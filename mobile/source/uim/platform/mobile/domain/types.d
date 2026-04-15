@@ -6,18 +6,114 @@
 module uim.platform.mobile.domain.types;
 
 // ID aliases
-alias MobileAppId = string;
-alias DeviceRegistrationId = string;
-alias PushNotificationId = string;
-alias PushRegistrationId = string;
-alias AppConfigurationId = string;
-alias FeatureRestrictionId = string;
-alias ClientResourceId = string;
-alias AppVersionId = string;
-alias UsageReportId = string;
-alias OfflineStoreId = string;
-alias UserSessionId = string;
-alias ClientLogEntryId = string;
+struct MobileAppId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct DeviceRegistrationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct PushNotificationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct PushRegistrationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct AppConfigurationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct FeatureRestrictionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ClientResourceId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct AppVersionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UsageReportId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct OfflineStoreId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserSessionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ClientLogEntryId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 
 // Mobile app platform

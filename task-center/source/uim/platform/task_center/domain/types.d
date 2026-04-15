@@ -13,16 +13,87 @@ mixin(ShowModule!());
 
 // --- ID Aliases ---
 
-alias TaskId = string;
-alias TaskDefinitionId = string;
-alias TaskCommentId = string;
-alias TaskAttachmentId = string;
-alias TaskProviderId = string;
-alias SubstitutionRuleId = string;
-alias TaskActionId = string;
-alias UserTaskFilterId = string;
+struct TaskId  {
+    string value;
 
-alias UserId = string;
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskDefinitionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskCommentId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskAttachmentId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskProviderId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct SubstitutionRuleId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskActionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserTaskFilterId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 // --- Enums ---
 

@@ -65,10 +65,42 @@ struct EnrichmentDataId {
 
   mixin DomainId;
 }
-struct TrainingJobId = string;
-struct ClientId = string;
-struct TenantId = string;
-struct ResourceGroupId = string;
+struct TrainingJobId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ClientId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TenantId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ResourceGroupId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 // Document processing status
 enum DocumentStatus {

@@ -114,9 +114,33 @@ struct PipelineId {
 
   mixin DomainId;
 }
-struct IngestionTokenId = string;
-struct TenantId = string;
-struct SubaccountId = string;
+struct  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 enum LogLevel {
   trace,

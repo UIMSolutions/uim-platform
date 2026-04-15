@@ -6,33 +6,240 @@
 module uim.platform.workzone.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias WorkspaceId = string;
-alias WorkpageId = string;
-alias CardId = string;
-alias ContentId = string;
-alias FeedEntryId = string;
-alias NotificationId = string;
-alias TaskId = string;
-alias ChannelId = string;
-alias AppId = string;
-alias WidgetId = string;
+struct WorkspaceId  {
+    string value;
 
-alias UserId = string;
-alias RoleId = string;
-alias SiteId = string;
-alias EventId = string;
-alias SurveyId = string;
-alias ForumTopicId = string;
-alias KBArticleId = string;
-alias GroupId = string;
-alias TagId = string;
-alias ThemeId = string;
-alias NavigationItemId = string;
-alias PageTemplateId = string;
-alias ExternalContentProviderId = string;
-alias ShellPluginId = string;
-alias UserProfileId = string;
-alias MemberId = string;
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct WorkpageId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct CardId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ContentId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct FeedEntryId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct NotificationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ChannelId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct AppId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct WidgetId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct RoleId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct SiteId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct EventId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct SurveyId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ForumTopicId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct KBArticleId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct GroupId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TagId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ThemeId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct NavigationItemId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct PageTemplateId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ExternalContentProviderId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ShellPluginId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserProfileId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct MemberId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 /// Workspace type.
 enum WorkspaceType {

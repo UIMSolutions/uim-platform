@@ -6,16 +6,96 @@
 module uim.platform.hana.domain.types;
 
 // ID aliases
-alias InstanceId = string;
-alias DataLakeId = string;
-alias SchemaId = string;
-alias DatabaseUserId = string;
-alias BackupId = string;
-alias AlertId = string;
-alias HDIContainerId = string;
-alias ReplicationTaskId = string;
-alias ConfigurationId = string;
-alias DatabaseConnectionId = string;
+struct InstanceId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DataLakeId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct SchemaId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DatabaseUserId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct BackupId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct AlertId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct HDIContainerId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ReplicationTaskId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ConfigurationId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DatabaseConnectionId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 // TenantId is provided by uim.platform.service
 
 // Database instance type

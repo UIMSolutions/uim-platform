@@ -120,9 +120,10 @@ class CommunicationArrangementController : PlatformController {
 
       auto result = uc.updateArrangement(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
-        res.writeJsonBody(resp, 200);
+        auto response = Json.emptyObject.
+        .set("status", "updated");
+
+        res.writeJsonBody(response, 200);
       }
       else
       {
@@ -139,8 +140,8 @@ class CommunicationArrangementController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteArrangement(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+        .set("status", "deleted");
         res.writeJsonBody(resp, 200);
       }
       else

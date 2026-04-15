@@ -61,10 +61,26 @@ struct TrustedCertificateId {
     mixin DomainId;
 }
 
-struct DnsRecordId = string;
-struct DomainDashboardId = string;
-struct TenantId = string;
-struct UserId = string;
+struct DnsRecordId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DomainDashboardId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+
 
 // --- Custom Domain ---
 

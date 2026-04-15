@@ -65,9 +65,20 @@ struct PermissionId {
 
   mixin DomainId;
 }
-struct FavoriteId = string;
-struct TenantId = string;
-struct UserId = string;
+struct FavoriteId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+
+
+
+
 
 // --- Enumerations ---
 

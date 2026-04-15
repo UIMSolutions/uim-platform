@@ -115,18 +115,98 @@ struct BusinessContextId {
 
   mixin DomainId;
 }
-struct BusinessProcessId = string;
-struct BusinessSubprocessId = string;
-struct CorrectionRequestId = string;
-struct ArchiveRequestId = string;
-struct DestructionRequestId = string;
-struct PurposeRecordId = string;
-struct ConsentPurposeId = string;
-struct RuleSetId = string;
-struct InformationReportId = string;
-struct AnonymizationConfigId = string;
-struct TenantId = string;
-struct UserId = string;
+struct BusinessProcessId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct BusinessSubprocessId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct CorrectionRequestId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ArchiveRequestId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DestructionRequestId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct PurposeRecordId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ConsentPurposeId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct RuleSetId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct InformationReportId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct AnonymizationConfigId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+
 
 /// Type of data subject whose personal data is processed.
 enum DataSubjectType {

@@ -6,17 +6,105 @@
 module uim.platform.abap_enviroment.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias SystemInstanceId = string;
-alias SoftwareComponentId = string;
-alias CommunicationArrangementId = string;
-alias ServiceBindingId = string;
-alias BusinessUserId = string;
-alias BusinessRoleId = string;
-alias TransportRequestId = string;
-alias ApplicationJobId = string;
-alias SubaccountId = string;
-alias ServiceDefinitionId = string;
-alias CommunicationScenarioId = string;
+struct SystemInstanceId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct SoftwareComponentId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct CommunicationArrangementId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ServiceBindingId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct BusinessUserId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct BusinessRoleId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct TransportRequestId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ApplicationJobId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct SubaccountId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ServiceDefinitionId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct CommunicationScenarioId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // ─── System Instance ───
 

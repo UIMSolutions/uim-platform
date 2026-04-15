@@ -55,7 +55,7 @@ struct ApplicationJob {
 
     if (executionHistory.length > 0) {
       auto history = executionHistory.map!(e => e.toJson)();
-      j["executionHistory"] = history;
+      j = j.set("executionHistory", history;
     }
 
     if (jobParameters.length > 0) {

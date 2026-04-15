@@ -66,11 +66,43 @@ struct ArtifactId {
   mixin DomainId;
 }
 
-struct ResourceGroupId = string;
-struct MetricId = string;
-struct TenantId = string;
-struct DockerRegistrySecretId = string;
-struct ObjectStoreSecretId = string;
+struct ResourceGroupId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct MetricId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DockerRegistrySecretId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ObjectStoreSecretId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // Executable types: workflow (batch), serving (inference)
 enum ExecutableType {

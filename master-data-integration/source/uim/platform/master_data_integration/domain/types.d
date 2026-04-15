@@ -6,16 +6,87 @@
 module uim.platform.master_data_integration.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias MasterDataObjectId = string;
-alias DataModelId = string;
-alias DistributionModelId = string;
-alias KeyMappingId = string;
-alias ChangeLogEntryId = string;
-alias ClientId = string;
-alias ReplicationJobId = string;
-alias FilterRuleId = string;
+struct MasterDataObjectId  {
+    string value;
 
-alias VersionId = string;
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct DataModelId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct DistributionModelId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct KeyMappingId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ChangeLogEntryId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ClientId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ReplicationJobId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct FilterRuleId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct VersionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 /// Category of master data object.
 enum MasterDataCategory {

@@ -6,20 +6,123 @@
 module uim.platform.process_automation.domain.types;
 
 // ID aliases
-alias ProcessId = string;
-alias ProcessInstanceId = string;
-alias TaskId = string;
-alias DecisionId = string;
-alias FormId = string;
-alias AutomationId = string;
-alias TriggerId = string;
-alias ActionId = string;
-alias VisibilityId = string;
-alias ArtifactId = string;
+struct ProcessId  {
+    string value;
 
-alias UserId = string;
-alias ProjectId = string;
-alias VersionId = string;
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ProcessInstanceId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TaskId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct DecisionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct FormId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct AutomationId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct TriggerId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ActionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct VisibilityId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ArtifactId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct UserId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct ProjectId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+struct VersionId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 
 // --- Process (Workflow Definition) ---
 

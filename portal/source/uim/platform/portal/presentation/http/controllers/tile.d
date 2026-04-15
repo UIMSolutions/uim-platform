@@ -65,9 +65,10 @@ class TileController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto tiles = useCase.listTiles(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(tiles.length);
-      response["resources"] = toJsonArray(tiles);
+      auto response = Json.emptyObject
+      .set("totalResults", tiles.length)
+      .set("resources", tiles);
+      
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
