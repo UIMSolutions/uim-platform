@@ -10,4 +10,5 @@ public {
     import uim.platform.personal_data.domain.entities;
     import uim.platform.personal_data.domain.ports;
     import uim.platform.personal_data.domain.services;
+    import uim.platform.personal_data.domain.enumerations;
 }

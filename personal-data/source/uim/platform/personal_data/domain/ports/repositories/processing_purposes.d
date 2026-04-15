@@ -12,10 +12,13 @@ mixin(ShowModule!());
 @safe:
 
 interface ProcessingPurposeRepository {
+    bool existsById(ProcessingPurposeId id);
     ProcessingPurpose findById(ProcessingPurposeId id);
+
     ProcessingPurpose[] findByTenant(TenantId tenantId);
     ProcessingPurpose[] findByLegalBasis(LegalBasis basis);
     ProcessingPurpose[] findByApplication(RegisteredApplicationId applicationId);
+    
     void save(ProcessingPurpose entity);
     void update(ProcessingPurpose entity);
     void remove(ProcessingPurposeId id);

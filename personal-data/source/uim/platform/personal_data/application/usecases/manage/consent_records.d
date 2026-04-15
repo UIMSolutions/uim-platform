@@ -19,9 +19,12 @@ class ManageConsentRecordsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateConsentRecordRequest r) {
-        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
-        if (r.purposeId.isEmpty) return CommandResult(false, "", "Purpose ID is required");
+        if (r.id.isEmpty)
+            return CommandResult(false, "", "ID is required");
+        if (r.dataSubjectId.isEmpty)
+            return CommandResult(false, "", "Data subject ID is required");
+        if (r.purposeId.isEmpty)
+            return CommandResult(false, "", "Purpose ID is required");
 
         ConsentRecord cr;
         cr.id = r.id;
@@ -43,15 +46,35 @@ class ManageConsentRecordsUseCase : UIMUseCase {
         return CommandResult(true, cr.id, "");
     }
 
-    ConsentRecord get_(ConsentRecordId id) {
+    bool hasConsentRecord(string id) {
+        return hasConsentRecord(ConsentRecordId(id));
+    }
+
+    bool hasConsentRecord(ConsentRecordId id) {
+        return repo.existsById(id);
+    }
+
+    ConsentRecord getConsentRecord(string id) {
+        return getConsentRecord(ConsentRecordId(id));
+    }
+
+    ConsentRecord getConsentRecord(ConsentRecordId id) {
         return repo.findById(id);
     }
 
-    ConsentRecord[] list(TenantId tenantId) {
+    ConsentRecord[] listConsentRecordsByTenant(string tenantId) {
+        return listConsentRecordsByTenant(TenantId(tenantId));
+    }
+
+    ConsentRecord[] listConsentRecordsByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ConsentRecord[] listByDataSubject(DataSubjectId dataSubjectId) {
+    ConsentRecord[] listConsentRecordsByDataSubject(string dataSubjectId) {
+        return listConsentRecordsByDataSubject(DataSubjectId(dataSubjectId));
+    }
+
+    ConsentRecord[] listConsentRecordsByDataSubject(DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(dataSubjectId);
     }
 
@@ -68,7 +91,11 @@ class ManageConsentRecordsUseCase : UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    CommandResult remove(ConsentRecordId id) {
+    CommandResult removeConsentRecord(string id) {
+        return removeConsentRecord(ConsentRecordId(id));
+    }
+
+    CommandResult removeConsentRecord(ConsentRecordId id) {
         auto existing = repo.findById(id);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Consent record not found");

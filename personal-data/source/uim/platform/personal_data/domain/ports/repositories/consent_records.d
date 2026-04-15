@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface ConsentRecordRepository {
+    bool existsById(ConsentRecordId id);
     ConsentRecord findById(ConsentRecordId id);
+    
     ConsentRecord[] findByTenant(TenantId tenantId);
     ConsentRecord[] findByDataSubject(DataSubjectId dataSubjectId);
     ConsentRecord[] findByPurpose(ProcessingPurposeId purposeId);
     ConsentRecord findByDataSubjectAndPurpose(DataSubjectId dataSubjectId, ProcessingPurposeId purposeId);
+    
     void save(ConsentRecord entity);
     void update(ConsentRecord entity);
     void remove(ConsentRecordId id);

@@ -12,7 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 interface PersonalDataRecordRepository {
+    bool existsById(PersonalDataRecordId id);
     PersonalDataRecord findById(PersonalDataRecordId id);
+
     PersonalDataRecord[] findByTenant(TenantId tenantId);
     PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId);
     PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId);

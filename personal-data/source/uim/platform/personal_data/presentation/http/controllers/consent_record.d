@@ -20,6 +20,7 @@ class ConsentRecordController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/personal-data/consents", &handleList);
         router.get("/api/v1/personal-data/consents/*", &handleGet);
         router.post("/api/v1/personal-data/consents", &handleCreate);
@@ -45,11 +46,12 @@ class ConsentRecordController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Consent record created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Consent record created");
+
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -65,20 +67,18 @@ class ConsentRecordController : PlatformController {
 
             ConsentRecord[] consents;
             if (dataSubjectId.length > 0) {
-                consents = uc.listByDataSubject(dataSubjectId);
-            } ) {
-                consents = uc.list(tenantId);
+                consents = uc.listConsentRecordsByDataSubject(dataSubjectId);
+            } else {
+                consents = uc.listConsentRecordsByTenant(tenantId);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (c; consents) {
-                jarr ~= consentToJson(c);
-            }
+            auto jarr = consents.map!(c => c.toJson).array.toJson;
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(consents.length);
-            resp["resources"] = jarr;
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject
+                .set("count", consents.length)
+                .set("resources", jarr);
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -89,15 +89,17 @@ class ConsentRecordController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            if (path.length > 9 && path[$ - 9 .. $] == "/withdraw") return;
+            if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
+                return;
 
             auto id = extractIdFromPath(path);
-            auto c = uc.get_(id);
-            if (c.id.isEmpty) {
+            if (!uc.hasConsentRecord(id)) {
                 writeError(res, 404, "Consent record not found");
                 return;
             }
-            res.writeJsonBody(consentToJson(c), 200);
+
+            auto consent = uc.getConsentRecord(id);
+            res.writeJsonBody(consent.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -119,11 +121,12 @@ class ConsentRecordController : PlatformController {
 
             auto result = uc.withdraw(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Consent withdrawn");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Consent withdrawn");
+
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -134,34 +137,20 @@ class ConsentRecordController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Consent record deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Consent record deleted");
+
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
-    }
-
-    private Json consentToJson(ConsentRecord c) {
-        return Json.emptyObject
-        .set("id", c.id)
-        .set("dataSubjectId", c.dataSubjectId)
-        .set("purposeId", c.purposeId)
-        .set("status", c.status.to!string)
-        .set("consentText", c.consentText)
-        .set("consentVersion", c.consentVersion)
-        .set("givenAt", c.givenAt)
-        .set("withdrawnAt", c.withdrawnAt)
-        .set("expiresAt", c.expiresAt)
-        .set("source", c.source)
-        .set("createdBy", c.createdBy)
-        .set("createdAt", c.createdAt);
     }
 }

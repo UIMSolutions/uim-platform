@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface DataProcessingLogRepository {
+    bool exitstsById(DataProcessingLogId id);
     DataProcessingLog findById(DataProcessingLogId id);
+
     DataProcessingLog[] findByTenant(TenantId tenantId);
     DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId);
     DataProcessingLog[] findByRequest(DataSubjectRequestId requestId);
     DataProcessingLog[] findByApplication(string applicationId);
+    
     void save(DataProcessingLog entity);
     void remove(DataProcessingLogId id);
 }

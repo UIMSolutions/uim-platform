@@ -12,7 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 interface RetentionRuleRepository {
+    bool existsById(RetentionRuleId id);
     RetentionRule findById(RetentionRuleId id);
+
     RetentionRule[] findByTenant(TenantId tenantId);
     RetentionRule[] findByApplication(RegisteredApplicationId applicationId);
     RetentionRule[] findByStatus(RetentionRuleStatus status);

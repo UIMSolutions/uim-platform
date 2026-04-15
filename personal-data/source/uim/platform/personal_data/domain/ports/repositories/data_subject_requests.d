@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface DataSubjectRequestRepository {
+    bool existsById(DataSubjectRequestId id);
     DataSubjectRequest findById(DataSubjectRequestId id);
+
     DataSubjectRequest[] findByTenant(TenantId tenantId);
     DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId);
     DataSubjectRequest[] findByStatus(RequestStatus status);
     DataSubjectRequest[] findByAssignee(string assignedTo);
+
     void save(DataSubjectRequest entity);
     void update(DataSubjectRequest entity);
     void remove(DataSubjectRequestId id);

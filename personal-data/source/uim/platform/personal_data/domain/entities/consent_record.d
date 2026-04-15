@@ -28,4 +28,22 @@ struct ConsentRecord {
     string createdBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("dataSubjectId", dataSubjectId)
+            .set("tenantId", tenantId)
+            .set("purposeId", purposeId)
+            .set("status", status.to!string)
+            .set("consentText", consentText)
+            .set("consentVersion", consentVersion)
+            .set("givenAt", givenAt)
+            .set("withdrawnAt", withdrawnAt)
+            .set("expiresAt", expiresAt)
+            .set("source", source)
+            .set("createdBy", createdBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }

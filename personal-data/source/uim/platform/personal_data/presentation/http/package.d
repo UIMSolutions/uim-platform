@@ -6,6 +6,5 @@
 module uim.platform.personal_data.presentation.http;
 
 public {
-    import uim.platform.personal_data.presentation.http.json_utils;
     import uim.platform.personal_data.presentation.http.controllers;
 }

@@ -12,7 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 interface RegisteredApplicationRepository {
+    bool existsById(RegisteredApplicationId id);
     RegisteredApplication findById(RegisteredApplicationId id);
+
     RegisteredApplication[] findByTenant(TenantId tenantId);
     RegisteredApplication findByName(string name);
     RegisteredApplication[] findByStatus(ApplicationStatus status);
