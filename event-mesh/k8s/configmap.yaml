@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: event-mesh-config
+  namespace: uim-platform
+  labels:
+    app: event-mesh
+    part-of: uim-platform
+data:
+  EVENT_MESH_HOST: "0.0.0.0"
+  EVENT_MESH_PORT: "8108"
