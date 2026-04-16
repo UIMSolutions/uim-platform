@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.pipeline;
 
-import uim.platform.logging.application.usecases.manage.pipelines;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.manage.pipelines;
+  // import uim.platform.logging.application.dto;
+    // import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class PipelineController : PlatformController {
   private ManagePipelinesUseCase uc;
@@ -20,6 +24,7 @@ class PipelineController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/pipelines", &handleCreate);
     router.get("/api/v1/pipelines", &handleList);
     router.get("/api/v1/pipelines/*", &handleGet);
@@ -53,10 +58,11 @@ class PipelineController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+        .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -78,9 +84,10 @@ class PipelineController : PlatformController {
           .set("isActive", p.isActive);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(pipelines.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", pipelines.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -105,7 +112,7 @@ class PipelineController : PlatformController {
         .set("isActive", p.isActive)
         .set("targetStreamId", p.targetStreamId);
 
-      res.writeJsonBody(pj, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -125,10 +132,11 @@ class PipelineController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        res.writeJsonBody(resp, 200);
-      }) {
+        auto response = Json.emptyObject
+          .set("id", result.id);
+
+        res.writeJsonBody(response, 200);
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

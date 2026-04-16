@@ -42,10 +42,11 @@ class StreamController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -67,9 +68,9 @@ class StreamController : PlatformController {
           .set("isActive", s.isActive);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(streams.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", streams.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -115,10 +116,10 @@ class StreamController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.log;
 
-import uim.platform.logging.application.usecases.ingest_logs;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.ingest_logs;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class LogController : PlatformController {
   private IngestLogsUseCase uc;
@@ -20,6 +24,7 @@ class LogController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/logs", &handleIngest);
     router.post("/api/v1/logs/batch", &handleBatchIngest);
   }

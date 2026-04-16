@@ -6,6 +6,5 @@
 module uim.platform.logging.presentation.http;
 
 public {
-  import uim.platform.logging.presentation.http.json_utils;
   import uim.platform.logging.presentation.http.controllers;
 }

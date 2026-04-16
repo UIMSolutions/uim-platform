@@ -23,6 +23,7 @@ class SearchController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/search", &handleSearch);
     router.get("/api/v1/logs/*", &handleGetById);
   }
@@ -71,9 +72,10 @@ class SearchController : PlatformController {
           .set("streamId", e.streamId);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(entries.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", entries.length);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

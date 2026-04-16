@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.channel;
 
-import uim.platform.logging.application.usecases.manage.notification_channels;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
-
+// import uim.platform.logging.application.usecases.manage.notification_channels;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.presentation.http.json_utils;
+// 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class ChannelController : PlatformController {
   private ManageNotificationChannelsUseCase uc;
@@ -20,6 +24,7 @@ class ChannelController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/channels", &handleCreate);
     router.get("/api/v1/channels", &handleList);
     router.get("/api/v1/channels/*", &handleGet);
@@ -49,7 +54,7 @@ class ChannelController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -93,7 +98,7 @@ class ChannelController : PlatformController {
       auto cj = Json.emptyObject
       .set("id", ch.id)
       .set("name", ch.name)
-      .set("description", ch.description));
+      .set("description", ch.description) ;
 
       res.writeJsonBody(cj, 200);
     } catch (Exception e) {
@@ -119,10 +124,11 @@ class ChannelController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

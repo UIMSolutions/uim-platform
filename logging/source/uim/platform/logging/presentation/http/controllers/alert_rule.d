@@ -4,12 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.alert_rule;
-
-import uim.platform.logging.application.usecases.manage.alert_rules;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
-
+//
+//import uim.platform.logging.application.usecases.manage.alert_rules;
+//import uim.platform.logging.application.dto;
+//import uim.platform.logging.presentation.http.json_utils;
+//
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class AlertRuleController : PlatformController {
   private ManageAlertRulesUseCase uc;

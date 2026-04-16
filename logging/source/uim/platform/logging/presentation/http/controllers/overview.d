@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.overview;
 
-import uim.platform.logging.application.usecases.get_overview;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.get_overview;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class OverviewController : PlatformController {
   private GetOverviewUseCase uc;
@@ -20,6 +24,7 @@ class OverviewController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/overview", &handleOverview);
   }
 

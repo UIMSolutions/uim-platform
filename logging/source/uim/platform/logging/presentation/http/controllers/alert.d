@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.alert;
 
-import uim.platform.logging.application.usecases.manage.alerts;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.domain.entities.alert;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.manage.alerts;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.alert;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class AlertController : PlatformController {
   private ManageAlertsUseCase uc;
@@ -47,7 +51,8 @@ class AlertController : PlatformController {
 
       auto resp = Json.emptyObject
       .set("items", jarr)
-      .set("totalCount", Json(alerts.length))
+      .set("totalCount", Json(alerts.length));
+      
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -97,7 +102,7 @@ class AlertController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -115,10 +120,11 @@ class AlertController : PlatformController {
 
       auto result = uc.resolve(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -132,6 +138,7 @@ class AlertController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       uc.remove(id);
+
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

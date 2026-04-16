@@ -20,6 +20,7 @@ class RetentionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/retention", &handleCreate);
     router.get("/api/v1/retention", &handleList);
     router.get("/api/v1/retention/*", &handleGet);
@@ -45,7 +46,7 @@ class RetentionController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -69,9 +70,9 @@ class RetentionController : PlatformController {
           .set("isActive", p.isActive);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(policies.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", policies.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -98,7 +99,7 @@ class RetentionController : PlatformController {
         .set("isDefault", p.isDefault)
         .set("isActive", p.isActive);
 
-      res.writeJsonBody(pj, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -119,10 +120,11 @@ class RetentionController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
