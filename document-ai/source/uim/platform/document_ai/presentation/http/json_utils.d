@@ -7,28 +7,6 @@ module uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-string getString(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-bool getBoolean(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
-
 int jsonInt(Json j, string key, int default_ = 0) {
   if (!j.isObject)
     return default_;
@@ -39,8 +17,6 @@ int jsonInt(Json j, string key, int default_ = 0) {
     return cast(int)(*v).get!long;
   return default_;
 }
-
-
 
 double jsonDouble(Json j, string key, double default_ = 0.0) {
   if (!j.isObject)

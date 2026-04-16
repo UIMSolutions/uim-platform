@@ -103,7 +103,7 @@ Container buildContainer(AppConfig config) {
   c.trainingJobController = new TrainingJobController(c.manageTrainingJobs);
   c.clientController = new ClientController(c.manageClients);
   c.capabilitiesController = new CapabilitiesController(c.getCapabilities);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("document-ai");
 
   return c;
 }

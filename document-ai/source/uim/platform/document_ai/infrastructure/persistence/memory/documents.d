@@ -16,6 +16,9 @@ class MemoryDocumentRepository : DocumentRepository {
   private Document[][string] store;
 
   Document findById(DocumentId id, ClientId clientId) {
+  }
+  
+  Document findById(DocumentId id, ClientId clientId) {
     if (auto cl = clientId in store) {
       foreach (d; *cl) {
         if (d.id == id)

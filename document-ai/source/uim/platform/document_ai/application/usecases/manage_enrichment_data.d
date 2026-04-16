@@ -70,10 +70,10 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
       EnrichmentField[] fields;
       foreach (pair; r.fields) {
         if (pair.length >= 2) {
-          EnrichmentField f;
-          f.key = pair[0];
-          f.value = pair[1];
-          fields ~= f;
+          EnrichmentField field;
+          field.key = pair[0];
+          field.value = pair[1];
+          fields ~= field;
         }
       }
       existing.fields = fields;
@@ -103,8 +103,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
   }
 
   CommandResult remove(EnrichmentDataId id, ClientId clientId) {
-    auto existing = repo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id, clientId))
       return CommandResult(false, "", "Enrichment data not found");
 
     repo.remove(id, clientId);
