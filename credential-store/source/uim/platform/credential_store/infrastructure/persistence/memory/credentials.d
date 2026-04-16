@@ -15,10 +15,20 @@ import std.array : array;
 class MemoryCredentialRepository : CredentialRepository {
   private Credential[CredentialId] store;
 
+  bool existsById(CredentialId id) {
+    return (id in store) ? true : false;
+  }
+
   Credential findById(CredentialId id) {
-    if (auto p = id in store)
-      return *p;
-    return Credential.init;
+    return existsById(id) ? store[id] : Credential.init;
+  }
+
+  bool existsByName(NamespaceId namespaceId, string name, CredentialType type) {
+    foreach (c; store) {
+      if (c.namespaceId == namespaceId && c.name == name && c.type == type)
+        return true;
+    }
+    return false;
   }
 
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
@@ -34,7 +44,7 @@ class MemoryCredentialRepository : CredentialRepository {
   }
 
   Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    return store.values.filter!(c => c.namespaceId == namespaceId && c.type == type).array;
+    return findByNamespace(namespaceId).filter!(c => c.type == type).array;
   }
 
   Credential[] findByTenant(TenantId tenantId) {

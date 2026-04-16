@@ -15,10 +15,20 @@ import std.array : array;
 class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
+  bool existsById(ServiceBindingId id) {
+    return (id in store) ? true : false;
+  }
+
   ServiceBinding findById(ServiceBindingId id) {
-    if (auto p = id in store)
-      return *p;
-    return ServiceBinding.init;
+    return existsById(id) ? store[id] : ServiceBinding.init;
+  }
+
+  bool existsByClientId(string clientId) {
+    foreach (b; store) {
+      if (b.clientId == clientId)
+        return true;
+    }
+    return false;
   }
 
   ServiceBinding findByClientId(string clientId) {

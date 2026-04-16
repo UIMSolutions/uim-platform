@@ -15,10 +15,12 @@ import std.array : array;
 class MemoryNamespaceRepository : NamespaceRepository {
   private Namespace[NamespaceId] store;
 
+  bool existsById(NamespaceId id) {
+    return (id in store) ? true : false;
+  }
+
   Namespace findById(NamespaceId id) {
-    if (auto p = id in store)
-      return *p;
-    return Namespace.init;
+    return existsById(id) ? store[id] : Namespace.init;
   }
 
   Namespace findByName(TenantId tenantId, string name) {

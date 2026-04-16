@@ -15,6 +15,10 @@ import std.array : array;
 class MemoryKeyringVersionRepository : KeyringVersionRepository {
   private KeyringVersion[] store;
 
+  bool existsById(KeyringVersionId id) {
+    return store.any!(v => v.id == id);
+  }
+
   KeyringVersion findById(KeyringVersionId id) {
     foreach (v; store)
       if (v.id == id)

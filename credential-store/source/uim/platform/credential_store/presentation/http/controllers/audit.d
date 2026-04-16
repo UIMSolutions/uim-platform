@@ -62,6 +62,7 @@ class AuditController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", jarr)
         .set("totalCount", entries.length);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
