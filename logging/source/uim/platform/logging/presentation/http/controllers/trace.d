@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.trace;
 
-import uim.platform.logging.application.usecases.ingest_traces;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.domain.entities.span;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.ingest_traces;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.span;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class TraceController : PlatformController {
   private IngestTracesUseCase uc;
@@ -22,6 +26,7 @@ class TraceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/traces/spans", &handleIngestSpan);
     router.post("/api/v1/traces/spans/batch", &handleBatchIngest);
     router.get("/api/v1/traces/*", &handleGetTrace);

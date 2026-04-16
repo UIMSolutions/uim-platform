@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.search;
 
-import uim.platform.logging.application.usecases.search_logs;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.services.log_parser;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.search_logs;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.services.log_parser;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class SearchController : PlatformController {
   private SearchLogsUseCase uc;
@@ -75,7 +79,7 @@ class SearchController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", jarr)
         .set("totalCount", entries.length);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

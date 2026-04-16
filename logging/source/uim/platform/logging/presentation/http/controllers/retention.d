@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.retention;
 
-import uim.platform.logging.application.usecases.manage.retention_policies;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.manage.retention_policies;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class RetentionController : PlatformController {
   private ManageRetentionPoliciesUseCase uc;
@@ -43,9 +47,9 @@ class RetentionController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        res.writeJsonBody(resp, 201);
+        auto response = Json.emptyObject
+          .set("id", result.id);
+        res.writeJsonBody(response, 201);
       } else {
         writeError(res, 400, result.error);
       }
@@ -120,10 +124,10 @@ class RetentionController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject
+        auto response = Json.emptyObject
           .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
+        res.writeJsonBody(response, 200);
       } else {
         writeError(res, 400, result.error);
       }

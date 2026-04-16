@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.stream;
 
-import uim.platform.logging.application.usecases.manage.log_streams;
-import uim.platform.logging.application.dto;
-import uim.platform.logging.domain.entities.log_stream;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.presentation.http.json_utils;
+// import uim.platform.logging.application.usecases.manage.log_streams;
+// import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.log_stream;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class StreamController : PlatformController {
   private ManageLogStreamsUseCase uc;
@@ -22,6 +26,7 @@ class StreamController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/streams", &handleCreate);
     router.get("/api/v1/streams", &handleList);
     router.get("/api/v1/streams/*", &handleGet);
