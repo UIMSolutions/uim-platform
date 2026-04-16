@@ -42,27 +42,55 @@ class ManageDataProcessingLogsUseCase : UIMUseCase {
         return CommandResult(true, entry.id, "");
     }
 
-    DataProcessingLog get_(DataProcessingLogId id) {
+    bool hasById(DataProcessingLogId id) {
+        return repo.existsById(id);
+    }
+
+    bool hasById(string id) {
+        return hasById(DataProcessingLogId(id));
+    }
+
+    DataProcessingLog getById(DataProcessingLogId id) {
         return repo.findById(id);
     }
 
-    DataProcessingLog[] list(TenantId tenantId) {
+    DataProcessingLog getById(string id) {
+        return getById(DataProcessingLogId(id));
+    }
+
+    DataProcessingLog[] listByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
+    }
+
+    DataProcessingLog[] listByTenant(string tenantId) {
+        return listByTenant(TenantId(tenantId));
     }
 
     DataProcessingLog[] listByDataSubject(DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(dataSubjectId);
     }
 
+    DataProcessingLog[] listByDataSubject(string dataSubjectId) {
+        return listByDataSubject(DataSubjectId(dataSubjectId));
+    }
+
     DataProcessingLog[] listByRequest(DataSubjectRequestId requestId) {
         return repo.findByRequest(requestId);
     }
 
-    CommandResult remove(DataProcessingLogId id) {
+    DataProcessingLog[] listByRequest(string requestId) {
+        return listByRequest(DataSubjectRequestId(requestId));
+    }
+
+    CommandResult removeById(DataProcessingLogId id) {
         auto existing = repo.findById(id);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Log entry not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");
+    }
+
+    CommandResult removeById(string id) {
+        return removeById(DataProcessingLogId(id));
     }
 }

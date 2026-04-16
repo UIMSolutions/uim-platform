@@ -19,6 +19,7 @@ interface PersonalDataRecordRepository {
     PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId);
     PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId);
     PersonalDataRecord[] findByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
+    
     void save(PersonalDataRecord entity);
     void update(PersonalDataRecord entity);
     void remove(PersonalDataRecordId id);

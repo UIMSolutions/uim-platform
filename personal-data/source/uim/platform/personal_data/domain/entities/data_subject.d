@@ -30,4 +30,22 @@ struct DataSubject {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("externalId", externalId)
+            .set("tenantId", tenantId)
+            .set("organizationId", organizationId)
+            .set("subjectType", subjectType.to!string)
+            .set("status", status.to!string)
+            .set("firstName", firstName)
+            .set("lastName", lastName)
+            .set("email", email)
+            .set("phone", phoneNumber)
+            .set("dateOfBirth", dateOfBirth)
+            .set("organizationName", organizationName)
+            .set("createdBy", createdBy)
+            .set("createdAt", createdAt);
+    }
 }

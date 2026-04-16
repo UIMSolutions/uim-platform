@@ -53,7 +53,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject created");
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -66,14 +66,12 @@ class DataSubjectController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto subjects = uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (s; subjects) {
-                jarr ~= subjectToJson(s);
-            }
+            auto jarr = subjects.map!(s => subjectToJson(s)).array.toJson;
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(subjects.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", subjects.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -94,18 +92,15 @@ class DataSubjectController : PlatformController {
                 auto s = uc.findByEmail(email);
                 if (s.id.length > 0)
                     results ~= s;
-            }) {
+            } else {
                 results = uc.search(firstName, lastName);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (s; results) {
-                jarr ~= subjectToJson(s);
-            }
+            auto jarr = results.map!(s => subjectToJson(s)).array.toJson;
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(results.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", results.length)
+                .set("resources", jarr);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -123,12 +118,13 @@ class DataSubjectController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            auto s = uc.get_(id);
-            if (s.id.isEmpty) {
+            if (!uc.hasDataSubject(id)) {
                 writeError(res, 404, "Data subject not found");
                 return;
             }
-            res.writeJsonBody(subjectToJson(s), 200);
+
+            auto subject = uc.getDataSubject(id);
+            res.writeJsonBody(subjectToJson(subject), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -139,25 +135,25 @@ class DataSubjectController : PlatformController {
             import std.conv : to;
 
             auto j = req.json;
-            UpdateDataSubjectRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
-            r.firstName = j.getString("firstName");
-            r.lastName = j.getString("lastName");
-            r.email = j.getString("email");
-            r.phone = j.getString("phone");
-            r.dateOfBirth = j.getString("dateOfBirth");
-            r.organizationName = j.getString("organizationName");
-            r.organizationId = j.getString("organizationId");
-            r.modifiedBy = j.getString("modifiedBy");
+            UpdateDataSubjectRequest request;
+            request.tenantId = req.getTenantId;
+            request.id = extractIdFromPath(req.requestURI.to!string);
+            request.firstName = j.getString("firstName");
+            request.lastName = j.getString("lastName");
+            request.email = j.getString("email");
+            request.phone = j.getString("phone");
+            request.dateOfBirth = j.getString("dateOfBirth");
+            request.organizationName = j.getString("organizationName");
+            request.organizationId = j.getString("organizationId");
+            request.modifiedBy = j.getString("modifiedBy");
 
-            auto result = uc.update(r);
+            auto result = uc.updateDataSubject(request);
             if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject updated");
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -179,7 +175,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject blocked");
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -201,7 +197,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject erased (anonymized)");
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -220,28 +216,11 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject deleted");
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
-    }
-
-    private Json subjectToJson(DataSubject s) {
-        return Json.emptyObject
-            .set("id", s.id)
-            .set("subjectType", s.subjectType.to!string)
-            .set("status", s.status.to!string)
-            .set("firstName", s.firstName)
-            .set("lastName", s.lastName)
-            .set("email", s.email)
-            .set("phone", s.phone)
-            .set("dateOfBirth", s.dateOfBirth)
-            .set("organizationName", s.organizationName)
-            .set("organizationId", s.organizationId)
-            .set("externalId", s.externalId)
-            .set("createdBy", s.createdBy)
-            .set("createdAt", s.createdAt);
     }
 }

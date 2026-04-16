@@ -20,6 +20,7 @@ class PersonalDataRecordController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/personal-data/records", &handleList);
         router.get("/api/v1/personal-data/records/*", &handleGet);
         router.post("/api/v1/personal-data/records", &handleCreate);
@@ -45,9 +46,10 @@ class PersonalDataRecordController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Personal data record created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Personal data record created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -92,6 +94,7 @@ class PersonalDataRecordController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.get_(id);
             if (r.id.isEmpty) {
@@ -107,6 +110,7 @@ class PersonalDataRecordController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
@@ -120,22 +124,5 @@ class PersonalDataRecordController : PlatformController {
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
-    }
-
-    private Json recordToJson(PersonalDataRecord r) {
-        return Json.emptyObject
-        .set("id", r.id)
-        .set("dataSubjectId", r.dataSubjectId)
-        .set("applicationId", r.applicationId)
-        .set("dataCategory", r.dataCategory.to!string)
-        .set("sensitivity", r.sensitivity.to!string)
-        .set("fieldName", r.fieldName)
-        .set("fieldValue", r.fieldValue)
-        .set("purposeId", r.purposeId)
-        .set("legalBasis", r.legalBasis.to!string)
-        .set("retentionRuleId", r.retentionRuleId)
-        .set("isAnonymized", r.isAnonymized)
-        .set("createdBy", r.createdBy)
-        .set("createdAt", r.createdAt);
     }
 }
