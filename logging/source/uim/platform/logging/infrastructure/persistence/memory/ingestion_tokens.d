@@ -16,18 +16,16 @@ mixin(ShowModule!());
 class MemoryIngestionTokenRepository : IngestionTokenRepository {
   private IngestionToken[IngestionTokenId] store;
 
+  bool existsById(IngestionTokenId id) {
+    return (id in store) ? true : false;
+  }
+
   IngestionToken findById(IngestionTokenId id) {
-    if (auto p = id in store)
-      return *p;
-    return IngestionToken.init;
+    return (existsById(id)) ? store[id] : IngestionToken.init;
   }
 
   IngestionToken[] findByTenant(TenantId tenantId) {
-    IngestionToken[] result;
-    foreach (t; store)
-      if (t.tenantId == tenantId)
-        result ~= t;
-    return result;
+    return store.byValue.filter!(t => t.tenantId == tenantId).array;
   }
 
   IngestionToken findByHash(string tokenHash) {

@@ -12,34 +12,24 @@ import uim.platform.logging.domain.types;
 class MemoryPipelineRepository : PipelineRepository {
   private Pipeline[PipelineId] store;
 
+  bool existsById(PipelineId id) {
+    return (id in store) ? true : false;
+  }
+
   Pipeline findById(PipelineId id) {
-    if (auto p = id in store)
-      return *p;
-    return Pipeline.init;
+    return (existsById(id)) ? store[id] : Pipeline.init;
   }
 
   Pipeline[] findByTenant(TenantId tenantId) {
-    Pipeline[] result;
-    foreach (p; store)
-      if (p.tenantId == tenantId)
-        result ~= p;
-    return result;
+    return store.byValue.filter!(p => p.tenantId == tenantId).array;
   }
 
   Pipeline[] findActive(TenantId tenantId) {
-    Pipeline[] result;
-    foreach (p; store)
-      if (p.tenantId == tenantId && p.isActive)
-        result ~= p;
-    return result;
+    return findByTenant(tenantId).filter!(p => p.isActive).array;
   }
 
   Pipeline[] findBySource(TenantId tenantId, PipelineSourceType sourceType) {
-    Pipeline[] result;
-    foreach (p; store)
-      if (p.tenantId == tenantId && p.sourceType == sourceType)
-        result ~= p;
-    return result;
+    return findByTenant(tenantId).filter!(p => p.sourceType == sourceType).array;
   }
 
   void save(Pipeline p) {

@@ -16,42 +16,28 @@ mixin(ShowModule!());
 class MemoryAlertRepository : AlertRepository {
   private Alert[AlertId] store;
 
+  bool existsById(AlertId id) {
+    return (id in store) ? true : false;
+  }
+
   Alert findById(AlertId id) {
-    if (auto p = id in store)
-      return *p;
-    return Alert.init;
+    return (existsById(id)) ? store[id] : Alert.init;
   }
 
   Alert[] findByTenant(TenantId tenantId) {
-    Alert[] result;
-    foreach (a; store)
-      if (a.tenantId == tenantId)
-        result ~= a;
-    return result;
+        return store.byValue.filter!(a => a.tenantId == tenantId).array;
   }
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    Alert[] result;
-    foreach (a; store)
-      if (a.tenantId == tenantId && a.state == state)
-        result ~= a;
-    return result;
+    return findByTenant(tenantId).filter!(a => a.state == state).array;
   }
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
-    Alert[] result;
-    foreach (a; store)
-      if (a.tenantId == tenantId && a.severity == severity)
-        result ~= a;
-    return result;
+    return findByTenant(tenantId).filter!(a => a.severity == severity).array;
   }
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    Alert[] result;
-    foreach (a; store)
-      if (a.tenantId == tenantId && a.ruleId == ruleId)
-        result ~= a;
-    return result;
+    return findByTenant(tenantId).filter!(a => a.ruleId == ruleId).array;
   }
 
   void save(Alert a) {
@@ -67,18 +53,10 @@ class MemoryAlertRepository : AlertRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    size_t count;
-    foreach (a; store)
-      if (a.tenantId == tenantId)
-        count++;
-    return count;
+    return findByTenant(tenantId).length;
   }
 
   size_t countByState(TenantId tenantId, AlertState state) {
-    size_t count;
-    foreach (a; store)
-      if (a.tenantId == tenantId && a.state == state)
-        count++;
-    return count;
+    return findByState(tenantId, state).length;
   }
 }

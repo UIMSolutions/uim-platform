@@ -16,23 +16,21 @@ mixin(ShowModule!());
 class MemoryDashboardRepository : DashboardRepository {
   private Dashboard[DashboardId] store;
 
+  bool existsById(DashboardId id) {
+    return (id in store) ? true : false;
+  }
+
   Dashboard findById(DashboardId id) {
-    if (auto p = id in store)
-      return *p;
-    return Dashboard.init;
+    return (existsById(id)) ? store[id] : Dashboard.init;
   }
 
   Dashboard[] findByTenant(TenantId tenantId) {
-    Dashboard[] result;
-    foreach (d; store)
-      if (d.tenantId == tenantId)
-        result ~= d;
-    return result;
+    return store.byValue.filter!(d => d.tenantId == tenantId).array;
   }
 
   Dashboard findDefault(TenantId tenantId) {
-    foreach (d; store)
-      if (d.tenantId == tenantId && d.isDefault)
+    foreach (d; findByTenant(tenantId))
+      if (d.isDefault)
         return d;
     return Dashboard.init;
   }
@@ -50,10 +48,6 @@ class MemoryDashboardRepository : DashboardRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    size_t count;
-    foreach (d; store)
-      if (d.tenantId == tenantId)
-        count++;
-    return count;
+    return findByTenant(tenantId).length;
   }
 }

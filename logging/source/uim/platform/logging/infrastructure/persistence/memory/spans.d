@@ -3,17 +3,26 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.infrastructure.persistence.memory.span;
+module uim.platform.logging.infrastructure.persistence.memory.spans;
 
-import uim.platform.logging.domain.entities.span;
-import uim.platform.logging.domain.ports.repositories.spans;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.span;
+// import uim.platform.logging.domain.ports.repositories.spans;
+// import uim.platform.logging.domain.types;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.logging;
 
-import std.algorithm : filter;
-import std.array : array;
+mixin(ShowModule!());
+
+@safe:
 
 class MemorySpanRepository : SpanRepository {
   private Span[] store;
+
+  bool existsById(SpanId id) {
+    return store.any!(s => s.id == id);
+  }
 
   Span findById(SpanId id) {
     foreach (s; store)

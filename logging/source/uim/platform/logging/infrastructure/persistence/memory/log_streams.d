@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.infrastructure.persistence.memory.log_stream;
+module uim.platform.logging.infrastructure.persistence.memory.log_streams;
 
 // import uim.platform.logging.domain.entities.log_stream;
 // import uim.platform.logging.domain.ports.repositories.log_streams;
@@ -16,23 +16,21 @@ mixin(ShowModule!());
 class MemoryLogStreamRepository : LogStreamRepository {
   private LogStream[LogStreamId] store;
 
+  bool existsById(LogStreamId id) {
+    return (id in store) ? true : false;
+  }
+
   LogStream findById(LogStreamId id) {
-    if (auto p = id in store)
-      return *p;
-    return LogStream.init;
+    return (existsById(id)) ? store[id] : LogStream.init;
   }
 
   LogStream[] findByTenant(TenantId tenantId) {
-    LogStream[] result;
-    foreach (s; store)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+    return store.byValue.filter!(s => s.tenantId == tenantId).array;
   }
 
   LogStream findByName(TenantId tenantId, string name) {
-    foreach (s; store)
-      if (s.tenantId == tenantId && s.name == name)
+    foreach (s; findByTenant(tenantId))
+      if (s.name == name)
         return s;
     return LogStream.init;
   }

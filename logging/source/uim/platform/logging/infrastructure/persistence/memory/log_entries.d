@@ -20,11 +20,12 @@ mixin(ShowModule!());
 class MemoryLogEntryRepository : LogEntryRepository {
   private LogEntry[] store;
 
+  bool existsById(LogEntryId id) {
+    return store.any!(e => e.id == id);
+  }
+
   LogEntry findById(LogEntryId id) {
-    foreach (e; store)
-      if (e.id == id)
-        return e;
-    return LogEntry.init;
+    return (existsById(id)) ? store.find!(e => e.id == id) : LogEntry.init;
   }
 
   LogEntry[] findByTenant(TenantId tenantId) {
@@ -32,27 +33,27 @@ class MemoryLogEntryRepository : LogEntryRepository {
   }
 
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId) {
-    return store.filter!(e => e.tenantId == tenantId && e.streamId == streamId).array;
+    return findByTenant(tenantId).filter!(e => e.streamId == streamId).array;
   }
 
   LogEntry[] findByLevel(TenantId tenantId, LogLevel level) {
-    return store.filter!(e => e.tenantId == tenantId && e.level == level).array;
+    return findByTenant(tenantId).filter!(e => e.level == level).array;
   }
 
   LogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return store.filter!(e => e.tenantId == tenantId && e.timestamp >= startTime && e.timestamp <= endTime).array;
+    return findByTenant(tenantId).filter!(e => e.timestamp >= startTime && e.timestamp <= endTime).array;
   }
 
   LogEntry[] search(TenantId tenantId, string query) {
-    return store.filter!(e => e.tenantId == tenantId && e.message.indexOf(query) >= 0).array;
+    return findByTenant(tenantId).filter!(e => e.message.indexOf(query) >= 0).array;
   }
 
   LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId) {
-    return store.filter!(e => e.tenantId == tenantId && e.traceId == traceId).array;
+    return findByTenant(tenantId).filter!(e => e.traceId == traceId).array;
   }
 
   LogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
-    return store.filter!(e => e.tenantId == tenantId && e.correlationId == correlationId).array;
+    return findByTenant(tenantId).filter!(e => e.correlationId == correlationId).array;
   }
 
   void save(LogEntry entry) {
@@ -64,10 +65,10 @@ class MemoryLogEntryRepository : LogEntryRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
+    store = findByTenant(tenantId).filter!(e => e.timestamp >= beforeTimestamp).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array.length;
+    return findByTenant(tenantId).length;
   }
 }

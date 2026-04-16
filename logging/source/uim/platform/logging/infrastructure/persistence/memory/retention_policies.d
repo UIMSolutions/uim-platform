@@ -5,40 +5,39 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.retention_policy;
 
-import uim.platform.logging.domain.entities.retention_policy;
-import uim.platform.logging.domain.ports.repositories.retention_policys;
-import uim.platform.logging.domain.types;
+//import uim.platform.logging.domain.entities.retention_policy;
+//import uim.platform.logging.domain.ports.repositories.retention_policys;
+//import uim.platform.logging.domain.types;
+import uim.platform.logging;
+
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
   private RetentionPolicy[RetentionPolicyId] store;
 
+  bool existsById(RetentionPolicyId id) {
+    return (  id in store) ? true : false;
+  }
+
   RetentionPolicy findById(RetentionPolicyId id) {
-    if (auto p = id in store)
-      return *p;
-    return RetentionPolicy.init;
+    return (existsById(id)) ? store[id] : RetentionPolicy.init;
   }
 
   RetentionPolicy[] findByTenant(TenantId tenantId) {
-    RetentionPolicy[] result;
-    foreach (p; store)
-      if (p.tenantId == tenantId)
-        result ~= p;
-    return result;
+    return store.byValue.filter!(p => p.tenantId == tenantId).array;
   }
 
   RetentionPolicy findDefault(TenantId tenantId) {
-    foreach (p; store)
-      if (p.tenantId == tenantId && p.isDefault)
+    foreach (p; findByTenant(tenantId))
+      if (p.isDefault)
         return p;
     return RetentionPolicy.init;
   }
 
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt) {
-    RetentionPolicy[] result;
-    foreach (p; store)
-      if (p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all))
-        result ~= p;
-    return result;
+    return store.byValue.filter!(p => p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all)).array;
   }
 
   void save(RetentionPolicy p) {

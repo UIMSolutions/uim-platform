@@ -16,26 +16,20 @@ mixin(ShowModule!());
 class MemoryAlertRuleRepository : AlertRuleRepository {
   private AlertRule[AlertRuleId] store;
 
+  bool existsById(AlertRuleId id) {
+    return (id in store) ? true : false;
+  }
+
   AlertRule findById(AlertRuleId id) {
-    if (auto p = id in store)
-      return *p;
-    return AlertRule.init;
+    return (existsById(id)) ? store[id] : AlertRule.init;
   }
 
   AlertRule[] findByTenant(TenantId tenantId) {
-    AlertRule[] result;
-    foreach (r; store)
-      if (r.tenantId == tenantId)
-        result ~= r;
-    return result;
+    return store.byValue.filter!(r => r.tenantId == tenantId).array;
   }
 
   AlertRule[] findEnabled(TenantId tenantId) {
-    AlertRule[] result;
-    foreach (r; store)
-      if (r.tenantId == tenantId && r.isEnabled)
-        result ~= r;
-    return result;
+    return findByTenant(tenantId).filter!(r => r.isEnabled).array;
   }
 
   void save(AlertRule rule) {
