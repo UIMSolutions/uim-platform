@@ -38,13 +38,20 @@ class ManageRolesUseCase : UIMUseCase {
       return RoleResponse("", "Role with this name already exists");
 
     auto existing = roleRepo.findByName(req.tenantId, req.name);
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto role = Role(id, req.tenantId, req.name, req.description, req.scope_, [], // userIds
-      [], // groupIds
-      now, now,);
+    Role role;
+    with (role) {
+      roleId = randomUUID();
+      tenantId = req.tenantId;
+      name = req.name;
+      description = req.description;
+      scope_ = req.scope_;
+      userIds = null; // initially no users assigned
+      groupIds = null; // initially no groups assigned
+      createdAt = Clock.currStdTime();
+      updatedAt = createdAt;
+    }
     roleRepo.save(role);
-    return RoleResponse(id, "");
+    return RoleResponse(role.roleId, "");
   }
 
   Role getRole(RoleId id) {
@@ -56,10 +63,10 @@ class ManageRolesUseCase : UIMUseCase {
   }
 
   string updateRole(UpdateRoleRequest req) {
-    auto role = roleRepo.findById(req.roleId);
-    if (role == Role.init)
+    if (!roleRepo.existsById(req.roleId))
       return "Role not found";
 
+    auto role = roleRepo.findById(req.roleId);
     role.name = req.name.length > 0 ? req.name : role.name;
     role.description = req.description;
     role.updatedAt = Clock.currStdTime();
@@ -68,15 +75,19 @@ class ManageRolesUseCase : UIMUseCase {
   }
 
   string assignRole(AssignRoleRequest req) {
-    auto role = roleRepo.findById(req.roleId);
-    if (role == Role.init)
+    if (!roleRepo.existsById(req.roleId))
       return "Role not found";
 
+    auto role = roleRepo.findById(req.roleId);
     foreach (uid; req.userIds) {
+      if (role.userIds is null)
+        role.userIds = [];
       if (!role.userIds.canFind(uid))
         role.userIds ~= uid;
     }
     foreach (gid; req.groupIds) {
+      if (role.groupIds is null)
+        role.groupIds = null;
       if (!role.groupIds.canFind(gid))
         role.groupIds ~= gid;
     }
@@ -86,10 +97,10 @@ class ManageRolesUseCase : UIMUseCase {
   }
 
   string unassignUsers(RoleId roleId, string[] userIds) {
-    auto role = roleRepo.findById(roleId);
-    if (role == Role.init)
+    if (!roleRepo.existsById(roleId))
       return "Role not found";
 
+    auto role = roleRepo.findById(roleId);
     role.userIds = role.userIds.filter!(u => !userIds.canFind(u)).array;
     role.updatedAt = Clock.currStdTime();
     roleRepo.update(role);
@@ -97,8 +108,7 @@ class ManageRolesUseCase : UIMUseCase {
   }
 
   string deleteRole(RoleId id) {
-    auto role = roleRepo.findById(id);
-    if (role == Role.init)
+    if (!roleRepo.existsById(id))
       return "Role not found";
 
     roleRepo.remove(id);

@@ -6,6 +6,14 @@ mixin(ShowModule!());
 @safe:
 
 mixin template DomainId() {
+    // this(string newValue) {
+    //     this.value = newValue;
+    // }
+
+    // this(UUID newValue) {
+    //     this.value = newValue.toString();
+    // }
+
     void opAssign(UUID newValue) {
         this.value = newValue.toString();
     }
@@ -13,7 +21,6 @@ mixin template DomainId() {
     void opAssign(string newValue) {
         this.value = newValue;
     }
-
 
     bool isNull() const {
         return value is null;

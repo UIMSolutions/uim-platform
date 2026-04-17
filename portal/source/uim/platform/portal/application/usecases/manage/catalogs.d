@@ -28,15 +28,23 @@ class ManageCatalogsUseCase : UIMUseCase {
 
   CatalogResponse createCatalog(CreateCatalogRequest req) {
     if (req.title.length == 0)
-      return CatalogResponse("", "Catalog title is required");
+      return CatalogResponse(CatalogId(""), "Catalog title is required");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto catalog = Catalog(id, req.tenantId, req.title, req.description,
-      req.providerId, [], // tileIds
-      req.allowedRoleIds, req.active, now, now,);
-    catalogRepo.save(catalog);
-    return CatalogResponse(id, "");
+    Catalog catalog;
+    with (catalog) {
+      tenantId = req.tenantId;
+      catalogId = randomUUID();
+      title = req.title;
+      description = req.description;
+      providerId = req.providerId;
+      tileIds = [];
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      active = req.active;
+      createdAt = Clock.currStdTime();
+      updatedAt = createdAt;
+      }
+      catalogRepo.save(catalog);
+    return CatalogResponse(catalog.catalogId, "");
   }
 
   Catalog getCatalog(CatalogId id) {
@@ -54,7 +62,7 @@ class ManageCatalogsUseCase : UIMUseCase {
     auto catalog = catalogRepo.findById(req.catalogId);
     catalog.title = req.title.length > 0 ? req.title : catalog.title;
     catalog.description = req.description;
-    catalog.allowedRoleIds = req.allowedRoleIds;
+    catalog.allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
     catalog.active = req.active;
     catalog.updatedAt = Clock.currStdTime();
     catalogRepo.update(catalog);

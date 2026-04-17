@@ -34,24 +34,38 @@ class ManageMenuItemsUseCase : UIMUseCase {
 
   MenuItemResponse createMenuItem(CreateMenuItemRequest req) {
     if (req.title.length == 0)
-      return MenuItemResponse("", "Menu item title is required");
+      return MenuItemResponse(MenuItemId(""), "Menu item title is required");
 
-    auto site = siteRepo.findById(req.siteId);
-    if (site == Site.init)
-      return MenuItemResponse("", "Site not found");
+    if (!siteRepo.existsById(req.siteId))
+      return MenuItemResponse(MenuItemId(""), "Site not found");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto item = MenuItem(id, req.siteId, req.tenantId, req.title, req.icon,
-        req.parentId, req.targetPageId, req.targetUrl, req.navigationTarget,
-        req.allowedRoleIds, req.sortOrder, req.visible, now, now,);
+    MenuItem item;
+    with (item) {
+      menuItemId = randomUUID();
+      siteId = req.siteId;
+      tenantId = req.tenantId;
+      title = req.title;
+      icon = req.icon;
+      parentId = req.parentId;
+      targetPageId = req.targetPageId;
+      targetUrl = req.targetUrl;
+      navigationTarget = req.navigationTarget;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      createdAt = Clock.currStdTime();
+      updatedAt = createdAt;
+    }
     menuRepo.save(item);
 
-    site.menuItemIds ~= id;
-    site.updatedAt = now;
-    siteRepo.update(site);
+    if (siteRepo.existsById(req.siteId)) {
+      auto site = siteRepo.findById(req.siteId);
+      site.menuItemIds ~= item.menuItemId;
+      site.updatedAt = Clock.currStdTime();
+      siteRepo.update(site);
+    }
 
-    return MenuItemResponse(id, "");
+    return MenuItemResponse(item.menuItemId, "");
   }
 
   MenuItem getMenuItem(MenuItemId id) {
@@ -67,34 +81,34 @@ class ManageMenuItemsUseCase : UIMUseCase {
   }
 
   string updateMenuItem(UpdateMenuItemRequest req) {
-    auto item = menuRepo.findById(req.menuItemId);
-    if (item == MenuItem.init)
+    if (!menuRepo.existsById(req.menuItemId))
       return "Menu item not found";
 
     auto item = menuRepo.findById(req.menuItemId);
-    item.title = req.title.length > 0 ? req.title : item.title;
-    item.icon = req.icon;
-    item.parentId = req.parentId;
-    item.targetPageId = req.targetPageId;
-    item.targetUrl = req.targetUrl;
-    item.navigationTarget = req.navigationTarget;
-    item.allowedRoleIds = req.allowedRoleIds;
-    item.sortOrder = req.sortOrder;
-    item.visible = req.visible;
-    item.updatedAt = Clock.currStdTime();
+    with (item) {
+      title = req.title.length > 0 ? req.title : item.title;
+      icon = req.icon;
+      parentId = req.parentId;
+      targetPageId = req.targetPageId;
+      targetUrl = req.targetUrl;
+      navigationTarget = req.navigationTarget;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      updatedAt = Clock.currStdTime();
+    }
     menuRepo.update(item);
     return "";
   }
 
   string deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
-    auto item = menuRepo.findById(menuItemId);
-    if (item == MenuItem.init)
+    if (!menuRepo.existsById(menuItemId))
       return "Menu item not found";
 
     menuRepo.remove(menuItemId);
 
-    auto site = siteRepo.findById(siteId);
-    if (site != Site.init) {
+    if (siteRepo.existsById(siteId)) {
+      auto site = siteRepo.findById(siteId);
       site.menuItemIds = site.menuItemIds.filter!(m => m != menuItemId).array;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);

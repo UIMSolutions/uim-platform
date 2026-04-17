@@ -36,20 +36,36 @@ class ManagePagesUseCase : UIMUseCase {
     if (req.title.length == 0)
       return PageResponse("", "Page title is required");
 
-    if (siteRepo.existsById(req.siteId))
+    if (!siteRepo.existsById(req.siteId))
       return PageResponse("", "Site not found");
 
     auto now = Clock.currStdTime();
     auto id = randomUUID();
-    auto page = Page(id, req.siteId, req.tenantId, req.title, req.description,
-        req.alias_, req.layout, [], // sectionIds
-        req.allowedRoleIds, req.sortOrder, req.visible, now, now,);
+    Page page;
+    with (page) {
+      pageId = id;
+      siteId = req.siteId;
+      tenantId = req.tenantId;
+      title = req.title;
+      description = req.description;
+      alias_ = req.alias_;
+      layout = req.layout;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      createdAt = now;
+      updatedAt = now;
+    }
+
     pageRepo.save(page);
 
     // Add page to site
-    site.pageIds ~= id;
-    site.updatedAt = now;
-    siteRepo.update(site);
+    if (siteRepo.existsById(req.siteId)) {
+      auto site = siteRepo.findById(req.siteId);
+      site.pageIds ~= id;
+      site.updatedAt = now;
+      siteRepo.update(site);
+    }
 
     return PageResponse(id, "");
   }
@@ -67,14 +83,16 @@ class ManagePagesUseCase : UIMUseCase {
       return "Page not found";
 
     auto page = pageRepo.findById(req.pageId);
-    page.title = req.title.length > 0 ? req.title : page.title;
-    page.description = req.description;
-    page.alias_ = req.alias_.length > 0 ? req.alias_ : page.alias_;
-    page.layout = req.layout;
-    page.allowedRoleIds = req.allowedRoleIds;
-    page.sortOrder = req.sortOrder;
-    page.visible = req.visible;
-    page.updatedAt = Clock.currStdTime();
+    with (page) {
+      title = req.title.length > 0 ? req.title : title;
+      description = req.description;
+      alias_ = req.alias_.length > 0 ? req.alias_ : alias_;
+      layout = req.layout;
+      allowedRoleIds = req.allowedRoleIds;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      updatedAt = Clock.currStdTime();
+    }
     pageRepo.update(page);
     return "";
   }

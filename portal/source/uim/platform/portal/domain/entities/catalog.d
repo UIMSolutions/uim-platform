@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Content catalog — groups tiles for content administration.
 struct Catalog {
-  CatalogId id;
   TenantId tenantId;
+  CatalogId catalogId;
   string title;
   string description;
   ProviderId providerId;

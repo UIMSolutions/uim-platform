@@ -30,14 +30,22 @@ class ManageProvidersUseCase : UIMUseCase {
     if (req.name.length == 0)
       return ProviderResponse("", "Provider name is required");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto provider = ContentProvider(id, req.tenantId, req.name, req.description,
-      req.providerType, req.contentEndpointUrl, req.authToken, true, // active
-      [], // catalogIds
-      now, now,);
+    ContentProvider provider;
+    with (provider) {
+      providerId = randomUUID();
+      tenantId = req.tenantId;
+      name = req.name;
+      description = req.description;
+      providerType = req.providerType;
+      contentEndpointUrl = req.contentEndpointUrl;
+      authToken = req.authToken;
+      active = true; // new providers are active by default
+      catalogIds = null; // initially not associated with any catalogs
+      createdAt = Clock.currStdTime();
+      updatedAt = createdAt;
+    }
     providerRepo.save(provider);
-    return ProviderResponse(id, "");
+    return ProviderResponse(provider.providerId, "");
   }
 
   ContentProvider getProvider(ProviderId id) {

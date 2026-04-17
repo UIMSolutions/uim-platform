@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// Unique identifier type aliases for type safety.
 struct SiteId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -19,8 +19,9 @@ struct SiteId {
 
   mixin DomainId;
 }
+
 struct PageId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -28,8 +29,9 @@ struct PageId {
 
   mixin DomainId;
 }
+
 struct SectionId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -37,8 +39,9 @@ struct SectionId {
 
   mixin DomainId;
 }
+
 struct TileId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -46,8 +49,9 @@ struct TileId {
 
   mixin DomainId;
 }
+
 struct CatalogId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -55,8 +59,9 @@ struct CatalogId {
 
   mixin DomainId;
 }
+
 struct GroupId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -64,8 +69,9 @@ struct GroupId {
 
   mixin DomainId;
 }
+
 struct RoleId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -73,8 +79,9 @@ struct RoleId {
 
   mixin DomainId;
 }
+
 struct ProviderId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -82,8 +89,9 @@ struct ProviderId {
 
   mixin DomainId;
 }
+
 struct ThemeId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -91,8 +99,9 @@ struct ThemeId {
 
   mixin DomainId;
 }
+
 struct MenuItemId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -100,8 +109,9 @@ struct MenuItemId {
 
   mixin DomainId;
 }
+
 struct TranslationId {
-    string value;
+  string value;
 
   this(string value) {
     this.value = value;

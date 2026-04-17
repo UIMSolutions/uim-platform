@@ -175,7 +175,7 @@ struct UpdateCatalogRequest {
 }
 
 struct CatalogResponse {
-  string catalogId;
+  CatalogId catalogId;
   string error;
 
   bool isSuccess() const
@@ -205,7 +205,7 @@ struct UpdateProviderRequest {
 }
 
 struct ProviderResponse {
-  string providerId;
+  ProviderId providerId;
   string error;
 
   bool isSuccess() const
@@ -236,7 +236,7 @@ struct AssignRoleRequest {
 }
 
 struct RoleResponse {
-  string roleId;
+  RoleId roleId;
   string error;
 
   bool isSuccess() const
@@ -271,7 +271,7 @@ struct UpdateThemeRequest {
 }
 
 struct ThemeResponse {
-  string themeId;
+  ThemeId themeId;
   string error;
 
   bool isSuccess() const
@@ -310,7 +310,7 @@ struct UpdateMenuItemRequest {
 }
 
 struct MenuItemResponse {
-  string menuItemId;
+  MenuItemId menuItemId;
   string error;
 
   bool isSuccess() const
@@ -336,7 +336,7 @@ struct UpdateTranslationRequest {
 }
 
 struct TranslationResponse {
-  string translationId;
+  TranslationId translationId;
   string error;
 
   bool isSuccess() const

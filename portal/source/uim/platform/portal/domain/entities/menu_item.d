@@ -16,7 +16,7 @@ struct MenuItem {
   TenantId tenantId;
   SiteId siteId;
   MenuItemId parentId; // empty = top-level
-  MenuItemId id;
+  MenuItemId menuItemId;
   string title;
   string icon;
   PageId targetPageId; // internal page link
