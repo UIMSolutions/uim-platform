@@ -15,10 +15,16 @@ import std.array : array;
 class MemoryAppConfigurationRepository : AppConfigurationRepository {
   private AppConfiguration[AppConfigurationId] store;
 
+  bool existsById(AppConfigurationId id) {
+    return id in store ? true : false;
+  }
+
   AppConfiguration findById(AppConfigurationId id) {
-    if (auto p = id in store)
-      return *p;
-    return AppConfiguration.init;
+    return existsById(id) ? store[id] : AppConfiguration.init;
+  }
+
+  bool existsByKey(MobileAppId appId, string key) {
+    return store.any!(c => c.appId == appId && c.key == key);
   }
 
   AppConfiguration findByKey(MobileAppId appId, string key) {
@@ -29,12 +35,16 @@ class MemoryAppConfigurationRepository : AppConfigurationRepository {
     return AppConfiguration.init;
   }
 
+  size_t countByApp(MobileAppId appId) {
+    return store.values.filter!(c => c.appId == appId).array.length;
+  }
+
   AppConfiguration[] findByApp(MobileAppId appId) {
     return store.values.filter!(c => c.appId == appId).array;
   }
 
   AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
-    return store.values.filter!(c => c.appId == appId && c.platform == platform).array;
+    return findByApp(appId).filter!(c => c.platform == platform).array;
   }
 
   AppConfiguration[] findByTenant(TenantId tenantId) {
@@ -51,9 +61,5 @@ class MemoryAppConfigurationRepository : AppConfigurationRepository {
 
   void remove(AppConfigurationId id) {
     store.remove(id);
-  }
-
-  size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(c => c.appId == appId).array.length;
   }
 }

@@ -15,10 +15,12 @@ import std.array : array;
 class MemoryAppVersionRepository : AppVersionRepository {
   private AppVersion[AppVersionId] store;
 
+  bool existsById(AppVersionId id) {
+    return id in store ? true : false;
+  }
+
   AppVersion findById(AppVersionId id) {
-    if (auto p = id in store)
-      return *p;
-    return AppVersion.init;
+    return existsById(id) ? store[id] : AppVersion.init;
   }
 
   AppVersion findLatest(MobileAppId appId, AppPlatform platform) {
@@ -40,7 +42,7 @@ class MemoryAppVersionRepository : AppVersionRepository {
   }
 
   AppVersion[] findByStatus(MobileAppId appId, VersionStatus status) {
-    return store.values.filter!(v => v.appId == appId && v.status == status).array;
+    return findByApp(appId).filter!(v => v.status == status).array;
   }
 
   AppVersion[] findByTenant(TenantId tenantId) {

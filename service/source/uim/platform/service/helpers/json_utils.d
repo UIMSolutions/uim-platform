@@ -27,6 +27,16 @@ long jsonLong(Json j, string key, long defaultValue = 0) {
 int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int)jsonLong(j, key, default_);
 }
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
 
 /// Extract a ushort field from a Json object.
 ushort getUshort(Json j, string key, ushort default_ = 0) {
@@ -223,6 +233,24 @@ unittest {
   assert(getStringArray(parseJsonString(`{}`), "tags") is null);
 }
 
+/// Read a string array from JSON.
+string[] getStringArray(Json j, string key, string[] defaultArray = null) {
+  if (!j.isObject)
+    return defaultArray;
+
+  if (key !in j)
+    return defaultArray;
+
+  auto val = j[key];
+  if (!val.isArray)
+    return defaultArray;
+
+  return val.toArray
+    .filter!(item => item.isString)
+    .map!(item => item.get!string)
+    .array;
+}
+
 Json toJsonArray(string[] arr) {
   return arr.map!(s => Json(s)).array.Json;
 }
@@ -373,23 +401,6 @@ uint jsonUint(Json j, string key, uint default_ = 0) {
 
 /// Read an int field from JSON.
 
-/// Read a string array from JSON.
-string[] getStringArray(Json j, string key, string[] defaultArray = null) {
-  if (!j.isObject)
-    return defaultArray;
-
-  if (key !in j)
-    return defaultArray;
-
-  auto val = j[key];
-  if (!val.isArray)
-    return defaultArray;
-
-  return val.toArray
-    .filter!(item => item.isString)
-    .map!(item => item.get!string)
-    .array;
-}
 
 /// Parse an enum from a JSON string field.
 T jsonEnum(T)(Json j, string key, T default_ = T.init) {
@@ -464,20 +475,6 @@ uint jsonUint(Json j, string key, uint default_ = 0) {
   return cast(uint) jsonLong(j, key, default_);
 }
 
-/// Read a string array from JSON.
-string[] getStringArray(Json j, string key) {
-  string[] result;
-  if (j.isObject) {
-    auto val = key in j;
-    if (val !is null && (*val).isArray) {
-      foreach (item; *val) {
-        if (item.isString)
-          result ~= item.get!string;
-      }
-    }
-  }
-  return result;
-}
 
 /// Extract ID from the last segment of a URL path.
 string extractIdFromPath(string path) {
@@ -519,16 +516,7 @@ Json toJsonArray(string[] arr) {
 //   return "";
 // }
 
-int jsonInt(Json j, string key, int default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return cast(int)(*v).get!long;
-  return default_;
-}
+
 
 
 
@@ -754,17 +742,6 @@ private long lastIndexOfChar(string s, char c) {
   return -1;
 }
 
-
-int jsonInt(Json j, string key, int default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return cast(int)(*v).get!long;
-  return default_;
-}
 
 string[] getStringArray(Json j, string key) {
   if (!j.isObject)

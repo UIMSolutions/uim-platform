@@ -47,8 +47,9 @@ class SiteController : PlatformController {
 
       auto result = useCase.createSite(createReq);
       if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.siteId);
+        auto response = Json.emptyObject
+        .set("id", result.siteId);
+
         res.writeJsonBody(response, 201);
       } else {
         writeApiError(res, 400, result.error);
@@ -62,9 +63,10 @@ class SiteController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(sites.length);
-      response["resources"] = toJsonArray(sites);
+      auto response = Json.emptyObject
+      .set("totalResults", sites.length)
+      .set("resources", sites);
+      
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
