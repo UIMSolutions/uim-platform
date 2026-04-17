@@ -5,10 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.abap_enviroment.domain.entities.application_job;
 
-import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.domain.types;
 
 /// Execution log entry for a job run.
+import uim.platform.abap_enviroment;
 
+mixin(ShowModule!());
+@safe:
 
 /// Application job definition and schedule.
 struct ApplicationJob {
@@ -55,7 +58,7 @@ struct ApplicationJob {
 
     if (executionHistory.length > 0) {
       auto history = executionHistory.map!(e => e.toJson)();
-      j = j.set("executionHistory", history;
+      j = j.set("executionHistory", history);
     }
 
     if (jobParameters.length > 0) {

@@ -5,3 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.helpers;
 
+public {
+  import uim.platform.identity.directory.helpers.convert;
+}

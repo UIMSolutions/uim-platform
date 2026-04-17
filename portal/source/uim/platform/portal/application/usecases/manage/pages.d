@@ -41,7 +41,7 @@ class ManagePagesUseCase : UIMUseCase {
 
     Page page;
     with (page) {
-      pageId = randomUUID();
+      id = randomUUID();
       siteId = req.siteId;
       tenantId = req.tenantId;
       title = req.title;
@@ -60,12 +60,12 @@ class ManagePagesUseCase : UIMUseCase {
     // Add page to site
     if (siteRepo.existsById(req.siteId)) {
       auto site = siteRepo.findById(req.siteId);
-      site.pageIds ~= page.pageId;
+      site.pageIds ~= page.id;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);
     }
 
-    return PageResponse(PageResponseId(page.pageId), "");
+    return PageResponse(page.id, "");
   }
 
   Page getPage(PageId id) {

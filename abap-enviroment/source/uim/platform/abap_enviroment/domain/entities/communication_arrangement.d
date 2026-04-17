@@ -44,4 +44,39 @@ struct CommunicationArrangement {
   string createdBy;
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    auto j = Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("systemInstanceId", systemInstanceId)
+      .set("scenarioId", scenarioId)
+      .set("name", name)
+      .set("description", description)
+      .set("direction", direction.to!string)
+      .set("status", status.to!string)
+      .set("authMethod", authMethod.to!string)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+
+    if (inboundServices.length > 0) {
+      auto services = inboundServices.map!(e => Json.emptyObject
+          .set("url", e.url)
+          .set("protocol", e.protocol.to!string)
+          .set("port", e.port)
+          .set("active", e.active)).array.toJson;
+      j = j.set("inboundServices", services);
+    }
+
+    if (outboundServices.length > 0) {
+      auto services = outboundServices.map!(e => Json.emptyObject
+          .set("url", e.url)
+          .set("protocol", e.protocol.to!string)
+          .set("port", e.port)
+          .set("active", e.active)).array.toJson;
+      j = j.set("outboundServices", services);
+    }
+
+    return j;
+  }
 }

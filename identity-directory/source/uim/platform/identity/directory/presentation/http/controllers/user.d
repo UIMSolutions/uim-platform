@@ -41,11 +41,11 @@ class UserController : PlatformController {
     try {
       auto j = req.json;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("externalId"), j.getString("userName"), parseUserName(j),
+        j.getString("externalId"), j.getString("userName"), j.parseUserName,
         j.getString("displayName"), j.getString("userType"),
         j.getString("preferredLanguage"), j.getString("locale"),
         j.getString("timezone"), j.getString("password"), parseEmails(j),
-        parsePhoneNumbers(j), parseAddresses(j), [], // extendedAttributes
+        parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
         getStringArray(j, "schemas"),);
 
       auto result = useCase.createUser(createReq);
@@ -106,20 +106,23 @@ class UserController : PlatformController {
       auto userId = extractIdFromPath(req.requestURI);
       auto j = req.json;
 
-      auto updateReq = UpdateUserRequest(userId, parseUserName(j), j.getString("displayName"),
+      auto updateReq = UpdateUserRequest(userId, j.parseUserName, j.getString("displayName"),
         j.getString("userType"), j.getString("preferredLanguage"),
         j.getString("locale"), j.getString("timezone"),
         j.getBoolean("active", true), parseEmails(j), parsePhoneNumbers(j),
-        parseAddresses(j), [], // extendedAttributes
+        j.toAddresses, [], // extendedAttributes
+
         
+
       );
 
       auto error = useCase.updateUser(updateReq);
       if (error.length > 0) {
         writeScimError(res, 404, error);
       } else {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+        .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
       }
     } catch (Exception e) {
@@ -149,8 +152,9 @@ class UserController : PlatformController {
       if (error.length > 0) {
         writeScimError(res, 400, error);
       } else {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("password_changed");
+        auto resp = Json.emptyObject
+          .set("status", Json("password_changed"));
+
         res.writeJsonBody(resp, 200);
       }
     } catch (Exception e) {
@@ -163,11 +167,12 @@ class UserController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto filter = req.params.get("filter", "");
       auto users = useCase.searchUsers(tenantId, filter);
-      auto response = Json.emptyObject;
-      response["schemas"] = Json.emptyArray;
-      response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(users.length);
-      response["Resources"] = serializeUsers(users);
+      auto response = Json.emptyObject
+        .set("schemas", Json.emptyArray)
+        .set("schemas", "urn:ietf:params:scim:api:messages:2.0:ListResponse")
+        .set("totalResults", users.length)
+        .set("Resources", serializeUsers(users));
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
@@ -177,70 +182,45 @@ class UserController : PlatformController {
 
 
 
-private UserName parseUserName(Json j) {
-  if (!j.isObject)
-    return UserName.init;
-
-  auto nameVal = "name" in j;
-  if (nameVal is null || (*nameVal).type != Json.Type.object)
-    return UserName.init;
-
-  auto n = *nameVal;
-  return UserName(n.getString("formatted"), n.getString("familyName"),
-    n.getString("givenName"), n.getString("middleName"),
-    n.getString("honorificPrefix"), n.getString("honorificSuffix"),);
-}
-
 private Email[] parseEmails(Json j) {
   Email[] result;
   if (!j.isObject)
+    return null;
+
+  if ("emails" !in j)
+    return null;
+
+  auto value = j["emails"];
+  if (!value.isArray)
     return result;
-  auto val = "emails" in j;
-  if (val is null || (*val).type != Json.Type.array)
-    return result;
-  foreach (item; *val) {
-    result ~= Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary"),);
-  }
-  return result;
+
+  return value.toArray.map!(item => Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary")))
+    .array;
 }
 
 private PhoneNumber[] parsePhoneNumbers(Json j) {
   PhoneNumber[] result;
   if (!j.isObject)
+    return null;
+
+  if ("phoneNumbers" !in j)
+    return null;
+
+  auto value = j["phoneNumbers"];
+  if (!value.isArray)
     return result;
-  auto val = "phoneNumbers" in j;
-  if (val is null || (*val).type != Json.Type.array)
-    return result;
-  foreach (item; *val) {
-    result ~= PhoneNumber(item.getString("value"), item.getString("type"),
-      getBoolean(item, "primary"),);
-  }
-  return result;
+
+  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString("type"),
+      getBoolean(item, "primary"))).array;
 }
 
-private Address[] parseAddresses(Json j) {
-  Address[] result;
-  if (!j.isObject)
-    return result;
-  auto val = "addresses" in j;
-  if (val is null || (*val).type != Json.Type.array)
-    return result;
-  foreach (item; *val) {
-    result ~= Address(item.getString("formatted"), item.getString("streetAddress"),
-      item.getString("locality"), item.getString("region"),
-      item.getString("postalCode"), item.getString("country"),
-      item.getString("type"), getBoolean(item, "primary"),);
-  }
-  return result;
-}
 
 private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
-  auto errRes = Json.emptyObject;
-  errRes["schemas"] = Json.emptyArray;
-  errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
-  errRes["detail"] = Json(detail);
+  auto errRes = Json.emptyObject
+    .set("schemas", Json.emptyArray)
+    .set("schemas", Json("urn:ietf:params:scim:api:messages:2.0:Error"))
+    .set("detail", Json(detail))
+    .set("status", Json(status.to!string));
 
-  // import std.conv : to;
-  errRes["status"] = Json(status.to!string);
   res.writeJsonBody(errRes, status);
 }

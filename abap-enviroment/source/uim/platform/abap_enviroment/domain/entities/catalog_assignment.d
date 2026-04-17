@@ -7,12 +7,12 @@ mixin(ShowModule!());
 
 /// Catalog assignment attached to a role.
 struct CatalogAssignment {
-    string catalogId;
+    CatalogAssignmentId id;
     string catalogName;
 
     Json toJson() const {
         return Json.emptyObject
-            .set("catalogId", catalogId)
+            .set("id", id)
             .set("catalogName", catalogName);
     }
 }

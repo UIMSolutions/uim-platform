@@ -38,4 +38,27 @@ struct ServiceBinding {
   string createdBy;
   long createdAt;
   long updatedAt;
+  
+  Json toJson() const {
+    auto j = Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("systemInstanceId", systemInstanceId)
+      .set("serviceDefinitionId", serviceDefinitionId)
+      .set("name", name)
+      .set("description", description)
+      .set("bindingType", bindingType.to!string)
+      .set("status", status.to!string)
+      .set("serviceUrl", serviceUrl)
+      .set("metadataUrl", metadataUrl)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+
+    if (endpoints.length > 0) {
+      auto eps = endpoints.map!(e => e.toJson).array.toJson;
+      j = j.set("endpoints", eps);
+    }
+
+    return j;
+  }
 }

@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.abap_enviroment.domain.entities.business_user;
 
-import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment;
 
+mixin(ShowModule!());
+@safe:
 /// Business role assignment carried by a user.
 struct RoleAssignment {
   BusinessRoleId roleId;

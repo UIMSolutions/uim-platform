@@ -10,6 +10,7 @@ public {
 
   import uim.platform.identity.directory.application;
   import uim.platform.identity.directory.domain;
+  import uim.platform.identity.directory.helpers;
   import uim.platform.identity.directory.infrastructure;
   import uim.platform.identity.directory.presentation;
 }

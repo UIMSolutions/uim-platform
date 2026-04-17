@@ -162,7 +162,7 @@ class AuditLogController : PlatformController {
       if (j.isNull)
         return null;
         
-      if (j.type != Json.Type.array)
+      if (!j.isArray)
         return result;
     }
 
