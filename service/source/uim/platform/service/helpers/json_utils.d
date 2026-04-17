@@ -33,7 +33,7 @@ ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort)jsonLong(j, key, default_);
 }
 
-double jsonDouble(Json j, string key) {
+double getDouble(Json j, string key) {
   if (!j.hasKey(key))
     return 0.0;
 
@@ -788,13 +788,13 @@ ModelType parseModelType(string s) {
   }
 }
 /// Extract a double field from a Json object.
-double jsonDouble(Json j, string key, double default_ = 0.0) {
+double getDouble(Json j, string key, double default_ = 0.0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
   if (v is null)
     return default_;
-  if ((*v).type == Json.Type.float_)
+  if ((*v).isFloat)
     return (*v).get!double;
   if ((*v).isInteger)
     return cast(double)(*v).get!long;
@@ -1067,7 +1067,7 @@ int jsonInt(Json j, string key, int default_ = 0) {
   return default_;
 }
 
-double jsonDouble(Json j, string key, double default_ = 0.0) {
+double getDouble(Json j, string key, double default_ = 0.0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -1153,10 +1153,10 @@ string[][] jsonRegionArray(Json j, string key) {
     if (item.isObject) {
       auto fieldName = item.getString("fieldName");
       auto page = jsonInt(item, "page").to!string;
-      auto x = jsonDouble(item, "x").to!string;
-      auto y = jsonDouble(item, "y").to!string;
-      auto width = jsonDouble(item, "width").to!string;
-      auto height = jsonDouble(item, "height").to!string;
+      auto x = getDouble(item, "x").to!string;
+      auto y = getDouble(item, "y").to!string;
+      auto width = getDouble(item, "width").to!string;
+      auto height = getDouble(item, "height").to!string;
       if (fieldName.length > 0)
         result ~= [fieldName, page, x, y, width, height];
     }
@@ -1214,7 +1214,7 @@ int jsonInt(Json j, string key, int default_ = 0) {
 
 
 
-double jsonDouble(Json j, string key, double default_ = 0.0) {
+double getDouble(Json j, string key, double default_ = 0.0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -1630,7 +1630,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
     return default_;
 }
 
-double jsonDouble(Json j, string key, double default_ = 0.0) {
+double getDouble(Json j, string key, double default_ = 0.0) {
     if (!j.isObject)
         return default_;
     auto v = key in j;
@@ -1960,7 +1960,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
     return default_;
 }
 
-double jsonDouble(Json j, string key, double default_ = 0.0) {
+double getDouble(Json j, string key, double default_ = 0.0) {
     if (!j.isObject)
         return default_;
     auto v = key in j;

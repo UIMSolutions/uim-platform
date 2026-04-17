@@ -56,8 +56,8 @@ class CheckController : PlatformController {
       r.mbeanAttribute = j.getString("mbeanAttribute");
       r.customUrl = j.getString("customUrl");
       r.expectedResponseContains = j.getString("expectedResponseContains");
-      r.warningThreshold = jsonDouble(j, "warningThreshold");
-      r.criticalThreshold = jsonDouble(j, "criticalThreshold");
+      r.warningThreshold = getDouble(j, "warningThreshold");
+      r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.thresholdOperator = j.getString("thresholdOperator");
       r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -115,8 +115,8 @@ class CheckController : PlatformController {
       r.intervalSeconds = j.getInteger("intervalSeconds");
       r.url = j.getString("url");
       r.expectedStatus = j.getString("expectedStatus");
-      r.warningThreshold = jsonDouble(j, "warningThreshold");
-      r.criticalThreshold = jsonDouble(j, "criticalThreshold");
+      r.warningThreshold = getDouble(j, "warningThreshold");
+      r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.thresholdOperator = j.getString("thresholdOperator");
 
       auto result = usecase.updateCheck(id, r);
@@ -156,7 +156,7 @@ class CheckController : PlatformController {
       r.checkId = j.getString("checkId");
       r.resourceId = j.getString("resourceId");
       r.status = j.getString("status");
-      r.value_ = jsonDouble(j, "value");
+      r.value_ = getDouble(j, "value");
       r.message = j.getString("message");
       r.responseTimeMs = j.getInteger("responseTimeMs");
       r.httpStatusCode = j.getInteger("httpStatusCode");

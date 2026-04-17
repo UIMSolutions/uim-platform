@@ -48,8 +48,8 @@ class AlertRuleController : PlatformController {
       r.metricName = j.getString("metricName");
       r.metricDefinitionId = j.getString("metricDefinitionId");
       r.operator_ = j.getString("operator");
-      r.warningThreshold = jsonDouble(j, "warningThreshold");
-      r.criticalThreshold = jsonDouble(j, "criticalThreshold");
+      r.warningThreshold = getDouble(j, "warningThreshold");
+      r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
@@ -106,8 +106,8 @@ class AlertRuleController : PlatformController {
       auto j = req.json;
       UpdateAlertRuleRequest r;
       r.description = j.getString("description");
-      r.warningThreshold = jsonDouble(j, "warningThreshold");
-      r.criticalThreshold = jsonDouble(j, "criticalThreshold");
+      r.warningThreshold = getDouble(j, "warningThreshold");
+      r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");

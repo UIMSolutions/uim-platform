@@ -24,7 +24,7 @@ class OverviewController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/overview", &handleOverview);
   }
 
@@ -34,16 +34,16 @@ class OverviewController : PlatformController {
       auto summary = uc.getSummary(tenantId);
 
       auto response = Json.emptyObject
-      .set("totalLogEntries", summary.totalLogEntries)
-      .set("totalSpans", summary.totalSpans)
-      .set("totalStreams", summary.totalStreams)
-      .set("totalDashboards", summary.totalDashboards)
-      .set("totalAlerts", summary.totalAlerts)
-      .set("openAlerts", summary.openAlerts)
-      .set("criticalAlerts", summary.criticalAlerts)
-      .set("totalPipelines", summary.totalPipelines)
-      .set("activePipelines", summary.activePipelines)
-      .set("totalChannels", summary.totalChannels);
+        .set("totalLogEntries", summary.totalLogEntries)
+        .set("totalSpans", summary.totalSpans)
+        .set("totalStreams", summary.totalStreams)
+        .set("totalDashboards", summary.totalDashboards)
+        .set("totalAlerts", summary.totalAlerts)
+        .set("openAlerts", summary.openAlerts)
+        .set("criticalAlerts", summary.criticalAlerts)
+        .set("totalPipelines", summary.totalPipelines)
+        .set("activePipelines", summary.activePipelines)
+        .set("totalChannels", summary.totalChannels);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

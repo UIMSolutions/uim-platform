@@ -43,7 +43,7 @@ class AlertRuleController : PlatformController {
       r.condition = j.getString("condition");
       r.field = j.getString("field");
       r.pattern = j.getString("pattern");
-      r.thresholdValue = jsonDouble(j, "thresholdValue");
+      r.thresholdValue = getDouble(j, "thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
@@ -125,7 +125,7 @@ class AlertRuleController : PlatformController {
       r.condition = j.getString("condition");
       r.field = j.getString("field");
       r.pattern = j.getString("pattern");
-      r.thresholdValue = jsonDouble(j, "thresholdValue");
+      r.thresholdValue = getDouble(j, "thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");

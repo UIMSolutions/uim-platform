@@ -43,7 +43,7 @@ class MetricController : PlatformController {
       r.tenantId = req.getTenantId;
       r.resourceId = j.getString("resourceId");
       r.name = j.getString("name");
-      r.value_ = jsonDouble(j, "value");
+      r.value_ = getDouble(j, "value");
       r.unit = j.getString("unit");
       r.category = j.getString("category");
 
@@ -77,7 +77,7 @@ class MetricController : PlatformController {
           r.tenantId = tenantId;
           r.resourceId = mj.getString("resourceId");
           r.name = mj.getString("name");
-          r.value_ = jsonDouble(mj, "value");
+          r.value_ = getDouble(mj, "value");
           r.unit = mj.getString("unit");
           r.category = mj.getString("category");
           batchReq.metrics ~= r;

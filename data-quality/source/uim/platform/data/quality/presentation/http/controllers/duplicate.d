@@ -44,7 +44,7 @@ class DuplicateController : PlatformController {
       r.datasetId = j.getString("datasetId");
       r.matchFields = getStringArrayArray(j, "matchFields");
       r.strategy = parseStrategy(j.getString("strategy"));
-      r.threshold = jsonDouble(j, "threshold", 70.0);
+      r.threshold = getDouble(j, "threshold", 70.0);
 
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (*recordsJson).isArray) {

@@ -44,8 +44,8 @@ class AlertController : PlatformController {
       r.severity = j.getString("severity");
       r.category = j.getString("category");
       r.metricName = j.getString("metricName");
-      r.warningValue = jsonDouble(j, "warningValue");
-      r.criticalValue = jsonDouble(j, "criticalValue");
+      r.warningValue = getDouble(j, "warningValue");
+      r.criticalValue = getDouble(j, "criticalValue");
       r.unit = j.getString("unit");
 
       auto result = uc.create(r);
@@ -130,8 +130,8 @@ class AlertController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.severity = j.getString("severity");
-      r.warningValue = jsonDouble(j, "warningValue");
-      r.criticalValue = jsonDouble(j, "criticalValue");
+      r.warningValue = getDouble(j, "warningValue");
+      r.criticalValue = getDouble(j, "criticalValue");
 
       auto result = uc.update(r);
       if (result.success) {

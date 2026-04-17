@@ -71,9 +71,8 @@ class LogController : PlatformController {
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      auto entriesVal = "entries" in j;
-      if (entriesVal !is null && (*entriesVal).isArray) {
-        foreach (ej; *entriesVal) {
+      if ("entries" in j && (j["entries"].isArray)) {
+        foreach (ej; j["entries"].toArray) {
           IngestLogRequest r;
           r.tenantId = tenantId;
           r.streamId = getString(ej, "streamId");
