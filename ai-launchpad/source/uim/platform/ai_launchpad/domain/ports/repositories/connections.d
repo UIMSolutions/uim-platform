@@ -3,15 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
+module uim.platform.ai_launchpad.domain.ports.repositories.connections;
 
 import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.domain.entities.prompt_collection : PromptCollection;
+import uim.platform.ai_launchpad.domain.entities.connection : Connection;
 
-interface IPromptCollectionRepository {
-  void save(PromptCollection pc);
-  PromptCollection findById(PromptCollectionId id);
-  PromptCollection[] findByWorkspace(WorkspaceId workspaceId);
-  PromptCollection[] findAll();
-  void remove(PromptCollectionId id);
+interface IConnectionRepository {
+  bool existsById(ConnectionId id);
+  Connection findById(ConnectionId id);
+  
+  Connection[] findByWorkspace(WorkspaceId workspaceId);
+  Connection[] findAll();
+
+  void save(Connection c);
+  void remove(ConnectionId id);
 }
