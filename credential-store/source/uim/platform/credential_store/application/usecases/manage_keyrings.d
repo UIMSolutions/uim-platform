@@ -103,7 +103,7 @@ class ManageKeyringsUseCase : UIMUseCase {
     return CommandResult(true, ver.id, "");
   }
 
-  Credential get_(CredentialId id) {
+  Credential getById(CredentialId id) {
     return credRepo.findById(id);
   }
 

@@ -53,7 +53,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, ns.id, "");
   }
 
-  Namespace get_(NamespaceId id) {
+  Namespace getById(NamespaceId id) {
     return repo.findById(id);
   }
 

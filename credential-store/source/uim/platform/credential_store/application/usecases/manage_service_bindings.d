@@ -68,7 +68,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, binding.id, "");
   }
 
-  ServiceBinding get_(ServiceBindingId id) {
+  ServiceBinding getById(ServiceBindingId id) {
     return repo.findById(id);
   }
 

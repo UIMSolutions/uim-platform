@@ -81,7 +81,7 @@ class NamespaceController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto ns = uc.get_(id);
+      auto ns = uc.getById(id);
 
       if (ns.id.isEmpty) {
         writeError(res, 404, "Namespace not found");

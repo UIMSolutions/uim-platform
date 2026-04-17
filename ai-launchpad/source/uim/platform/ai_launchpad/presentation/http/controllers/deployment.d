@@ -81,7 +81,7 @@ class DeploymentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto d = uc.get_(id, connectionId);
+      auto d = uc.getById(id, connectionId);
       if (d.id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;

@@ -81,7 +81,7 @@ class ResourceGroupController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto g = uc.get_(id, connectionId);
+      auto g = uc.getById(id, connectionId);
       if (g.id.isEmpty) {
         writeError(res, 404, "Resource group not found");
         return;

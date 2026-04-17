@@ -84,7 +84,7 @@ class KeyringController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto k = uc.get_(id);
+      auto k = uc.getById(id);
 
       if (k.id.isEmpty) {
         writeError(res, 404, "Keyring not found");

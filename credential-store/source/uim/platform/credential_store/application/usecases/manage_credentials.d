@@ -98,7 +98,7 @@ class ManageCredentialsUseCase : UIMUseCase {
     return CommandResult(true, cred.id, "");
   }
 
-  Credential get_(CredentialId id) {
+  Credential getById(CredentialId id) {
     return repo.findById(id);
   }
 

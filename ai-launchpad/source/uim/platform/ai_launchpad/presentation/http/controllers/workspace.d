@@ -77,7 +77,7 @@ class WorkspaceController : PlatformController {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto w = uc.get_(id);
+      auto w = uc.getById(id);
       if (w.id.isEmpty) {
         writeError(res, 404, "Workspace not found");
         return;

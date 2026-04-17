@@ -140,7 +140,7 @@ class CredentialController : PlatformController {
       // Support conditional read via If-None-Match
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto c = uc.get_(id);
+      auto c = uc.getById(id);
       if (c.id.isEmpty) {
         writeError(res, 404, "Credential not found");
         return;

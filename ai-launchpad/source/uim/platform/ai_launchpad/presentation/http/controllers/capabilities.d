@@ -24,7 +24,7 @@ class CapabilitiesController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto cap = uc.get_();
+      auto cap = uc.getById();
 
       auto resp = Json.emptyObject
       .set("serviceName", cap.serviceName)
