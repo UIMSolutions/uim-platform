@@ -60,14 +60,15 @@ class ManageProvidersUseCase : UIMUseCase {
     if (!providerRepo.existsById(req.providerId))
       return "Content provider not found";
 
-    auto provider = providerRepo.findById(req.providerId);
-    provider.name = req.name.length > 0 ? req.name : provider.name;
-    provider.description = req.description;
-    provider.contentEndpointUrl = req.contentEndpointUrl.length > 0
-      ? req.contentEndpointUrl : provider.contentEndpointUrl;
-    provider.authToken = req.authToken.length > 0 ? req.authToken : provider.authToken;
-    provider.active = req.active;
-    provider.updatedAt = Clock.currStdTime();
+    ContentProvider provider = providerRepo.findById(req.providerId);
+    with (provider) {
+      name = req.name.length > 0 ? req.name : name;
+      description = req.description;
+      contentEndpointUrl = req.contentEndpointUrl.length > 0 ? req.contentEndpointUrl : contentEndpointUrl;
+      authToken = req.authToken.length > 0 ? req.authToken : authToken;
+      active = req.active;
+      updatedAt = Clock.currStdTime();
+    }
     providerRepo.update(provider);
     return "";
   }

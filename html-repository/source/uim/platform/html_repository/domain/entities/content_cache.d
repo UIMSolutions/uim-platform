@@ -8,9 +8,9 @@ module uim.platform.html_repository.domain.entities.content_cache;
 import uim.platform.html_repository.domain.types;
 
 struct ContentCache {
-  ContentCacheId id;
+  ContentCacheId contentCacheId;
   TenantId tenantId;
-  AppFileId fileId;
+  AppFileId appFileId;
   string filePath;
   string contentType;
   string data;              // cached base64-encoded content

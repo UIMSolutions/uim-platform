@@ -66,10 +66,12 @@ class ManageRolesUseCase : UIMUseCase {
     if (!roleRepo.existsById(req.roleId))
       return "Role not found";
 
-    auto role = roleRepo.findById(req.roleId);
-    role.name = req.name.length > 0 ? req.name : role.name;
-    role.description = req.description;
-    role.updatedAt = Clock.currStdTime();
+    Role role = roleRepo.findById(req.roleId);
+    with (role) {
+      name = req.name.length > 0 ? req.name : name;
+      description = req.description;
+      updatedAt = Clock.currStdTime();
+    }
     roleRepo.update(role);
     return "";
   }
@@ -78,31 +80,37 @@ class ManageRolesUseCase : UIMUseCase {
     if (!roleRepo.existsById(req.roleId))
       return "Role not found";
 
-    auto role = roleRepo.findById(req.roleId);
-    foreach (uid; req.userIds) {
-      if (role.userIds is null)
-        role.userIds = [];
-      if (!role.userIds.canFind(uid))
-        role.userIds ~= uid;
+    Role role = roleRepo.findById(req.roleId);
+    with (role) {
+      foreach (uid; req.userIds) {
+        if (userIds is null)
+          userIds = [];
+        if (!userIds.canFind(uid))
+          userIds ~= uid;
+
+        foreach (gid; req.groupIds) {
+          if (groupIds is null)
+            groupIds = null;
+          if (!groupIds.canFind(gid))
+            groupIds ~= gid;
+        }
+        role.updatedAt = Clock.currStdTime();
+      }
     }
-    foreach (gid; req.groupIds) {
-      if (role.groupIds is null)
-        role.groupIds = null;
-      if (!role.groupIds.canFind(gid))
-        role.groupIds ~= gid;
-    }
-    role.updatedAt = Clock.currStdTime();
+
     roleRepo.update(role);
     return "";
   }
 
-  string unassignUsers(RoleId roleId, string[] userIds) {
+  string unassignUsers(RoleId roleId, string[] unassignUserIds) {
     if (!roleRepo.existsById(roleId))
       return "Role not found";
 
     auto role = roleRepo.findById(roleId);
-    role.userIds = role.userIds.filter!(u => !userIds.canFind(u)).array;
-    role.updatedAt = Clock.currStdTime();
+    with (role) {
+      userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array;
+      updatedAt = Clock.currStdTime();
+    }
     roleRepo.update(role);
     return "";
   }

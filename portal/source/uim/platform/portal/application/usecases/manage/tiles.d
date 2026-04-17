@@ -32,12 +32,30 @@ class ManageTilesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto id = randomUUID();
-    auto tile = Tile(id, req.tenantId, req.catalogId, req.title, req.subtitle,
-        req.description, req.icon, req.info, req.tileType, req.appType,
-        req.url, req.appId, req.navigationTarget, req.keywords,
-        req.allowedRoleIds, req.configuration, 0, // sortOrder
-        true, // visible
-        now, now,);
+    Tile tile;
+    with (tile) {
+      tileId = id;
+      tenantId = req.tenantId;
+      catalogId = req.catalogId;
+      title = req.title;
+      subtitle = req.subtitle;
+      description = req.description;
+      icon = req.icon;
+      info = req.info;
+      tileType = req.tileType;
+      appType = req.appType;
+      url = req.url;
+      appId = req.appId;
+      navigationTarget = req.navigationTarget;
+      keywords = req.keywords;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      config = req.configuration;
+      sortOrder = 0; // default sort order
+      visible = true; // default visibility
+      createdAt = now;
+      updatedAt = now;
+    }
+
     tileRepo.save(tile);
     return TileResponse(id, "");
   }
@@ -63,20 +81,22 @@ class ManageTilesUseCase : UIMUseCase {
       return "Tile not found";
 
     auto tile = tileRepo.findById(req.tileId);
-    tile.title = req.title.length > 0 ? req.title : tile.title;
-    tile.subtitle = req.subtitle;
-    tile.description = req.description;
-    tile.icon = req.icon;
-    tile.info = req.info;
-    tile.tileType = req.tileType;
-    tile.appType = req.appType;
-    tile.url = req.url;
-    tile.appId = req.appId;
-    tile.navigationTarget = req.navigationTarget;
-    tile.keywords = req.keywords;
-    tile.allowedRoleIds = req.allowedRoleIds;
-    tile.config = req.configuration;
-    tile.updatedAt = Clock.currStdTime();
+    with (tile) {
+      title = req.title.length > 0 ? req.title : tile.title;
+      subtitle = req.subtitle;
+      description = req.description;
+      icon = req.icon;
+      info = req.info;
+      tileType = req.tileType;
+      appType = req.appType;
+      url = req.url;
+      appId = req.appId;
+      navigationTarget = req.navigationTarget;
+      keywords = req.keywords;
+      allowedRoleIds = req.allowedRoleIds;
+      config = req.configuration;
+      updatedAt = Clock.currStdTime();
+    }
     tileRepo.update(tile);
     return "";
   }

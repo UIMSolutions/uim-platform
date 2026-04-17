@@ -62,17 +62,18 @@ class ManageThemesUseCase : UIMUseCase {
   }
 
   string updateTheme(UpdateThemeRequest req) {
-    auto theme = themeRepo.findById(req.themeId);
-    if (theme == Theme.init)
+    if (!themeRepo.existsById(req.themeId))
       return "Theme not found";
 
-    theme.name = req.name.length > 0 ? req.name : theme.name;
-    theme.description = req.description;
-    theme.mode = req.mode;
-    theme.colors = req.colors;
-    theme.fonts = req.fonts;
-    theme.customCss = req.customCss;
-
+    auto theme = themeRepo.findById(req.themeId);
+    with (theme) {
+      name = req.name.length > 0 ? req.name : theme.name;
+      description = req.description;
+      mode = req.mode;
+      colors = req.colors;
+      fonts = req.fonts;
+      customCss = req.customCss;
+    }
     if (req.isDefault && !theme.isDefault) {
       auto currentDefault = themeRepo.findDefault(theme.tenantId);
       if (currentDefault != Theme.init && currentDefault.id != theme.id) {

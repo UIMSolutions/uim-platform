@@ -42,8 +42,8 @@ class ManageCatalogsUseCase : UIMUseCase {
       active = req.active;
       createdAt = Clock.currStdTime();
       updatedAt = createdAt;
-      }
-      catalogRepo.save(catalog);
+    }
+    catalogRepo.save(catalog);
     return CatalogResponse(catalog.catalogId, "");
   }
 
@@ -59,12 +59,14 @@ class ManageCatalogsUseCase : UIMUseCase {
     if (!catalogRepo.existsById(req.catalogId))
       return "Catalog not found";
 
-    auto catalog = catalogRepo.findById(req.catalogId);
-    catalog.title = req.title.length > 0 ? req.title : catalog.title;
-    catalog.description = req.description;
-    catalog.allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
-    catalog.active = req.active;
-    catalog.updatedAt = Clock.currStdTime();
+    Catalog catalog = catalogRepo.findById(req.catalogId);
+    with (catalog) {
+      title = req.title.length > 0 ? req.title : catalog.title;
+      description = req.description;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      active = req.active;
+      updatedAt = Clock.currStdTime();
+    }
     catalogRepo.update(catalog);
     return "";
   }

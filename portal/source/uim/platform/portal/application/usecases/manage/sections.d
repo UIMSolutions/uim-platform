@@ -38,13 +38,22 @@ class ManageSectionsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto id = randomUUID();
-    auto section = PortalSection(id, req.pageId, req.tenantId, req.title, [], // tileIds
-      req.sortOrder, req.visible, req.columns > 0 ? req.columns : 3, now, now,);
-    sectionRepo.save(section);
+    PortalSection section;
+    with (section) {
+      id = id;
+      pageId = req.pageId;
+      tenantId = req.tenantId;
+      title = req.title;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      columns = req.columns > 0 ? req.columns : 3;
+      createdAt = now;
+      updatedAt = now;
+    }
 
     page.sectionIds ~= id;
     page.updatedAt = now;
-    pageRepo.update(page);
+    pageRepo.save(page);
 
     return SectionResponse(id, "");
   }
@@ -62,11 +71,13 @@ class ManageSectionsUseCase : UIMUseCase {
       return "Section not found";
 
     auto section = sectionRepo.findById(req.sectionId);
-    section.title = req.title.length > 0 ? req.title : section.title;
-    section.sortOrder = req.sortOrder;
-    section.visible = req.visible;
-    section.columns = req.columns > 0 ? req.columns : section.columns;
-    section.updatedAt = Clock.currStdTime();
+    with (section) {
+      title = req.title.length > 0 ? req.title : title;
+      sortOrder = req.sortOrder;
+      visible = req.visible;
+      columns = req.columns > 0 ? req.columns : columns;
+      updatedAt = Clock.currStdTime();
+    }
     sectionRepo.update(section);
     return "";
   }
@@ -77,8 +88,8 @@ class ManageSectionsUseCase : UIMUseCase {
 
     sectionRepo.remove(sectionId);
 
-    auto page = pageRepo.findById(pageId);
-    if (page != Page.init) {
+    if (pageRepo.existsById(pageId)) {
+      auto page = pageRepo.findById(pageId);
       page.sectionIds = page.sectionIds.filter!(s => s != sectionId).array;
       page.updatedAt = Clock.currStdTime();
       pageRepo.update(page);

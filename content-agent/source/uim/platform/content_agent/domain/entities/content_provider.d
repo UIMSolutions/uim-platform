@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// Describes a content type offered by a provider.
 struct ProvidedContentType {
-  ContentTypeId typeId;
+  ContentTypeId contentTypeId;
   string name;
   ContentCategory category;
   string description;
@@ -23,7 +23,7 @@ struct ProvidedContentType {
 /// A registered content provider from which content can be discovered and assembled.
 struct ContentProvider {
   TenantId tenantId;
-  ContentProviderId id;
+  ContentProviderId contentProviderId;
   string name;
   string description;
   string endpoint;
