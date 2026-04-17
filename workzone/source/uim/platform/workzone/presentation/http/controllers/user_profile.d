@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.user_profile;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class UserProfileController {
+class UserProfileController : PlatformController {
   private ManageUserProfilesUseCase useCase;
 
   this(ManageUserProfilesUseCase useCase) {
@@ -22,6 +22,8 @@ class UserProfileController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/user-profiles", &handleCreate);
     router.get("/api/v1/user-profiles", &handleList);
     router.get("/api/v1/user-profiles/*", &handleGet);

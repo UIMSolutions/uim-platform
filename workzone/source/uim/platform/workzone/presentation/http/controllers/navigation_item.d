@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.navigation_item;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class NavigationItemController {
+class NavigationItemController : PlatformController {
   private ManageNavigationItemsUseCase useCase;
 
   this(ManageNavigationItemsUseCase useCase) {
@@ -22,6 +22,8 @@ class NavigationItemController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/navigation-items", &handleCreate);
     router.get("/api/v1/navigation-items", &handleList);
     router.get("/api/v1/navigation-items/*", &handleGet);

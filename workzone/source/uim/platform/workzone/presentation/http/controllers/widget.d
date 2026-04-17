@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WidgetController {
+class WidgetController : PlatformController {
   private ManageWidgetsUseCase useCase;
 
   this(ManageWidgetsUseCase useCase) {
@@ -22,6 +22,8 @@ class WidgetController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/widgets", &handleCreate);
     router.get("/api/v1/widgets", &handleList);
     router.get("/api/v1/widgets/*", &handleGet);

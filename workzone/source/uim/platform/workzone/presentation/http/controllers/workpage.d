@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WorkpageController {
+class WorkpageController : PlatformController {
   private ManageWorkpagesUseCase useCase;
 
   this(ManageWorkpagesUseCase useCase) {
@@ -22,6 +22,8 @@ class WorkpageController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/workpages", &handleCreate);
     router.get("/api/v1/workpages", &handleList);
     router.get("/api/v1/workpages/*", &handleGet);

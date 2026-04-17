@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.site;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class SiteController {
+class SiteController : PlatformController {
   private ManageSitesUseCase useCase;
 
   this(ManageSitesUseCase useCase) {
@@ -22,6 +22,8 @@ class SiteController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/sites", &handleCreate);
     router.get("/api/v1/sites", &handleList);
     router.get("/api/v1/sites/*", &handleGet);

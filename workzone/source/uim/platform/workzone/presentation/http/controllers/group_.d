@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.group;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class GroupController {
+class GroupController : PlatformController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {
@@ -22,6 +22,8 @@ class GroupController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/groups", &handleCreate);
     router.get("/api/v1/groups", &handleList);
     router.get("/api/v1/groups/*", &handleGet);

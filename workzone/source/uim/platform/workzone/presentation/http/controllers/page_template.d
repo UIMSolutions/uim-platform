@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.page_template;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class PageTemplateController {
+class PageTemplateController : PageformController{
   private ManagePageTemplatesUseCase useCase;
 
   this(ManagePageTemplatesUseCase useCase) {
@@ -22,6 +22,8 @@ class PageTemplateController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/page-templates", &handleCreate);
     router.get("/api/v1/page-templates", &handleList);
     router.get("/api/v1/page-templates/*", &handleGet);

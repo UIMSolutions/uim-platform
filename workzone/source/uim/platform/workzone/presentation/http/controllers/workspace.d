@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WorkspaceController {
+class WorkspaceController : PlatformController {
   private ManageWorkspacesUseCase useCase;
 
   this(ManageWorkspacesUseCase useCase) {
@@ -22,6 +22,8 @@ class WorkspaceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/workspaces", &handleCreate);
     router.get("/api/v1/workspaces", &handleList);
     router.get("/api/v1/workspaces/*", &handleGet);

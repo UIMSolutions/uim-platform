@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class NotificationController {
+class NotificationController : PlatformController {
   private ManageNotificationsUseCase useCase;
 
   this(ManageNotificationsUseCase useCase) {
@@ -22,6 +22,8 @@ class NotificationController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/notifications", &handleCreate);
     router.get("/api/v1/notifications", &handleList);
     router.get("/api/v1/notifications/*", &handleGet);

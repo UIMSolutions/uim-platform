@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.tag;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class TagController {
+class TagController : PlatformController {
   private ManageTagsUseCase useCase;
 
   this(ManageTagsUseCase useCase) {
@@ -22,6 +22,8 @@ class TagController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/tags", &handleCreate);
     router.get("/api/v1/tags", &handleList);
     router.get("/api/v1/tags/*", &handleGet);

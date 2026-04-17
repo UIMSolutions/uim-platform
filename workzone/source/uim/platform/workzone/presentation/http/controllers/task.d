@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class TaskController {
+class TaskController : PlatformController {
   private ManageTasksUseCase useCase;
 
   this(ManageTasksUseCase useCase) {
@@ -22,6 +22,8 @@ class TaskController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/tasks", &handleCreate);
     router.get("/api/v1/tasks", &handleList);
     router.get("/api/v1/tasks/*", &handleGet);

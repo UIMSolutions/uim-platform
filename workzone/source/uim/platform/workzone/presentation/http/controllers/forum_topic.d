@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.forum_topic;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ForumTopicController {
+class ForumTopicController : PlatformController {
   private ManageForumTopicsUseCase useCase;
 
   this(ManageForumTopicsUseCase useCase) {
@@ -22,6 +22,8 @@ class ForumTopicController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/forum-topics", &handleCreate);
     router.get("/api/v1/forum-topics", &handleList);
     router.get("/api/v1/forum-topics/*", &handleGet);

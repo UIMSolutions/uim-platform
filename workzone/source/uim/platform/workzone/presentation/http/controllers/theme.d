@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.theme;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ThemeController {
+class ThemeController : PlatformController {
   private ManageThemesUseCase useCase;
 
   this(ManageThemesUseCase useCase) {
@@ -22,6 +22,8 @@ class ThemeController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/themes", &handleCreate);
     router.get("/api/v1/themes", &handleList);
     router.get("/api/v1/themes/*", &handleGet);

@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.role;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class RoleController {
+class RoleController : PlatformController {
   private ManageRolesUseCase useCase;
 
   this(ManageRolesUseCase useCase) {
@@ -22,6 +22,8 @@ class RoleController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/roles", &handleCreate);
     router.get("/api/v1/roles", &handleList);
     router.get("/api/v1/roles/*", &handleGet);

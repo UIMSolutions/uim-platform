@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class FeedController {
+class FeedController : PlatformController {
   private ManageFeedsUseCase useCase;
 
   this(ManageFeedsUseCase useCase) {
@@ -22,6 +22,8 @@ class FeedController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/feeds", &handleCreate);
     router.get("/api/v1/feeds", &handleList);
     router.get("/api/v1/feeds/*", &handleGet);

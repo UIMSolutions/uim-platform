@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.survey;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class SurveyController {
+class SurveyController : PlatformController {
   private ManageSurveysUseCase useCase;
 
   this(ManageSurveysUseCase useCase) {
@@ -22,6 +22,8 @@ class SurveyController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/surveys", &handleCreate);
     router.get("/api/v1/surveys", &handleList);
     router.get("/api/v1/surveys/*", &handleGet);

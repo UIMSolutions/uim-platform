@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.shell_plugin;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ShellPluginController {
+class ShellPluginController : PlatformController {
   private ManageShellPluginsUseCase useCase;
 
   this(ManageShellPluginsUseCase useCase) {
@@ -22,6 +22,8 @@ class ShellPluginController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/shell-plugins", &handleCreate);
     router.get("/api/v1/shell-plugins", &handleList);
     router.get("/api/v1/shell-plugins/*", &handleGet);
