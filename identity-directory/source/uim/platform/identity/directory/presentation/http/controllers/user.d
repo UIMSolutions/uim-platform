@@ -8,11 +8,15 @@ module uim.platform.identity_authentication.presentation.http.user;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.identity.directory.application.usecases.manage.users;
-import uim.platform.identity.directory.application.dto;
-import uim.platform.identity.directory.domain.entities.user;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.identity.directory.application.usecases.manage.users;
+// import uim.platform.identity.directory.application.dto;
+// import uim.platform.identity.directory.domain.entities.user;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// HTTP controller for SCIM 2.0 user management.
 class UserController : PlatformController {
   private ManageUsersUseCase useCase;
@@ -23,7 +27,7 @@ class UserController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/scim/Users", &handleCreate);
     router.get("/scim/Users", &handleList);
     router.get("/scim/Users/*", &handleGet);

@@ -8,10 +8,14 @@ module uim.platform.identity_authentication.presentation.http.audit;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.identity.directory.application.usecases.query_audit_log;
-import uim.platform.identity.directory.domain.entities.audit_event;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.identity.directory.application.usecases.query_audit_log;
+// import uim.platform.identity.directory.domain.entities.audit_event;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// HTTP controller for audit log queries.
 class AuditController : PlatformController {
   private QueryAuditLogUseCase useCase;
@@ -22,7 +26,7 @@ class AuditController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-  
+
     router.get("/api/v1/audit-logs", &handleList);
     router.get("/api/v1/audit-logs/actor/*", &handleByActor);
     router.get("/api/v1/audit-logs/target/*", &handleByTarget);

@@ -621,3 +621,351 @@ Json envelopeJson(string key, Json data) {
   j[key] = data;
   return j;
 }
+
+// /// Extract a string array from a Json object.
+// string[] getStringArray(Json j, string key) {
+//   if (!j.isObject)
+//     return null;
+//   auto v = key in j;
+//   if (v is null || (*v).type != Json.Type.array)
+//     return null;
+
+//   string[] result;
+//   foreach (item; *v) {
+//     if (item.isString)
+//       result ~= item.get!string;
+//   }
+//   return result;
+// }
+
+/// Extract a ushort field from a Json object.
+ushort getUshort(Json j, string key, ushort default_ = 0) {
+  return cast(ushort) jsonLong(j, key, default_);
+}
+
+/// Convert a string array to a Json array.
+Json toJsonArray(const(string[]) arr) {
+  auto j = Json.emptyArray;
+  foreach (s; arr)
+    j ~= Json(s);
+  return j;
+}
+
+// --- Enum parsers ---
+
+OrgStatus parseOrgStatus(string s) {
+  switch (s) {
+  case "active":
+    return OrgStatus.active;
+  case "suspended":
+    return OrgStatus.suspended;
+  default:
+    return OrgStatus.active;
+  }
+}
+
+SpaceStatus parseSpaceStatus(string s) {
+  switch (s) {
+  case "active":
+    return SpaceStatus.active;
+  case "suspended":
+    return SpaceStatus.suspended;
+  default:
+    return SpaceStatus.active;
+  }
+}
+
+AppState parseAppState(string s) {
+  switch (s) {
+  case "stopped":
+    return AppState.stopped;
+  case "started":
+    return AppState.started;
+  case "crashed":
+    return AppState.crashed;
+  case "staging":
+    return AppState.staging;
+  default:
+    return AppState.stopped;
+  }
+}
+
+HealthCheckType parseHealthCheckType(string s) {
+  switch (s) {
+  case "http":
+    return HealthCheckType.http;
+  case "port":
+    return HealthCheckType.port;
+  case "process":
+    return HealthCheckType.process;
+  default:
+    return HealthCheckType.port;
+  }
+}
+
+RouteProtocol parseRouteProtocol(string s) {
+  switch (s) {
+  case "http":
+    return RouteProtocol.http;
+  case "tcp":
+    return RouteProtocol.tcp;
+  default:
+    return RouteProtocol.http;
+  }
+}
+
+DomainScope parseDomainScope(string s) {
+  switch (s) {
+  case "shared":
+    return DomainScope.shared_;
+  case "private":
+    return DomainScope.private_;
+  case "internal":
+    return DomainScope.internal_;
+  default:
+    return DomainScope.shared_;
+  }
+}
+
+BuildpackType parseBuildpackType(string s) {
+  switch (s) {
+  case "system":
+    return BuildpackType.system;
+  case "custom":
+    return BuildpackType.custom;
+  default:
+    return BuildpackType.system;
+  }
+}
+/// Extract the last path segment from a URI (for wildcard routes).
+string extractIdFromPath(string uri) {
+  // import std.string : indexOf;
+
+  auto qpos = uri.indexOf('?');
+  string path = qpos >= 0 ? uri[0 .. qpos] : uri;
+
+  if (path.length > 0 && path[$ - 1] == '/')
+    path = path[0 .. $ - 1];
+
+  auto spos = lastIndexOf(path, '/');
+  if (spos >= 0 && spos + 1 < path.length)
+    return path[spos + 1 .. $];
+  return path;
+}
+
+
+
+
+// --- Enum parsers ---
+
+DataType parseDataType(string s) {
+  switch (s) {
+  case "product":
+    return DataType.product;
+  case "material":
+    return DataType.material;
+  case "customer":
+    return DataType.customer;
+  case "supplier":
+    return DataType.supplier;
+  case "custom":
+    return DataType.custom;
+  default:
+    return DataType.custom;
+  }
+}
+
+ModelType parseModelType(string s) {
+  switch (s) {
+  case "classification":
+    return ModelType.classification;
+  case "regression":
+    return ModelType.regression;
+  case "recommendation":
+    return ModelType.recommendation;
+  default:
+    return ModelType.classification;
+  }
+}
+/// Extract a double field from a Json object.
+double jsonDouble(Json j, string key, double default_ = 0.0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).type == Json.Type.float_)
+    return (*v).get!double;
+  if ((*v).isInteger)
+    return cast(double)(*v).get!long;
+  return default_;
+}
+
+
+
+/// Extract a string-to-string map from a Json object field.
+string[string] jsonStrMap(Json j, string key) {
+  if (!j.isObject)
+    return (string[string]).init;
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.object)
+    return (string[string]).init;
+
+  string[string] result;
+  foreach (string k, val; *v) {
+    if (val.isString)
+      result[k] = val.get!string;
+  }
+  return result;
+}
+
+/// Extract a string[][] (array of string arrays) from a Json object.
+string[][] getStringArrayArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.array)
+    return [];
+
+  string[][] result;
+  foreach (item; *v) {
+    if (item.type == Json.Type.array) {
+      string[] inner;
+      foreach (sub; item)
+        if (sub.isString)
+          inner ~= sub.get!string;
+      result ~= inner;
+    }
+  }
+  return result;
+}
+
+/// Extract the last path segment from a URI (for wildcard routes).
+string extractIdFromPath(string uri) {
+  // import std.string : indexOf;
+  auto qpos = uri.indexOf('?');
+  string path = qpos >= 0 ? uri[0 .. qpos] : uri;
+
+  if (path.length > 0 && path[$ - 1] == '/')
+    path = path[0 .. $ - 1];
+
+  auto spos = lastIndexOfChar(path, '/');
+  if (spos >= 0 && spos + 1 < path.length)
+    return path[spos + 1 .. $];
+  return path;
+}
+
+private long lastIndexOfChar(string s, char c) {
+  for (long i = s.length - 1; i >= 0; --i)
+    if (s[cast(size_t) i] == c)
+      return i;
+  return -1;
+}
+
+
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+string[][] jsonKeyValuePairs(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[][] result;
+  foreach (item; *v) {
+    if (item.isObject) {
+      auto k = item.getString("key");
+      auto val = item.getString("value");
+      if (k.length > 0)
+        result ~= [k, val];
+    }
+  }
+  return result;
+}
+
+Json stringsToJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+/// Extract a string[string] map from a Json object.
+// string[string] jsonStrMap(Json j, string key) {
+//   if (!j.isObject)
+//     return (string[string]).init;
+//   auto v = key in j;
+//   if (v is null || (*v).type != Json.Type.object)
+//     return (string[string]).init;
+
+//   string[string] result;
+//   foreach (string k, val; *v) {
+//     if (val.isString)
+//       result[k] = val.get!string;
+//   }
+//   return result;
+// }
+
+/// Convert a string array to a Json array.
+
+
+/// Convert a string[string] map to a Json object.
+// Json toJsonObject(const(string[string]) map) {
+//   auto jobj = Json.emptyObject;
+//   foreach (k, v; map)
+//     jobj[k] = Json(v);
+//   return jobj;
+// }
+
+// /// Write a JSON error response.
+
+
+// /// Extract ID from the last segment of a request URI path.
+// string extractIdFromPath(string uri) {
+//   // import std.string : lastIndexOf;
+//   auto qpos = lastIndexOf(uri, '?');
+//   auto path = qpos >= 0 ? uri[0 .. qpos] : uri;
+//   auto pos = lastIndexOf(path, '/');
+//   if (pos >= 0 && pos + 1 < path.length)
+//     return path[pos + 1 .. $];
+//   return "";
+// }

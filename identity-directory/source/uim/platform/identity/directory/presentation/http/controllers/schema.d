@@ -8,11 +8,15 @@ module uim.platform.identity_authentication.presentation.http.schema;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.identity.directory.application.usecases.manage.schemas;
-import uim.platform.identity.directory.application.dto;
-import uim.platform.identity.directory.domain.entities.schema;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.identity.directory.application.usecases.manage.schemas;
+// import uim.platform.identity.directory.application.dto;
+// import uim.platform.identity.directory.domain.entities.schema;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// HTTP controller for custom schema management.
 class SchemaController : PlatformController {
   private ManageSchemasUseCase useCase;
@@ -23,7 +27,7 @@ class SchemaController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/scim/Schemas", &handleCreate);
     router.get("/scim/Schemas", &handleList);
     router.get("/scim/Schemas/*", &handleGet);
