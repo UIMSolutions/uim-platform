@@ -18,7 +18,7 @@ class ManageSkillsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Skill* get_(SkillId id) {
+    Skill* getById(SkillId id) {
         return repo.findById(id);
     }
 

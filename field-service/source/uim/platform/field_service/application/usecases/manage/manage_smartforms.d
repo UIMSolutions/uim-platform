@@ -18,7 +18,7 @@ class ManageSmartformsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Smartform* get_(SmartformId id) {
+    Smartform* getById(SmartformId id) {
         return repo.findById(id);
     }
 

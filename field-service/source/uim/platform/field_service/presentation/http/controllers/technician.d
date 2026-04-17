@@ -46,7 +46,7 @@ class TechnicianController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(id);
+            auto e = uc.getById(id);
             if (e is null) { writeError(res, 404, "Technician not found"); return; }
             res.writeJsonBody(technicianToJson(*e), 200);
         } catch (Exception e) {

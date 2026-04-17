@@ -18,7 +18,7 @@ class ManageCustomersUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Customer* get_(CustomerId id) {
+    Customer* getById(CustomerId id) {
         return repo.findById(id);
     }
 

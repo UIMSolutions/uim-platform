@@ -18,7 +18,7 @@ class ManageTechniciansUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Technician* get_(TechnicianId id) {
+    Technician* getById(TechnicianId id) {
         return repo.findById(id);
     }
 

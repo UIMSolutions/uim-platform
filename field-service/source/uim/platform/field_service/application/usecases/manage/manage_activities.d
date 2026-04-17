@@ -18,7 +18,7 @@ class ManageActivitiesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Activity* get_(ActivityId id) {
+    Activity* getById(ActivityId id) {
         return repo.findById(id);
     }
 

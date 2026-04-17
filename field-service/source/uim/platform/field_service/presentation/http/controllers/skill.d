@@ -46,7 +46,7 @@ class SkillController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(id);
+            auto e = uc.getById(id);
             if (e is null) { writeError(res, 404, "Skill not found"); return; }
             res.writeJsonBody(skillToJson(*e), 200);
         } catch (Exception e) {

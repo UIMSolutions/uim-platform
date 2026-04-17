@@ -18,7 +18,7 @@ class ManageAssignmentsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Assignment* get_(AssignmentId id) {
+    Assignment* getById(AssignmentId id) {
         return repo.findById(id);
     }
 

@@ -18,7 +18,7 @@ class ManageEquipmentUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Equipment* get_(EquipmentId id) {
+    Equipment* getById(EquipmentId id) {
         return repo.findById(id);
     }
 
