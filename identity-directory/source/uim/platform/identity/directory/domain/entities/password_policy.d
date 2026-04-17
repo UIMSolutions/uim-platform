@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.password_policy;
 
-import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// Password policy configuration per tenant.
 struct PasswordPolicy {
   string id;

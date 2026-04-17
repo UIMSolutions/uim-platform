@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.application.usecases.query_audit_log;
 
-import uim.platform.identity.directory.domain.entities.audit_event;
-import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.repositories.audits;
+// import uim.platform.identity.directory.domain.entities.audit_event;
+// import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.ports.repositories.audits;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application use case: query audit logs.
 class QueryAuditLogUseCase : UIMUseCase {
   private AuditRepository auditRepo;

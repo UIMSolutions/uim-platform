@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.user;
 
-import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// SCIM 2.0 user name component.
 struct UserName {
   string formatted;

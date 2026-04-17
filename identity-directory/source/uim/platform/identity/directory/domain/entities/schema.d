@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.schema;
 
-import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// Attribute definition within a custom schema.
 struct SchemaAttribute {
   AttributeId id;
