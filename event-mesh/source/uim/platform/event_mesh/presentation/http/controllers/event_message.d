@@ -46,7 +46,7 @@ class EventMessageController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(EventMessageId(id));
+            auto e = uc.getById(EventMessageId(id));
             if (e is null) { writeError(res, 404, "Event message not found"); return; }
             res.writeJsonBody(eventMessageToJson(*e), 200);
         } catch (Exception e) {

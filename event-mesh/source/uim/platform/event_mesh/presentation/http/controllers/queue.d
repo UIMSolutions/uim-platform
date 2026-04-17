@@ -46,7 +46,7 @@ class QueueController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(QueueId(id));
+            auto e = uc.getById(QueueId(id));
             if (e is null) { writeError(res, 404, "Queue not found"); return; }
             res.writeJsonBody(queueToJson(*e), 200);
         } catch (Exception e) {

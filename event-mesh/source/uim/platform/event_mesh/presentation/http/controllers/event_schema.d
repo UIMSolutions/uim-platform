@@ -46,7 +46,7 @@ class EventSchemaController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(EventSchemaId(id));
+            auto e = uc.getById(EventSchemaId(id));
             if (e is null) { writeError(res, 404, "Event schema not found"); return; }
             res.writeJsonBody(eventSchemaToJson(*e), 200);
         } catch (Exception e) {

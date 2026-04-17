@@ -18,7 +18,7 @@ class ManageQueuesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Queue* get_(QueueId id) {
+    Queue* getById(QueueId id) {
         return repo.findById(id);
     }
 

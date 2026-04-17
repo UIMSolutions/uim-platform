@@ -46,7 +46,7 @@ class BrokerServiceController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(BrokerServiceId(id));
+            auto e = uc.getById(BrokerServiceId(id));
             if (e is null) { writeError(res, 404, "Broker service not found"); return; }
             res.writeJsonBody(brokerServiceToJson(*e), 200);
         } catch (Exception e) {

@@ -46,7 +46,7 @@ class TopicController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(TopicId(id));
+            auto e = uc.getById(TopicId(id));
             if (e is null) { writeError(res, 404, "Topic not found"); return; }
             res.writeJsonBody(topicToJson(*e), 200);
         } catch (Exception e) {

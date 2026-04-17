@@ -18,7 +18,7 @@ class ManageMeshBridgesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    MeshBridge* get_(MeshBridgeId id) {
+    MeshBridge* getById(MeshBridgeId id) {
         return repo.findById(id);
     }
 

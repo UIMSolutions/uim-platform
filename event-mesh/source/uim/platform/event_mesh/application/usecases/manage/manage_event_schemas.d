@@ -18,7 +18,7 @@ class ManageEventSchemasUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    EventSchema* get_(EventSchemaId id) {
+    EventSchema* getById(EventSchemaId id) {
         return repo.findById(id);
     }
 

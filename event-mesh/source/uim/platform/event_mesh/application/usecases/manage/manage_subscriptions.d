@@ -18,7 +18,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    EventSubscription* get_(SubscriptionId id) {
+    EventSubscription* getById(SubscriptionId id) {
         return repo.findById(id);
     }
 

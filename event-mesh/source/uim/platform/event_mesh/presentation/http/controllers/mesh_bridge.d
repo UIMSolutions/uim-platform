@@ -46,7 +46,7 @@ class MeshBridgeController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(MeshBridgeId(id));
+            auto e = uc.getById(MeshBridgeId(id));
             if (e is null) { writeError(res, 404, "Mesh bridge not found"); return; }
             res.writeJsonBody(meshBridgeToJson(*e), 200);
         } catch (Exception e) {

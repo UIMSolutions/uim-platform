@@ -18,7 +18,7 @@ class ManageEventApplicationsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    EventApplication* get_(EventApplicationId id) {
+    EventApplication* getById(EventApplicationId id) {
         return repo.findById(id);
     }
 

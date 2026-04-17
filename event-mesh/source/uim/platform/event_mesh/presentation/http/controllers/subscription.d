@@ -46,7 +46,7 @@ class SubscriptionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(SubscriptionId(id));
+            auto e = uc.getById(SubscriptionId(id));
             if (e is null) { writeError(res, 404, "Subscription not found"); return; }
             res.writeJsonBody(subscriptionToJson(*e), 200);
         } catch (Exception e) {

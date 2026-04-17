@@ -18,7 +18,7 @@ class ManageBrokerServicesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    BrokerService* get_(BrokerServiceId id) {
+    BrokerService* getById(BrokerServiceId id) {
         return repo.findById(id);
     }
 
