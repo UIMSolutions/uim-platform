@@ -33,29 +33,33 @@ class ManageApplicationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     Application app;
-    app.id = randomUUID();
-    app.environmentId = req.environmentId;
-    app.tenantId = req.tenantId;
-    app.name = req.name;
-    app.description = req.description;
-    app.status = AppConnectivityStatus.pairing;
-    app.registrationType = parseRegistrationType(req.registrationType);
-    app.connectorUrl = req.connectorUrl;
-    app.boundNamespaces = req.boundNamespaces;
-    app.labels = req.labels;
-    app.createdBy = req.createdBy;
-    app.createdAt = clockSeconds();
-    app.modifiedAt = app.createdAt;
+    with(app) {
+      id = randomUUID();
+      environmentId = req.environmentId;
+      tenantId = req.tenantId;
+      name = req.name;
+      description = req.description;
+      status = AppConnectivityStatus.pairing;
+      registrationType = parseRegistrationType(req.registrationType);
+      connectorUrl = req.connectorUrl;
+      boundNamespaces = req.boundNamespaces;
+      labels = req.labels;
+      createdBy = req.createdBy;
+      createdAt = clockSeconds();
+      modifiedAt = app.createdAt;
+    }
 
     // Convert API entries
     AppApiEntry[] apis;
     foreach (a; req.apis) {
       AppApiEntry entry;
-      entry.name = a.name;
-      entry.description = a.description;
-      entry.targetUrl = a.targetUrl;
-      entry.specUrl = a.specUrl;
-      entry.authType = a.authType;
+      with(entry) {
+        name = a.name;
+        description = a.description;
+        targetUrl = a.targetUrl;
+        specUrl = a.specUrl;
+        authType = a.authType;
+      }
       apis ~= entry;
     }
     app.apis = apis;
@@ -64,9 +68,11 @@ class ManageApplicationsUseCase : UIMUseCase {
     AppEventEntry[] events;
     foreach (e; req.events) {
       AppEventEntry entry;
-      entry.name = e.name;
-      entry.description = e.description;
-      entry.version_ = e.version_;
+      with(entry) {
+        name = e.name;
+        description = e.description;
+        version_ = e.version_;
+      }
       events ~= entry;
     }
     app.events = events;

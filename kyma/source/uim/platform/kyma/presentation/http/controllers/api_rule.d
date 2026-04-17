@@ -60,7 +60,7 @@ class ApiRuleController : PlatformController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       // Parse rules array
-      r.rules = parseRuleEntries(j);
+      r.rules = j.toRuleEntries;
 
       auto result = uc.create(r);
       if (result.success) {
@@ -134,7 +134,7 @@ class ApiRuleController : PlatformController {
       r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
       r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
-      r.rules = parseRuleEntries(j);
+      r.rules = j.toRuleEntries;
 
       auto result = uc.updateApiRule(id, r);
       if (result.success)
@@ -161,23 +161,7 @@ class ApiRuleController : PlatformController {
     }
   }
 
-  private ApiRuleEntryDto[] parseRuleEntries(Json j) {
-    ApiRuleEntryDto[] entries;
-    auto v = "rules" in j;
-    if (v is null || (*v).type != Json.Type.array)
-      return entries;
-    foreach (item; *v) {
-      ApiRuleEntryDto entry;
-      entry.path = item.getString("path");
-      entry.methods = getStringArray(item, "methods");
-      entry.accessStrategy = item.getString("accessStrategy");
-      entry.requiredScopes = getStringArray(item, "requiredScopes");
-      entry.audiences = getStringArray(item, "audiences");
-      entry.trustedIssuers = getStringArray(item, "trustedIssuers");
-      entries ~= entry;
-    }
-    return entries;
-  }
+  
 
   private Json serializeRule(ApiRule rule) {
     auto json = Json.emptyObject

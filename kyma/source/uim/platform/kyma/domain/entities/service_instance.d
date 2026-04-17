@@ -40,4 +40,25 @@ struct ServiceInstance {
   string createdBy;
   long createdAt;
   long modifiedAt;
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("id", id.value)
+      .set("namespaceId", namespaceId.value)
+      .set("environmentId", environmentId.value)
+      .set("tenantId", tenantId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("serviceOfferingName", serviceOfferingName)
+      .set("servicePlanName", servicePlanName)
+      .set("servicePlanId", servicePlanId)
+      .set("externalName", externalName)
+      .set("parametersJson", parametersJson)
+      .set("labels", labels)
+      .set("bindingCount", bindingCount)
+      .set("createdBy", createdBy)
+      .set("createdAt", createdAt)
+      .set("modifiedAt", modifiedAt);
+  }
 }

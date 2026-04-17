@@ -39,4 +39,24 @@ struct Namespace {
   string createdBy;
   long createdAt;
   long modifiedAt;
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("id", id.value)
+      .set("environmentId", environmentId.value)
+      .set("tenantId", tenantId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("cpuLimit", cpuLimit)
+      .set("memoryLimit", memoryLimit)
+      .set("cpuRequest", cpuRequest)
+      .set("memoryRequest", memoryRequest)
+      .set("podLimit", podLimit)
+      .set("quotaEnforcement", quotaEnforcement.toString())
+      .set("labels", labels)
+      .set("annotations", annotations)
+      .set("istioInjection", istioInjection)
+      .set("createdBy", createdBy);
+  } 
 }

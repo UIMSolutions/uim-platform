@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// A Kyma module — an optional component that can be enabled/disabled.
 struct KymaModule {
   TenantId tenantId;
-  ModuleId moduleId;
+  KymaModule id;
   KymaEnvironmentId environmentId;
   string name;
   string description;

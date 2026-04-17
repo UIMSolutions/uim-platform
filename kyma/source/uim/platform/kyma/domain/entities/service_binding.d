@@ -39,4 +39,22 @@ struct ServiceBinding {
   string createdBy;
   long createdAt;
   long modifiedAt;
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("id", id.value)
+      .set("serviceInstanceId", serviceInstanceId.value)
+      .set("namespaceId", namespaceId.value)
+      .set("environmentId", environmentId.value)
+      .set("tenantId", tenantId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("secretName", secretName)
+      .set("secretNamespace", secretNamespace)
+      .set("parametersJson", parametersJson)
+      .set("credentials", credentials)
+      .set("labels", labels)
+      .set("createdBy", createdBy);
+  }
 }

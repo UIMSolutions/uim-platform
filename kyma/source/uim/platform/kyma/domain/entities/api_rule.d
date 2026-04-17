@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// An API rule — exposes a service or function via the API Gateway.
 struct ApiRule {
   TenantId tenantId;
-  ApiRuleId ruleId;
+  ApiRuleId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;
