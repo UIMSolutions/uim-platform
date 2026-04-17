@@ -61,7 +61,7 @@ class AddressController : PlatformController {
       batchReq.tenantId = req.getTenantId;
 
       auto addrJson = "addresses" in j;
-      if (addrJson !is null && (*addrJson).type == Json.Type.array) {
+      if (addrJson !is null && (*addrJson).isArray) {
         foreach (item; *addrJson) {
           if (item.isObject) {
             CleanseAddressRequest a;

@@ -478,7 +478,7 @@ string[] getStringArray(Json j, string key) {
   string[] result;
   if (j.isObject) {
     auto val = key in j;
-    if (val !is null && (*val).type == Json.Type.array) {
+    if (val !is null && (*val).isArray) {
       foreach (item; *val) {
         if (item.isString)
           result ~= item.get!string;
@@ -829,7 +829,7 @@ string[][] getStringArrayArray(Json j, string key) {
 
   string[][] result;
   foreach (item; *v) {
-    if (item.type == Json.Type.array) {
+    if (item.isArray) {
       string[] inner;
       foreach (sub; item)
         if (sub.isString)
@@ -1402,7 +1402,7 @@ string[] getStringArray(Json j, string key) {
   string[] result;
   if (j.isObject) {
     auto val = key in j;
-    if (val !is null && (*val).type == Json.Type.array) {
+    if (val !is null && (*val).isArray) {
       foreach (item; *val) {
         if (item.isString)
           result ~= item.get!string;

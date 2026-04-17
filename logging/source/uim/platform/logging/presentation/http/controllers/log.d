@@ -72,7 +72,7 @@ class LogController : PlatformController {
       batchReq.tenantId = tenantId;
 
       auto entriesVal = "entries" in j;
-      if (entriesVal !is null && (*entriesVal).type == Json.Type.array) {
+      if (entriesVal !is null && (*entriesVal).isArray) {
         foreach (ej; *entriesVal) {
           IngestLogRequest r;
           r.tenantId = tenantId;

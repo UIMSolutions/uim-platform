@@ -70,7 +70,7 @@ class TraceController : PlatformController {
       batchReq.tenantId = tenantId;
 
       auto spansVal = "spans" in j;
-      if (spansVal !is null && (*spansVal).type == Json.Type.array) {
+      if (spansVal !is null && (*spansVal).isArray) {
         foreach (sj; *spansVal) {
           IngestSpanRequest r;
           r.tenantId = tenantId;

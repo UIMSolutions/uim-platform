@@ -43,7 +43,7 @@ class ProfileController : PlatformController {
       r.datasetName = j.getString("datasetName");
 
       auto recordsJson = "records" in j;
-      if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
+      if (recordsJson !is null && (*recordsJson).isArray) {
         foreach (item; *recordsJson)
         {
           if (item.isObject)

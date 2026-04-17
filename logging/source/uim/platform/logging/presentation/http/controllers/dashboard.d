@@ -45,7 +45,7 @@ class DashboardController : PlatformController {
       r.createdBy = j.getString("createdBy");
 
       auto panelsVal = "panels" in j;
-      if (panelsVal !is null && (*panelsVal).type == Json.Type.array) {
+      if (panelsVal !is null && (*panelsVal).isArray) {
         foreach (pj; *panelsVal) {
           PanelDTO p;
           p.id = getString(pj, "id");

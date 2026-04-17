@@ -45,7 +45,7 @@ class PipelineController : PlatformController {
       r.createdBy = j.getString("createdBy");
 
       auto processorsVal = "processors" in j;
-      if (processorsVal !is null && (*processorsVal).type == Json.Type.array) {
+      if (processorsVal !is null && (*processorsVal).isArray) {
         foreach (pj; *processorsVal) {
           ProcessorDTO p;
           p.type = getString(pj, "type");
