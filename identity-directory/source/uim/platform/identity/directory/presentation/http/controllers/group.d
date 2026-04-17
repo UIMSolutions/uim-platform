@@ -14,7 +14,7 @@ import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 group management.
-class GroupController {
+class GroupController : PlatformController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {
@@ -22,6 +22,8 @@ class GroupController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/scim/Groups", &handleCreate);
     router.get("/scim/Groups", &handleList);
     router.get("/scim/Groups/*", &handleGet);

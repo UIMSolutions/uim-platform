@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.infrastructure.security.sha256_password_service;
 
-import uim.platform.identity.directory.domain.ports.repositories.password_service;
+// import uim.platform.identity.directory.domain.ports.repositories.password_service;
 
 // import std.digest.sha;
 // import std.uuid;
 // import std.string : representation;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
 class Sha256PasswordService : PasswordService {
   string hashPassword(string plaintext) {

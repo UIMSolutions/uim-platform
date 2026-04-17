@@ -13,7 +13,7 @@ import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for audit log queries.
-class AuditController {
+class AuditController : PlatformController {
   private QueryAuditLogUseCase useCase;
 
   this(QueryAuditLogUseCase useCase) {
@@ -21,6 +21,8 @@ class AuditController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+  
     router.get("/api/v1/audit-logs", &handleList);
     router.get("/api/v1/audit-logs/actor/*", &handleByActor);
     router.get("/api/v1/audit-logs/target/*", &handleByTarget);

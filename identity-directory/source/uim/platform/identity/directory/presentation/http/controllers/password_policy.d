@@ -8,13 +8,17 @@ module uim.platform.identity_authentication.presentation.http.password_policy;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.identity.directory.application.usecases.manage.password_policies;
-import uim.platform.identity.directory.application.dto;
-import uim.platform.identity.directory.domain.entities.password_policy;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.identity.directory.application.usecases.manage.password_policies;
+// import uim.platform.identity.directory.application.dto;
+// import uim.platform.identity.directory.domain.entities.password_policy;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// HTTP controller for password policy management.
-class PasswordPolicyController {
+class PasswordPolicyController : PlatformController {
   private ManagePasswordPoliciesUseCase useCase;
 
   this(ManagePasswordPoliciesUseCase useCase) {
@@ -22,6 +26,8 @@ class PasswordPolicyController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/password-policies", &handleCreate);
     router.get("/api/v1/password-policies", &handleList);
     router.get("/api/v1/password-policies/active", &handleGetActive);

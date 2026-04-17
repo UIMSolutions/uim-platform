@@ -14,7 +14,7 @@ import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 user management.
-class UserController {
+class UserController : PlatformController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase) {
@@ -22,6 +22,8 @@ class UserController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/scim/Users", &handleCreate);
     router.get("/scim/Users", &handleList);
     router.get("/scim/Users/*", &handleGet);

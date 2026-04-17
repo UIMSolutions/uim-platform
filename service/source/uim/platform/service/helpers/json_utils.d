@@ -409,3 +409,215 @@ void writeApiError(scope HTTPServerResponse res, int status, string detail) {
   response["status"] = Json(status);
   res.writeJsonBody(response, status);
 }
+
+/// Serialize a struct to JSON.
+Json toJsonValue(T)(T val) {
+  auto j = Json.emptyObject;
+  static foreach (i, field; T.tupleof) {
+    {
+      enum name = __traits(identifier, T.tupleof[i]);
+      alias FT = typeof(field);
+      static if (is(FT == string))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == bool))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == string[])) {
+        auto arr = Json.emptyArray;
+        foreach (s; val.tupleof[i])
+          arr ~= Json(s);
+        j[name] = arr;
+      }
+      else static if (is(FT == enum)) {
+        // import std.conv : to;
+        j[name] = Json(val.tupleof[i].to!string);
+      }
+      else static if (is(FT == string[string])) {
+        auto obj = Json.emptyObject;
+        foreach (k, v; val.tupleof[i])
+          obj[k] = Json(v);
+        j[name] = obj;
+      }
+      else static if (isArray!FT && !is(FT == string)) {
+        auto arr = Json.emptyArray;
+        foreach (item; val.tupleof[i])
+          arr ~= toJsonValue(item);
+        j[name] = arr;
+      }
+    }
+  }
+  return j;
+}
+
+/// Serialize an array of structs.
+Json toJsonArray(T)(T[] items) {
+  auto arr = Json.emptyArray;
+  foreach (item; items)
+    arr ~= toJsonValue(item);
+  return arr;
+}
+
+/// Read an integer field from JSON.
+long jsonLong(Json j, string key, long default_ = 0) {
+  if (j.type == Json.Type.object) {
+    auto val = key in j;
+    if (val !is null && (*val).isInteger)
+      return (*val).get!long;
+  }
+  return default_;
+}
+
+/// Read a uint field from JSON.
+uint jsonUint(Json j, string key, uint default_ = 0) {
+  return cast(uint) jsonLong(j, key, default_);
+}
+
+/// Read a string array from JSON.
+string[] getStringArray(Json j, string key) {
+  string[] result;
+  if (j.type == Json.Type.object) {
+    auto val = key in j;
+    if (val !is null && (*val).type == Json.Type.array) {
+      foreach (item; *val) {
+        if (item.isString)
+          result ~= item.get!string;
+      }
+    }
+  }
+  return result;
+}
+
+/// Extract ID from the last segment of a URL path.
+string extractIdFromPath(string path) {
+  // import std.string : lastIndexOf;
+  auto idx = path.lastIndexOf('/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+Json toJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+// string extractIdFromPath(string path) {
+//   import std.string : lastIndexOf;
+
+//   auto idx = lastIndexOf(path, '/');
+//   if (idx >= 0 && idx + 1 < path.length)
+//     return path[idx + 1 .. $];
+//   return "";
+// }
+
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+/// Parse array of [key, value] pairs from JSON array of objects with "key"/"value" fields
+string[][] jsonKeyValuePairs(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[][] result;
+  foreach (item; *v) {
+    if (item.isObject) {
+      auto k = item.getString("key");
+      auto val = item.getString("value");
+      if (k.length > 0)
+        result ~= [k, val];
+    }
+  }
+  return result;
+}
+
+Json toJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+/// Serialize a struct to a Json value.
+Json toJsonValue(T)(T obj) if (is(T == struct)) {
+  return serializeToJson(obj);
+}
+
+/// Serialize an array of structs to a Json array.
+Json toJsonArray(T)(T[] arr) if (is(T == struct)) {
+  auto jArr = Json.emptyArray;
+  foreach (item; arr)
+    jArr ~= serializeToJson(item);
+  return jArr;
+}
+
+/// Helper: standard JSON error response body.
+Json errorJson(string message, int code = 400) {
+  return Json.emptyObject
+    .set("error", message)
+    .set("code", code);
+}
+
+/// Helper: envelope a result with metadata.
+Json envelopeJson(string key, Json data) {
+  auto j = Json.emptyObject;
+  j[key] = data;
+  return j;
+}

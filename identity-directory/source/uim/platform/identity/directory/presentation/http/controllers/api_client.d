@@ -14,7 +14,7 @@ import uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.
-class ApiClientController {
+class ApiClientController : PlatformController {
   private ManageApiClientsUseCase useCase;
 
   this(ManageApiClientsUseCase useCase) {
@@ -22,6 +22,8 @@ class ApiClientController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/api-clients", &handleCreate);
     router.get("/api/v1/api-clients", &handleList);
     router.get("/api/v1/api-clients/*", &handleGet);

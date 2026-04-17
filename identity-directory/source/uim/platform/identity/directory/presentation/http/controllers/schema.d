@@ -14,7 +14,7 @@ import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for custom schema management.
-class SchemaController {
+class SchemaController : PlatformController {
   private ManageSchemasUseCase useCase;
 
   this(ManageSchemasUseCase useCase) {
@@ -22,6 +22,8 @@ class SchemaController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/scim/Schemas", &handleCreate);
     router.get("/scim/Schemas", &handleList);
     router.get("/scim/Schemas/*", &handleGet);
