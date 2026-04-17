@@ -13,12 +13,12 @@ mixin(ShowModule!());
 @safe:
 /// Navigation menu item within a site.
 struct MenuItem {
-  MenuItemId id;
-  SiteId siteId;
   TenantId tenantId;
+  SiteId siteId;
+  MenuItemId parentId; // empty = top-level
+  MenuItemId id;
   string title;
   string icon;
-  MenuItemId parentId; // empty = top-level
   PageId targetPageId; // internal page link
   string targetUrl; // external URL
   NavigationTarget navigationTarget = NavigationTarget.inPlace;
@@ -27,4 +27,22 @@ struct MenuItem {
   bool visible = true;
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId)
+      .set("siteId", siteId)
+      .set("parentId", parentId)
+      .set("id", id)
+      .set("title", title)
+      .set("icon", icon)
+      .set("targetPageId", targetPageId)
+      .set("targetUrl", targetUrl)
+      .set("navigationTarget", navigationTarget)
+      .set("allowedRoleIds", allowedRoleIds)
+      .set("sortOrder", sortOrder)
+      .set("visible", visible)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }

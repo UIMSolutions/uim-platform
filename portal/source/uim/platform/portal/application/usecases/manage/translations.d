@@ -51,10 +51,10 @@ class ManageTranslationsUseCase : UIMUseCase {
   }
 
   string updateTranslation(UpdateTranslationRequest req) {
-    auto translation = translationRepo.findById(req.translationId);
-    if (translation == Translation.init)
+    if (!translationRepo.existsById(req.translationId))
       return "Translation not found";
 
+    auto translation = translationRepo.findById(req.translationId) ;
     translation.value = req.value;
     translation.updatedAt = Clock.currStdTime();
     translationRepo.update(translation);
@@ -62,8 +62,7 @@ class ManageTranslationsUseCase : UIMUseCase {
   }
 
   string deleteTranslation(TranslationId id) {
-    auto translation = translationRepo.findById(id);
-    if (translation == Translation.init)
+    if (!translationRepo.existsById(id))
       return "Translation not found";
 
     translationRepo.remove(id);

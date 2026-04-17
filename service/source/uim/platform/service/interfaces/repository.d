@@ -26,5 +26,6 @@ interface ITenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
   TEntity findById(TenantId tenantId, TId id);
 
   void save(TenantId tenantId, TEntity entity);
+  void update(TenantId tenantId, TEntity entity);
   void remove(TenantId tenantId, TId id);
 }

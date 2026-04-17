@@ -140,7 +140,6 @@ string[] getStringArray(Json j, string key, string[] defaultArray = null) {
     .array;
 }
 
-
 string[string] jsonStrMap(Json j, string key) {
   if (!j.isObject)
     return null;
@@ -166,7 +165,7 @@ string extractId(string uri) {
 }
 
 /*
-private string extractId(scope HTTPServerRequest req) {
+ string extractId(scope HTTPServerRequest req) {
   // import std.conv : to;
   // import std.string : split;
   auto path = req.requestURI;
@@ -183,7 +182,6 @@ private string extractId(scope HTTPServerRequest req) {
   return "";
 }
 */
-
 
 /// Extract a query parameter from the URI.
 string queryParam(scope HTTPServerRequest req, string key) {
@@ -207,14 +205,7 @@ string queryParam(scope HTTPServerRequest req, string key) {
   return "";
 }
 
-private long lastIndexOfChar(string s, char c) {
-  for (long i = s.length - 1; i >= 0; i--)
-    if (s[cast(size_t)i] == c)
-      return i;
-  return -1;
-}
-
-private string[] splitBy(string s, char delim) {
+string[] splitBy(string s, char delim) {
   string[] result;
   size_t start = 0;
   foreach (i, ch; s) {
@@ -328,8 +319,6 @@ Json toJsonValue(T)(T val) {
   return j;
 }
 
-
-
 /// Parse array of [key, value] pairs from JSON array of objects with "key"/"value" fields
 string[][] jsonKeyValuePairs(Json j, string key) {
   if (!j.isObject)
@@ -339,7 +328,7 @@ string[][] jsonKeyValuePairs(Json j, string key) {
     return null;
 
   auto v = j[key];
-  if (!v.type.isArray)
+  if (!v.isArray)
     return null;
 
   string[][] result;
@@ -377,49 +366,23 @@ Json envelopeJson(string key, Json data) {
   return j;
 }
 
-/// Extract a double field from a Json object.
-double getDouble(Json j, string key, double default_ = 0.0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isFloat)
-    return (*v).get!double;
-  if ((*v).isInteger)
-    return cast(double)(*v).get!long;
-  return default_;
-}
-
-/// Extract a string-to-string map from a Json object field.
-string[string] jsonStrMap(Json j, string key) {
-  if (!j.isObject)
-    return (string[string]).init;
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.object)
-    return (string[string]).init;
-
-  string[string] result;
-  foreach (string k, val; *v) {
-    if (val.isString)
-      result[k] = val.get!string;
-  }
-  return result;
-}
-
 /// Extract a string[][] (array of string arrays) from a Json object.
 string[][] getStringArrayArray(Json j, string key) {
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (key !in j)
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
 
   string[][] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isArray) {
       string[] inner;
-      foreach (sub; item)
+      foreach (sub; item.toArray)
         if (sub.isString)
           inner ~= sub.get!string;
       result ~= inner;
@@ -428,8 +391,7 @@ string[][] getStringArrayArray(Json j, string key) {
   return result;
 }
 
-
-private long lastIndexOfChar(string s, char c) {
+long lastIndexOfChar(string s, char c) {
   for (long i = s.length - 1; i >= 0; --i)
     if (s[cast(size_t)i] == c)
       return i;
@@ -439,22 +401,6 @@ private long lastIndexOfChar(string s, char c) {
 Json stringsToJsonArray(string[] arr) {
   return arr.map!(s => Json(s)).array.toJson;
 }
-
-/// Extract a string[string] map from a Json object.
-// string[string] jsonStrMap(Json j, string key) {
-//   if (!j.isObject)
-//     return (string[string]).init;
-//   auto v = key in j;
-//   if (v is null || (*v).type != Json.Type.object)
-//     return (string[string]).init;
-
-//   string[string] result;
-//   foreach (string k, val; *v) {
-//     if (val.isString)
-//       result[k] = val.get!string;
-//   }
-//   return result;
-// }
 
 /// Convert a string array to a Json array.
 
@@ -466,46 +412,19 @@ Json stringsToJsonArray(string[] arr) {
 //   return jobj;
 // }
 
-
-
-
-// --- Enum parsers ---
-
-int jsonInt(Json j, string key, int default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return cast(int)(*v).get!long;
-  return default_;
-}
-
-// double getDouble(Json j, string key, double default_ = 0.0) {
-//   if (!j.isObject)
-//     return default_;
-//   auto v = key in j;
-//   if (v is null)
-//     return default_;
-//   if ((*v).isFloat)
-//     return (*v).get!double;
-//   if ((*v).isInteger)
-//     return cast(double)(*v).get!long;
-//   return default_;
-// }
-
-
 string[][] jsonFieldArray(Json j, string key) {
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (key in j)
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+
   string[][] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isObject) {
       auto name = item.getString("name");
       auto label = item.getString("label");
@@ -522,14 +441,17 @@ string[][] jsonRegionArray(Json j, string key) {
   import std.conv : to;
 
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (key !in j)
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+
   string[][] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isObject) {
       auto fieldName = item.getString("fieldName");
       auto page = jsonInt(item, "page").to!string;
@@ -543,73 +465,6 @@ string[][] jsonRegionArray(Json j, string key) {
   }
   return result;
 }
-
-
-string getString(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-bool getBoolean(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
-
-double getDouble(Json j, string key, double default_ = 0.0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isFloat)
-    return (*v).get!double;
-  if ((*v).isInteger)
-    return cast(double)(*v).get!long;
-  return default_;
-}
-
-string[] getStringArray(Json j, string key) {
-  if (!j.isObject)
-    return null;
-
-  if (!j.hasKey(key))
-    return null;
-
-  auto v = j[key];
-  if (!v.isArray)
-    return null;
-
-  string[] result;
-  foreach (item; v.toArray) {
-    if (item.isString)
-      result ~= item.get!string;
-  }
-  return result;
-}
-
-int jsonInt(Json j, string key, int default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return cast(int)(*v).get!long;
-  return default_;
-}
-
 
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
@@ -639,8 +494,6 @@ Json toJsonValue(T)(T val) {
   return j;
 }
 
-
-
 /// Read a string field from JSON, or return default.
 string getString(Json j, string key) {
   if (j.isObject) {
@@ -650,22 +503,6 @@ string getString(Json j, string key) {
   }
   return "";
 }
-/// Extract a string-to-string map from a Json object.
-/* string[string] jsonStrMap(Json j, string key) {
-  if (!j.isObject)
-    return (string[string]).init;
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.object)
-    return (string[string]).init;
-
-  string[string] result;
-  foreach (string k, val; *v) {
-    if (val.isString)
-      result[k] = val.get!string;
-  }
-  return result;
-}
- */
 
 // /// Serialize a string array to Json array.
 // Json serializeStrArray(string[] arr) {
@@ -683,20 +520,6 @@ string getString(Json j, string key) {
 //   return result;
 // }
 /// Extract a string[string] map from a Json object.
-string[string] jsonStrMap(Json j, string key) {
-  if (!j.isObject)
-    return (string[string]).init;
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.object)
-    return (string[string]).init;
-
-  string[string] result;
-  foreach (string k, val; *v) {
-    if (val.isString)
-      result[k] = val.get!string;
-  }
-  return result;
-}
 
 /// Convert a string array to a Json array.
 
@@ -771,16 +594,6 @@ bool getBoolean(Json j, string key, bool default_ = false) {
     return default_;
 }
 
-int jsonInt(Json j, string key, int default_ = 0) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isInteger)
-        return cast(int)(*v).get!long;
-    return default_;
-}
 
 long jsonLong(Json j, string key, long default_ = 0) {
     if (!j.isObject)
@@ -792,94 +605,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
         return (*v).get!long;
     return default_;
 }
-
-double getDouble(Json j, string key, double default_ = 0.0) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isFloat)
-        return (*v).get!double;
-    if ((*v).isInteger)
-        return cast(double)(*v).get!long;
-    return default_;
-}
-
-string[] getStringArray(Json j, string key) {
-    if (!j.isObject)
-        return [];
-    auto v = key in j;
-    if (v is null)
-        return [];
-    if ((*v).type != Json.Type.array)
-        return [];
-    string[] result;
-    foreach (item; *v) {
-        if (item.isString)
-            result ~= item.get!string;
-    }
-    return result;
-}
-
 */
-
-string getString(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-bool getBoolean(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
-
-
-
-// string getString(Json j, string key) {
-//     if (!j.isObject)
-//         return "";
-//     auto v = key in j;
-//     if (v is null)
-//         return "";
-//     if ((*v).isString)
-//         return (*v).get!string;
-//     return "";
-// }
-
-// bool getBoolean(Json j, string key, bool default_ = false) {
-//     if (!j.isObject)
-//         return default_;
-//     auto v = key in j;
-//     if (v is null)
-//         return default_;
-//     if ((*v).isBoolean)
-//         return (*v).get!bool;
-//     return default_;
-// }
-
-// int jsonInt(Json j, string key, int default_ = 0) {
-//     if (!j.isObject)
-//         return default_;
-//     auto v = key in j;
-//     if (v is null)
-//         return default_;
-//     if ((*v).isInteger)
-//         return cast(int)(*v).get!long;
-//     return default_;
-// }
 
 // long jsonLong(Json j, string key, long default_ = 0) {
 //     if (!j.isObject)
@@ -905,12 +631,6 @@ bool getBoolean(Json j, string key, bool default_ = false) {
 //     return "";
 // }
 
-/// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int)jsonLong(j, key, default_);
-}
-
-
 /// Serialize a string array to Json array.
 Json serializeStrArray(string[] arr) {
   auto result = Json.emptyArray;
@@ -930,39 +650,21 @@ Json serializeStrMap(string[string] map) {
 /// Extract a Json array of objects (generic).
 Json[] jsonObjArray(Json j, string key) {
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (key !in j)
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
 
   Json[] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isObject)
       result ~= item;
   }
   return result;
-}
-
-string getString(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-bool getBoolean(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
 }
 
 int jsonInt(Json j, string key, int default_ = 0) {
@@ -977,33 +679,4 @@ int jsonInt(Json j, string key, int default_ = 0) {
     return default_;
 
   return cast(int)v.get!long;
-}
-
-double getDouble(Json j, string key, double default_ = 0.0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isFloat)
-    return (*v).get!double;
-  if ((*v).isInteger)
-    return cast(double)(*v).get!long;
-  return default_;
-}
-
-string[] getStringArray(Json j, string key) {
-  if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
-  string[] result;
-  foreach (item; *v) {
-    if (item.isString)
-      result ~= item.get!string;
-  }
-  return result;
 }

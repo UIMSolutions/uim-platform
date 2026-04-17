@@ -17,6 +17,26 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
+  bool existsById(AlertId id) {
+    return store.byValue().any!(tenantId => (id in store[tenantId]) ? true : false);
+  }
+
+  Alert findById(AlertId id) {
+    foreach (tenentId, alerts; store) {
+      if (id in alerts)
+        return alerts[id];
+    }
+    return Alert.init;
+  }
+
+  override Alert[] findByTenant(TenantId tenantId) {
+    return store.filter!(a => a.tenantId == tenantId).array;
+  }
+
+  Alert[] findByInstance(InstanceId instanceId) {
+    return store.byValue().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
+  }
+
   Alert[] findByInstance(TenantId tenantId, InstanceId instanceId) {
     return findByTenant(tenantId).filter!(a => a.instanceId == instanceId).array;
   }
@@ -27,5 +47,20 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
 
   size_t countByTenant(TenantId tenantId) {
     return findByTenant(tenantId).length;
+  }
+
+  size_t countAll() {
+    return store.byValue().map!(alerts => alerts.length).sum;
+  }
+
+  void remove(AlertId id) {
+    foreach (tenantId, alerts; store) {
+      if (id in alerts) {
+        store[tenantId].remove(id);
+
+        if (store[tenantId].isEmpty) store.remove(tenantId);
+        return;
+      }
+    }
   }
 }

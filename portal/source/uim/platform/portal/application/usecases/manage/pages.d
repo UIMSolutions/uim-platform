@@ -35,8 +35,7 @@ class ManagePagesUseCase : UIMUseCase {
     if (req.title.length == 0)
       return PageResponse("", "Page title is required");
 
-    auto site = siteRepo.findById(req.siteId);
-    if (site == Site.init)
+    if (siteRepo.existsById(req.siteId))
       return PageResponse("", "Site not found");
 
     auto now = Clock.currStdTime();

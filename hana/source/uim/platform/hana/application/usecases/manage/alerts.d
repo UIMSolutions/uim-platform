@@ -28,8 +28,7 @@ class ManageAlertsUseCase : UIMUseCase {
     if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "Alert already exists");
 
     Alert a;
@@ -47,6 +46,7 @@ class ManageAlertsUseCase : UIMUseCase {
     a.threshold.unit = r.unit;
 
     import core.time : MonoTime;
+
     a.createdAt = MonoTime.currTime.ticks;
     a.triggeredAt = a.createdAt;
 
@@ -67,14 +67,15 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   CommandResult acknowledge(AcknowledgeAlertRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Alert not found");
 
+    auto existing = repo.findById(r.id);
     existing.status = AlertStatus.acknowledged;
     existing.acknowledgedBy = r.acknowledgedBy;
 
     import core.time : MonoTime;
+
     existing.acknowledgedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
@@ -82,10 +83,10 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateAlertRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Alert not found");
 
+    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.threshold.warningValue = r.warningValue;
@@ -96,8 +97,7 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   CommandResult remove(AlertId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Alert not found");
 
     repo.remove(id);

@@ -24,6 +24,7 @@ class ReplicationTaskController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/hana/replicationTasks", &handleList);
     router.get("/api/v1/hana/replicationTasks/*", &handleGet);
     router.post("/api/v1/hana/replicationTasks", &handleCreate);

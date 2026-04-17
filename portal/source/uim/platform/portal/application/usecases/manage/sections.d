@@ -31,8 +31,7 @@ class ManageSectionsUseCase : UIMUseCase {
   }
 
   SectionResponse createSection(CreateSectionRequest req) {
-    auto page = pageRepo.findById(req.pageId);
-    if (page == Page.init)
+    if (pageRepo.existsById(req.pageId))
       return SectionResponse("", "Page not found");
 
     auto now = Clock.currStdTime();
@@ -57,10 +56,10 @@ class ManageSectionsUseCase : UIMUseCase {
   }
 
   string updateSection(UpdateSectionRequest req) {
-    auto section = sectionRepo.findById(req.sectionId);
-    if (section == PortalSection.init)
+    if (!sectionRepo.existsById(req.sectionId))
       return "Section not found";
 
+    auto section = sectionRepo.findById(req.sectionId);
     section.title = req.title.length > 0 ? req.title : section.title;
     section.sortOrder = req.sortOrder;
     section.visible = req.visible;
@@ -71,8 +70,7 @@ class ManageSectionsUseCase : UIMUseCase {
   }
 
   string deleteSection(SectionId sectionId, PageId pageId) {
-    auto section = sectionRepo.findById(sectionId);
-    if (section == PortalSection.init)
+    if (!sectionRepo.existsById(sectionId))
       return "Section not found";
 
     sectionRepo.remove(sectionId);

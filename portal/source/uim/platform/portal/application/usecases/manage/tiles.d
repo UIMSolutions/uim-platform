@@ -57,10 +57,10 @@ class ManageTilesUseCase : UIMUseCase {
   }
 
   string updateTile(UpdateTileRequest req) {
-    auto tile = tileRepo.findById(req.tileId);
-    if (tile == Tile.init)
+    if (!tileRepo.existsById(req.tileId))
       return "Tile not found";
 
+    auto tile = tileRepo.findById(req.tileId);
     tile.title = req.title.length > 0 ? req.title : tile.title;
     tile.subtitle = req.subtitle;
     tile.description = req.description;
@@ -80,8 +80,7 @@ class ManageTilesUseCase : UIMUseCase {
   }
 
   string deleteTile(TileId id) {
-    auto tile = tileRepo.findById(id);
-    if (tile == Tile.init)
+    if (!tileRepo.existsById(id))
       return "Tile not found";
 
     tileRepo.remove(id);
