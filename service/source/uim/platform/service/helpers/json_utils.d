@@ -969,3 +969,571 @@ string extractIdFromPath(string path) {
 //     return path[pos + 1 .. $];
 //   return "";
 // }
+
+/// Extract a bool field from a Json object.
+bool getBoolean(Json j, string key, bool default_ = false) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isBoolean)
+    return (*v).get!bool;
+  return default_;
+}
+
+/// Extract the last path segment from a URI (for wildcard routes).
+string extractIdFromPath(string uri) {
+  // import std.string : indexOf;
+
+  auto qpos = uri.indexOf('?');
+  string path = qpos >= 0 ? uri[0 .. qpos] : uri;
+
+  if (path.length > 0 && path[$ - 1] == '/')
+    path = path[0 .. $ - 1];
+
+  auto spos = lastIndexOf(path, '/');
+  if (spos >= 0 && spos + 1 < path.length)
+    return path[spos + 1 .. $];
+  return path;
+}
+
+
+
+
+// --- Enum parsers ---
+
+ContentCategory parseContentCategory(string s) {
+  switch (s) {
+  case "file":
+    return ContentCategory.file;
+  case "link":
+    return ContentCategory.link;
+  case "reference":
+    return ContentCategory.reference;
+  default:
+    return ContentCategory.file;
+  }
+}
+
+ShareType parseShareType(string s) {
+  switch (s) {
+  case "internal":
+    return ShareType.internal;
+  case "external":
+    return ShareType.external;
+  case "public":
+    return ShareType.public_;
+  default:
+    return ShareType.internal;
+  }
+}
+
+PermissionLevel parsePermissionLevel(string s) {
+  switch (s) {
+  case "read":
+    return PermissionLevel.read;
+  case "write":
+    return PermissionLevel.write;
+  case "admin":
+    return PermissionLevel.admin;
+  case "owner":
+    return PermissionLevel.owner;
+  default:
+    return PermissionLevel.read;
+  }
+}
+
+ResourceType parseResourceType(string s) {
+  switch (s) {
+  case "document":
+    return ResourceType.document;
+  case "folder":
+    return ResourceType.folder;
+  case "repository":
+    return ResourceType.repository;
+  default:
+    return ResourceType.document;
+  }
+}
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+double jsonDouble(Json j, string key, double default_ = 0.0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isFloat)
+    return (*v).get!double;
+  if ((*v).isInteger)
+    return cast(double)(*v).get!long;
+  return default_;
+}
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+string[][] jsonKeyValuePairs(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[][] result;
+  foreach (item; *v) {
+    if (item.isObject) {
+      auto k = item.getString("key");
+      auto val = item.getString("value");
+      if (k.length > 0)
+        result ~= [k, val];
+    }
+  }
+  return result;
+}
+
+string[][] jsonFieldArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[][] result;
+  foreach (item; *v) {
+    if (item.isObject) {
+      auto name = item.getString("name");
+      auto label = item.getString("label");
+      auto type = item.getString("type");
+      auto req = getBoolean(item, "required") ? "true" : "false";
+      if (name.length > 0)
+        result ~= [name, label, type, req];
+    }
+  }
+  return result;
+}
+
+string[][] jsonRegionArray(Json j, string key) {
+  import std.conv : to;
+
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[][] result;
+  foreach (item; *v) {
+    if (item.isObject) {
+      auto fieldName = item.getString("fieldName");
+      auto page = jsonInt(item, "page").to!string;
+      auto x = jsonDouble(item, "x").to!string;
+      auto y = jsonDouble(item, "y").to!string;
+      auto width = jsonDouble(item, "width").to!string;
+      auto height = jsonDouble(item, "height").to!string;
+      if (fieldName.length > 0)
+        result ~= [fieldName, page, x, y, width, height];
+    }
+  }
+  return result;
+}
+
+Json toJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+string getString(Json j, string key) {
+  if (!j.isObject)
+    return "";
+  auto v = key in j;
+  if (v is null)
+    return "";
+  if ((*v).isString)
+    return (*v).get!string;
+  return "";
+}
+
+bool getBoolean(Json j, string key, bool default_ = false) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isBoolean)
+    return (*v).get!bool;
+  return default_;
+}
+
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+
+
+double jsonDouble(Json j, string key, double default_ = 0.0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isFloat)
+    return (*v).get!double;
+  if ((*v).isInteger)
+    return cast(double)(*v).get!long;
+  return default_;
+}
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return null;
+
+  if (!j.hasKey(key))
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+
+  string[] result;
+  foreach (item; v.toArray) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+string[][] jsonKeyValuePairs(Json j, string key) {
+  if (!j.isObject)
+    return null;
+
+  if (!j.hasKey(key))
+    return null;
+  
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+  
+  string[][] result;
+  foreach (item; v.toArray) {
+    if (item.isObject) {
+      auto k = item.getString("key");
+      auto val = item.getString("value");
+      if (k.length > 0)
+        result ~= [k, val];
+    }
+  }
+  return result;
+}
+
+Json stringsToJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+string getString(Json j, string key) {
+  if (!j.isObject)
+    return "";
+  auto v = key in j;
+  if (v is null)
+    return "";
+  if ((*v).isString)
+    return (*v).get!string;
+  return "";
+}
+
+bool getBoolean(Json j, string key, bool default_ = false) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isBoolean)
+    return (*v).get!bool;
+  return default_;
+}
+
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+Json toJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+/// Serialize a struct to JSON.
+Json toJsonValue(T)(T val) {
+  auto j = Json.emptyObject;
+  static foreach (i, field; T.tupleof) {
+    {
+      enum name = __traits(identifier, T.tupleof[i]);
+      alias FT = typeof(field);
+      static if (is(FT == string))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == bool))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == string[])) {
+        auto arr = Json.emptyArray;
+        foreach (s; val.tupleof[i])
+          arr ~= Json(s);
+        j[name] = arr;
+      }
+      else static if (is(FT == enum)) {
+        // import std.conv : to;
+
+        j[name] = Json(val.tupleof[i].to!string);
+      }
+    }
+  }
+  return j;
+}
+
+/// Serialize an array of structs.
+Json toJsonArray(T)(T[] items) {
+  auto arr = Json.emptyArray;
+  foreach (item; items)
+    arr ~= toJsonValue(item);
+  return arr;
+}
+
+/// Read a string field from JSON, or return default.
+string getString(Json j, string key) {
+  if (j.type == Json.Type.object) {
+    auto val = key in j;
+    if (val !is null && (*val).isString)
+      return (*val).get!string;
+  }
+  return "";
+}
+
+/// Read a string array from JSON.
+string[] getStringArray(Json j, string key) {
+  string[] result;
+  if (j.type == Json.Type.object) {
+    auto val = key in j;
+    if (val !is null && (*val).type == Json.Type.array) {
+      foreach (item; *val) {
+        if (item.isString)
+          result ~= item.get!string;
+      }
+    }
+  }
+  return result;
+}
+/// Extract a string-to-string map from a Json object.
+/* string[string] jsonStrMap(Json j, string key) {
+  if (!j.isObject)
+    return (string[string]).init;
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.object)
+    return (string[string]).init;
+
+  string[string] result;
+  foreach (string k, val; *v) {
+    if (val.isString)
+      result[k] = val.get!string;
+  }
+  return result;
+}
+ */
+
+// /// Extract an ID from the end of a URI path.
+// string extractIdFromPath(string uri) {
+//   // import std.string : lastIndexOf;
+//   auto idx = uri.lastIndexOf('/');
+//   if (idx < 0 || idx + 1 >= uri.length)
+//     return "";
+//   auto rest = uri[idx + 1 .. $];
+//   auto qidx = rest.lastIndexOf('?');
+//   return qidx > 0 ? rest[0 .. qidx] : rest;
+// }
+
+// /// Serialize a string array to Json array.
+// Json serializeStrArray(string[] arr) {
+//   auto result = Json.emptyArray;
+//   foreach (s; arr)
+//     result ~= Json(s);
+//   return result;
+// }
+
+// /// Serialize a string[string] map to Json object.
+// Json serializeStrMap(string[string] map) {
+//   auto result = Json.emptyObject;
+//   foreach (k, v; map)
+//     result[k] = Json(v);
+//   return result;
+// }
+/// Extract a string[string] map from a Json object.
+string[string] jsonStrMap(Json j, string key) {
+  if (!j.isObject)
+    return (string[string]).init;
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.object)
+    return (string[string]).init;
+
+  string[string] result;
+  foreach (string k, val; *v) {
+    if (val.isString)
+      result[k] = val.get!string;
+  }
+  return result;
+}
+
+/// Convert a string array to a Json array.
+
+
+/// Convert a string[string] map to a Json object.
+Json toJsonObject(const(string[string]) map) {
+  auto jobj = Json.emptyObject;
+  foreach (k, v; map)
+    jobj[k] = Json(v);
+  return jobj;
+}
+// /// Extract a string-to-string map from a Json object.
+// string[string] jsonStrMap(Json j, string key) {
+//   if (!j.isObject)
+//     return (string[string]).init;
+//   auto v = key in j;
+//   if (v is null || (*v).type != Json.Type.object)
+//     return (string[string]).init;
+
+//   string[string] result;
+//   foreach (string k, val; *v) {
+//     if (val.isString)
+//       result[k] = val.get!string;
+//   }
+//   return result;
+// }
+
+
+// /// Serialize a string-to-string map to Json.
+// Json serializeStrMap(string[string] map) {
+//   auto j = Json.emptyObject;
+//   foreach (k, v; map)
+//     j[k] = Json(v);
+//   return j;
+// }
+
+// /// Serialize a string array to Json.
+// Json serializeStrArray(string[] arr) {
+//   auto j = Json.emptyArray;
+//   foreach (s; arr)
+//     j ~= Json(s);
+//   return j;
+// }
+/// Extract a ushort field from a Json object.
+ushort getUshort(Json j, string key, ushort default_ = 0) {
+  return cast(ushort) jsonLong(j, key, default_);
+}
+
+/// Extract the last path segment from a URI (for wildcard routes).
+string extractIdFromPath(string uri) {
+  // Strip query string
+  // import std.string : indexOf;
+  auto qpos = uri.indexOf('?');
+  string path = qpos >= 0 ? uri[0 .. qpos] : uri;
+
+  // Strip trailing slash
+  if (path.length > 0 && path[$ - 1] == '/')
+    path = path[0 .. $ - 1];
+
+  // Find last slash
+  auto spos = path.lastIndexOf('/');
+  if (spos >= 0 && spos + 1 < path.length)
+    return path[spos + 1 .. $];
+  return path;
+}
+
+
+

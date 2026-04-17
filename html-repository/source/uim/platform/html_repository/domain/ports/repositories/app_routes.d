@@ -9,10 +9,15 @@ import uim.platform.html_repository.domain.entities.app_route;
 import uim.platform.html_repository.domain.types;
 
 interface AppRouteRepository {
+  bool existsById(AppRouteId id);
   AppRoute findById(AppRouteId id);
+
+  bool existsByPathPrefix(TenantId tenantId, string pathPrefix);
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix);
+
   AppRoute[] findByApp(HtmlAppId appId);
   AppRoute[] findByTenant(TenantId tenantId);
+
   void save(AppRoute route);
   void update(AppRoute route);
   void remove(AppRouteId id);

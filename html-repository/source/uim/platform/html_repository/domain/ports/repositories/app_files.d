@@ -9,11 +9,16 @@ import uim.platform.html_repository.domain.entities.app_file;
 import uim.platform.html_repository.domain.types;
 
 interface AppFileRepository {
+  bool existsById(AppFileId id);
   AppFile findById(AppFileId id);
+  
+  bool existsByPath(AppVersionId versionId, string filePath);
   AppFile findByPath(AppVersionId versionId, string filePath);
+
   AppFile[] findByVersion(AppVersionId versionId);
   AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
   AppFile[] findByTenant(TenantId tenantId);
+  
   void save(AppFile file);
   void update(AppFile file);
   void remove(AppFileId id);

@@ -9,11 +9,16 @@ import uim.platform.html_repository.domain.entities.app_version;
 import uim.platform.html_repository.domain.types;
 
 interface AppVersionRepository {
+  bool existsById(AppVersionId id);
   AppVersion findById(AppVersionId id);
+
+  bool existsLatest(HtmlAppId appId);
   AppVersion findLatest(HtmlAppId appId);
+  
   AppVersion[] findByApp(HtmlAppId appId);
   AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status);
   AppVersion[] findByTenant(TenantId tenantId);
+  
   void save(AppVersion ver);
   void update(AppVersion ver);
   void remove(AppVersionId id);

@@ -6,6 +6,5 @@
 module uim.platform.html_repository.presentation.http;
 
 public {
-  import uim.platform.html_repository.presentation.http.json_utils;
   import uim.platform.html_repository.presentation.http.controllers;
 }

@@ -9,11 +9,14 @@ import uim.platform.html_repository.domain.entities.deployment_record;
 import uim.platform.html_repository.domain.types;
 
 interface DeploymentRecordRepository {
+  bool existsById(DeploymentRecordId id);
   DeploymentRecord findById(DeploymentRecordId id);
+
   DeploymentRecord[] findByApp(HtmlAppId appId);
   DeploymentRecord[] findByVersion(AppVersionId versionId);
   DeploymentRecord[] findByTenant(TenantId tenantId);
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status);
+
   void save(DeploymentRecord record);
   void update(DeploymentRecord record);
   void remove(DeploymentRecordId id);

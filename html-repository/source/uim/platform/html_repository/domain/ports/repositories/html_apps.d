@@ -9,8 +9,12 @@ import uim.platform.html_repository.domain.entities.html_app;
 import uim.platform.html_repository.domain.types;
 
 interface HtmlAppRepository {
+  bool existsById(HtmlAppId id);
   HtmlApp findById(HtmlAppId id);
+
+  bool existsByName(TenantId tenantId, string name);
   HtmlApp findByName(TenantId tenantId, string name);
+  
   HtmlApp[] findByTenant(TenantId tenantId);
   HtmlApp[] findBySpace(SpaceId spaceId);
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId);

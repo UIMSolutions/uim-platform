@@ -9,11 +9,16 @@ import uim.platform.html_repository.domain.entities.content_cache;
 import uim.platform.html_repository.domain.types;
 
 interface ContentCacheRepository {
+  bool existsById(ContentCacheId id);
   ContentCache findById(ContentCacheId id);
+
+  bool existsByFileId(AppFileId fileId);
   ContentCache findByFileId(AppFileId fileId);
+  
   ContentCache[] findByTenant(TenantId tenantId);
   ContentCache[] findByStatus(CacheStatus status);
   ContentCache[] findExpired(long currentTime);
+  
   void save(ContentCache cache);
   void update(ContentCache cache);
   void remove(ContentCacheId id);
