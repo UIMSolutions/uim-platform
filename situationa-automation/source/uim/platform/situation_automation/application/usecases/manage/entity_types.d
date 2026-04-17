@@ -43,7 +43,7 @@ class ManageEntityTypesUseCase : UIMUseCase {
         return CommandResult(true, e.id, "");
     }
 
-    EntityType get_(EntityTypeId id) {
+    EntityType getById(EntityTypeId id) {
         return repo.findById(id);
     }
 

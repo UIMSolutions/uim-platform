@@ -46,7 +46,7 @@ class ManageAutomationRulesUseCase : UIMUseCase {
         return CommandResult(true, rule.id, "");
     }
 
-    AutomationRule get_(AutomationRuleId id) {
+    AutomationRule getById(AutomationRuleId id) {
         return repo.findById(id);
     }
 

@@ -96,7 +96,7 @@ class SituationInstanceController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto i = uc.get_(id);
+            auto i = uc.getById(id);
             if (i.id.isEmpty) {
                 writeError(res, 404, "Situation instance not found");
                 return;

@@ -50,7 +50,7 @@ class ManageSituationInstancesUseCase : UIMUseCase {
         return CommandResult(true, i.id, "");
     }
 
-    SituationInstance get_(SituationInstanceId id) {
+    SituationInstance getById(SituationInstanceId id) {
         return repo.findById(id);
     }
 

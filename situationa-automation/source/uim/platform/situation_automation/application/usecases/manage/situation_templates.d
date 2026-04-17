@@ -49,7 +49,7 @@ class ManageSituationTemplatesUseCase : UIMUseCase {
         return CommandResult(true, t.id, "");
     }
 
-    SituationTemplate get_(SituationTemplateId id) {
+    SituationTemplate getById(SituationTemplateId id) {
         return repo.findById(id);
     }
 

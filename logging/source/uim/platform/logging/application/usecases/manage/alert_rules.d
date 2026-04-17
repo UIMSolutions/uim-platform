@@ -88,11 +88,11 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  AlertRule get_(string id) {
-    return get_(AlertRuleId(id));
+  AlertRule getById(string id) {
+    return getById(AlertRuleId(id));
   }
 
-  AlertRule get_(AlertRuleId id) {
+  AlertRule getById(AlertRuleId id) {
     return repo.findById(id);
   }
 

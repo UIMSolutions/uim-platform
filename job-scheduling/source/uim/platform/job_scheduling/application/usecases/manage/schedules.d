@@ -64,7 +64,7 @@ class ManageSchedulesUseCase : UIMUseCase {
         return CommandResult(true, s.id, "");
     }
 
-    Schedule get_(ScheduleId id, JobId jobId, TenantId tenantId) {
+    Schedule getById(ScheduleId id, JobId jobId, TenantId tenantId) {
         return repo.findById(id, jobId, tenantId);
     }
 

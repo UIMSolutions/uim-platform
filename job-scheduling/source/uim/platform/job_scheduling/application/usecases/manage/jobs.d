@@ -59,7 +59,7 @@ class ManageJobsUseCase : UIMUseCase {
         return CommandResult(true, job.id.toString, "");
     }
 
-    Job get_(TenantId tenantId, JobId id) {
+    Job getById(TenantId tenantId, JobId id) {
         return repo.findById(tenantId, id);
     }
 

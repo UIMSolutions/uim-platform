@@ -105,7 +105,7 @@ class ScheduleController : PlatformController {
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
 
-            auto s = uc.get_(ids[1], ids[0], tenantId);
+            auto s = uc.getById(ids[1], ids[0], tenantId);
             if (s.id.isEmpty) {
                 writeError(res, 404, "Schedule not found");
                 return;

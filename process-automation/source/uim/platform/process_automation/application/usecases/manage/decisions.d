@@ -46,7 +46,7 @@ class ManageDecisionsUseCase : UIMUseCase {
         return CommandResult(true, d.id, "");
     }
 
-    Decision get_(DecisionId id) {
+    Decision getById(DecisionId id) {
         return repo.findById(id);
     }
 

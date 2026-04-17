@@ -79,7 +79,7 @@ class RetentionRuleController : PlatformController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.get_(id);
+            auto r = uc.getById(id);
             if (r.id.isEmpty) {
                 writeError(res, 404, "Retention rule not found");
                 return;

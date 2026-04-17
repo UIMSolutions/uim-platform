@@ -46,7 +46,7 @@ class ManageVisibilitiesUseCase : UIMUseCase {
         return CommandResult(true, v.id, "");
     }
 
-    Visibility get_(VisibilityId id) {
+    Visibility getById(VisibilityId id) {
         return repo.findById(id);
     }
 

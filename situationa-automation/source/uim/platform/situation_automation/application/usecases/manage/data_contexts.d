@@ -45,7 +45,7 @@ class ManageDataContextsUseCase : UIMUseCase {
         return CommandResult(true, d.id, "");
     }
 
-    DataContext get_(DataContextId id) {
+    DataContext getById(DataContextId id) {
         return repo.findById(id);
     }
 

@@ -99,7 +99,7 @@ class PipelineController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto p = uc.get_(id);
+      auto p = uc.getById(id);
       if (p.id.isEmpty) {
         writeError(res, 404, "Pipeline not found");
         return;

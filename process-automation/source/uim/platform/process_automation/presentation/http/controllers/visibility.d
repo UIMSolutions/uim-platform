@@ -85,7 +85,7 @@ class VisibilityController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto v = uc.get_(id);
+            auto v = uc.getById(id);
             if (v.id.isEmpty) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;

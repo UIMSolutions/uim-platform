@@ -84,7 +84,7 @@ class TaskActionController : PlatformController {
             import std.conv : to;
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.get_(tenantId, id);
+            auto a = uc.getById(tenantId, id);
             if (a.id.isEmpty) {
                 writeError(res, 404, "Action not found");
                 return;

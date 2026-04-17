@@ -20,7 +20,7 @@ class TriggerController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/process-automation/triggers", &handleList);
         router.get("/api/v1/process-automation/triggers/*", &handleGet);
         router.post("/api/v1/process-automation/triggers", &handleCreate);
@@ -90,7 +90,7 @@ class TriggerController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto t = uc.get_(id);
+            auto t = uc.getById(id);
             if (t.id.isEmpty) {
                 writeError(res, 404, "Trigger not found");
                 return;

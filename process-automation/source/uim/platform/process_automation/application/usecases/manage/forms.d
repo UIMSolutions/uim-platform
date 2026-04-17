@@ -46,7 +46,7 @@ class ManageFormsUseCase : UIMUseCase {
         return CommandResult(true, f.id, "");
     }
 
-    Form get_(FormId id) {
+    Form getById(FormId id) {
         return repo.findById(id);
     }
 

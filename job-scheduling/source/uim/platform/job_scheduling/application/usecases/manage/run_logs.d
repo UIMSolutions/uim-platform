@@ -27,7 +27,7 @@ class ManageRunLogsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    RunLog get_(RunLogId id) {
+    RunLog getById(RunLogId id) {
         return repo.findById(id);
     }
 

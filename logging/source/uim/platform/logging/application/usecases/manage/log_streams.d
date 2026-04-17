@@ -60,7 +60,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  LogStream get_(LogStreamId id) {
+  LogStream getById(LogStreamId id) {
     return repo.findById(id);
   }
 

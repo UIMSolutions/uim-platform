@@ -45,7 +45,7 @@ class ManageProcessesUseCase : UIMUseCase {
         return CommandResult(true, p.id, "");
     }
 
-    Process get_(ProcessId id) {
+    Process getById(ProcessId id) {
         return repo.findById(id);
     }
 

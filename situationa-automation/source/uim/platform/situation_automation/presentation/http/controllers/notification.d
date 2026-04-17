@@ -91,7 +91,7 @@ class NotificationController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto n = uc.get_(id);
+            auto n = uc.getById(id);
             if (n.id.isEmpty) {
                 writeError(res, 404, "Notification not found");
                 return;

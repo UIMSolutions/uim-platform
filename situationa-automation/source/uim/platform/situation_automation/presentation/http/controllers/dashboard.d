@@ -86,7 +86,7 @@ class DashboardController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = uc.get_(id);
+            auto d = uc.getById(id);
             if (d.id.isEmpty) {
                 writeError(res, 404, "Dashboard not found");
                 return;

@@ -23,11 +23,11 @@ class ManageAlertsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
-  Alert get_(string id) {
-    return get_(AlertId(id));
+  Alert getById(string id) {
+    return getById(AlertId(id));
   }
 
-  Alert get_(AlertId id) {
+  Alert getById(AlertId id) {
     return repo.findById(id);
   }
 

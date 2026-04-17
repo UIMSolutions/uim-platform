@@ -18,7 +18,7 @@ class ManageTaskActionsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAction get_(string tenantId, string id) {
+    TaskAction getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

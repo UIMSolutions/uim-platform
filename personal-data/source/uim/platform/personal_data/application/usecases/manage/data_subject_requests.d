@@ -44,7 +44,7 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    DataSubjectRequest get_(DataSubjectRequestId id) {
+    DataSubjectRequest getById(DataSubjectRequestId id) {
         return repo.findById(id);
     }
 

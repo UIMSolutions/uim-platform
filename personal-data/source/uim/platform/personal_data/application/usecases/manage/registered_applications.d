@@ -41,7 +41,7 @@ class ManageRegisteredApplicationsUseCase : UIMUseCase {
         return CommandResult(true, app.id, "");
     }
 
-    RegisteredApplication get_(RegisteredApplicationId id) {
+    RegisteredApplication getById(RegisteredApplicationId id) {
         return repo.findById(id);
     }
 

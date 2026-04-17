@@ -88,7 +88,7 @@ class FormController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto f = uc.get_(id);
+            auto f = uc.getById(id);
             if (f.id.isEmpty) {
                 writeError(res, 404, "Form not found");
                 return;

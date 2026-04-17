@@ -83,7 +83,7 @@ class TaskCommentController : PlatformController {
             import std.conv : to;
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = uc.get_(tenantId, id);
+            auto c = uc.getById(tenantId, id);
             if (c.id.isEmpty) {
                 writeError(res, 404, "Comment not found");
                 return;

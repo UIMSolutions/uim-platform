@@ -44,7 +44,7 @@ class ManageNotificationsUseCase : UIMUseCase {
         return CommandResult(true, n.id, "");
     }
 
-    Notification get_(NotificationId id) {
+    Notification getById(NotificationId id) {
         return repo.findById(id);
     }
 

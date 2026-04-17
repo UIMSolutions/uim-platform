@@ -50,7 +50,7 @@ class ManageSituationActionsUseCase : UIMUseCase {
         return CommandResult(true, a.id, "");
     }
 
-    SituationAction get_(SituationActionId id) {
+    SituationAction getById(SituationActionId id) {
         return repo.findById(id);
     }
 

@@ -84,7 +84,7 @@ class ManagePipelinesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  Pipeline get_(PipelineId id) {
+  Pipeline getById(PipelineId id) {
     return repo.findById(id);
   }
 

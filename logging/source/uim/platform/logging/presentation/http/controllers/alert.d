@@ -64,7 +64,7 @@ class AlertController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto a = uc.get_(id);
+      auto a = uc.getById(id);
       if (a.id.isEmpty) {
         writeError(res, 404, "Alert not found");
         return;

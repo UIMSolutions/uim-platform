@@ -32,7 +32,7 @@ class ConfigurationController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto config = uc.get_(tenantId);
+            auto config = uc.getById(tenantId);
 
             auto resp = Json.emptyObject;
             resp["defaultRetries"] = Json(config.defaultRetries);

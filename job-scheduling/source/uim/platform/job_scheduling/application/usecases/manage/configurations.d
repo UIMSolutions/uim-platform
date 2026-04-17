@@ -26,7 +26,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    Configuration get_(TenantId tenantId) {
+    Configuration getById(TenantId tenantId) {
         if (!repo.existsByTenant(tenantId)) {
             // Return default configuration
             Configuration c;

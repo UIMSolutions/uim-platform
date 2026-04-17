@@ -48,7 +48,7 @@ class ManageTriggersUseCase : UIMUseCase {
         return CommandResult(true, t.id, "");
     }
 
-    Trigger get_(TriggerId id) {
+    Trigger getById(TriggerId id) {
         return repo.findById(id);
     }
 

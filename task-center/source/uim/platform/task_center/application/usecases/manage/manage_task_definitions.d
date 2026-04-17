@@ -18,7 +18,7 @@ class ManageTaskDefinitionsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    TaskDefinition get_(string tenantId, string id) {
+    TaskDefinition getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

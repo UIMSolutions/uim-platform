@@ -47,7 +47,7 @@ class ManageAutomationsUseCase : UIMUseCase {
         return CommandResult(true, a.id, "");
     }
 
-    Automation get_(AutomationId id) {
+    Automation getById(AutomationId id) {
         return repo.findById(id);
     }
 

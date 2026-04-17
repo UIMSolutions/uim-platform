@@ -90,7 +90,7 @@ class UserTaskFilterController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto f = uc.get_(tenantId, id);
+            auto f = uc.getById(tenantId, id);
             if (f.id.isEmpty) {
                 writeError(res, 404, "Filter not found");
                 return;

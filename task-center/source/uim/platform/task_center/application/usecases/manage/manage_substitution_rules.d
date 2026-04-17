@@ -18,7 +18,7 @@ class ManageSubstitutionRulesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    SubstitutionRule get_(string tenantId, string id) {
+    SubstitutionRule getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

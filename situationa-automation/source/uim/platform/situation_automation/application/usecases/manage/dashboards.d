@@ -43,7 +43,7 @@ class ManageDashboardsUseCase : UIMUseCase {
         return CommandResult(true, d.id, "");
     }
 
-    Dashboard get_(DashboardId id) {
+    Dashboard getById(DashboardId id) {
         return repo.findById(id);
     }
 

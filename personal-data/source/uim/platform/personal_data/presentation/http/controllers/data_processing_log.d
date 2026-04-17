@@ -90,7 +90,7 @@ class DataProcessingLogController : PlatformController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto l = uc.get_(id);
+            auto l = uc.getById(id);
             if (l.id.isEmpty) {
                 writeError(res, 404, "Processing log entry not found");
                 return;

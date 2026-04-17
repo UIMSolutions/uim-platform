@@ -44,7 +44,7 @@ class ManagePersonalDataRecordsUseCase : UIMUseCase {
         return CommandResult(true, rec.id, "");
     }
 
-    PersonalDataRecord get_(PersonalDataRecordId id) {
+    PersonalDataRecord getById(PersonalDataRecordId id) {
         return repo.findById(id);
     }
 

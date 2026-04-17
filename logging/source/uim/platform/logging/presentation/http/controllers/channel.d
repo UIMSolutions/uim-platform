@@ -89,7 +89,7 @@ class ChannelController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto ch = uc.get_(id);
+      auto ch = uc.getById(id);
       if (ch.id.isEmpty) {
         writeError(res, 404, "Notification channel not found");
         return;

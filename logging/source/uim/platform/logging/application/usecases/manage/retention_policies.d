@@ -71,7 +71,7 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  RetentionPolicy get_(RetentionPolicyId id) {
+  RetentionPolicy getById(RetentionPolicyId id) {
     return repo.findById(id);
   }
 

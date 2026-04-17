@@ -18,7 +18,7 @@ class ManageUserTaskFiltersUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    UserTaskFilter get_(string tenantId, string id) {
+    UserTaskFilter getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

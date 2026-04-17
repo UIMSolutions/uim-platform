@@ -18,7 +18,7 @@ class ManageTaskProvidersUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    TaskProvider get_(string tenantId, string id) {
+    TaskProvider getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

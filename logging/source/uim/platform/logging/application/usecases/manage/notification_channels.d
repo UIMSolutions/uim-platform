@@ -81,11 +81,11 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  NotificationChannel get_(string id) {
-    return get_(NotificationChannelId(id));
+  NotificationChannel getById(string id) {
+    return getById(NotificationChannelId(id));
   }
 
-  NotificationChannel get_(NotificationChannelId id) {
+  NotificationChannel getById(NotificationChannelId id) {
     return repo.findById(id);
   }
 

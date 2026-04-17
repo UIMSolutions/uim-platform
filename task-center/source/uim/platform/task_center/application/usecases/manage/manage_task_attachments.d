@@ -18,7 +18,7 @@ class ManageTaskAttachmentsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAttachment get_(string tenantId, string id) {
+    TaskAttachment getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

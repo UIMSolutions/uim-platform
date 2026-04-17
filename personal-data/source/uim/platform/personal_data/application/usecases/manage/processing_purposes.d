@@ -44,7 +44,7 @@ class ManageProcessingPurposesUseCase : UIMUseCase {
         return CommandResult(true, p.id, "");
     }
 
-    ProcessingPurpose get_(ProcessingPurposeId id) {
+    ProcessingPurpose getById(ProcessingPurposeId id) {
         return repo.findById(id);
     }
 

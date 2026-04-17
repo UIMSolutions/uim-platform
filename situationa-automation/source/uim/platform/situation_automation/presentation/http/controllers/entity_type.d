@@ -86,7 +86,7 @@ class EntityTypeController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto et = uc.get_(id);
+            auto et = uc.getById(id);
             if (et.id.isEmpty) {
                 writeError(res, 404, "Entity type not found");
                 return;

@@ -96,7 +96,7 @@ class PersonalDataRecordController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.get_(id);
+            auto r = uc.getById(id);
             if (r.id.isEmpty) {
                 writeError(res, 404, "Personal data record not found");
                 return;

@@ -18,7 +18,7 @@ class ManageTaskCommentsUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    TaskComment get_(string tenantId, string id) {
+    TaskComment getById(string tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 

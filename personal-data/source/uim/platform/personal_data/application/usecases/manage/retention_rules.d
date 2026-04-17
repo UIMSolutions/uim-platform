@@ -45,7 +45,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
         return CommandResult(true, rule.id, "");
     }
 
-    RetentionRule get_(RetentionRuleId id) {
+    RetentionRule getById(RetentionRuleId id) {
         return repo.findById(id);
     }
 
