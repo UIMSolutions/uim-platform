@@ -109,10 +109,38 @@ enum PermissionLevel {
   owner,
 }
 
+PermissionLevel parsePermissionLevel(string s) {
+  switch (s) {
+  case "read":
+    return PermissionLevel.read;
+  case "write":
+    return PermissionLevel.write;
+  case "admin":
+    return PermissionLevel.admin;
+  case "owner":
+    return PermissionLevel.owner;
+  default:
+    return PermissionLevel.read;
+  }
+}
+
 enum ShareType {
   internal,
   external,
   public_,
+}
+
+ShareType parseShareType(string s) {
+  switch (s) {
+  case "internal":
+    return ShareType.internal;
+  case "external":
+    return ShareType.external;
+  case "public":
+    return ShareType.public_;
+  default:
+    return ShareType.internal;
+  }
 }
 
 enum ShareStatus {
@@ -127,8 +155,34 @@ enum ResourceType {
   repository,
 }
 
+ResourceType parseResourceType(string s) {
+  switch (s) {
+  case "document":
+    return ResourceType.document;
+  case "folder":
+    return ResourceType.folder;
+  case "repository":
+    return ResourceType.repository;
+  default:
+    return ResourceType.document;
+  }
+}
+
 enum ContentCategory {
   file,
   link,
   reference,
+}
+
+ContentCategory parseContentCategory(string s) {
+  switch (s) {
+  case "file":
+    return ContentCategory.file;
+  case "link":
+    return ContentCategory.link;
+  case "reference":
+    return ContentCategory.reference;
+  default:
+    return ContentCategory.file;
+  }
 }

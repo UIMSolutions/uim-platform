@@ -14,7 +14,7 @@ struct ContextVariable {
 }
 
 struct ExecutionLog {
-    string stepId;
+    ExecutionLogId stepId;
     string stepName;
     string status;
     string message;

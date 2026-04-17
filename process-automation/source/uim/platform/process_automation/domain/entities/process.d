@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.entities.process;
 import uim.platform.process_automation.domain.types;
 
 struct ProcessStep {
-    string id;
+    ProcessStepId id;
     string name;
     StepType type;
     string description;

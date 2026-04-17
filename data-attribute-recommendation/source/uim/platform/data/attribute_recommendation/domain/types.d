@@ -98,6 +98,22 @@ enum DataType {
   custom
 }
 
+DataType parseDataType(string s) {
+  switch (s) {
+  case "product":
+    return DataType.product;
+  case "material":
+    return DataType.material;
+  case "customer":
+    return DataType.customer;
+  case "supplier":
+    return DataType.supplier;
+  case "custom":
+    return DataType.custom;
+  default:
+    return DataType.custom;
+  }
+}
 enum RecordStatus {
   pending,
   validated,
@@ -108,6 +124,19 @@ enum ModelType {
   classification,
   regression,
   recommendation
+}
+
+ModelType parseModelType(string s) {
+  switch (s) {
+  case "classification":
+    return ModelType.classification;
+  case "regression":
+    return ModelType.regression;
+  case "recommendation":
+    return ModelType.recommendation;
+  default:
+    return ModelType.classification;
+  }
 }
 
 enum ModelConfigStatus {

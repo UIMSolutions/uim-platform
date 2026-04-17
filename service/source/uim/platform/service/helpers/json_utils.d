@@ -45,6 +45,7 @@ double getDouble(Json j, string key) {
     return cast(double)v.get!long;
   return 0.0;
 }
+
 /// Extract a string array from a Json object.
 string[] getStringArray(Json json, string key) {
   if (!json.hasKey(key) || json[key] == Json(null))
@@ -458,16 +459,6 @@ Json toJsonArray(T)(T[] items) {
   return arr;
 }
 
-/// Read an integer field from JSON.
-long jsonLong(Json j, string key, long default_ = 0) {
-  if (j.isObject) {
-    auto val = key in j;
-    if (val !is null && (*val).isInteger)
-      return (*val).get!long;
-  }
-  return default_;
-}
-
 /// Read a uint field from JSON.
 uint jsonUint(Json j, string key, uint default_ = 0) {
   return cast(uint) jsonLong(j, key, default_);
@@ -659,42 +650,11 @@ Json toJsonArray(const(string[]) arr) {
 
 
 
-HealthCheckType parseHealthCheckType(string s) {
-  switch (s) {
-  case "http":
-    return HealthCheckType.http;
-  case "port":
-    return HealthCheckType.port;
-  case "process":
-    return HealthCheckType.process;
-  default:
-    return HealthCheckType.port;
-  }
-}
-
-RouteProtocol parseRouteProtocol(string s) {
-  switch (s) {
-  case "http":
-    return RouteProtocol.http;
-  case "tcp":
-    return RouteProtocol.tcp;
-  default:
-    return RouteProtocol.http;
-  }
-}
 
 
 
-BuildpackType parseBuildpackType(string s) {
-  switch (s) {
-  case "system":
-    return BuildpackType.system;
-  case "custom":
-    return BuildpackType.custom;
-  default:
-    return BuildpackType.system;
-  }
-}
+
+
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
   // import std.string : indexOf;
@@ -716,35 +676,9 @@ string extractIdFromPath(string uri) {
 
 // --- Enum parsers ---
 
-DataType parseDataType(string s) {
-  switch (s) {
-  case "product":
-    return DataType.product;
-  case "material":
-    return DataType.material;
-  case "customer":
-    return DataType.customer;
-  case "supplier":
-    return DataType.supplier;
-  case "custom":
-    return DataType.custom;
-  default:
-    return DataType.custom;
-  }
-}
 
-ModelType parseModelType(string s) {
-  switch (s) {
-  case "classification":
-    return ModelType.classification;
-  case "regression":
-    return ModelType.regression;
-  case "recommendation":
-    return ModelType.recommendation;
-  default:
-    return ModelType.classification;
-  }
-}
+
+
 /// Extract a double field from a Json object.
 double getDouble(Json j, string key, double default_ = 0.0) {
   if (!j.isObject)
@@ -831,8 +765,6 @@ int jsonInt(Json j, string key, int default_ = 0) {
     return cast(int)(*v).get!long;
   return default_;
 }
-
-
 
 string[] getStringArray(Json j, string key) {
   if (!j.isObject)
@@ -961,59 +893,6 @@ string extractIdFromPath(string uri) {
 
 // --- Enum parsers ---
 
-ContentCategory parseContentCategory(string s) {
-  switch (s) {
-  case "file":
-    return ContentCategory.file;
-  case "link":
-    return ContentCategory.link;
-  case "reference":
-    return ContentCategory.reference;
-  default:
-    return ContentCategory.file;
-  }
-}
-
-ShareType parseShareType(string s) {
-  switch (s) {
-  case "internal":
-    return ShareType.internal;
-  case "external":
-    return ShareType.external;
-  case "public":
-    return ShareType.public_;
-  default:
-    return ShareType.internal;
-  }
-}
-
-PermissionLevel parsePermissionLevel(string s) {
-  switch (s) {
-  case "read":
-    return PermissionLevel.read;
-  case "write":
-    return PermissionLevel.write;
-  case "admin":
-    return PermissionLevel.admin;
-  case "owner":
-    return PermissionLevel.owner;
-  default:
-    return PermissionLevel.read;
-  }
-}
-
-ResourceType parseResourceType(string s) {
-  switch (s) {
-  case "document":
-    return ResourceType.document;
-  case "folder":
-    return ResourceType.folder;
-  case "repository":
-    return ResourceType.repository;
-  default:
-    return ResourceType.document;
-  }
-}
 int jsonInt(Json j, string key, int default_ = 0) {
   if (!j.isObject)
     return default_;
@@ -1025,18 +904,18 @@ int jsonInt(Json j, string key, int default_ = 0) {
   return default_;
 }
 
-double getDouble(Json j, string key, double default_ = 0.0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isFloat)
-    return (*v).get!double;
-  if ((*v).isInteger)
-    return cast(double)(*v).get!long;
-  return default_;
-}
+// double getDouble(Json j, string key, double default_ = 0.0) {
+//   if (!j.isObject)
+//     return default_;
+//   auto v = key in j;
+//   if (v is null)
+//     return default_;
+//   if ((*v).isFloat)
+//     return (*v).get!double;
+//   if ((*v).isInteger)
+//     return cast(double)(*v).get!long;
+//   return default_;
+// }
 
 string[] getStringArray(Json j, string key) {
   if (!j.isObject)
@@ -1276,7 +1155,6 @@ int jsonInt(Json j, string key, int default_ = 0) {
 }
 
 
-
 string[] getStringArray(Json j, string key) {
   if (!j.isObject)
     return [];
@@ -1497,52 +1375,10 @@ string extractIdFromPath(string uri) {
 
 // --- Enum parsers ---
 
-SystemType parseSystemType(string s) {
-  switch (s) {
-  case "ias":
-    return SystemType.ias;
-  case "ldap":
-    return SystemType.ldap;
-  case "sap_hr":
-    return SystemType.sap_hr;
-  case "scim":
-    return SystemType.scim;
-  case "csv":
-    return SystemType.csv;
-  case "azure_ad":
-    return SystemType.azure_ad;
-  case "custom":
-    return SystemType.custom;
-  default:
-    return SystemType.custom;
-  }
-}
 
-SystemRole parseSystemRole(string s) {
-  switch (s) {
-  case "source":
-    return SystemRole.source;
-  case "target":
-    return SystemRole.target;
-  case "proxy":
-    return SystemRole.proxy;
-  default:
-    return SystemRole.source;
-  }
-}
 
-JobType parseJobType(string s) {
-  switch (s) {
-  case "full":
-    return JobType.full;
-  case "delta":
-    return JobType.delta;
-  case "simulate":
-    return JobType.simulate;
-  default:
-    return JobType.full;
-  }
-}
+
+
 /*
 string getString(Json j, string key) {
     if (!j.isObject)
@@ -1907,16 +1743,7 @@ int jsonInt(Json j, string key, int default_ = 0) {
     return default_;
 }
 
-long jsonLong(Json j, string key, long default_ = 0) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isInteger)
-        return (*v).get!long;
-    return default_;
-}
+
 
 double getDouble(Json j, string key, double default_ = 0.0) {
     if (!j.isObject)

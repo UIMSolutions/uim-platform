@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.entities.task;
 import uim.platform.process_automation.domain.types;
 
 struct TaskComment {
-    string id;
+    TaskCommentId id;
     string userId;
     string text;
     long createdAt;

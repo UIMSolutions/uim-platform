@@ -23,8 +23,7 @@ class ManageActionsUseCase : UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Action name is required");
 
-        auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (repo.existsById(r.id))
             return CommandResult(false, "", "Action already exists");
 
         Action a;
@@ -59,10 +58,10 @@ class ManageActionsUseCase : UIMUseCase {
     }
 
     CommandResult update(UpdateActionRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(r.id))
             return CommandResult(false, "", "Action not found");
 
+        auto existing = repo.findById(r.id);
         existing.name = r.name;
         existing.description = r.description;
         existing.baseUrl = r.baseUrl;
@@ -80,8 +79,7 @@ class ManageActionsUseCase : UIMUseCase {
     }
 
     CommandResult remove(ActionId id) {
-        auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(id))
             return CommandResult(false, "", "Action not found");
 
         repo.remove(id);

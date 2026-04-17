@@ -13,7 +13,7 @@ struct FormFieldOption {
 }
 
 struct FormField {
-    string id;
+    FormFieldId id;
     string name;
     string label;
     FieldType type;
@@ -27,7 +27,7 @@ struct FormField {
 }
 
 struct FormSection {
-    string id;
+    FormSectionId id;
     string title;
     string description;
     int sortOrder;

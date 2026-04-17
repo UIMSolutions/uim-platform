@@ -173,6 +173,18 @@ enum RouteProtocol {
   tcp,
 }
 
+RouteProtocol parseRouteProtocol(string s) {
+  switch (s) {
+  case "http":
+    return RouteProtocol.http;
+  case "tcp":
+    return RouteProtocol.tcp;
+  default:
+    return RouteProtocol.http;
+  }
+}
+
+
 /// Domain ownership scope.
 enum DomainScope {
   shared_,
@@ -198,9 +210,33 @@ enum BuildpackType {
   custom,
 }
 
+BuildpackType parseBuildpackType(string s) {
+  switch (s) {
+  case "system":
+    return BuildpackType.system;
+  case "custom":
+    return BuildpackType.custom;
+  default:
+    return BuildpackType.system;
+  }
+}
+
 /// Application health check strategy.
 enum HealthCheckType {
   http,
   port,
   process,
+}
+
+HealthCheckType parseHealthCheckType(string s) {
+  switch (s) {
+  case "http":
+    return HealthCheckType.http;
+  case "port":
+    return HealthCheckType.port;
+  case "process":
+    return HealthCheckType.process;
+  default:
+    return HealthCheckType.port;
+  }
 }

@@ -93,6 +93,26 @@ enum SystemType {
   custom
 }
 
+SystemType parseSystemType(string s) {
+  switch (s) {
+  case "ias":
+    return SystemType.ias;
+  case "ldap":
+    return SystemType.ldap;
+  case "sap_hr":
+    return SystemType.sap_hr;
+  case "scim":
+    return SystemType.scim;
+  case "csv":
+    return SystemType.csv;
+  case "azure_ad":
+    return SystemType.azure_ad;
+  case "custom":
+    return SystemType.custom;
+  default:
+    return SystemType.custom;
+  }
+}
 /// Operational status of a system connection.
 enum SystemStatus {
   active,
@@ -108,11 +128,37 @@ enum SystemRole {
   proxy
 }
 
+SystemRole parseSystemRole(string s) {
+  switch (s) {
+  case "source":
+    return SystemRole.source;
+  case "target":
+    return SystemRole.target;
+  case "proxy":
+    return SystemRole.proxy;
+  default:
+    return SystemRole.source;
+  }
+}
+
 /// Type of provisioning job.
 enum JobType {
   full,
   delta,
   simulate
+}
+
+JobType parseJobType(string s) {
+  switch (s) {
+  case "full":
+    return JobType.full;
+  case "delta":
+    return JobType.delta;
+  case "simulate":
+    return JobType.simulate;
+  default:
+    return JobType.full;
+  }
 }
 
 /// Status of a provisioning job.

@@ -194,6 +194,7 @@ enum DataType {
   all,
 }
 
+
 enum AlertCondition {
   contains,
   regex,

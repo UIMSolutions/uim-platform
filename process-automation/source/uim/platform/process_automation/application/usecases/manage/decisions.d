@@ -72,8 +72,7 @@ class ManageDecisionsUseCase : UIMUseCase {
     }
 
     CommandResult remove(DecisionId id) {
-        auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(id))
             return CommandResult(false, "", "Decision not found");
 
         repo.remove(id);

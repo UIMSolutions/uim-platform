@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.entities.decision;
 import uim.platform.process_automation.domain.types;
 
 struct DecisionColumn {
-    string id;
+    DecisionColumnId id;
     string name;
     string type;
     bool isInput;
@@ -17,7 +17,7 @@ struct DecisionColumn {
 }
 
 struct DecisionRow {
-    string id;
+    DecisionRowId id;
     string[] inputValues;
     string[] outputValues;
     int priority;

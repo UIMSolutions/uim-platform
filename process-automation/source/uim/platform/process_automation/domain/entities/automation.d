@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.entities.automation;
 import uim.platform.process_automation.domain.types;
 
 struct AutomationStep {
-    string id;
+    AutomationStepId id;
     string name;
     string type;
     string application;
@@ -20,7 +20,7 @@ struct AutomationStep {
 }
 
 struct AutomationRun {
-    string id;
+    AutomationRunId id;
     AutomationId automationId;
     AutomationRunStatus status;
     string triggeredBy;
