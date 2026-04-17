@@ -17,5 +17,5 @@ interface GroupRepository {
   void save(Group group);
   void update(Group group);
   void remove(GroupId id);
-  usize_t countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

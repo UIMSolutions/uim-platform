@@ -17,10 +17,6 @@ mixin(ShowModule!());
 class MemoryAuditRepository : AuditRepository {
   private AuditEvent[] store;
 
-  void save(AuditEvent event) {
-    store ~= event;
-  }
-
   AuditEvent[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return filterPaged((AuditEvent e) => e.tenantId == tenantId, offset, limit);
   }
@@ -45,8 +41,8 @@ class MemoryAuditRepository : AuditRepository {
         && e.timestamp >= from && e.timestamp <= to, offset, limit);
   }
 
-  usize_t countByTenant(TenantId tenantId) {
-    usize_t count;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count;
     foreach (e; store) {
       if (e.tenantId == tenantId)
         count++;
@@ -65,5 +61,9 @@ class MemoryAuditRepository : AuditRepository {
       }
     }
     return result;
+  }
+
+  void save(AuditEvent event) {
+    store ~= event;
   }
 }

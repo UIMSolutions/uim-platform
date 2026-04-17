@@ -72,7 +72,7 @@ class MemoryUserRepository : UserRepository {
     store.remove(id);
   }
 
-  usize_t countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return store.byValue().count!(u => u.tenantId == tenantId);
   }
 }

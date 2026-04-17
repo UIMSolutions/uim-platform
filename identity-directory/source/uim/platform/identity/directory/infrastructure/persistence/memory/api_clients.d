@@ -17,10 +17,16 @@ mixin(ShowModule!());
 class MemoryApiClientRepository : ApiClientRepository {
   private ApiClient[ApiClientId] store;
 
+  bool existsById(ApiClientId id) {
+    return (id in store) ? true : false;
+  }
+
   ApiClient findById(ApiClientId id) {
-    if (auto p = id in store)
-      return *p;
-    return ApiClient.init;
+    return existsById(id) ? store[id] : ApiClient.init;
+  }
+
+  bool existsByClientId(string clientId) {
+    return store.byValue().any!(c => c.clientId == clientId);{
   }
 
   ApiClient findByClientId(string clientId) {

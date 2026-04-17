@@ -21,5 +21,5 @@ interface UserRepository {
   void save(User user);
   void update(User user);
   void remove(UserId id);
-  usize_t countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

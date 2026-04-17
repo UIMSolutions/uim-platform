@@ -17,18 +17,33 @@ mixin(ShowModule!());
 class MemoryGroupRepository : GroupRepository {
   private Group[GroupId] store;
 
-  Group findById(GroupId id) {
-    if (auto p = id in store)
-      return *p;
-    return Group.init;
+  bool existsById(GroupId id) {
+    return (id in store) ? true : false;
   }
 
+  Group findById(GroupId id) {
+    return (id in store) ? store[id] : Group.init;
+  }
+
+  bool existsByDisplayName(TenantId tenantId, string displayName) {
+    return store.byValue().any!(g => g.tenantId == tenantId && g.displayName == displayName);
+  }
+  
   Group findByDisplayName(TenantId tenantId, string displayName) {
     foreach (g; store.byValue()) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
     return Group.init;
+  }
+
+  size_t countByTenant(TenantId tenantId) {
+    size_t count;
+    foreach (g; store.byValue()) {
+      if (g.tenantId == tenantId)
+        count++;
+    }
+    return count;
   }
 
   Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
@@ -63,14 +78,5 @@ class MemoryGroupRepository : GroupRepository {
 
   void remove(GroupId id) {
     store.remove(id);
-  }
-
-  usize_t countByTenant(TenantId tenantId) {
-    usize_t count;
-    foreach (g; store.byValue()) {
-      if (g.tenantId == tenantId)
-        count++;
-    }
-    return count;
   }
 }
