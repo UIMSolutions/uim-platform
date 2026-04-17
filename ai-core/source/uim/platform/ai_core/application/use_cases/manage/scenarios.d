@@ -49,7 +49,7 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  Scenario get_(ScenarioId id, ResourceGroupId rgId) {
+  Scenario getbyId(ScenarioId id, ResourceGroupId rgId) {
     return repo.findById(id, rgId);
   }
 

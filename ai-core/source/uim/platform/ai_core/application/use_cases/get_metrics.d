@@ -80,7 +80,7 @@ class GetMetricsUseCase : UIMUseCase {
     return repo.findByExecution(execId, rgId);
   }
 
-  Metric get_(MetricId id, ResourceGroupId rgId) {
+  Metric getbyId(MetricId id, ResourceGroupId rgId) {
     return repo.findById(id, rgId);
   }
 

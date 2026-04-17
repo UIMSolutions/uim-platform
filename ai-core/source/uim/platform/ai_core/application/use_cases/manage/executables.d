@@ -54,7 +54,7 @@ class ManageExecutablesUseCase : UIMUseCase {
         return CommandResult(true, e.id, "");
     }
 
-    Executable get_(ExecutableId id, ResourceGroupId rgId) {
+    Executable getbyId(ExecutableId id, ResourceGroupId rgId) {
         return repo.findById(id, rgId);
     }
 

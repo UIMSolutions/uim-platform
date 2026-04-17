@@ -72,7 +72,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
     return CommandResult(true, rg.id, "");
   }
 
-  ResourceGroup get_(ResourceGroupId id) {
+  ResourceGroup getbyId(ResourceGroupId id) {
     return repo.findById(id);
   }
 

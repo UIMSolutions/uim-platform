@@ -75,7 +75,7 @@ class ManageArtifactsUseCase : UIMUseCase {
     return CommandResult(true, a.id, "");
   }
 
-  Artifact get_(ArtifactId id, ResourceGroupId rgId) {
+  Artifact getbyId(ArtifactId id, ResourceGroupId rgId) {
     return repo.findById(id, rgId);
   }
 

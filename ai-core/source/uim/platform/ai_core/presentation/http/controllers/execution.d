@@ -76,7 +76,7 @@ class ExecutionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
-      auto ex = uc.get_(id, rgId);
+      auto ex = uc.getbyId(id, rgId);
       if (ex.id.isEmpty) {
         writeError(res, 404, "Execution not found");
         return;

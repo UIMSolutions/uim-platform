@@ -89,7 +89,7 @@ class ResourceGroupController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto rg = uc.get_(id);
+      auto rg = uc.getbyId(id);
       if (rg.id.isEmpty) {
         writeError(res, 404, "Resource group not found");
         return;

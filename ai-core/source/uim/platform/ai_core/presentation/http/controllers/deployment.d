@@ -77,7 +77,7 @@ class DeploymentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
-      auto d = uc.get_(id, rgId);
+      auto d = uc.getbyId(id, rgId);
       if (d.id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;
