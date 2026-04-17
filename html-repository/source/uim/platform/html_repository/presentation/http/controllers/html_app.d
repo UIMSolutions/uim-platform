@@ -85,7 +85,7 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto entry = uc.get_(tenantId, id);
+      auto entry = uc.getById(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "App not found");
         return;

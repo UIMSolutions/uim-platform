@@ -41,7 +41,7 @@ class ManageContentCacheUseCase : UIMUseCase {
         return CommandResult(true, entry.id, "");
     }
 
-    ContentCache get_(ContentCacheId id) {
+    ContentCache getById(ContentCacheId id) {
         return repo.findById(id);
     }
 

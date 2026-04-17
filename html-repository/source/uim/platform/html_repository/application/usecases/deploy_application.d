@@ -66,7 +66,7 @@ class DeployApplicationUseCase : UIMUseCase {
         return CommandResult(true, record.id, "");
     }
 
-    DeploymentRecord get_(DeploymentRecordId id) {
+    DeploymentRecord getById(DeploymentRecordId id) {
         return deploymentRepo.findById(id);
     }
 

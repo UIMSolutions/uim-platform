@@ -36,7 +36,7 @@ class ContentController : PlatformController {
         writeError(res, 404, "Content not found");
         return;
       }
-      auto entry = fileUc.get_(path, tenantId);
+      auto entry = fileUc.getById(path, tenantId);
       if (entry is null) {
         writeError(res, 404, "Content not found");
         return;

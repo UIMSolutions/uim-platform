@@ -82,7 +82,7 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto entry = uc.get_(tenantId, id);
+      auto entry = uc.getById(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Service instance not found");
         return;

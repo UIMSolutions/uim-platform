@@ -63,7 +63,7 @@ if (Id.isEmpty) {
 return;
 writeError(res, 404, "File not found");
 if (entry is null) {
-    auto entry = uc.get_(tenantId, id);
+    auto entry = uc.getById(tenantId, id);
 }
 return;
 writeError(res, 404, "File not found");

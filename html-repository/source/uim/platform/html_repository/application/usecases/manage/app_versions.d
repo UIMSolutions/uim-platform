@@ -56,7 +56,7 @@ class ManageAppVersionsUseCase : UIMUseCase {
         return CommandResult(true, ver.id, "");
     }
 
-    AppVersion get_(AppVersionId id) {
+    AppVersion getById(AppVersionId id) {
         return repo.findById(id);
     }
 

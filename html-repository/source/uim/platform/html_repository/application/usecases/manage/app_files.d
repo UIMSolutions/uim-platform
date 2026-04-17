@@ -65,7 +65,7 @@ class ManageAppFilesUseCase : UIMUseCase {
         return CommandResult(true, file.id, "");
     }
 
-    AppFile get_(AppFileId id) {
+    AppFile getById(AppFileId id) {
         return repo.findById(id);
     }
 

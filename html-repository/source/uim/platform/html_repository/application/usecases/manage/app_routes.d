@@ -60,7 +60,7 @@ class ManageAppRoutesUseCase : UIMUseCase {
         return CommandResult(true, route.id, "");
     }
 
-    AppRoute get_(AppRouteId id) {
+    AppRoute getById(AppRouteId id) {
         return repo.findById(id);
     }
 

@@ -63,7 +63,7 @@ class ManageHtmlAppsUseCase : UIMUseCase {
         return CommandResult(true, app.id, "");
     }
 
-    HtmlApp get_(HtmlAppId id) {
+    HtmlApp getById(HtmlAppId id) {
         return repo.findById(id);
     }
 

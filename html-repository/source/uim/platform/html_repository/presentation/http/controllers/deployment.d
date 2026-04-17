@@ -83,7 +83,7 @@ class DeploymentController : PlatformController {
         writeError(res, 404, "Deployment not found");
         return;
       }
-      auto entry = getHistory.get_(tenantId, id);
+      auto entry = getHistory.getById(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Deployment not found");
         return;

@@ -58,7 +58,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
         return CommandResult(true, inst.id, "");
     }
 
-    ServiceInstance get_(ServiceInstanceId id) {
+    ServiceInstance getById(ServiceInstanceId id) {
         return repo.findById(id);
     }
 
