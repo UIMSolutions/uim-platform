@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.infrastructure.persistence.memory.run_log;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.run_log;
-import uim.platform.job_scheduling.domain.ports.repositories.run_logs;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.run_log;
+// import uim.platform.job_scheduling.domain.ports.repositories.run_logs;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.job_scheduling
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryRunLogRepository : RunLogRepository {
     private RunLog[] store;
 

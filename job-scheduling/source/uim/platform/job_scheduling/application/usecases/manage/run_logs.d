@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.usecases.manage.run_logs;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.run_log;
-import uim.platform.job_scheduling.domain.ports.repositories.run_logs;
-import uim.platform.job_scheduling.domain.services.run_tracker;
-import uim.platform.job_scheduling.application.dto;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.run_log;
+// import uim.platform.job_scheduling.domain.ports.repositories.run_logs;
+// import uim.platform.job_scheduling.domain.services.run_tracker;
+// import uim.platform.job_scheduling.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
 
-alias RunLog = uim.platform.job_scheduling.domain.entities.run_log.RunLog;
+// alias RunLog = uim.platform.job_scheduling.domain.entities.run_log.RunLog;
+import uim.platform.job_scheduling
 
+mixin(ShowModule!());
+
+@safe:
 class ManageRunLogsUseCase : UIMUseCase {
     private RunLogRepository repo;
 

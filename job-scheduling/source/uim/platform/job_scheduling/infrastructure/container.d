@@ -5,27 +5,31 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.infrastructure.container;
 
-import uim.platform.job_scheduling.infrastructure.config;
+// import uim.platform.job_scheduling.infrastructure.config;
 
-// Repositories
-import uim.platform.job_scheduling.infrastructure.persistence.memory.job;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.run_log;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.configuration;
+// // Repositories
+// import uim.platform.job_scheduling.infrastructure.persistence.memory.job;
+// import uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
+// import uim.platform.job_scheduling.infrastructure.persistence.memory.run_log;
+// import uim.platform.job_scheduling.infrastructure.persistence.memory.configuration;
 
-// Use Cases
-import uim.platform.job_scheduling.application.usecases.manage.jobs;
-import uim.platform.job_scheduling.application.usecases.manage.schedules;
-import uim.platform.job_scheduling.application.usecases.manage.run_logs;
-import uim.platform.job_scheduling.application.usecases.manage.configurations;
+// // Use Cases
+// import uim.platform.job_scheduling.application.usecases.manage.jobs;
+// import uim.platform.job_scheduling.application.usecases.manage.schedules;
+// import uim.platform.job_scheduling.application.usecases.manage.run_logs;
+// import uim.platform.job_scheduling.application.usecases.manage.configurations;
 
-// Controllers
-import uim.platform.job_scheduling.presentation.http.controllers.job;
-import uim.platform.job_scheduling.presentation.http.controllers.schedule;
-import uim.platform.job_scheduling.presentation.http.controllers.run_log;
-import uim.platform.job_scheduling.presentation.http.controllers.configuration;
-import uim.platform.job_scheduling.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.job_scheduling.presentation.http.controllers.job;
+// import uim.platform.job_scheduling.presentation.http.controllers.schedule;
+// import uim.platform.job_scheduling.presentation.http.controllers.run_log;
+// import uim.platform.job_scheduling.presentation.http.controllers.configuration;
+// import uim.platform.job_scheduling.presentation.http.controllers.health;
+import uim.platform.job_scheduling
 
+mixin(ShowModule!());
+
+@safe:
 struct Container {
     // Repositories (driven adapters)
     MemoryJobRepository jobRepo;

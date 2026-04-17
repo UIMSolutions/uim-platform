@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.schedule;
-import uim.platform.job_scheduling.domain.ports.repositories.schedules;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.schedule;
+// import uim.platform.job_scheduling.domain.ports.repositories.schedules;
 
-import std.algorithm : filter, canFind;
-import std.array : array;
-import std.uni : toLower;
+// import std.algorithm : filter, canFind;
+// import std.array : array;
+// import std.uni : toLower;
+import uim.platform.job_scheduling
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryScheduleRepository : ScheduleRepository {
     private Schedule[] store;
 
