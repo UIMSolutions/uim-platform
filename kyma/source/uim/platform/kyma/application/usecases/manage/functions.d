@@ -35,17 +35,14 @@ class ManageFunctionsUseCase : UIMUseCase {
       return CommandResult(false, "",
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     ServerlessFunction serverlessFunction;
-    serverlessFunction.functionId = id;
+    serverlessFunction.id = randomUUID();
     serverlessFunction.namespaceId = request.namespaceId;
     serverlessFunction.environmentId = request.environmentId;
     serverlessFunction.tenantId = request.tenantId;
     serverlessFunction.name = request.name;
     serverlessFunction.description = request.description;
-    serverlessFunction.runtime = parseRuntime(request.runtime);
+    serverlessFunction.runtime = request.runtime.toRuntime();
     serverlessFunction.sourceCode = request.sourceCode;
     serverlessFunction.handler = request.handler;
     serverlessFunction.dependencies = request.dependencies;
@@ -69,10 +66,10 @@ class ManageFunctionsUseCase : UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.save(serverlessFunction);
-    return CommandResult(true, serverlessFunction.functionId.toString, "");
+    return CommandResult(true, serverlessFunction.id.toString, "");
   }
 
-  CommandResult updateFunction(FunctionId functionId, UpdateFunctionRequest req) {
+  CommandResult updateFunction(ServerlessFunctionId functionId, UpdateFunctionRequest req) {
     if (!functionRepository.existsById(functionId))
       return CommandResult(false, "", "Function not found");
 
@@ -113,10 +110,10 @@ class ManageFunctionsUseCase : UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.update(fn);
-    return CommandResult(true, functionId.toString(), "");
+    return CommandResult(true, fn.id.toString, "");
   }
 
-  ServerlessFunction getFunction(FunctionId functionId) {
+  ServerlessFunction getFunction(ServerlessFunctionId functionId) {
     return functionRepository.findById(functionId);
   }
 
@@ -128,7 +125,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     return functionRepository.findByEnvironment(environmentId);
   }
 
-  CommandResult deleteFunction(FunctionId functionId) {
+  CommandResult deleteFunction(ServerlessFunctionId functionId) {
     if (!functionRepository.existsById(functionId))
       return CommandResult(false, "", "Function not found");
 
@@ -137,20 +134,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, fn.functionId.toString(), "");
   }
 
-  private FunctionRuntime parseRuntime(string runtimeName) {
-    switch (runtimeName) {
-    case "nodejs18":
-      return FunctionRuntime.nodejs18;
-    case "nodejs20":
-      return FunctionRuntime.nodejs20;
-    case "python39":
-      return FunctionRuntime.python39;
-    case "python312":
-      return FunctionRuntime.python312;
-    default:
-      return FunctionRuntime.nodejs20;
-    }
-  }
+
 
   private ScalingType parseScalingType(string scalingTypeName) {
     switch (scalingTypeName) {

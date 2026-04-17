@@ -100,15 +100,6 @@ struct ApplicationId {
   mixin DomainId;
 }
 
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
-
 struct ClusterId {
   string value;
 
@@ -119,3 +110,12 @@ struct ClusterId {
   mixin DomainId;
 }
 
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}

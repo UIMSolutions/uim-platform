@@ -17,13 +17,13 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryModuleRepository : ModuleRepository {
-  private KymaModule[ModuleId] store;
+  private KymaModule[KymaModuleId] store;
 
-  bool existsById(ModuleId moduleId) {
+  bool existsById(KymaModuleId moduleId) {
     return (moduleId in store) ? true : false;
   }
 
-  KymaModule findById(ModuleId moduleId) {
+  KymaModule findById(KymaModuleId moduleId) {
     return existsById(moduleId) ? store[moduleId] : KymaModule.init;
   }
 
@@ -51,14 +51,14 @@ class MemoryModuleRepository : ModuleRepository {
   }
 
   void save(KymaModule mod) {
-    store[mod.moduleId] = mod;
+    store[mod.id] = mod;
   }
 
   void update(KymaModule mod) {
-    store[mod.moduleId] = mod;
+    store[mod.id] = mod;
   }
 
-  void remove(ModuleId moduleId) {
+  void remove(KymaModuleId moduleId) {
     store.remove(moduleId);
   }
 }

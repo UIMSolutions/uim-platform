@@ -53,12 +53,12 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   void save(ApiRule rule) {
-    store[rule.ruleId] = rule;
+    store[rule.id] = rule;
   }
 
   void update(ApiRule rule) {
-    if (existsById(rule.ruleId))
-      store[rule.ruleId] = rule;
+    if (existsById(rule.id))
+      store[rule.id] = rule;
   }
 
   void remove(ApiRuleId ruleId) {

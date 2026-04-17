@@ -44,7 +44,7 @@ class ManageModulesUseCase : UIMUseCase {
     mod.environmentId = request.environmentId;
     mod.tenantId = request.tenantId;
     mod.name = request.name;
-    mod.moduleType = parseModuleType(request.moduleType);
+    mod.moduleType = toModuleType(request.moduleType);
     mod.version_ = request.version_;
     mod.channel = request.channel.length > 0 ? request.channel : "regular";
     mod.customResourcePolicy = request.customResourcePolicy;
@@ -72,7 +72,7 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult disableModule(ModuleId moduleId) {
+  CommandResult disableModule(KymaModuleId moduleId) {
     if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
 
@@ -86,7 +86,7 @@ class ManageModulesUseCase : UIMUseCase {
     if (dependents.length > 0) {
       // import std.array : join;
       return CommandResult(false, "",
-          "Cannot disable: modules depend on it: " ~ dependents.join(", "));
+        "Cannot disable: modules depend on it: " ~ dependents.join(", "));
     }
 
     mod.status = ModuleStatus.uninstalling;
@@ -95,7 +95,7 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, moduleId.toString, "");
   }
 
-  CommandResult updateModule(ModuleId moduleId, UpdateModuleRequest request) {
+  CommandResult updateModule(KymaModuleId moduleId, UpdateModuleRequest request) {
     if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
 
@@ -111,10 +111,10 @@ class ManageModulesUseCase : UIMUseCase {
     mod.modifiedAt = clockSeconds();
 
     moduleRepository.update(mod);
-    return CommandResult(true, moduleId, "");
+    return CommandResult(true, moduleId.toString, "");
   }
 
-  KymaModule getModule(ModuleId moduleId) {
+  KymaModule getModule(KymaModuleId moduleId) {
     return moduleRepository.findById(moduleId);
   }
 
@@ -122,37 +122,12 @@ class ManageModulesUseCase : UIMUseCase {
     return moduleRepository.findByEnvironment(environmentId);
   }
 
-  CommandResult deleteModule(ModuleId moduleId) {
+  CommandResult deleteModule(KymaModuleId moduleId) {
     if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
 
     moduleRepository.remove(moduleId);
     return CommandResult(true, moduleId.toString, "");
-  }
-
-  private ModuleType parseModuleType(string typeName) {
-    switch (typeName) {
-    case "istio":
-      return ModuleType.istio;
-    case "api-gateway":
-      return ModuleType.apiGateway;
-    case "serverless":
-      return ModuleType.serverless;
-    case "eventing":
-      return ModuleType.eventing;
-    case "nats":
-      return ModuleType.nats;
-    case "telemetry":
-      return ModuleType.telemetry;
-    case "btp-operator":
-      return ModuleType.btp_operator;
-    case "keda":
-      return ModuleType.keda;
-    case "connectivity-proxy":
-      return ModuleType.connectivityProxy;
-    default:
-      return ModuleType.custom;
-    }
   }
 
   private string[] getKnownDependencies(ModuleType type) {
@@ -172,5 +147,3 @@ class ManageModulesUseCase : UIMUseCase {
     }
   }
 }
-
-

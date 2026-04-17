@@ -23,7 +23,7 @@ ApiRuleEntryDto[] toRuleEntries(Json j) {
       return null;
 
     ApiRuleEntryDto[] entries;
-    foreach (item; value) {
+    foreach (item; value.toArray) {
       ApiRuleEntryDto entry;
       entry.path = item.getString("path");
       entry.methods = getStringArray(item, "methods");
@@ -31,6 +31,29 @@ ApiRuleEntryDto[] toRuleEntries(Json j) {
       entry.requiredScopes = getStringArray(item, "requiredScopes");
       entry.audiences = getStringArray(item, "audiences");
       entry.trustedIssuers = getStringArray(item, "trustedIssuers");
+      entries ~= entry;
+    }
+    return entries;
+  }
+
+    AppApiEntryDto[] toApis(Json json) {
+    if (!j.isObject)
+      return null;
+
+    if (!("apis" in j))
+      return null;
+
+    auto value = j["apis"];
+    if (!value.isArray)
+      return null;
+      
+    foreach (item; value.toArray) {
+      AppApiEntryDto entry;
+      entry.name = item.getString("name");
+      entry.description = item.getString("description");
+      entry.targetUrl = item.getString("targetUrl");
+      entry.specUrl = item.getString("specUrl");
+      entry.authType = item.getString("authType");
       entries ~= entry;
     }
     return entries;

@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — serverless function persistence.
 interface FunctionRepository {
-  bool existsById(FunctionId functionId);
-  ServerlessFunction findById(FunctionId functionId);
+  bool existsById(ServerlessFunctionId functionId);
+  ServerlessFunction findById(ServerlessFunctionId functionId);
   
   bool existsByName(NamespaceId namespaceId, string name);
   ServerlessFunction findByName(NamespaceId namespaceId, string name);
@@ -23,7 +23,8 @@ interface FunctionRepository {
   ServerlessFunction[] findByNamespace(NamespaceId namespaceId);
   ServerlessFunction[] findByEnvironment(KymaEnvironmentId environmentId);
   ServerlessFunction[] findByStatus(FunctionStatus status);
+
   void save(ServerlessFunction fn);
   void update(ServerlessFunction fn);
-  void remove(FunctionId functionId);
+  void remove(ServerlessFunctionId functionId);
 }

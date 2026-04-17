@@ -49,7 +49,7 @@ struct ServiceInstance {
       .set("tenantId", tenantId.value)
       .set("name", name)
       .set("description", description)
-      .set("status", status.toString())
+      .set("status", status.to!string())
       .set("serviceOfferingName", serviceOfferingName)
       .set("servicePlanName", servicePlanName)
       .set("servicePlanId", servicePlanId)

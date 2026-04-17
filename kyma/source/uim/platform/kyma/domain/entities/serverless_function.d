@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// A serverless function deployed in a Kyma namespace.
 struct ServerlessFunction {
   TenantId tenantId;
-  ServerlessFunction id;
+  ServerlessFunctionId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;

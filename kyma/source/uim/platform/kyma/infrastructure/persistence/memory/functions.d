@@ -17,13 +17,13 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryFunctionRepository : FunctionRepository {
-  private ServerlessFunction[FunctionId] store;
+  private ServerlessFunction[ServerlessFunctionId] store;
 
-  bool existsById(FunctionId functionId) {
+  bool existsById(ServerlessFunctionId functionId) {
     return (functionId in store) ? true : false;
   }
 
-  ServerlessFunction findById(FunctionId functionId) {
+  ServerlessFunction findById(ServerlessFunctionId functionId) {
     if (existsById(functionId))
       return store[functionId];
     return ServerlessFunction.init;
@@ -60,7 +60,7 @@ class MemoryFunctionRepository : FunctionRepository {
     store[fn.functionId] = fn;
   }
 
-  void remove(FunctionId functionId) {
+  void remove(ServerlessFunctionId functionId) {
     store.remove(functionId);
   }
 }

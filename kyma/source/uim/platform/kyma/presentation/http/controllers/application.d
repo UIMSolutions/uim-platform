@@ -43,30 +43,29 @@ class ApplicationController : PlatformController {
     try {
       auto j = req.json;
       RegisterApplicationRequest r;
-      r.environmentId = j.getString("environmentId");
-      r.tenantId = req.getTenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.registrationType = j.getString("registrationType");
-      r.connectorUrl = j.getString("connectorUrl");
-      r.boundNamespaces = getStringArray(j, "boundNamespaces");
-      r.labels = jsonStrMap(j, "labels");
-      r.createdBy = req.headers.get("X-User-Id", "");
-
-      // Parse APIs
-      r.apis = parseApis(j);
-      r.events = parseEvents(j);
+      with (r) {
+        environmentId = j.getString("environmentId");
+        tenantId = req.getTenantId;
+        name = j.getString("name");
+        description = j.getString("description");
+        registrationType = j.getString("registrationType");
+        connectorUrl = j.getString("connectorUrl");
+        boundNamespaces = getStringArray(j, "boundNamespaces");
+        labels = jsonStrMap(j, "labels");
+        createdBy = req.headers.get("X-User-Id", "");
+        // Parse APIs
+        apis = j.toApis;
+        events = parseEvents(j);
+      }
 
       auto result = uc.register(r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,8 +89,7 @@ class ApplicationController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,8 +103,7 @@ class ApplicationController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeApp(app), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -120,7 +117,7 @@ class ApplicationController : PlatformController {
       r.connectorUrl = j.getString("connectorUrl");
       r.boundNamespaces = getStringArray(j, "boundNamespaces");
       r.labels = jsonStrMap(j, "labels");
-      r.apis = parseApis(j);
+      r.apis = toApis;
       r.events = parseEvents(j);
 
       auto result = uc.updateApplication(id, r);
@@ -128,8 +125,7 @@ class ApplicationController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -142,8 +138,7 @@ class ApplicationController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -155,8 +150,7 @@ class ApplicationController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -168,27 +162,9 @@ class ApplicationController : PlatformController {
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private AppApiEntryDto[] parseApis(Json j) {
-    AppApiEntryDto[] entries;
-    auto v = "apis" in j;
-    if (v is null || (*v).type != Json.Type.array)
-      return entries;
-    foreach (item; *v) {
-      AppApiEntryDto entry;
-      entry.name = item.getString("name");
-      entry.description = item.getString("description");
-      entry.targetUrl = item.getString("targetUrl");
-      entry.specUrl = item.getString("specUrl");
-      entry.authType = item.getString("authType");
-      entries ~= entry;
-    }
-    return entries;
   }
 
   private AppEventEntryDto[] parseEvents(Json j) {
@@ -208,37 +184,37 @@ class ApplicationController : PlatformController {
 
   private Json serializeApp(Application app) {
     auto j = Json.emptyObject
-    .set("id", app.id)
-    .set("environmentId", app.environmentId)
-    .set("tenantId", app.tenantId)
-    .set("name", app.name)
-    .set("description", app.description)
-    .set("status", app.status.to!string)
-    .set("registrationType", app.registrationType.to!string)
-    .set("connectorUrl", app.connectorUrl)
-    .set("boundNamespaces", serializeStrArray(app.boundNamespaces))
-    .set("labels", serializeStrMap(app.labels))
-    .set("createdBy", app.createdBy)
-    .set("createdAt", app.createdAt)
-    .set("modifiedAt", app.modifiedAt);
+      .set("id", app.id)
+      .set("environmentId", app.environmentId)
+      .set("tenantId", app.tenantId)
+      .set("name", app.name)
+      .set("description", app.description)
+      .set("status", app.status.to!string)
+      .set("registrationType", app.registrationType.to!string)
+      .set("connectorUrl", app.connectorUrl)
+      .set("boundNamespaces", serializeStrArray(app.boundNamespaces))
+      .set("labels", serializeStrMap(app.labels))
+      .set("createdBy", app.createdBy)
+      .set("createdAt", app.createdAt)
+      .set("modifiedAt", app.modifiedAt);
 
     auto apisArr = Json.emptyArray;
     foreach (a; app.apis) {
       apisArr ~= Json.emptyObject
-      .set("name", a.name)
-      .set("description", a.description)
-      .set("targetUrl", a.targetUrl)
-      .set("specUrl", a.specUrl)
-      .set("authType", a.authType);
+        .set("name", a.name)
+        .set("description", a.description)
+        .set("targetUrl", a.targetUrl)
+        .set("specUrl", a.specUrl)
+        .set("authType", a.authType);
     }
     j["apis"] = apisArr;
 
     auto eventsArr = Json.emptyArray;
     foreach (e; app.events) {
       eventsArr ~= Json.emptyObject
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("version", e.version_);
+        .set("name", e.name)
+        .set("description", e.description)
+        .set("version", e.version_);
     }
     j["events"] = eventsArr;
 

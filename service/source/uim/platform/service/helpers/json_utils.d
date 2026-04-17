@@ -494,16 +494,6 @@ Json toJsonValue(T)(T val) {
   return j;
 }
 
-/// Read a string field from JSON, or return default.
-string getString(Json j, string key) {
-  if (j.isObject) {
-    auto val = key in j;
-    if (val !is null && (*val).isString)
-      return (*val).get!string;
-  }
-  return "";
-}
-
 // /// Serialize a string array to Json array.
 // Json serializeStrArray(string[] arr) {
 //   auto result = Json.emptyArray;

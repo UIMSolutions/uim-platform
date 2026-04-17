@@ -30,37 +30,33 @@ class ManageApiRulesUseCase : UIMUseCase {
     if (req.host.length == 0)
       return CommandResult(false, "", "Host is required");
 
-    auto existing = ruleRepository.findByName(req.namespaceId, req.name);
-    if (existing.ruleId.isEmpty)
+    if (ruleRepository.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     ApiRule rule;
-    rule.ruleId = id;
-    rule.namespaceId = req.namespaceId;
-    rule.environmentId = req.environmentId;
-    rule.tenantId = req.tenantId;
-    rule.name = req.name;
-    rule.description = req.description;
-    rule.status = ApiRuleStatus.notReady;
-    rule.serviceName = req.serviceName;
-    rule.servicePort = req.servicePort > 0 ? req.servicePort : 80;
-    rule.gateway = req.gateway.length > 0 ? req.gateway
-      : "kyma-gateway.kyma-system.svc.cluster.local";
-    rule.host = req.host;
-    rule.tlsEnabled = req.tlsEnabled;
-    rule.tlsSecretName = req.tlsSecretName;
-    rule.corsEnabled = req.corsEnabled;
-    rule.corsAllowOrigins = req.corsAllowOrigins;
-    rule.corsAllowMethods = req.corsAllowMethods;
-    rule.corsAllowHeaders = req.corsAllowHeaders;
-    rule.labels = req.labels;
-    rule.createdBy = req.createdBy;
-    rule.createdAt = clockSeconds();
-    rule.modifiedAt = rule.createdAt;
+    with (rule) {
+      id = randomUUID();
+      namespaceId = req.namespaceId;
+      environmentId = req.environmentId;
+      tenantId = req.tenantId;
+      name = req.name;
+      description = req.description;
+      status = ApiRuleStatus.notReady;
+      serviceName = req.serviceName;
+      servicePort = req.servicePort > 0 ? req.servicePort : 80;
+      gateway = req.gateway.length > 0 ? req.gateway : "kyma-gateway.kyma-system.svc.cluster.local";
+      host = req.host;
+      tlsEnabled = req.tlsEnabled;
+      tlsSecretName = req.tlsSecretName;
+      corsEnabled = req.corsEnabled;
+      corsAllowOrigins = req.corsAllowOrigins;
+      corsAllowMethods = req.corsAllowMethods;
+      corsAllowHeaders = req.corsAllowHeaders;
+      labels = req.labels;
+      createdBy = req.createdBy;
+      createdAt = clockSeconds();
+      modifiedAt = createdAt;
+    }
 
     // Convert rule entry DTOs
     ApiRuleEntry[] entries;
@@ -72,9 +68,7 @@ class ManageApiRulesUseCase : UIMUseCase {
       entry.audiences = r.audiences;
       entry.trustedIssuers = r.trustedIssuers;
 
-      ApiHttpMethod[] methods;
-      foreach (m; r.methods)
-        methods ~= parseHttpMethod(m);
+      ApiHttpMethod[] methods = r.methods.map!(m => parseHttpMethod(m)).array;
       entry.methods = methods;
       entries ~= entry;
     }
@@ -89,10 +83,10 @@ class ManageApiRulesUseCase : UIMUseCase {
   }
 
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
-    auto rule = ruleRepository.findById(id);
-    if (rule.ruleId.isEmpty)
+    if (!ruleRepository.existsById(id))
       return CommandResult(false, "", "API rule not found");
 
+    auto rule = ruleRepository.findById(id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.serviceName.length > 0)
@@ -118,15 +112,14 @@ class ManageApiRulesUseCase : UIMUseCase {
       ApiRuleEntry[] entries;
       foreach (r; req.rules) {
         ApiRuleEntry entry;
-        entry.path = r.path;
-        entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
-        entry.requiredScopes = r.requiredScopes;
-        entry.audiences = r.audiences;
-        entry.trustedIssuers = r.trustedIssuers;
-        ApiHttpMethod[] methods;
-        foreach (m; r.methods)
-          methods ~= parseHttpMethod(m);
-        entry.methods = methods;
+        with (entry) {
+          path = r.path;
+          accessStrategy = parseAccessStrategy(r.accessStrategy);
+          requiredScopes = r.requiredScopes;
+          audiences = r.audiences;
+          trustedIssuers = r.trustedIssuers;
+          methods = r.methods.map!(m => parseHttpMethod(m)).array;
+        }
         entries ~= entry;
       }
       rule.rules = entries;
@@ -210,5 +203,3 @@ class ManageApiRulesUseCase : UIMUseCase {
     }
   }
 }
-
-
