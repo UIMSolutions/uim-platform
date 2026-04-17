@@ -52,7 +52,7 @@ class ManageTasksUseCase : UIMUseCase {
     return CommandResult(true, t.id, "");
   }
 
-  Task get_(TaskId id, SpaceId spaceId) {
+  Task getById(TaskId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

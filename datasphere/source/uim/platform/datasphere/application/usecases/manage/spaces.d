@@ -47,7 +47,7 @@ class ManageSpacesUseCase : UIMUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  Space get_(SpaceId id) {
+  Space getById(SpaceId id) {
     return repo.findById(id);
   }
 

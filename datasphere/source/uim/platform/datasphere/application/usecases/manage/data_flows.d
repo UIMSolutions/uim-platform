@@ -48,7 +48,7 @@ class ManageDataFlowsUseCase : UIMUseCase {
     return CommandResult(true, df.id, "");
   }
 
-  DataFlow get_(DataFlowId id, SpaceId spaceId) {
+  DataFlow getById(DataFlowId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

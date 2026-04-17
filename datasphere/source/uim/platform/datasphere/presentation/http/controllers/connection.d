@@ -87,7 +87,7 @@ class ConnectionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
-      auto c = uc.get_(id, spaceId);
+      auto c = uc.getById(id, spaceId);
       if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;

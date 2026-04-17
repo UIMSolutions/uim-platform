@@ -83,7 +83,7 @@ class TaskChainController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
-      auto tc = uc.get_(id, spaceId);
+      auto tc = uc.getById(id, spaceId);
       if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;

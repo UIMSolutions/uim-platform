@@ -45,7 +45,7 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
     return CommandResult(true, dac.id, "");
   }
 
-  DataAccessControl get_(DataAccessControlId id, SpaceId spaceId) {
+  DataAccessControl getById(DataAccessControlId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

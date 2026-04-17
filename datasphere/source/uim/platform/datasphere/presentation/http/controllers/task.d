@@ -87,7 +87,7 @@ class TaskController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
-      auto t = uc.get_(id, spaceId);
+      auto t = uc.getById(id, spaceId);
       if (t.id.isEmpty) {
         writeError(res, 404, "Task not found");
         return;

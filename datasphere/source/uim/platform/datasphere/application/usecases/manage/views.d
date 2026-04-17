@@ -48,7 +48,7 @@ class ManageViewsUseCase : UIMUseCase {
     return CommandResult(true, v.id, "");
   }
 
-  View get_(ViewId id, SpaceId spaceId) {
+  View getById(ViewId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

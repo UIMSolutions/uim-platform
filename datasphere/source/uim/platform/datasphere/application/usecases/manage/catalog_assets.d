@@ -50,7 +50,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
     return CommandResult(true, ca.id, "");
   }
 
-  CatalogAsset get_(CatalogAssetId id, SpaceId spaceId) {
+  CatalogAsset getById(CatalogAssetId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

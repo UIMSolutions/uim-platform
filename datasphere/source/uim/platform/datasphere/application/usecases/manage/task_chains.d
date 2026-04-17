@@ -47,7 +47,7 @@ class ManageTaskChainsUseCase : UIMUseCase {
     return CommandResult(true, tc.id, "");
   }
 
-  TaskChain get_(TaskChainId id, SpaceId spaceId) {
+  TaskChain getById(TaskChainId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

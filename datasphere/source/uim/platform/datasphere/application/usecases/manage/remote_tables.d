@@ -51,7 +51,7 @@ class ManageRemoteTablesUseCase : UIMUseCase {
     return CommandResult(true, rt.id, "");
   }
 
-  RemoteTable get_(RemoteTableId id, SpaceId spaceId) {
+  RemoteTable getById(RemoteTableId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 

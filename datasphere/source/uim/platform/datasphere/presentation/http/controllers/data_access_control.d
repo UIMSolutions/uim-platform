@@ -83,7 +83,7 @@ class DataAccessControlController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
-      auto dac = uc.get_(id, spaceId);
+      auto dac = uc.getById(id, spaceId);
       if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
