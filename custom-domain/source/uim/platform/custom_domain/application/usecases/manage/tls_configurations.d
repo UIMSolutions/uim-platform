@@ -47,7 +47,7 @@ class ManageTlsConfigurationsUseCase : UIMUseCase {
         return CommandResult(true, c.id, "");
     }
 
-    TlsConfiguration get_(TlsConfigurationId id) {
+    TlsConfiguration getById(TlsConfigurationId id) {
         return repo.findById(id);
     }
 

@@ -28,7 +28,7 @@ class DomainDashboardController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto d = uc.get_(tenantId);
+            auto d = uc.getById(tenantId);
 
             auto resp = Json.emptyObject;
             resp["id"] = Json(d.id);

@@ -79,7 +79,7 @@ class ManageCertificatesUseCase : UIMUseCase {
         return CommandResult(true, id.toString, "");
     }
 
-    Certificate get_(CertificateId id) {
+    Certificate getById(CertificateId id) {
         return repo.findById(id);
     }
 

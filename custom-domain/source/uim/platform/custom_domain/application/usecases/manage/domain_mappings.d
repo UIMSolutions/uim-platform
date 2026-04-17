@@ -55,7 +55,7 @@ class ManageDomainMappingsUseCase : UIMUseCase {
         return CommandResult(true, m.id, "");
     }
 
-    DomainMapping get_(DomainMappingId id) {
+    DomainMapping getById(DomainMappingId id) {
         return repo.findById(id);
     }
 

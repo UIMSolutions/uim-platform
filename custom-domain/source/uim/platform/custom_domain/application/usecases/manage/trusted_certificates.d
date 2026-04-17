@@ -45,7 +45,7 @@ class ManageTrustedCertificatesUseCase : UIMUseCase {
         return CommandResult(true, c.id, "");
     }
 
-    TrustedCertificate get_(TrustedCertificateId id) {
+    TrustedCertificate getById(TrustedCertificateId id) {
         return repo.findById(id);
     }
 

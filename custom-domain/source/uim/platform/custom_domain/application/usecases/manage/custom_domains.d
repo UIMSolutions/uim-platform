@@ -52,7 +52,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
         return CommandResult(true, d.id, "");
     }
 
-    CustomDomain get_(CustomDomainId id) {
+    CustomDomain getById(CustomDomainId id) {
         return repo.findById(id);
     }
 

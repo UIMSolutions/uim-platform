@@ -46,7 +46,7 @@ class ManagePrivateKeysUseCase : UIMUseCase {
         return CommandResult(true, k.id, "");
     }
 
-    PrivateKey get_(PrivateKeyId id) {
+    PrivateKey getById(PrivateKeyId id) {
         return repo.findById(id);
     }
 

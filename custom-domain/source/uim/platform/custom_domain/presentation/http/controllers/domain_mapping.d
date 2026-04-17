@@ -89,7 +89,7 @@ class DomainMappingController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto m = uc.get_(id);
+            auto m = uc.getById(id);
             if (m.id.isEmpty) {
                 writeError(res, 404, "Domain mapping not found");
                 return;

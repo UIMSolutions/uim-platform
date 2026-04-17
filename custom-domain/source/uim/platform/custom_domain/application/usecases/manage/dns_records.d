@@ -49,7 +49,7 @@ class ManageDnsRecordsUseCase : UIMUseCase {
         return CommandResult(true, rec.id, "");
     }
 
-    DnsRecord get_(DnsRecordId id) {
+    DnsRecord getById(DnsRecordId id) {
         return repo.findById(id);
     }
 

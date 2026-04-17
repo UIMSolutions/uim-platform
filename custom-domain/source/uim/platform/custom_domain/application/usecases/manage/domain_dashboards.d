@@ -25,7 +25,7 @@ class ManageDomainDashboardsUseCase : UIMUseCase {
         this.mappingRepo = mappingRepo;
     }
 
-    DomainDashboard get_(TenantId tenantId) {
+    DomainDashboard getById(TenantId tenantId) {
         return dashboardRepo.findByTenant(tenantId);
     }
 
