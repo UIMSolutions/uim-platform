@@ -17,19 +17,16 @@ mixin(ShowModule!());
 class MemorySectionRepository : SectionRepository {
   private PortalSection[SectionId] store;
 
+  bool existsById(SectionId id) {
+    return id in store ? true : false;
+  }
+
   PortalSection findById(SectionId id) {
-    if (auto p = id in store)
-      return *p;
-    return PortalSection.init;
+    return existsById(id) ? store[id] : PortalSection.init;
   }
 
   PortalSection[] findByPage(PageId pageId) {
-    PortalSection[] result;
-    foreach (s; store.byValue()) {
-      if (s.pageId == pageId)
-        result ~= s;
-    }
-    return result;
+    return store.byValue().filter!(s => s.pageId == pageId).array;
   }
 
   void save(PortalSection section) {

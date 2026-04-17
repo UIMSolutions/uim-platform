@@ -17,10 +17,12 @@ mixin(ShowModule!());
 class MemoryProviderRepository : ProviderRepository {
   private ContentProvider[ProviderId] store;
 
+  bool existsById(ProviderId id) {
+    return id in store ? true : false;
+  }
+
   ContentProvider findById(ProviderId id) {
-    if (auto p = id in store)
-      return *p;
-    return ContentProvider.init;
+    return existsById(id) ? store[id] : ContentProvider.init;
   }
 
   ContentProvider[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {

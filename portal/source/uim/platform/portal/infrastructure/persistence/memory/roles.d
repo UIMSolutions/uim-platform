@@ -19,10 +19,16 @@ mixin(ShowModule!());
 class MemoryRoleRepository : RoleRepository {
   private Role[RoleId] store;
 
+  bool existsById(RoleId id) {
+    return id in store ? true : false;
+  }
+
   Role findById(RoleId id) {
-    if (auto p = id in store)
-      return *p;
-    return Role.init;
+    return existsById(id) ? store[id] : Role.init;
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
+    return store.byValue().any!(r => r.tenantId == tenantId && r.name == name);
   }
 
   Role findByName(TenantId tenantId, string name) {

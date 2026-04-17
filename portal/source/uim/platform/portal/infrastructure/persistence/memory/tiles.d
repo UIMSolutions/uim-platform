@@ -18,19 +18,16 @@ mixin(ShowModule!());
 class MemoryTileRepository : TileRepository {
   private Tile[TileId] store;
 
+  bool existsById(TileId id) {
+    return id in store ? true : false;
+  }
+
   Tile findById(TileId id) {
-    if (auto p = id in store)
-      return *p;
-    return Tile.init;
+    return existsById(id) ? store[id] : Tile.init;
   }
 
   Tile[] findByCatalog(CatalogId catalogId) {
-    Tile[] result;
-    foreach (t; store.byValue()) {
-      if (t.catalogId == catalogId)
-        result ~= t;
-    }
-    return result;
+    return store.byValue().filter!(t => t.catalogId == catalogId).array;
   }
 
   Tile[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {

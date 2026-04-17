@@ -86,20 +86,38 @@ struct BuildpackId {
   mixin DomainId;
 }
 
-
-
-
-
 /// Organization lifecycle status.
 enum OrgStatus {
   active,
   suspended,
 }
 
+OrgStatus parseOrgStatus(string status) {
+  switch (status) {
+  case "active":
+    return OrgStatus.active;
+  case "suspended":
+    return OrgStatus.suspended;
+  default:
+    return OrgStatus.active;
+  }
+}
+
 /// Space lifecycle status.
 enum SpaceStatus {
   active,
   suspended,
+}
+
+SpaceStatus parseSpaceStatus(string status) {
+  switch (status) {
+  case "active":
+    return SpaceStatus.active;
+  case "suspended":
+    return SpaceStatus.suspended;
+  default:
+    return SpaceStatus.active;
+  }
 }
 
 /// Application runtime state.
@@ -110,6 +128,20 @@ enum AppState {
   crashed,
 }
 
+AppState parseAppState(string state) {
+  switch (state ) {
+  case "stopped":
+    return AppState.stopped;
+  case "started":
+    return AppState.started;
+  case "crashed":
+    return AppState.crashed;
+  case "staging":
+    return AppState.staging;
+  default:
+    return AppState.stopped;
+  }
+}
 /// Individual application instance state.
 enum InstanceState {
   running,
@@ -148,6 +180,18 @@ enum DomainScope {
   internal_,
 }
 
+DomainScope parseDomainScope(string scope_) {
+  switch (scope_) {
+  case "shared":
+    return DomainScope.shared_;
+  case "private":
+    return DomainScope.private_;
+  case "internal":
+    return DomainScope.internal_;
+  default:
+    return DomainScope.shared_;
+  }
+}
 /// Buildpack origin type.
 enum BuildpackType {
   system,

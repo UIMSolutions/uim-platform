@@ -18,10 +18,12 @@ mixin(ShowModule!());
 class MemoryCatalogRepository : CatalogRepository {
   private Catalog[CatalogId] store;
 
+  bool existsById(CatalogId id) {
+    return (id in store) ? true : false;
+  }
+
   Catalog findById(CatalogId id) {
-    if (auto p = id in store)
-      return *p;
-    return Catalog.init;
+    return existsById(id) ? store[id] : Catalog.init;
   }
 
   Catalog[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {

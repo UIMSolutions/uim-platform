@@ -17,28 +17,20 @@ mixin(ShowModule!());
 class MemoryMenuItemRepository : MenuItemRepository {
   private MenuItem[MenuItemId] store;
 
+  bool existsById(MenuItemId id) {
+    return (id in store) ? true : false;
+  }
+
   MenuItem findById(MenuItemId id) {
-    if (auto p = id in store)
-      return *p;
-    return MenuItem.init;
+    return existsById(id) ? store[id] : MenuItem.init;
   }
 
   MenuItem[] findBySite(SiteId siteId) {
-    MenuItem[] result;
-    foreach (m; store.byValue()) {
-      if (m.siteId == siteId)
-        result ~= m;
-    }
-    return result;
+    return store.byValue().filter!(m => m.siteId == siteId).array;
   }
 
   MenuItem[] findChildren(MenuItemId parentId) {
-    MenuItem[] result;
-    foreach (m; store.byValue()) {
-      if (m.parentId == parentId)
-        result ~= m;
-    }
-    return result;
+    return store.byValue().filter!(m => m.parentId == parentId).array;
   }
 
   void save(MenuItem item) {

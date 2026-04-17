@@ -16,10 +16,12 @@ mixin(ShowModule!());
 class MemoryTranslationRepository : TranslationRepository {
   private Translation[TranslationId] store;
 
+  bool existsById(TranslationId id) {
+    return id in store ? true : false;
+  }
+
   Translation findById(TranslationId id) {
-    if (auto p = id in store)
-      return *p;
-    return Translation.init;
+    return existsById(id) ? store[id] : Translation.init;
   }
 
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
@@ -33,11 +35,15 @@ class MemoryTranslationRepository : TranslationRepository {
     return result;
   }
 
+  Translation[] findByTenant(TenantId tenantId) {
+    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  }
+
   Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {
     Translation[] result;
     uint idx;
-    foreach (t; store.byValue()) {
-      if (t.tenantId == tenantId && t.language == language) {
+    foreach (t; findByTenant(tenantId)) {
+      if (t.language == language) {
         if (idx >= offset && result.length < limit)
           result ~= t;
         idx++;

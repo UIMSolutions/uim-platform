@@ -16,10 +16,12 @@ mixin(ShowModule!());
 class MemoryThemeRepository : ThemeRepository {
   private Theme[ThemeId] store;
 
+  bool existsById(ThemeId id) {
+    return id in store ? true : false;
+  }
+
   Theme findById(ThemeId id) {
-    if (auto p = id in store)
-      return *p;
-    return Theme.init;
+    return existsById(id) ? store[id] : Theme.init;
   }
 
   Theme findDefault(TenantId tenantId) {

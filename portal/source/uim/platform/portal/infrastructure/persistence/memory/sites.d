@@ -17,10 +17,16 @@ mixin(ShowModule!());
 class MemorySiteRepository : SiteRepository {
   private Site[SiteId] store;
 
+  bool existsById(SiteId id) {
+    return id in store ? true : false;
+  }
+
   Site findById(SiteId id) {
-    if (auto p = id in store)
-      return *p;
-    return Site.init;
+    return existsById(id) ? store[id] : Site.init;
+  }
+
+  bool existsByAlias(TenantId tenantId, string alias_) {
+    return store.byValue().ay!(s => s.tenantId == tenantId && s.alias_ == alias_);
   }
 
   Site findByAlias(TenantId tenantId, string alias_) {
@@ -31,6 +37,10 @@ class MemorySiteRepository : SiteRepository {
     return Site.init;
   }
 
+  size_t countByTenant(TenantId tenantId) {
+    return store.byValue().filter!(s => s.tenantId == tenantId).count;
+  }
+  
   Site[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Site[] result;
     uint idx;
@@ -67,9 +77,5 @@ class MemorySiteRepository : SiteRepository {
 
   void remove(SiteId id) {
     store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return store.byValue().filter!(s => s.tenantId == tenantId).count;
   }
 }

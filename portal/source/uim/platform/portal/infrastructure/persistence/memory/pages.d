@@ -17,10 +17,20 @@ mixin(ShowModule!());
 class MemoryPageRepository : PageRepository {
   private Page[PageId] store;
 
+  bool existsById(PageId id) {
+    return (id in store) ? true : false;
+  }
+
   Page findById(PageId id) {
-    if (auto p = id in store)
-      return *p;
-    return Page.init;
+    return existsById(id) ? store[id] : Page.init;
+  }
+
+  bool existsByAlias(SiteId siteId, string alias_) {
+    return store.byValue().any!(p => p.siteId == siteId && p.alias_ == alias_);
+  }
+
+  Page findByAlias(SiteId siteId, string alias_) {
+    return store.byValue().filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
   Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100) {
@@ -34,14 +44,6 @@ class MemoryPageRepository : PageRepository {
       }
     }
     return result;
-  }
-
-  Page findByAlias(SiteId siteId, string alias_) {
-    foreach (p; store.byValue()) {
-      if (p.siteId == siteId && p.alias_ == alias_)
-        return p;
-    }
-    return Page.init;
   }
 
   void save(Page page) {
