@@ -6,7 +6,11 @@
 module uim.platform.identity.directory.domain.types;
 
 /// Unique identifier type aliases for type safety.
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 
 struct GroupId {
   string value;
@@ -17,8 +21,6 @@ struct GroupId {
 
   mixin DomainId;
 }
-
-
 
 struct SchemaId {
   string value;

@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.infrastructure.persistence.memory.password_policy;
 
-import uim.platform.identity.directory.domain.entities.password_policy;
-import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.repositories.password_policys;
+// import uim.platform.identity.directory.domain.entities.password_policy;
+// import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.ports.repositories.password_policys;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// In-memory adapter for password policy persistence.
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
   private PasswordPolicy[string] store;

@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.infrastructure.persistence.memory.groups;
 
-import uim.platform.identity.directory.domain.entities.group;
-import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.repositories.groups;
+// import uim.platform.identity.directory.domain.entities.group;
+// import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.ports.repositories.groups;
+import uim.platform.identity.directory;
 
+mixin(ShowModule!());
+
+@safe:
 /// In-memory adapter for group persistence.
 class MemoryGroupRepository : GroupRepository {
   private Group[GroupId] store;
