@@ -28,7 +28,7 @@ class ManageProvidersUseCase : UIMUseCase {
 
   ProviderResponse createProvider(CreateProviderRequest req) {
     if (req.name.length == 0)
-      return ProviderResponse("", "Provider name is required");
+      return ProviderResponse(ProviderResponseId(""), "Provider name is required");
 
     ContentProvider provider;
     with (provider) {

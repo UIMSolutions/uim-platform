@@ -12,7 +12,6 @@ import uim.platform.abap_enviroment.domain.entities.business_user : RoleAssignme
 import uim.platform.abap_enviroment.domain.entities.business_role : CatalogAssignment;
 import uim.platform.abap_enviroment.domain.entities.transport_request : TransportTask;
 
-
 // ─── System Instance DTOs ───
 
 struct CreateSystemInstanceRequest {
@@ -28,6 +27,22 @@ struct CreateSystemInstanceRequest {
   ushort hanaMemorySize;
   string softwareVersion;
   string stackVersion;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("subaccountId", subaccountId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("plan", plan)
+      .set("region", region)
+      .set("sapSystemId", sapSystemId)
+      .set("adminEmail", adminEmail)
+      .set("abapRuntimeSize", abapRuntimeSize)
+      .set("hanaMemorySize", hanaMemorySize)
+      .set("softwareVersion", softwareVersion)
+      .set("stackVersion", stackVersion);
+  }
 }
 
 struct UpdateSystemInstanceRequest {
@@ -36,6 +51,15 @@ struct UpdateSystemInstanceRequest {
   ushort abapRuntimeSize;
   ushort hanaMemorySize;
   string softwareVersion;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("description", description)
+      .set("status", status)
+      .set("abapRuntimeSize", abapRuntimeSize)
+      .set("hanaMemorySize", hanaMemorySize)
+      .set("softwareVersion", softwareVersion);
+  }
 }
 
 // ─── Software Component DTOs ───
@@ -50,15 +74,40 @@ struct CreateSoftwareComponentRequest {
   string branch;
   string branchStrategy;
   string namespace;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("componentType", componentType)
+      .set("repositoryUrl", repositoryUrl)
+      .set("branch", branch)
+      .set("branchStrategy", branchStrategy)
+      .set("namespace", namespace);
+  }
 }
 
 struct CloneSoftwareComponentRequest {
   string branch;
   string commitId;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("branch", branch)
+      .set("commitId", commitId);
+  }
 }
 
 struct PullSoftwareComponentRequest {
   string commitId;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("commitId", commitId);
+  }
+
 }
 
 // ─── Communication Arrangement DTOs ───
@@ -79,6 +128,25 @@ struct CreateCommunicationArrangementRequest {
   string certificateId;
   CommunicationEndpoint[] inboundServices;
   CommunicationEndpoint[] outboundServices;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("scenarioId", scenarioId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("direction", direction)
+      .set("authMethod", authMethod)
+      .set("communicationUser", communicationUser)
+      .set("communicationPassword", communicationPassword)
+      .set("clientId", clientId)
+      .set("clientSecret", clientSecret)
+      .set("tokenEndpoint", tokenEndpoint)
+      .set("certificateId", certificateId)
+      .set("inboundServices", inboundServices.map!(s => s.toJson()).array)
+      .set("outboundServices", outboundServices.map!(s => s.toJson()).array);
+  }
 }
 
 struct UpdateCommunicationArrangementRequest {
@@ -92,6 +160,20 @@ struct UpdateCommunicationArrangementRequest {
   string tokenEndpoint;
   CommunicationEndpoint[] inboundServices;
   CommunicationEndpoint[] outboundServices;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("description", description)
+      .set("status", status)
+      .set("authMethod", authMethod)
+      .set("communicationUser", communicationUser)
+      .set("communicationPassword", communicationPassword)
+      .set("clientId", clientId)
+      .set("clientSecret", clientSecret)
+      .set("tokenEndpoint", tokenEndpoint)
+      .set("inboundServices", inboundServices.map!(s => s.toJson()).array)
+      .set("outboundServices", outboundServices.map!(s => s.toJson()).array);
+  }
 }
 
 // ─── Service Binding DTOs ───
@@ -104,12 +186,30 @@ struct CreateServiceBindingRequest {
   string description;
   string bindingType; // "odataV2", "odataV4", ...
   ExposedEndpoint[] endpoints;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("serviceDefinitionId", serviceDefinitionId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("bindingType", bindingType)
+      .set("endpoints", endpoints.map!(e => e.toJson()).array);
+  }
 }
 
 struct UpdateServiceBindingRequest {
   string description;
   string status; // "active", "inactive", "deprecated_"
   ExposedEndpoint[] endpoints;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("description", description)
+      .set("status", status)
+      .set("endpoints", endpoints.map!(e => e.toJson()).array);
+  }
 }
 
 // ─── Business User DTOs ───
@@ -122,6 +222,17 @@ struct CreateBusinessUserRequest {
   string lastName;
   string email;
   string[] roleIds;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("username", username)
+      .set("firstName", firstName)
+      .set("lastName", lastName)
+      .set("email", email)
+      .set("roleIds", roleIds.array);
+  }
 }
 
 struct UpdateBusinessUserRequest {
@@ -130,6 +241,15 @@ struct UpdateBusinessUserRequest {
   string email;
   string status; // "active", "inactive", "locked"
   string[] roleIds;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("firstName", firstName)
+      .set("lastName", lastName)
+      .set("email", email)
+      .set("status", status)
+      .set("roleIds", roleIds.array);
+  }
 }
 
 // ─── Business Role DTOs ───
@@ -142,6 +262,17 @@ struct CreateBusinessRoleRequest {
   string roleType; // "unrestricted", "restricted", "custom"
   string[] restrictionTypes;
   CatalogAssignment[] assignedCatalogs;
+
+  Json toJson() const {
+    return Json.emptyObject.set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("roleType", roleType)
+      .set("restrictionTypes", restrictionTypes.array)
+      .set("assignedCatalogs", assignedCatalogs.map!(c => c.toJson()).array);
+
+  }
 }
 
 struct UpdateBusinessRoleRequest {
@@ -180,6 +311,19 @@ struct CreateApplicationJobRequest {
   long scheduledAt;
   string cronExpression;
   string[string] jobParameters;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("systemInstanceId", systemInstanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("jobTemplateName", jobTemplateName)
+      .set("frequency", frequency)
+      .set("scheduledAt", scheduledAt)
+      .set("cronExpression", cronExpression)
+      .set("jobParameters", jobParameters);
+  }
 }
 
 struct UpdateApplicationJobRequest {
@@ -189,4 +333,14 @@ struct UpdateApplicationJobRequest {
   string cronExpression;
   bool active;
   string[string] jobParameters;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("description", description)
+      .set("frequency", frequency)
+      .set("scheduledAt", scheduledAt)
+      .set("cronExpression", cronExpression)
+      .set("active", active)
+      .set("jobParameters", jobParameters);
+  }
 }

@@ -37,6 +37,35 @@ struct ServiceCallDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("customerId", customerId)
+            .set("equipmentId", equipmentId)
+            .set("subject", subject)
+            .set("description", description)
+            .set("status", status)
+            .set("priority", priority)
+            .set("origin", origin)
+            .set("category", category)
+            .set("serviceType", serviceType)
+            .set("contactPerson", contactPerson)
+            .set("contactPhone", contactPhone)
+            .set("contactEmail", contactEmail)
+            .set("reportedDate", reportedDate)
+            .set("dueDate", dueDate)
+            .set("resolvedDate", resolvedDate)
+            .set("resolution", resolution)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct ActivityDTO {
@@ -63,6 +92,33 @@ struct ActivityDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("serviceCallId", serviceCallId)
+            .set("technicianId", technicianId)
+            .set("subject", subject)
+            .set("description", description)
+            .set("activityType", activityType)
+            .set("status", status)
+            .set("plannedStart", plannedStart)
+            .set("plannedEnd", plannedEnd)
+            .set("actualStart", actualStart)
+            .set("actualEnd", actualEnd)
+            .set("travelTime", travelTime)
+            .set("workTime", workTime)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("notes", notes)
+            .set("feedbackCode", feedbackCode)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct AssignmentDTO {
@@ -83,6 +139,27 @@ struct AssignmentDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("activityId", activityId)
+            .set("technicianId", technicianId)
+            .set("status", status)
+            .set("assignedDate", assignedDate)
+            .set("acceptedDate", acceptedDate)
+            .set("startedDate", startedDate)
+            .set("completedDate", completedDate)
+            .set("travelDistance", travelDistance)
+            .set("schedulingPolicy", schedulingPolicy)
+            .set("matchScore", matchScore)
+            .set("notes", notes)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct EquipmentDTO {
@@ -108,6 +185,32 @@ struct EquipmentDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("customerId", customerId)
+            .set("serialNumber", serialNumber)
+            .set("name", name)
+            .set("description", description)
+            .set("equipmentType", equipmentType)
+            .set("status", status)
+            .set("manufacturer", manufacturer)
+            .set("model", model)
+            .set("installationDate", installationDate)
+            .set("warrantyEndDate", warrantyEndDate)
+            .set("locationAddress", locationAddress)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("lastServiceDate", lastServiceDate)
+            .set("nextServiceDate", nextServiceDate)
+            .set("measuringPoint", measuringPoint)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct TechnicianDTO {
@@ -131,6 +234,30 @@ struct TechnicianDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("firstName", firstName)
+            .set("lastName", lastName)
+            .set("email", email)
+            .set("phone", phone)
+            .set("status", status)
+            .set("region", region)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("availabilityStart", availabilityStart)
+            .set("availabilityEnd", availabilityEnd)
+            .set("maxWorkload", maxWorkload)
+            .set("currentWorkload", currentWorkload)
+            .set("travelRadius", travelRadius)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct CustomerDTO {
@@ -153,6 +280,29 @@ struct CustomerDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("description", description)
+            .set("customerType", customerType)
+            .set("status", status)
+            .set("contactPerson", contactPerson)
+            .set("email", email)
+            .set("phone", phone)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("website", website)
+            .set("industry", industry)
+            .set("accountNumber", accountNumber)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct SkillDTO {
@@ -171,6 +321,25 @@ struct SkillDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("technicianId", technicianId)
+            .set("name", name)
+            .set("description", description)
+            .set("category", category)
+            .set("proficiencyLevel", proficiencyLevel)
+            .set("certificationDate", certificationDate)
+            .set("expirationDate", expirationDate)
+            .set("certificationNumber", certificationNumber)
+            .set("issuingAuthority", issuingAuthority)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
 
 struct SmartformDTO {
@@ -194,4 +363,28 @@ struct SmartformDTO {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("serviceCallId", serviceCallId)
+            .set("activityId", activityId)
+            .set("name", name)
+            .set("description", description)
+            .set("formType", formType)
+            .set("status", status)
+            .set("templateId", templateId)
+            .set("submittedBy", submittedBy)
+            .set("submittedDate", submittedDate)
+            .set("approvedBy", approvedBy)
+            .set("approvedDate", approvedDate)
+            .set("formData", formData)
+            .set("safetyLabel", safetyLabel)
+            .set("signatureData", signatureData)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }

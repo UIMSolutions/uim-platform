@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A page within a site; contains sections.
 struct Page {
-  PageId id;
+  PageId pageId;
   SiteId siteId;
   TenantId tenantId;
   string title;

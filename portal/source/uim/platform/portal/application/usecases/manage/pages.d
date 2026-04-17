@@ -34,16 +34,14 @@ class ManagePagesUseCase : UIMUseCase {
 
   PageResponse createPage(CreatePageRequest req) {
     if (req.title.length == 0)
-      return PageResponse("", "Page title is required");
+      return PageResponse(PageResponseId(""), "Page title is required");
 
     if (!siteRepo.existsById(req.siteId))
-      return PageResponse("", "Site not found");
+      return PageResponse(PageResponseId(""), "Site not found");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
     Page page;
     with (page) {
-      pageId = id;
+      pageId = randomUUID();
       siteId = req.siteId;
       tenantId = req.tenantId;
       title = req.title;
@@ -53,8 +51,8 @@ class ManagePagesUseCase : UIMUseCase {
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
       sortOrder = req.sortOrder;
       visible = req.visible;
-      createdAt = now;
-      updatedAt = now;
+      createdAt = Clock.currStdTime();
+      updatedAt = createdAt;
     }
 
     pageRepo.save(page);
@@ -62,12 +60,12 @@ class ManagePagesUseCase : UIMUseCase {
     // Add page to site
     if (siteRepo.existsById(req.siteId)) {
       auto site = siteRepo.findById(req.siteId);
-      site.pageIds ~= id;
-      site.updatedAt = now;
+      site.pageIds ~= page.pageId;
+      site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);
     }
 
-    return PageResponse(id, "");
+    return PageResponse(PageResponseId(page.pageId), "");
   }
 
   Page getPage(PageId id) {
@@ -88,7 +86,7 @@ class ManagePagesUseCase : UIMUseCase {
       description = req.description;
       alias_ = req.alias_.length > 0 ? req.alias_ : alias_;
       layout = req.layout;
-      allowedRoleIds = req.allowedRoleIds;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
       sortOrder = req.sortOrder;
       visible = req.visible;
       updatedAt = Clock.currStdTime();

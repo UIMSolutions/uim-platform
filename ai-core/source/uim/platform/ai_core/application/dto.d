@@ -7,134 +7,252 @@ module uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core.domain.types;
 
-
 // --- Scenario ---
 
 struct CreateScenarioRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   string id;
   string name;
   string description;
   string[] labels;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("labels", labels);
+  }
 }
 
 // --- Executable ---
 
 struct CreateExecutableRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string scenarioId;
+  ResourceGroupId resourceGroupId;
+  ScenarioId scenarioId;
   string id;
   string name;
   string description;
   string type;
   string versionId;
   string deployable;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("scenarioId", scenarioId.value)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type)
+      .set("versionId", versionId)
+      .set("deployable", deployable);
+  }
 }
 
 // --- Configuration ---
 
 struct CreateConfigurationRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string scenarioId;
-  string executableId;
+  ResourceGroupId resourceGroupId;
+  ScenarioId scenarioId;
+  ExecutableId executableId;
   string name;
   string[][] parameterValues;
   string[][] inputArtifacts;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("scenarioId", scenarioId.value)
+      .set("executableId", executableId.value)
+      .set("name", name)
+      .set("parameterValues", parameterValues)
+      .set("inputArtifacts", inputArtifacts);
+  }
 }
 
 // --- Execution ---
 
 struct CreateExecutionRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string configurationId;
+  ResourceGroupId resourceGroupId;
+  ConfigurationId configurationId;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("configurationId", configurationId.value);
+  }
 }
 
 struct PatchExecutionRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string executionId;
+  ResourceGroupId resourceGroupId;
+  ExecutionId executionId;
   string targetStatus;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("executionId", executionId.value)
+      .set("targetStatus", targetStatus);
+  }
 }
 
 struct BulkPatchExecutionRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string[] executionIds;
+  ResourceGroupId resourceGroupId;
+  ExecutionId[] executionIds;
   string targetStatus;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("executionIds", executionIds.map!(e => e.value).array)
+      .set("targetStatus", targetStatus);
+  }
 }
 
 // --- Deployment ---
 
 struct CreateDeploymentRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string configurationId;
+  ResourceGroupId resourceGroupId;
+  ConfigurationId configurationId;
   int ttl;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("configurationId", configurationId.value)
+      .set("ttl", ttl);
+  }
 }
 
 struct PatchDeploymentRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string deploymentId;
+  ResourceGroupId resourceGroupId;
+  DeploymentId deploymentId;
   string targetStatus;
-  string configurationId;
+  ConfigurationId configurationId;
   int ttl;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("deploymentId", deploymentId.value)
+      .set("targetStatus", targetStatus)
+      .set("configurationId", configurationId.value)
+      .set("ttl", ttl);
+  }
 }
 
 struct BulkPatchDeploymentRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string[] deploymentIds;
+  ResourceGroupId resourceGroupId;
+  DeploymentId[] deploymentIds;
   string targetStatus;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("deploymentIds", deploymentIds.map!(d => d.value).array)
+      .set("targetStatus", targetStatus);
+  }
 }
 
 // --- Artifact ---
 
 struct CreateArtifactRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string scenarioId;
+  ResourceGroupId resourceGroupId;
+  ScenarioId scenarioId;
   string name;
   string description;
   string kind;
   string url;
   string[][] labels;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("scenarioId", scenarioId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("kind", kind)
+      .set("url", url)
+      .set("labels", labels);
+  }
 }
 
 // --- Resource Group ---
 
 struct CreateResourceGroupRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   string[][] labels;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("labels", labels);
+  }
 }
 
 struct PatchResourceGroupRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   string[][] labels;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("labels", labels);
+  }
 }
 
 // --- Docker Registry Secret ---
 
 struct CreateDockerRegistrySecretRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   string name;
   string server;
   string username;
   string password;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("name", name)
+      .set("server", server)
+      .set("username", username)
+      .set("password", password);
+  }
 }
 
 // --- Object Store Secret ---
 
 struct CreateObjectStoreSecretRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   string name;
   string type;
   string bucket;
@@ -143,40 +261,87 @@ struct CreateObjectStoreSecretRequest {
   string pathPrefix;
   string accessKey;
   string secretKey;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("name", name)
+      .set("type", type)
+      .set("bucket", bucket)
+      .set("region", region)
+      .set("endpoint", endpoint)
+      .set("pathPrefix", pathPrefix)
+      .set("accessKey", accessKey)
+      .set("secretKey", secretKey);
+  }
 }
 
 // --- Metrics ---
 
 struct PatchMetricsRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string executionId;
+  ResourceGroupId resourceGroupId;
+  ExecutionId executionId;
   string[][] metrics;
   string[][] tags;
   string[][] customInfo;
   string[][] labels;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("executionId", executionId.value)
+      .set("metrics", metrics)
+      .set("tags", tags)
+      .set("customInfo", customInfo)
+      .set("labels", labels);
+  }
 }
 
 // --- Execution Schedule ---
 
 struct CreateExecutionScheduleRequest {
   TenantId tenantId;
-  string resourceGroupId;
-  string configurationId;
+  ResourceGroupId resourceGroupId;
+  ConfigurationId configurationId;
   string name;
   string cron;
   long start;
   long end;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("configurationId", configurationId.value)
+      .set("name", name)
+      .set("cron", cron)
+      .set("start", start)
+      .set("end", end);
+  }
 }
 
 struct PatchExecutionScheduleRequest {
   TenantId tenantId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   ScheduleId scheduleId;
   string status;
   string cron;
   long start;
   long end;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("resourceGroupId", resourceGroupId.value)
+      .set("scheduleId", scheduleId.value)
+      .set("status", status)
+      .set("cron", cron)
+      .set("start", start)
+      .set("end", end);
+  }
 }
 
 // --- Meta / Capabilities ---
@@ -193,4 +358,19 @@ struct CapabilitiesResponse {
   bool bulkUpdates;
   bool timeToLiveDeployments;
   string apiVersion;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("logsExecutions", logsExecutions)
+      .set("logsDeployments", logsDeployments)
+      .set("multitenant", multitenant)
+      .set("shareable", shareable)
+      .set("staticDeployments", staticDeployments)
+      .set("userDeployments", userDeployments)
+      .set("userExecutions", userExecutions)
+      .set("executionSchedules", executionSchedules)
+      .set("bulkUpdates", bulkUpdates)
+      .set("timeToLiveDeployments", timeToLiveDeployments)
+      .set("apiVersion", apiVersion);
+  }
 }
