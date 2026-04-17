@@ -85,7 +85,7 @@ class FunctionController : PlatformController {
       if (nsId.length > 0)
         items = uc.listByNamespace(nsId);
       else if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = uc.listByEnvironment(EnvironmentId(envId));
       else
         items = [];
 
@@ -106,11 +106,11 @@ class FunctionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      if (!uc.hasFunction(id)) {
+      if (!uc.hasFunction(ServerlessFunctionId(id))) {
         writeError(res, 404, "Function not found");
         return;
       }
-      auto fn = uc.getFunction(id);
+      auto fn = uc.getFunction(ServerlessFunctionId(id));
       res.writeJsonBody(serializeFn(fn), 200);
     }
     catch (Exception e) {
@@ -138,7 +138,7 @@ class FunctionController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.timeoutSeconds = j.getInteger("timeoutSeconds");
 
-      auto result = uc.updateFunction(id, r);
+      auto result = uc.updateFunction(ServerlessFunctionId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -152,7 +152,7 @@ class FunctionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteFunction(id);
+      auto result = uc.deleteFunction(ServerlessFunctionId(id));
       if (result.success)
         res.writeBody("", 204);
       else

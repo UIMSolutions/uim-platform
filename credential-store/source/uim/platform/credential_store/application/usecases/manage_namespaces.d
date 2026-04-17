@@ -42,6 +42,10 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, ns.id, "");
   }
 
+  CommandResult update(string id, UpdateNamespaceRequest r) {
+    return update(NamespaceId(id), r);
+  }
+
   CommandResult update(NamespaceId id, UpdateNamespaceRequest r) {
     auto ns = repo.findById(id);
     if (ns.id.isEmpty)
@@ -53,20 +57,40 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, ns.id, "");
   }
 
+  Namespace getById(string id) {
+    return getById(NamespaceId(id));
+  }
+
   Namespace getById(NamespaceId id) {
     return repo.findById(id);
   }
 
   Namespace getByName(TenantId tenantId, string name) {
+    return getByName(tenantId, name);
+  }
+  
+  Namespace getByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 
+  Namespace[] list(string tenantId) {
+    return list(TenantId(tenantId));
+  }
+  
   Namespace[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  void remove(string id) {
+    remove(NamespaceId(id));
+  }
+
   void remove(NamespaceId id) {
     repo.remove(id);
+  }
+
+  size_t count(string tenantId) {
+    return count(TenantId(tenantId));
   }
 
   size_t count(TenantId tenantId) {

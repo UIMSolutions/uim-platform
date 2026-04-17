@@ -188,7 +188,7 @@ class EventSubscriptionController : PlatformController {
   }
 
   private Json serializeSub(EventSubscription sub) {
-    auto j = Json.emptyObject
+    return Json.emptyObject
     .set("id", sub.id)
     .set("namespaceId", sub.namespaceId)
     .set("environmentId", sub.environmentId)

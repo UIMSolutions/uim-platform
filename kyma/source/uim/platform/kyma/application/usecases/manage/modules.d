@@ -33,27 +33,26 @@ class ManageModulesUseCase : UIMUseCase {
       return CommandResult(false, "", "Environment ID is required");
 
     auto existing = moduleRepository.findByName(request.environmentId, request.name);
-    if (existing.id.length > 0 && existing.status == ModuleStatus.enabled)
+    if (existing.id.value.length > 0 && existing.status == ModuleStatus
+      .enabled)
       return CommandResult(false, "", "Module '" ~ request.name ~ "' is already enabled");
 
-    // import std.uuid : randomUUID;
-    auto id = existing.id.length > 0 ? existing.id : randomUUID().toString();
-
     KymaModule mod;
-    mod.moduleId = id;
-    mod.environmentId = request.environmentId;
-    mod.tenantId = request.tenantId;
-    mod.name = request.name;
-    mod.moduleType = toModuleType(request.moduleType);
-    mod.version_ = request.version_;
-    mod.channel = request.channel.length > 0 ? request.channel : "regular";
-    mod.customResourcePolicy = request.customResourcePolicy;
-    mod.configurationJson = request.configurationJson;
-    mod.status = ModuleStatus.installing;
-    mod.enabledBy = request.enabledBy;
-    mod.enabledAt = clockSeconds();
-    mod.modifiedAt = mod.enabledAt;
-
+    with (mod) {
+      moduleId = existing.id.value.length > 0 ? existing.id : randomUUID().toString();
+      environmentId = request.environmentId;
+      tenantId = request.tenantId;
+      name = request.name;
+      moduleType = toModuleType(request.moduleType);
+      version_ = request.version_;
+      channel = request.channel.length > 0 ? request.channel : "regular";
+      customResourcePolicy = request.customResourcePolicy;
+      configurationJson = request.configurationJson;
+      status = ModuleStatus.installing;
+      enabledBy = request.enabledBy;
+      enabledAt = clockSeconds();
+      modifiedAt = enabledAt;
+    }
     // Set known dependencies
     mod.requiredModules = getKnownDependencies(mod.moduleType);
 

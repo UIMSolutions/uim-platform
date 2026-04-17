@@ -34,7 +34,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     env.id = randomUUID();
     env.tenantId = req.tenantId;
     env.subaccountId = req.subaccountId;
-    env.clusterId = "cluster-" ~ id.value[0 .. 8];
+    env.clusterId = "cluster-" ~ env.id.value[0 .. 8];
     env.name = req.name;
     env.description = req.description;
     env.plan = parsePlan(req.plan);

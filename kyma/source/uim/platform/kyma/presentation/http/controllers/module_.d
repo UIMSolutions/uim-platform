@@ -112,7 +112,7 @@ class ModuleController : PlatformController {
       r.customResourcePolicy = j.getString("customResourcePolicy");
       r.configurationJson = j.getString("configuration");
 
-      auto result = uc.updateModule(id, r);
+      auto result = uc.updateModule(KymaModuleId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

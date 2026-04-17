@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class EnvironmentController : PlatformController{
+class EnvironmentController : PlatformController {
   private ManageEnvironmentsUseCase uc;
 
   this(ManageEnvironmentsUseCase uc) {
@@ -29,7 +29,7 @@ class EnvironmentController : PlatformController{
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/environments", &handleCreate);
     router.get("/api/v1/environments", &handleList);
     router.get("/api/v1/environments/*", &handleGetById);
@@ -63,11 +63,9 @@ class EnvironmentController : PlatformController{
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -91,8 +89,7 @@ class EnvironmentController : PlatformController{
       resp["items"] = arr;
       resp["totalCount"] = Json(envs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -100,14 +97,14 @@ class EnvironmentController : PlatformController{
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto env = uc.getEnvironment(id);
-      if (env.id.isEmpty) {
+      if (!uc.hasEnvironment(KymaEnvironmentId(id))) {
         writeError(res, 404, "Environment not found");
         return;
       }
+
+      auto env = uc.getEnvironment(KymaEnvironmentId(id));
       res.writeJsonBody(serializeEnv(env), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -117,6 +114,7 @@ class EnvironmentController : PlatformController{
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateEnvironmentRequest r;
+      r.name = j.getString("name");
       r.description = j.getString("description");
       r.machineCount = j.getInteger("machineCount");
       r.machineType = j.getString("machineType");
@@ -126,13 +124,12 @@ class EnvironmentController : PlatformController{
       r.oidcClientId = j.getString("oidcClientId");
       r.administrators = getStringArray(j, "administrators");
 
-      auto result = uc.updateEnvironment(id, r);
+      auto result = uc.updateEnvironment(KymaEnvironmentId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -140,38 +137,37 @@ class EnvironmentController : PlatformController{
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteEnvironment(id);
+      auto result = uc.deleteEnvironment(KymaEnvironmentId(id));
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private Json serializeEnv(KymaEnvironment e) {
     return Json.emptyObject
-    .set("id", e.id)
-    .set("tenantId", e.tenantId)
-    .set("subaccountId", e.subaccountId)
-    .set("clusterId", e.clusterId)
-    .set("name", e.name)
-    .set("description", e.description)
-    .set("plan", e.plan.to!string)
-    .set("region", e.region)
-    .set("kubernetesVersion", e.kubernetesVersion)
-    .set("status", e.status.to!string)
-    .set("machineCount", e.machineCount)
-    .set("machineType", e.machineType)
-    .set("autoScalerMin", e.autoScalerMin)
-    .set("autoScalerMax", e.autoScalerMax)
-    .set("shootDomain", e.shootDomain)
-    .set("kubeApiServerUrl", e.kubeApiServerUrl)
-    .set("administrators", e.administrators)
-    .set("createdBy", e.createdBy)
-    .set("createdAt", e.createdAt)
-    .set("modifiedAt", e.modifiedAt);
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("subaccountId", e.subaccountId)
+      .set("clusterId", e.clusterId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("plan", e.plan.to!string)
+      .set("region", e.region)
+      .set("kubernetesVersion", e.kubernetesVersion)
+      .set("status", e.status.to!string)
+      .set("machineCount", e.machineCount)
+      .set("machineType", e.machineType)
+      .set("autoScalerMin", e.autoScalerMin)
+      .set("autoScalerMax", e.autoScalerMax)
+      .set("shootDomain", e.shootDomain)
+      .set("kubeApiServerUrl", e.kubeApiServerUrl)
+      .set("administrators", e.administrators.toJson)
+      .set("createdBy", e.createdBy)
+      .set("createdAt", e.createdAt)
+      .set("modifiedAt", e.modifiedAt);
   }
 }

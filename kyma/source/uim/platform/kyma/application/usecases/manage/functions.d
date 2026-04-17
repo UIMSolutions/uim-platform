@@ -69,6 +69,10 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, serverlessFunction.id.toString, "");
   }
 
+  CommandResult updateFunction(string functionId, UpdateFunctionRequest req) {
+    return updateFunction(ServerlessFunctionId(functionId), req);
+  }
+
   CommandResult updateFunction(ServerlessFunctionId functionId, UpdateFunctionRequest req) {
     if (!functionRepository.existsById(functionId))
       return CommandResult(false, "", "Function not found");
@@ -113,16 +117,32 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, fn.id.toString, "");
   }
 
+  ServerlessFunction getFunction(string functionId) {
+    return getFunction(ServerlessFunctionId(functionId));
+  }
+  
   ServerlessFunction getFunction(ServerlessFunctionId functionId) {
     return functionRepository.findById(functionId);
+  }
+
+  ServerlessFunction[] listByNamespace(string nsId) {
+    return listByNamespace(NamespaceId(nsId));
   }
 
   ServerlessFunction[] listByNamespace(NamespaceId nsId) {
     return functionRepository.findByNamespace(nsId);
   }
 
+  ServerlessFunction[] listByEnvironment(string environmentId) {
+    return listByEnvironment(KymaEnvironmentId(environmentId));
+  }
+
   ServerlessFunction[] listByEnvironment(KymaEnvironmentId environmentId) {
     return functionRepository.findByEnvironment(environmentId);
+  }
+
+  CommandResult deleteFunction(string functionId) {
+    return deleteFunction(ServerlessFunctionId(functionId));
   }
 
   CommandResult deleteFunction(ServerlessFunctionId functionId) {
@@ -133,8 +153,6 @@ class ManageFunctionsUseCase : UIMUseCase {
     functionRepository.remove(functionId);
     return CommandResult(true, fn.id.toString(), "");
   }
-
-
 
   private ScalingType parseScalingType(string scalingTypeName) {
     switch (scalingTypeName) {

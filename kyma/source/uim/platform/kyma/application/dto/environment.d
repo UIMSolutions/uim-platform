@@ -24,6 +24,7 @@ struct CreateEnvironmentRequest {
 }
 
 struct UpdateEnvironmentRequest {
+  string name;
   string description;
   int machineCount;
   string machineType;

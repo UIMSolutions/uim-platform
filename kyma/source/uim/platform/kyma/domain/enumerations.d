@@ -35,7 +35,7 @@ enum FunctionRuntime {
     python312,
 }
 
-  private FunctionRuntime toRuntime(string runtimeName) {
+  FunctionRuntime toRuntime(string runtimeName) {
     switch (runtimeName) {
     case "nodejs18":
       return FunctionRuntime.nodejs18;

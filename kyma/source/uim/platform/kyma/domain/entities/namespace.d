@@ -53,7 +53,7 @@ struct Namespace {
       .set("cpuRequest", cpuRequest)
       .set("memoryRequest", memoryRequest)
       .set("podLimit", podLimit)
-      .set("quotaEnforcement", quotaEnforcement.toString())
+      .set("quotaEnforcement", quotaEnforcement.to!string)
       .set("labels", labels)
       .set("annotations", annotations)
       .set("istioInjection", istioInjection)
