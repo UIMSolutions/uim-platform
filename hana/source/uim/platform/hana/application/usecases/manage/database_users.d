@@ -51,7 +51,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
     return CommandResult(true, u.id, "");
   }
 
-  DatabaseUser get_(DatabaseUserId id) {
+  DatabaseUser getById(DatabaseUserId id) {
     return repo.findById(id);
   }
 

@@ -91,7 +91,7 @@ class BackupController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto b = uc.get_(id);
+      auto b = uc.getById(id);
       if (b.id.isEmpty) {
         writeError(res, 404, "Backup not found");
         return;

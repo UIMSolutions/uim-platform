@@ -51,7 +51,7 @@ class ManageHDIContainersUseCase : UIMUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  HDIContainer get_(HDIContainerId id) {
+  HDIContainer getById(HDIContainerId id) {
     return repo.findById(id);
   }
 

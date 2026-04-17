@@ -52,7 +52,7 @@ class ManageBackupsUseCase : UIMUseCase {
     return CommandResult(true, b.id, "");
   }
 
-  Backup get_(BackupId id) {
+  Backup getById(BackupId id) {
     return repo.findById(id);
   }
 

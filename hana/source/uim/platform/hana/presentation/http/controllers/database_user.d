@@ -90,7 +90,7 @@ class DatabaseUserController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto u = uc.get_(id);
+      auto u = uc.getById(id);
       if (u.id.isEmpty) {
         writeError(res, 404, "Database user not found");
         return;

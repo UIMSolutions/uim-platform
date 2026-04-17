@@ -52,7 +52,7 @@ class ManageReplicationTasksUseCase : UIMUseCase {
     return CommandResult(true, t.id, "");
   }
 
-  ReplicationTask get_(ReplicationTaskId id) {
+  ReplicationTask getById(ReplicationTaskId id) {
     return repo.findById(id);
   }
 

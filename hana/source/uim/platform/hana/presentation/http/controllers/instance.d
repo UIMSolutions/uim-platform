@@ -104,7 +104,7 @@ class InstanceController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto i = uc.get_(id);
+      auto i = uc.getById(id);
       if (i.id.isEmpty) {
         writeError(res, 404, "Instance not found");
         return;

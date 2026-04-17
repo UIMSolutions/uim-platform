@@ -48,7 +48,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  Configuration get_(ConfigurationId id) {
+  Configuration getById(ConfigurationId id) {
     return repo.findById(id);
   }
 

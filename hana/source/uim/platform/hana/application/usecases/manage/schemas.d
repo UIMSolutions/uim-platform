@@ -48,7 +48,7 @@ class ManageSchemasUseCase : UIMUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  Schema get_(SchemaId id) {
+  Schema getById(SchemaId id) {
     return repo.findById(id);
   }
 

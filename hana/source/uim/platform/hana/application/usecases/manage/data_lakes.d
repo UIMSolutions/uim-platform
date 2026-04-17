@@ -50,7 +50,7 @@ class ManageDataLakesUseCase : UIMUseCase {
     return CommandResult(true, d.id, "");
   }
 
-  DataLake get_(DataLakeId id) {
+  DataLake getById(DataLakeId id) {
     return repo.findById(id);
   }
 

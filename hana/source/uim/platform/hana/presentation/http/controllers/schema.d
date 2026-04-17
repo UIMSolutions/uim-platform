@@ -88,7 +88,7 @@ class SchemaController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto s = uc.get_(id);
+      auto s = uc.getById(id);
       if (s.id.isEmpty) {
         writeError(res, 404, "Schema not found");
         return;

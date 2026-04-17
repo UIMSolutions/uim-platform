@@ -58,7 +58,7 @@ class ManageDatabaseConnectionsUseCase : UIMUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  DatabaseConnection get_(DatabaseConnectionId id) {
+  DatabaseConnection getById(DatabaseConnectionId id) {
     return repo.findById(id);
   }
 

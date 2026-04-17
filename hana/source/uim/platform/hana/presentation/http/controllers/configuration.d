@@ -90,7 +90,7 @@ class ConfigurationController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto c = uc.get_(id);
+      auto c = uc.getById(id);
       if (c.id.isEmpty) {
         writeError(res, 404, "Configuration not found");
         return;

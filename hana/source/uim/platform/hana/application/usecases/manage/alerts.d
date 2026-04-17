@@ -54,7 +54,7 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, a.id, "");
   }
 
-  Alert get_(AlertId id) {
+  Alert getById(AlertId id) {
     return repo.findById(id);
   }
 

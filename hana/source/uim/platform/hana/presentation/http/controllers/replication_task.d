@@ -92,7 +92,7 @@ class ReplicationTaskController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto t = uc.get_(id);
+      auto t = uc.getById(id);
       if (t.id.isEmpty) {
         writeError(res, 404, "Replication task not found");
         return;

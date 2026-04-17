@@ -62,7 +62,7 @@ class ManageInstancesUseCase : UIMUseCase {
     return CommandResult(true, i.id, "");
   }
 
-  DatabaseInstance get_(InstanceId id) {
+  DatabaseInstance getById(InstanceId id) {
     return repo.findById(id);
   }
 
