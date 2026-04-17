@@ -96,7 +96,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
     return CommandResult(true, d.id, "");
   }
 
-  Deployment getbyId(DeploymentId id, ResourceGroupId groupId) {
+  Deployment getById(DeploymentId id, ResourceGroupId groupId) {
     return deplRepo.findById(id, groupId);
   }
 

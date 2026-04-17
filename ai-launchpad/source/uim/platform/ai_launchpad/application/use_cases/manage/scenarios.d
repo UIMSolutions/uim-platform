@@ -30,7 +30,7 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  Scenario getbyId(ScenarioId id, ConnectionId connectionId) {
+  Scenario getById(ScenarioId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 

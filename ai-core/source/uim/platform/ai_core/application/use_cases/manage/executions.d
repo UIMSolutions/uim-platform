@@ -83,7 +83,7 @@ class ManageExecutionsUseCase : UIMUseCase {
     return CommandResult(true, e.id, "");
   }
 
-  Execution getbyId(ExecutionId id, ResourceGroupId rgId) {
+  Execution getById(ExecutionId id, ResourceGroupId rgId) {
     return execRepo.findById(id, rgId);
   }
 

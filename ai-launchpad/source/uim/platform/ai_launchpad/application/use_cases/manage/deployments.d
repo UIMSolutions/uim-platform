@@ -34,7 +34,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
     return CommandResult(true, d.id, "");
   }
 
-  Deployment getbyId(DeploymentId id, ConnectionId connectionId) {
+  Deployment getById(DeploymentId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 

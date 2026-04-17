@@ -33,7 +33,7 @@ class ManageExecutionsUseCase : UIMUseCase {
     return CommandResult(true, e.id, "");
   }
 
-  Execution getbyId(ExecutionId id, ConnectionId connectionId) {
+  Execution getById(ExecutionId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 

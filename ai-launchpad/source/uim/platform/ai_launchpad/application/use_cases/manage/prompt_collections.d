@@ -37,7 +37,7 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
     return CommandResult(true, pc.id, "");
   }
 
-  PromptCollection getbyId(PromptCollectionId id) {
+  PromptCollection getById(PromptCollectionId id) {
     return collectionRepository.findById(id);
   }
 

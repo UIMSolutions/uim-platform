@@ -37,7 +37,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
     return CommandResult(true, rg.id, "");
   }
 
-  ResourceGroup getbyId(ResourceGroupId id, ConnectionId connectionId) {
+  ResourceGroup getById(ResourceGroupId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 

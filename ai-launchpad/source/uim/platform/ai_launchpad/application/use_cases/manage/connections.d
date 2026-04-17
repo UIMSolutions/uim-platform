@@ -49,7 +49,7 @@ class ManageConnectionsUseCase : UIMUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  Connection getbyId(ConnectionId id) {
+  Connection getById(ConnectionId id) {
     return repo.findById(id);
   }
 
