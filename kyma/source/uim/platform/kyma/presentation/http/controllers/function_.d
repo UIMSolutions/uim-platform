@@ -106,11 +106,11 @@ class FunctionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto fn = uc.getFunction(id);
-      if (fn.id.isEmpty) {
+      if (!uc.hasFunction(id)) {
         writeError(res, 404, "Function not found");
         return;
       }
+      auto fn = uc.getFunction(id);
       res.writeJsonBody(serializeFn(fn), 200);
     }
     catch (Exception e) {

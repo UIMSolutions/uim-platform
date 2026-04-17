@@ -59,6 +59,10 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, sub.id.toString, "");
   }
 
+  CommandResult updateSubscription(string subscriptionId, UpdateEventSubscriptionRequest request) {
+    return updateSubscription(EventSubscriptionId(subscriptionId), request);
+  }
+
   CommandResult updateSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
@@ -87,6 +91,10 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, subscriptionId.toString(), "");
   }
 
+  CommandResult pauseSubscription(string subscriptionId) {
+    return pauseSubscription(EventSubscriptionId(subscriptionId));
+  }
+
   CommandResult pauseSubscription(EventSubscriptionId subscriptionId) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
@@ -96,6 +104,10 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     sub.modifiedAt = clockSeconds();
     subscriptionRepository.update(sub);
     return CommandResult(true, subscriptionId.toString(), "");
+  }
+
+  CommandResult resumeSubscription(string subscriptionId) {
+    return resumeSubscription(EventSubscriptionId(subscriptionId));
   }
 
   CommandResult resumeSubscription(EventSubscriptionId subscriptionId) {
@@ -109,12 +121,24 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, subscriptionId.toString(), "");
   }
 
+  EventSubscription getSubscription(string subscriptionId) {
+    return getSubscription(EventSubscriptionId(subscriptionId));
+  }
+
   EventSubscription getSubscription(EventSubscriptionId subscriptionId) {
     return subscriptionRepository.findById(subscriptionId);
   }
 
+  EventSubscription[] listByNamespace(string namespaceId) {
+    return listByNamespace(NamespaceId(namespaceId));
+  }
+
   EventSubscription[] listByNamespace(NamespaceId namespaceId) {
     return subscriptionRepository.findByNamespace(namespaceId);
+  }
+
+  EventSubscription[] listByEnvironment(string environmentId) {
+    return listByEnvironment(KymaEnvironmentId(environmentId));
   }
 
   EventSubscription[] listByEnvironment(KymaEnvironmentId environmentId) {
@@ -123,6 +147,10 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
 
   EventSubscription[] listBySource(string source) {
     return subscriptionRepository.findBySource(source);
+  }
+
+  CommandResult deleteSubscription(string subscriptionId) {
+    return deleteSubscription(EventSubscriptionId(subscriptionId));
   }
 
   CommandResult deleteSubscription(EventSubscriptionId subscriptionId) {

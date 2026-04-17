@@ -5,3 +5,4 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.helpers;
 
+public import uim.platform.kyma.helpers.convert;

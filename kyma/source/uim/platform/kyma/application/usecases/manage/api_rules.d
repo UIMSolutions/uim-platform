@@ -75,7 +75,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     rule.rules = entries;
 
     ruleRepository.save(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, rule.id.toString, "");
   }
 
   CommandResult updateApiRule(string id, UpdateApiRuleRequest req) {
@@ -164,7 +164,7 @@ class ManageApiRulesUseCase : UIMUseCase {
 
     auto rule = ruleRepository.findById(id);
     ruleRepository.remove(id);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, rule.id.toString(), "");
   }
 
   private AccessStrategy parseAccessStrategy(string strategyName) {

@@ -197,7 +197,7 @@ class EventSubscriptionController : PlatformController {
     .set("description", sub.description)
     .set("status", sub.status.to!string)
     .set("source", sub.source)
-    .set("eventTypes", lizeStrArray(sub.eventTypes))
+    .set("eventTypes", serializeStrArray(sub.eventTypes))
     .set("typeEncoding", sub.typeEncoding.to!string)
     .set("sinkUrl", sub.sinkUrl)
     .set("sinkServiceName", sub.sinkServiceName)

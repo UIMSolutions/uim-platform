@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-ApiRuleEntryDto[] toRuleEntries(Json j) {
-    if (!j.isObject)
+ApiRuleEntryDto[] toRuleEntries(Json json) {
+    if (!json.isObject)
       return null;
 
-    if (!("rules" in j))
+    if (!("rules" in json))
       return null;
 
-    auto value = j["rules"];
+    auto value = json["rules"];
     if (!value.isArray)
       return null;
 
@@ -37,16 +37,17 @@ ApiRuleEntryDto[] toRuleEntries(Json j) {
   }
 
     AppApiEntryDto[] toApis(Json json) {
-    if (!j.isObject)
+    if (!json.isObject)
       return null;
 
-    if (!("apis" in j))
+    if (!("apis" in json))
       return null;
 
-    auto value = j["apis"];
+    auto value = json["apis"];
     if (!value.isArray)
       return null;
       
+      AppApiEntryDto[] entries;
     foreach (item; value.toArray) {
       AppApiEntryDto entry;
       entry.name = item.getString("name");

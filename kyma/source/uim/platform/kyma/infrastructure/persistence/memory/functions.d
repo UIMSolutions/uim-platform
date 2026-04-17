@@ -53,11 +53,11 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   void save(ServerlessFunction fn) {
-    store[fn.functionId] = fn;
+    store[fn.id] = fn;
   }
 
   void update(ServerlessFunction fn) {
-    store[fn.functionId] = fn;
+    store[fn.id] = fn;
   }
 
   void remove(ServerlessFunctionId functionId) {

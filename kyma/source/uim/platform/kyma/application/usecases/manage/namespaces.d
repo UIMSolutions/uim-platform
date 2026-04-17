@@ -33,27 +33,29 @@ class ManageNamespacesUseCase : UIMUseCase {
       return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
     Namespace ns;
-    ns.namespaceId = randomUUID();
-    ns.environmentId = req.environmentId;
-    ns.tenantId = req.tenantId;
-    ns.name = req.name;
-    ns.description = req.description;
-    ns.status = NamespaceStatus.active;
-    ns.cpuLimit = req.cpuLimit;
-    ns.memoryLimit = req.memoryLimit;
-    ns.cpuRequest = req.cpuRequest;
-    ns.memoryRequest = req.memoryRequest;
-    ns.podLimit = req.podLimit > 0 ? req.podLimit : 100;
-    ns.quotaEnforcement = parseQuotaEnforcement(req.quotaEnforcement);
-    ns.istioInjection = req.istioInjection;
-    ns.labels = req.labels;
-    ns.annotations = req.annotations;
-    ns.createdBy = req.createdBy;
-    ns.createdAt = clockSeconds();
-    ns.modifiedAt = ns.createdAt;
+    with (ns) {
+      id = randomUUID();
+      environmentId = req.environmentId;
+      tenantId = req.tenantId;
+      name = req.name;
+      description = req.description;
+      status = NamespaceStatus.active;
+      cpuLimit = req.cpuLimit;
+      memoryLimit = req.memoryLimit;
+      cpuRequest = req.cpuRequest;
+      memoryRequest = req.memoryRequest;
+      podLimit = req.podLimit > 0 ? req.podLimit : 100;
+      quotaEnforcement = parseQuotaEnforcement(req.quotaEnforcement);
+      istioInjection = req.istioInjection;
+      labels = req.labels;
+      annotations = req.annotations;
+      createdBy = req.createdBy;
+      createdAt = clockSeconds();
+      modifiedAt = ns.createdAt;
+    }
 
     namespaceRepository.save(ns);
-    return CommandResult(true, ns.namespaceId, "");
+    return CommandResult(true, ns.id.toString, "");
   }
 
   CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {

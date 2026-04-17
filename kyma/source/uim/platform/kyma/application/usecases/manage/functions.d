@@ -131,7 +131,7 @@ class ManageFunctionsUseCase : UIMUseCase {
 
     auto fn = functionRepository.findById(functionId);
     functionRepository.remove(functionId);
-    return CommandResult(true, fn.functionId.toString(), "");
+    return CommandResult(true, fn.id.toString(), "");
   }
 
 

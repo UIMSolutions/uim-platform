@@ -78,7 +78,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     app.events = events;
 
     appRepository.save(app);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, app.id.toString, "");
   }
 
   CommandResult updateApplication(string appId, UpdateApplicationRequest req) {
@@ -127,7 +127,7 @@ class ManageApplicationsUseCase : UIMUseCase {
 
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, appId.toString(), "");
+    return CommandResult(true, app.id.toString(), "");
   }
 
   CommandResult connectApplication(string appId) {
@@ -142,7 +142,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     app.status = AppConnectivityStatus.connected;
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, appId.toString(), "");
+    return CommandResult(true, app.id.toString(), "");
   }
 
   CommandResult disconnectApplication(string appId) {

@@ -49,7 +49,7 @@ struct ServiceBinding {
       .set("tenantId", tenantId.value)
       .set("name", name)
       .set("description", description)
-      .set("status", status.toString())
+      .set("status", status.to!string())
       .set("secretName", secretName)
       .set("secretNamespace", secretNamespace)
       .set("parametersJson", parametersJson)

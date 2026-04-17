@@ -47,7 +47,7 @@ struct Namespace {
       .set("tenantId", tenantId.value)
       .set("name", name)
       .set("description", description)
-      .set("status", status.toString())
+      .set("status", status.to!string())
       .set("cpuLimit", cpuLimit)
       .set("memoryLimit", memoryLimit)
       .set("cpuRequest", cpuRequest)
