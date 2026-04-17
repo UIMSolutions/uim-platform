@@ -9,11 +9,14 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 
 interface ProvisioningLogRepository {
+  bool existsById(ProvisioningLogId tenantId, id tenantId);
+  ProvisioningLog findById(ProvisioningLogId tenantId, id tenantId);
+
   ProvisioningLog[] findByTenant(TenantId tenantId);
-  ProvisioningLog* findById(ProvisioningLogId tenantId, id tenantId);
   ProvisioningLog[] findByJob(ProvisioningJobId jobtenantId, id tenantId);
   ProvisioningLog[] findByEntity(string entitytenantId, id tenantId);
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status);
+  
   size_t countByJob(ProvisioningJobId jobtenantId, id tenantId);
   size_t countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status);
   void save(ProvisioningLog entity);

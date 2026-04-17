@@ -1671,3 +1671,358 @@ string extractIdFromPath(string path) {
     return path[idx + 1 .. $];
 }
 */
+
+string getString(Json j, string key) {
+  if (!j.isObject)
+    return "";
+  auto v = key in j;
+  if (v is null)
+    return "";
+  if ((*v).isString)
+    return (*v).get!string;
+  return "";
+}
+
+bool getBoolean(Json j, string key, bool default_ = false) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isBoolean)
+    return (*v).get!bool;
+  return default_;
+}
+
+int jsonInt(Json j, string key, int default_ = 0) {
+  if (!j.isObject)
+    return default_;
+  auto v = key in j;
+  if (v is null)
+    return default_;
+  if ((*v).isInteger)
+    return cast(int)(*v).get!long;
+  return default_;
+}
+
+
+
+string[] getStringArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null)
+    return [];
+  if ((*v).type != Json.Type.array)
+    return [];
+  string[] result;
+  foreach (item; *v) {
+    if (item.isString)
+      result ~= item.get!string;
+  }
+  return result;
+}
+
+Json toJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
+string extractIdFromPath(string path) {
+  import std.string : lastIndexOf;
+
+  auto idx = lastIndexOf(path, '/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}
+
+// string getString(Json j, string key) {
+//     if (!j.isObject)
+//         return "";
+//     auto v = key in j;
+//     if (v is null)
+//         return "";
+//     if ((*v).isString)
+//         return (*v).get!string;
+//     return "";
+// }
+
+// bool getBoolean(Json j, string key, bool default_ = false) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isBoolean)
+//         return (*v).get!bool;
+//     return default_;
+// }
+
+// int jsonInt(Json j, string key, int default_ = 0) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isInteger)
+//         return cast(int)(*v).get!long;
+//     return default_;
+// }
+
+// long jsonLong(Json j, string key, long default_ = 0) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isInteger)
+//         return (*v).get!long;
+//     return default_;
+// }
+
+// string[] getStringArray(Json j, string key) {
+//     if (!j.isObject)
+//         return [];
+//     auto v = key in j;
+//     if (v is null)
+//         return [];
+//     if ((*v).type != Json.Type.array)
+//         return [];
+//     string[] result;
+//     foreach (item; *v) {
+//         if (item.isString)
+//             result ~= item.get!string;
+//     }
+//     return result;
+// }
+
+// string[][] jsonKeyValuePairs(Json j, string key) {
+//     if (!j.isObject)
+//         return [];
+//     auto v = key in j;
+//     if (v is null)
+//         return [];
+//     if ((*v).type != Json.Type.array)
+//         return [];
+//     string[][] result;
+//     foreach (item; *v) {
+//         if (item.isObject) {
+//             auto k = item.getString("key");
+//             auto val = item.getString("value");
+//             if (k.length > 0)
+//                 result ~= [k, val];
+//         }
+//     }
+//     return result;
+// }
+
+// Json stringsToJsonArray(string[] arr) {
+//     auto jarr = Json.emptyArray;
+//     foreach (s; arr)
+//         jarr ~= Json(s);
+//     return jarr;
+// }
+
+// string extractIdFromPath(string path) {
+//     import std.string : lastIndexOf;
+
+//     auto idx = lastIndexOf(path, '/');
+//     if (idx >= 0 && idx + 1 < path.length)
+//         return path[idx + 1 .. $];
+//     return "";
+// }
+
+// string extractSegmentFromPath(string path, int segmentIndex) {
+//     import std.string : split;
+//     auto parts = path.split("/");
+//     // Filter empty segments
+//     string[] segments;
+//     foreach (p; parts) {
+//         if (p.length > 0)
+//             segments ~= p;
+//     }
+//     if (segmentIndex < segments.length)
+//         return segments[segmentIndex];
+//     return "";
+// }
+
+/// Extract an int field from a Json object.
+int jsonInt(Json j, string key, int default_ = 0) {
+  return cast(int)jsonLong(j, key, default_);
+}
+
+/// Extract a string array from a Json object.
+
+
+/// Extract a string-to-string map from a Json object.
+string[string] jsonStrMap(Json j, string key) {
+  if (!j.isObject)
+    return (string[string]).init;
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.object)
+    return (string[string]).init;
+
+  string[string] result;
+  foreach (string k, val; *v) {
+    if (val.isString)
+      result[k] = val.get!string;
+  }
+  return result;
+}
+
+/// Extract an ID from the end of a URI path.
+string extractIdFromPath(string uri) {
+  // import std.string : lastIndexOf;
+  auto idx = uri.lastIndexOf('/');
+  if (idx < 0 || idx + 1 >= uri.length)
+    return "";
+  auto rest = uri[idx + 1 .. $];
+  auto qidx = rest.lastIndexOf('?');
+  return qidx > 0 ? rest[0 .. qidx] : rest;
+}
+
+/// Serialize a string array to Json array.
+Json serializeStrArray(string[] arr) {
+  auto result = Json.emptyArray;
+  foreach (s; arr)
+    result ~= Json(s);
+  return result;
+}
+
+/// Serialize a string[string] map to Json object.
+Json serializeStrMap(string[string] map) {
+  auto result = Json.emptyObject;
+  foreach (k, v; map)
+    result[k] = Json(v);
+  return result;
+}
+
+/// Extract a Json array of objects (generic).
+Json[] jsonObjArray(Json j, string key) {
+  if (!j.isObject)
+    return [];
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.array)
+    return [];
+
+  Json[] result;
+  foreach (item; *v) {
+    if (item.type == Json.Type.object)
+      result ~= item;
+  }
+  return result;
+}
+
+string getString(Json j, string key) {
+    if (!j.isObject)
+        return "";
+    auto v = key in j;
+    if (v is null)
+        return "";
+    if ((*v).isString)
+        return (*v).get!string;
+    return "";
+}
+
+bool getBoolean(Json j, string key, bool default_ = false) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isBoolean)
+        return (*v).get!bool;
+    return default_;
+}
+
+int jsonInt(Json j, string key, int default_ = 0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isInteger)
+        return cast(int)(*v).get!long;
+    return default_;
+}
+
+long jsonLong(Json j, string key, long default_ = 0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isInteger)
+        return (*v).get!long;
+    return default_;
+}
+
+double jsonDouble(Json j, string key, double default_ = 0.0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isFloat)
+        return (*v).get!double;
+    if ((*v).isInteger)
+        return cast(double)(*v).get!long;
+    return default_;
+}
+
+string[] getStringArray(Json j, string key) {
+    if (!j.isObject)
+        return [];
+    auto v = key in j;
+    if (v is null)
+        return [];
+    if ((*v).type != Json.Type.array)
+        return [];
+    string[] result;
+    foreach (item; *v) {
+        if (item.isString)
+            result ~= item.get!string;
+    }
+    return result;
+}
+
+string[][] jsonKeyValuePairs(Json j, string key) {
+    if (!j.isObject)
+        return [];
+    auto v = key in j;
+    if (v is null)
+        return [];
+    if ((*v).type != Json.Type.array)
+        return [];
+    string[][] result;
+    foreach (item; *v) {
+        if (item.isObject) {
+            auto k = item.getString("key");
+            auto val = item.getString("value");
+            if (k.length > 0)
+                result ~= [k, val];
+        }
+    }
+    return result;
+}
+
+Json stringsToJsonArray(string[] arr) {
+    auto jarr = Json.emptyArray;
+    foreach (s; arr)
+        jarr ~= Json(s);
+    return jarr;
+}
+
+string extractIdFromPath(string path) {
+    import std.string : lastIndexOf;
+
+    if (path.length == 0)
+        return "";
+    auto idx = lastIndexOf(path, '/');
+    if (idx < 0 || idx + 1 >= path.length)
+        return "";
+    return path[idx + 1 .. $];
+}

@@ -9,10 +9,13 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 
 interface TransformationRepository {
+  bool existsById(TransformationId tenantId, id tenantId);
+  Transformation findById(TransformationId tenantId, id tenantId);
+  
   Transformation[] findByTenant(TenantId tenantId);
-  Transformation* findById(TransformationId tenantId, id tenantId);
   Transformation[] findBySystem(string systemtenantId, id tenantId);
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role);
+  
   void save(Transformation entity);
   void update(Transformation entity);
   void remove(TransformationId tenantId, id tenantId);

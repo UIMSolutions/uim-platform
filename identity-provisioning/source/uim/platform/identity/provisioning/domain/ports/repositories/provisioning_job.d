@@ -9,11 +9,14 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 
 interface ProvisioningJobRepository {
+  bool existsById(ProvisioningJobId tenantId, id tenantId);
+  ProvisioningJob findById(ProvisioningJobId tenantId, id tenantId);
+  
   ProvisioningJob[] findByTenant(TenantId tenantId);
-  ProvisioningJob* findById(ProvisioningJobId tenantId, id tenantId);
   ProvisioningJob[] findBySource(SourceSystemId sourcetenantId, id tenantId);
   ProvisioningJob[] findByTarget(TargetSystemId targettenantId, id tenantId);
   ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status);
+  
   void save(ProvisioningJob entity);
   void update(ProvisioningJob entity);
   void remove(ProvisioningJobId tenantId, id tenantId);

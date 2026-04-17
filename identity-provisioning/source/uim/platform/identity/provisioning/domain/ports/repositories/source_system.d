@@ -9,11 +9,16 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.source_system;
 
 interface SourceSystemRepository {
+  bool existsById(SourceSystemId tenantId, id tenantId);
+  SourceSystem findById(SourceSystemId tenantId, id tenantId);
+
+  bool existsByName(TenantId tenantId, string name);
+  SourceSystem findByName(TenantId tenantId, string name);
+
   SourceSystem[] findByTenant(TenantId tenantId);
-  SourceSystem* findById(SourceSystemId tenantId, id tenantId);
-  SourceSystem* findByName(TenantId tenantId, string name);
   SourceSystem[] findByType(TenantId tenantId, SystemType systemType);
   SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status);
+  
   void save(SourceSystem entity);
   void update(SourceSystem entity);
   void remove(SourceSystemId tenantId, id tenantId);

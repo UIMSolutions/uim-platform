@@ -9,9 +9,13 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.proxy_system;
 
 interface ProxySystemRepository {
+  bool existsById(ProxySystemId tenantId, id tenantId);
+  ProxySystem findById(ProxySystemId tenantId, id tenantId);
+
+  bool existsByName(TenantId tenantId, string name);
+  ProxySystem findByName(TenantId tenantId, string name);
+
   ProxySystem[] findByTenant(TenantId tenantId);
-  ProxySystem* findById(ProxySystemId tenantId, id tenantId);
-  ProxySystem* findByName(TenantId tenantId, string name);
   ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId);
   ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId);
   void save(ProxySystem entity);

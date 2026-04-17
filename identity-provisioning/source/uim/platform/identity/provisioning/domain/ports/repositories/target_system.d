@@ -9,11 +9,17 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.target_system;
 
 interface TargetSystemRepository {
+  bool existsById(TargetSystemId tenantId, id tenantId);
+  TargetSystem findById(TargetSystemId tenantId, id tenantId);
+
+  bool existsByName(TenantId tenantId, string name);
+  TargetSystem findByName(TenantId tenantId, string name);
+
   TargetSystem[] findByTenant(TenantId tenantId);
-  TargetSystem* findById(TargetSystemId tenantId, id tenantId);
-  TargetSystem* findByName(TenantId tenantId, string name);
+  TargetSystem[] findByTenant(TenantId tenantId);
   TargetSystem[] findByType(TenantId tenantId, SystemType systemType);
   TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status);
+
   void save(TargetSystem entity);
   void update(TargetSystem entity);
   void remove(TargetSystemId tenantId, id tenantId);
