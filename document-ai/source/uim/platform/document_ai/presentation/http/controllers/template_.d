@@ -81,7 +81,7 @@ class TemplateController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = req.headers.get("X-Client-Id", "");
 
-      auto t = uc.get_(id, clientId);
+      auto t = uc.getById(id, clientId);
       if (t.id.isEmpty) {
         writeError(res, 404, "Template not found");
         return;

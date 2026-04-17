@@ -86,7 +86,7 @@ class DocumentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = req.headers.get("X-Client-Id", "");
 
-      auto d = uc.get_(id, clientId);
+      auto d = uc.getById(id, clientId);
       if (d.id.isEmpty) {
         writeError(res, 404, "Document not found");
         return;

@@ -86,7 +86,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  Client get_(ClientId id) {
+  Client getById(ClientId id) {
     return repo.findById(id);
   }
 

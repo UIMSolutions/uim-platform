@@ -77,7 +77,7 @@ class ClientController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
 
-      auto c = uc.get_(tenantId, id);
+      auto c = uc.getById(tenantId, id);
       if (c.clientId.isEmpty) {
         writeError(res, 404, "Client not found");
         return;

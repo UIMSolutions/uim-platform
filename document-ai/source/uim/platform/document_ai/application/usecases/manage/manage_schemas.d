@@ -100,7 +100,7 @@ class ManageSchemasUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  Schema get_(SchemaId id, ClientId clientId) {
+  Schema getById(SchemaId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 

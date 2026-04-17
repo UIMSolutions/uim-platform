@@ -92,7 +92,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  TrainingJob get_(TrainingJobId id, ClientId clientId) {
+  TrainingJob getById(TrainingJobId id, ClientId clientId) {
     return jobRepo.findById(id, clientId);
   }
 

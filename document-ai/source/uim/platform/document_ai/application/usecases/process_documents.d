@@ -95,7 +95,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
     return CommandResult(true, doc.id, "");
   }
 
-  Document get_(DocumentId id, ClientId clientId) {
+  Document getById(DocumentId id, ClientId clientId) {
     return docRepo.findById(id, clientId);
   }
 

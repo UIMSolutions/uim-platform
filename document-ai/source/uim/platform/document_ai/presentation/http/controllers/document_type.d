@@ -81,7 +81,7 @@ class DocumentTypeController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = req.headers.get("X-Client-Id", "");
 
-      auto dt = uc.get_(id, clientId);
+      auto dt = uc.getById(id, clientId);
       if (dt.id.isEmpty) {
         writeError(res, 404, "Document type not found");
         return;

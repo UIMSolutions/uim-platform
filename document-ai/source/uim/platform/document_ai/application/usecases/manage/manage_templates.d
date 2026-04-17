@@ -94,7 +94,7 @@ class ManageTemplatesUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  Template get_(TemplateId id, ClientId clientId) {
+  Template getById(TemplateId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 

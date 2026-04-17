@@ -86,7 +86,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  EnrichmentData get_(EnrichmentDataId id, ClientId clientId) {
+  EnrichmentData getById(EnrichmentDataId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 

@@ -66,7 +66,7 @@ class ManageDocumentTypesUseCase : UIMUseCase {
     return CommandResult(true, existing.id, "");
   }
 
-  DocumentType get_(DocumentTypeId id, ClientId clientId) {
+  DocumentType getById(DocumentTypeId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 
