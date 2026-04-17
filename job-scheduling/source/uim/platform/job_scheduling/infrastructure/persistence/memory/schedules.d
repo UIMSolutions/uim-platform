@@ -12,7 +12,7 @@ module uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
 // import std.algorithm : filter, canFind;
 // import std.array : array;
 // import std.uni : toLower;
-import uim.platform.job_scheduling
+import uim.platform.job_scheduling;
 
 mixin(ShowModule!());
 

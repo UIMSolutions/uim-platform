@@ -9,7 +9,7 @@ module uim.platform.job_scheduling.presentation.http.controllers.run_log;
 // import uim.platform.job_scheduling.application.dto;
 // import uim.platform.job_scheduling.presentation.http.json_utils;
 
-import uim.platform.job_scheduling
+import uim.platform.job_scheduling;
 
 mixin(ShowModule!());
 

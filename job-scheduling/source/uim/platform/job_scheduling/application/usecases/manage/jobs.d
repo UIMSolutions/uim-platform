@@ -14,7 +14,7 @@ module uim.platform.job_scheduling.application.usecases.manage.jobs;
 // import std.conv : to;
 
 // alias Job = uim.platform.job_scheduling.domain.entities.job.Job;
-import uim.platform.job_scheduling
+import uim.platform.job_scheduling;
 
 mixin(ShowModule!());
 

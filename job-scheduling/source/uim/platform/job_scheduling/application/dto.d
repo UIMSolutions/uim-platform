@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.dto;
 
-import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.types;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 // --- Job ---
 
 struct CreateJobRequest {

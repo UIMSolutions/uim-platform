@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.usecases.manage.schedules;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.schedule;
-import uim.platform.job_scheduling.domain.ports.repositories.schedules;
-import uim.platform.job_scheduling.domain.services.schedule_validator;
-import uim.platform.job_scheduling.application.dto;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.schedule;
+// import uim.platform.job_scheduling.domain.ports.repositories.schedules;
+// import uim.platform.job_scheduling.domain.services.schedule_validator;
+// import uim.platform.job_scheduling.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
 
-alias Schedule = uim.platform.job_scheduling.domain.entities.schedule.Schedule;
+// alias Schedule = uim.platform.job_scheduling.domain.entities.schedule.Schedule;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSchedulesUseCase : UIMUseCase {
     private ScheduleRepository repo;
 

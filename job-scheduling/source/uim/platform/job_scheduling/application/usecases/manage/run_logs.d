@@ -15,7 +15,7 @@ module uim.platform.job_scheduling.application.usecases.manage.run_logs;
 // import std.conv : to;
 
 // alias RunLog = uim.platform.job_scheduling.domain.entities.run_log.RunLog;
-import uim.platform.job_scheduling
+import uim.platform.job_scheduling;
 
 mixin(ShowModule!());
 

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.ports.repositories.schedules;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.schedule;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.schedule;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 interface ScheduleRepository {
     Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId);
     Schedule[] findByJob(JobId jobtenantId, id tenantId);

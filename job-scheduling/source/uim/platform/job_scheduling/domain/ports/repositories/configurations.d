@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.ports.repositories.configurations;
 
-import uim.platform.job_scheduling.domain.types;
-import uim.platform.job_scheduling.domain.entities.configuration;
+// import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.entities.configuration;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 interface ConfigurationRepository {
     Configuration findByTenant(TenantId tenantId);
     void save(Configuration c);

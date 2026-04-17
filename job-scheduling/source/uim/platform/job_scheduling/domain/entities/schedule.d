@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.entities.schedule;
 
-import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.types;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 struct Schedule {
     TenantId tenantId;
     ScheduleId id;

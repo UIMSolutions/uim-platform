@@ -25,7 +25,7 @@ module uim.platform.job_scheduling.infrastructure.container;
 // import uim.platform.job_scheduling.presentation.http.controllers.run_log;
 // import uim.platform.job_scheduling.presentation.http.controllers.configuration;
 // import uim.platform.job_scheduling.presentation.http.controllers.health;
-import uim.platform.job_scheduling
+import uim.platform.job_scheduling;
 
 mixin(ShowModule!());
 

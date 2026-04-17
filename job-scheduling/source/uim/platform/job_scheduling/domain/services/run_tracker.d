@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.services.run_tracker;
 
-import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.types;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 struct RunTracker {
     static bool canTransition(RunStatus from, RunStatus to) {
         if (to == RunStatus.triggered)

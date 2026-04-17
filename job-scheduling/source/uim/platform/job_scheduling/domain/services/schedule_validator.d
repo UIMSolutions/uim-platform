@@ -5,11 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.services.schedule_validator;
 
-import uim.platform.job_scheduling.domain.types;
+// import uim.platform.job_scheduling.domain.types;
+import uim.platform.job_scheduling;
 
+mixin(ShowModule!());
+
+@safe:
 struct ScheduleValidator {
     static bool isValidCron(string cron) {
         import std.array : split;
+
         auto parts = cron.split(" ");
         return parts.length == 5;
     }
