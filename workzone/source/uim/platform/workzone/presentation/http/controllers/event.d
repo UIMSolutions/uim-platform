@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.event;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class EventController {
+class EventController : PlatformController {
   private ManageEventsUseCase useCase;
 
   this(ManageEventsUseCase useCase) {
@@ -22,6 +22,8 @@ class EventController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/events", &handleCreate);
     router.get("/api/v1/events", &handleList);
     router.get("/api/v1/events/*", &handleGet);

@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class CardController {
+class CardController : PlatformController {
   private ManageCardsUseCase useCase;
 
   this(ManageCardsUseCase useCase) {
@@ -22,6 +22,8 @@ class CardController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/cards", &handleCreate);
     router.get("/api/v1/cards", &handleList);
     router.get("/api/v1/cards/*", &handleGet);

@@ -16,7 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class ScenarioController {
+class ScenarioController : PlatformController {
   private ManageScenariosUseCase useCase;
 
   this(ManageScenariosUseCase useCase) {
@@ -24,6 +24,8 @@ class ScenarioController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/scenarios", &handleCreate);
     router.get("/api/v1/scenarios", &handleList);
     router.get("/api/v1/scenarios/*", &handleGetById);

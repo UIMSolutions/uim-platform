@@ -17,7 +17,7 @@ import uim.platform.integration.automation.domain.entities.system_connection;
 import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
-class SystemController {
+class SystemController : PlatformController {
   private ManageSystemsUseCase useCase;
 
   this(ManageSystemsUseCase useCase) {
@@ -25,6 +25,8 @@ class SystemController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/systems", &handleCreate);
     router.get("/api/v1/systems", &handleList);
     router.get("/api/v1/systems/*", &handleGetById);

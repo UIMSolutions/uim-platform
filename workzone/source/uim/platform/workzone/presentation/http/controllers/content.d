@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.content_item;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ContentController {
+class ContentController : PlatformController {
   private ManageContentUseCase useCase;
 
   this(ManageContentUseCase useCase) {
@@ -22,6 +22,8 @@ class ContentController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/content", &handleCreate);
     router.get("/api/v1/content", &handleList);
     router.get("/api/v1/content/*", &handleGet);

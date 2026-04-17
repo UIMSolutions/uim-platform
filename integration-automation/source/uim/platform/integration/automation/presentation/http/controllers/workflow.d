@@ -16,7 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class WorkflowController {
+class WorkflowController : PlatformController {
   private ManageWorkflowsUseCase useCase;
 
   this(ManageWorkflowsUseCase useCase) {
@@ -24,6 +24,8 @@ class WorkflowController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/workflows", &handleCreate);
     router.get("/api/v1/workflows", &handleList);
     router.get("/api/v1/workflows/*", &handleGetById);

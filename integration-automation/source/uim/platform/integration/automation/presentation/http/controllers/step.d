@@ -16,7 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class StepController {
+class StepController : PlatformController {
   private ManageStepsUseCase useCase;
 
   this(ManageStepsUseCase useCase) {
@@ -24,6 +24,8 @@ class StepController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/steps", &handleListByWorkflow);
     router.get("/api/v1/steps/*", &handleGetById);
     router.get("/api/v1/my-tasks", &handleMyTasks);

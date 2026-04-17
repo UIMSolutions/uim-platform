@@ -17,7 +17,7 @@ import uim.platform.integration.automation.domain.entities.destination;
 import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
-class DestinationController {
+class DestinationController : PlatformController {
   private ManageDestinationsUseCase useCase;
 
   this(ManageDestinationsUseCase useCase) {
@@ -25,6 +25,8 @@ class DestinationController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
     router.get("/api/v1/destinations/*", &handleGetById);

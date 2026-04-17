@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ChannelController {
+class ChannelController : PlatformController {
   private ManageChannelsUseCase useCase;
 
   this(ManageChannelsUseCase useCase) {
@@ -22,6 +22,8 @@ class ChannelController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/channels", &handleCreate);
     router.get("/api/v1/channels", &handleList);
     router.get("/api/v1/channels/*", &handleGet);

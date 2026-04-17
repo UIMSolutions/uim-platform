@@ -15,7 +15,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class MonitoringController {
+class MonitoringController : PlatformController {
   private MonitorExecutionsUseCase useCase;
 
   this(MonitorExecutionsUseCase useCase) {
@@ -23,6 +23,8 @@ class MonitoringController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/monitoring/logs", &handleGetLogs);
     router.get("/api/v1/monitoring/logs/workflow/*", &handleGetWorkflowLogs);
     router.get("/api/v1/monitoring/logs/step/*", &handleGetStepLogs);
