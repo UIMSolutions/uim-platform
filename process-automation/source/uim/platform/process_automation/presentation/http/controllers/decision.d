@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.decision;
 
-import uim.platform.process_automation.application.usecases.manage.decisions;
-import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http.json_utils;
+// import uim.platform.process_automation.application.usecases.manage.decisions;
+// import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DecisionController : PlatformController {
     private ManageDecisionsUseCase uc;
@@ -20,6 +24,7 @@ class DecisionController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/process-automation/decisions", &handleList);
         router.get("/api/v1/process-automation/decisions/*", &handleGet);
         router.post("/api/v1/process-automation/decisions", &handleCreate);

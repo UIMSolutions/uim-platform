@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.artifact;
 
-import uim.platform.process_automation.application.usecases.manage.artifacts;
-import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http.json_utils;
+// import uim.platform.process_automation.application.usecases.manage.artifacts;
+// import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class ArtifactController : PlatformController {
     private ManageArtifactsUseCase uc;

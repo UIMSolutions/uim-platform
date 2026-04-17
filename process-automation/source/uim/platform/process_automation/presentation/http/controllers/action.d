@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.action;
 
-import uim.platform.process_automation.application.usecases.manage.actions;
-import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http.json_utils;
+// import uim.platform.process_automation.application.usecases.manage.actions;
+// import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class ActionController : PlatformController {
     private ManageActionsUseCase uc;
@@ -20,6 +24,7 @@ class ActionController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/process-automation/actions", &handleList);
         router.get("/api/v1/process-automation/actions/*", &handleGet);
         router.post("/api/v1/process-automation/actions", &handleCreate);

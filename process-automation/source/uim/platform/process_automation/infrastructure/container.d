@@ -125,7 +125,7 @@ Container buildContainer(AppConfig config) {
     c.actionController = new ActionController(c.manageActions);
     c.visibilityController = new VisibilityController(c.manageVisibilities);
     c.artifactController = new ArtifactController(c.manageArtifacts);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("process-automation");
 
     return c;
 }
