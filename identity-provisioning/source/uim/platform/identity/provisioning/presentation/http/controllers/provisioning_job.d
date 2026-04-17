@@ -16,7 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class ProvisioningJobController {
+class ProvisioningJobController : PlatformController {
   private RunProvisioningJobsUseCase uc;
 
   this(RunProvisioningJobsUseCase uc) {
@@ -24,6 +24,8 @@ class ProvisioningJobController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/provisioning-jobs", &handleCreate);
     router.get("/api/v1/provisioning-jobs", &handleList);
     router.get("/api/v1/provisioning-jobs/*", &handleGetById);

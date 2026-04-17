@@ -16,14 +16,16 @@ import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class TransformationController {
+class TransformationController : PlatformController {
   private ManageTransformationsUseCase uc;
 
   this(ManageTransformationsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/transformations", &handleCreate);
     router.get("/api/v1/transformations", &handleList);
     router.get("/api/v1/transformations/*", &handleGetById);

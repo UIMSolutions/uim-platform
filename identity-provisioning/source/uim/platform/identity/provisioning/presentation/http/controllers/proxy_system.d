@@ -16,7 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.proxy_system;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class ProxySystemController {
+class ProxySystemController : PlatformController {
   private ManageProxySystemsUseCase uc;
 
   this(ManageProxySystemsUseCase uc) {
@@ -24,6 +24,8 @@ class ProxySystemController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/proxy-systems", &handleCreate);
     router.get("/api/v1/proxy-systems", &handleList);
     router.get("/api/v1/proxy-systems/*", &handleGetById);

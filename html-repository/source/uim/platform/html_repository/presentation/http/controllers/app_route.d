@@ -22,6 +22,7 @@ class AppRouteController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/routes", &handleCreate);
     router.get("/api/v1/routes", &handleList);
     router.get("/api/v1/routes/*", &handleGet);

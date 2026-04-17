@@ -1537,3 +1537,137 @@ string extractIdFromPath(string uri) {
 
 
 
+// --- Enum parsers ---
+
+SystemType parseSystemType(string s) {
+  switch (s) {
+  case "ias":
+    return SystemType.ias;
+  case "ldap":
+    return SystemType.ldap;
+  case "sap_hr":
+    return SystemType.sap_hr;
+  case "scim":
+    return SystemType.scim;
+  case "csv":
+    return SystemType.csv;
+  case "azure_ad":
+    return SystemType.azure_ad;
+  case "custom":
+    return SystemType.custom;
+  default:
+    return SystemType.custom;
+  }
+}
+
+SystemRole parseSystemRole(string s) {
+  switch (s) {
+  case "source":
+    return SystemRole.source;
+  case "target":
+    return SystemRole.target;
+  case "proxy":
+    return SystemRole.proxy;
+  default:
+    return SystemRole.source;
+  }
+}
+
+JobType parseJobType(string s) {
+  switch (s) {
+  case "full":
+    return JobType.full;
+  case "delta":
+    return JobType.delta;
+  case "simulate":
+    return JobType.simulate;
+  default:
+    return JobType.full;
+  }
+}
+/*
+string getString(Json j, string key) {
+    if (!j.isObject)
+        return "";
+    auto v = key in j;
+    if (v is null)
+        return "";
+    if ((*v).isString)
+        return (*v).get!string;
+    return "";
+}
+
+bool getBoolean(Json j, string key, bool default_ = false) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isBoolean)
+        return (*v).get!bool;
+    return default_;
+}
+
+int jsonInt(Json j, string key, int default_ = 0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isInteger)
+        return cast(int)(*v).get!long;
+    return default_;
+}
+
+long jsonLong(Json j, string key, long default_ = 0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isInteger)
+        return (*v).get!long;
+    return default_;
+}
+
+double jsonDouble(Json j, string key, double default_ = 0.0) {
+    if (!j.isObject)
+        return default_;
+    auto v = key in j;
+    if (v is null)
+        return default_;
+    if ((*v).isFloat)
+        return (*v).get!double;
+    if ((*v).isInteger)
+        return cast(double)(*v).get!long;
+    return default_;
+}
+
+string[] getStringArray(Json j, string key) {
+    if (!j.isObject)
+        return [];
+    auto v = key in j;
+    if (v is null)
+        return [];
+    if ((*v).type != Json.Type.array)
+        return [];
+    string[] result;
+    foreach (item; *v) {
+        if (item.isString)
+            result ~= item.get!string;
+    }
+    return result;
+}
+
+
+string extractIdFromPath(string path) {
+    import std.string : lastIndexOf;
+
+    if (path.length == 0)
+        return "";
+    auto idx = lastIndexOf(path, '/');
+    if (idx < 0 || idx + 1 >= path.length)
+        return "";
+    return path[idx + 1 .. $];
+}
+*/

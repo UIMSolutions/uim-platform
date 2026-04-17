@@ -16,7 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class MonitoringController {
+class MonitoringController : PlatformController {
   private MonitorProvisioningUseCase uc;
 
   this(MonitorProvisioningUseCase uc) {
@@ -24,6 +24,8 @@ class MonitoringController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/monitoring/jobs", &handleListJobSummaries);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJobSummary);
     router.get("/api/v1/monitoring/logs/*", &handleGetJobLogs);

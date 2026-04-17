@@ -16,7 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.target_system;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class TargetSystemController {
+class TargetSystemController : PlatformController {
   private ManageTargetSystemsUseCase uc;
 
   this(ManageTargetSystemsUseCase uc) {
@@ -24,6 +24,8 @@ class TargetSystemController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/target-systems", &handleCreate);
     router.get("/api/v1/target-systems", &handleList);
     router.get("/api/v1/target-systems/*", &handleGetById);
