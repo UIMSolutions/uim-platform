@@ -66,10 +66,10 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   }
 
   CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
-    auto comp = repo.findById(id);
-    if (comp is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Software component not found");
 
+    auto comp = repo.findById(id);
     if (comp.status != ComponentStatus.notCloned && comp.status != ComponentStatus.error)
       return CommandResult(false, "", "Component is already cloned or cloning in progress");
 

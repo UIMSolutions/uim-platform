@@ -18,6 +18,7 @@ interface ProxySystemRepository {
   ProxySystem[] findByTenant(TenantId tenantId);
   ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId);
   ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId);
+  
   void save(ProxySystem entity);
   void update(ProxySystem entity);
   void remove(ProxySystemId tenantId, id tenantId);

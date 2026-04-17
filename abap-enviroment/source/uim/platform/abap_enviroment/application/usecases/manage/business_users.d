@@ -53,8 +53,8 @@ class ManageBusinessUsersUseCase : UIMUseCase {
 
     // Assign roles
     foreach (roleId; req.roleIds) {
-      auto role = roleRepo.findById(roleId);
-      if (role !is null) {
+      if (roleRepo.existsById(roleId)) {
+        auto role = roleRepo.findById(roleId);
         // import std.datetime.systime : Clock;
         user.roleAssignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
       }
@@ -118,8 +118,8 @@ class ManageBusinessUsersUseCase : UIMUseCase {
   }
 }
 
-private UserStatus parseUserStatus(string s) {
-  switch (s) {
+private UserStatus parseUserStatus(string status) {
+  switch (status) {
   case "active":
     return UserStatus.active;
   case "inactive":

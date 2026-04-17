@@ -123,8 +123,7 @@ class ManageApplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult deleteJob(ApplicationJobId id) {
-    auto job = repo.findById(id);
-    if (job is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Application job not found");
 
     repo.remove(id);

@@ -73,7 +73,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, binding.id.toString, "");
   }
 
-  ServiceBinding* getBinding(ServiceBindingId id) {
+  ServiceBinding getBinding(ServiceBindingId id) {
     return repo.findById(id);
   }
 
@@ -82,12 +82,11 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   }
 
   CommandResult deleteBinding(ServiceBindingId id) {
-    auto binding = repo.findById(id);
-    if (binding is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
 
     repo.remove(id);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

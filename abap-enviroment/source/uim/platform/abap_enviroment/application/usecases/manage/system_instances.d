@@ -67,10 +67,10 @@ class ManageSystemInstancesUseCase : UIMUseCase {
   }
 
   CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req) {
-    auto inst = repo.findById(id);
-    if (inst is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "System instance not found");
 
+    auto inst = repo.findById(id);
     if (req.description.length > 0)
       inst.description = req.description;
     if (req.abapRuntimeSize > 0)
@@ -105,10 +105,10 @@ class ManageSystemInstancesUseCase : UIMUseCase {
   }
 
   CommandResult deleteInstance(SystemInstanceId id) {
-    auto inst = repo.findById(id);
-    if (inst is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "System instance not found");
 
+    auto inst = repo.findById(id);
     if (inst.status != SystemStatus.active && inst.status != SystemStatus.error
       && inst.status != SystemStatus.suspended)
       return CommandResult(false, "", "System must be in active, suspended, or error status to delete");
