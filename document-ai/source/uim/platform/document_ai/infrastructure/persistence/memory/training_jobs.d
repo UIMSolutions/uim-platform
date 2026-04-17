@@ -15,32 +15,36 @@ import std.array : array;
 class MemoryTrainingJobRepository : TrainingJobRepository {
   private TrainingJob[][string] store;
 
-  TrainingJob findById(TrainingJobId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (tj; *cl) {
-        if (tj.id == id)
-          return tj;
-      }
+  bool existsById(ClientId clientId, TrainingJobId id) {
+    if (clientId !in store)
+      return false;
+
+    return store[clientId].any!(tj => tj.id == id);
+  }
+
+  TrainingJob findById(ClientId clientId, TrainingJobId id) {
+    if (clientId !in store)
+      return TrainingJob.init;
+
+    foreach (tj; store[clientId]) {
+      if (tj.id == id)
+        return tj;
     }
     return TrainingJob.init;
   }
 
   TrainingJob[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
-    return [];
+    return clientId in store ? store[clientId] : null;
   }
 
-  TrainingJob[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(tj => tj.documentTypeId == typeId).array;
-    return [];
+  TrainingJob[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    return findByClient(clientId)
+      .filter!(tj => tj.documentTypeId == typeId).array;
   }
 
-  TrainingJob[] findByStatus(TrainingJobStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(tj => tj.status == status).array;
-    return [];
+  TrainingJob[] findByStatus(ClientId clientId, TrainingJobStatus status) {
+    return findByClient(clientId)
+      .filter!(tj => tj.status == status).array;
   }
 
   void save(TrainingJob tj) {
@@ -48,31 +52,25 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
   }
 
   void update(TrainingJob tj) {
-    if (auto cl = tj.clientId in store) {
-      foreach (existing; *cl) {
-        if (existing.id == tj.id) {
-          existing = tj;
-          return;
-        }
-      }
-    }
+    if (tj.clientId !in store)
+      return;
+
+    store[tj.clientId] = findByClient(tj.clientId).map!(j => j.id == tj.id ? tj : j).array;
   }
 
   void remove(TrainingJobId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(tj => tj.id != id).array;
-    }
+    if (clientId !in store)
+      return;
+
+    store[clientId] = store[clientId].filter!(tj => tj.id != id).array;
   }
 
   size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).length;
-    return 0;
+    return findByClient(clientId).length;
   }
 
-  size_t countByStatus(TrainingJobStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(tj => tj.status == status).array.length;
-    return 0;
+  size_t countByStatus(ClientId clientId, TrainingJobStatus status) {
+    return findByClient(clientId)
+      .filter!(tj => tj.status == status).array.length;
   }
 }

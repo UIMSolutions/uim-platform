@@ -15,36 +15,38 @@ import std.array : array;
 class MemoryExtractionResultRepository : ExtractionResultRepository {
   private ExtractionResult[][string] store;
 
-  ExtractionResult findById(ExtractionResultId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (r; *cl) {
-        if (r.id == id)
-          return r;
-      }
+  bool existsById(ClientId clientId, ExtractionResultId id) {
+    return clientId in store ? store[clientId].any!(r => r.id == id) : false;
+  }
+
+  ExtractionResult findById(ClientId clientId, ExtractionResultId id) {
+    if (clientId !in store)
+      return ExtractionResult.init;
+
+    foreach (r; store[clientId]) {
+      if (r.id == id)
+        return r;
     }
     return ExtractionResult.init;
   }
 
-  ExtractionResult findByDocument(DocumentId docId, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (r; *cl) {
-        if (r.documentId == docId)
-          return r;
-      }
+  ExtractionResult findByDocument(ClientId clientId, DocumentId docId) {
+    if (clientId !in store)
+      return ExtractionResult.init;
+
+    foreach (r; store[clientId]) {
+      if (r.documentId == docId)
+        return r;
     }
     return ExtractionResult.init;
   }
 
   ExtractionResult[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
-    return [];
+    return clientId in store ? store[clientId] : null;
   }
 
   ExtractionResult[] findBySchema(SchemaId schemaId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(r => r.schemaId == schemaId).array;
-    return [];
+    return clientId in store ? store[clientId].filter!(r => r.schemaId == schemaId).array : null;
   }
 
   void save(ExtractionResult r) {
@@ -52,25 +54,24 @@ class MemoryExtractionResultRepository : ExtractionResultRepository {
   }
 
   void update(ExtractionResult r) {
-    if (auto cl = r.clientId in store) {
-      foreach (existing; *cl) {
-        if (existing.id == r.id) {
-          existing = r;
-          return;
-        }
+    if (r.clientId !in store) {
+      return;
+    }
+    foreach (existing; store[r.clientId]) {
+      if (existing.id == r.id) {
+        existing = r;
+        return;
       }
     }
   }
 
   void remove(ExtractionResultId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(r => r.id != id).array;
+    if (clientId in store) {
+      store[clientId] = store[clientId].filter!(r => r.id != id).array;
     }
   }
 
   size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).length;
-    return 0;
+    return clientId in store ? store[clientId].length : 0;
   }
 }

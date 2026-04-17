@@ -15,73 +15,69 @@ import std.array : array;
 class MemoryDocumentRepository : DocumentRepository {
   private Document[][string] store;
 
-  Document findById(DocumentId id, ClientId clientId) {
+  bool existsById(DocumentId id, ClientId clientId) {
+    return clientId in store ? store[clientId].any!(d => d.id == id) : false;
   }
-  
+
   Document findById(DocumentId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (d; *cl) {
-        if (d.id == id)
-          return d;
-      }
+    if (clientId !in store)
+      return Document.init;
+
+    foreach (d; store[clientId]) {
+      if (d.id == id)
+        return d;
     }
     return Document.init;
   }
 
   Document[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
-    return [];
+    return clientId in store ? store[clientId] : [];
   }
 
   Document[] findByStatus(DocumentStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(d => d.status == status).array;
-    return [];
+    return clientId in store ? store[clientId].filter!(d => d.status == status).array : null;
   }
 
   Document[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(d => d.documentTypeId == typeId).array;
-    return [];
+    return clientId in store ? store[clientId].filter!(d => d.documentTypeId == typeId).array : [];
   }
 
   Document[] findByCategory(DocumentCategory category, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(d => d.category == category).array;
-    return [];
+    return clientId in store ? store[clientId].filter!(d => d.category == category).array : [];
   }
 
   void save(Document d) {
+    if (d.clientId !in store) {
+      Document[] docs;
+      store[d.clientId] = docs;
+    }
     store[d.clientId] ~= d;
   }
 
   void update(Document d) {
-    if (auto cl = d.clientId in store) {
-      foreach (existing; *cl) {
-        if (existing.id == d.id) {
-          existing = d;
-          return;
-        }
+    if (d.clientId !in store)
+      return;
+
+    foreach (existing; store[d.clientId]) {
+      if (existing.id == d.id) {
+        existing = d;
+        return;
       }
     }
   }
 
   void remove(DocumentId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(d => d.id != id).array;
-    }
+    if (clientId !in store)
+      return;
+
+    store[clientId] = store[clientId].filter!(d => d.id != id).array;
   }
 
   size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).length;
-    return 0;
+    return clientId in store ? store[clientId].length : 0;
   }
 
   size_t countByStatus(DocumentStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(d => d.status == status).array.length;
-    return 0;
+    return clientId in store ? store[clientId].filter!(d => d.status == status).array.length : 0;
   }
 }

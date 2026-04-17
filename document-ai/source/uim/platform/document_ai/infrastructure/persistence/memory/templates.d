@@ -15,37 +15,42 @@ import std.array : array;
 class MemoryTemplateRepository : TemplateRepository {
   private Template[][string] store;
 
-  Template findById(TemplateId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (t; *cl) {
-        if (t.id == id)
-          return t;
-      }
+  bool existsById(ClientId clientId, TemplateId id) {
+    return clientId in store ? store[clientId].any!(t => t.id == id) : false;
+  }
+
+  Template findById(ClientId clientId, TemplateId id) {
+    if (clientId !in store)
+      return Template.init;
+
+    foreach (t; store[clientId]) {
+      if (t.id == id)
+        return t;
     }
     return Template.init;
   }
 
   Template[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
+    if (clientId in store)
+      return store[clientId];
     return [];
   }
 
-  Template[] findBySchema(SchemaId schemaId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(t => t.schemaId == schemaId).array;
+  Template[] findBySchema(ClientId clientId, SchemaId schemaId) {
+    if (clientId in store)
+      return store[clientId].filter!(t => t.schemaId == schemaId).array;
     return [];
   }
 
-  Template[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(t => t.documentTypeId == typeId).array;
+  Template[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    if (clientId in store)
+      return store[clientId].filter!(t => t.documentTypeId == typeId).array;
     return [];
   }
 
-  Template[] findByStatus(TemplateStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(t => t.status == status).array;
+  Template[] findByStatus(ClientId clientId, TemplateStatus status) {
+    if (clientId in store)
+      return store[clientId].filter!(t => t.status == status).array;
     return [];
   }
 
@@ -54,8 +59,8 @@ class MemoryTemplateRepository : TemplateRepository {
   }
 
   void update(Template t) {
-    if (auto cl = t.clientId in store) {
-      foreach (existing; *cl) {
+    if (t.clientId in store) {
+      foreach (existing; store[t.clientId]) {
         if (existing.id == t.id) {
           existing = t;
           return;
@@ -64,15 +69,15 @@ class MemoryTemplateRepository : TemplateRepository {
     }
   }
 
-  void remove(TemplateId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(t => t.id != id).array;
+  void remove(ClientId clientId, TemplateId id) {
+    if (clientId in store) {
+      store[clientId] = store[clientId].filter!(t => t.id != id).array;
     }
   }
 
   size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).length;
+    if (clientId in store)
+      return store[clientId].length;
     return 0;
   }
 }

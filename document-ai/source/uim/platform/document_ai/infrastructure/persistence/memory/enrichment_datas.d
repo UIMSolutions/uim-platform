@@ -15,32 +15,28 @@ import std.array : array;
 class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
   private EnrichmentData[][string] store;
 
-  EnrichmentData findById(EnrichmentDataId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (ed; *cl) {
-        if (ed.id == id)
-          return ed;
-      }
+  bool existsById(ClientId clientId, EnrichmentDataId id) {
+    return clientId in store ? store[clientId].any!(ed => ed.id == id) : false;
+  }
+
+  EnrichmentData findById(ClientId clientId, EnrichmentDataId id) {
+    foreach (enrichmentData; findByClient(clientId)) {
+      if (enrichmentData.id == id)
+        return enrichmentData;
     }
     return EnrichmentData.init;
   }
 
   EnrichmentData[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
-    return [];
+    return clientId in store ? store[clientId] : null;
   }
 
-  EnrichmentData[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(ed => ed.documentTypeId == typeId).array;
-    return [];
+  EnrichmentData[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    return findByClient(clientId).filter!(ed => ed.documentTypeId == typeId).array;
   }
 
-  EnrichmentData[] findBySubtype(string subtype, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).filter!(ed => ed.subtype == subtype).array;
-    return [];
+  EnrichmentData[] findBySubtype(ClientId clientId, string subtype) {
+    return findByClient(clientId).filter!(ed => ed.subtype == subtype).array;
   }
 
   void save(EnrichmentData ed) {
@@ -48,25 +44,22 @@ class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
   }
 
   void update(EnrichmentData ed) {
-    if (auto cl = ed.clientId in store) {
-      foreach (existing; *cl) {
-        if (existing.id == ed.id) {
-          existing = ed;
-          return;
-        }
+    foreach (existing; findByClient(clientId)) {
+      if (existing.id == ed.id) {
+        existing = ed;
+        return;
       }
     }
   }
 
   void remove(EnrichmentDataId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(ed => ed.id != id).array;
-    }
+    if (clientId !in store)
+      return;
+
+    store[clientId] = [clientId].filter!(ed => ed.id != id).array;
   }
 
   size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (*cl).length;
-    return 0;
+    return findByClient(clientId).length;
   }
 }
