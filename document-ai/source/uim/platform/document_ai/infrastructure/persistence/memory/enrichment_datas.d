@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.enrichment_data;
-import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.enrichment_data;
+// import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
   private EnrichmentData[][string] store;
 

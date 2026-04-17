@@ -9,10 +9,13 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.enrichment_data;
 
 interface EnrichmentDataRepository {
+  bool findById(EnrichmentDataId id, ClientId clientId);
   EnrichmentData findById(EnrichmentDataId id, ClientId clientId);
+
   EnrichmentData[] findByClient(ClientId clientId);
   EnrichmentData[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
   EnrichmentData[] findBySubtype(string subtype, ClientId clientId);
+  
   void save(EnrichmentData ed);
   void update(EnrichmentData ed);
   void remove(EnrichmentDataId id, ClientId clientId);

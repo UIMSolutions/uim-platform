@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.schema;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.schema;
-import uim.platform.document_ai.domain.ports.repositories.schemas;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.schema;
+// import uim.platform.document_ai.domain.ports.repositories.schemas;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class MemorySchemaRepository : SchemaRepository {
   private Schema[][string] store;
 

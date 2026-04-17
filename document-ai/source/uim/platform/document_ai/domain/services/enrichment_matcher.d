@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.services.enrichment_matcher;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.extraction_result;
-import uim.platform.document_ai.domain.entities.enrichment_data;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.extraction_result;
+// import uim.platform.document_ai.domain.entities.enrichment_data;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 struct EnrichmentMatchResult {
   EnrichmentDataId matchedId;
   EnrichmentMatchStatus status;

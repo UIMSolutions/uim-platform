@@ -9,12 +9,18 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.extraction_result;
 
 interface ExtractionResultRepository {
+  bool existsById(ExtractionResultId id, ClientId clientId);
   ExtractionResult findById(ExtractionResultId id, ClientId clientId);
+
+  bool existsByDocument(DocumentId docId, ClientId clientId);
   ExtractionResult findByDocument(DocumentId docId, ClientId clientId);
+
+  size_t countByClient(ClientId clientId);  
   ExtractionResult[] findByClient(ClientId clientId);
+  
   ExtractionResult[] findBySchema(SchemaId schemaId, ClientId clientId);
+
   void save(ExtractionResult r);
   void update(ExtractionResult r);
   void remove(ExtractionResultId id, ClientId clientId);
-  size_t countByClient(ClientId clientId);
 }

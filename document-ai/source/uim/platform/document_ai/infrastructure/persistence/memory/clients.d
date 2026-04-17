@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.clients;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.client;
-import uim.platform.document_ai.domain.ports.repositories.clients;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.client;
+// import uim.platform.document_ai.domain.ports.repositories.clients;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryClientRepository : ClientRepository {
   private Client[] store;
 

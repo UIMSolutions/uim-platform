@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.document_types;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.document_type;
-import uim.platform.document_ai.domain.ports.repositories.document_types;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.document_type;
+// import uim.platform.document_ai.domain.ports.repositories.document_types;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDocumentTypeRepository : DocumentTypeRepository {
   private DocumentType[][string] store;
 

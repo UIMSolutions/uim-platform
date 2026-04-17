@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.types;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 // ID aliases
 struct DocumentId {
   string value;

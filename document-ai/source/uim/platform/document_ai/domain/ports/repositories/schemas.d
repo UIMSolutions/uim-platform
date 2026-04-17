@@ -9,12 +9,16 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.schema;
 
 interface SchemaRepository {
+  bool existsById(SchemaId id, ClientId clientId);
   Schema findById(SchemaId id, ClientId clientId);
+
+  size_t countByClient(ClientId clientId);
   Schema[] findByClient(ClientId clientId);
+
   Schema[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
   Schema[] findByStatus(SchemaStatus status, ClientId clientId);
+
   void save(Schema s);
   void update(Schema s);
   void remove(SchemaId id, ClientId clientId);
-  size_t countByClient(ClientId clientId);
 }

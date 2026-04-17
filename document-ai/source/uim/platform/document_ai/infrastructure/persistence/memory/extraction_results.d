@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.extraction_result;
-import uim.platform.document_ai.domain.ports.repositories.extraction_results;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.extraction_result;
+// import uim.platform.document_ai.domain.ports.repositories.extraction_results;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryExtractionResultRepository : ExtractionResultRepository {
   private ExtractionResult[][string] store;
 

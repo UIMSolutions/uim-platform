@@ -9,13 +9,16 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.template_;
 
 interface TemplateRepository {
+  bool existsById(TemplateId id, ClientId clientId);
   Template findById(TemplateId id, ClientId clientId);
+
+  size_t countByClient(ClientId clientId);
   Template[] findByClient(ClientId clientId);
   Template[] findBySchema(SchemaId schemaId, ClientId clientId);
   Template[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
   Template[] findByStatus(TemplateStatus status, ClientId clientId);
+
   void save(Template t);
   void update(Template t);
   void remove(TemplateId id, ClientId clientId);
-  size_t countByClient(ClientId clientId);
 }

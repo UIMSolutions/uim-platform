@@ -5,15 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.document_types;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.document_type;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.document_type;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 interface DocumentTypeRepository {
+  bool existsById(DocumentTypeId id, ClientId clientId);
   DocumentType findById(DocumentTypeId id, ClientId clientId);
+
+  size_t countByClient(ClientId clientId);
+
   DocumentType[] findByClient(ClientId clientId);
   DocumentType[] findByCategory(DocumentCategory category, ClientId clientId);
+
   void save(DocumentType dt);
   void update(DocumentType dt);
   void remove(DocumentTypeId id, ClientId clientId);
-  size_t countByClient(ClientId clientId);
 }
