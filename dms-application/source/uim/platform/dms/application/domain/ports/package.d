@@ -6,13 +6,5 @@
 module uim.platform.dms.application.domain.ports;
 
 public {
-  import uim.platform.dms.application.domain.ports.repositories.documents;
-  import uim.platform.dms.application.domain.ports.repositories.document_versions;
-  import uim.platform.dms.application.domain.ports.repositories.favorites;
-  import uim.platform.dms.application.domain.ports.repositories.folders;
-  import uim.platform.dms.application.domain.ports.repositories.permissions;
-  import uim.platform.dms.application.domain.ports.repositoriess;
-  import uim.platform.dms.application.domain.ports.repositories.shares;
-
-  // import uim.platform.dms.application.domain.ports.repositories.versions;
+  import uim.platform.dms.application.domain.ports.repositories;
 }
