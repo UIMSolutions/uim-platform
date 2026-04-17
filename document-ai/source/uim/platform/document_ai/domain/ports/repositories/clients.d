@@ -9,10 +9,14 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.client;
 
 interface ClientRepository {
+  bool existsById(ClientId id);
   Client findById(ClientId id);
+  
+  size_t countByTenant(TenantId tenantId);
+
   Client[] findByTenant(TenantId tenantId);
+
   void save(Client c);
   void update(Client c);
   void remove(ClientId id);
-  size_t countByTenant(TenantId tenantId);
 }

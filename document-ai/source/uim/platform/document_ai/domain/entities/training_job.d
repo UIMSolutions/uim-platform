@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.entities.training_job;
 
-import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.types;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 struct TrainingMetric {
   string name;
   double value;

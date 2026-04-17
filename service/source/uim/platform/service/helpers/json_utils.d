@@ -516,10 +516,6 @@ Json toJsonArray(string[] arr) {
 //   return "";
 // }
 
-
-
-
-
 string[] getStringArray(Json j, string key) {
   if (!j.isObject)
     return [];
@@ -563,8 +559,6 @@ Json toJsonArray(string[] arr) {
     jarr ~= Json(s);
   return jarr;
 }
-
-
 
 string extractIdFromPath(string path) {
   import std.string : lastIndexOf;
@@ -629,8 +623,6 @@ Json toJsonArray(const(string[]) arr) {
     j ~= Json(s);
   return j;
 }
-
-// --- Enum parsers ---
 
 
 

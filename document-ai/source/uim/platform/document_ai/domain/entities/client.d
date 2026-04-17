@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.entities.client;
 
-import uim.platform.document_ai.domain.types;
+// import uim.platform.docuimport uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 struct ClientLabel {
   string key;
   string value;

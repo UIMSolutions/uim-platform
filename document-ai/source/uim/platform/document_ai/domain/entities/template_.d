@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.entities.template_;
 
-import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.types;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 struct TemplateRegion {
   string fieldName;
   int page;

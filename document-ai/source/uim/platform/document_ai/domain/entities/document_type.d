@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.entities.document_type;
 
-import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.types;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 struct DocumentType {
   DocumentTypeId id;
   TenantId tenantId;
