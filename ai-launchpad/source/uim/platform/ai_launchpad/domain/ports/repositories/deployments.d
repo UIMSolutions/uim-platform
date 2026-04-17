@@ -9,11 +9,14 @@ import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.domain.entities.deployment : Deployment;
 
 interface IDeploymentRepository {
-  void save(Deployment d);
+  bool existsById(DeploymentId id, ConnectionId connectionId);
   Deployment findById(DeploymentId id, ConnectionId connectionId);
+  
   Deployment[] findByConnection(ConnectionId connectionId);
   Deployment[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
   Deployment[] findByStatus(DeploymentStatus status, ConnectionId connectionId);
   Deployment[] findAll();
+
+  void save(Deployment d);
   void remove(DeploymentId id, ConnectionId connectionId);
 }

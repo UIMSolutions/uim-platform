@@ -9,10 +9,13 @@ import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.domain.entities.model : Model;
 
 interface IModelRepository {
-  void save(Model m);
+  bool existsById(ModelId id, ConnectionId connectionId);
   Model findById(ModelId id, ConnectionId connectionId);
+  
   Model[] findByConnection(ConnectionId connectionId);
   Model[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
   Model[] findAll();
+
+  void save(Model m);
   void remove(ModelId id, ConnectionId connectionId);
 }

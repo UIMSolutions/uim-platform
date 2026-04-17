@@ -6,16 +6,5 @@
 module uim.platform.ai_launchpad.domain.ports;
 
 public {
-  import uim.platform.ai_launchpad.domain.ports.repositories.connections;
-  import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
-  import uim.platform.ai_launchpad.domain.ports.repositories.scenarios;
-  import uim.platform.ai_launchpad.domain.ports.repositories.configurations;
-  import uim.platform.ai_launchpad.domain.ports.repositories.executions;
-  import uim.platform.ai_launchpad.domain.ports.repositories.deployments;
-  import uim.platform.ai_launchpad.domain.ports.repositories.models;
-  import uim.platform.ai_launchpad.domain.ports.repositories.datasets;
-  import uim.platform.ai_launchpad.domain.ports.repositories.prompts;
-  import uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
-  import uim.platform.ai_launchpad.domain.ports.repositories.resource_groups;
-  import uim.platform.ai_launchpad.domain.ports.repositories.usage_statistics;
+  import uim.platform.ai_launchpad.domain.ports.repositories;
 }

@@ -9,10 +9,13 @@ import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.domain.entities.dataset : Dataset;
 
 interface IDatasetRepository {
-  void save(Dataset d);
+  bool existsById(DatasetId id, ConnectionId connectionId);
   Dataset findById(DatasetId id, ConnectionId connectionId);
+  
   Dataset[] findByConnection(ConnectionId connectionId);
   Dataset[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
   Dataset[] findAll();
+
+  void save(Dataset d);
   void remove(DatasetId id, ConnectionId connectionId);
 }

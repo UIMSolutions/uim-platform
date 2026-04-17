@@ -9,11 +9,14 @@ import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.domain.entities.execution : Execution;
 
 interface IExecutionRepository {
-  void save(Execution e);
+  bool existsById(ExecutionId id, ConnectionId connectionId);
   Execution findById(ExecutionId id, ConnectionId connectionId);
+  
   Execution[] findByConnection(ConnectionId connectionId);
   Execution[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
   Execution[] findByStatus(ExecutionStatus status, ConnectionId connectionId);
   Execution[] findAll();
+
+  void save(Execution e);
   void remove(ExecutionId id, ConnectionId connectionId);
 }
