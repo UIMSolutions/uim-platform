@@ -42,8 +42,8 @@ class GroupController : PlatformController {
       auto j = req.json;
       auto members = parseMembers(j);
       auto createReq = CreateGroupRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("externalId"), j.getString("displayName"),
-          j.getString("description"), members,);
+        j.getString("externalId"), j.getString("displayName"),
+        j.getString("description"), members,);
 
       auto result = useCase.createGroup(createReq);
       auto response = Json.emptyObject;
@@ -53,13 +53,10 @@ class GroupController : PlatformController {
         response["schemas"] = Json.emptyArray;
         response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:Group");
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         writeScimError(res, 409, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -74,8 +71,7 @@ class GroupController : PlatformController {
       response["totalResults"] = Json(groups.length);
       response["Resources"] = toJsonArray(groups);
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -89,8 +85,7 @@ class GroupController : PlatformController {
         return;
       }
       res.writeJsonBody(toJsonValue(group), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -100,19 +95,16 @@ class GroupController : PlatformController {
       auto groupId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
-          j.getString("description"),);
+        j.getString("description"),);
       auto error = useCase.updateGroup(updateReq);
       if (error.length > 0) {
         writeScimError(res, 404, error);
-      }
-      else
-      {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+      } else {
+        auto resp = Json.emptyObject
+        .set("status", "updated");
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -125,8 +117,7 @@ class GroupController : PlatformController {
         writeScimError(res, 404, error);
       else
         res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -135,19 +126,17 @@ class GroupController : PlatformController {
     try {
       auto j = req.json;
       auto addReq = AddMemberRequest(j.getString("groupId"),
-          j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
+        j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
       auto error = useCase.addMember(addReq);
       if (error.length > 0) {
         writeScimError(res, 400, error);
-      }
-      else
-      {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("member_added");
+      } else {
+        auto resp = Json.emptyObject
+          .set("status", "member_added");
+
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -159,15 +148,13 @@ class GroupController : PlatformController {
       auto error = useCase.removeMember(removeReq);
       if (error.length > 0) {
         writeScimError(res, 400, error);
-      }
-      else
-      {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("member_removed");
+      } else {
+        auto resp = Json.emptyObject
+          .set("status", "member_removed");
+
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
@@ -180,11 +167,11 @@ private GroupMember[] parseMembers(Json j) {
   if (!j.isObject)
     return result;
   auto val = "members" in j;
-  if (val is null || (*val).type != Json.Type.array)
+  if (val is null || !(*val).isArray)
     return result;
   foreach (item; *val) {
     result ~= GroupMember(item.getString("value"), item.getString("type"),
-        item.getString("display"),);
+      item.getString("display"),);
   }
   return result;
 }

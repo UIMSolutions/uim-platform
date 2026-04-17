@@ -161,7 +161,7 @@ private WidgetConfig parseWidgetConfig(Json j) {
 
   WidgetConfig cfg;
   auto v = "config" in j;
-  if (v !is null && (*v).type == Json.Type.object) {
+  if (v !is null && (*v).isObject) {
     auto c = *v;
     cfg.customTitle = c.getString("customTitle");
     cfg.maxItems = jsonInt(c, "maxItems");

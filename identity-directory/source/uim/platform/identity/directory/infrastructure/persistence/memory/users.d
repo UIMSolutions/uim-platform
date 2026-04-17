@@ -20,10 +20,16 @@ mixin(ShowModule!());
 class MemoryUserRepository : UserRepository {
   private User[UserId] store;
 
+  bool existsById(UserId id) {
+    return id in store ? true : false;
+  }
+
   User findById(UserId id) {
-    if (auto p = id in store)
-      return *p;
-    return User.init;
+    return existsById(id) ? store[id] : User.init;
+  }
+
+  bool existsByUserName(TenantId tenantId, string userName) {
+    return store.byValue().any!(u => u.tenantId == tenantId && u.userName == userName);
   }
 
   User findByUserName(TenantId tenantId, string userName) {
@@ -32,6 +38,10 @@ class MemoryUserRepository : UserRepository {
         return u;
     }
     return User.init;
+  }
+
+  bool existsByExternalId(TenantId tenantId, string externalId) {
+    return store.byValue().any!(u => u.tenantId == tenantId && u.externalId == externalId);
   }
 
   User findByExternalId(TenantId tenantId, string externalId) {
@@ -57,6 +67,15 @@ class MemoryUserRepository : UserRepository {
       }
     }
     return result;
+  }
+
+  size_t countByTenant(TenantId tenantId) {
+    size_t count;
+    foreach (u; store.byValue()) {
+      if (u.tenantId == tenantId)
+        count++;
+    }
+    return count;
   }
 
   User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
@@ -130,14 +149,5 @@ class MemoryUserRepository : UserRepository {
 
   void remove(UserId id) {
     store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    size_t count;
-    foreach (u; store.byValue()) {
-      if (u.tenantId == tenantId)
-        count++;
-    }
-    return count;
   }
 }

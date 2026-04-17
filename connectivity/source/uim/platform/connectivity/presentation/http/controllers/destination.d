@@ -208,7 +208,7 @@ class DestinationController : PlatformController {
     if (v is null || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
-      if (item.type == Json.Type.object)
+      if (item.isObject)
         result ~= DestinationProperty(item.getString("key"), item.getString("value"));
     }
     return result;
@@ -220,7 +220,7 @@ class DestinationController : PlatformController {
     if (v is null || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
-      if (item.type == Json.Type.object)
+      if (item.isObject)
         result ~= DestinationProperty(item.getString("key"), item.getString("value"));
     }
     return result;

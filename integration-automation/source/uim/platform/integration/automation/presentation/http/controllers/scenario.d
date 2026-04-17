@@ -181,7 +181,7 @@ class ScenarioController {
     if (v is null || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
-      if (item.type == Json.Type.object) {
+      if (item.isObject) {
         ScenarioStepTemplate t;
         t.name = item.getString("name");
         t.description = item.getString("description");

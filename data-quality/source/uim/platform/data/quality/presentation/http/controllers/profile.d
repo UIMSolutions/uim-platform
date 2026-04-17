@@ -46,7 +46,7 @@ class ProfileController : PlatformController {
       if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
         foreach (item; *recordsJson)
         {
-          if (item.type == Json.Type.object)
+          if (item.isObject)
           {
             ProfileRecordInput pri;
             pri.recordId = item.getString("recordId");

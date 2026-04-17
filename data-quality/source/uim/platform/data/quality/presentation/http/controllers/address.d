@@ -63,7 +63,7 @@ class AddressController : PlatformController {
       auto addrJson = "addresses" in j;
       if (addrJson !is null && (*addrJson).type == Json.Type.array) {
         foreach (item; *addrJson) {
-          if (item.type == Json.Type.object) {
+          if (item.isObject) {
             CleanseAddressRequest a;
             a.tenantId = batchReq.tenantId;
             a.sourceRecordId = item.getString("sourceRecordId");

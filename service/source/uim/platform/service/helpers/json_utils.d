@@ -460,7 +460,7 @@ Json toJsonArray(T)(T[] items) {
 
 /// Read an integer field from JSON.
 long jsonLong(Json j, string key, long default_ = 0) {
-  if (j.type == Json.Type.object) {
+  if (j.isObject) {
     auto val = key in j;
     if (val !is null && (*val).isInteger)
       return (*val).get!long;
@@ -476,7 +476,7 @@ uint jsonUint(Json j, string key, uint default_ = 0) {
 /// Read a string array from JSON.
 string[] getStringArray(Json j, string key) {
   string[] result;
-  if (j.type == Json.Type.object) {
+  if (j.isObject) {
     auto val = key in j;
     if (val !is null && (*val).type == Json.Type.array) {
       foreach (item; *val) {
@@ -1389,7 +1389,7 @@ Json toJsonArray(T)(T[] items) {
 
 /// Read a string field from JSON, or return default.
 string getString(Json j, string key) {
-  if (j.type == Json.Type.object) {
+  if (j.isObject) {
     auto val = key in j;
     if (val !is null && (*val).isString)
       return (*val).get!string;
@@ -1400,7 +1400,7 @@ string getString(Json j, string key) {
 /// Read a string array from JSON.
 string[] getStringArray(Json j, string key) {
   string[] result;
-  if (j.type == Json.Type.object) {
+  if (j.isObject) {
     auto val = key in j;
     if (val !is null && (*val).type == Json.Type.array) {
       foreach (item; *val) {
@@ -1910,7 +1910,7 @@ Json[] jsonObjArray(Json j, string key) {
 
   Json[] result;
   foreach (item; *v) {
-    if (item.type == Json.Type.object)
+    if (item.isObject)
       result ~= item;
   }
   return result;

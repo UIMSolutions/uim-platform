@@ -46,26 +46,23 @@ class MemoryGroupRepository : GroupRepository {
     return count;
   }
 
+  Group[] findByTenant(TenantId tenantId) {
+    return store.byValue().filter!(g => g.tenantId == tenantId).array;
+  }
+
   Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Group[] result;
     uint idx;
-    foreach (g; store.byValue()) {
-      if (g.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= g;
-        idx++;
-      }
+    foreach (g; findByTenant(tenantId)) {
+      if (idx >= offset && result.length < limit)
+        result ~= g;
+      idx++;
     }
     return result;
   }
 
   Group[] findByMember(string memberId) {
-    Group[] result;
-    foreach (g; store.byValue()) {
-      if (g.hasMember(memberId))
-        result ~= g;
-    }
-    return result;
+    return store.byValue().filter!(g => g.hasMember(memberId)).array;
   }
 
   void save(Group group) {

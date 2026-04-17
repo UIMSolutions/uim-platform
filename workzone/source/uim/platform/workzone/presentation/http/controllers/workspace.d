@@ -187,7 +187,7 @@ class WorkspaceController {
 private WorkspaceSettings parseWorkspaceSettings(Json j) {
   WorkspaceSettings s;
   auto sv = "settings" in j;
-  if (sv !is null && (*sv).type == Json.Type.object) {
+  if (sv !is null && (*sv).isObject) {
     auto sj = *sv;
     s.allowExternalMembers = getBoolean(sj, "allowExternalMembers");
     s.enableNotifications = getBoolean(sj, "enableNotifications", true);

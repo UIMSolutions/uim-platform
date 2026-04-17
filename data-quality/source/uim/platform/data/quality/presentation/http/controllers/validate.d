@@ -60,7 +60,7 @@ class ValidateController : PlatformController {
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
         foreach (item; *recordsJson) {
-          if (item.type == Json.Type.object) {
+          if (item.isObject) {
             RecordFieldValues rfv;
             rfv.recordId = item.getString("recordId");
             rfv.fieldValues = jsonStrMap(item, "fieldValues");

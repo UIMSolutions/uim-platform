@@ -15,12 +15,10 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for password policy persistence.
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
-  private PasswordPolicy[string] store;
+  private PasswordPolicy[PasswordPolicyId] store;
 
-  PasswordPolicy findById(string id) {
-    if (auto p = id in store)
-      return *p;
-    return PasswordPolicy.init;
+  PasswordPolicy findById(PasswordPolicyId id) {
+    return id in store ? store[id] : PasswordPolicy.init;
   }
 
   PasswordPolicy findActiveForTenant(TenantId tenantId) {

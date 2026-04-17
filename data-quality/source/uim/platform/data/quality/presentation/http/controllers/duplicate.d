@@ -49,7 +49,7 @@ class DuplicateController : PlatformController {
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
         foreach (item; *recordsJson) {
-          if (item.type == Json.Type.object) {
+          if (item.isObject) {
             DuplicateRecordInput dri;
             dri.recordId = item.getString("recordId");
             dri.fieldValues = jsonStrMap(item, "fieldValues");
