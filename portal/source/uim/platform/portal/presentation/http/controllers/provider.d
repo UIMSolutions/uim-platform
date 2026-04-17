@@ -46,7 +46,7 @@ class ProviderController : PlatformController {
       auto result = useCase.createProvider(createReq);
       if (result.isSuccess()) {
         auto response = Json.emptyObject
-        .set("id", result.providerId);
+          .set("id", result.providerId);
 
         res.writeJsonBody(response, 201);
       } else {
@@ -62,9 +62,9 @@ class ProviderController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto response = Json.emptyObject
-      .set("totalResults", providers.length)
-      .set("resources", providers);
-      
+        .set("totalResults", providers.length)
+        .set("resources", providers);
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");

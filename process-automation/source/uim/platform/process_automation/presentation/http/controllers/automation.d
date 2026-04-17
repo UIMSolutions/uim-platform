@@ -20,6 +20,7 @@ class AutomationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/process-automation/automations", &handleList);
         router.get("/api/v1/process-automation/automations/*", &handleGet);
         router.post("/api/v1/process-automation/automations", &handleCreate);
@@ -43,9 +44,10 @@ class AutomationController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Automation created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -63,20 +65,21 @@ class AutomationController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (a; automations) {
                 jarr ~= Json.emptyObject
-                .set("id", a.id)
-                .set("name", a.name)
-                .set("description", a.description)
-                .set("status", a.status.to!string)
-                .set("type", a.type.to!string)
-                .set("targetApplication", a.targetApplication)
-                .set("version", a.version_)
-                .set("createdAt", a.createdAt)
-                .set("modifiedAt", a.modifiedAt);
+                    .set("id", a.id)
+                    .set("name", a.name)
+                    .set("description", a.description)
+                    .set("status", a.status.to!string)
+                    .set("type", a.type.to!string)
+                    .set("targetApplication", a.targetApplication)
+                    .set("version", a.version_)
+                    .set("createdAt", a.createdAt)
+                    .set("modifiedAt", a.modifiedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(automations.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+            .set("count", automations.length)
+            .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -88,25 +91,26 @@ class AutomationController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(id);
-            if (a.id.isEmpty) {
+            if (!uc.existsById(id)) {
                 writeError(res, 404, "Automation not found");
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(a.id);
-            resp["name"] = Json(a.name);
-            resp["description"] = Json(a.description);
-            resp["status"] = Json(a.status.to!string);
-            resp["type"] = Json(a.type.to!string);
-            resp["targetApplication"] = Json(a.targetApplication);
-            resp["version"] = Json(a.version_);
-            resp["projectId"] = Json(a.projectId);
-            resp["createdBy"] = Json(a.createdBy);
-            resp["modifiedBy"] = Json(a.modifiedBy);
-            resp["createdAt"] = Json(a.createdAt);
-            resp["modifiedAt"] = Json(a.modifiedAt);
+            auto a = uc.getById(id);
+            auto resp = Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("status", a.status.to!string)
+                .set("type", a.type.to!string)
+                .set("targetApplication", a.targetApplication)
+                .set("version", a.version_)
+                .set("projectId", a.projectId)
+                .set("createdBy", a.createdBy)
+                .set("modifiedBy", a.modifiedBy)
+                .set("createdAt", a.createdAt)
+                .set("modifiedAt", a.modifiedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -130,9 +134,10 @@ class AutomationController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation updated");
+                auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Automation updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -149,9 +154,10 @@ class AutomationController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation deleted");
+                auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Automation deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

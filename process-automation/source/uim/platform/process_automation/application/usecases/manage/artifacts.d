@@ -60,10 +60,10 @@ class ManageArtifactsUseCase : UIMUseCase {
     }
 
     CommandResult update(UpdateArtifactRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(r.id))
             return CommandResult(false, "", "Artifact not found");
 
+        auto existing = repo.findById(r.id);
         existing.name = r.name;
         existing.description = r.description;
         existing.version_ = r.version_;
@@ -77,8 +77,7 @@ class ManageArtifactsUseCase : UIMUseCase {
     }
 
     CommandResult remove(ArtifactId id) {
-        auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(id))
             return CommandResult(false, "", "Artifact not found");
 
         repo.remove(id);

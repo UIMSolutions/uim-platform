@@ -24,6 +24,7 @@ class FormController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/process-automation/forms", &handleList);
         router.get("/api/v1/process-automation/forms/*", &handleGet);
         router.post("/api/v1/process-automation/forms", &handleCreate);
@@ -45,9 +46,10 @@ class FormController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Form created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Form created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -65,18 +67,22 @@ class FormController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (f; forms) {
                 jarr ~= Json.emptyObject
-                .set("id", f.id)
-                .set("name", f.name)
-                .set("description", f.description)
-                .set("status", f.status.to!string)
-                .set("version", f.version_)
-                .set("createdAt", f.createdAt);
+                    .set("id", f.id)
+                    .set("name", f.name)
+                    .set("description", f.description)
+                    .set("status", f.status.to!string)
+                    .set("version", f.version_)
+                    .set("createdAt", f.createdAt);
+
+                
+
                 .set("modifiedAt", f.modifiedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(forms.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", forms.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -94,17 +100,18 @@ class FormController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(f.id);
-            resp["name"] = Json(f.name);
-            resp["description"] = Json(f.description);
-            resp["status"] = Json(f.status.to!string);
-            resp["version"] = Json(f.version_);
-            resp["projectId"] = Json(f.projectId);
-            resp["createdBy"] = Json(f.createdBy);
-            resp["modifiedBy"] = Json(f.modifiedBy);
-            resp["createdAt"] = Json(f.createdAt);
-            resp["modifiedAt"] = Json(f.modifiedAt);
+            auto resp = Json.emptyObject
+                .set("id", f.id)
+                .set("name", f.name)
+                .set("description", f.description)
+                .set("status", f.status.to!string)
+                .set("version", f.version_)
+                .set("projectId", f.projectId)
+                .set("createdBy", f.createdBy)
+                .set("modifiedBy", f.modifiedBy)
+                .set("createdAt", f.createdAt)
+                .set("modifiedAt", f.modifiedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -126,9 +133,10 @@ class FormController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Form updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Form updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

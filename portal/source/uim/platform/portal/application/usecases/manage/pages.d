@@ -63,10 +63,10 @@ class ManagePagesUseCase : UIMUseCase {
   }
 
   string updatePage(UpdatePageRequest req) {
-    auto page = pageRepo.findById(req.pageId);
-    if (page == Page.init)
+    if (!pageRepo.existsById(req.pageId))
       return "Page not found";
 
+    auto page = pageRepo.findById(req.pageId);
     page.title = req.title.length > 0 ? req.title : page.title;
     page.description = req.description;
     page.alias_ = req.alias_.length > 0 ? req.alias_ : page.alias_;
@@ -80,14 +80,14 @@ class ManagePagesUseCase : UIMUseCase {
   }
 
   string deletePage(PageId pageId, SiteId siteId) {
-    if (!pageRepo.exitsById(pageId))
+    if (!pageRepo.existsById(pageId))
       return "Page not found";
 
     pageRepo.remove(pageId);
 
     // Remove from site
-    auto site = siteRepo.findById(siteId);
-    if (site != Site.init) {
+    if (siteRepo.existsById(siteId)) {
+      auto site = siteRepo.findById(siteId);
       site.pageIds = site.pageIds.filter!(p => p != pageId).array;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);

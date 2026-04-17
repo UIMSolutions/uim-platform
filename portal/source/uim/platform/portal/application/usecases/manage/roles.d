@@ -32,10 +32,10 @@ class ManageRolesUseCase : UIMUseCase {
     if (req.name.length == 0)
       return RoleResponse("", "Role name is required");
 
-    auto existing = roleRepo.findByName(req.tenantId, req.name);
-    if (existing != Role.init)
+    if (roleRepo.existsByName(req.tenantId, req.name))
       return RoleResponse("", "Role with this name already exists");
 
+    auto existing = roleRepo.findByName(req.tenantId, req.name);
     auto now = Clock.currStdTime();
     auto id = randomUUID();
     auto role = Role(id, req.tenantId, req.name, req.description, req.scope_, [], // userIds

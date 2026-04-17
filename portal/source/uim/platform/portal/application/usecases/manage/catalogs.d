@@ -47,10 +47,10 @@ class ManageCatalogsUseCase : UIMUseCase {
   }
 
   string updateCatalog(UpdateCatalogRequest req) {
-    auto catalog = catalogRepo.findById(req.catalogId);
-    if (catalog == Catalog.init)
+    if (!catalogRepo.existsById(req.catalogId))
       return "Catalog not found";
 
+    auto catalog = catalogRepo.findById(req.catalogId);
     catalog.title = req.title.length > 0 ? req.title : catalog.title;
     catalog.description = req.description;
     catalog.allowedRoleIds = req.allowedRoleIds;
@@ -61,8 +61,7 @@ class ManageCatalogsUseCase : UIMUseCase {
   }
 
   string deleteCatalog(CatalogId id) {
-    auto catalog = catalogRepo.findById(id);
-    if (catalog == Catalog.init)
+    if (!catalogRepo.existsById(id))
       return "Catalog not found";
 
     catalogRepo.remove(id);

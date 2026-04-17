@@ -24,6 +24,7 @@ class ArtifactController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/process-automation/store/artifacts", &handleList);
         router.get("/api/v1/process-automation/store/artifacts/*", &handleGet);
         router.post("/api/v1/process-automation/store/artifacts", &handleCreate);
@@ -47,9 +48,10 @@ class ArtifactController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Artifact published");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Artifact published");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -66,21 +68,22 @@ class ArtifactController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (a; artifacts) {
                 jarr ~= Json.emptyObject
-                .set("id", a.id)
-                .set("name", a.name)
-                .set("description", a.description)
-                .set("type", a.type.to!string)
-                .set("status", a.status.to!string)
-                .set("version", a.version_)
-                .set("author", a.author)
-                .set("category", a.category)
-                .set("downloadCount", a.downloadCount)
-                .set("rating", a.rating);
+                    .set("id", a.id)
+                    .set("name", a.name)
+                    .set("description", a.description)
+                    .set("type", a.type.to!string)
+                    .set("status", a.status.to!string)
+                    .set("version", a.version_)
+                    .set("author", a.author)
+                    .set("category", a.category)
+                    .set("downloadCount", a.downloadCount)
+                    .set("rating", a.rating);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(artifacts.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", artifacts.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -98,21 +101,22 @@ class ArtifactController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(a.id);
-            resp["name"] = Json(a.name);
-            resp["description"] = Json(a.description);
-            resp["type"] = Json(a.type.to!string);
-            resp["status"] = Json(a.status.to!string);
-            resp["version"] = Json(a.version_);
-            resp["author"] = Json(a.author);
-            resp["category"] = Json(a.category);
-            resp["tags"] = stringsToJsonArray(a.tags);
-            resp["contentUrl"] = Json(a.contentUrl);
-            resp["downloadCount"] = Json(a.downloadCount);
-            resp["rating"] = Json(a.rating);
-            resp["publishedAt"] = Json(a.publishedAt);
-            resp["updatedAt"] = Json(a.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("type", a.type.to!string)
+                .set("status", a.status.to!string)
+                .set("version", a.version_)
+                .set("author", a.author)
+                .set("category", a.category)
+                .set("tags", a.tags)
+                .set("contentUrl", a.contentUrl)
+                .set("downloadCount", a.downloadCount)
+                .set("rating", a.rating)
+                .set("publishedAt", a.publishedAt)
+                .set("updatedAt", a.updatedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -133,9 +137,10 @@ class ArtifactController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Artifact updated");
+                auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Artifact updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -152,9 +157,10 @@ class ArtifactController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Artifact deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Artifact deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

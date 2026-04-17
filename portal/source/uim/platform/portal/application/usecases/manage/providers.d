@@ -49,10 +49,10 @@ class ManageProvidersUseCase : UIMUseCase {
   }
 
   string updateProvider(UpdateProviderRequest req) {
-    auto provider = providerRepo.findById(req.providerId);
-    if (provider == ContentProvider.init)
+    if (!providerRepo.existsById(req.providerId))
       return "Content provider not found";
 
+    auto provider = providerRepo.findById(req.providerId);
     provider.name = req.name.length > 0 ? req.name : provider.name;
     provider.description = req.description;
     provider.contentEndpointUrl = req.contentEndpointUrl.length > 0
@@ -65,8 +65,7 @@ class ManageProvidersUseCase : UIMUseCase {
   }
 
   string deleteProvider(ProviderId id) {
-    auto provider = providerRepo.findById(id);
-    if (provider == ContentProvider.init)
+    if (!providerRepo.existsById(id))
       return "Content provider not found";
 
     providerRepo.remove(id);

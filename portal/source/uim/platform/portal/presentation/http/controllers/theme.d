@@ -61,9 +61,10 @@ class ThemeController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(themes.length);
-      response["resources"] = toJsonArray(themes);
+      auto response = Json.emptyObject
+        .set("totalResults", themes.length)
+        .set("resources", themes);
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");

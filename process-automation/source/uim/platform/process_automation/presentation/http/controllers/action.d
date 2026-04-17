@@ -52,9 +52,10 @@ class ActionController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Action created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -72,20 +73,21 @@ class ActionController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
                 jarr ~= Json.emptyObject
-                .set("id", a.id)
-                .set("name", a.name)
-                .set("description", a.description)
-                .set("status", a.status.to!string)
-                .set("type", a.type.to!string)
-                .set("baseUrl", a.baseUrl)
-                .set("version", a.version_)
-                .set("createdAt", a.createdAt)
-                .set("modifiedAt", a.modifiedAt);
+                    .set("id", a.id)
+                    .set("name", a.name)
+                    .set("description", a.description)
+                    .set("status", a.status.to!string)
+                    .set("type", a.type.to!string)
+                    .set("baseUrl", a.baseUrl)
+                    .set("version", a.version_)
+                    .set("createdAt", a.createdAt)
+                    .set("modifiedAt", a.modifiedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(actions.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", actions.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -97,28 +99,29 @@ class ActionController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(id);
-            if (a.id.isEmpty) {
+            if (!uc.existsById(id)) {
                 writeError(res, 404, "Action not found");
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(a.id);
-            resp["name"] = Json(a.name);
-            resp["description"] = Json(a.description);
-            resp["status"] = Json(a.status.to!string);
-            resp["type"] = Json(a.type.to!string);
-            resp["baseUrl"] = Json(a.baseUrl);
-            resp["path"] = Json(a.path);
-            resp["authType"] = Json(a.authType);
-            resp["destinationName"] = Json(a.destinationName);
-            resp["version"] = Json(a.version_);
-            resp["projectId"] = Json(a.projectId);
-            resp["createdBy"] = Json(a.createdBy);
-            resp["modifiedBy"] = Json(a.modifiedBy);
-            resp["createdAt"] = Json(a.createdAt);
-            resp["modifiedAt"] = Json(a.modifiedAt);
+            auto a = uc.getById(id);
+            auto resp = Json.emptyObject
+            .set("id", a.id)
+            .set("name", a.name)
+            .set("description", a.description)
+            .set("status", a.status.to!string)
+            .set("type", a.type.to!string)
+            .set("baseUrl", a.baseUrl)
+            .set("path", a.path)
+            .set("authType", a.authType)
+            .set("destinationName", a.destinationName)
+            .set("version", a.version_)
+            .set("projectId", a.projectId)
+            .set("createdBy", a.createdBy)
+            .set("modifiedBy", a.modifiedBy)
+            .set("createdAt", a.createdAt)
+            .set("modifiedAt", a.modifiedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -147,6 +150,7 @@ class ActionController : PlatformController {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Action updated");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

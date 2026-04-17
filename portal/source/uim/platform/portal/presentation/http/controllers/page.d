@@ -67,7 +67,7 @@ class PageController : PlatformController {
       auto response = Json.emptyObject
         .set("totalResults", pages.length)
         .set("resources", pages);
-        
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");

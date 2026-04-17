@@ -69,6 +69,7 @@ class ManageMenuItemsUseCase : UIMUseCase {
     if (item == MenuItem.init)
       return "Menu item not found";
 
+    auto item = menuRepo.findById(req.menuItemId);
     item.title = req.title.length > 0 ? req.title : item.title;
     item.icon = req.icon;
     item.parentId = req.parentId;
