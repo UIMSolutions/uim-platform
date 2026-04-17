@@ -16,6 +16,8 @@ module uim.platform.portal.application.usecases.manage.roles;
 // import std.array : array;
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.application.dto;
+import uim.platform.portal.application.dto;
+import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
 mixin(ShowModule!());

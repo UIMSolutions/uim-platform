@@ -9,6 +9,7 @@ module uim.platform.portal.infrastructure.persistence.memory.themes;
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.domain.ports.repositories.themes;
 import uim.platform.portal;
+import uim.platform.portal.application.usecases.manage;
 
 mixin(ShowModule!());
 
@@ -22,6 +23,10 @@ class MemoryThemeRepository : ThemeRepository {
 
   Theme findById(ThemeId id) {
     return existsById(id) ? store[id] : Theme.init;
+  }
+
+  bool existsDefault(TenantId tenantId) {
+    return store.byValue().any!(t => t.tenantId == tenantId && t.isDefault);
   }
 
   Theme findDefault(TenantId tenantId) {

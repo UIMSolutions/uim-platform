@@ -15,6 +15,7 @@ module uim.platform.portal.presentation.http.controllers.provider;
 // import uim.platform.identity_authentication.presentation.http.json_utils;
 import uim.platform.portal;
 
+import uim.platform.portal.application.usecases.manage;
 mixin(ShowModule!());
 
 @safe:
