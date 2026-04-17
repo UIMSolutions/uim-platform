@@ -28,8 +28,7 @@ class ManageReplicationTasksUseCase : UIMUseCase {
     if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Replication task ID and name are required");
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "Replication task already exists");
 
     ReplicationTask t;
@@ -61,10 +60,10 @@ class ManageReplicationTasksUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateReplicationTaskRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Replication task not found");
 
+    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.scheduleExpression = r.scheduleExpression;
@@ -77,8 +76,7 @@ class ManageReplicationTasksUseCase : UIMUseCase {
   }
 
   CommandResult remove(ReplicationTaskId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Replication task not found");
 
     repo.remove(id);

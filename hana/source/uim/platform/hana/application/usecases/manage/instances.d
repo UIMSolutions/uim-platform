@@ -30,8 +30,7 @@ class ManageInstancesUseCase : UIMUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "Instance already exists");
 
     DatabaseInstance i;
@@ -71,10 +70,10 @@ class ManageInstancesUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateInstanceRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Instance not found");
 
+    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.resources.memoryGB = r.memoryGB;
@@ -93,10 +92,10 @@ class ManageInstancesUseCase : UIMUseCase {
   }
 
   CommandResult performAction(InstanceActionRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Instance not found");
 
+    auto existing = repo.findById(r.id);
     switch (r.action) {
       case "start":
         existing.status = InstanceStatus.starting;
@@ -119,8 +118,7 @@ class ManageInstancesUseCase : UIMUseCase {
   }
 
   CommandResult remove(InstanceId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Instance not found");
 
     repo.remove(id);

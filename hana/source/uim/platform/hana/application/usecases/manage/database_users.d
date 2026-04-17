@@ -28,8 +28,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
     if (r.id.isEmpty || r.userName.length == 0)
       return CommandResult(false, "", "User ID and username are required");
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "Database user already exists");
 
     DatabaseUser u;
@@ -60,10 +59,10 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateDatabaseUserRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Database user not found");
 
+    auto existing = repo.findById(r.id);
     existing.defaultSchema = r.defaultSchema;
     existing.isRestricted = r.isRestricted;
     existing.forcePasswordChange = r.forcePasswordChange;
@@ -76,8 +75,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
   }
 
   CommandResult remove(DatabaseUserId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Database user not found");
 
     repo.remove(id);

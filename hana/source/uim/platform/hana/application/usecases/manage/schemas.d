@@ -57,10 +57,10 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateSchemaRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Schema not found");
 
+    auto existing = repo.findById(r.id);
     existing.owner = r.owner;
 
     import core.time : MonoTime;
@@ -71,8 +71,7 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   CommandResult remove(SchemaId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Schema not found");
 
     repo.remove(id);

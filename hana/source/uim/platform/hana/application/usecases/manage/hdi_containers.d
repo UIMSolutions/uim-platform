@@ -28,8 +28,7 @@ class ManageHDIContainersUseCase : UIMUseCase {
     if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "HDI Container ID and name are required");
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "HDI Container already exists");
 
     HDIContainer c;
@@ -60,10 +59,10 @@ class ManageHDIContainersUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateHDIContainerRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "HDI Container not found");
 
+    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.grantedSchemas = r.grantedSchemas;
@@ -76,8 +75,7 @@ class ManageHDIContainersUseCase : UIMUseCase {
   }
 
   CommandResult remove(HDIContainerId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "HDI Container not found");
 
     repo.remove(id);

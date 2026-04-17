@@ -28,8 +28,7 @@ class ManageDatabaseConnectionsUseCase : UIMUseCase {
     if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Connection ID and name are required");
 
-    auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (repo.existsById(r.id))
       return CommandResult(false, "", "Database connection already exists");
 
     DatabaseConnection c;
@@ -67,10 +66,10 @@ class ManageDatabaseConnectionsUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateDatabaseConnectionRequest r) {
-    auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(r.id))
       return CommandResult(false, "", "Database connection not found");
 
+    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.host = r.host;
@@ -86,8 +85,7 @@ class ManageDatabaseConnectionsUseCase : UIMUseCase {
   }
 
   CommandResult remove(DatabaseConnectionId id) {
-    auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Database connection not found");
 
     repo.remove(id);
