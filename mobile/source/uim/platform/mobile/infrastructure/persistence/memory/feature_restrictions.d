@@ -15,15 +15,17 @@ import std.array : array;
 class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   private FeatureRestriction[FeatureRestrictionId] store;
 
+  bool existsById(FeatureRestrictionId id) {
+    return id in store ? true : false;
+  }
+
   FeatureRestriction findById(FeatureRestrictionId id) {
-    if (auto p = id in store)
-      return *p;
-    return FeatureRestriction.init;
+    return existsById(id) ? store[id] : FeatureRestriction.init;
   }
 
   FeatureRestriction findByKey(MobileAppId appId, string featureKey) {
-    foreach (r; store) {
-      if (r.appId == appId && r.featureKey == featureKey)
+    foreach (r; findByApp(appId)) {
+      if (r.featureKey == featureKey)
         return r;
     }
     return FeatureRestriction.init;
@@ -34,7 +36,7 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   FeatureRestriction[] findEnabled(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId && r.enabled).array;
+    return findByApp(appId).filter!(r => r.enabled).array;
   }
 
   FeatureRestriction[] findByTenant(TenantId tenantId) {

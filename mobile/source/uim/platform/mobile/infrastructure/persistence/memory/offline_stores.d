@@ -15,15 +15,21 @@ import std.array : array;
 class MemoryOfflineStoreRepository : OfflineStoreRepository {
   private OfflineStore[OfflineStoreId] store;
 
+  bool existsById(OfflineStoreId id) {
+    return id in store ? true : false;
+  }
+
   OfflineStore findById(OfflineStoreId id) {
-    if (auto p = id in store)
-      return *p;
-    return OfflineStore.init;
+    return existsById(id) ? store[id] : OfflineStore.init;
+  }
+
+  bool existsByName(MobileAppId appId, string name) {
+    return findByApp(appId).any!(s => s.name == name);
   }
 
   OfflineStore findByName(MobileAppId appId, string name) {
-    foreach (s; store) {
-      if (s.appId == appId && s.name == name)
+    foreach (s; findByApp(appId)) {
+      if (s.name == name)
         return s;
     }
     return OfflineStore.init;

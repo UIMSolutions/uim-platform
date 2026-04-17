@@ -15,15 +15,21 @@ import std.array : array;
 class MemoryClientResourceRepository : ClientResourceRepository {
   private ClientResource[ClientResourceId] store;
 
+  bool existsById(ClientResourceId id) {
+    return id in store ? true : false;
+  }
+
   ClientResource findById(ClientResourceId id) {
-    if (auto p = id in store)
-      return *p;
-    return ClientResource.init;
+    return existsById(id) ? store[id] : ClientResource.init;
+  }
+
+  bool existsByName(MobileAppId appId, string name) {
+    return store.any!(r => r.appId == appId && r.name == name);
   }
 
   ClientResource findByName(MobileAppId appId, string name) {
-    foreach (r; store) {
-      if (r.appId == appId && r.name == name)
+      foreach (r; store) {
+        if (r.appId == appId && r.name == name)
         return r;
     }
     return ClientResource.init;

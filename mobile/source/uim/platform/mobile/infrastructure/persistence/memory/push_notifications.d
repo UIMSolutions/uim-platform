@@ -15,10 +15,12 @@ import std.array : array;
 class MemoryPushNotificationRepository : PushNotificationRepository {
   private PushNotification[PushNotificationId] store;
 
+  bool existsById(PushNotificationId id) {
+    return id in store ? true : false;
+  }
+
   PushNotification findById(PushNotificationId id) {
-    if (auto p = id in store)
-      return *p;
-    return PushNotification.init;
+    return existsById(id) ? store[id] : PushNotification.init;
   }
 
   PushNotification[] findByApp(MobileAppId appId) {
@@ -26,7 +28,7 @@ class MemoryPushNotificationRepository : PushNotificationRepository {
   }
 
   PushNotification[] findByStatus(MobileAppId appId, NotificationStatus status) {
-    return store.values.filter!(n => n.appId == appId && n.status == status).array;
+    return findByApp(appId).filter!(n => n.status == status).array;
   }
 
   PushNotification[] findByTenant(TenantId tenantId) {

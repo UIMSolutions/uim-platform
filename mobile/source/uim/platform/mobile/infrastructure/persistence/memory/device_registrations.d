@@ -15,10 +15,16 @@ import std.array : array;
 class MemoryDeviceRegistrationRepository : DeviceRegistrationRepository {
   private DeviceRegistration[DeviceRegistrationId] store;
 
+  bool existsById(DeviceRegistrationId id) {
+    return id in store ? true : false;
+  }
+
   DeviceRegistration findById(DeviceRegistrationId id) {
-    if (auto p = id in store)
-      return *p;
-    return DeviceRegistration.init;
+    return existsById(id) ? store[id] : DeviceRegistration.init;
+  }
+
+  bool existsByDeviceToken(string deviceToken) {
+    return store.any!(r => r.deviceToken == deviceToken);
   }
 
   DeviceRegistration findByDeviceToken(string deviceToken) {
