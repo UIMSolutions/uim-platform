@@ -67,7 +67,7 @@ class ManagePromptsUseCase : UIMUseCase {
     return CommandResult(true, p.id, "");
   }
 
-  Prompt get_(PromptId id) {
+  Prompt getbyId(PromptId id) {
     return repo.findById(id);
   }
 

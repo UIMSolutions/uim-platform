@@ -37,7 +37,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(true, w.id, "");
   }
 
-  Workspace get_(WorkspaceId id) {
+  Workspace getbyId(WorkspaceId id) {
     return repo.findById(id);
   }
 

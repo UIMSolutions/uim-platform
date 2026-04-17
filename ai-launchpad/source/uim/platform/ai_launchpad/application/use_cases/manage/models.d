@@ -41,7 +41,7 @@ class ManageModelsUseCase : UIMUseCase {
     return CommandResult(true, m.id, "");
   }
 
-  Model get_(ModelId id, ConnectionId connectionId) {
+  Model getbyId(ModelId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 

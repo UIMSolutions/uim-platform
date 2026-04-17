@@ -40,7 +40,7 @@ class ManageDatasetsUseCase : UIMUseCase {
     return CommandResult(true, d.id, "");
   }
 
-  Dataset get_(DatasetId id, ConnectionId connectionId) {
+  Dataset getbyId(DatasetId id, ConnectionId connectionId) {
     return repo.findById(id, connectionId);
   }
 
