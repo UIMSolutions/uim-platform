@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.infrastructure;
+module uim.platform.abap_environment.infrastructure;
 
 public {
-  import uim.platform.abap_enviroment.infrastructure.persistence;
-  import uim.platform.abap_enviroment.infrastructure.config;
-  import uim.platform.abap_enviroment.infrastructure.container;
+  import uim.platform.abap_environment.infrastructure.persistence;
+  import uim.platform.abap_environment.infrastructure.config;
+  import uim.platform.abap_environment.infrastructure.container;
 }

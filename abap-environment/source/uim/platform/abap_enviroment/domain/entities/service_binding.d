@@ -3,9 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.domain.entities.service_binding;
+module uim.platform.abap_environment.domain.entities.service_binding;
 
-import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_environment.domain.types;
 
 /// Exposed service endpoint from a binding.
 struct ExposedEndpoint {

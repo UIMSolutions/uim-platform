@@ -1,6 +1,6 @@
-module uim.platform.abap_enviroment.domain.entities.execution_log;
+module uim.platform.abap_environment.domain.entities.execution_log;
 
-import uim.platform.abap_enviroment;
+import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 

@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.domain.ports.repositories.business_users;
+module uim.platform.abap_environment.domain.ports.repositories.business_users;
 
-import uim.platform.abap_enviroment.domain.entities.business_user;
-import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_environment.domain.entities.business_user;
+import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - business user persistence.
 interface BusinessUserRepository : ITenantRepository!(BusinessUser, BusinessUserId) {

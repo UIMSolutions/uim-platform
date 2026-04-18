@@ -58,7 +58,7 @@ Clean/Hexagonal architecture with four layers:
 
 ```bash
 # Build and run locally
-cd abap-enviroment
+cd abap-environment
 dub run
 
 # Run tests

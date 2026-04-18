@@ -3,17 +3,17 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.presentation.http.transport_request;
+module uim.platform.abap_environment.presentation.http.transport_request;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.abap_enviroment.application.usecases.manage.transport_requests;
-import uim.platform.abap_enviroment.application.dto;
-import uim.platform.abap_enviroment.domain.entities.transport_request;
-import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_environment.application.usecases.manage.transport_requests;
+import uim.platform.abap_environment.application.dto;
+import uim.platform.abap_environment.domain.entities.transport_request;
+import uim.platform.abap_environment.domain.types;
 
 class TransportRequestController : PlatformController {
   private ManageTransportRequestsUseCase uc;

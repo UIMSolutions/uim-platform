@@ -9,8 +9,8 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.abap_enviroment.infrastructure.config;
-import uim.platform.abap_enviroment.infrastructure.container;
+import uim.platform.abap_environment.infrastructure.config;
+import uim.platform.abap_environment.infrastructure.container;
 
 // import std.stdio : writefln;
 

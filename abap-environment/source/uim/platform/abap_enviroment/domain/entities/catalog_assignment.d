@@ -1,6 +1,6 @@
-module uim.platform.abap_enviroment.domain.entities.catalog_assignment;
+module uim.platform.abap_environment.domain.entities.catalog_assignment;
 
-import uim.platform.abap_enviroment;
+import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:

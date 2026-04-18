@@ -3,19 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.http.controllers.business_user;
+module uim.platform.abap_environment.http.controllers.business_user;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.usecases.manage.business_users;
-// import uim.platform.abap_enviroment.application.dto;
-// import uim.platform.abap_enviroment.domain.entities.business_user;
-// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_environment.application.usecases.manage.business_users;
+// import uim.platform.abap_environment.application.dto;
+// import uim.platform.abap_environment.domain.entities.business_user;
+// import uim.platform.abap_environment.domain.types;
 
-import uim.platform.abap_enviroment.presentation.http;
+import uim.platform.abap_environment.presentation.http;
 
 mixin(ShowModule!());
 

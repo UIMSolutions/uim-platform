@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.application.usecases.manage.business_roles;
+module uim.platform.abap_environment.application.usecases.manage.business_roles;
 
-import uim.platform.abap_enviroment.application.dto;
-import uim.platform.abap_enviroment.domain.entities.business_role;
-import uim.platform.abap_enviroment.domain.ports.repositories.business_roles;
-import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_environment.application.dto;
+import uim.platform.abap_environment.domain.entities.business_role;
+import uim.platform.abap_environment.domain.ports.repositories.business_roles;
+import uim.platform.abap_environment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
