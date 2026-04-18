@@ -59,10 +59,10 @@ class ManagePipelinesUseCase : UIMUseCase {
   }
 
   CommandResult update(PipelineId id, UpdatePipelineRequest req) {
-    auto p = repo.findById(id);
-    if (p.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Pipeline not found");
 
+    auto p = repo.findById(id);
     if (req.description.length > 0)
       p.description = req.description;
     if (req.format.length > 0)

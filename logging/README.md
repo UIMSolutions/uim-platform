@@ -109,6 +109,12 @@ kubectl apply -f k8s/service.yaml
 | `LOGGING_HOST` | `0.0.0.0` | Bind address |
 | `LOGGING_PORT` | `8094` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache 2.0 - See [LICENSE](../LICENSE) for details.
+See the repository root [LICENSE](../LICENSE) file.

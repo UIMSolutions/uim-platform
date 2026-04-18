@@ -12,7 +12,17 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface PipelineRepository : ITenantRepository!(Pipeline,PipelineId) {
+interface PipelineRepository : ITenantRepository!(Pipeline, PipelineId) {
+  bool existsById(PipelineId id);
+  Pipeline findById(PipelineId id);
+
+  Pipeline[] findAll(TenantId tenantId);
   Pipeline[] findActive(TenantId tenantId);
   Pipeline[] findBySource(TenantId tenantId, PipelineSourceType sourceType);
+
+  void save(Pipeline a);
+  void save(TenantId tenantId, Pipeline a);
+
+  void update(Pipeline a);
+  void update(TenantId tenantId, Pipeline a);
 }
