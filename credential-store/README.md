@@ -109,6 +109,12 @@ kubectl apply -f k8s/service.yaml
 | `CREDSTORE_HOST` | `0.0.0.0` | Bind address |
 | `CREDSTORE_PORT` | `8095` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache 2.0 - See [LICENSE](../LICENSE) for details.
+See the repository root [LICENSE](../LICENSE) file.

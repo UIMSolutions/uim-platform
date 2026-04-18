@@ -147,6 +147,12 @@ podman run -p 8102:8102 uim-platform/cloud-personal-data
 kubectl apply -f k8s/
 ```
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+See the repository root [LICENSE](../LICENSE) file.

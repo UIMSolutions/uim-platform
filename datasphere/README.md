@@ -94,3 +94,13 @@ kubectl apply -f k8s/service.yaml
 |----------|---------|-------------|
 | `DATASPHERE_HOST` | `0.0.0.0` | Listen address |
 | `DATASPHERE_PORT` | `8095` | Listen port |
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

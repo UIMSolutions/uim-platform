@@ -579,3 +579,13 @@ Container --> MemoryConnectivityLogRepo
 
 @enduml
 ```
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

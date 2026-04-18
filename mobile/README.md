@@ -113,3 +113,13 @@ kubectl apply -f mobile/k8s/service.yaml
 ## Inspired By
 
 [SAP Mobile Services for SAP BTP](https://help.sap.com/doc/f53c64b93e5140918d676b927a3cd65b/Cloud/en-US/docs-en/guides/index.html) - providing mobile app management, push notifications, offline sync, usage analytics, feature flags, and device management capabilities.
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

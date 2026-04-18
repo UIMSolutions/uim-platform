@@ -101,3 +101,13 @@ kubectl apply -f html-repository/k8s/service.yaml
 ## Inspired By
 
 [SAP HTML5 Application Repository Service for SAP BTP](https://help.sap.com/docs/btp/sap-business-technology-platform/html5-application-repository-service-for-sap-btp) - providing central storage, versioning, zero-downtime deployment, public/private authorization, caching, and multitenancy for HTML5 static content.
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

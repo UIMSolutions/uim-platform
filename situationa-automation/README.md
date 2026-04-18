@@ -80,3 +80,13 @@ kubectl apply -f k8s/service.yaml
 |----------|---------|-------------|
 | `SITUATION_AUTOMATION_HOST` | `0.0.0.0` | Bind address |
 | `SITUATION_AUTOMATION_PORT` | `8100` | Listen port |
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

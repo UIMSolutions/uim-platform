@@ -160,6 +160,12 @@ The typical workflow for setting up a custom domain with TLS:
 8. **Map Routes** - Map standard application routes to the custom domain
 9. **Enable Client Auth** (optional) - Upload trusted CA certificates for mTLS
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+See the repository root [LICENSE](../LICENSE) file.

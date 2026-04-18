@@ -215,6 +215,12 @@ Ratings:
 - **Persistence:** In-memory (swappable via port interfaces)
 - **Architecture:** Clean + Hexagonal (Ports & Adapters) + DDD
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Proprietary — UIM Platform Team
+See the repository root [LICENSE](../LICENSE) file.

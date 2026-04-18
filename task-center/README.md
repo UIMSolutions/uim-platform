@@ -161,6 +161,12 @@ kubectl apply -f k8s/service.yaml
 | `sapBuild` | SAP Build Process Automation |
 | `custom` | Custom provider application |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache 2.0
+See the repository root [LICENSE](../LICENSE) file.

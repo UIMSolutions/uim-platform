@@ -219,3 +219,13 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 
 - **PasswordValidator** — validates a password string against all `PasswordPolicy` rules (length, character classes, unique chars, repeat limit) and returns a `PasswordValidationResult` with specific violations
 - **SchemaValidator** — validates user `ExtendedAttribute[]` against a `Schema` definition, checking required fields, read-only attributes, and unknown attribute names
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

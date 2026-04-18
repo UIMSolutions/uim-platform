@@ -146,3 +146,13 @@ kubectl apply -f k8s/service.yaml
 - **Training Jobs** — Train custom extraction models on your document types
 - **Multi-tenant Client Management** — Isolate data per tenant/client
 - **Capabilities Discovery** — Query supported extraction methods, file types, and features
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

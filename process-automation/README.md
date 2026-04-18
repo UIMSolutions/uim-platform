@@ -119,6 +119,12 @@ kubectl apply -f k8s/service.yaml
 | `PROCESS_AUTOMATION_HOST`    | `0.0.0.0` | Bind address         |
 | `PROCESS_AUTOMATION_PORT`    | `8099`    | Listen port          |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+See the repository root [LICENSE](../LICENSE) file.

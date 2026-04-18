@@ -190,3 +190,13 @@ ai-launchpad/
   Containerfile                    # Podman build
   dub.sdl                         # Package configuration
 ```
+
+## Testing
+
+```bash
+dub test
+```
+
+## License
+
+See the repository root [LICENSE](../LICENSE) file.

@@ -262,6 +262,12 @@ Static time-series forecasting methods:
 - **Persistence:** In-memory (swappable via repository interfaces)
 - **Architecture:** Clean + Hexagonal (Ports & Adapters) + DDD
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Proprietary — UIM Platform Team
+See the repository root [LICENSE](../LICENSE) file.
