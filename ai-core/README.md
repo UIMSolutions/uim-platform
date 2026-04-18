@@ -62,7 +62,7 @@ Clean/Hexagonal architecture with four layers:
 |--------|------|-------------|
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -97,13 +97,19 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `AICORE_HOST` | `0.0.0.0` | Bind address |
 | `AICORE_PORT` | `8090` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

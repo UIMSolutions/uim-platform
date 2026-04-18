@@ -58,7 +58,7 @@ Clean/Hexagonal architecture with four layers:
 | GET | `/api/v1/change-log?deltaToken=...` | Get incremental changes since a delta token |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -71,13 +71,19 @@ dub test
 
 The service starts on port **8096** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `MDI_HOST` | `0.0.0.0` | Bind address |
 | `MDI_PORT` | `8096` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

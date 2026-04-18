@@ -71,7 +71,7 @@ Clean/Hexagonal architecture with four layers:
 | CRUD | `/api/v1/anonymization-configs` | Manage anonymisation configurations |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -84,13 +84,19 @@ dub test
 
 The service starts on port **8089** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DP_HOST` | `0.0.0.0` | Bind address |
 | `DP_PORT` | `8089` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

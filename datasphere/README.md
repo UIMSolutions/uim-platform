@@ -59,7 +59,7 @@ datasphere/
 - `X-Tenant-Id` - Tenant identifier for multi-tenancy
 - `X-Space-Id` - Space identifier for space-scoped operations
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run
@@ -88,7 +88,7 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|

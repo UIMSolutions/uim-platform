@@ -48,7 +48,7 @@ Clean/Hexagonal architecture with four layers:
 | POST | `/api/v1/service-bindings/{id}/revoke` | Revoke a service binding |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -61,13 +61,19 @@ dub test
 
 The service starts on port **8092** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `OBJSTORE_HOST` | `0.0.0.0` | Bind address |
 | `OBJSTORE_PORT` | `8092` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

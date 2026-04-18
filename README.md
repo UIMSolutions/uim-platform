@@ -1,14 +1,12 @@
 # UIM Platform
 
-A modular collection of SAP BTP-inspired cloud platform services, built with
-**D** and **vibe.d**, following **Clean Architecture** and **Hexagonal
-Architecture** (Ports & Adapters) principles.
+![DUB Version](https://img.shields.io/dub/v/uim-platform) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![DUB Downloads](https://img.shields.io/dub/dm/uim-platform) ![DUB Score](https://img.shields.io/dub/score/uim-platform)
 
-Part of the [UIM Platform](https://www.sueel.de/uim/platform) suite.
+A modular collection of SAP BTP-inspired cloud platform services, built with **D** and **vibe.d**, following **Clean Architecture** and **Hexagonal Architecture** (Ports & Adapters) principles.
 
 ## Overview
 
-UIM Platform is a monorepo containing 40 independently deployable microservices
+UIM Platform is a monorepo containing 42 independently deployable microservices
 and a shared service library. Each service mirrors the feature set of a
 corresponding SAP Business Technology Platform capability, re-implemented in the
 D programming language using the vibe.d HTTP framework and the
@@ -34,56 +32,57 @@ service/
 │   │   └── persistence/         #   In-memory repository implementations
 │   └── presentation/            # HTTP driving adapters
 │       └── http/
-│           ├── json_utils.d     #   JSON helper functions
-│           └── *_controller.d   #   Route controllers
+│           └── controller.d   #   Route controllers
 └── dub.sdl
 ```
 
 ## Services
 
-| Service | Description | Port |
-|---|---|---|
-| **service** | Shared library — core utilities, base types, and shared infrastructure for all platform services | — |
-| **abap-enviroment** | SAP BTP ABAP Environment — ABAP system instances, software components, communication arrangements, transports, and business users/roles | 8090 |
-| **ai-core** | SAP AI Core — ML lifecycle API v2 covering scenarios, executables, configurations, executions, deployments, artifacts, and metrics | 8090 |
-| **ai-launchpad** | SAP AI Launchpad — unified AI runtime management, workspaces, ML lifecycle, and Generative AI Hub | 8097 |
-| **analytics** | SAP Analytics Cloud — embedded analytics, KPI management, stories, and reporting | 8082 |
-| **auditlog** | SAP Audit Log — audit event capture, retention, and retrieval | 8085 |
-| **cloud-foundry** | SAP BTP Cloud Foundry Runtime — orgs, spaces, apps, services, buildpacks, routes, and domains | 8091 |
-| **connectivity** | SAP BTP Connectivity — destination management, Cloud Connector tunnels, service channels, access control rules, and certificate stores | 8088 |
-| **content-agent** | SAP Content Agent Service — content package assembly, provider sync, transport lifecycle, imports/exports, and activity tracking | 8092 |
-| **credential-store** | SAP Credential Store — secure secret, password, and key storage with namespace and binding management | 8095 |
-| **custom-domain** | SAP Custom Domain Service — custom domain registration, TLS certificate management, and routing configuration | 8101 |
-| **data-attribute-recommendation** | SAP Data Attribute Recommendation — ML-driven attribute suggestion with dataset, model training, deployment, and inference management | 8092 |
-| **data-privacy** | SAP Data Privacy Integration — data subject management, consent tracking, deletion/blocking/correction requests, and GDPR compliance | 8089 |
-| **data-quality** | SAP Data Quality Management — address cleansing, geocoding, and data enrichment | 8086 |
-| **datasphere** | SAP Datasphere — spaces, connections, remote tables, data flows, views, tasks, data access controls, and catalog | 8095 |
-| **destination** | SAP Destination Service — centralised connectivity destinations, certificates, and destination fragments | 8094 |
-| **dms-application** | SAP Document Management Service — repositories, folders, documents, versioning, sharing, and access control | 8094 |
-| **document-ai** | SAP Document Information Extraction — document classification, field extraction, and schema management | 8096 |
-| **event-mesh** | SAP Event Mesh — message queues, topic subscriptions, webhooks, and event-driven messaging | 8108 |
-| **field-service** | SAP Field Service Management — service orders, technicians, scheduling, equipment, and work orders | 8107 |
-| **hana** | SAP HANA Cloud — database instances, schemas, users, roles, backups, and monitoring | 8097 |
-| **html-repository** | SAP HTML5 Application Repository — static app hosting, version management, zero-downtime deployment, routing, and content caching | 8097 |
-| **identity-authentication** | SAP Cloud Identity Services (IAS) — authentication, users, groups, application registration, tenants, and policies | 8080 |
-| **identity-directory** | SAP Cloud Identity Directory — user, group, schema, and attribute management (SCIM-based) | 8082 |
-| **identity-provisioning** | SAP Identity Provisioning — source/target/proxy system configuration, provisioning jobs, transformation rules, and audit logging | 8093 |
-| **integration-automation** | SAP Cloud Integration Automation — integration scenarios, task workflows, system connections, and execution runs | 8090 |
-| **job-scheduling** | SAP Job Scheduling Service — cron/interval-based job scheduling, run logs, and configuration management | 8096 |
-| **kyma** | SAP BTP Kyma Runtime — serverless functions, API rules, service instances, event subscriptions, modules, and applications | 8095 |
-| **logging** | SAP Application Logging — log entry ingestion, log level management, retention policies, and search | 8094 |
-| **malware-scanning** | SAP Malware Scanning Service — content scanning, quarantine management, scan profiles, signature definitions, and webhook notifications | 8097 |
-| **management** | SAP BTP Cloud Management Service — global accounts, directories, subaccounts, entitlements, environments, subscriptions, and labels | 8098 |
-| **master-data-integration** | SAP Master Data Integration — master data orchestration, distribution models, key mappings, replication jobs, and change log | 8096 |
-| **mobile** | SAP Mobile Services — mobile application management, push notifications, app configurations, and device registration | 8096 |
-| **monitoring** | Platform Monitoring Service — resource monitoring, metric ingestion, health checks, alert rules, and notification channels | 8093 |
-| **object-store** | SAP Object Store Service — S3-compatible bucket and object management, versioning, access policies, lifecycle rules, and CORS | 8092 |
-| **personal-data** | SAP Personal Data Manager — personal data inventory, data subject requests, and cross-application data reporting | 8102 |
-| **portal** | SAP Build Work Zone (Standard) — portal sites, pages, sections, tiles, catalogs, themes, roles, menus, and i18n | 8083 |
-| **process-automation** | SAP Build Process Automation — workflows, forms, decisions, bots, and automation project management | 8099 |
-| **situationa-automation** | SAP Intelligent Situation Automation — situation templates, automation rules, actions, dashboards, and notifications | 8100 |
-| **task-center** | SAP Task Center — unified task inbox, task providers, task definitions, and user task management | 8103 |
-| **workzone** | SAP Work Zone (Advanced) — collaborative workspaces, work pages, integration cards, feeds, notifications, tasks, and channels | 8084 |
+| Service                                 | Port | Status                                                                                                                                                                                 | Description                                                                                                                                     |
+| --------------------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **service**                       |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Shared library — core utilities, base types, and shared infrastructure for all platform services                                               |
+| **abap-enviroment**               |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP BTP ABAP Environment<br />ABAP system instances, software components, communication arrangements, transports, and business users/roles |
+| **ai-core**                       |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP AI Core<br />ML lifecycle API v2 covering scenarios, executables, configurations, executions, deployments, artifacts, and metrics      |
+| **ai-launchpad**                  |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP AI Launchpad — unified AI runtime management, workspaces, ML lifecycle, and Generative AI Hub                                         |
+| **analytics**                     |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Analytics Cloud — embedded analytics, KPI management, stories, and reporting                                                          |
+| **application-vulnerability**     |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Application Vulnerability Report — vulnerability scanning, component analysis, remediation tracking, and exception management          |
+| **automation-pilot**              |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Automation Pilot — DevOps automation flows, command catalogs, scheduled executions, triggers, and content connectors                   |
+| **auditlog**                      |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Audit Log — audit event capture, retention, and retrieval                                                                             |
+| **cloud-foundry**                 |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP BTP Cloud Foundry Runtime — orgs, spaces, apps, services, buildpacks, routes, and domains                                             |
+| **connectivity**                  |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP BTP Connectivity — destination management, Cloud Connector tunnels, service channels, access control rules, and certificate stores    |
+| **content-agent**                 |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Content Agent Service — content package assembly, provider sync, transport lifecycle, imports/exports, and activity tracking          |
+| **credential-store**              |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Credential Store — secure secret, password, and key storage with namespace and binding management                                     |
+| **custom-domain**                 |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Custom Domain Service — custom domain registration, TLS certificate management, and routing configuration                             |
+| **data-attribute-recommendation** |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Data Attribute Recommendation — ML-driven attribute suggestion with dataset, model training, deployment, and inference management     |
+| **data-privacy**                  |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Data Privacy Integration — data subject management, consent tracking, deletion/blocking/correction requests, and GDPR compliance      |
+| **data-quality**                  |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Data Quality Management — address cleansing, geocoding, and data enrichment                                                           |
+| **datasphere**                    |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Datasphere — spaces, connections, remote tables, data flows, views, tasks, data access controls, and catalog                          |
+| **destination**                   |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Destination Service — centralised connectivity destinations, certificates, and destination fragments                                  |
+| **dms-application**               |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Document Management Service — repositories, folders, documents, versioning, sharing, and access control                               |
+| **document-ai**                   |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Document Information Extraction — document classification, field extraction, and schema management                                    |
+| **event-mesh**                    |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Event Mesh — message queues, topic subscriptions, webhooks, and event-driven messaging                                                |
+| **field-service**                 |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Field Service Management — service orders, technicians, scheduling, equipment, and work orders                                        |
+| **hana**                          |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP HANA Cloud — database instances, schemas, users, roles, backups, and monitoring                                                       |
+| **html-repository**               |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP HTML5 Application Repository — static app hosting, version management, zero-downtime deployment, routing, and content caching         |
+| **identity-authentication**       |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Cloud Identity Services (IAS) — authentication, users, groups, application registration, tenants, and policies                        |
+| **identity-directory**            |      | [![uim-platform:service](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml/badge.svg)](https://github.com/UIMSolutions/uim-platform/actions/workflows/service.yml) | Like SAP Cloud Identity Directory — user, group, schema, and attribute management (SCIM-based)                                                 |
+| **identity-provisioning**         |      |                                                                                                                                                                                        | Like SAP Identity Provisioning — source/target/proxy system configuration, provisioning jobs, transformation rules, and audit logging          |
+| **integration-automation**        |      |                                                                                                                                                                                        | Like SAP Cloud Integration Automation — integration scenarios, task workflows, system connections, and execution runs                          |
+| **job-scheduling**                |      |                                                                                                                                                                                        | Like SAP Job Scheduling Service — cron/interval-based job scheduling, run logs, and configuration management                                   |
+| **kyma**                          |      |                                                                                                                                                                                        | Like SAP BTP Kyma Runtime — serverless functions, API rules, service instances, event subscriptions, modules, and applications                 |
+| **logging**                       |      |                                                                                                                                                                                        | Like SAP Application Logging — log entry ingestion, log level management, retention policies, and search                                       |
+| **malware-scanning**              |      |                                                                                                                                                                                        | Like SAP Malware Scanning Service — content scanning, quarantine management, scan profiles, signature definitions, and webhook notifications   |
+| **management**                    |      |                                                                                                                                                                                        | Like SAP BTP Cloud Management Service — global accounts, directories, subaccounts, entitlements, environments, subscriptions, and labels       |
+| **master-data-integration**       |      |                                                                                                                                                                                        | Like SAP Master Data Integration — master data orchestration, distribution models, key mappings, replication jobs, and change log              |
+| **mobile**                        |      |                                                                                                                                                                                        | Like SAP Mobile Services — mobile application management, push notifications, app configurations, and device registration                       |
+| **monitoring**                    |      |                                                                                                                                                                                        | Like SAP Platform Monitoring Service — resource monitoring, metric ingestion, health checks, alert rules, and notification channels            |
+| **object-store**                  |      |                                                                                                                                                                                        | Like SAP Object Store Service — S3-compatible bucket and object management, versioning, access policies, lifecycle rules, and CORS             |
+| **personal-data**                 |      |                                                                                                                                                                                        | Like SAP Personal Data Manager — personal data inventory, data subject requests, and cross-application data reporting                          |
+| **portal**                        |      |                                                                                                                                                                                        | Like SAP Build Work Zone (Standard) — portal sites, pages, sections, tiles, catalogs, themes, roles, menus, and i18n                           |
+| **process-automation**            |      |                                                                                                                                                                                        | Like SAP Build Process Automation — workflows, forms, decisions, bots, and automation project management                                      |
+| **situationa-automation**         |      |                                                                                                                                                                                        | Like SAP Intelligent Situation Automation — situation templates, automation rules, actions, dashboards, and notifications                      |
+| **task-center**                   |      |                                                                                                                                                                                        | Like SAP Task Center — unified task inbox, task providers, task definitions, and user task management                                          |
+| **workzone**                      |      |                                                                                                                                                                                        | Like SAP Work Zone (Advanced) — collaborative workspaces, work pages, integration cards, feeds, notifications, tasks, and channels              |
 
 ## Prerequisites
 
@@ -145,7 +144,7 @@ tenant identifier via the `X-Tenant-Id` HTTP header on every request.
 
 ## Dependencies
 
-- [uim-framework ~>26.4.1](https://github.com/AnotherCoder/uim-framework) — Core utilities, OOP extensions, JSON helpers
+- [uim-framework ~&gt;26.4.1](https://github.com/AnotherCoder/uim-framework) — Core utilities, OOP extensions, JSON helpers
 - [vibe.d 0.10.x](https://vibed.org/) — HTTP server framework
 
 ## License

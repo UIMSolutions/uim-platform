@@ -56,7 +56,7 @@ Presentation Layer (outermost)
 | GET | `/api/v1/overview` | Get system overview/dashboard |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ### Local Development
 
@@ -67,7 +67,7 @@ dub run
 
 The service starts on port 8097 by default.
 
-### Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|

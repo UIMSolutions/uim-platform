@@ -69,7 +69,7 @@ infrastructure/   - Configuration, DI container, in-memory persistence
 |--------|----------|-------------|
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -100,13 +100,19 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `JOB_SCHEDULING_HOST` | `0.0.0.0` | Bind address |
 | `JOB_SCHEDULING_PORT` | `8096` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

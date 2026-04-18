@@ -181,7 +181,7 @@ dub build --config=defaultRun
 dub test --config=defaultTest
 ```
 
-### Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -245,6 +245,12 @@ hana/
             └── persistence/memory/  # 10 in-memory repos
 ```
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

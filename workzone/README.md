@@ -52,7 +52,7 @@ Clean/Hexagonal architecture with four layers:
 | CRUD | `/api/v1/widgets` | Manage widgets |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -65,13 +65,19 @@ dub test
 
 The service starts on port **8084** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `WZ_HOST` | `0.0.0.0` | Bind address |
 | `WZ_PORT` | `8084` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

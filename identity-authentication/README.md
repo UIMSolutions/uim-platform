@@ -48,7 +48,7 @@ Clean/Hexagonal architecture with four layers:
 | CRUD | `/api/v1/policies` | Manage authentication policies |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -61,7 +61,7 @@ dub test
 
 The service starts on port **8080** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -69,6 +69,12 @@ The service starts on port **8080** by default.
 | `IAS_PORT` | `8080` | Listen port |
 | `IAS_JWT_SECRET` | _(empty)_ | Secret key for JWT token signing |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

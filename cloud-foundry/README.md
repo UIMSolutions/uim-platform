@@ -61,7 +61,7 @@ Clean/Hexagonal architecture with four layers:
 | GET | `/api/v1/monitoring/spaces/{id}` | Get space monitoring summary |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -74,13 +74,19 @@ dub test
 
 The service starts on port **8091** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CF_HOST` | `0.0.0.0` | Bind address |
 | `CF_PORT` | `8091` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

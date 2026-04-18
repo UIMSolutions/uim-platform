@@ -125,7 +125,7 @@ cd ai-launchpad
 dub build
 ```
 
-## Running
+## Build and Run
 
 ```bash
 # Default (port 8097)

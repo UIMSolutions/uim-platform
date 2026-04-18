@@ -51,7 +51,7 @@ Clean/Hexagonal architecture with four layers:
 | GET | `/api/v1/activities/summary` | Get activity summary |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -64,13 +64,19 @@ dub test
 
 The service starts on port **8092** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CONTENT_AGENT_HOST` | `0.0.0.0` | Bind address |
 | `CONTENT_AGENT_PORT` | `8092` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

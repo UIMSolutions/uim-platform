@@ -50,7 +50,7 @@ Clean/Hexagonal architecture with four layers:
 | GET | `/api/v1/monitoring/pipeline` | Get pipeline overview |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -63,13 +63,19 @@ dub test
 
 The service starts on port **8092** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DAR_HOST` | `0.0.0.0` | Bind address |
 | `DAR_PORT` | `8092` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

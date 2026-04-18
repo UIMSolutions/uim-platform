@@ -46,7 +46,7 @@ Clean/Hexagonal architecture with four layers:
 | GET | `/api/v1/monitoring` | Get provisioning monitoring data |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -59,13 +59,19 @@ dub test
 
 The service starts on port **8093** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `IPS_HOST` | `0.0.0.0` | Bind address |
 | `IPS_PORT` | `8093` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

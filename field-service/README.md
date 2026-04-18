@@ -88,7 +88,7 @@ source/
 | `FIELD_SERVICE_HOST` | `0.0.0.0` | Bind host |
 | `FIELD_SERVICE_PORT` | `8107` | Bind port |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run
@@ -119,6 +119,12 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.

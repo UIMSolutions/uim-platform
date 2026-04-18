@@ -55,7 +55,7 @@ Clean/Hexagonal architecture with four layers:
 | POST | `/api/v1/applications/disconnect/{id}` | Disconnect an application |
 | GET | `/api/v1/health` | Health check |
 
-## Running
+## Build and Run
 
 ```bash
 # Build and run locally
@@ -68,13 +68,19 @@ dub test
 
 The service starts on port **8095** by default.
 
-## Environment Variables
+## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `KYMA_HOST` | `0.0.0.0` | Bind address |
 | `KYMA_PORT` | `8095` | Listen port |
 
+## Testing
+
+```bash
+dub test
+```
+
 ## License
 
-Apache-2.0
+See the repository root [LICENSE](../LICENSE) file.
