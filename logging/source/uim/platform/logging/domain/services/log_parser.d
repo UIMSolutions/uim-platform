@@ -35,38 +35,38 @@ struct LogParser {
     return result;
   }
 
-  static LogLevel parseLevel(string levelStr) {
+  static LoggingLevel parseLevel(string levelStr) {
     switch (levelStr) {
     case "trace":
-      return LogLevel.trace;
+      return LoggingLevel.trace;
     case "debug":
-      return LogLevel.debug_;
+      return LoggingLevel.debug_;
     case "info":
-      return LogLevel.info;
+      return LoggingLevel.info;
     case "warn", "warning":
-      return LogLevel.warn;
+      return LoggingLevel.warn;
     case "error":
-      return LogLevel.error;
+      return LoggingLevel.error;
     case "fatal":
-      return LogLevel.fatal;
+      return LoggingLevel.fatal;
     default:
-      return LogLevel.info;
+      return LoggingLevel.info;
     }
   }
 
-  static string levelToString(LogLevel level) {
+  static string levelToString(LoggingLevel level) {
     final switch (level) {
-    case LogLevel.trace:
+    case LoggingLevel.trace:
       return "trace";
-    case LogLevel.debug_:
+    case LoggingLevel.debug_:
       return "debug";
-    case LogLevel.info:
+    case LoggingLevel.info:
       return "info";
-    case LogLevel.warn:
+    case LoggingLevel.warn:
       return "warn";
-    case LogLevel.error:
+    case LoggingLevel.error:
       return "error";
-    case LogLevel.fatal:
+    case LoggingLevel.fatal:
       return "fatal";
     }
   }

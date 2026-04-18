@@ -44,6 +44,10 @@ class ManageLogStreamsUseCase : UIMUseCase {
     return CommandResult(true, stream.id, "");
   }
 
+  CommandResult update(string id, UpdateLogStreamRequest req) {
+    return update(LogStreamId(id), req);
+  }
+
   CommandResult update(LogStreamId id, UpdateLogStreamRequest req) {
     auto stream = repo.findById(id);
     if (stream.id.isEmpty)
@@ -60,12 +64,32 @@ class ManageLogStreamsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  bool hasById(string id) {
+    return hasById(LogStreamId(id));
+  }
+
+  bool hasById(LogStreamId id) {
+    return repo.existsById(id).id.isEmpty;
+  }
+
+  LogStream getById(string id) {
+    return getById(LogStreamId(id));
+  }
+
   LogStream getById(LogStreamId id) {
     return repo.findById(id);
   }
 
+  LogStream[] list(string tenantId) {
+    return list(TenantId(tenantId));
+  }
+
   LogStream[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
+  }
+
+  CommandResult remove(string id) {
+    return remove(LogStreamId(id));
   }
 
   CommandResult remove(LogStreamId id) {

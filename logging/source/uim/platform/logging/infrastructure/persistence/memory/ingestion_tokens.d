@@ -20,12 +20,13 @@ class MemoryIngestionTokenRepository : IngestionTokenRepository {
     return (id in store) ? true : false;
   }
 
+
   IngestionToken findById(IngestionTokenId id) {
     return (existsById(id)) ? store[id] : IngestionToken.init;
   }
 
-  IngestionToken[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(t => t.tenantId == tenantId).array;
+  bool existsByHash(string tokenHash) {
+    return store.byValue.any!(t => t.tokenHash == tokenHash);
   }
 
   IngestionToken findByHash(string tokenHash) {
@@ -34,6 +35,12 @@ class MemoryIngestionTokenRepository : IngestionTokenRepository {
         return t;
     return IngestionToken.init;
   }
+
+  IngestionToken[] findByTenant(TenantId tenantId) {
+    return store.byValue.filter!(t => t.tenantId == tenantId).array;
+  }
+
+
 
   void save(IngestionToken t) {
     store[t.id] = t;

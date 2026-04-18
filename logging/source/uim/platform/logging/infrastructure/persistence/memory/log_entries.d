@@ -36,7 +36,7 @@ class MemoryLogEntryRepository : LogEntryRepository {
     return findByTenant(tenantId).filter!(e => e.streamId == streamId).array;
   }
 
-  LogEntry[] findByLevel(TenantId tenantId, LogLevel level) {
+  LogEntry[] findByLevel(TenantId tenantId, LoggingLevel level) {
     return findByTenant(tenantId).filter!(e => e.level == level).array;
   }
 

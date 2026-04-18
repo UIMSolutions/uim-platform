@@ -55,6 +55,10 @@ class ManageDashboardsUseCase : UIMUseCase {
     return CommandResult(true, d.id, "");
   }
 
+  CommandResult update(string id, UpdateDashboardRequest req) {
+    return update(DashboardId(id), req);
+  }
+
   CommandResult update(DashboardId id, UpdateDashboardRequest req) {
     auto d = repo.findById(id);
     if (d.id.isEmpty)
@@ -89,16 +93,40 @@ class ManageDashboardsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  bool hasById(string id) {
+    return repo.existsById(DashboardId(id));
+  }
+
+  bool hasById(DashboardId id) {
+    return repo.existsById(id);
+  }
+
+  Dashboard getById(string id) {
+    return getById(DashboardId(id));
+  }
+  
   Dashboard getById(DashboardId id) {
     return repo.findById(id);
+  }
+
+  Dashboard[] list(string tenantId) {
+    return list(TenantId(tenantId));
   }
 
   Dashboard[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  Dashboard getDefault(string tenantId) {
+    return getDefault(TenantId(tenantId));
+  }
+
   Dashboard getDefault(TenantId tenantId) {
     return repo.findDefault(tenantId);
+  }
+
+  CommandResult remove(string id) {
+    return remove(DashboardId(id));
   }
 
   CommandResult remove(DashboardId id) {

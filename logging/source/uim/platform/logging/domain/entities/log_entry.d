@@ -16,7 +16,7 @@ struct LogEntry {
   TenantId tenantId;
   LogStreamId streamId;
   long timestamp;
-  LogLevel level = LogLevel.info;
+  LoggingLevel level = LoggingLevel.info;
   string source;
   string message;
   string[string] structuredData;

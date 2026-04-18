@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.dto;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
 
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 // --- Log Ingestion ---
 
 struct IngestLogRequest {

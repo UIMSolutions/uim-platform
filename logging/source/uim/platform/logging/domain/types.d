@@ -118,6 +118,15 @@ struct PipelineId {
 
   mixin DomainId;
 }
+struct IngestionTokenId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 // struct  {
 //     string value;
 
@@ -136,17 +145,8 @@ struct PipelineId {
 
 //     mixin DomainId;
 // }
-// struct  {
-//     string value;
 
-//     this(string value) {
-//         this.value = value;
-//     }
-
-//     mixin DomainId;
-// }
-
-enum LogLevel {
+enum LoggingLevel {
   trace,
   debug_,
   info,

@@ -20,7 +20,7 @@ interface LogEntryRepository {
   LogEntry[] findByTenant(TenantId tenantId);
   
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId);
-  LogEntry[] findByLevel(TenantId tenantId, LogLevel level);
+  LogEntry[] findByLevel(TenantId tenantId, LoggingLevel level);
   LogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
   LogEntry[] search(TenantId tenantId, string query);
   LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId);

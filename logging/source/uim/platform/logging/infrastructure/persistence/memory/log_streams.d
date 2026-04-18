@@ -20,12 +20,8 @@ class MemoryLogStreamRepository : LogStreamRepository {
     return (id in store) ? true : false;
   }
 
-  LogStream findById(LogStreamId id) {
-    return (existsById(id)) ? store[id] : LogStream.init;
-  }
-
-  LogStream[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(s => s.tenantId == tenantId).array;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(s => s.name == name);
   }
 
   LogStream findByName(TenantId tenantId, string name) {
@@ -34,6 +30,16 @@ class MemoryLogStreamRepository : LogStreamRepository {
         return s;
     return LogStream.init;
   }
+
+  LogStream findById(LogStreamId id) {
+    return (existsById(id)) ? store[id] : LogStream.init;
+  }
+
+  LogStream[] findByTenant(TenantId tenantId) {
+    return store.byValue.filter!(s => s.tenantId == tenantId).array;
+  }
+
+
 
   void save(LogStream stream) {
     store[stream.id] = stream;
