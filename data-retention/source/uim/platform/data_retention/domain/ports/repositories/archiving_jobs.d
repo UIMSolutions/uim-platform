@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ArchivingJobRepository : ITenantRepository!(ArchivingJob, ArchivingJobId) {
+interface ArchivingJobRepository { // }: ITenantRepository!(ArchivingJob, ArchivingJobId) {
     bool existsById(ArchivingJobId id);
     ArchivingJob findById(ArchivingJobId id);
 

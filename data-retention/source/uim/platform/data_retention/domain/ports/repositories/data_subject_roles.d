@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRoleRepository : ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
+interface DataSubjectRoleRepository { //: ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
     bool existsById(DataSubjectRoleId id);
     DataSubjectRole findById(DataSubjectRoleId id);
 

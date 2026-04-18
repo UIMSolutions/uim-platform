@@ -64,6 +64,23 @@ enum ArchivingJobStatus {
     cancelled
 }
 
+ArchivingJobStatus toArchivingJobStatus(string name) {
+    switch (name) {
+    case "scheduled":
+        return ArchivingJobStatus.scheduled;
+    case "running":
+        return ArchivingJobStatus.running;
+    case "completed":
+        return ArchivingJobStatus.completed;
+    case "failed":
+        return ArchivingJobStatus.failed;
+    case "cancelled":
+        return ArchivingJobStatus.cancelled;
+    default:
+        return ArchivingJobStatus.scheduled;
+    }
+}
+
 /// Type of archiving operation
 enum ArchivingOperationType {
     archive,
@@ -71,11 +88,37 @@ enum ArchivingOperationType {
     archiveAndDestruct
 }
 
+    ArchivingOperationType toArchivingOperationType(string name) {
+        switch (name) {
+        case "archive":
+            return ArchivingOperationType.archive;
+        case "destruct":
+            return ArchivingOperationType.destruct;
+        case "archiveAndDestruct":
+            return ArchivingOperationType.archiveAndDestruct;
+        default:
+            return ArchivingOperationType.archive;
+        }
+    }
+
 /// Scope of an application group
 enum ApplicationGroupScope {
     global,
     regional,
     local
+}
+
+ApplicationGroupScope toApplicationGroupScope(string name) {
+    switch (name) {
+    case "global":
+        return ApplicationGroupScope.global;
+    case "regional":
+        return ApplicationGroupScope.regional;
+    case "local":
+        return ApplicationGroupScope.local;
+    default:
+        return ApplicationGroupScope.global;
+    }
 }
 
 /// Purpose check result

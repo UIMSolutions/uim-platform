@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
+interface DeletionRequestRepository { //: ITenantRepository!(DeletionRequest, DeletionRequestId) {
     bool existsById(DeletionRequestId id);
     DeletionRequest findById(DeletionRequestId id);
 

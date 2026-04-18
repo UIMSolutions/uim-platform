@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
+interface RetentionRuleRepository { //: ITenantRepository!(RetentionRule, RetentionRuleId) {
     bool existsById(RetentionRuleId id);
     RetentionRule findById(RetentionRuleId id);
 

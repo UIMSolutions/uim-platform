@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
+interface LegalGroundRepository { //: ITenantRepository!(LegalGround, LegalGroundId) {
     bool existsById(LegalGroundId id);
     LegalGround findById(LegalGroundId id);
 

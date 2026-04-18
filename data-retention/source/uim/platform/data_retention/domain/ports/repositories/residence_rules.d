@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ResidenceRuleRepository : ITenantRepository!(ResidenceRule, ResidenceRuleId) {
+interface ResidenceRuleRepository { //: ITenantRepository!(ResidenceRule, ResidenceRuleId) {
     bool existsById(ResidenceRuleId id);
     ResidenceRule findById(ResidenceRuleId id);
 

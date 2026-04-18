@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LegalEntityRepository : ITenantRepository!(LegalEntity, LegalEntityId) {
+interface LegalEntityRepository { //: ITenantRepository!(LegalEntity, LegalEntityId) {
     bool existsById(LegalEntityId id);
     LegalEntity findById(LegalEntityId id);
 

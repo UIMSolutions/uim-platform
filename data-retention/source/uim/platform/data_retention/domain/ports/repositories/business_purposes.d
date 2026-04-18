@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BusinessPurposeRepository : ITenantRepository!(BusinessPurpose, BusinessPurposeId) {
+interface BusinessPurposeRepository { //: ITenantRepository!(BusinessPurpose, BusinessPurposeId) {
     bool existsById(BusinessPurposeId id);
     BusinessPurpose findById(BusinessPurposeId id);
 
