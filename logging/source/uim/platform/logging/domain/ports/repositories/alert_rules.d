@@ -13,9 +13,12 @@ mixin(ShowModule!());
 
 @safe:
 interface AlertRuleRepository {
+  bool existsById(AlertRuleId id);
   AlertRule findById(AlertRuleId id);
+
   AlertRule[] findByTenant(TenantId tenantId);
   AlertRule[] findEnabled(TenantId tenantId);
+  
   void save(AlertRule rule);
   void update(AlertRule rule);
   void remove(AlertRuleId id);

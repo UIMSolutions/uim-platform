@@ -23,6 +23,14 @@ class ManageAlertsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
+  bool hasById(string id) {
+    return hasById(AlertId(id));
+  }
+
+  bool hasById(AlertId id) {
+    return !repo.existsById(id).id.isEmpty;
+  }
+
   Alert getById(string id) {
     return getById(AlertId(id));
   }

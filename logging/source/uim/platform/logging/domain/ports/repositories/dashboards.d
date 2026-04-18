@@ -13,7 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 interface DashboardRepository {
+  bool existsById(DashboardId id);
   Dashboard findById(DashboardId id);
+
   Dashboard[] findByTenant(TenantId tenantId);
   Dashboard findDefault(TenantId tenantId);
   void save(Dashboard d);

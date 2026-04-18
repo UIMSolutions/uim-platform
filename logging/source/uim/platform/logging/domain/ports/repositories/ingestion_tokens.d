@@ -13,9 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 interface IngestionTokenRepository {
+  bool existsById(IngestionTokenId id);
   IngestionToken findById(IngestionTokenId id);
-  IngestionToken[] findByTenant(TenantId tenantId);
+
+  bool existsByHash(string tokenHash);
   IngestionToken findByHash(string tokenHash);
+
+  IngestionToken[] findByTenant(TenantId tenantId);
+  
   void save(IngestionToken t);
   void update(IngestionToken t);
   void remove(IngestionTokenId id);

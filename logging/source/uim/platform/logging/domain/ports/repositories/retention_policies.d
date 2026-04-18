@@ -13,10 +13,13 @@ mixin(ShowModule!());
 
 @safe:
 interface RetentionPolicyRepository {
+  bool existsById(RetentionPolicyId id);
   RetentionPolicy findById(RetentionPolicyId id);
+
   RetentionPolicy[] findByTenant(TenantId tenantId);
   RetentionPolicy findDefault(TenantId tenantId);
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt);
+
   void save(RetentionPolicy p);
   void update(RetentionPolicy p);
   void remove(RetentionPolicyId id);

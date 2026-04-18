@@ -13,7 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 interface AlertRepository {
+  bool existsById(AlertId id);
   Alert findById(AlertId id);
+
   Alert[] findByTenant(TenantId tenantId);
   Alert[] findByState(TenantId tenantId, AlertState state);
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity);
