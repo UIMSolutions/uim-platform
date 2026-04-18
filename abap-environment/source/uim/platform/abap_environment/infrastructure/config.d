@@ -8,7 +8,7 @@ module uim.platform.abap_environment.infrastructure.config;
 /// Service configuration.
 struct AppConfig {
   string host = "0.0.0.0";
-  ushort port = 8090;
+  ushort port = 10000;
   string serviceName = "ABAP Environment Service";
 }
 

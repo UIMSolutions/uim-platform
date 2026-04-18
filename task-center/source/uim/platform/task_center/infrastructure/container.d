@@ -64,7 +64,7 @@ Container buildContainer(AppConfig config) {
     c.substitutionController = new SubstitutionRuleController(c.manageSubstitutionRulesUseCase);
     c.actionController = new TaskActionController(c.manageTaskActionsUseCase);
     c.filterController = new UserTaskFilterController(c.manageUserTaskFiltersUseCase);
-    c.healthController = new HealthController("Task Center Service");
+    c.healthController = new HealthController("task-center");
 
     return c;
 }
