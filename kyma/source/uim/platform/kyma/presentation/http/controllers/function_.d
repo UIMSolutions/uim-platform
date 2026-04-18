@@ -83,9 +83,9 @@ class FunctionController : PlatformController {
 
       ServerlessFunction[] items;
       if (nsId.length > 0)
-        items = uc.listByNamespace(nsId);
+        items = uc.listByNamespace(NamespaceId(nsId));
       else if (envId.length > 0)
-        items = uc.listByEnvironment(EnvironmentId(envId));
+        items = uc.listByEnvironment(envId);
       else
         items = [];
 

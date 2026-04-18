@@ -75,9 +75,9 @@ class ServiceInstanceController : PlatformController {
 
       ServiceInstance[] items;
       if (nsId.length > 0)
-        items = uc.listByNamespace(nsId);
+        items = uc.listByNamespace(NamespaceId(nsId));
       else if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = uc.listByEnvironment(KymaEnvironmentId(envId));
       else
         items = [];
 
@@ -98,7 +98,7 @@ class ServiceInstanceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto inst = uc.getServiceInstance(id);
+      auto inst = uc.getServiceInstance(ServiceInstanceId(id));
       if (inst.id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -121,7 +121,7 @@ class ServiceInstanceController : PlatformController {
       r.parametersJson = j.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.updateServiceInstance(id, r);
+      auto result = uc.updateServiceInstance(ServiceInstanceId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,7 +135,7 @@ class ServiceInstanceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteServiceInstance(id);
+      auto result = uc.deleteServiceInstance(ServiceInstanceId(id));
       if (result.success)
         res.writeBody("", 204);
       else

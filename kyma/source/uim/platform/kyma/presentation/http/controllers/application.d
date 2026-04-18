@@ -72,7 +72,7 @@ class ApplicationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      EnvironmentId envId = req.params.get("environmentId");
+      auto envId = req.params.get("environmentId");
       TenantId tenantId = req.getTenantId;
 
       Application[] items;
@@ -85,9 +85,10 @@ class ApplicationController : PlatformController {
       foreach (app; items)
         arr ~= serializeApp(app);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -97,11 +98,12 @@ class ApplicationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      auto app = uc.getApplication(id);
-      if (app.id.isEmpty) {
+      if (!uc.hasApplication(ApplicationId(id))) {
         writeError(res, 404, "Application not found");
         return;
       }
+
+      auto app = uc.getApplication(ApplicationId(id));
       res.writeJsonBody(serializeApp(app), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -117,7 +119,7 @@ class ApplicationController : PlatformController {
       r.connectorUrl = j.getString("connectorUrl");
       r.boundNamespaces = getStringArray(j, "boundNamespaces");
       r.labels = jsonStrMap(j, "labels");
-      r.apis = toApis;
+      r.apis = j.toApis;
       r.events = parseEvents(j);
 
       auto result = uc.updateApplication(id, r);
@@ -133,7 +135,7 @@ class ApplicationController : PlatformController {
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      auto result = uc.connectApplication(id);
+      auto result = uc.connectApplication(ApplicationId(id));
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

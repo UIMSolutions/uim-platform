@@ -88,12 +88,32 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  bool hasNamespace(string namespaceId) {
+    return hasNamespace(NamespaceId(namespaceId));
+  }
+
+  bool hasNamespace(NamespaceId namespaceId) {
+    return namespaceRepository.existsById(namespaceId);
+  }
+
+  Namespace getNamespace(string namespaceId) {
+    return getNamespace(NamespaceId(namespaceId));
+  }
+
   Namespace getNamespace(NamespaceId namespaceId) {
     return namespaceRepository.findById(namespaceId);
   }
 
   Namespace[] listByEnvironment(KymaEnvironmentId envId) {
     return namespaceRepository.findByEnvironment(envId);
+  }
+
+  Namespace[] listByEnvironment(string envId) {
+    return listByEnvironment(KymaEnvironmentId(envId));
+  } 
+
+  CommandResult deleteNamespace(string namespaceId) {
+    return deleteNamespace(NamespaceId(namespaceId));
   }
 
   CommandResult deleteNamespace(NamespaceId namespaceId) {

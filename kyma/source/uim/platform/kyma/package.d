@@ -10,6 +10,7 @@ public {
 
   import uim.platform.kyma.application;
   import uim.platform.kyma.domain;
+  import uim.platform.kyma.helpers;
   import uim.platform.kyma.infrastructure;
   import uim.platform.kyma.presentation;
 }

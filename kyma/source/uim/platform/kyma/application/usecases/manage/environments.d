@@ -84,6 +84,14 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, env.id.toString, "");
   }
 
+  bool hasEnvironment(string id) {
+    return hasEnvironment(KymaEnvironmentId(id));
+  }
+
+  bool hasEnvironment(KymaEnvironmentId id) {
+    return repo.existsById(id);
+  }
+
   KymaEnvironment getEnvironment(string id) {
     return getEnvironment(KymaEnvironmentId(id));
   }

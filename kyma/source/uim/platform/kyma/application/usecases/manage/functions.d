@@ -117,6 +117,14 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, fn.id.toString, "");
   }
 
+  bool hasFunction(string functionId) {
+    return hasFunction(ServerlessFunctionId(functionId));
+  }
+  
+  bool hasFunction(ServerlessFunctionId functionId) {
+    return functionRepository.existsById(functionId);
+  }
+
   ServerlessFunction getFunction(string functionId) {
     return getFunction(ServerlessFunctionId(functionId));
   }

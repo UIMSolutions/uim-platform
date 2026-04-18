@@ -73,7 +73,7 @@ class NamespaceController : PlatformController {
       auto envIdParam = req.params.get("environmentId");
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
-      auto items = uc.listByEnvironment(envId);
+      auto items = uc.listByEnvironment(KymaEnvironmentId(envId));
       auto arr = Json.emptyArray;
       foreach (ns; items)
         arr ~= serializeNs(ns);
@@ -90,7 +90,7 @@ class NamespaceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto ns = uc.getNamespace(id);
+      auto ns = uc.getNamespace(NamespaceId(id));
       if (ns.id.isEmpty) {
         writeError(res, 404, "Namespace not found");
         return;
@@ -117,7 +117,7 @@ class NamespaceController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.annotations = jsonStrMap(j, "annotations");
 
-      auto result = uc.updateNamespace(id, r);
+      auto result = uc.updateNamespace(NamespaceId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -130,7 +130,7 @@ class NamespaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteNamespace(id);
+      auto result = uc.deleteNamespace(NamespaceId(id));
       if (result.success)
         res.writeBody("", 204);
       else

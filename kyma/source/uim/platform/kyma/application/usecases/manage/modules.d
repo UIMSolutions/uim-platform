@@ -39,7 +39,7 @@ class ManageModulesUseCase : UIMUseCase {
 
     KymaModule mod;
     with (mod) {
-      moduleId = existing.id.value.length > 0 ? existing.id : randomUUID().toString();
+      id = existing.id.value.length > 0 ? existing.id : randomUUID().toString();
       environmentId = request.environmentId;
       tenantId = request.tenantId;
       name = request.name;
@@ -68,7 +68,11 @@ class ManageModulesUseCase : UIMUseCase {
       moduleRepository.update(mod);
     else
       moduleRepository.save(mod);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, mod.id.toString, "");
+  }
+
+  CommandResult disableModule(string moduleId) {
+    return disableModule(KymaModuleId(moduleId));
   }
 
   CommandResult disableModule(KymaModuleId moduleId) {
@@ -94,6 +98,10 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, moduleId.toString, "");
   }
 
+  CommandResult updateModule(string moduleId, UpdateModuleRequest request) {
+    return updateModule(KymaModuleId(moduleId), request);
+  }
+
   CommandResult updateModule(KymaModuleId moduleId, UpdateModuleRequest request) {
     if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
@@ -113,12 +121,32 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, moduleId.toString, "");
   }
 
+  bool hasModule(string moduleId) {
+    return hasModule(KymaModuleId(moduleId));
+  }
+
+  bool hasModule(KymaModuleId moduleId) {
+    return moduleRepository.existsById(moduleId);
+  }
+
+  KymaModule getModule(string moduleId) {
+    return getModule(KymaModuleId(moduleId));
+  }
+
   KymaModule getModule(KymaModuleId moduleId) {
     return moduleRepository.findById(moduleId);
   }
 
+  KymaModule[] listByEnvironment(string environmentId) {
+    return listByEnvironment(KymaEnvironmentId(environmentId));
+  }
+
   KymaModule[] listByEnvironment(KymaEnvironmentId environmentId) {
     return moduleRepository.findByEnvironment(environmentId);
+  }
+
+  CommandResult deleteModule(string moduleId) {
+    return deleteModule(KymaModuleId(moduleId));
   }
 
   CommandResult deleteModule(KymaModuleId moduleId) {

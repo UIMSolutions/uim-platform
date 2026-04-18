@@ -74,9 +74,9 @@ class ServiceBindingController : PlatformController {
 
       ServiceBinding[] items;
       if (instId.length > 0)
-        items = uc.listByServiceInstance(instId);
+        items = uc.listByServiceInstance(ServiceInstanceId(instId));
       else if (nsId.length > 0)
-        items = uc.listByNamespace(nsId);
+        items = uc.listByNamespace(NamespaceId(nsId));
       else
         items = [];
 
@@ -97,7 +97,7 @@ class ServiceBindingController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto b = uc.getBinding(id);
+      auto b = uc.getBinding(ServiceBindingId(id));
       if (b.id.isEmpty) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -119,7 +119,7 @@ class ServiceBindingController : PlatformController {
       r.parametersJson = j.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.updateBinding(id, r);
+      auto result = uc.updateBinding(ServiceBindingId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -133,7 +133,7 @@ class ServiceBindingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteBinding(id);
+      auto result = uc.deleteBinding(ServiceBindingId(id));
       if (result.success)
         res.writeBody("", 204);
       else

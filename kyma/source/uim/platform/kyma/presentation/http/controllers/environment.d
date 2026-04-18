@@ -77,9 +77,9 @@ class EnvironmentController : PlatformController {
 
       KymaEnvironment[] envs;
       if (subaccountId.length > 0)
-        envs = uc.listBySubaccount(tenantId, subaccountId);
+        envs = uc.listBySubaccount(TenantId(tenantId), SubaccountId(subaccountId));
       else
-        envs = uc.listByTenant(tenantId);
+        envs = uc.listByTenant(TenantId(tenantId));
 
       auto arr = Json.emptyArray;
       foreach (e; envs)
