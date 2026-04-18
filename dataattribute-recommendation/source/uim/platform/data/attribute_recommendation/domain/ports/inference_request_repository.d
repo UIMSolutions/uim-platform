@@ -1,0 +1,19 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+
+import uim.platform.data.attribute_recommendation.domain.types;
+import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
+
+interface InferenceRequestRepository {
+  InferenceRequest[] findByTenant(TenantId tenantId);
+  InferenceRequest* findById(InferenceRequestId tenantId, id tenantId);
+  InferenceRequest[] findByDeployment(DeploymentId deploymenttenantId, id tenantId);
+  InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status);
+  void save(InferenceRequest request);
+  void update(InferenceRequest request);
+  void remove(InferenceRequestId tenantId, id tenantId);
+}
