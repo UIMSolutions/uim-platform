@@ -19,6 +19,9 @@ class MemoryPipelineRepository : PipelineRepository {
   size_t countAll() {
     return store.length;
   }
+  Pipeline[] findAll() {
+    return store.byValue.array;
+  }
 
   bool existsById(PipelineId id) {
     return (id in store) ? true : false;
