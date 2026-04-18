@@ -12,13 +12,14 @@ interface DeploymentRecordRepository {
   bool existsById(DeploymentRecordId id);
   DeploymentRecord findById(DeploymentRecordId id);
 
+  size_t countByTenant(TenantId tenantId);
+  DeploymentRecord[] findByTenant(TenantId tenantId);
+
   DeploymentRecord[] findByApp(HtmlAppId appId);
   DeploymentRecord[] findByVersion(AppVersionId versionId);
-  DeploymentRecord[] findByTenant(TenantId tenantId);
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status);
 
   void save(DeploymentRecord record);
   void update(DeploymentRecord record);
   void remove(DeploymentRecordId id);
-  size_t countByTenant(TenantId tenantId);
 }

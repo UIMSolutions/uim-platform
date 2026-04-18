@@ -15,12 +15,13 @@ interface AppRouteRepository {
   bool existsByPathPrefix(TenantId tenantId, string pathPrefix);
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix);
 
+  size_t countByApp(HtmlAppId appId);
   AppRoute[] findByApp(HtmlAppId appId);
+  
+  size_t countByTenant(TenantId tenantId);
   AppRoute[] findByTenant(TenantId tenantId);
 
   void save(AppRoute route);
   void update(AppRoute route);
   void remove(AppRouteId id);
-  size_t countByApp(HtmlAppId appId);
-  size_t countByTenant(TenantId tenantId);
 }

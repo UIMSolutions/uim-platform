@@ -15,15 +15,17 @@ interface AppFileRepository {
   bool existsByPath(AppVersionId versionId, string filePath);
   AppFile findByPath(AppVersionId versionId, string filePath);
 
+  size_t countByVersion(AppVersionId versionId);
   AppFile[] findByVersion(AppVersionId versionId);
-  AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
+
+  size_t countByTenant(TenantId tenantId);
   AppFile[] findByTenant(TenantId tenantId);
+  
+  AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
   
   void save(AppFile file);
   void update(AppFile file);
   void remove(AppFileId id);
   void removeByVersion(AppVersionId versionId);
-  size_t countByVersion(AppVersionId versionId);
   long totalSizeByVersion(AppVersionId versionId);
-  size_t countByTenant(TenantId tenantId);
 }

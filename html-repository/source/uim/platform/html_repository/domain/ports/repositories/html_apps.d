@@ -15,13 +15,15 @@ interface HtmlAppRepository {
   bool existsByName(TenantId tenantId, string name);
   HtmlApp findByName(TenantId tenantId, string name);
   
+  size_t countByTenant(TenantId tenantId);
   HtmlApp[] findByTenant(TenantId tenantId);
-  HtmlApp[] findBySpace(SpaceId spaceId);
+
+  size_t countByServiceInstance(ServiceInstanceId instanceId);
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId);
+  
+  HtmlApp[] findBySpace(SpaceId spaceId);
   HtmlApp[] findPublic(TenantId tenantId);
   void save(HtmlApp app);
   void update(HtmlApp app);
   void remove(HtmlAppId id);
-  size_t countByTenant(TenantId tenantId);
-  size_t countByServiceInstance(ServiceInstanceId instanceId);
 }

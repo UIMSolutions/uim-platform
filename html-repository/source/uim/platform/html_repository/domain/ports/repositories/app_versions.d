@@ -15,13 +15,15 @@ interface AppVersionRepository {
   bool existsLatest(HtmlAppId appId);
   AppVersion findLatest(HtmlAppId appId);
   
+  size_t countByApp(HtmlAppId appId);
   AppVersion[] findByApp(HtmlAppId appId);
-  AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status);
+
+  size_t countByTenant(TenantId tenantId);
   AppVersion[] findByTenant(TenantId tenantId);
   
-  void save(AppVersion ver);
-  void update(AppVersion ver);
+  AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status);
+  
+  void save(AppVersion appVersion);
+  void update(AppVersion appVersion);
   void remove(AppVersionId id);
-  size_t countByApp(HtmlAppId appId);
-  size_t countByTenant(TenantId tenantId);
 }

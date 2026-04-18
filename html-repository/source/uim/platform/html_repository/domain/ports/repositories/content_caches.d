@@ -15,7 +15,9 @@ interface ContentCacheRepository {
   bool existsByFileId(AppFileId fileId);
   ContentCache findByFileId(AppFileId fileId);
   
+  size_t countByTenant(TenantId tenantId);
   ContentCache[] findByTenant(TenantId tenantId);
+
   ContentCache[] findByStatus(CacheStatus status);
   ContentCache[] findExpired(long currentTime);
   
@@ -23,6 +25,5 @@ interface ContentCacheRepository {
   void update(ContentCache cache);
   void remove(ContentCacheId id);
   void removeExpired(long currentTime);
-  size_t countByTenant(TenantId tenantId);
   long totalSizeByTenant(TenantId tenantId);
 }
