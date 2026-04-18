@@ -56,7 +56,7 @@ class IngestTracesUseCase : UIMUseCase {
       return CommandResult(false, "", "Operation name is required");
 
     spanRepo.save(s);
-    return CommandResult(true, s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   CommandResult ingestSpanBatch(IngestSpanBatchRequest req) {

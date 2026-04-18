@@ -60,7 +60,7 @@ class IngestLogsUseCase : UIMUseCase {
     }
 
     logRepo.save(entry);
-    return CommandResult(true, entry.id, "");
+    return CommandResult(true, entry.id.value, "");
   }
 
   CommandResult ingestBatch(IngestLogBatchRequest req) {

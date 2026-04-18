@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 
 class AlertRuleController : PlatformController {
-  private ManageAlertRulesUseCase uc;
+  private ManageAlertRulesUseCase usecase;
 
-  this(ManageAlertRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageAlertRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class AlertRuleController : PlatformController {
       r.channelIds = j.getArray("channelIds").map!(v => v.to!string).array;
       r.createdBy = j.getString("createdBy");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -66,7 +66,7 @@ class AlertRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto rules = uc.list(tenantId);
+      auto rules = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (r; rules) {
@@ -92,12 +92,12 @@ class AlertRuleController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto r = uc.getById(id);
-      if (r.id.isEmpty) {
+      if (!usecase.hasById(id)) {
         writeError(res, 404, "Alert rule not found");
         return;
       }
 
+      auto r = usecase.getById(id);
       auto response = Json.emptyObject
         .set("id", r.id)
         .set("name", r.name)
@@ -132,7 +132,7 @@ class AlertRuleController : PlatformController {
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = getStringArray(j, "channelIds");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -150,7 +150,7 @@ class AlertRuleController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.remove(id);
+      usecase.remove(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

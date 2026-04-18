@@ -28,7 +28,7 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   bool hasById(AlertId id) {
-    return !repo.existsById(id).id.isEmpty;
+    return repo.existsById(id);
   }
 
   Alert getById(string id) {
@@ -73,7 +73,7 @@ class ManageAlertsUseCase : UIMUseCase {
     a.acknowledgedAt = clockSeconds();
 
     repo.update(a);
-    return CommandResult(true, req.alertId, "");
+    return CommandResult(true, req.alertId.value, "");
   }
 
   CommandResult resolve(ResolveAlertRequest req) {
@@ -86,7 +86,7 @@ class ManageAlertsUseCase : UIMUseCase {
     a.resolvedAt = clockSeconds();
 
     repo.update(a);
-    return CommandResult(true, req.alertId, "");
+    return CommandResult(true, req.alertId.value, "");
   }
 
   CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,

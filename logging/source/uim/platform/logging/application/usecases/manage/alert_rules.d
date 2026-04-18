@@ -49,7 +49,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     rule.createdAt = clockSeconds();
 
     repo.save(rule);
-    return CommandResult(true, rule.id, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult update(string id, UpdateAlertRuleRequest req) {
