@@ -130,6 +130,14 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  bool hasApiRule(string id) {
+    return hasApiRule(ApiRuleId(id));
+  }
+
+  bool hasApiRule(ApiRuleId id) {
+    return ruleRepository.existsById(id);
+  }
+
   ApiRule getApiRule(string id) {
     return getApiRule(ApiRuleId(id));
   }

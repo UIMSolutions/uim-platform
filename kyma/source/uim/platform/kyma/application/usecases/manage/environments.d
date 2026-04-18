@@ -57,6 +57,10 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, env.id.toString, "");
   }
 
+  CommandResult updateEnvironment(string id, UpdateEnvironmentRequest req) {
+    return updateEnvironment(KymaEnvironmentId(id), req);
+  }
+
   CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req) {
     auto env = repo.findById(id);
     if (env.id.isEmpty)

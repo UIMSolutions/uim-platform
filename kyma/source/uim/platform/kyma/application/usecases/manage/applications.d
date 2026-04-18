@@ -160,6 +160,14 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, appId.toString(), "");
   }
 
+  bool hasApplication(string appId) {
+    return hasApplication(ApplicationId(appId));
+  }
+
+  bool hasApplication(ApplicationId appId) {
+    return appRepository.existsById(appId);
+  }
+
   Application getApplication(string appId) {
     return getApplication(ApplicationId(appId));
   }
@@ -168,8 +176,16 @@ class ManageApplicationsUseCase : UIMUseCase {
     return appRepository.findById(appId);
   }
 
+  Application[] listByEnvironment(string envId) {
+    return listByEnvironment(KymaEnvironmentId(envId));
+  }
+
   Application[] listByEnvironment(KymaEnvironmentId envId) {
     return appRepository.findByEnvironment(envId);
+  }
+
+  Application[] listByTenant(string tenantId) {
+    return listByTenant(TenantId(tenantId));
   }
 
   Application[] listByTenant(TenantId tenantId) {

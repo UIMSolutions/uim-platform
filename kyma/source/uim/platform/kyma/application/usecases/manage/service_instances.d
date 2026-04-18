@@ -77,6 +77,14 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  bool hasServiceInstance(string id) {
+    return hasServiceInstance(ServiceInstanceId(id));
+  }
+
+  bool hasServiceInstance(ServiceInstanceId id) {
+    return repo.existsById(id);
+  }
+
   ServiceInstance getServiceInstance(string id) {
     return getServiceInstance(ServiceInstanceId(id));
   }
@@ -85,12 +93,24 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     return repo.findById(id);
   }
 
+  ServiceInstance[] listByNamespace(string nsId) {
+    return listByNamespace(NamespaceId(nsId));
+  }
+
   ServiceInstance[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
+  ServiceInstance[] listByEnvironment(string envId) {
+    return listByEnvironment(KymaEnvironmentId(envId));
+  }
+
   ServiceInstance[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
+  }
+
+  CommandResult deleteServiceInstance(string id) {
+    return deleteServiceInstance(ServiceInstanceId(id));
   }
 
   CommandResult deleteServiceInstance(ServiceInstanceId id) {

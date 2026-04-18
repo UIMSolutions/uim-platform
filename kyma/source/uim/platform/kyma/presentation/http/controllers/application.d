@@ -98,12 +98,12 @@ class ApplicationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      if (!uc.hasApplication(ApplicationId(id))) {
+      if (!uc.hasApplication(id)) {
         writeError(res, 404, "Application not found");
         return;
       }
 
-      auto app = uc.getApplication(ApplicationId(id));
+      auto app = uc.getApplication(id);
       res.writeJsonBody(serializeApp(app), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -135,7 +135,7 @@ class ApplicationController : PlatformController {
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      auto result = uc.connectApplication(ApplicationId(id));
+      auto result = uc.connectApplication(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -171,10 +171,14 @@ class ApplicationController : PlatformController {
 
   private AppEventEntryDto[] parseEvents(Json j) {
     AppEventEntryDto[] entries;
-    auto v = "events" in j;
-    if (v is null || (*v).type != Json.Type.array)
+    if("events" !in j)
       return entries;
-    foreach (item; *v) {
+
+    auto v = j["events"];
+    if (!v.isArray)
+      return entries;
+
+    foreach (item; v.toArray) {
       AppEventEntryDto entry;
       entry.name = item.getString("name");
       entry.description = item.getString("description");

@@ -71,12 +71,32 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  ServiceBinding getBinding(ServiceBindingId id) {
-    return repo.findById(id);
+    bool hasBinding(string id) {
+      return hasBinding(ServiceBindingId(id));
+    }
+
+    bool hasBinding(ServiceBindingId id) {
+      return repo.existsById(id);
+    }
+
+    ServiceBinding getBinding(string id) {
+      return getBinding(ServiceBindingId(id));
+    }
+
+    ServiceBinding getBinding(ServiceBindingId id) {
+      return repo.findById(id);
+    }
+
+  ServiceBinding[] listByNamespace(string nsId) {
+    return listByNamespace(NamespaceId(nsId));
   }
 
   ServiceBinding[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
+  }
+
+  ServiceBinding[] listByServiceInstance(string instId) {
+    return listByServiceInstance(ServiceInstanceId(instId));
   }
 
   ServiceBinding[] listByServiceInstance(ServiceInstanceId instId) {

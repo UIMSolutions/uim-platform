@@ -39,7 +39,7 @@ class ManageModulesUseCase : UIMUseCase {
 
     KymaModule mod;
     with (mod) {
-      id = existing.id.value.length > 0 ? existing.id : randomUUID().toString();
+      id = existing.id.value.length > 0 ? existing.id.value : randomUUID().toString();
       environmentId = request.environmentId;
       tenantId = request.tenantId;
       name = request.name;

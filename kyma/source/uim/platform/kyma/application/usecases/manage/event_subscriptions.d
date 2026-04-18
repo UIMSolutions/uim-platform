@@ -121,6 +121,14 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, subscriptionId.toString(), "");
   }
 
+  bool hasSubscription(string subscriptionId) {
+    return hasSubscription(EventSubscriptionId(subscriptionId));
+  }
+
+  bool hasSubscription(EventSubscriptionId subscriptionId) {
+    return subscriptionRepository.existsById(subscriptionId);
+  }
+
   EventSubscription getSubscription(string subscriptionId) {
     return getSubscription(EventSubscriptionId(subscriptionId));
   }
