@@ -1,4 +1,4 @@
-name: data-attribute-recommendation
+name: dataattribute-recommendation
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
 
     - name: 'Build & Test'
       run: |
-        cd ./data-attribute-recommendation/
+        cd ./dataattribute-recommendation/
         dub upgrade
         dub build --compiler=$DC
         dub test --compiler=$DC

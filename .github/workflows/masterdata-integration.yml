@@ -24,7 +24,7 @@ jobs:
 
     - name: 'Build & Test'
       run: |
-        cd ./master-data-integration/
+        cd ./masterdata-integration/
         # Build the project, with its main file included, without unittests
         dub upgrade 
         dub build --compiler=$DC
