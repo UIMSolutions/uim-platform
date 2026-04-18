@@ -49,7 +49,11 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
     }
 
     repo.save(p);
-    return CommandResult(true, p.id, "");
+    return CommandResult(true, p.id.value, "");
+  }
+
+  CommandResult update(string id, UpdateRetentionPolicyRequest req) {
+    return update(RetentionPolicyId(id), req);
   }
 
   CommandResult update(RetentionPolicyId id, UpdateRetentionPolicyRequest req) {
@@ -68,20 +72,32 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
     p.updatedAt = clockSeconds();
 
     repo.update(p);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
+  }
+
+  RetentionPolicy getById(string id) {
+    return getById(RetentionPolicyId(id));
   }
 
   RetentionPolicy getById(RetentionPolicyId id) {
     return repo.findById(id);
   }
 
+  RetentionPolicy[] list(string tenantId) {
+    return list(TenantId(tenantId));
+  }
+
   RetentionPolicy[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  CommandResult remove(string id) {
+    return remove(RetentionPolicyId(id));
+  }
+
   CommandResult remove(RetentionPolicyId id) {
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static DataType parseDataType(string s) {

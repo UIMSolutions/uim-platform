@@ -106,7 +106,7 @@ class ManageAlertsUseCase : UIMUseCase {
     a.triggeredAt = clockSeconds();
 
     repo.save(a);
-    return CommandResult(true, a.id, "");
+    return CommandResult(true, a.id.value, "");
   }
 
   CommandResult remove(string id) {
@@ -115,7 +115,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult remove(AlertId id) {
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t countOpen(TenantId tenantId) {

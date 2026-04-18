@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.config;
 
 // import std.conv : to;
-// import std.process : environment;
+import std.process : environment;
 import uim.platform.logging;
 
 mixin(ShowModule!());

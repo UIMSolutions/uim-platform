@@ -52,11 +52,11 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult update(string id, UpdateAlertRuleRequest req) {
-    return update(AlertRuleId(id), req);
+  CommandResult updateRule(string id, UpdateAlertRuleRequest req) {
+    return updateRule(AlertRuleId(id), req);
   }
 
-  CommandResult update(AlertRuleId id, UpdateAlertRuleRequest req) {
+  CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Alert rule not found");
 

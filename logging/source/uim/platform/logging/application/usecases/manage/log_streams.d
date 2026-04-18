@@ -34,14 +34,14 @@ class ManageLogStreamsUseCase : UIMUseCase {
     stream.tenantId = req.tenantId;
     stream.name = req.name;
     stream.description = req.description;
-    stream.sourceType = parseSourceType(req.sourceType);
+    stream.sourceType = toLogSourceType(req.sourceType);
     stream.retentionPolicyId = req.retentionPolicyId;
     stream.isActive = true;
     stream.createdBy = req.createdBy;
     stream.createdAt = clockSeconds();
 
     repo.save(stream);
-    return CommandResult(true, stream.id, "");
+    return CommandResult(true, stream.id.value, "");
   }
 
   CommandResult update(string id, UpdateLogStreamRequest req) {
@@ -61,7 +61,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
     stream.updatedAt = clockSeconds();
 
     repo.update(stream);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool hasById(string id) {
@@ -69,7 +69,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
   }
 
   bool hasById(LogStreamId id) {
-    return repo.existsById(id).id.isEmpty;
+    return repo.existsById(id);
   }
 
   LogStream getById(string id) {
@@ -94,25 +94,8 @@ class ManageLogStreamsUseCase : UIMUseCase {
 
   CommandResult remove(LogStreamId id) {
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
-  private static LogSourceType parseSourceType(string s) {
-    switch (s) {
-    case "application":
-      return LogSourceType.application;
-    case "request":
-      return LogSourceType.request;
-    case "system":
-      return LogSourceType.system;
-    case "cloudFoundry":
-      return LogSourceType.cloudFoundry;
-    case "kyma":
-      return LogSourceType.kyma;
-    case "kubernetes":
-      return LogSourceType.kubernetes;
-    default:
-      return LogSourceType.custom;
-    }
-  }
+
 }

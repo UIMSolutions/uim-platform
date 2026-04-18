@@ -7,6 +7,7 @@ module uim.platform.logging.domain;
 
 public {
   import uim.platform.logging.domain.types;
+  import uim.platform.logging.domain.enumerations;
   import uim.platform.logging.domain.entities;
   import uim.platform.logging.domain.ports;
   import uim.platform.logging.domain.services;

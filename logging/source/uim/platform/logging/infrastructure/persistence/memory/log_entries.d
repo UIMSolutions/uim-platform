@@ -25,7 +25,12 @@ class MemoryLogEntryRepository : LogEntryRepository {
   }
 
   LogEntry findById(LogEntryId id) {
-    return (existsById(id)) ? store.find!(e => e.id == id) : LogEntry.init;
+    foreach(entry; store) {
+      if (entry.id == id) {
+        return entry;
+      }
+    }
+    return LogEntry.init;
   }
 
   LogEntry[] findByTenant(TenantId tenantId) {

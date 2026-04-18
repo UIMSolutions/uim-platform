@@ -47,7 +47,7 @@ class AlertRuleController : PlatformController {
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
-      r.channelIds = j.getArray("channelIds").map!(v => v.to!string).array;
+      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
       r.createdBy = j.getString("createdBy");
 
       auto result = usecase.create(r);
@@ -66,7 +66,7 @@ class AlertRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto rules = usecase.list(tenantId);
+      auto rules = usecase.listRules(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (r; rules) {
@@ -92,12 +92,12 @@ class AlertRuleController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      if (!usecase.hasById(id)) {
+      if (!usecase.hasRule(id)) {
         writeError(res, 404, "Alert rule not found");
         return;
       }
 
-      auto r = usecase.getById(id);
+      auto r = usecase.getRule(id);
       auto response = Json.emptyObject
         .set("id", r.id)
         .set("name", r.name)
@@ -130,9 +130,9 @@ class AlertRuleController : PlatformController {
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = getStringArray(j, "channelIds");
+      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -150,7 +150,7 @@ class AlertRuleController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      usecase.remove(id);
+      usecase.removeRule(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

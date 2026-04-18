@@ -34,7 +34,7 @@ class ManagePipelinesUseCase : UIMUseCase {
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;
-    p.sourceType = parseSourceType(req.sourceType);
+    p.sourceType = toLogSourceType(req.sourceType);
     p.format = parseFormat(req.format);
     p.targetStreamId = req.targetStreamId;
     p.isActive = true;
@@ -51,7 +51,11 @@ class ManagePipelinesUseCase : UIMUseCase {
     }
 
     repo.save(p);
-    return CommandResult(true, p.id, "");
+    return CommandResult(true, p.id.value, "");
+  }
+
+  CommandResult update(string id, UpdatePipelineRequest req) {
+    return update(PipelineId(id), req);
   }
 
   CommandResult update(PipelineId id, UpdatePipelineRequest req) {
@@ -63,7 +67,7 @@ class ManagePipelinesUseCase : UIMUseCase {
       p.description = req.description;
     if (req.format.length > 0)
       p.format = parseFormat(req.format);
-    if (req.targetStreamId.length > 0)
+    if (req.targetStreamId.value.length > 0)
       p.targetStreamId = req.targetStreamId;
     p.isActive = req.isActive;
     p.updatedAt = clockSeconds();
@@ -81,27 +85,51 @@ class ManagePipelinesUseCase : UIMUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
+  }
+
+  bool hasById(string id) {
+    return hasById(PipelineId(id));
+  }
+
+  bool hasById(PipelineId id) {
+    return repo.existsById(id);
+  }
+
+  Pipeline getById(string id) {
+    return getById(PipelineId(id));
   }
 
   Pipeline getById(PipelineId id) {
     return repo.findById(id);
   }
 
+  Pipeline[] list(string tenantId) {
+    return list(TenantId(tenantId));
+  }
+
   Pipeline[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
+  }
+
+  Pipeline[] listActive(string tenantId) {
+    return listActive(TenantId(tenantId));
   }
 
   Pipeline[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
-  CommandResult remove(PipelineId id) {
-    repo.remove(id);
-    return CommandResult(true, id.toString, "");
+  CommandResult remove(string id) {
+    return remove(PipelineId(id));
   }
 
-  private static PipelineSourceType parseSourceType(string s) {
+  CommandResult remove(PipelineId id) {
+    repo.remove(id);
+    return CommandResult(true, id.value, "");
+  }
+
+  private static PipelineSourceType toLogSourceType(string s) {
     switch (s) {
     case "cloudFoundry":
       return PipelineSourceType.cloudFoundry;

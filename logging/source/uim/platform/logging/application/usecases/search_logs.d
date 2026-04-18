@@ -30,13 +30,13 @@ class SearchLogsUseCase : UIMUseCase {
     if (req.correlationId.length > 0)
       return logRepo.findByCorrelation(req.tenantId, req.correlationId);
 
-    if (req.streamId.length > 0)
+    if (req.streamId.value.length > 0)
       return logRepo.findByStream(req.tenantId, req.streamId);
 
     if (req.level.length > 0) {
       auto level = LogParser.parseLevel(req.level);
       return logRepo.findByLevel(req.tenantId, level);
-    }
+    } 
 
     if (req.startTime > 0 && req.endTime > 0)
       return logRepo.findByTimeRange(req.tenantId, req.startTime, req.endTime);

@@ -47,7 +47,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     ch.createdAt = clockSeconds();
 
     repo.save(ch);
-    return CommandResult(true, ch.id, "");
+    return CommandResult(true, ch.id.value, "");
   }
 
   CommandResult update(string id, UpdateNotificationChannelRequest req) {
