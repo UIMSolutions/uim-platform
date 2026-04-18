@@ -88,35 +88,43 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  AlertRule getById(string id) {
-    return getById(AlertRuleId(id));
+  bool hasRule(string id) {
+    return hasRule(AlertRuleId(id));
   }
 
-  AlertRule getById(AlertRuleId id) {
+  bool hasRule(AlertRuleId id) {
+    return repo.existsById(id);
+  }
+
+  AlertRule getRule(AlertRuleId id) {
     return repo.findById(id);
   }
 
-  AlertRule[] list(string tenantId) {
-    return list(TenantId(tenantId));
+  AlertRule getRule(string id) {
+    return getRule(AlertRuleId(id));
   }
 
-  AlertRule[] list(TenantId tenantId) {
+  AlertRule[] listRules(string tenantId) {
+    return listRules(TenantId(tenantId));
+  }
+
+  AlertRule[] listRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  AlertRule[] listEnabled(string tenantId) {
-    return listEnabled(TenantId(tenantId));
+  AlertRule[] listEnabledRules(string tenantId) {
+    return listEnabledRules(TenantId(tenantId));
   }
 
-  AlertRule[] listEnabled(TenantId tenantId) {
+  AlertRule[] listEnabledRules(TenantId tenantId) {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult remove(string id) {
-    return remove(AlertRuleId(id));
+  CommandResult removeRule(string id) {
+    return removeRule(AlertRuleId(id));
   }
 
-  CommandResult remove(AlertRuleId id) {
+  CommandResult removeRule(AlertRuleId id) {
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

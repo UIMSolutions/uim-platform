@@ -114,33 +114,33 @@ struct PipelineId {
 
   mixin DomainId;
 }
-struct  {
-    string value;
+// struct  {
+//     string value;
 
-    this(string value) {
-        this.value = value;
-    }
+//     this(string value) {
+//         this.value = value;
+//     }
 
-    mixin DomainId;
-}
-struct  {
-    string value;
+//     mixin DomainId;
+// }
+// struct  {
+//     string value;
 
-    this(string value) {
-        this.value = value;
-    }
+//     this(string value) {
+//         this.value = value;
+//     }
 
-    mixin DomainId;
-}
-struct  {
-    string value;
+//     mixin DomainId;
+// }
+// struct  {
+//     string value;
 
-    this(string value) {
-        this.value = value;
-    }
+//     this(string value) {
+//         this.value = value;
+//     }
 
-    mixin DomainId;
-}
+//     mixin DomainId;
+// }
 
 enum LogLevel {
   trace,
