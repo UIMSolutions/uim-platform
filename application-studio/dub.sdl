@@ -1,0 +1,29 @@
+name "application-studio"
+description "Application Studio Service - Cloud-based IDE platform for SAP BTP application development with dev spaces, extensions, project templates, service bindings, run and build configurations"
+authors "Ozan Nurettin Suel"
+copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
+license "Apache-2.0"
+targetName "uim-application-studio-platform-service"
+
+dependency "uim-platform:service" path=".."
+
+sourcePaths "source"
+importPaths "source"
+
+configuration "defaultRun" {
+    targetType "executable"
+}
+
+configuration "defaultTest" {
+    targetType "library"
+}
+
+configuration "modules" {
+    targetType "library"
+    versions "show_module"
+}
+
+configuration "tests" {
+    targetType "library"
+    versions "show_module" "show_test"
+}

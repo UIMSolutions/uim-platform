@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-studio
+  namespace: uim-platform
+  labels:
+    app: application-studio
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application-studio
+  template:
+    metadata:
+      labels:
+        app: application-studio
+    spec:
+      containers:
+      - name: application-studio
+        image: uim-platform/application-studio:latest
+        ports:
+        - containerPort: 8111
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: application-studio-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8111
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8111
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

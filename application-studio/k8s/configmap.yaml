@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-studio-config
+  namespace: uim-platform
+  labels:
+    app: application-studio
+    part-of: uim-platform
+data:
+  APPLICATION_STUDIO_HOST: "0.0.0.0"
+  APPLICATION_STUDIO_PORT: "8111"
