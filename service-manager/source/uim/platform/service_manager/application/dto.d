@@ -97,7 +97,7 @@ struct CreateServiceInstanceRequest {
     string context;
     string parameters;
     string labels;
-    string shared;
+    string shared_;
 }
 
 struct UpdateServiceInstanceRequest {
@@ -105,7 +105,7 @@ struct UpdateServiceInstanceRequest {
     string planId;
     string parameters;
     string labels;
-    string shared;
+    string shared_;
 }
 
 // --- Service Binding DTOs ---

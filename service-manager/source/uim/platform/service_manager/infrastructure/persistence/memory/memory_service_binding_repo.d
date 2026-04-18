@@ -13,10 +13,11 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
         return store.get(tenantId.value, []);
     }
 
-    ServiceBinding* findById(TenantId tenantId, ServiceBindingId id) {
-        auto items = store.get(tenantId.value, []);
-        foreach (ref e; items)
-            if (e.id == id) return &e;
+    ServiceBinding* findById(TenantId tenantId, ServiceBindingId id) @trusted {
+        if (auto items = tenantId.value in store) {
+            foreach (ref e; *items)
+                if (e.id == id) return &e;
+        }
         return null;
     }
 

@@ -13,10 +13,11 @@ class MemoryServiceOfferingRepository : ServiceOfferingRepository {
         return store.get(tenantId.value, []);
     }
 
-    ServiceOffering* findById(TenantId tenantId, ServiceOfferingId id) {
-        auto items = store.get(tenantId.value, []);
-        foreach (ref e; items)
-            if (e.id == id) return &e;
+    ServiceOffering* findById(TenantId tenantId, ServiceOfferingId id) @trusted {
+        if (auto items = tenantId.value in store) {
+            foreach (ref e; *items)
+                if (e.id == id) return &e;
+        }
         return null;
     }
 

@@ -30,7 +30,7 @@ class ServiceInstanceController : PlatformController {
                     .set("id", e.id.value).set("name", e.name)
                     .set("planId", e.planId.value)
                     .set("status", e.status.to!string)
-                    .set("shared", e.shared)
+                    .set("shared", e.shared_)
                     .set("usable", e.usable);
             }
             res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
@@ -50,7 +50,7 @@ class ServiceInstanceController : PlatformController {
                 .set("offeringId", e.offeringId.value)
                 .set("platformId", e.platformId.value)
                 .set("status", e.status.to!string)
-                .set("shared", e.shared)
+                .set("shared", e.shared_)
                 .set("usable", e.usable)
                 .set("dashboardUrl", e.dashboardUrl)
                 .set("createdAt", e.createdAt), 200);

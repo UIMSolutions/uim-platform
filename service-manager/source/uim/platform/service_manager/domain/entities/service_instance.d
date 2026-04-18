@@ -18,7 +18,7 @@ struct ServiceInstance {
     string parameters;
     string dashboardUrl;
     string maintenanceInfo;
-    bool shared = false;
+    bool shared_ = false;
     bool usable = true;
     string labels;
     string createdBy;

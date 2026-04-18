@@ -13,10 +13,11 @@ class MemoryServiceBrokerRepository : ServiceBrokerRepository {
         return store.get(tenantId.value, []);
     }
 
-    ServiceBroker* findById(TenantId tenantId, ServiceBrokerId id) {
-        auto items = store.get(tenantId.value, []);
-        foreach (ref e; items)
-            if (e.id == id) return &e;
+    ServiceBroker* findById(TenantId tenantId, ServiceBrokerId id) @trusted {
+        if (auto items = tenantId.value in store) {
+            foreach (ref e; *items)
+                if (e.id == id) return &e;
+        }
         return null;
     }
 
