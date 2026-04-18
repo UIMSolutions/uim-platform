@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: automation-pilot-config
+  namespace: uim-platform
+  labels:
+    app: automation-pilot
+    part-of: uim-platform
+data:
+  AUTOMATION_PILOT_HOST: "0.0.0.0"
+  AUTOMATION_PILOT_PORT: "8110"
