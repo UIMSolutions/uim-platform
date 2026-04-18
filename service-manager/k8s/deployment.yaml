@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-manager
+  namespace: uim-platform
+  labels:
+    app: service-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-manager
+  template:
+    metadata:
+      labels:
+        app: service-manager
+    spec:
+      containers:
+      - name: service-manager
+        image: uim-platform/service-manager:latest
+        ports:
+        - containerPort: 8113
+        envFrom:
+        - configMapRef:
+            name: service-manager-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8113
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8113
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

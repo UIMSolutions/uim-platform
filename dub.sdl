@@ -52,6 +52,7 @@ dependency ":masterdata-integration" version="*"
 dependency ":mobile" version="*"
 dependency ":monitoring" version="*"
 dependency ":portal" version="*"
+dependency ":service-manager" version="*"
 dependency ":workzone" version="*"
 
 // Source files
@@ -96,6 +97,7 @@ subPackage "masterdata-integration"
 subPackage "mobile"
 subPackage "monitoring"
 subPackage "portal"
+subPackage "service-manager"
 subPackage "workzone"
 
 buildRequirements "allowWarnings" "silenceDeprecations"

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-manager-config
+  namespace: uim-platform
+data:
+  SERVICE_MANAGER_HOST: "0.0.0.0"
+  SERVICE_MANAGER_PORT: "8113"
