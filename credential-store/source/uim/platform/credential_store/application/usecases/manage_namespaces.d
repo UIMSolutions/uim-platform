@@ -57,6 +57,14 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, ns.id, "");
   }
 
+  bool getById(string id) {
+    return hasById(NamespaceId(id));
+  }
+
+  bool hasById(NamespaceId id) {
+    return repo.existsById(id);
+  }
+
   Namespace getById(string id) {
     return getById(NamespaceId(id));
   }
@@ -65,8 +73,8 @@ class ManageNamespacesUseCase : UIMUseCase {
     return repo.findById(id);
   }
 
-  Namespace getByName(TenantId tenantId, string name) {
-    return getByName(tenantId, name);
+  Namespace getByName(string tenantId, string name) {
+    return getByName(TenantId(tenantId), name);
   }
   
   Namespace getByName(TenantId tenantId, string name) {
