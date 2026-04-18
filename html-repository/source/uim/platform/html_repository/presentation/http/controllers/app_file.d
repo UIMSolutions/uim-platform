@@ -138,4 +138,5 @@ if (result.isSuccess()) {
                 import uim.platform.html_repository.application.usecases.manage.app_files;
 
                 module uim.platform.html_repository.presentation.http.controllers.app_file;
-                    * Authors : Ozan Nurettin Süel(aka UI - Manufaktur UG * R.I.P * )
+                
+                * Authors : Ozan Nurettin Süel(aka UI - Manufaktur UG * R.I.P * )

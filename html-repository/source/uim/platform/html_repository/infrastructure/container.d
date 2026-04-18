@@ -106,7 +106,7 @@ Container buildContainer(AppConfig config) {
   c.contentCacheController = new ContentCacheController(c.manageCache);
   c.contentController = new ContentController(c.manageFiles, c.manageCache);
   c.overviewController = new OverviewController(c.getOverview);
-  c.healthController = new HealthController("html5-application-repository");
+  c.healthController = new HealthController("html-repository");
 
   return c;
 }
