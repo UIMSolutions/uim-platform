@@ -10,7 +10,7 @@ import std.conv : to;
 
 struct AppConfig {
   string host = "0.0.0.0";
-  ushort port = 8097;
+  ushort port = 10002;
   string serviceName = "AI Launchpad Service";
 }
 

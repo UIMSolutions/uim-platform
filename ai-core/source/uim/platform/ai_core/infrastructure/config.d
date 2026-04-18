@@ -10,7 +10,7 @@ import std.conv : to;
 
 struct AppConfig {
   string host = "0.0.0.0";
-  ushort port = 8090;
+  ushort port = 10001;
   string serviceName = "AI Core Service";
 }
 
