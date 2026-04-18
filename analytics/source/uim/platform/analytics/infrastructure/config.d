@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Service configuration (read from environment or defaults).
 struct ServiceConfig {
   string host = "0.0.0.0";
-  ushort port = 8082;
+  ushort port = 10003;
   string serviceName = "analytics";
   string apiVersion = "v1";
 

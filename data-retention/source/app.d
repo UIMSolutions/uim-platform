@@ -5,14 +5,9 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.data_retention.infrastructure.config;
-import uim.platform.data_retention.infrastructure.container;
+import uim.platform.data_retention;
 
-@safe:
-
-version (unittest) {
-} else {
-  void main() {
+void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -31,32 +26,31 @@ version (unittest) {
     container.dataSubjectRoleController.registerRoutes(router);
     container.healthController.registerRoutes(router);
 
+    writeln("==========================================================");
+    writeln("  Data Retention Manager Service");
+    writeln("==========================================================");
+    writeln("  Endpoints:");
+    writeln("    CRUD      /api/v1/data-retention/business-purposes");
+    writeln("    POST      /api/v1/data-retention/business-purposes/*/activate");
+    writeln("    CRUD      /api/v1/data-retention/legal-grounds");
+    writeln("    CRUD      /api/v1/data-retention/retention-rules");
+    writeln("    CRUD      /api/v1/data-retention/residence-rules");
+    writeln("    CRUD      /api/v1/data-retention/data-subjects");
+    writeln("    POST      /api/v1/data-retention/data-subjects/*/block");
+    writeln("    CRUD      /api/v1/data-retention/deletion-requests");
+    writeln("    CRUD      /api/v1/data-retention/archiving-jobs");
+    writeln("    CRUD      /api/v1/data-retention/application-groups");
+    writeln("    CRUD      /api/v1/data-retention/legal-entities");
+    writeln("    CRUD      /api/v1/data-retention/data-subject-roles");
+    writeln("    GET       /api/v1/health");
+    writeln("==========================================================");
+    writefln("  Listening on %s:%d", config.host, config.port);
+    writeln("==========================================================");
+
     auto settings = new HTTPServerSettings();
     settings.port = config.port;
     settings.bindAddresses = [config.host];
-
     auto listener = listenHTTP(settings, router);
-
-    writefln("==========================================================");
-    writefln("  Data Retention Manager Service");
-    writefln("  Listening on %s:%d", config.host, config.port);
-    writefln("                                                          ");
-    writefln("  Endpoints:                                              ");
-    writefln("    CRUD      /api/v1/data-retention/business-purposes    ");
-    writefln("    POST      /api/v1/data-retention/business-purposes/*/activate");
-    writefln("    CRUD      /api/v1/data-retention/legal-grounds        ");
-    writefln("    CRUD      /api/v1/data-retention/retention-rules      ");
-    writefln("    CRUD      /api/v1/data-retention/residence-rules      ");
-    writefln("    CRUD      /api/v1/data-retention/data-subjects        ");
-    writefln("    POST      /api/v1/data-retention/data-subjects/*/block");
-    writefln("    CRUD      /api/v1/data-retention/deletion-requests    ");
-    writefln("    CRUD      /api/v1/data-retention/archiving-jobs       ");
-    writefln("    CRUD      /api/v1/data-retention/application-groups   ");
-    writefln("    CRUD      /api/v1/data-retention/legal-entities       ");
-    writefln("    CRUD      /api/v1/data-retention/data-subject-roles   ");
-    writefln("    GET       /api/v1/health                              ");
-    writefln("==========================================================");
-
+    scope (exit) listener.stopListening();
     runApplication();
-  }
 }

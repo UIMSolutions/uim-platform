@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-retention
+  namespace: uim-platform
+  labels:
+    app: data-retention
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-retention
+  template:
+    metadata:
+      labels:
+        app: data-retention
+    spec:
+      containers:
+      - name: data-retention
+        image: uim-platform/data-retention:latest
+        ports:
+        - containerPort: 8112
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: data-retention-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8112
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8112
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

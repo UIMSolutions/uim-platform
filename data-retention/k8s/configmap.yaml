@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-retention-config
+  namespace: uim-platform
+  labels:
+    app: data-retention
+    part-of: uim-platform
+data:
+  DATA_RETENTION_HOST: "0.0.0.0"
+  DATA_RETENTION_PORT: "8112"
