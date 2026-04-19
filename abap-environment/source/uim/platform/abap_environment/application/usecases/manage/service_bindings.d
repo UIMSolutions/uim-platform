@@ -62,7 +62,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       binding.description = req.description;
     if (req.status.length > 0)
-      binding.status = parseBindingStatus(req.status);
+      binding.status = req.status.to!BindingStatus;
     if (req.endpoints.length > 0)
       binding.endpoints = req.endpoints;
 
@@ -109,15 +109,3 @@ private BindingType parseBindingType(string s) {
   }
 }
 
-private BindingStatus parseBindingStatus(string s) {
-  switch (s) {
-  case "active":
-    return BindingStatus.active;
-  case "inactive":
-    return BindingStatus.inactive;
-  case "deprecated_":
-    return BindingStatus.deprecated_;
-  default:
-    return BindingStatus.active;
-  }
-}

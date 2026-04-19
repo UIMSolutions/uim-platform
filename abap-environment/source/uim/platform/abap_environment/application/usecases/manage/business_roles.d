@@ -38,7 +38,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     role.systemInstanceId = req.systemInstanceId;
     role.name = req.name;
     role.description = req.description;
-    role.roleType = parseRoleType(req.roleType);
+    role.roleType = req.roleType.to!RoleType;
     role.restrictionTypes = req.restrictionTypes;
     role.assignedCatalogs = req.assignedCatalogs;
 
@@ -58,7 +58,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       role.description = req.description;
     if (req.roleType.length > 0)
-      role.roleType = parseRoleType(req.roleType);
+      role.roleType = req.roleType.to!RoleType;
     if (req.restrictionTypes.length > 0)
       role.restrictionTypes = req.restrictionTypes;
     if (req.assignedCatalogs.length > 0)
@@ -85,18 +85,5 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
 
     repo.remove(roleId);
     return CommandResult(true, roleId.toString(), "");
-  }
-}
-
-private RoleType parseRoleType(string s) {
-  switch (s) {
-  case "unrestricted":
-    return RoleType.unrestricted;
-  case "restricted":
-    return RoleType.restricted;
-  case "custom":
-    return RoleType.custom;
-  default:
-    return RoleType.unrestricted;
   }
 }

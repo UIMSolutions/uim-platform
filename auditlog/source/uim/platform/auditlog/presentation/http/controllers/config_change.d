@@ -62,15 +62,16 @@ class ConfigChangeController : PlatformController {
   private static AuditAttribute[] parseChanges(Json j) {
     AuditAttribute[] result;
     
-    if (!("changes" in j) || !j["changes"].isArray)
+    if (!j.isArray("changes"))
       return result;
 
     foreach (item; j["changes"].toArray) {
       if (item.isObject) {
-        result ~= AuditAttribute(
-          item.getString("name"),
-          item.getString("oldValue"), 
-          item.getString("newValue"));
+        AuditAttribute change;
+        change.name = item.getString("name");
+        change.oldValue = item.getString("oldValue");
+        change.newValue = item.getString("newValue");
+        result ~= change;
       }
     }
     return result;

@@ -49,7 +49,7 @@ struct RetentionPolicy {
       p.categories ~= toAuditCategory(c.getString);
     //
     // p.categories = j.getArray("categories").map!(c => toAuditCategory(c.getString)).array;
-    p.status = RetentionStatus.fromString(j.getString("status"));
+    p.status = j.getString("status").to!RetentionStatus;
     p.isDefault = j.getBoolean("isDefault");
     p.createdAt = j.getLong("createdAt");
     p.updatedAt = j.getLong("updatedAt");

@@ -37,7 +37,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.name = request.name;
     job.description = request.description;
     job.jobTemplateName = request.jobTemplateName;
-    job.frequency = parseFrequency(request.frequency);
+    job.frequency = request.frequency.to!JobFrequency;
     job.scheduledAt = request.scheduledAt;
     job.cronExpression = request.cronExpression;
     job.active = true;
@@ -64,7 +64,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     if (request.description.length > 0)
       job.description = request.description;
     if (request.frequency.length > 0)
-      job.frequency = parseFrequency(request.frequency);
+      job.frequency = request.frequency.to!JobFrequency;
     if (request.scheduledAt > 0)
       job.scheduledAt = request.scheduledAt;
     if (request.cronExpression.length > 0)
@@ -128,22 +128,5 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
 
     repo.remove(id);
     return CommandResult(true, id.toString, "");
-  }
-}
-
-private JobFrequency parseFrequency(string frequency) {
-  switch (frequency) {
-  case "once":
-    return JobFrequency.once;
-  case "hourly":
-    return JobFrequency.hourly;
-  case "daily":
-    return JobFrequency.daily;
-  case "weekly":
-    return JobFrequency.weekly;
-  case "monthly":
-    return JobFrequency.monthly;
-  default:
-    return JobFrequency.once;
   }
 }

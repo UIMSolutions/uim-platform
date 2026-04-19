@@ -46,10 +46,10 @@ class AuditLogController : PlatformController {
       r.userName = j.getString("userName");
       r.serviceId = j.getString("serviceId");
       r.serviceName = j.getString("serviceName");
-      r.category = toAuditCategory(j.getString("category"));
-      r.severity = parseSeverity(j.getString("severity"));
-      r.action = parseAction(j.getString("action"));
-      r.outcome = parseOutcome(j.getString("outcome"));
+      r.category = j.getString("category").to!AuditCategory;
+      r.severity = j.getString("severity").to!AuditSeverity;
+      r.action = j.getString("action").to!AuditAction;
+      r.outcome = j.getString("outcome").to!AuditOutcome;
       r.objectType = j.getString("objectType");
       r.objectId = j.getString("objectId");
       r.message = j.getString("message");
@@ -58,6 +58,8 @@ class AuditLogController : PlatformController {
       r.userAgent = j.getString("userAgent");
       r.correlationId = j.getString("correlationId");
       r.originApp = j.getString("originApp");
+
+
 
       auto result = writeUsecase.writeLog(r);
       if (result.isSuccess()) {
@@ -128,7 +130,7 @@ class AuditLogController : PlatformController {
       .set("userName", e.userName)
       .set("serviceId", e.serviceId)
       .set("serviceName", e.serviceName)
-      .set("category", categoryToString(e.category))
+      .set("category", e.category.to!string)
       .set("severity", e.severity.to!string)
       .set("action", e.action.to!string)
       .set("outcome", e.outcome.to!string)
@@ -173,91 +175,5 @@ class AuditLogController : PlatformController {
       }
     }
     return result;
-  }
-
-
-
-  private static string categoryToString(AuditCategory c) {
-    final switch (c) {
-    case AuditCategory.securityEvents:
-      return "audit.security-events";
-    case AuditCategory.configuration:
-      return "audit.configuration";
-    case AuditCategory.dataAccess:
-      return "audit.data-access";
-    case AuditCategory.dataModification:
-      return "audit.data-modification";
-    }
-  }
-
-  private static AuditSeverity parseSeverity(string s) {
-    switch (s) {
-    case "warning":
-      return AuditSeverity.warning;
-    case "error":
-      return AuditSeverity.error;
-    case "critical":
-      return AuditSeverity.critical;
-    default:
-      return AuditSeverity.info;
-    }
-  }
-
-  private static AuditAction parseAction(string s) {
-    switch (s) {
-    case "create":
-      return AuditAction.create;
-    case "read":
-      return AuditAction.read_;
-    case "update":
-      return AuditAction.update;
-    case "delete":
-      return AuditAction.delete_;
-    case "login":
-      return AuditAction.login;
-    case "logout":
-      return AuditAction.logout;
-    case "loginFailed":
-      return AuditAction.loginFailed;
-    case "passwordChange":
-      return AuditAction.passwordChange;
-    case "roleAssign":
-      return AuditAction.roleAssign;
-    case "roleRevoke":
-      return AuditAction.roleRevoke;
-    case "policyChange":
-      return AuditAction.policyChange;
-    case "configChange":
-      return AuditAction.configChange;
-    case "export":
-      return AuditAction.export_;
-    case "dataAccess":
-      return AuditAction.dataAccess;
-    case "consentChange":
-      return AuditAction.consentChange;
-    case "tokenIssue":
-      return AuditAction.tokenIssue;
-    case "tokenRevoke":
-      return AuditAction.tokenRevoke;
-    case "mfaEnroll":
-      return AuditAction.mfaEnroll;
-    case "mfaVerify":
-      return AuditAction.mfaVerify;
-    default:
-      return AuditAction.create;
-    }
-  }
-
-  private static AuditOutcome parseOutcome(string s) {
-    switch (s) {
-    case "failure":
-      return AuditOutcome.failure;
-    case "denied":
-      return AuditOutcome.denied;
-    case "error":
-      return AuditOutcome.error;
-    default:
-      return AuditOutcome.success;
-    }
   }
 }

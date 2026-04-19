@@ -109,20 +109,7 @@ enum PermissionLevel {
   owner,
 }
 
-PermissionLevel parsePermissionLevel(string s) {
-  switch (s) {
-  case "read":
-    return PermissionLevel.read;
-  case "write":
-    return PermissionLevel.write;
-  case "admin":
-    return PermissionLevel.admin;
-  case "owner":
-    return PermissionLevel.owner;
-  default:
-    return PermissionLevel.read;
-  }
-}
+
 
 enum ShareType {
   internal,
