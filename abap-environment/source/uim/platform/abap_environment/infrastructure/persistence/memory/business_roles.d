@@ -30,9 +30,9 @@ class MemoryBusinessRoleRepository : MemoryTenantRepository!(BusinessRole, Busin
     return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
   }
 
-/  BusinessRole[] findByTenant(TenantId tenantId) {
-/    return store.byValue().filter!(e => e.tenantId == tenantId).array;
-/  }
+//  BusinessRole[] findByTenant(TenantId tenantId) {
+//    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+//  }
 
   BusinessRole findByName(SystemInstanceId systemId, string name) {
     foreach (e; store.byValue())

@@ -120,8 +120,8 @@ class CommunicationArrangementController : PlatformController {
 
       auto result = uc.updateArrangement(id, r);
       if (result.isSuccess()) {
-        auto response = Json.emptyObject.
-        .set("status", "updated");
+        auto response = Json.emptyObject
+          .set("status", "updated");
 
         res.writeJsonBody(response, 200);
       }
