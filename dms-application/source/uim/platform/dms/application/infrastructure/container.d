@@ -42,6 +42,7 @@ module uim.platform.dms.application.infrastructure.container;
 import uim.platform.dms.application;
 
 mixin(ShowModule!());
+
 @safe:
 /// Dependency injection container - wires all layers together.
 struct Container {

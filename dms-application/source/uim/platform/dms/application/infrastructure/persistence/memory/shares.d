@@ -12,67 +12,42 @@ module uim.platform.dms.application.infrastructure.persistence.memory.shares;
 import uim.platform.dms.application;
 
 mixin(ShowModule!());
+
 @safe:
-class MemoryShareRepository : IShareRepository {
-  private Share[string] store;
-
-  Share[] findByTenant(TenantId tenantId) {
-    Share[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepository {
+  size_t countByDocument(TenantId tenantId, DocumentId documentId) {
+    return findByDocument(tenantId, documentId).length;
   }
 
-  Share findById(ShareId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        return *p;
-    return null;
+  Share[] findByDocument(TenantId tenantId, DocumentId documentId) {
+    return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;
   }
 
-  Share[] findByDocument(DocumentId documenttenantId, id tenantId) {
-    Share[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.documentId == documentId)
-        result ~= e;
-    return result;
+  void removeByDocument(TenantId tenantId, DocumentId documentId) {
+    findByDocument(tenantId, documentId).each!(e => store.remove(e.id));
   }
 
-  Share[] findBySharedWith(string sharedWith, TenantId tenantId) {
-    Share[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.sharedWith == sharedWith)
-        result ~= e;
-    return result;
+  size_t countBySharedWith(TenantId tenantId, string sharedWith) {
+    return findBySharedWith(tenantId, sharedWith).length;
   }
 
-  Share[] findByStatus(ShareStatus status, TenantId tenantId) {
-    Share[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.status == status)
-        result ~= e;
-    return result;
+  Share[] findBySharedWith(TenantId tenantId, string sharedWith) {
+    return findByTenant(tenantId).filter!(e => e.sharedWith == sharedWith).array;
   }
 
-  void save(Share share) {
-    store[share.id] = share;
+  void removeBySharedWith(TenantId tenantId, string sharedWith) {
+    findBySharedWith(tenantId, sharedWith).each!(e => store.remove(e.id));
   }
 
-  void update(Share share) {
-    store[share.id] = share;
+  size_t countByStatus(TenantId tenantId, ShareStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  void remove(ShareId tenantId, id tenantId) {
-    store.remove(id);
+  Share[] findByStatus(TenantId tenantId, ShareStatus status) {
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void removeByDocument(DocumentId documenttenantId, id tenantId) {
-    string[] toRemove;
-    foreach (k, ref e; store)
-      if (e.tenantId == tenantId && e.documentId == documentId)
-        toRemove ~= k;
-    foreach (k; toRemove)
-      store.remove(k);
+  void removeByStatus(TenantId tenantId, ShareStatus status) {
+    findByStatus(tenantId, status).each!(e => store.remove(e));
   }
 }

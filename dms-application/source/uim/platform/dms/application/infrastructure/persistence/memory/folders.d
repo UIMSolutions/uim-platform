@@ -12,43 +12,41 @@ module uim.platform.dms.application.infrastructure.persistence.memory.folders;
 import uim.platform.dms.application;
 
 mixin(ShowModule!());
+
 @safe:
 class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepository {
-  Folder findByPath(TenantId tenantId, string path, RepositoryId repositoryId) {
+  bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
+    return findByTenant(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
+  }
+
+  Folder findByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     foreach (e; findByTenant(tenantId))
       if (e.repositoryId == repositoryId && e.path == path)
         return e;
     return Folder.init;
   }
 
+  size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    return findByRepository(tenantId, repositoryId).length;
+  }
+
   Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+  }
+
+  void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    findByRepository(tenantId, repositoryId).each!(e => store.remove(e.id));
+  }
+
+  size_t countByParent(TenantId tenantId, FolderId parentFolderId) {
+    return findByParent(tenantId, parentFolderId).length;
   }
 
   Folder[] findByParent(TenantId tenantId, FolderId parentFolderId) {
     return findByTenant(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
   }
 
-  void save(Folder folder) {
-    store[folder.id] = folder;
-  }
-
-  void update(Folder folder) {
-    store[folder.id] = folder;
-  }
-
-  void remove(TenantId tenantId, FolderId id) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        store.remove(id);
-  }
-
-  void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    string[] toRemove;
-    foreach (k, ref e; store)
-      if (e.tenantId == tenantId && e.repositoryId == repositoryId)
-        toRemove ~= k;
-    foreach (k; toRemove)
-      store.remove(k);
+  void removeByParent(TenantId tenantId, FolderId parentFolderId) {
+    findByParent(tenantId, parentFolderId).each!(e => store.remove(e.id));
   }
 }

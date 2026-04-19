@@ -92,15 +92,15 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return docRepo.findByTenant(tenantId);
   }
 
-  Document[] listByFolder(FolderId foldertenantId, id tenantId) {
-    return docRepo.findByFolder(foldertenantId, id);
+  Document[] listByFolder(TenantId tenantId, FolderId folderId) {
+    return docRepo.findByFolder(folderId, tenantId);
   }
 
-  Document[] listByRepository(string repositorytenantId, id tenantId) {
-    return docRepo.findByRepository(repositorytenantId, id);
+  Document[] listByRepository(TenantId tenantId, string repositoryId) {
+    return docRepo.findByRepository(repositoryId, tenantId);
   }
 
-  Document getDocument(DocumentId tenantId, id tenantId) {
+  Document getDocument(TenantId tenantId, DocumentId id) {
     return docRepo.findById(tenantId, id);
   }
 
@@ -109,7 +109,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDocument(UpdateDocumentRequest r) {
-    auto doc = docRepo.findById(r.id, r.tenantId);
+    auto doc = docRepo.findById(r.tenantId, r.id);
     if (doc is null)
       return CommandResult(false, "", "Document not found");
 
@@ -128,12 +128,12 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult moveDocument(MoveDocumentRequest r) {
-    auto doc = docRepo.findById(r.id, r.tenantId);
+    auto doc = docRepo.findById(r.tenantId, r.id);
     if (doc is null)
       return CommandResult(false, "", "Document not found");
 
     if (r.newFolderId.length > 0) {
-      auto folder = folderRepo.findById(r.newFolderId, r.tenantId);
+      auto folder = folderRepo.findById(r.tenantId, r.newFolderId);
       if (folder is null)
         return CommandResult(false, "", "Target folder not found");
     }
@@ -144,7 +144,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult archiveDocument(DocumentId tenantId, id tenantId) {
+  CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
     auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
       return CommandResult(false, "", "Document not found");
@@ -155,7 +155,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult deleteDocument(DocumentId tenantId, id tenantId) {
+  CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
     auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
       return CommandResult(false, "", "Document not found");

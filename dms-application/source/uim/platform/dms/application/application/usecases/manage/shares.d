@@ -55,15 +55,15 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     return shareRepo.findByTenant(tenantId);
   }
 
-  Share[] listByDocument(DocumentId documenttenantId, id tenantId) {
-    return shareRepo.findByDocument(documenttenantId, id);
+  Share[] listByDocument(TenantId tenantId, DocumentId documentId) {
+    return shareRepo.findByDocument(tenantId, documentId);
   }
 
-  Share getShare(ShareId tenantId, id tenantId) {
+  Share getShare(TenantId tenantId, ShareId id) {
     return shareRepo.findById(tenantId, id);
   }
 
-  CommandResult revokeShare(ShareId tenantId, id tenantId) {
+  CommandResult revokeShare(TenantId tenantId, ShareId id) {
     auto entity = shareRepo.findById(tenantId, id);
     if (entity is null)
       return CommandResult(false, "", "Share not found");
@@ -73,7 +73,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteShare(ShareId tenantId, id tenantId) {
+  CommandResult deleteShare(TenantId tenantId, ShareId id) {
     auto entity = shareRepo.findById(tenantId, id);
     if (entity is null)
       return CommandResult(false, "", "Share not found");
