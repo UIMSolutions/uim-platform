@@ -14,7 +14,7 @@ import uim.platform.object_store.domain.types;
 // import std.conv : to;
 
 /// Application service for service binding management (credentials for programmatic access).
-class ManageServiceBindingsUseCase : UIMUseCase {
+class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   private ServiceBindingRepository bindingRepo;
   private BucketRepository bucketRepo;
 

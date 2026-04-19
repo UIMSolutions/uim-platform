@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.tag;
 import uim.platform.workzone.domain.ports.repositories.tags;
 import uim.platform.workzone.application.dto;
 
-class ManageTagsUseCase : UIMUseCase {
+class ManageTagsUseCase { // TODO: UIMUseCase {
   private TagRepository repo;
 
   this(TagRepository repo) {

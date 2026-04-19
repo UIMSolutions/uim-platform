@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageTilesUseCase : UIMUseCase {
+class ManageTilesUseCase { // TODO: UIMUseCase {
   private TileRepository tileRepo;
 
   this(TileRepository tileRepo) {

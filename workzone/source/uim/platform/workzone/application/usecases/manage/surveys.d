@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.survey;
 import uim.platform.workzone.domain.ports.repositories.surveys;
 import uim.platform.workzone.application.dto;
 
-class ManageSurveysUseCase : UIMUseCase {
+class ManageSurveysUseCase { // TODO: UIMUseCase {
   private SurveyRepository repo;
 
   this(SurveyRepository repo) {

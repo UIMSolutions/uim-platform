@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageUserTaskFiltersUseCase : UIMUseCase {
+class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
     private UserTaskFilterRepository repo;
 
     this(UserTaskFilterRepository repo) {

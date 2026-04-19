@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageCatalogsUseCase : UIMUseCase {
+class ManageCatalogsUseCase { // TODO: UIMUseCase {
   private CatalogRepository catalogRepo;
 
   this(CatalogRepository catalogRepo) {

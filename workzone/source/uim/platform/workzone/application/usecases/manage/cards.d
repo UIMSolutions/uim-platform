@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.card;
 import uim.platform.workzone.domain.ports.repositories.cards;
 import uim.platform.workzone.application.dto;
 
-class ManageCardsUseCase : UIMUseCase {
+class ManageCardsUseCase { // TODO: UIMUseCase {
   private CardRepository repo;
 
   this(CardRepository repo) {

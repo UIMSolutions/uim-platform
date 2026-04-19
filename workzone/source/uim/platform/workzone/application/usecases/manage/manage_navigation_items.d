@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.navigation_item;
 import uim.platform.workzone.domain.ports.repositories.navigation_items;
 import uim.platform.workzone.application.dto;
 
-class ManageNavigationItemsUseCase : UIMUseCase {
+class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
   private NavigationItemRepository repo;
 
   this(NavigationItemRepository repo) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManagePersonalDataRecordsUseCase : UIMUseCase {
+class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
     private PersonalDataRecordRepository repo;
 
     this(PersonalDataRecordRepository repo) {

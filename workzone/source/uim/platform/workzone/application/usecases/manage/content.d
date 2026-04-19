@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.ports.repositories.contents;
 import uim.platform.workzone.domain.services.content_search;
 import uim.platform.workzone.application.dto;
 
-class ManageContentUseCase : UIMUseCase {
+class ManageContentUseCase { // TODO: UIMUseCase {
   private ContentRepository repo;
 
   this(ContentRepository repo) {

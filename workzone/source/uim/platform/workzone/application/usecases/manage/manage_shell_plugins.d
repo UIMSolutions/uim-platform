@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.shell_plugin;
 import uim.platform.workzone.domain.ports.repositories.shell_plugins;
 import uim.platform.workzone.application.dto;
 
-class ManageShellPluginsUseCase : UIMUseCase {
+class ManageShellPluginsUseCase { // TODO: UIMUseCase {
   private ShellPluginRepository repo;
 
   this(ShellPluginRepository repo) {

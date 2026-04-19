@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.role;
 import uim.platform.workzone.domain.ports.repositories.roles;
 import uim.platform.workzone.application.dto;
 
-class ManageRolesUseCase : UIMUseCase {
+class ManageRolesUseCase { // TODO: UIMUseCase {
   private RoleRepository repo;
 
   this(RoleRepository repo) {

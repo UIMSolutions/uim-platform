@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDataProcessingLogsUseCase : UIMUseCase {
+class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     private DataProcessingLogRepository repo;
 
     this(DataProcessingLogRepository repo) {

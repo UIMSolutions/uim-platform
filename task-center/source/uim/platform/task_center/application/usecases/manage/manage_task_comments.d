@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageTaskCommentsUseCase : UIMUseCase {
+class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
     private TaskCommentRepository repo;
 
     this(TaskCommentRepository repo) {

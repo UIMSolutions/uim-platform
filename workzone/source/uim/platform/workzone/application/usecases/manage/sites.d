@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.site;
 import uim.platform.workzone.domain.ports.repositories.sites;
 import uim.platform.workzone.application.dto;
 
-class ManageSitesUseCase : UIMUseCase {
+class ManageSitesUseCase { // TODO: UIMUseCase {
   private SiteRepository repo;
 
   this(SiteRepository repo) {

@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.forum_topic;
 import uim.platform.workzone.domain.ports.repositories.forum_topics;
 import uim.platform.workzone.application.dto;
 
-class ManageForumTopicsUseCase : UIMUseCase {
+class ManageForumTopicsUseCase { // TODO: UIMUseCase {
   private ForumTopicRepository repo;
 
   this(ForumTopicRepository repo) {

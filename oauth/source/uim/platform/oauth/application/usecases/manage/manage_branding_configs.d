@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageBrandingConfigsUseCase : UIMUseCase {
+class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
     private BrandingConfigRepository repo;
 
     this(BrandingConfigRepository repo) {

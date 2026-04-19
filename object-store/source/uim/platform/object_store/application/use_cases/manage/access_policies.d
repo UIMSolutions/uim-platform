@@ -12,7 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for bucket access policy management.
-class ManageAccessPoliciesUseCase : UIMUseCase {
+class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
   private AccessPolicyRepository policyRepo;
   private BucketRepository bucketRepo;
 

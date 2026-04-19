@@ -23,7 +23,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManagePagesUseCase : UIMUseCase {
+class ManagePagesUseCase { // TODO: UIMUseCase {
   private PageRepository pageRepo;
   private SiteRepository siteRepo;
 

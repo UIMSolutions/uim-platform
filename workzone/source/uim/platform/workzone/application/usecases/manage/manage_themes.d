@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.theme;
 import uim.platform.workzone.domain.ports.repositories.themes;
 import uim.platform.workzone.application.dto;
 
-class ManageThemesUseCase : UIMUseCase {
+class ManageThemesUseCase { // TODO: UIMUseCase {
   private ThemeRepository repo;
 
   this(ThemeRepository repo) {

@@ -23,7 +23,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageRolesUseCase : UIMUseCase {
+class ManageRolesUseCase { // TODO: UIMUseCase {
   private RoleRepository roleRepo;
 
   this(RoleRepository roleRepo) {

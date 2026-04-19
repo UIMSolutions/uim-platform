@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.event;
 import uim.platform.workzone.domain.ports.repositories.events;
 import uim.platform.workzone.application.dto;
 
-class ManageEventsUseCase : UIMUseCase {
+class ManageEventsUseCase { // TODO: UIMUseCase {
   private EventRepository repo;
 
   this(EventRepository repo) {

@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.page_template;
 import uim.platform.workzone.domain.ports.repositories.page_templates;
 import uim.platform.workzone.application.dto;
 
-class ManagePageTemplatesUseCase : UIMUseCase {
+class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   private PageTemplateRepository repo;
 
   this(PageTemplateRepository repo) {

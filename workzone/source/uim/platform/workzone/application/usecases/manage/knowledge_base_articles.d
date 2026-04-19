@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.knowledge_base_article;
 import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 import uim.platform.workzone.application.dto;
 
-class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
+class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
   private KnowledgeBaseArticleRepository repo;
 
   this(KnowledgeBaseArticleRepository repo) {

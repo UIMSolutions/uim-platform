@@ -12,7 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for CORS rule management.
-class ManageCorsRulesUseCase : UIMUseCase {
+class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   private CorsRuleRepository corsRepo;
   private BucketRepository bucketRepo;
 

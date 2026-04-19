@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.notification;
 import uim.platform.workzone.domain.ports.repositories.notifications;
 import uim.platform.workzone.application.dto;
 
-class ManageNotificationsUseCase : UIMUseCase {
+class ManageNotificationsUseCase { // TODO: UIMUseCase {
   private NotificationRepository repo;
 
   this(NotificationRepository repo) {

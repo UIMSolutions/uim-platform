@@ -14,7 +14,7 @@ import uim.platform.object_store.domain.types;
 // import std.conv : to;
 
 /// Application service for bucket CRUD operations.
-class ManageBucketsUseCase : UIMUseCase {
+class ManageBucketsUseCase { // TODO: UIMUseCase {
   private BucketRepository repo;
 
   this(BucketRepository repo) {

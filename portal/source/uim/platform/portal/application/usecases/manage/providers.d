@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageProvidersUseCase : UIMUseCase {
+class ManageProvidersUseCase { // TODO: UIMUseCase {
   private ProviderRepository providerRepo;
 
   this(ProviderRepository providerRepo) {

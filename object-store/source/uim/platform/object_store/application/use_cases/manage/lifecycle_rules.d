@@ -12,7 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for lifecycle rule management.
-class ManageLifecycleRulesUseCase : UIMUseCase {
+class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   private LifecycleRuleRepository ruleRepo;
   private BucketRepository bucketRepo;
 

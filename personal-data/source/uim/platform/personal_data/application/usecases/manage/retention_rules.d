@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageRetentionRulesUseCase : UIMUseCase {
+class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     private RetentionRuleRepository repo;
 
     this(RetentionRuleRepository repo) {

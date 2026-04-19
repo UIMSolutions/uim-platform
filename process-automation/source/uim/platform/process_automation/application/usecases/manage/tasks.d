@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageTasksUseCase : UIMUseCase {
+class ManageTasksUseCase { // TODO: UIMUseCase {
     private TaskRepository repo;
 
     this(TaskRepository repo) {

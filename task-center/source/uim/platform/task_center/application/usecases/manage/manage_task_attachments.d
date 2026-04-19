@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageTaskAttachmentsUseCase : UIMUseCase {
+class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
     private TaskAttachmentRepository repo;
 
     this(TaskAttachmentRepository repo) {

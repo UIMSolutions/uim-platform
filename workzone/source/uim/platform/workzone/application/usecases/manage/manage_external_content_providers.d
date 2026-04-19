@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.external_content_provider;
 import uim.platform.workzone.domain.ports.repositories.external_content_providers;
 import uim.platform.workzone.application.dto;
 
-class ManageExternalContentProvidersUseCase : UIMUseCase {
+class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
   private ExternalContentProviderRepository repo;
 
   this(ExternalContentProviderRepository repo) {

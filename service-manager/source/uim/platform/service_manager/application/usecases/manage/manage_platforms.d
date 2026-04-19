@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManagePlatformsUseCase : UIMUseCase {
+class ManagePlatformsUseCase { // TODO: UIMUseCase {
     private PlatformRepository repo;
 
     this(PlatformRepository repo) {

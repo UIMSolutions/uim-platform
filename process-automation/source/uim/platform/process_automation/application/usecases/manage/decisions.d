@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageDecisionsUseCase : UIMUseCase {
+class ManageDecisionsUseCase { // TODO: UIMUseCase {
     private DecisionRepository repo;
 
     this(DecisionRepository repo) {

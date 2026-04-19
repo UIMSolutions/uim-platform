@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.group;
 import uim.platform.workzone.domain.ports.repositories.groups;
 import uim.platform.workzone.application.dto;
 
-class ManageGroupsUseCase : UIMUseCase {
+class ManageGroupsUseCase { // TODO: UIMUseCase {
   private GroupRepository repo;
 
   this(GroupRepository repo) {

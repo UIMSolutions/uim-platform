@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageTranslationsUseCase : UIMUseCase {
+class ManageTranslationsUseCase { // TODO: UIMUseCase {
   private TranslationRepository translationRepo;
 
   this(TranslationRepository translationRepo) {

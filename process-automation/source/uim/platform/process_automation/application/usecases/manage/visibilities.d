@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageVisibilitiesUseCase : UIMUseCase {
+class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     private VisibilityRepository repo;
 
     this(VisibilityRepository repo) {

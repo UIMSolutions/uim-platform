@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.user_profile;
 import uim.platform.workzone.domain.ports.repositories.user_profiles;
 import uim.platform.workzone.application.dto;
 
-class ManageUserProfilesUseCase : UIMUseCase {
+class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   private UserProfileRepository repo;
 
   this(UserProfileRepository repo) {
