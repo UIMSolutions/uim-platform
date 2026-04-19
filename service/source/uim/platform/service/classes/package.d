@@ -8,14 +8,14 @@ module uim.platform.service.classes;
 public { // Packages
   import uim.platform.service.classes.controllers;
   import uim.platform.service.classes.entities;
+  import uim.platform.service.classes.repositories;
   import uim.platform.service.classes.stores;
   import uim.platform.service.classes.tenants;
+  import uim.platform.service.classes.usecases;
 }
 
 public { // Modules
   import uim.platform.service.classes.config;
-  import uim.platform.service.classes.repository;
   import uim.platform.service.classes.server;
   import uim.platform.service.classes.service;
-  import uim.platform.service.classes.usecase;
 }
