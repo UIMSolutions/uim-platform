@@ -38,9 +38,11 @@ class AuditConfigController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
+
       auto j = req.json;
       auto request = CreateAuditConfigRequest();
-      request.tenantId = req.getTenantId;
+      request.tenantId = tenantId;
       request.name = j.getString("name");
       request.logDataAccess = j.getBoolean("logDataAccess", true);
       request.logDataModification = j.getBoolean("logDataModification", true);
@@ -92,6 +94,7 @@ class AuditConfigController : PlatformController {
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+
       if (!useCase.existsConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
@@ -105,10 +108,12 @@ class AuditConfigController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
+
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.logDataAccess = j.getBoolean("logDataAccess", true);
       r.logDataModification = j.getBoolean("logDataModification", true);
@@ -137,8 +142,9 @@ class AuditConfigController : PlatformController {
 
       auto result = useCase.updateConfig(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

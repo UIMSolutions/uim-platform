@@ -21,40 +21,53 @@ class ManageAppRoutesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateAppRouteRequest r) {
-        if (!DeploymentValidator.validatePathPrefix(r.pathPrefix))
+    CommandResult create(CreateAppRouteRequest request) {
+        if (!DeploymentValidator.validatePathPrefix(request.pathPrefix))
             return CommandResult(false, "", "Invalid path prefix");
 
         AppRoute route;
-        route.id = randomUUID();
-        route.tenantId = r.tenantId;
-        route.appId = r.appId;
-        route.versionId = r.versionId;
-        route.pathPrefix = r.pathPrefix;
-        route.targetPath = r.targetPath;
-        route.authRequired = r.authRequired;
-        route.cacheEnabled = r.cacheEnabled;
-        route.status = RouteStatus.active;
-        route.createdAt = currentTimestamp();
-        route.updatedAt = route.createdAt;
-        route.createdBy = r.createdBy;
-        route.modifiedBy = r.createdBy;
+        with (route) {
+            id = randomUUID();
+            tenantId = request.tenantId;
+            appId = request.appId;
+            pathPrefix = request.pathPrefix;
+            targetUrl = request.targetUrl;
+            description = request.description;
+            status = RouteStatus.active;
+            createdAt = currentTimestamp();
+            updatedAt = createdAt;
+            createdBy = request.createdBy;
+            modifiedBy = request.createdBy;
+            
+            /* versionId = request.versionId;
+            pathPrefix = request.pathPrefix;
+            targetPath = request.targetPath;
+            authRequired = request.authRequired;
+            cacheEnabled = request.cacheEnabled;
+            */
+        }
 
         repo.save(route);
         return CommandResult(true, route.id, "");
     }
 
-    CommandResult update(AppRouteId id, UpdateAppRouteRequest r) {
-        auto route = repo.findById(id);
-        if (route.id.isEmpty)
+    CommandResult update(string id, UpdateAppRouteRequest request) {
+        return update(AppRouteId(id), request);
+    }
+
+    CommandResult update(AppRouteId id, UpdateAppRouteRequest request) {
+        if (!repo.existsById(id))
             return CommandResult(false, "", "Route not found");
 
-        if (r.pathPrefix.length > 0) route.pathPrefix = r.pathPrefix;
-        if (r.targetPath.length > 0) route.targetPath = r.targetPath;
-        route.authRequired = r.authRequired;
-        route.cacheEnabled = r.cacheEnabled;
+        auto route = repo.findById(id);
+        if (request.pathPrefix.length > 0)
+            route.pathPrefix = request.pathPrefix;
+        if (request.targetPath.length > 0)
+            route.targetPath = request.targetPath;
+        route.authRequired = request.authRequired;
+        route.cacheEnabled = request.cacheEnabled;
         route.updatedAt = currentTimestamp();
-        route.modifiedBy = r.modifiedBy;
+        route.modifiedBy = request.modifiedBy;
 
         repo.update(route);
         return CommandResult(true, route.id, "");
@@ -82,6 +95,7 @@ class ManageAppRoutesUseCase : UIMUseCase {
 
     private static long currentTimestamp() {
         import std.datetime.systime : Clock;
+
         return Clock.currStdTime();
     }
 }

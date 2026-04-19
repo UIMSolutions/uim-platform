@@ -1,156 +1,148 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.app_version;
 
-/****************************************************************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}  }      writeError(res, 500, "Internal server error");    } catch (Exception e)        writeError(res, 400, result.error);      else        res.writeBody("", 204);      if (result.isSuccess())      auto result = uc.remove(tenantId, id);      }        return;        writeError(res, 404, "Version not found");      if (Id.isEmpty) {      TenantId tenantId = req.getTenantId;      auto id = extractIdFromPath(req.requestURI.to!string);    try {  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {  }      writeError(res, 500, "Internal server error");    } catch (Exception e)        writeError(res, 400, result.error);      } else        res.writeJsonBody(resp, 200);        resp["id"] = Json(id);        auto resp = Json.emptyObject;      if (result.isSuccess()) {      auto result = uc.update(r);      r.description = j.getString("description");      r.tenantId = tenantId;      r.id = id;      UpdateAppVersionRequest r;      }        return;        writeError(res, 404, "Version not found");      if (Id.isEmpty) {      TenantId tenantId = req.getTenantId;      auto id = extractIdFromPath(req.requestURI.to!string);      auto j = req.json;    try {  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {  }      writeError(res, 500, "Internal server error");    } catch (Exception e)      res.writeJsonBody(obj, 200);      obj["modifiedAt"] = Json(entry.modifiedAt);      obj["modifiedBy"] = Json(entry.modifiedBy);      obj["createdAt"] = Json(entry.createdAt);      obj["createdBy"] = Json(entry.createdBy);      obj["fileCount"] = Json(entry.fileCount);      obj["status"] = Json(entry.status);      obj["description"] = Json(entry.description);      obj["versionCode"] = Json(entry.versionCode);      obj["appId"] = Json(entry.appId);      obj["id"] = Json(entry.id);      auto obj = Json.emptyObject;      }        return;        writeError(res, 404, "Version not found");      if (entry is null) {      auto entry = uc.getById(tenantId, id);      }        return;        writeError(res, 404, "Version not found");      if (Id.isEmpty) {      TenantId tenantId = req.getTenantId;      auto id = extractIdFromPath(req.requestURI.to!string);    try {  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {  }      writeError(res, 500, "Internal server error");    } catch (Exception e)      res.writeJsonBody(resp, 200);      resp["totalCount"] = Json(items.length);      resp["items"] = arr;      auto resp = Json.emptyObject;      }        arr ~= obj;        obj["fileCount"] = Json(e.fileCount);        obj["status"] = Json(e.status);        obj["versionCode"] = Json(e.versionCode);        obj["appId"] = Json(e.appId);        obj["id"] = Json(e.id);        auto obj = Json.emptyObject;      foreach (e; items) {      auto arr = Json.emptyArray;      auto items = uc.listByApp(apptenantId, id);        appId = req.headers.get("X-App-Id", "");      if (appId.isEmpty)      auto appId = getString(req.json, "appId");      TenantId tenantId = req.getTenantId;    try {  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {  }      writeError(res, 500, "Internal server error");    } catch (Exception e)        writeError(res, 400, result.error);      } else        res.writeJsonBody(resp, 201);        resp["id"] = Json(result.id);        auto resp = Json.emptyObject;      if (result.isSuccess()) {      auto result = uc.create(r);      r.createdBy = j.getString("createdBy");      r.description = j.getString("description");      r.versionCode = j.getString("versionCode");      r.appId = j.getString("appId");      r.tenantId = req.getTenantId;      CreateAppVersionRequest r;      auto j = req.json;    try {  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {  }    router.delete_("/api/v1/versions/*", &handleDelete);    router.put("/api/v1/versions/*", &handleUpdate);    router.get("/api/v1/versions/*", &handleGet);    router.get("/api/v1/versions", &handleList);    router.post("/api/v1/versions", &handleCreate);    super.registerRoutes(router);  override void registerRoutes(URLRouter router) {  }    this.uc = uc;  this(ManageAppVersionsUseCase uc) {  private ManageAppVersionsUseCase uc;class AppVersionController : PlatformController {import std.conv : to;import uim.platform.htmls;import uim.platform.html_repository.presentation.http.json_utils;import uim.platform.html_repository.application.dto;import uim.platform.html_repository.application.usecases.manage.app_versions;module uim.platform.html_repository.presentation.http.controllers.app_version;*****************************************************************************************************************/
-* Authors : Ozan Nurettin Süel(aka UI - Manufaktur UG * R.I.P * ) * Copyright
-    : © 2018 - 2026 Ozan Nurettin Süel(aka UI - Manufaktur UG * R.I.P * )
-    * License
-    : Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+import uim.platform.html_repository.application.usecases.manage.app_versions;
+import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository.presentation.http.json_utils;
+
+import uim.platform.htmls;
+
+import std.conv : to;
+
+class AppVersionController : PlatformController {
+  private ManageAppVersionsUseCase uc;
+
+  this(ManageAppVersionsUseCase uc) {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.post("/api/v1/versions", &handleCreate);
+    router.get("/api/v1/versions", &handleList);
+    router.get("/api/v1/versions/*", &handleGet);
+    router.put("/api/v1/versions/*", &handleUpdate);
+    router.delete_("/api/v1/versions/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      CreateAppVersionRequest r;
+      r.tenantId = req.getTenantId;
+      r.appId = j.getString("appId");
+      r.versionCode = j.getString("versionCode");
+      r.description = j.getString("description");
+      r.createdBy = j.getString("createdBy");
+
+      auto result = uc.create(r);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      } else
+        writeError(res, 400, result.error);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto appId = getString(req.json, "appId");
+      if (appId.isEmpty)
+        appId = req.headers.get("X-App-Id", "");
+      auto items = uc.listByApp(appId);
+
+      auto arr = Json.emptyArray;
+      foreach (e; items) {
+        auto obj = Json.emptyObject;
+        obj["id"] = Json(e.id);
+        obj["appId"] = Json(e.appId);
+        obj["versionCode"] = Json(e.versionCode);
+        obj["status"] = Json(e.status);
+        obj["fileCount"] = Json(e.fileCount);
+        arr ~= obj;
+      }
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(items.length);
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "Version not found");
+        return;
+      }
+      auto entry = uc.getById(tenantId, id);
+      if (entry is null) {
+        writeError(res, 404, "Version not found");
+        return;
+      }
+      auto obj = Json.emptyObject;
+      obj["id"] = Json(entry.id);
+      obj["appId"] = Json(entry.appId);
+      obj["versionCode"] = Json(entry.versionCode);
+      obj["description"] = Json(entry.description);
+      obj["status"] = Json(entry.status);
+      obj["fileCount"] = Json(entry.fileCount);
+      obj["createdBy"] = Json(entry.createdBy);
+      obj["createdAt"] = Json(entry.createdAt);
+      obj["updatedAt"] = Json(entry.updatedAt);
+
+      res.writeJsonBody(obj, 200);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "Version not found");
+        return;
+      }
+      UpdateAppVersionRequest r;
+      r.description = j.getString("description");
+      r.status = j.getString("status");
+
+      auto result = uc.update(r);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(id);
+        res.writeJsonBody(resp, 200);
+      } else
+        writeError(res, 400, result.error);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "Version not found");
+        return;
+      }
+      auto result = uc.remove(tenantId, id);
+      if (result.isSuccess())
+        res.writeBody("", 204);
+      else
+        writeError(res, 400, result.error);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+}

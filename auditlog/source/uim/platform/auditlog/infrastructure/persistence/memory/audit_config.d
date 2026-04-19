@@ -17,9 +17,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAuditConfigRepository : AuditConfigRepository {
-  private AuditConfig[AuditConfigId] store;
-
+class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
   AuditConfig[] findAll() {
     return store.byValue().array;
   }

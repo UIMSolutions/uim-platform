@@ -14,15 +14,15 @@ import uim.platform.htmls;
 import std.conv : to;
 
 class AppRouteController : PlatformController {
-  private ManageAppRoutesUseCase uc;
+  private ManageAppRoutesUseCase usecase;
 
-  this(ManageAppRoutesUseCase uc) {
-    this.uc = uc;
+  this(ManageAppRoutesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/routes", &handleCreate);
     router.get("/api/v1/routes", &handleList);
     router.get("/api/v1/routes/*", &handleGet);
@@ -32,19 +32,25 @@ class AppRouteController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
-      CreateAppRouteRequest r;
-      r.tenantId = req.getTenantId;
-      r.appId = j.getString("appId");
-      r.pathPrefix = j.getString("pathPrefix");
-      r.targetUrl = j.getString("targetUrl");
-      r.description = j.getString("description");
-      r.createdBy = j.getString("createdBy");
+      TenantId tenantId = req.getTenantId;
 
-      auto result = uc.create(r);
+      auto j = req.json;
+      CreateAppRouteRequest request;
+      with (request) {
+         tenantId = tenantId;
+         appId = j.getString("appId");
+         pathPrefix = j.getString("pathPrefix");
+         targetPath = j.getString("targetPath");
+         authRequired = j.getBoolean("authRequired");
+         cacheEnabled = j.getBoolean("cacheEnabled");
+         createdBy = j.getString("createdBy");
+      }
+
+      auto result = usecase.create(request);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -55,8 +61,8 @@ class AppRouteController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByTenant(tenantId);
 
+      auto items = usecase.listByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (e; items) {
         arr ~= Json.emptyObject
@@ -76,18 +82,19 @@ class AppRouteController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Route not found");
         return;
       }
-      
+
       auto response = Json.emptyObject
         .set("id", entry.id)
         .set("appId", entry.appId)
@@ -107,10 +114,11 @@ class AppRouteController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
+
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
@@ -121,7 +129,7 @@ class AppRouteController : PlatformController {
       r.targetUrl = j.getString("targetUrl");
       r.modifiedBy = j.getString("modifiedBy");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(id);
@@ -134,13 +142,14 @@ class AppRouteController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto result = uc.remove(tenantId, id);
+      auto result = usecase.remove(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

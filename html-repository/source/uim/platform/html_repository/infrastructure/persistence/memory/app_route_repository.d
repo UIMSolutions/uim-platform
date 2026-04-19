@@ -9,9 +9,7 @@ import uim.platform.html_repository.domain.ports.repositories.app_routes;
 import uim.platform.html_repository.domain.entities.app_route;
 import uim.platform.html_repository.domain.types;
 
-class AppRouteMemoryRepository : AppRouteRepository {
-  private AppRoute[] store;
-
+class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
   AppRoute findById(AppRouteId id) {
     foreach (e; store) {
       if (e.id == id) return e;

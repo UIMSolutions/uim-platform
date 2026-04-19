@@ -1,142 +1,153 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.app_file;
 
-}
-}
-writeError(res, 500, "Internal server error");
-} catch (Exception e)
-    writeError(res, 400, result.error);
-else
-    res.writeBody("", 204);
-if (result.isSuccess())
-    auto result = uc.remove(tenantId, id);
-    }
-return;
-writeError(res, 404, "File not found");
-if (Id.isEmpty) {
-    TenantId tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI.to!string);
+import uim.platform.html_repository.application.usecases.manage.app_files;
+import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository.presentation.http.json_utils;
+
+import uim.platform.htmls;
+
+import std.conv : to;
+
+class AppFileController : PlatformController {
+  private ManageAppFilesUseCase uc;
+
+  this(ManageAppFilesUseCase uc) {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.post("/api/v1/files", &handleCreate);
+    router.get("/api/v1/files", &handleList);
+    router.get("/api/v1/files/*", &handleGet);
+    router.put("/api/v1/files/*", &handleUpdate);
+    router.delete_("/api/v1/files/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        }
-        writeError(res, 500, "Internal server error");
-    } catch (Exception e)
+      auto j = req.json;
+      UploadAppFileRequest r;
+      r.tenantId = req.getTenantId;
+      r.versionId = j.getString("versionId");
+      r.filePath = j.getString("filePath");
+      r.contentType = j.getString("contentType");
+      r.data = j.getString("data");
+      r.encoding = j.getString("encoding");
+      r.createdBy = j.getString("createdBy");
+
+      auto result = uc.upload(r);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      } else
         writeError(res, 400, result.error);
-} else
-    res.writeJsonBody(resp, 200);
-resp["id"] = Json(id);
-auto resp = Json.emptyObject;
-if (result.isSuccess()) {
-    auto result = uc.update(r);
-    r.encoding = j.getString("encoding");
-    r.data = j.getString("data");
-    r.contentType = j.getString("contentType");
-    r.tenantId = tenantId;
-    r.id = id;
-    UpdateAppFileRequest r;
-}
-return;
-writeError(res, 404, "File not found");
-if (Id.isEmpty) {
-    TenantId tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI.to!string);
-    auto j = req.json;
-    try {
-        private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        }
-        writeError(res, 500, "Internal server error");
     } catch (Exception e)
-        res.writeJsonBody(obj, 200);
-    obj["modifiedAt"] = Json(entry.modifiedAt);
-    obj["modifiedBy"] = Json(entry.modifiedBy);
-    obj["createdAt"] = Json(entry.createdAt);
-    obj["createdBy"] = Json(entry.createdBy);
-    obj["encoding"] = Json(entry.encoding);
-    obj["data"] = Json(entry.data);
-    obj["sizeBytes"] = Json(entry.sizeBytes);
-    obj["category"] = Json(entry.category);
-    obj["contentType"] = Json(entry.contentType);
-    obj["filePath"] = Json(entry.filePath);
-    obj["versionId"] = Json(entry.versionId);
-    obj["id"] = Json(entry.id);
-    auto obj = Json.emptyObject;
-}
-return;
-writeError(res, 404, "File not found");
-if (entry is null) {
-    auto entry = uc.getById(tenantId, id);
-}
-return;
-writeError(res, 404, "File not found");
-if (Id.isEmpty) {
-    TenantId tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI.to!string);
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        }
-        writeError(res, 500, "Internal server error");
+      auto versionId = getString(req.json, "versionId");
+      if (versionId.isEmpty)
+        versionId = req.headers.get("X-Version-Id", "");
+      auto items = uc.listByVersion(versionId);
+
+      auto arr = Json.emptyArray;
+      foreach (e; items) {
+        auto obj = Json.emptyObject;
+        obj["id"] = Json(e.id);
+        obj["filePath"] = Json(e.filePath);
+        obj["contentType"] = Json(e.contentType);
+        obj["category"] = Json(e.category);
+        obj["sizeBytes"] = Json(e.sizeBytes);
+        arr ~= obj;
+      }
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(items.length);
+      res.writeJsonBody(resp, 200);
     } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "File not found");
+        return;
+      }
+      auto entry = uc.getById(tenantId, id);
+      if (entry is null) {
+        writeError(res, 404, "File not found");
+        return;
+      }
+      auto obj = Json.emptyObject;
+      obj["id"] = Json(entry.id);
+      obj["versionId"] = Json(entry.versionId);
+      obj["filePath"] = Json(entry.filePath);
+      obj["contentType"] = Json(entry.contentType);
+      obj["category"] = Json(entry.category);
+      obj["sizeBytes"] = Json(entry.sizeBytes);
+      obj["data"] = Json(entry.data);
+      obj["encoding"] = Json(entry.encoding);
+      obj["createdBy"] = Json(entry.createdBy);
+      obj["createdAt"] = Json(entry.createdAt);
+      obj["updatedAt"] = Json(entry.updatedAt);
+
+      res.writeJsonBody(obj, 200);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "File not found");
+        return;
+      }
+      UpdateAppFileRequest r;
+      r.contentType = j.getString("contentType");
+      r.data = j.getString("data");
+      r.encoding = j.getString("encoding");
+
+      auto result = uc.update(r);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(id);
         res.writeJsonBody(resp, 200);
-    resp["totalCount"] = Json(items.length);
-    resp["items"] = arr;
-    auto resp = Json.emptyObject;
-}
-arr ~= obj;
-obj["sizeBytes"] = Json(e.sizeBytes);
-obj["category"] = Json(e.category);
-obj["contentType"] = Json(e.contentType);
-obj["filePath"] = Json(e.filePath);
-obj["id"] = Json(e.id);
-auto obj = Json.emptyObject;
-foreach (e; items) {
-    auto arr = Json.emptyArray;
-    auto items = uc.listByVersion(versiontenantId, id);
-    versionId = req.headers.get("X-Version-Id", "");
-    if (versionId.isEmpty)
-        auto versionId = getString(req.json, "versionId");
-    TenantId tenantId = req.getTenantId;
-    try {
-        private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        }
-        writeError(res, 500, "Internal server error");
-    } catch (Exception e)
+      } else
         writeError(res, 400, result.error);
-} else
-    res.writeJsonBody(resp, 201);
-resp["id"] = Json(result.id);
-auto resp = Json.emptyObject;
-if (result.isSuccess()) {
-    auto result = uc.create(r);
-    r.createdBy = j.getString("createdBy");
-    r.encoding = j.getString("encoding");
-    r.data = j.getString("data");
-    r.contentType = j.getString("contentType");
-    r.filePath = j.getString("filePath");
-    r.versionId = j.getString("versionId");
-    r.tenantId = req.getTenantId;
-    CreateAppFileRequest r;
-    auto j = req.json;
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        }
-        router.delete_("/api/v1/files/*",  & handleDelete);
-        router.put("/api/v1/files/*",  & handleUpdate);
-        router.get("/api/v1/files/*",  & handleGet);
-        router.get("/api/v1/files",  & handleList);
-        router.post("/api/v1/files",  & handleCreate);
-        super.registerRoutes(router);
-        override void registerRoutes(URLRouter router) {
-        }
-
-        this.uc = uc;
-        this(ManageAppFilesUseCase uc) {
-            private ManageAppFilesUseCase uc;
-            class AppFileController : PlatformController {
-                import std.conv : to;
-                import uim.platform.htmls;
-                import uim.platform.html_repository.presentation.http.json_utils;
-                import uim.platform.html_repository.application.dto;
-                import uim.platform.html_repository.application.usecases.manage.app_files;
-
-                module uim.platform.html_repository.presentation.http.controllers.app_file;
-                
-                * Authors : Ozan Nurettin Süel(aka UI - Manufaktur UG * R.I.P * )
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      if (Id.isEmpty) {
+        writeError(res, 404, "File not found");
+        return;
+      }
+      auto result = uc.remove(tenantId, id);
+      if (result.isSuccess())
+        res.writeBody("", 204);
+      else
+        writeError(res, 400, result.error);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+}

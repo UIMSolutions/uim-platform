@@ -25,6 +25,11 @@ class TenantRepository(TEntity, TId) {
     return existsByTenant(tenantId) ? store[tenantId].values.array : null;
   }
 
+  void save(TenantId tenantId, TEntity item) {
+    item.tenantId = tenantId;
+    save(item);
+  }
+
   void save(TEntity item) {
     if (!existsByTenant(item.tenantId)) {
       TEntity[TId] entities;
@@ -39,10 +44,8 @@ class TenantRepository(TEntity, TId) {
     }
   }
 
-  void remove(TEntity item) {
-    if (existsById(item.tenantId, item.id)) {
-      store[item.tenantId].remove(item.id);
-    }
+  void remove(TEntity item, bool deleteTenantIfEmpty = false) {
+    remove(item.tenantId, item.id, deleteTenantIfEmpty);
   }
 
   void remove(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {

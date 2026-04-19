@@ -17,7 +17,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ManageAuditConfigUseCase : UIMUseCase {
+class ManageAuditConfigUseCase { // } : UIMUseCase {
   private AuditConfigRepository configRepo;
 
   this(AuditConfigRepository configRepo) {
@@ -34,7 +34,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto cfg = AuditConfig();
-    cfg.id = AuditConfigId(randomUUID().toString());
+    cfg.id = randomUUID;
     cfg.tenantId = req.tenantId;
     cfg.name = req.name.length > 0 ? req.name : "Default";
     cfg.status = ConfigStatus.enabled;
@@ -48,7 +48,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.minimumSeverity = req.minimumSeverity;
     cfg.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
     cfg.createdAt = now;
-    cfg.updatedAt = now;
+    cfg.updatedAt = cfg.createdAt;
 
     configRepo.save(cfg);
     return CommandResult(true, cfg.id.toString, "");
