@@ -17,7 +17,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
+class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
   private AuditLogEntry[AuditLogId][TenantId] store;
 
   // bool existsByTenant(TenantId tenantId) {

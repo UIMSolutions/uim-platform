@@ -17,7 +17,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryExportJobRepository : ExportJobRepository {
+class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
   private ExportJob[ExportJobId] store;
 
   bool existsById(TenantId tenantId, ExportJobId id) {

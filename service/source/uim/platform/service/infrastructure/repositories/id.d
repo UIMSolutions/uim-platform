@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdRepository(TEntity, TId) {
+class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
     protected TEntity[TId] store;
 
     bool existsById(TId id) {

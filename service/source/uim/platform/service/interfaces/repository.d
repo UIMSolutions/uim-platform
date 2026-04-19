@@ -17,15 +17,15 @@ interface IBaseRepository(TEntity, TId) {
   void remove(TId id);
 }
 
-interface ITenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
-  bool existsByTenant(TenantId tenantId);
-  TEntity[] findByTenant(TenantId tenantId);
-  size_t countByTenant(TenantId tenantId);
+// interface ITenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
+//   bool existsByTenant(TenantId tenantId);
+//   TEntity[] findByTenant(TenantId tenantId);
+//   size_t countByTenant(TenantId tenantId);
 
-  bool existsById(TenantId tenantId, TId id);
-  TEntity findById(TenantId tenantId, TId id);
+//   bool existsById(TenantId tenantId, TId id);
+//   TEntity findById(TenantId tenantId, TId id);
 
-  void save(TenantId tenantId, TEntity entity);
-  void update(TenantId tenantId, TEntity entity);
-  void remove(TenantId tenantId, TId id);
-}
+//   void save(TenantId tenantId, TEntity entity);
+//   void update(TenantId tenantId, TEntity entity);
+//   void remove(TenantId tenantId, TId id);
+// }
