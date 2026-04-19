@@ -16,6 +16,7 @@ configuration "defaultRun" {
 
 configuration "defaultTest" {
     targetType "library"
+    excludedSourceFiles "source/app.d"
 }
 
 configuration "modules" {
