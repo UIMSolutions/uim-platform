@@ -33,43 +33,43 @@ struct RepositorySummary {
 
 /// Use case for browsing content, searching, and managing favorites.
 class BrowseContentUseCase { // TODO: UIMUseCase {
-  private IDocumentRepository docRepo;
-  private IFolderRepository folderRepo;
-  private IFavoriteRepository favRepo;
-  private IRepositoryRepository repoRepo;
+  private IDocumentRepository docs;
+  private IFolderRepository folders;
+  private IFavoriteRepository favorites;
+  private IRepositoryRepository repositories;
 
-  this(IDocumentRepository docRepo, IFolderRepository folderRepo,
-      IFavoriteRepository favRepo, IRepositoryRepository repoRepo) {
-    this.docRepo = docRepo;
-    this.folderRepo = folderRepo;
-    this.favRepo = favRepo;
-    this.repoRepo = repoRepo;
+  this(IDocumentRepository docs, IFolderRepository folders,
+      IFavoriteRepository favorites, IRepositoryRepository repositories) {
+    this.docs = docs;
+    this.folders = folders;
+    this.favorites = favorites;
+    this.repositories = repositories;
   }
 
   /// Search documents by name.
-  Document[] searchDocuments(string query, TenantId tenantId) {
-    return docRepo.findByName(query, tenantId);
+  Document[] searchDocuments(TenantId tenantId, string query) {
+    return docs.findByName(query, tenantId);
   }
 
   /// Browse folder contents (subfolders + documents).
-  FolderContents browseFolderContents(FolderId foldertenantId, id tenantId) {
+  FolderContents browseFolderContents(TenantId tenantId, FolderId folderId) {
     FolderContents result;
-    result.subfolders = folderRepo.findByParent(foldertenantId, id);
-    result.documents = docRepo.findByFolder(foldertenantId, id);
+    result.subfolders = folders.findByParent(tenantId, folderId);
+    result.documents = docs.findByFolder(tenantId, folderId);
     return result;
   }
 
   /// Get repository summary.
-  RepositorySummary getRepositorySummary(string repositorytenantId, id tenantId) {
+  RepositorySummary getRepositorySummary(TenantId tenantId, string repositoryId) {
     RepositorySummary summary;
-    auto repo = repoRepo.findById(repositorytenantId, id);
+    auto repo = repositories.findById(repositoryId, tenantId);
     if (repo is null)
       return summary;
 
     summary.repositoryId = repositoryId;
     summary.name = repo.name;
-    summary.totalDocuments = docRepo.countByRepository(repositorytenantId, id);
-    summary.totalFolders = folderRepo.findByRepository(repositorytenantId, id).length;
+    summary.totalDocuments = docs.countByRepository(tenantId, repositoryId);
+    summary.totalFolders = folders.findByRepository(tenantId, repositoryId).length;
     summary.status = repo.status;
     return summary;
   }
@@ -77,7 +77,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   /// Add a favorite.
   CommandResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
-    auto existing = favRepo.findByUserAndResource(r.userId, r.resourceId, r.tenantId);
+    auto existing = favorites.findByUserAndResource(r.tenantId, r.userId, r.resourceId);
     if (existing !is null)
       return CommandResult(existing.id, "");
 
@@ -89,23 +89,23 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     fav.resourceType = r.resourceType;
     fav.createdAt = Clock.currStdTime();
 
-    favRepo.save(fav);
+    favorites.save(fav);
     return CommandResult(fav.id, "");
   }
 
   /// Get user favorites.
-  Favorite[] getFavorites(UserId usertenantId, id tenantId) {
-    return favRepo.findByUser(usertenantId, id);
+  Favorite[] getFavorites(TenantId tenantId, UserId userId) {
+    return favorites.findByUser(userId, tenantId);
   }
 
   /// Remove a favorite.
-  CommandResult removeFavorite(FavoriteId tenantId, id tenantId) {
-    auto fav = favRepo.findById(tenantId, id);
+  CommandResult removeFavorite(TenantId tenantId, FavoriteId favoriteId) {
+    auto fav = favorites.findById(tenantId, favoriteId);
     if (fav is null)
       return CommandResult(false, "", "Favorite not found");
 
-    favRepo.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    favorites.remove(tenantId, favoriteId);
+    return CommandResult(true, favoriteId.toString, "");
   }
 }
 

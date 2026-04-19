@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.dms.application.infrastructure.persistence.memory.permission;
+module uim.platform.dms.application.infrastructure.persistence.memory.permissions;
 
 // import uim.platform.dms.application.domain.entities.permission;
 // import uim.platform.dms.application.domain.ports.repositories.permissions;
@@ -13,67 +13,40 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPermissionRepository : IPermissionRepository {
-  private Permission[string] store;
-
-  Permission[] findByTenant(TenantId tenantId) {
-    Permission[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {
+  // #region byResource
+  size_t countByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
+    return findByResource(tenantId, resourceId, resourceType).count;
   }
 
-  Permission findById(PermissionId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        return *p;
-    return null;
+  Permission[] findByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
+    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId && e.resourceType == resourceType).array;
   }
 
-  Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
-    Permission[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.resourceId == resourceId && e.resourceType == resourceType)
-        result ~= e;
-    return result;
+  void removeByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
+    findByResource(tenantId, resourceId, resourceType).each!(e => store.remove(e));
+  }
+  // #endregion byResource
+
+  // #region byUser
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).count;
   }
 
-  Permission[] findByUser(UserId usertenantId, id tenantId) {
-    Permission[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.userId == userId)
-        result ~= e;
-    return result;
+    Permission[] findByUser(TenantId tenantId, UserId userId) {
+    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
   }
 
-  Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
-      UserId usertenantId, id tenantId) {
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.resourceId == resourceId
-          && e.resourceType == resourceType && e.userId == userId)
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(e => store.remove(e));
+  }
+  // #endregion byUser
+
+  Permission findByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
+      UserId userId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.resourceId == resourceId && e.resourceType == resourceType && e.userId == userId)
         return e;
-    return null;
-  }
-
-  void save(Permission perm) {
-    store[perm.id] = perm;
-  }
-
-  void update(Permission perm) {
-    store[perm.id] = perm;
-  }
-
-  void remove(PermissionId tenantId, id tenantId) {
-    store.remove(id);
-  }
-
-  void removeByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
-    string[] toRemove;
-    foreach (k, ref e; store)
-      if (e.tenantId == tenantId && e.resourceId == resourceId && e.resourceType == resourceType)
-        toRemove ~= k;
-    foreach (k; toRemove)
-      store.remove(k);
+    return Permission.init;
   }
 }
