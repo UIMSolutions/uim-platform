@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageTlsConfigurationsUseCase : UIMUseCase {
+class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     private TlsConfigurationRepository repo;
 
     this(TlsConfigurationRepository repo) {

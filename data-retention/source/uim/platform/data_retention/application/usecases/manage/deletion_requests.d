@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDeletionRequestsUseCase : UIMUseCase {
+class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     private DeletionRequestRepository repo;
 
     this(DeletionRequestRepository repo) { this.repo = repo; }

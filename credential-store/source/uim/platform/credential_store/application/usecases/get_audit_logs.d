@@ -10,7 +10,7 @@ import uim.platform.credential_store.domain.entities.audit_log_entry;
 import uim.platform.credential_store.domain.types;
 import uim.platform.credential_store.application.dto;
 
-class GetAuditLogsUseCase : UIMUseCase {
+class GetAuditLogsUseCase { // TODO: UIMUseCase {
   private AuditLogRepository repo;
 
   this(AuditLogRepository repo) {

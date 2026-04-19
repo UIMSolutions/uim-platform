@@ -10,7 +10,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageBusinessContextsUseCase : UIMUseCase {
+class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   private BusinessContextRepository repo;
 
   this(BusinessContextRepository repo) {

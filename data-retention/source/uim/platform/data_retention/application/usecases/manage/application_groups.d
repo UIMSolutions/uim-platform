@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageApplicationGroupsUseCase : UIMUseCase {
+class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     private ApplicationGroupRepository appGroupRepository;
 
     this(ApplicationGroupRepository appGroupRepository) {

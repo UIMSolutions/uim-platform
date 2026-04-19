@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDomainMappingsUseCase : UIMUseCase {
+class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     private DomainMappingRepository repo;
 
     this(DomainMappingRepository repo) {

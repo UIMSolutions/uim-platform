@@ -16,7 +16,7 @@ import uim.platform.foundry.domain.entities.space;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageSpacesUseCase : UIMUseCase {
+class ManageSpacesUseCase { // TODO: UIMUseCase {
   private SpaceRepository repo;
   private OrgRepository orgRepo;
 

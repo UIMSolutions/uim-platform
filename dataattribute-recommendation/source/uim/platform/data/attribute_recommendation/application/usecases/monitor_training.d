@@ -47,7 +47,7 @@ struct PipelineSummary {
   long totalInferenceRequests;
 }
 
-class MonitorTrainingUseCase : UIMUseCase {
+class MonitorTrainingUseCase { // TODO: UIMUseCase {
   private TrainingJobRepository jobRepo;
   private DeploymentRepository deploymentRepo;
   private ModelConfigRepository configRepo;

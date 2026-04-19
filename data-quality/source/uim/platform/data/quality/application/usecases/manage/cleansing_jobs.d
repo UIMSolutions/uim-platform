@@ -17,7 +17,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class ManageCleansingJobsUseCase : UIMUseCase {
+class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
   private CleansingJobRepository repo;
 
   this(CleansingJobRepository repo) {

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageResidenceRulesUseCase : UIMUseCase {
+class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     private ResidenceRuleRepository repo;
 
     this(ResidenceRuleRepository repo) { this.repo = repo; }

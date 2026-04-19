@@ -18,7 +18,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for content package CRUD and assembly.
-class ManageContentPackagesUseCase : UIMUseCase {
+class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   private ContentPackageRepository packageRepo;
   private ContentProviderRepository providerRepo;
   private ContentActivityRepository activityRepo;

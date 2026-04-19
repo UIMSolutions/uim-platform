@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageBusinessPurposesUseCase : UIMUseCase {
+class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     private BusinessPurposeRepository repo;
 
     this(BusinessPurposeRepository repo) { this.repo = repo; }

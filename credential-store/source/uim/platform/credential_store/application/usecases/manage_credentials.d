@@ -14,7 +14,7 @@ import uim.platform.credential_store.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageCredentialsUseCase : UIMUseCase {
+class ManageCredentialsUseCase { // TODO: UIMUseCase {
   private CredentialRepository repo;
 
   this(CredentialRepository repo) {

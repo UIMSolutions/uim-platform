@@ -10,7 +10,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageDataControllerGroupsUseCase : UIMUseCase {
+class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
   private DataControllerGroupRepository repo;
 
   this(DataControllerGroupRepository repo) {

@@ -17,7 +17,7 @@ import uim.platform.foundry.domain.entities.service_binding;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageServicesUseCase : UIMUseCase {
+class ManageServicesUseCase { // TODO: UIMUseCase {
   private ServiceInstanceRepository instanceRepo;
   private ServiceBindingRepository bindingRepo;
 

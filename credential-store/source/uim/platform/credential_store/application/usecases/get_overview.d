@@ -12,7 +12,7 @@ import uim.platform.credential_store.domain.ports.repositories.audit_logs;
 import uim.platform.credential_store.domain.types;
 import uim.platform.credential_store.application.dto;
 
-class GetOverviewUseCase : UIMUseCase {
+class GetOverviewUseCase { // TODO: UIMUseCase {
   private NamespaceRepository nsRepo;
   private CredentialRepository credRepo;
   private ServiceBindingRepository bindingRepo;

@@ -15,7 +15,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for content provider registration and management.
-class ManageContentProvidersUseCase : UIMUseCase {
+class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   private ContentProviderRepository providerRepo;
   private ContentActivityRepository activityRepo;
 

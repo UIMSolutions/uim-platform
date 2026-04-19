@@ -13,7 +13,7 @@ import uim.platform.credential_store.domain.services.encryption_service;
 import uim.platform.credential_store.domain.types;
 import uim.platform.credential_store.application.dto;
 
-class EncryptDekUseCase : UIMUseCase {
+class EncryptDekUseCase { // TODO: UIMUseCase {
   private CredentialRepository credRepo;
   private KeyringVersionRepository versionRepo;
 

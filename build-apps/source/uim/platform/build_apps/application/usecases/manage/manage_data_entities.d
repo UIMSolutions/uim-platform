@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDataEntitiesUseCase : UIMUseCase {
+class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     private DataEntityRepository repo;
 
     this(DataEntityRepository repo) {

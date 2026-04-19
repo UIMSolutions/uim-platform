@@ -15,7 +15,7 @@ import uim.platform.foundry.domain.entities.buildpack;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageBuildpacksUseCase : UIMUseCase {
+class ManageBuildpacksUseCase { // TODO: UIMUseCase {
   private BuildpackRepository repo;
 
   this(BuildpackRepository repo) {

@@ -16,7 +16,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ManageModelsUseCase : UIMUseCase {
+class ManageModelsUseCase { // TODO: UIMUseCase {
   private ModelConfigRepository repo;
   private DatasetRepository datasetRepo;
   private ModelTrainer trainer;

@@ -39,7 +39,7 @@ struct SpaceUsageSummary {
   int totalRoutes;
 }
 
-class MonitorAppsUseCase : UIMUseCase {
+class MonitorAppsUseCase { // TODO: UIMUseCase {
   private AppRepository appRepo;
   private ServiceInstanceRepository siRepo;
   private RouteRepository routeRepo;

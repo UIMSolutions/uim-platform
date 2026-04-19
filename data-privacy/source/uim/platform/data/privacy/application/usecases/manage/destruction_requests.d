@@ -10,7 +10,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageDestructionRequestsUseCase : UIMUseCase {
+class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   private DestructionRequestRepository repo;
   private DataSubjectRepository subjectRepo;
 

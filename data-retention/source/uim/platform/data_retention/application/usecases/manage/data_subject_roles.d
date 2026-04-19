@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDataSubjectRolesUseCase : UIMUseCase {
+class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     private DataSubjectRoleRepository repo;
 
     this(DataSubjectRoleRepository repo) { this.repo = repo; }

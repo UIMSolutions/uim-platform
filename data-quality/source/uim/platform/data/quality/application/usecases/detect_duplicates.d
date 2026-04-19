@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 // import std.datetime.systime : Clock;
 
-class DetectDuplicatesUseCase : UIMUseCase {
+class DetectDuplicatesUseCase { // TODO: UIMUseCase {
   private MatchGroupRepository repo;
   private DuplicateDetector detector;
 

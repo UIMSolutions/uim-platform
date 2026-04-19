@@ -17,7 +17,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManagePersonalDataModelsUseCase : UIMUseCase {
+class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   private PersonalDataModelRepository repo;
 
   this(PersonalDataModelRepository repo) {

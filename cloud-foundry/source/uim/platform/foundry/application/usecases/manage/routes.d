@@ -18,7 +18,7 @@ import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.domain.services.route_resolver;
 import uim.platform.foundry.application.dto;
 
-class ManageRoutesUseCase : UIMUseCase {
+class ManageRoutesUseCase { // TODO: UIMUseCase {
   private RouteRepository routeRepo;
   private DomainRepository domainRepo;
   private RouteResolver resolver;

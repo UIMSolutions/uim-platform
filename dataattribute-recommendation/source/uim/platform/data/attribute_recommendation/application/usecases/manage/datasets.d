@@ -14,7 +14,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ManageDatasetsUseCase : UIMUseCase {
+class ManageDatasetsUseCase { // TODO: UIMUseCase {
   private DatasetRepository repo;
   private DataRecordRepository recordRepo;
 

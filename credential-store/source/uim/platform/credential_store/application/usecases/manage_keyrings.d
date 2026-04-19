@@ -16,7 +16,7 @@ import uim.platform.credential_store.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageKeyringsUseCase : UIMUseCase {
+class ManageKeyringsUseCase { // TODO: UIMUseCase {
   private CredentialRepository credRepo;
   private KeyringVersionRepository versionRepo;
 

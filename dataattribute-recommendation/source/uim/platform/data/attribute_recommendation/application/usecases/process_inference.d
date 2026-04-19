@@ -16,7 +16,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ProcessInferenceUseCase : UIMUseCase {
+class ProcessInferenceUseCase { // TODO: UIMUseCase {
   private InferenceRequestRepository requestRepo;
   private InferenceResultRepository resultRepo;
   private InferenceEngine engine;

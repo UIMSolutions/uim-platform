@@ -18,7 +18,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class ProfileDataUseCase : UIMUseCase {
+class ProfileDataUseCase { // TODO: UIMUseCase {
   private DataProfileRepository repo;
 
   this(DataProfileRepository repo) {
