@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDevSpacesUseCase : UIMUseCase {
+class ManageDevSpacesUseCase { // TODO: UIMUseCase {
     private DevSpaceRepository repo;
 
     this(DevSpaceRepository repo) {

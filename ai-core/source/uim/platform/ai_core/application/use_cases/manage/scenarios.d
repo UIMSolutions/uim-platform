@@ -13,7 +13,7 @@ import uim.platform.ai_core.application.dto;
 
 import std.conv : to;
 
-class ManageScenariosUseCase : UIMUseCase {
+class ManageScenariosUseCase { // TODO: UIMUseCase {
   private ScenarioRepository repo;
 
   this(ScenarioRepository repo) {

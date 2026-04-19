@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageExecutionsUseCase : UIMUseCase {
+class ManageExecutionsUseCase { // TODO: UIMUseCase {
   private IExecutionRepository repo;
 
   this(IExecutionRepository repo) {

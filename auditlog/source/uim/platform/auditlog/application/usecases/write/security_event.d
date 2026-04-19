@@ -19,7 +19,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class WriteSecurityEventUseCase : UIMUseCase {
+class WriteSecurityEventUseCase { // TODO: UIMUseCase {
   private AuditLogRepository auditRepo;
   private SecurityEventRepository secRepo;
 

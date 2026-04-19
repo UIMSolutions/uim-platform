@@ -20,7 +20,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class WriteDataAccessLogUseCase : UIMUseCase {
+class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
   private AuditLogRepository auditRepo;
   private DataAccessLogRepository dalRepo;
 

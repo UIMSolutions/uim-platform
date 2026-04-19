@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageContentConnectorsUseCase : UIMUseCase {
+class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     private ContentConnectorRepository repo;
 
     this(ContentConnectorRepository repo) {

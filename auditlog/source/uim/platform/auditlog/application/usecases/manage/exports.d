@@ -18,13 +18,13 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ManageExportsUseCase : UIMUseCase {
-  private ExportJobRepository jobRepo;
-  private AuditLogRepository auditRepo;
+class ManageExportsUseCase { // TODO: UIMUseCase {
+  private ExportJobRepository jobs;
+  private AuditLogRepository audits;
 
-  this(ExportJobRepository jobRepo, AuditLogRepository auditRepo) {
-    this.jobRepo = jobRepo;
-    this.auditRepo = auditRepo;
+  this(ExportJobRepository jobs, AuditLogRepository audits) {
+    this.jobs = jobs;
+    this.audits = audits;
   }
 
   CommandResult createExport(CreateExportJobRequest req) {
@@ -47,30 +47,30 @@ class ManageExportsUseCase : UIMUseCase {
     job.createdAt = now;
 
     // Simulate immediate export completion
-    auto logs = auditRepo.search(req.tenantId, req.categories, req.timeFrom,
+    auto logs = audits.search(req.tenantId, req.categories, req.timeFrom,
         req.timeTo, int.max, 0);
     job.totalRecords = logs.length;
     job.status = ExportStatus.completed;
     job.completedAt = Clock.currStdTime();
     job.downloadUrl = "/api/v1/exports/" ~ job.id.toString() ~ "/download";
 
-    jobRepo.save(job);
+    jobs.save(job);
     return CommandResult(true, job.id.toString(), "");
   }
 
   bool hasExport(TenantId tenantId, ExportJobId id) {
-    return jobRepo.existsById(tenantId, id);
+    return jobs.existsById(tenantId, id);
   }
 
   ExportJob getExport(TenantId tenantId, ExportJobId id) {
-    return jobRepo.findById(tenantId, id);
+    return jobs.findById(tenantId, id);
   }
 
   ExportJob[] listExports(TenantId tenantId) {
-    return jobRepo.findByTenant(tenantId);
+    return jobs.findByTenant(tenantId);
   }
 
   void deleteExport(TenantId tenantId, ExportJobId id) {
-    jobRepo.remove(tenantId, id);
+    jobs.remove(tenantId, id);
   }
 }

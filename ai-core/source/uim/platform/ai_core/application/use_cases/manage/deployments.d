@@ -15,7 +15,7 @@ import uim.platform.ai_core.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageDeploymentsUseCase : UIMUseCase {
+class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   private DeploymentRepository deplRepo;
   private ConfigurationRepository confRepo;
 

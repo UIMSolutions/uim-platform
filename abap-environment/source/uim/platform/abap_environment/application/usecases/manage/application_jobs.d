@@ -14,7 +14,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for application job scheduling and management.
-class ManageApplicationJobsUseCase : UIMUseCase {
+class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   private ApplicationJobRepository repo;
 
   this(ApplicationJobRepository repo) {

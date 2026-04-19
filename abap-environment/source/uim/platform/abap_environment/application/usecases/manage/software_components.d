@@ -15,7 +15,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for software component lifecycle (clone, pull, manage).
-class ManageSoftwareComponentsUseCase : UIMUseCase {
+class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   private SoftwareComponentRepository repo;
   private SystemInstanceRepository systemRepo;
 

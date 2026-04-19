@@ -15,7 +15,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetrieveAuditLogsUseCase : UIMUseCase {
+class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
   private AuditLogRepository repository;
 
   this(AuditLogRepository repository) {

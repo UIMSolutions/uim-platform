@@ -144,7 +144,7 @@ class AuditConfigController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -156,8 +156,9 @@ class AuditConfigController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = AuditConfigId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
+      
+      auto id = AuditConfigId(extractIdFromPath(req.requestURI));
       useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted");

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageRunConfigurationsUseCase : UIMUseCase {
+class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     private RunConfigurationRepository repo;
 
     this(RunConfigurationRepository repo) {

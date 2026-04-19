@@ -17,7 +17,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ManageAuditConfigUseCase { // } : UIMUseCase {
+class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   private AuditConfigRepository configRepo;
 
   this(AuditConfigRepository configRepo) {
@@ -59,7 +59,7 @@ class ManageAuditConfigUseCase { // } : UIMUseCase {
   }
 
   AuditConfig getConfig(TenantId tenantId) {
-    return configRepo.findByTenant(tenantId);
+    return configRepo.getByTenant(tenantId);
   }
 
   AuditConfig[] listConfigs() {

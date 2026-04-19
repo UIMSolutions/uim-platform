@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageProjectTemplatesUseCase : UIMUseCase {
+class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     private ProjectTemplateRepository repo;
 
     this(ProjectTemplateRepository repo) {

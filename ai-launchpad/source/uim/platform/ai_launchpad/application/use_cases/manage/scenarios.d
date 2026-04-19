@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.domain.entities.scenario : Scenario;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;
 
-class ManageScenariosUseCase : UIMUseCase {
+class ManageScenariosUseCase { // TODO: UIMUseCase {
   private IScenarioRepository repo;
 
   this(IScenarioRepository repo) {

@@ -14,7 +14,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for communication arrangement CRUD.
-class ManageCommunicationArrangementsUseCase : UIMUseCase {
+class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   private CommunicationArrangementRepository repo;
 
   this(CommunicationArrangementRepository repo) {

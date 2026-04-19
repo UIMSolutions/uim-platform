@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageWorkspacesUseCase : UIMUseCase {
+class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   private IWorkspaceRepository repo;
 
   this(IWorkspaceRepository repo) {

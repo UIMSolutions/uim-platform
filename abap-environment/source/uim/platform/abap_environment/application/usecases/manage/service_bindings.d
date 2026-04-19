@@ -14,7 +14,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for service binding CRUD.
-class ManageServiceBindingsUseCase : UIMUseCase {
+class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   private ServiceBindingRepository repo;
 
   this(ServiceBindingRepository repo) {

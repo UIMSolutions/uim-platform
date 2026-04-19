@@ -14,7 +14,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for business role management.
-class ManageBusinessRolesUseCase : UIMUseCase {
+class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
   private BusinessRoleRepository repo;
 
   this(BusinessRoleRepository repo) {

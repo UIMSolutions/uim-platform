@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.domain.entities.resource_group;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;
 
-class ManageResourceGroupsUseCase : UIMUseCase {
+class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   private IResourceGroupRepository repo;
 
   this(IResourceGroupRepository repo) {

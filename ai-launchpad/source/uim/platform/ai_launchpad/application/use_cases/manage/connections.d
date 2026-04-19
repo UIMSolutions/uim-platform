@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageConnectionsUseCase : UIMUseCase {
+class ManageConnectionsUseCase { // TODO: UIMUseCase {
   private IConnectionRepository repo;
   private ConnectionValidator validator;
 

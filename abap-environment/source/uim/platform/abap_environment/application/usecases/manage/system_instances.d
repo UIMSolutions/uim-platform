@@ -15,7 +15,7 @@ import uim.platform.abap_environment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for ABAP system instance lifecycle management.
-class ManageSystemInstancesUseCase : UIMUseCase {
+class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   private SystemInstanceRepository repo;
 
   this(SystemInstanceRepository repo) {
