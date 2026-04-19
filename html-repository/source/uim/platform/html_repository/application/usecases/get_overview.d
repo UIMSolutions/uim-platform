@@ -15,7 +15,7 @@ import uim.platform.html_repository.domain.ports.repositories.content_caches;
 import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository.application.dto;
 
-class GetOverviewUseCase : UIMUseCase {
+class GetOverviewUseCase { // TODO: UIMUseCase {
     private HtmlAppRepository appRepo;
     private AppVersionRepository versionRepo;
     private AppFileRepository fileRepo;

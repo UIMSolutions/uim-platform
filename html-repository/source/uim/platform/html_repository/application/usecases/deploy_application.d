@@ -18,7 +18,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class DeployApplicationUseCase : UIMUseCase {
+class DeployApplicationUseCase { // TODO: UIMUseCase {
     private DeploymentRecordRepository deploymentRepo;
     private HtmlAppRepository appRepo;
     private AppVersionRepository versionRepo;

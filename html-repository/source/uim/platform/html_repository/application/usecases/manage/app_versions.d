@@ -14,7 +14,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageAppVersionsUseCase : UIMUseCase {
+class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     private AppVersionRepository repo;
 
     this(AppVersionRepository repo) {

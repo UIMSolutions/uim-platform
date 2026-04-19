@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageAssignmentsUseCase : UIMUseCase {
+class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     private AssignmentRepository repo;
 
     this(AssignmentRepository repo) {

@@ -16,7 +16,7 @@ import std.conv : to;
 
 alias Task = uim.platform.datasphere.domain.entities.task.Task;
 
-class ManageTasksUseCase : UIMUseCase {
+class ManageTasksUseCase { // TODO: UIMUseCase {
   private TaskRepository repo;
 
   this(TaskRepository repo) {

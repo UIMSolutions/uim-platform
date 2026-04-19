@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageViewsUseCase : UIMUseCase {
+class ManageViewsUseCase { // TODO: UIMUseCase {
   private ViewRepository repo;
 
   this(ViewRepository repo) {

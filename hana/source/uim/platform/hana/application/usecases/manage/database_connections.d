@@ -17,7 +17,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageDatabaseConnectionsUseCase : UIMUseCase {
+class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   private DatabaseConnectionRepository repo;
 
   this(DatabaseConnectionRepository repo) {

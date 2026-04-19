@@ -14,7 +14,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageServiceInstancesUseCase : UIMUseCase {
+class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     private ServiceInstanceRepository repo;
 
     this(ServiceInstanceRepository repo) {

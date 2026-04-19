@@ -17,7 +17,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageSchemasUseCase : UIMUseCase {
+class ManageSchemasUseCase { // TODO: UIMUseCase {
   private SchemaRepository repo;
 
   this(SchemaRepository repo) {

@@ -24,7 +24,7 @@ mixin(ShowModule!());
 @safe:
 /// Application service for the "Find Destination" API — resolves a destination
 /// by name, merges fragments, resolves auth tokens, and collects certificates.
-class FindDestinationUseCase : UIMUseCase {
+class FindDestinationUseCase { // TODO: UIMUseCase {
   private DestinationRepository destRepo;
   private FragmentRepository fragRepo;
   private CertificateRepository certRepo;

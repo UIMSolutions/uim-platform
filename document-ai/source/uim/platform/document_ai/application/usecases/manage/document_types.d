@@ -13,7 +13,7 @@ import uim.platform.document_ai.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageDocumentTypesUseCase : UIMUseCase {
+class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
   private DocumentTypeRepository repo;
 
   this(DocumentTypeRepository repo) {

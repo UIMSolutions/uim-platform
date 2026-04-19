@@ -13,7 +13,7 @@ import uim.platform.document_ai.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageSchemasUseCase : UIMUseCase {
+class ManageSchemasUseCase { // TODO: UIMUseCase {
   private SchemaRepository repo;
 
   this(SchemaRepository repo) {

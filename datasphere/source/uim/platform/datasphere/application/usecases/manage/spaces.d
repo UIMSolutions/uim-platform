@@ -14,7 +14,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageSpacesUseCase : UIMUseCase {
+class ManageSpacesUseCase { // TODO: UIMUseCase {
   private SpaceRepository repo;
 
   this(SpaceRepository repo) {

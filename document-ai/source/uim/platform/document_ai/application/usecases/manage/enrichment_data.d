@@ -13,7 +13,7 @@ import uim.platform.document_ai.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageEnrichmentDataUseCase : UIMUseCase {
+class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
   private EnrichmentDataRepository repo;
 
   this(EnrichmentDataRepository repo) {

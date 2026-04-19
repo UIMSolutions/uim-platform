@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageDataAccessControlsUseCase : UIMUseCase {
+class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
   private DataAccessControlRepository repo;
 
   this(DataAccessControlRepository repo) {

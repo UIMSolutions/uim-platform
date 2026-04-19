@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageSmartformsUseCase : UIMUseCase {
+class ManageSmartformsUseCase { // TODO: UIMUseCase {
     private SmartformRepository repo;
 
     this(SmartformRepository repo) {

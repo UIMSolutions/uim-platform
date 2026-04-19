@@ -18,7 +18,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: service provider / application registration.
-class ManageApplicationsUseCase : UIMUseCase {
+class ManageApplicationsUseCase { // TODO: UIMUseCase {
   private ApplicationRepository appRepo;
 
   this(ApplicationRepository appRepo) {

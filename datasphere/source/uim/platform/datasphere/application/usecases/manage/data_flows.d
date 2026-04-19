@@ -14,7 +14,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageDataFlowsUseCase : UIMUseCase {
+class ManageDataFlowsUseCase { // TODO: UIMUseCase {
   private DataFlowRepository repo;
 
   this(DataFlowRepository repo) {

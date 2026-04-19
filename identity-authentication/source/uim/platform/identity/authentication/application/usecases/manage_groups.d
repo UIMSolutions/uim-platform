@@ -19,7 +19,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: group management (CRUD + membership).
-class ManageGroupsUseCase : UIMUseCase {
+class ManageGroupsUseCase { // TODO: UIMUseCase {
   private GroupRepository groupRepo;
   private UserRepository userRepo;
 

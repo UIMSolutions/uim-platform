@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageCatalogAssetsUseCase : UIMUseCase {
+class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
   private CatalogAssetRepository repo;
 
   this(CatalogAssetRepository repo) {

@@ -18,7 +18,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageFoldersUseCase : UIMUseCase {
+class ManageFoldersUseCase { // TODO: UIMUseCase {
   private IFolderRepository folderRepo;
   private IRepositoryRepository repoRepo;
 

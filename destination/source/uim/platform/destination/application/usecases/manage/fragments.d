@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for destination fragment CRUD operations.
-class ManageFragmentsUseCase : UIMUseCase {
+class ManageFragmentsUseCase { // TODO: UIMUseCase {
   private FragmentRepository repo;
 
   this(FragmentRepository repo) {

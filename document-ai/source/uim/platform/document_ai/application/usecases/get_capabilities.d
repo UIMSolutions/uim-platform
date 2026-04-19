@@ -7,7 +7,7 @@ module uim.platform.document_ai.application.usecases.get_capabilities;
 
 import uim.platform.document_ai.application.dto;
 
-class GetCapabilitiesUseCase : UIMUseCase {
+class GetCapabilitiesUseCase { // TODO: UIMUseCase {
   CapabilitiesResponse getCapabilities() {
     CapabilitiesResponse r;
     r.extraction = true;

@@ -18,7 +18,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageInstancesUseCase : UIMUseCase {
+class ManageInstancesUseCase { // TODO: UIMUseCase {
   private InstanceRepository repo;
 
   this(InstanceRepository repo) {

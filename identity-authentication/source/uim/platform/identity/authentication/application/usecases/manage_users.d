@@ -19,7 +19,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: SCIM-like user management (CRUD).
-class ManageUsersUseCase : UIMUseCase {
+class ManageUsersUseCase { // TODO: UIMUseCase {
   private UserRepository userRepo;
   private PasswordService passwordSvc;
 

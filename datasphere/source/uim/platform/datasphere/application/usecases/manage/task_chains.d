@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageTaskChainsUseCase : UIMUseCase {
+class ManageTaskChainsUseCase { // TODO: UIMUseCase {
   private TaskChainRepository repo;
 
   this(TaskChainRepository repo) {

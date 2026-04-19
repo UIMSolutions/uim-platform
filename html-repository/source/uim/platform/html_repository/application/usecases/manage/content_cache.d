@@ -14,7 +14,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageContentCacheUseCase : UIMUseCase {
+class ManageContentCacheUseCase { // TODO: UIMUseCase {
     private ContentCacheRepository repo;
 
     this(ContentCacheRepository repo) {

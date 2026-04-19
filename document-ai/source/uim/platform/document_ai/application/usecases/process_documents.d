@@ -16,7 +16,7 @@ import uim.platform.document_ai.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ProcessDocumentsUseCase : UIMUseCase {
+class ProcessDocumentsUseCase { // TODO: UIMUseCase {
   private DocumentRepository docRepo;
   private ExtractionResultRepository resultRepo;
 

@@ -17,7 +17,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageHDIContainersUseCase : UIMUseCase {
+class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   private HDIContainerRepository repo;
 
   this(HDIContainerRepository repo) {

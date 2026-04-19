@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageConnectionsUseCase : UIMUseCase {
+class ManageConnectionsUseCase { // TODO: UIMUseCase {
   private ConnectionRepository repo;
 
   this(ConnectionRepository repo) {

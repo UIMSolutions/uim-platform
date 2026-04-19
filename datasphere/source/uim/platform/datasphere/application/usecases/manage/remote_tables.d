@@ -13,7 +13,7 @@ import uim.platform.datasphere.application.dto;
 import uim.platform.service;
 import std.conv : to;
 
-class ManageRemoteTablesUseCase : UIMUseCase {
+class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
   private RemoteTableRepository repo;
 
   this(RemoteTableRepository repo) {

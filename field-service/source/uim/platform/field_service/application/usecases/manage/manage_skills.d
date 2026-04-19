@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageSkillsUseCase : UIMUseCase {
+class ManageSkillsUseCase { // TODO: UIMUseCase {
     private SkillRepository repo;
 
     this(SkillRepository repo) {
