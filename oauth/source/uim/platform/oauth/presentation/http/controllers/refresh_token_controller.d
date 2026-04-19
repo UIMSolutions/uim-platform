@@ -31,7 +31,7 @@ class RefreshTokenController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= refreshTokenToJson(e);
+            foreach (e; items) jarr ~= e.refreshTokenToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class RefreshTokenController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(RefreshTokenId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Refresh token not found"); return; }
-            res.writeJsonBody(refreshTokenToJson(e), 200);
+            res.writeJsonBody(e.refreshTokenToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

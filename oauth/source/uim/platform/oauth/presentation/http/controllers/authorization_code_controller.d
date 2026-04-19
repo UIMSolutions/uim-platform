@@ -31,7 +31,7 @@ class AuthorizationCodeController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= authorizationCodeToJson(e);
+            foreach (e; items) jarr ~= e.authorizationCodeToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class AuthorizationCodeController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(AuthorizationCodeId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Authorization code not found"); return; }
-            res.writeJsonBody(authorizationCodeToJson(e), 200);
+            res.writeJsonBody(e.authorizationCodeToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

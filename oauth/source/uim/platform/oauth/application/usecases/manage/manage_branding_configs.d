@@ -33,7 +33,7 @@ class ManageBrandingConfigsUseCase : UIMUseCase {
     CommandResult create(BrandingConfigDTO dto) {
         BrandingConfig e;
         e.id = BrandingConfigId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
         e.logoUrl = dto.logoUrl;

@@ -37,7 +37,7 @@ class ManageRefreshTokensUseCase : UIMUseCase {
     CommandResult create(RefreshTokenDTO dto) {
         RefreshToken e;
         e.id = RefreshTokenId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.tokenValue = dto.tokenValue;
         e.clientId = dto.clientId;
         e.userId = dto.userId;

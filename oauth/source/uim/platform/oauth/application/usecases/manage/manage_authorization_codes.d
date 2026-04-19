@@ -37,7 +37,7 @@ class ManageAuthorizationCodesUseCase : UIMUseCase {
     CommandResult create(AuthorizationCodeDTO dto) {
         AuthorizationCode e;
         e.id = AuthorizationCodeId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.code = dto.code;
         e.clientId = dto.clientId;
         e.userId = dto.userId;

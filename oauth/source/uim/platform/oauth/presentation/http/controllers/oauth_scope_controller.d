@@ -31,7 +31,7 @@ class OAuthScopeController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= oauthScopeToJson(e);
+            foreach (e; items) jarr ~= e.oauthScopeToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class OAuthScopeController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(OAuthScopeId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "OAuth scope not found"); return; }
-            res.writeJsonBody(oauthScopeToJson(e), 200);
+            res.writeJsonBody(e.oauthScopeToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

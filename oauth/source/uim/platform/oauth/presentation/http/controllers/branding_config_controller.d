@@ -31,7 +31,7 @@ class BrandingConfigController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= brandingConfigToJson(e);
+            foreach (e; items) jarr ~= e.brandingConfigToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class BrandingConfigController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(BrandingConfigId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Branding config not found"); return; }
-            res.writeJsonBody(brandingConfigToJson(e), 200);
+            res.writeJsonBody(e.brandingConfigToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

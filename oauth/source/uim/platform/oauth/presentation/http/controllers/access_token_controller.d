@@ -31,7 +31,7 @@ class AccessTokenController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= accessTokenToJson(e);
+            foreach (e; items) jarr ~= e.accessTokenToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class AccessTokenController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(AccessTokenId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Access token not found"); return; }
-            res.writeJsonBody(accessTokenToJson(e), 200);
+            res.writeJsonBody(e.accessTokenToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

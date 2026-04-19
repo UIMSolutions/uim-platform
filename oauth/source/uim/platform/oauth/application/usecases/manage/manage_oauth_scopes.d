@@ -37,7 +37,7 @@ class ManageOAuthScopesUseCase : UIMUseCase {
     CommandResult create(OAuthScopeDTO dto) {
         OAuthScope e;
         e.id = OAuthScopeId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

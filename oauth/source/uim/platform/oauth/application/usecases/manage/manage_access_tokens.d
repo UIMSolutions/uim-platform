@@ -41,7 +41,7 @@ class ManageAccessTokensUseCase : UIMUseCase {
     CommandResult create(AccessTokenDTO dto) {
         AccessToken e;
         e.id = AccessTokenId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.tokenValue = dto.tokenValue;
         e.clientId = dto.clientId;
         e.userId = dto.userId;

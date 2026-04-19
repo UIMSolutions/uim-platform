@@ -12,25 +12,61 @@ mixin(ShowModule!());
 @safe:
 
 struct OAuthClientId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct OAuthScopeId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct AccessTokenId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct RefreshTokenId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct AuthorizationCodeId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct BrandingConfigId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }

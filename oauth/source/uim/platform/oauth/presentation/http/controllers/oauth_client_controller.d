@@ -31,7 +31,7 @@ class OAuthClientController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= oauthClientToJson(e);
+            foreach (e; items) jarr ~= e.oauthClientToJson();
             auto resp = Json.emptyObject;
             resp["count"] = Json(items.length);
             resp["resources"] = jarr;
@@ -48,7 +48,7 @@ class OAuthClientController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(OAuthClientId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "OAuth client not found"); return; }
-            res.writeJsonBody(oauthClientToJson(e), 200);
+            res.writeJsonBody(e.oauthClientToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

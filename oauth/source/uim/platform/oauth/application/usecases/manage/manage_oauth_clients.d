@@ -37,7 +37,7 @@ class ManageOAuthClientsUseCase : UIMUseCase {
     CommandResult create(OAuthClientDTO dto) {
         OAuthClient e;
         e.id = OAuthClientId(dto.id);
-        e.tenantId = TenantId(dto.tenantId);
+        e.tenantId = dto.tenantId;
         e.clientId = dto.clientId;
         e.clientSecret = dto.clientSecret;
         e.name = dto.name;
