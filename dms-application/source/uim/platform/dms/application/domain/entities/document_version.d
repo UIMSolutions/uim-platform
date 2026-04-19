@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.entities.document_version;
 
-import uim.platform.dms.application.domain.types;
+// import uim.platform.dms.application.domain.types;
+import uim.platform.dms.application;
 
-class DocumentVersion {
+mixin(ShowModule!());
+
+@safe:
+struct DocumentVersion {
   DocumentVersionId id;
   TenantId tenantId;
   DocumentId documentId;

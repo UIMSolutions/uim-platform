@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.entities.share;
 
-import uim.platform.dms.application.domain.types;
+// import uim.platform.dms.application.domain.types;
+import uim.platform.dms.application;
 
-class Share {
+mixin(ShowModule!());
+
+@safe:
+struct Share {
   ShareId id;
   TenantId tenantId;
   DocumentId documentId;
@@ -18,4 +22,18 @@ class Share {
   long expiresAt; // 0 = no expiry
   UserId createdBy;
   long createdAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("id", id.toString)
+      .set("tenantId", tenantId.toString)
+      .set("documentId", documentId.toString)
+      .set("shareType", shareType.toString)
+      .set("sharedWith", sharedWith)
+      .set("permissionLevel", permissionLevel.toString)
+      .set("status", status.toString)
+      .set("expiresAt", expiresAt)
+      .set("createdBy", createdBy.toString())
+      .set("createdAt", createdAt);
+  }
 }

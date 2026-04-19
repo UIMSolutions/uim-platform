@@ -14,65 +14,23 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class MemoryDocumentVersionRepository : IDocumentVersionRepository {
-  private DocumentVersion[string] store;
-
-  DocumentVersion[] findByTenant(TenantId tenantId) {
-    DocumentVersion[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {
+  size_t countByDocument(TenantId tenantId, DocumentId documentId) {
+    return findByDocument(tenantId, documentId).length;
   }
 
-  DocumentVersion findById(DocumentVersionId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        return *p;
-    return null;
+  DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
+    return findByTenant(tenantId).filter!(e => e.documentId == documentId);
   }
 
-  DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId) {
-    DocumentVersion[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.documentId == documentId)
-        result ~= e;
-    return result;
+  void removeByDocument(TenantId tenantId, DocumentId documentId) {
+    findByDocument(tenantId, documentId).each!(e => store.remove(e.id));
   }
 
-  DocumentVersion findLatest(DocumentId documenttenantId, id tenantId) {
+  DocumentVersion findLatest(TenantId tenantId, DocumentId documentId) {
     foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId && e.status == VersionStatus.current)
         return e;
     return null;
-  }
-
-  size_t countByDocument(DocumentId documenttenantId, id tenantId) {
-    size_t count;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.documentId == documentId)
-        ++count;
-    return count;
-  }
-
-  void save(DocumentVersion ver) {
-    store[ver.id] = ver;
-  }
-
-  void update(DocumentVersion ver) {
-    store[ver.id] = ver;
-  }
-
-  void remove(DocumentVersionId tenantId, id tenantId) {
-    store.remove(id);
-  }
-
-  void removeByDocument(DocumentId documenttenantId, id tenantId) {
-    string[] toRemove;
-    foreach (k, ref e; store)
-      if (e.tenantId == tenantId && e.documentId == documentId)
-        toRemove ~= k;
-    foreach (k; toRemove)
-      store.remove(k);
   }
 }

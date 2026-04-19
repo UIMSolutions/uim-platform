@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.entities.permission;
 
-import uim.platform.dms.application.domain.types;
+// import uim.platform.dms.application.domain.types;
+import uim.platform.dms.application;
 
-class Permission {
+mixin(ShowModule!());
+
+@safe:
+struct Permission {
   PermissionId id;
   TenantId tenantId;
   string resourceId; // documentId or folderId

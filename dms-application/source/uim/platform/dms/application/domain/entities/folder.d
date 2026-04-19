@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.entities.folder;
 
-import uim.platform.dms.application.domain.types;
+// import uim.platform.dms.application.domain.types;
+import uim.platform.dms.application;
 
+mixin(ShowModule!());
+
+@safe:
 class Folder {
   FolderId id;
   TenantId tenantId;

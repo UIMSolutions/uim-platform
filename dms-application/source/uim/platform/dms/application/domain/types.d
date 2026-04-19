@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.types;
+import uim.platform.dms.application;
 
+mixin(ShowModule!());
+
+@safe:
 // --- ID type aliases ---
 struct RepositoryId {
   string value;
