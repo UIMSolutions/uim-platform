@@ -15,34 +15,34 @@ mixin(ShowModule!());
 @safe:
 /// Domain service for access control checks.
 class AccessControlService {
-  private IPermissionRepository permRepo;
+  private IPermissionRepository permissions;
 
-  this(IPermissionRepository permRepo) {
-    this.permRepo = permRepo;
+  this(IPermissionRepository permissions) {
+    this.permissions = permissions;
   }
 
   /// Check if a user has at least the required permission level on a resource.
-  bool hasPermission(string resourceId, ResourceType resourceType, UserId userId,
-      PermissionLevel required, TenantId tenantId) {
-    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, usertenantId, id);
+  bool hasPermission(TenantId tenantId, string resourceId, ResourceType resourceType, UserId userId,
+      PermissionLevel required) {
+    auto perm = permissions.findByResourceAndUser(tenantId, resourceId, resourceType, userId);
     if (perm is null)
       return false;
     return permissionRank(perm.level) >= permissionRank(required);
   }
 
   /// Get effective permission level for a user on a resource.
-  PermissionLevel getEffectivePermission(string resourceId,
-      ResourceType resourceType, UserId usertenantId, id tenantId) {
-    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, usertenantId, id);
-    if (perm is null)
+  PermissionLevel getEffectivePermission(TenantId tenantId, string resourceId,
+      ResourceType resourceType, UserId userId) {
+    if (!permissions.existsByResourceAndUser(tenantId, resourceId, resourceType, userId))
       return PermissionLevel.read; // default minimum
+
+    auto perm = permissions.findByResourceAndUser(tenantId, resourceId, resourceType, userId);
     return perm.level;
   }
 
   /// Get all permissions for a resource.
-  Permission[] getResourcePermissions(string resourceId, ResourceType resourceType,
-      TenantId tenantId) {
-    return permRepo.findByResource(resourceId, resourceType, tenantId);
+  Permission[] getResourcePermissions(TenantId tenantId, string resourceId, ResourceType resourceType) {
+    return permissions.findByResource(tenantId, resourceId, resourceType);
   }
 
   private static int permissionRank(PermissionLevel level) {

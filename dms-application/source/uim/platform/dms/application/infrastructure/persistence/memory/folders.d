@@ -26,6 +26,12 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
     return Folder.init;
   }
 
+  void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
+    foreach (e; findByTenant(tenantId))
+      if (e.repositoryId == repositoryId && e.path == path)
+        store.remove(e.id);
+  }
+
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByRepository(tenantId, repositoryId).length;
   }

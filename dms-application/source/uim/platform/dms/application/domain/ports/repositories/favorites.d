@@ -12,12 +12,15 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 interface IFavoriteRepository : ITenantRepository!(Favorite, FavoriteId) {
+  bool existsByUserAndResource(TenantId tenantId, UserId userId, string resource);
+  Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resource);
+  void removeByUserAndResource(TenantId tenantId, UserId userId, string resource);
+
   size_t countByUser(TenantId tenantId, UserId userId);
   Favorite[] findByUser(TenantId tenantId, UserId userId);
   void removeByUser(TenantId tenantId, UserId userId);
   
-  Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resource);
-
-  void save(Favorite fav);
+  size_t countByResource(TenantId tenantId, string resource);
+  Favorite[] findByResource(TenantId tenantId, string resource);
   void removeByResource(TenantId tenantId, string resource);
 }

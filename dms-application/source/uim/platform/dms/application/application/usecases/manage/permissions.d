@@ -34,8 +34,8 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "User ID is required");
 
     // Check if permission already exists for this user+resource
-    auto existing = permissions.findByResourceAndUser(r.resourceId,
-        r.resourceType, r.userId, r.tenantId);
+    auto existing = permissions.findByResourceAndUser(r.tenantId, r.resourceId,
+      r.resourceType, r.userId);
     if (existing !is null) {
       // Update existing
       existing.level = r.level;
@@ -66,12 +66,12 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   bool checkAccess(TenantId tenantId, string resourceId, ResourceType resourceType, UserId userId,
-      PermissionLevel required) {
+    PermissionLevel required) {
     return accessService.hasPermission(tenantId, resourceId, resourceType, userId, required);
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    auto entity = permissions.findById(r.id, r.tenantId);
+    auto entity = permissions.findById(r.tenantId, r.id);
     if (entity is null)
       return CommandResult(false, "", "Permission not found");
 
@@ -81,11 +81,10 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokePermission(TenantId tenantId, PermissionId id) {
-    auto entity = permissions.findById(id, tenantId);
-    if (entity is null)
+    if (!permissions.existsById(tenantId, id))
       return CommandResult(false, "", "Permission not found");
 
-    permissions.remove(id, tenantId);
+    permissions.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

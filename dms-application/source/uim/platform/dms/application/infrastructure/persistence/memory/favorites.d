@@ -15,6 +15,26 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavoriteRepository {
+  bool existsByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.userId == userId && e.resourceId == resourceId)
+        return true;
+    return false;
+  }
+
+  Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.userId == userId && e.resourceId == resourceId)
+        return e;
+    return null;
+  }
+
+  void removeByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.userId == userId && e.resourceId == resourceId)
+        store.remove(e.id);
+  }
+
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).filter!(e => e.userId == userId).length;
   }
@@ -27,11 +47,12 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
     findByTenant(tenantId).filter!(e => e.userId == userId).each!(e => store.remove(e.id));
   }
 
-  Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
-    foreach (e; findByTenant(tenantId))
-      if (e.userId == userId && e.resourceId == resourceId)
-        return e;
-    return null;
+  size_t countByResource(TenantId tenantId, string resourceId) {
+    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).length;
+  }
+
+  Favorite[] findByResource(TenantId tenantId, string resourceId) {
+    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
   }
 
   void removeByResource(TenantId tenantId, string resourceId) {

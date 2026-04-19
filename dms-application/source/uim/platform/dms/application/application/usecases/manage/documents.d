@@ -21,13 +21,13 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageDocumentsUseCase { // TODO: UIMUseCase {
-  private IDocumentRepository docRepo;
+  private IDocumentRepository docs;
   private IDocumentVersionRepository versionRepo;
   private IFolderRepository folderRepo;
 
-  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo,
+  this(IDocumentRepository docs, IDocumentVersionRepository versionRepo,
       IFolderRepository folderRepo) {
-    this.docRepo = docRepo;
+    this.docs = docs;
     this.versionRepo = versionRepo;
     this.folderRepo = folderRepo;
   }
@@ -82,37 +82,37 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.currentVersionId = ver.id;
     doc.status = DocumentStatus.active;
 
-    docRepo.save(doc);
+    docs.save(doc);
     versionRepo.save(ver);
 
-    return CommandResult(doc.id, "");
+    return CommandResult(true, doc.id.toString, "");
   }
 
   Document[] listDocuments(TenantId tenantId) {
-    return docRepo.findByTenant(tenantId);
+    return docs.findByTenant(tenantId);
   }
 
   Document[] listByFolder(TenantId tenantId, FolderId folderId) {
-    return docRepo.findByFolder(folderId, tenantId);
+    return docs.findByFolder(tenantId, folderId);
   }
 
-  Document[] listByRepository(TenantId tenantId, string repositoryId) {
-    return docRepo.findByRepository(repositoryId, tenantId);
+  Document[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    return docs.findByRepository(tenantId, repositoryId);
   }
 
   Document getDocument(TenantId tenantId, DocumentId id) {
-    return docRepo.findById(tenantId, id);
+    return docs.findById(tenantId, id);
   }
 
-  Document[] searchByName(string name, TenantId tenantId) {
-    return docRepo.findByName(name, tenantId);
+  Document[] searchByName(TenantId tenantId, string name) {
+    return docs.findByName(tenantId, name);
   }
 
   CommandResult updateDocument(UpdateDocumentRequest r) {
-    auto doc = docRepo.findById(r.tenantId, r.id);
-    if (doc is null)
+    if (!docs.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Document not found");
 
+    auto doc = docs.findById(r.tenantId, r.id);
     if (r.name.length > 0)
       doc.name = r.name;
     if (r.description.length > 0)
@@ -123,16 +123,16 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
       doc.properties = r.properties;
     doc.updatedAt = Clock.currStdTime();
 
-    docRepo.update(doc);
-    return CommandResult(doc.id, "");
+    docs.update(doc);
+    return CommandResult(true, doc.id.toString, "");
   }
 
   CommandResult moveDocument(MoveDocumentRequest r) {
-    auto doc = docRepo.findById(r.tenantId, r.id);
-    if (doc is null)
+    if (!docs.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Document not found");
 
-    if (r.newFolderId.length > 0) {
+    auto doc = docs.findById(r.tenantId, r.id);
+    if (r.newFolderId.value.length > 0) {
       auto folder = folderRepo.findById(r.tenantId, r.newFolderId);
       if (folder is null)
         return CommandResult(false, "", "Target folder not found");
@@ -140,29 +140,28 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
 
     doc.folderId = r.newFolderId;
     doc.updatedAt = Clock.currStdTime();
-    docRepo.update(doc);
-    return CommandResult(doc.id, "");
+    docs.update(doc);
+    return CommandResult(true, doc.id.toString, "");
   }
 
   CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
-    auto doc = docRepo.findById(tenantId, id);
-    if (doc is null)
+    if (!docs.existsById(tenantId, id))
       return CommandResult(false, "", "Document not found");
 
+    auto doc = docs.findById(tenantId, id);
     doc.status = DocumentStatus.archived;
     doc.updatedAt = Clock.currStdTime();
-    docRepo.update(doc);
-    return CommandResult(doc.id, "");
+    docs.update(doc);
+    return CommandResult(true, doc.id.toString, "");
   }
 
   CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
-    auto doc = docRepo.findById(tenantId, id);
-    if (doc is null)
+    if (!docs.existsById(tenantId, id))
       return CommandResult(false, "", "Document not found");
 
     // Cascade delete versions
     versionRepo.removeByDocument(tenantId, id);
-    docRepo.remove(tenantId, id);
+    docs.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -40,7 +40,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
 
     // Build path
     string path = "/" ~ r.name;
-    if (r.parentFolderId.length > 0) {
+    if (r.parentFolderId.value.length > 0) {
       auto parent = folderRepo.findById(r.parentFolderId, r.tenantId);
       if (parent is null)
         return CommandResult(false, "", "Parent folder not found");

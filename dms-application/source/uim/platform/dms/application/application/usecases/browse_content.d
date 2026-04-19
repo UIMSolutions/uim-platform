@@ -48,7 +48,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
 
   /// Search documents by name.
   Document[] searchDocuments(TenantId tenantId, string query) {
-    return docs.findByName(query, tenantId);
+    return docs.findByName(tenantId, query);
   }
 
   /// Browse folder contents (subfolders + documents).
@@ -62,7 +62,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   /// Get repository summary.
   RepositorySummary getRepositorySummary(TenantId tenantId, string repositoryId) {
     RepositorySummary summary;
-    auto repo = repositories.findById(repositoryId, tenantId);
+    auto repo = repositories.findById(tenantId, repositoryId);
     if (repo is null)
       return summary;
 
@@ -95,7 +95,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
 
   /// Get user favorites.
   Favorite[] getFavorites(TenantId tenantId, UserId userId) {
-    return favorites.findByUser(userId, tenantId);
+    return favorites.findByUser(tenantId, userId);
   }
 
   /// Remove a favorite.
