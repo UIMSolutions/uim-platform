@@ -35,7 +35,11 @@ class MemoryDataConnectionRepository : DataConnectionRepository {
     }
 
     DataConnection[] findByType(ConnectionType type) {
-        return store.filter!(e => e.type == type).array;
+        return store.filter!(e => e.connectionType == type).array;
+    }
+
+    DataConnection[] findByStatus(ConnectionStatus status) {
+        return store.filter!(e => e.status == status).array;
     }
 
     void save(DataConnection entity) { store ~= entity; }

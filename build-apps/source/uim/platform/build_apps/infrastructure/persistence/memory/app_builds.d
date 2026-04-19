@@ -34,6 +34,10 @@ class MemoryAppBuildRepository : AppBuildRepository {
         return store.filter!(e => e.applicationId == applicationId).array;
     }
 
+    AppBuild[] findByBuildStatus(BuildStatus status) {
+        return store.filter!(e => e.buildStatus == status).array;
+    }
+
     void save(AppBuild entity) { store ~= entity; }
 
     void update(AppBuild entity) {

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-apps-config
+  namespace: uim-platform
+  labels:
+    app: build-apps
+    part-of: uim-platform
+data:
+  BUILD_APPS_HOST: "0.0.0.0"
+  BUILD_APPS_PORT: "8112"

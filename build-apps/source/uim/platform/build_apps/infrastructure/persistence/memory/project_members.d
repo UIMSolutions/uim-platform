@@ -38,6 +38,10 @@ class MemoryProjectMemberRepository : ProjectMemberRepository {
         return store.filter!(e => e.role == role).array;
     }
 
+    ProjectMember[] findByUserId(string userId) {
+        return store.filter!(e => e.userId == userId).array;
+    }
+
     void save(ProjectMember entity) { store ~= entity; }
 
     void update(ProjectMember entity) {
