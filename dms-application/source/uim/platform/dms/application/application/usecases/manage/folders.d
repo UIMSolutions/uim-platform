@@ -67,15 +67,15 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     return folderRepo.findByTenant(tenantId);
   }
 
-  Folder[] listByRepository(RepositoryId repositorytenantId, id tenantId) {
-    return folderRepo.findByRepository(repositorytenantId, id);
+  Folder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    return folderRepo.findByRepository(tenantId, repositoryId);
   }
 
-  Folder[] listChildren(FolderId parenttenantId, id tenantId) {
-    return folderRepo.findByParent(parenttenantId, id);
+  Folder[] listChildren(TenantId tenantId, FolderId parentFolderId) {
+    return folderRepo.findByParent(tenantId, parentFolderId);
   }
 
-  Folder getFolder(FolderId tenantId, id tenantId) {
+  Folder getFolder(TenantId tenantId, FolderId id) {
     return folderRepo.findById(tenantId, id);
   }
 
@@ -124,13 +124,13 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteFolder(FolderId tenantId, id tenantId) {
+  CommandResult deleteFolder(TenantId tenantId, FolderId id) {
     auto entity = folderRepo.findById(tenantId, id);
     if (entity is null)
       return CommandResult(false, "", "Folder not found");
 
     folderRepo.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   private static long lastIndexOf(string s, char c) {

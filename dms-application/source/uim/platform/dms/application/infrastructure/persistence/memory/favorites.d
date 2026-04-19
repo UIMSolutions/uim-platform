@@ -14,53 +14,27 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class MemoryFavoriteRepository : IFavoriteRepository {
-  private Favorite[string] store;
-
-  Favorite[] findByTenant(TenantId tenantId) {
-    Favorite[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavoriteRepository {
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByTenant(tenantId).filter!(e => e.userId == userId).length;
   }
 
-  Favorite findById(FavoriteId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        return *p;
-    return null;
+  Favorite[] findByUser(TenantId tenantId, UserId userId) {
+    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
   }
 
-  Favorite[] findByUser(UserId usertenantId, id tenantId) {
-    Favorite[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.userId == userId)
-        result ~= e;
-    return result;
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByTenant(tenantId).filter!(e => e.userId == userId).each!(e => store.remove(e.id));
   }
 
-  Favorite findByUserAndResource(UserId userId, string resourcetenantId, id tenantId) {
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.userId == userId && e.resourceId == resourceId)
+  Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.userId == userId && e.resourceId == resourceId)
         return e;
     return null;
   }
 
-  void save(Favorite fav) {
-    store[fav.id] = fav;
-  }
-
-  void remove(FavoriteId tenantId, id tenantId) {
-    store.remove(id);
-  }
-
-  void removeByResource(string resourcetenantId, id tenantId) {
-    string[] toRemove;
-    foreach (k, ref e; store)
-      if (e.tenantId == tenantId && e.resourceId == resourceId)
-        toRemove ~= k;
-    foreach (k; toRemove)
-      store.remove(k);
+  void removeByResource(TenantId tenantId, string resourceId) {
+    findByTenant(tenantId).filter!(e => e.resourceId == resourceId).each!(e => store.remove(e.id));
   }
 }

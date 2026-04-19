@@ -53,8 +53,8 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Repository getRepository(RepositoryId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  Repository getRepository(TenantId tenantId, RepositoryId repositoryId) {
+    return repo.findById(tenantId, repositoryId);
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
@@ -76,8 +76,8 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult archiveRepository(RepositoryId tenantId, id tenantId) {
-    auto entity = repo.findById(tenantId, id);
+  CommandResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
+    auto entity = repo.findById(tenantId, repositoryId);
     if (entity is null)
       return CommandResult(false, "", "Repository not found");
 
@@ -87,8 +87,8 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult activateRepository(RepositoryId tenantId, id tenantId) {
-    auto entity = repo.findById(tenantId, id);
+  CommandResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
+    auto entity = repo.findById(tenantId, repositoryId);
     if (entity is null)
       return CommandResult(false, "", "Repository not found");
 
@@ -98,12 +98,12 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteRepository(RepositoryId tenantId, id tenantId) {
-    auto entity = repo.findById(tenantId, id);
+  CommandResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
+    auto entity = repo.findById(tenantId, repositoryId);
     if (entity is null)
       return CommandResult(false, "", "Repository not found");
 
-    repo.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    repo.remove(tenantId, repositoryId);
+    return CommandResult(true, repositoryId.toString(), "");
   }
 }

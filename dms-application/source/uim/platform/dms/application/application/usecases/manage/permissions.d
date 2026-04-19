@@ -19,11 +19,11 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManagePermissionsUseCase { // TODO: UIMUseCase {
-  private IPermissionRepository permRepo;
+  private IPermissionRepository permissions;
   private AccessControlService accessService;
 
-  this(IPermissionRepository permRepo, AccessControlService accessService) {
-    this.permRepo = permRepo;
+  this(IPermissionRepository permissions, AccessControlService accessService) {
+    this.permissions = permissions;
     this.accessService = accessService;
   }
 
@@ -34,12 +34,12 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "User ID is required");
 
     // Check if permission already exists for this user+resource
-    auto existing = permRepo.findByResourceAndUser(r.resourceId,
+    auto existing = permissions.findByResourceAndUser(r.resourceId,
         r.resourceType, r.userId, r.tenantId);
     if (existing !is null) {
       // Update existing
       existing.level = r.level;
-      permRepo.update(existing);
+      permissions.update(existing);
       return CommandResult(existing.id, "");
     }
 
@@ -53,39 +53,39 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
     entity.createdBy = r.createdBy;
     entity.createdAt = Clock.currStdTime();
 
-    permRepo.save(entity);
+    permissions.save(entity);
     return CommandResult(entity.id, "");
   }
 
-  Permission[] listByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
-    return permRepo.findByResource(resourceId, resourceType, tenantId);
+  Permission[] listByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
+    return permissions.findByResource(tenantId, resourceId, resourceType);
   }
 
-  Permission[] listByUser(UserId usertenantId, id tenantId) {
-    return permRepo.findByUser(usertenantId, id);
+  Permission[] listByUser(TenantId tenantId, UserId userId) {
+    return permissions.findByUser(tenantId, userId);
   }
 
-  bool checkAccess(string resourceId, ResourceType resourceType, UserId userId,
-      PermissionLevel required, TenantId tenantId) {
-    return accessService.hasPermission(resourceId, resourceType, userId, required, tenantId);
+  bool checkAccess(TenantId tenantId, string resourceId, ResourceType resourceType, UserId userId,
+      PermissionLevel required) {
+    return accessService.hasPermission(tenantId, resourceId, resourceType, userId, required);
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    auto entity = permRepo.findById(r.id, r.tenantId);
+    auto entity = permissions.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult(false, "", "Permission not found");
 
     entity.level = r.level;
-    permRepo.update(entity);
+    permissions.update(entity);
     return CommandResult(entity.id, "");
   }
 
-  CommandResult revokePermission(PermissionId tenantId, id tenantId) {
-    auto entity = permRepo.findById(tenantId, id);
+  CommandResult revokePermission(TenantId tenantId, PermissionId id) {
+    auto entity = permissions.findById(id, tenantId);
     if (entity is null)
       return CommandResult(false, "", "Permission not found");
 
-    permRepo.remove(tenantId, id);
+    permissions.remove(id, tenantId);
     return CommandResult(true, id.toString, "");
   }
 }
