@@ -6,7 +6,6 @@
 module uim.platform.service.classes;
 
 public { // Packages
-  import uim.platform.service.classes.controllers;
   import uim.platform.service.classes.entities;
   import uim.platform.service.classes.repositories;
   import uim.platform.service.classes.stores;

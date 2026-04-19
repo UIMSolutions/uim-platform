@@ -25,23 +25,33 @@ class TenantRepository(TEntity, TId) {
     return existsByTenant(tenantId) ? store[tenantId].values.array : null;
   }
 
-  void save(TenantId tenantId, TEntity item) {
-    if (!existsByTenant(tenantId)) {
+  void save(TEntity item) {
+    if (!existsByTenant(item.tenantId)) {
       TEntity[TId] entities;
-      store[tenantId] = entities;
+      store[item.tenantId] = entities;
     } 
-    store[tenantId][item.id] = item;
+    store[item.tenantId][item.id] = item;
   }
 
-  void update(TenantId tenantId, TEntity item) {
-    if (existsById(tenantId, item.id)) {
-      store[tenantId][item.id] = item;
+  void update(TEntity item) {
+    if (existsById(item.tenantId, item.id)) {
+      store[item.tenantId][item.id] = item;
     }
   }
 
-  void remove(TenantId tenantId, TId id) {
-    if (existsById(tenantId, id)) {
+  void remove(TEntity item) {
+    if (existsById(item.tenantId, item.id)) {
+      store[item.tenantId].remove(item.id);
+    }
+  }
+
+  void remove(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
+     if (existsById(tenantId, id)) {
       store[tenantId].remove(id);
+      
+      if (deleteTenantIfEmpty && store[tenantId].empty) {
+        store.remove(tenantId);
+      }
     }
   }
 }
