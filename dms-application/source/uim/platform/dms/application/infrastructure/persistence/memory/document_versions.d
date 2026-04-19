@@ -3,67 +3,67 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.dms.application.infrastructure.persistence.memory.share;
+module uim.platform.dms.application.infrastructure.persistence.memory.document_versions;
 
-// import uim.platform.dms.application.domain.entities.share;
-// import uim.platform.dms.application.domain.ports.repositories.shares;
+// import uim.platform.dms.application.domain.entities.document_version;
+// import uim.platform.dms.application.domain.ports.repositories.document_versions;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryShareRepository : IShareRepository {
-  private Share[string] store;
 
-  Share[] findByTenant(TenantId tenantId) {
-    Share[] result;
+class MemoryDocumentVersionRepository : IDocumentVersionRepository {
+  private DocumentVersion[string] store;
+
+  DocumentVersion[] findByTenant(TenantId tenantId) {
+    DocumentVersion[] result;
     foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
   }
 
-  Share findById(ShareId tenantId, id tenantId) {
+  DocumentVersion findById(DocumentVersionId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Share[] findByDocument(DocumentId documenttenantId, id tenantId) {
-    Share[] result;
+  DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId) {
+    DocumentVersion[] result;
     foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
         result ~= e;
     return result;
   }
 
-  Share[] findBySharedWith(string sharedWith, TenantId tenantId) {
-    Share[] result;
+  DocumentVersion findLatest(DocumentId documenttenantId, id tenantId) {
     foreach (e; store)
-      if (e.tenantId == tenantId && e.sharedWith == sharedWith)
-        result ~= e;
-    return result;
+      if (e.tenantId == tenantId && e.documentId == documentId && e.status == VersionStatus.current)
+        return e;
+    return null;
   }
 
-  Share[] findByStatus(ShareStatus status, TenantId tenantId) {
-    Share[] result;
+  size_t countByDocument(DocumentId documenttenantId, id tenantId) {
+    size_t count;
     foreach (e; store)
-      if (e.tenantId == tenantId && e.status == status)
-        result ~= e;
-    return result;
+      if (e.tenantId == tenantId && e.documentId == documentId)
+        ++count;
+    return count;
   }
 
-  void save(Share share) {
-    store[share.id] = share;
+  void save(DocumentVersion ver) {
+    store[ver.id] = ver;
   }
 
-  void update(Share share) {
-    store[share.id] = share;
+  void update(DocumentVersion ver) {
+    store[ver.id] = ver;
   }
 
-  void remove(ShareId tenantId, id tenantId) {
+  void remove(DocumentVersionId tenantId, id tenantId) {
     store.remove(id);
   }
 

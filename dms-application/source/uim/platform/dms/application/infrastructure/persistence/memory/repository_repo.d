@@ -14,47 +14,30 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class MemoryRepositoryRepository : IRepositoryRepository {
-  private Repository[string] store;
-
-  Repository[] findByTenant(TenantId tenantId) {
-    Repository[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
 
-  Repository findById(RepositoryId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if ((*p).tenantId == tenantId)
-        return *p;
-    return null;
-  }
-
-  Repository findByName(string name, TenantId tenantId) {
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.name == name)
+  Repository findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return null;
   }
 
-  Repository[] findByStatus(RepositoryStatus status, TenantId tenantId) {
-    Repository[] result;
-    foreach (e; store)
-      if (e.tenantId == tenantId && e.status == status)
-        result ~= e;
-    return result;
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(e => store.remove(e.tenantId, e.id));
   }
 
-  void save(Repository repo) {
-    store[repo.id] = repo;
+  size_t countByStatus(TenantId tenantId, RepositoryStatus status) {
+    return findByStatus(tenantId, status).count;
   }
 
-  void update(Repository repo) {
-    store[repo.id] = repo;
+  Repository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void remove(RepositoryId tenantId, id tenantId) {
-    store.remove(id);
+  void removeByStatus(TenantId tenantId, RepositoryStatus status) {
+    findByStatus(tenantId, status).each!(e => store.remove(e.tenantId, e.id));
   }
 }
