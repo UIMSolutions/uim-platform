@@ -18,32 +18,4 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
-  private ExportJob[ExportJobId] store;
-
-  bool existsById(TenantId tenantId, ExportJobId id) {
-    return (id in store && store[id].tenantId == tenantId);
-  }
-
-  ExportJob findById(TenantId tenantId, ExportJobId id) {
-    if (existsById(tenantId, id))
-      return store[id];
-    return ExportJob.init;
-  }
-
-  ExportJob[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(j => j.tenantId == tenantId).array;
-  }
-
-  void save(ExportJob job) {
-    store[job.id] = job;
-  }
-
-  void update(ExportJob job) {
-    store[job.id] = job;
-  }
-
-  void remove(TenantId tenantId, ExportJobId id) {
-    if (existsById(tenantId, id))
-      store.remove(id);
-  }
 }

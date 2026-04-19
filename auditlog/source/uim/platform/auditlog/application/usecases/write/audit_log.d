@@ -37,7 +37,7 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
 
     // Check if logging is enabled for this tenant/category
     if (configRepo.existsByTenant(req.tenantId)) {
-      auto cfg = configRepo.findByTenant(req.tenantId);
+      auto cfg = configRepo.getByTenant(req.tenantId);
       if (cfg.status == ConfigStatus.disabled)
         return CommandResult(false, "", "Audit logging is disabled for this tenant");
 

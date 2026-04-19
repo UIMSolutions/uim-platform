@@ -17,19 +17,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
-  private RetentionPolicy[RetentionPolicyId] store;
-
-  bool existsById(TenantId tenantId, RetentionPolicyId policyId) {
-    return policyId in store && store[policyId].tenantId == tenantId;
-  }
-
-  RetentionPolicy findById(TenantId tenantId, RetentionPolicyId policyId) {
-    if (existsById(tenantId, policyId))
-      return store[policyId];
-    return RetentionPolicy.init;
-  }
-
+class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
   }
@@ -39,22 +27,5 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
       if (p.isDefault && p.status == RetentionStatus.active)
         return p;
     return RetentionPolicy.init;
-  }
-
-  RetentionPolicy[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(p => p.tenantId == tenantId).array;
-  }
-
-  void save(RetentionPolicy policy) {
-    store[policy.policyId] = policy;
-  }
-
-  void update(RetentionPolicy policy) {
-    store[policy.policyId] = policy;
-  }
-
-  void remove(TenantId tenantId, RetentionPolicyId policyId) {
-    if (existsById(tenantId, policyId))
-      store.remove(policyId);
   }
 }

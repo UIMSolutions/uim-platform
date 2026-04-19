@@ -14,16 +14,7 @@ mixin(ShowModule!());
 
 /// Port for persisting retention policies.
 @safe:
-interface RetentionPolicyRepository {
-  bool existsById(TenantId tenantId, RetentionPolicyId policyId);
-  RetentionPolicy findById(TenantId tenantId, RetentionPolicyId policyId);
-
+interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {
   bool existsDefault(TenantId tenantId);
   RetentionPolicy findDefault(TenantId tenantId);
-
-  RetentionPolicy[] findByTenant(TenantId tenantId);
-
-  void save(RetentionPolicy policy);
-  void update(RetentionPolicy policy);
-  void remove(TenantId tenantId, RetentionPolicyId policyId);
 }

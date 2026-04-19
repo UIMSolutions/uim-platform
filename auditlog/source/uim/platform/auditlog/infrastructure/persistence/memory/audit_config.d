@@ -19,7 +19,10 @@ mixin(ShowModule!());
 @safe:
 class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
   AuditConfig[] findAll() {
-    return store.byValue().array;
+    AuditConfig[] result;
+    foreach (tenantConfigs; store.byValue())
+      result ~= tenantConfigs.byValue().array;
+    return result;    
   }
 
   AuditConfig getByTenant(TenantId tenantId) {
@@ -43,14 +46,14 @@ unittest {
   repository.save(cfg);
 
   assert(repository.existsByTenant(TenantId("tenant1")));
-  assert(repository.findByTenant(TenantId("tenant1")).id.toString == "cfg1");
-  assert(repository.existsById(AuditConfigId("cfg1")));
-  assert(repository.findById(AuditConfigId("cfg1")).name == "Test Config");
+  assert(repository.getByTenant(TenantId("tenant1")).id.toString == "cfg1");
+  assert(repository.existsById(TenantId("tenant1"), AuditConfigId("cfg1")));
+  assert(repository.findById(TenantId("tenant1"), AuditConfigId("cfg1")).name == "Test Config");
 
   cfg.name = "Updated Config";
   repository.update(cfg);
-  assert(repository.findById(AuditConfigId("cfg1")).name == "Updated Config");
+  assert(repository.findById(TenantId("tenant1"), AuditConfigId("cfg1")).name == "Updated Config");
 
   repository.remove(TenantId("tenant1"), AuditConfigId("cfg1"));
-  assert(!repository.existsById(AuditConfigId("cfg1")));
+  assert(!repository.existsById(TenantId("tenant1"), AuditConfigId("cfg1")));
 } 

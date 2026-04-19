@@ -36,19 +36,21 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto policy = RetentionPolicy();
-    policy.tenantId = req.tenantId;
-    policy.policyId = RetentionPolicyId(randomUUID().toString);
-    policy.name = req.name;
-    policy.description = req.description;
-    policy.retentionDays = req.retentionDays;
-    policy.categories = req.categories;
-    policy.isDefault = req.isDefault;
-    policy.status = RetentionStatus.active;
-    policy.createdAt = now;
-    policy.updatedAt = now;
+    with (policy) {
+      tenantId = req.tenantId;
+      id = randomUUID();
+      name = req.name;
+      description = req.description;
+      retentionDays = req.retentionDays;
+      categories = req.categories;
+      isDefault = req.isDefault;
+      status = RetentionStatus.active;
+      createdAt = now;
+      updatedAt = now;
+    }
 
     policyRepo.save(policy);
-    return CommandResult(true, policy.policyId.toString(), "");
+    return CommandResult(true, policy.id.toString(), "");
   }
 
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
@@ -80,7 +82,7 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     policy.updatedAt = Clock.currStdTime();
 
     policyRepo.update(policy);
-    return CommandResult(true, policy.policyId.toString(), "");
+    return CommandResult(true, policy.id.toString(), "");
   }
 
   void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {

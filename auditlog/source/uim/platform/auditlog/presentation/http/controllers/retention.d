@@ -139,7 +139,7 @@ class RetentionController : PlatformController {
 
   private static Json serializePolicy(const RetentionPolicy policy) {
     auto j = Json.emptyObject
-      .set("id", policy.policyId)
+      .set("id", policy.id)
       .set("tenantId", policy.tenantId)
       .set("name", policy.name)
       .set("description", policy.description)
@@ -158,23 +158,10 @@ class RetentionController : PlatformController {
 
   private static AuditCategory[] parseCategoryArray(Json j) {
     auto cats = getStringArray(j, "categories");
-    return cats.map!(c => parseCategory(c)).array;
+    return cats.map!(c => toAuditCategory(c)).array;
   }
 
-  private static AuditCategory parseCategory(string category) {
-    switch (category) {
-    case "audit.security-events", "securityEvents":
-      return AuditCategory.securityEvents;
-    case "audit.configuration", "configuration":
-      return AuditCategory.configuration;
-    case "audit.data-access", "dataAccess":
-      return AuditCategory.dataAccess;
-    case "audit.data-modification", "dataModification":
-      return AuditCategory.dataModification;
-    default:
-      return AuditCategory.securityEvents;
-    }
-  }
+
 
   private static string categoryToString(AuditCategory c) {
     final switch (c) {

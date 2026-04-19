@@ -46,7 +46,7 @@ class AuditLogController : PlatformController {
       r.userName = j.getString("userName");
       r.serviceId = j.getString("serviceId");
       r.serviceName = j.getString("serviceName");
-      r.category = parseCategory(j.getString("category"));
+      r.category = toAuditCategory(j.getString("category"));
       r.severity = parseSeverity(j.getString("severity"));
       r.action = parseAction(j.getString("action"));
       r.outcome = parseOutcome(j.getString("outcome"));
@@ -84,7 +84,7 @@ class AuditLogController : PlatformController {
         // import std.string : split;
 
         foreach (c; catParam.split(","))
-          queryReq.categories ~= parseCategory(c);
+          queryReq.categories ~= toAuditCategory(c);
       }
 
       queryReq.timeFrom = jsonLong(Json.emptyObject, "unused"); // default 0
@@ -175,20 +175,7 @@ class AuditLogController : PlatformController {
     return result;
   }
 
-  private static AuditCategory parseCategory(string s) {
-    switch (s) {
-    case "audit.security-events", "securityEvents":
-      return AuditCategory.securityEvents;
-    case "audit.configuration", "configuration":
-      return AuditCategory.configuration;
-    case "audit.data-access", "dataAccess":
-      return AuditCategory.dataAccess;
-    case "audit.data-modification", "dataModification":
-      return AuditCategory.dataModification;
-    default:
-      return AuditCategory.securityEvents;
-    }
-  }
+
 
   private static string categoryToString(AuditCategory c) {
     final switch (c) {

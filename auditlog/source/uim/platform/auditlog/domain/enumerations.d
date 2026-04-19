@@ -1,12 +1,29 @@
 module uim.platform.auditlog.domain.enumerations;
+import uim.platform.auditlog;
 
-
+mixin(ShowModule!());
+@safe:
 /// Predefined SAP audit event categories.
 enum AuditCategory {
   securityEvents, // audit.security-events
   configuration, // audit.configuration
   dataAccess, // audit.data-access
   dataModification, // audit.data-modification
+}
+
+AuditCategory toAuditCategory(string s) {
+  switch (s) {
+  case "audit.security-events", "securityEvents":
+    return AuditCategory.securityEvents;
+  case "audit.configuration", "configuration":
+    return AuditCategory.configuration;
+  case "audit.data-access", "dataAccess":
+    return AuditCategory.dataAccess;
+  case "audit.data-modification", "dataModification":
+    return AuditCategory.dataModification;
+  default:
+    return AuditCategory.securityEvents;
+  }
 }
 
 /// Severity / log level of an audit event.

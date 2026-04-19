@@ -54,7 +54,7 @@ class ExportController : PlatformController {
       // Parse category filter
       auto cats = getStringArray(j, "categories");
       foreach (c; cats)
-        jobRequest.categories ~= parseCategory(c);
+        jobRequest.categories ~= toAuditCategory(c);
 
       auto result = useCase.createExport(jobRequest);
       if (result.isSuccess()) {
@@ -134,20 +134,7 @@ class ExportController : PlatformController {
     return json;
   }
 
-  private static AuditCategory parseCategory(string s) {
-    switch (s) {
-    case "audit.security-events", "securityEvents":
-      return AuditCategory.securityEvents;
-    case "audit.configuration", "configuration":
-      return AuditCategory.configuration;
-    case "audit.data-access", "dataAccess":
-      return AuditCategory.dataAccess;
-    case "audit.data-modification", "dataModification":
-      return AuditCategory.dataModification;
-    default:
-      return AuditCategory.securityEvents;
-    }
-  }
+
 
   private static string categoryToString(AuditCategory c) {
     final switch (c) {

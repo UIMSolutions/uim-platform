@@ -18,10 +18,10 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
-  private AuditConfigRepository configRepo;
+  private AuditConfigRepository configs;
 
-  this(AuditConfigRepository configRepo) {
-    this.configRepo = configRepo;
+  this(AuditConfigRepository configs) {
+    this.configs = configs;
   }
 
   CommandResult createConfig(CreateAuditConfigRequest req) {
@@ -29,7 +29,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     // Only one config per tenant
-    if (configRepo.existsByTenant(req.tenantId))
+    if (configs.existsByTenant(req.tenantId))
       return CommandResult(false, "", "Audit configuration already exists for this tenant");
 
     auto now = Clock.currStdTime();
@@ -50,30 +50,31 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     cfg.createdAt = now;
     cfg.updatedAt = cfg.createdAt;
 
-    configRepo.save(cfg);
+    configs.save(cfg);
     return CommandResult(true, cfg.id.toString, "");
   }
 
   bool existsConfig(TenantId tenantId) {
-    return configRepo.existsByTenant(tenantId);
+    return configs.existsByTenant(tenantId);
   }
 
   AuditConfig getConfig(TenantId tenantId) {
-    return configRepo.getByTenant(tenantId);
+    return configs.getByTenant(tenantId);
   }
 
   AuditConfig[] listConfigs() {
-    return configRepo.findAll();
+    return configs.findAll();
   }
 
   CommandResult updateConfig(UpdateAuditConfigRequest req) {
-    if (!configRepo.existsById(req.id))
+    if (!configs.existsById(req.tenantId, req.id))
       return CommandResult(false, "", "Audit config not found");
 
-    auto cfg = configRepo.findById(req.id);
+    auto cfg = configs.findById(req.tenantId, req.id);
     if (req.name.length > 0)
       cfg.name = req.name;
     cfg.status = req.status;
+    cfg.tenantId = req.tenantId;    
     cfg.logDataAccess = req.logDataAccess;
     cfg.logDataModification = req.logDataModification;
     cfg.logSecurityEvents = req.logSecurityEvents;
@@ -86,11 +87,11 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
       cfg.rateLimitPerSecond = req.rateLimitPerSecond;
     cfg.updatedAt = Clock.currStdTime();
 
-    configRepo.update(cfg);
+    configs.update(cfg);
     return CommandResult(true, cfg.id.toString, "");
   }
 
   void deleteConfig(TenantId tenantId, AuditConfigId id) {
-    configRepo.remove(tenantId, id);
+    configs.remove(tenantId, id);
   }
 }
