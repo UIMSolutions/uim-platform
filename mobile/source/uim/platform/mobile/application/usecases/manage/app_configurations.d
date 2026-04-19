@@ -12,7 +12,7 @@ import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageAppConfigurationsUseCase : UIMUseCase {
+class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     private AppConfigurationRepository repo;
 
     this(AppConfigurationRepository repo) {

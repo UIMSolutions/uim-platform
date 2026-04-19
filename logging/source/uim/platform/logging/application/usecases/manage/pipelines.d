@@ -16,7 +16,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManagePipelinesUseCase : UIMUseCase {
+class ManagePipelinesUseCase { // TODO: UIMUseCase {
   private PipelineRepository repo;
 
   this(PipelineRepository repo) {

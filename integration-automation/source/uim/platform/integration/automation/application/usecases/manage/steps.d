@@ -17,7 +17,7 @@ import uim.platform.integration.automation.domain.services.step_executor;
 import uim.platform.integration.automation.domain.services.workflow_engine;
 import uim.platform.integration.automation.application.dto;
 
-class ManageStepsUseCase : UIMUseCase {
+class ManageStepsUseCase { // TODO: UIMUseCase {
   private StepRepository repo;
   private StepExecutor executor;
   private WorkflowEngine engine;

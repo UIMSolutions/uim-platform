@@ -11,7 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.distributi
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for distribution model management.
-class ManageDistributionModelsUseCase : UIMUseCase {
+class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   private DistributionModelRepository repo;
 
   this(DistributionModelRepository repo) {

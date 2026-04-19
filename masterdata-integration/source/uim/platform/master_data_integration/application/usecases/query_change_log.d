@@ -11,7 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for querying the change log (delta tracking).
-class QueryChangeLogUseCase : UIMUseCase {
+class QueryChangeLogUseCase { // TODO: UIMUseCase {
   private ChangeLogRepository repo;
 
   this(ChangeLogRepository repo) {

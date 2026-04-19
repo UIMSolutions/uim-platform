@@ -17,7 +17,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class IngestTracesUseCase : UIMUseCase {
+class IngestTracesUseCase { // TODO: UIMUseCase {
   private SpanRepository spanRepo;
 
   this(SpanRepository spanRepo) {

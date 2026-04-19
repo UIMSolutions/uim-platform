@@ -17,7 +17,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageRetentionPoliciesUseCase : UIMUseCase {
+class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
   private RetentionPolicyRepository repo;
 
   this(RetentionPolicyRepository repo) {

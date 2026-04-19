@@ -14,7 +14,7 @@ import uim.platform.mobile.domain.ports.repositories.client_logs;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 
-class GetOverviewUseCase : UIMUseCase {
+class GetOverviewUseCase { // TODO: UIMUseCase {
     private MobileAppRepository appRepo;
     private DeviceRegistrationRepository deviceRepo;
     private PushNotificationRepository pushNotifRepo;

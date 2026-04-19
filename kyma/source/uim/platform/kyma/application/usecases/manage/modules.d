@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for Kyma module management.
-class ManageModulesUseCase : UIMUseCase {
+class ManageModulesUseCase { // TODO: UIMUseCase {
   private ModuleRepository moduleRepository;
   private ModuleDependencyResolver depResolver;
 

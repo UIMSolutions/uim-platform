@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for BTP service instance management in Kyma.
-class ManageServiceInstancesUseCase : UIMUseCase {
+class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
   private ServiceInstanceRepository repo;
 
   this(ServiceInstanceRepository repo) {

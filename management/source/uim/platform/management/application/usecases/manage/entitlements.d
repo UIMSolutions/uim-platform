@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: manage service plan entitlements and quota assignments.
-class ManageEntitlementsUseCase : UIMUseCase {
+class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   private EntitlementRepository repo;
   private EntitlementEvaluator evaluator;
 

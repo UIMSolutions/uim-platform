@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for notification channel CRUD (email, webhook, on-premise).
-class ManageNotificationChannelsUseCase : UIMUseCase {
+class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   private NotificationChannelRepository repo;
 
   this(NotificationChannelRepository repo) {

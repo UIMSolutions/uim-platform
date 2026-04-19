@@ -13,7 +13,7 @@ import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageFeatureRestrictionsUseCase : UIMUseCase {
+class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     private FeatureRestrictionRepository repo;
 
     this(FeatureRestrictionRepository repo) {

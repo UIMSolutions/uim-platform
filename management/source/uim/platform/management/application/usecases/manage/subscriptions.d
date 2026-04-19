@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: manage SaaS application subscriptions.
-class ManageSubscriptionsUseCase : UIMUseCase {
+class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   private SubscriptionRepository repo;
   private PlatformEventRepository eventRepo;
 

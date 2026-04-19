@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for external application connectivity.
-class ManageApplicationsUseCase : UIMUseCase {
+class ManageApplicationsUseCase { // TODO: UIMUseCase {
   private ApplicationRepository appRepository;
 
   this(ApplicationRepository appRepository) {

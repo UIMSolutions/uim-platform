@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for alert rule CRUD (thresholds and checks configuration).
-class ManageAlertRulesUseCase : UIMUseCase {
+class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   private AlertRuleRepository repo;
 
   this(AlertRuleRepository repo) {

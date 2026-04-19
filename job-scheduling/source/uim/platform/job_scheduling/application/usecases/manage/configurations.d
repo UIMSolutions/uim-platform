@@ -19,7 +19,7 @@ mixin(ShowModule!());
 @safe:
 // alias Configuration = uim.platform.job_scheduling.domain.entities.configuration.Configuration;
 
-class ManageConfigurationsUseCase : UIMUseCase {
+class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     private ConfigurationRepository repo;
 
     this(ConfigurationRepository repo) {

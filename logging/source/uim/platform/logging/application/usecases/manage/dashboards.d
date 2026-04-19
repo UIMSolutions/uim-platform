@@ -16,7 +16,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageDashboardsUseCase : UIMUseCase {
+class ManageDashboardsUseCase { // TODO: UIMUseCase {
   private DashboardRepository repo;
 
   this(DashboardRepository repo) {

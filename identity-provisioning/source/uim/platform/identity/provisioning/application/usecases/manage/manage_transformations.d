@@ -14,7 +14,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.transformati
 import uim.platform.identity.provisioning.domain.services.transformation_engine;
 import uim.platform.identity.provisioning.application.dto;
 
-class ManageTransformationsUseCase : UIMUseCase {
+class ManageTransformationsUseCase { // TODO: UIMUseCase {
   private TransformationRepository repo;
   private TransformationEngine engine;
 

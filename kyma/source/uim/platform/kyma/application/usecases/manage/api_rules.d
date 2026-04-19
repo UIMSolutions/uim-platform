@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for API rule management.
-class ManageApiRulesUseCase : UIMUseCase {
+class ManageApiRulesUseCase { // TODO: UIMUseCase {
   private ApiRuleRepository ruleRepository;
 
   this(ApiRuleRepository ruleRepository) {

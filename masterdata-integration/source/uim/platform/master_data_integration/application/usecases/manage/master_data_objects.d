@@ -13,7 +13,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for master data object CRUD and lifecycle.
-class ManageMasterDataObjectsUseCase : UIMUseCase {
+class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   private MasterDataObjectRepository repo;
   private ChangeLogRepository changeLogRepo;
 

@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: password policy management.
-class ManagePasswordPoliciesUseCase : UIMUseCase {
+class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
   private PasswordPolicyRepository policyRepo;
   private AuditRepository auditRepo;
 

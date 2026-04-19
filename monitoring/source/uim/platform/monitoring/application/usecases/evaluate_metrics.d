@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service: evaluates metrics against alert rules and triggers alerts.
-class EvaluateMetricsUseCase : UIMUseCase {
+class EvaluateMetricsUseCase { // TODO: UIMUseCase {
   private AlertRuleRepository ruleRepo;
   private MetricRepository metricRepo;
   private ManageAlertsUseCase alertsUseCase;

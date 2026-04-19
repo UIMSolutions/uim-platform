@@ -11,7 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for data model / schema management.
-class ManageDataModelsUseCase : UIMUseCase {
+class ManageDataModelsUseCase { // TODO: UIMUseCase {
   private DataModelRepository repo;
 
   this(DataModelRepository repo) {

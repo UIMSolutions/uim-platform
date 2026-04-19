@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for health check CRUD and result recording.
-class ManageHealthChecksUseCase : UIMUseCase {
+class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   private HealthCheckRepository checkRepo;
   private HealthCheckResultRepository resultRepo;
 

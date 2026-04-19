@@ -16,7 +16,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageLogStreamsUseCase : UIMUseCase {
+class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   private LogStreamRepository repo;
 
   this(LogStreamRepository repo) {

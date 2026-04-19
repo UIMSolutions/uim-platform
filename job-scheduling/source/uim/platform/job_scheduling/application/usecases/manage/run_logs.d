@@ -20,7 +20,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class ManageRunLogsUseCase : UIMUseCase {
+class ManageRunLogsUseCase { // TODO: UIMUseCase {
     private RunLogRepository repo;
 
     this(RunLogRepository repo) {

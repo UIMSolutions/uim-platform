@@ -25,7 +25,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Application use case: SCIM 2.0 group management.
-class ManageGroupsUseCase : UIMUseCase {
+class ManageGroupsUseCase { // TODO: UIMUseCase {
   private GroupRepository groupRepo;
   private UserRepository userRepo;
   private AuditRepository auditRepo;

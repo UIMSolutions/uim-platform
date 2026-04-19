@@ -11,7 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.filter_rul
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for filter rule management.
-class ManageFilterRulesUseCase : UIMUseCase {
+class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   private FilterRuleRepository repo;
 
   this(FilterRuleRepository repo) {

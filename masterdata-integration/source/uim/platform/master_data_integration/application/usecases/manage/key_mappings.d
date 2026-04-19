@@ -12,7 +12,7 @@ import uim.platform.master_data_integration.domain.services.key_mapping_resolver
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for cross-system key mapping management.
-class ManageKeyMappingsUseCase : UIMUseCase {
+class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   private KeyMappingRepository repo;
   private KeyMappingResolver resolver;
 

@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: custom schema management.
-class ManageSchemasUseCase : UIMUseCase {
+class ManageSchemasUseCase { // TODO: UIMUseCase {
   private SchemaRepository schemaRepo;
   private AuditRepository auditRepo;
 

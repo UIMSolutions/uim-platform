@@ -20,7 +20,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class ManageSchedulesUseCase : UIMUseCase {
+class ManageSchedulesUseCase { // TODO: UIMUseCase {
     private ScheduleRepository repo;
 
     this(ScheduleRepository repo) {

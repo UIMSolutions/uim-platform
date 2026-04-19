@@ -22,7 +22,7 @@ mixin(ShowModule!());
 // import std.datetime.systime : Clock;
 
 /// Application use case: API client / technical user management.
-class ManageApiClientsUseCase : UIMUseCase {
+class ManageApiClientsUseCase { // TODO: UIMUseCase {
   private ApiClientRepository clientRepo;
   private AuditRepository auditRepo;
 

@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Use case: manage directory hierarchy within global accounts.
-class ManageDirectoriesUseCase : UIMUseCase {
+class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   private DirectoryRepository repo;
 
   this(DirectoryRepository repo) {

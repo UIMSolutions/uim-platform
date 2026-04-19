@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for monitored resource CRUD operations.
-class ManageMonitoredResourcesUseCase : UIMUseCase {
+class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   private MonitoredResourceRepository repo;
 
   this(MonitoredResourceRepository repo) {

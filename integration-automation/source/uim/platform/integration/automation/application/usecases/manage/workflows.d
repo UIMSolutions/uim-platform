@@ -21,7 +21,7 @@ import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.domain.services.workflow_engine;
 import uim.platform.integration.automation.application.dto;
 
-class ManageWorkflowsUseCase : UIMUseCase {
+class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
   private ScenarioRepository scenarioRepo;

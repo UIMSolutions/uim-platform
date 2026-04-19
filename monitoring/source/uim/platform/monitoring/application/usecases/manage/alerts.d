@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for alert lifecycle management (list, acknowledge, resolve).
-class ManageAlertsUseCase : UIMUseCase {
+class ManageAlertsUseCase { // TODO: UIMUseCase {
   private AlertRepository repo;
 
   this(AlertRepository repo) {

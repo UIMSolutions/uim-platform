@@ -15,7 +15,7 @@ import uim.platform.integration.automation.domain.entities.system_connection;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 
-class ManageSystemsUseCase : UIMUseCase {
+class ManageSystemsUseCase { // TODO: UIMUseCase {
   private SystemRepository repo;
 
   this(SystemRepository repo) {

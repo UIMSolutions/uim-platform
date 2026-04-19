@@ -15,7 +15,7 @@ import uim.platform.integration.automation.domain.entities.workflow_step;
 // import uim.platform.integration.automation.domain.ports.repositories.steps;
 import uim.platform.integration.automation.domain.ports;
 
-class MonitorExecutionsUseCase : UIMUseCase {
+class MonitorExecutionsUseCase { // TODO: UIMUseCase {
   private ExecutionLogRepository logRepo;
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;

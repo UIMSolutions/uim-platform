@@ -42,7 +42,7 @@ struct ProvisioningSummary {
   long totalProvisionedEntities;
 }
 
-class MonitorProvisioningUseCase : UIMUseCase {
+class MonitorProvisioningUseCase { // TODO: UIMUseCase {
   private ProvisioningJobRepository jobRepo;
   private ProvisioningLogRepository logRepo;
   private ProvisionedEntityRepository entityRepo;
