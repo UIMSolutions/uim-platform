@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth
+  namespace: uim-platform
+  labels:
+    app: oauth
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth
+  template:
+    metadata:
+      labels:
+        app: oauth
+    spec:
+      containers:
+      - name: oauth
+        image: uim-platform/oauth:latest
+        ports:
+        - containerPort: 8114
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: oauth-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8114
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8114
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

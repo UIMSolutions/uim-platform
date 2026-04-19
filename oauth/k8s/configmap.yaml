@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth-config
+  namespace: uim-platform
+  labels:
+    app: oauth
+    part-of: uim-platform
+data:
+  OAUTH_HOST: "0.0.0.0"
+  OAUTH_PORT: "8114"
