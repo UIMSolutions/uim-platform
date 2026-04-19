@@ -7,10 +7,8 @@ module uim.platform.service.classes;
 
 public { // Packages
   import uim.platform.service.classes.entities;
-  import uim.platform.service.classes.repositories;
   import uim.platform.service.classes.stores;
   import uim.platform.service.classes.tenants;
-  import uim.platform.service.classes.usecases;
 }
 
 public { // Modules
