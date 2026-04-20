@@ -19,11 +19,11 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageFoldersUseCase { // TODO: UIMUseCase {
-  private IFolderRepository folderRepo;
+  private IFolderRepository folders;
   private IRepositoryRepository repoRepo;
 
-  this(IFolderRepository folderRepo, IRepositoryRepository repoRepo) {
-    this.folderRepo = folderRepo;
+  this(IFolderRepository folders, IRepositoryRepository repoRepo) {
+    this.folders = folders;
     this.repoRepo = repoRepo;
   }
 
@@ -34,14 +34,14 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository ID is required");
 
     // Validate repository exists
-    auto repository = repoRepo.findById(r.repositoryId, r.tenantId);
+    auto repository = repoRepo.findById(r.tenantId, r.repositoryId);
     if (repository is null)
       return CommandResult(false, "", "Repository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.value.length > 0) {
-      auto parent = folderRepo.findById(r.parentFolderId, r.tenantId);
+      auto parent = folders.findById(r.tenantId, r.parentFolderId);
       if (parent is null)
         return CommandResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
@@ -59,31 +59,31 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     entity.createdAt = Clock.currStdTime();
     entity.updatedAt = entity.createdAt;
 
-    folderRepo.save(entity);
-    return CommandResult(entity.id, "");
+    folders.save(entity);
+    return CommandResult(true, entity.id.toString(), "");
   }
 
   Folder[] listFolders(TenantId tenantId) {
-    return folderRepo.findByTenant(tenantId);
+    return folders.findByTenant(tenantId);
   }
 
   Folder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    return folderRepo.findByRepository(tenantId, repositoryId);
+    return folders.findByRepository(tenantId, repositoryId);
   }
 
   Folder[] listChildren(TenantId tenantId, FolderId parentFolderId) {
-    return folderRepo.findByParent(tenantId, parentFolderId);
+    return folders.findByParent(tenantId, parentFolderId);
   }
 
   Folder getFolder(TenantId tenantId, FolderId id) {
-    return folderRepo.findById(tenantId, id);
+    return folders.findById(tenantId, id);
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
-    auto entity = folderRepo.findById(r.id, r.tenantId);
-    if (entity is null)
+    if (!folders.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Folder not found");
 
+    auto entity = folders.findById(r.tenantId, r.id);
     if (r.name.length > 0) {
       entity.name = r.name;
       // Update path
@@ -97,17 +97,17 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       entity.description = r.description;
     entity.updatedAt = Clock.currStdTime();
 
-    folderRepo.update(entity);
-    return CommandResult(entity.id, "");
+    folders.update(entity);
+    return CommandResult(true, entity.id.toString(), "");
   }
 
   CommandResult moveFolder(MoveFolderRequest r) {
-    auto entity = folderRepo.findById(r.id, r.tenantId);
-    if (entity is null)
+    if (!folders.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Folder not found");
 
-    if (r.newParentFolderId.length > 0) {
-      auto newParent = folderRepo.findById(r.newParentFolderId, r.tenantId);
+    auto entity = folders.findById(r.tenantId, r.id);
+    if (r.newParentFolderId.value.length > 0) {
+      auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
       if (newParent is null)
         return CommandResult(false, "", "New parent folder not found");
       entity.parentFolderId = r.newParentFolderId;
@@ -120,23 +120,16 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     }
     entity.updatedAt = Clock.currStdTime();
 
-    folderRepo.update(entity);
-    return CommandResult(entity.id, "");
+    folders.update(entity);
+    return CommandResult(true, entity.id.toString(), "");
   }
 
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
-    auto entity = folderRepo.findById(tenantId, id);
+    auto entity = folders.findById(tenantId, id);
     if (entity is null)
       return CommandResult(false, "", "Folder not found");
 
-    folderRepo.remove(tenantId, id);
+    folders.remove(tenantId, id);
     return CommandResult(true, id.toString(), "");
-  }
-
-  private static long lastIndexOf(string s, char c) {
-    for (long i = s.length - 1; i >= 0; --i)
-      if (s[cast(size_t) i] == c)
-        return i;
-    return -1;
   }
 }

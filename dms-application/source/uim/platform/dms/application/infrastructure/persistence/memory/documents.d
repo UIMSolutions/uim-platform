@@ -25,37 +25,35 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
   }
 
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    string[] toRemove = findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).map!(e => e.id).array;
-    foreach (k; toRemove)
-      store.remove(k);
+    findByRepository(tenantId, repositoryId).each!(e => store.remove(e.id));
   }
 
   size_t countByFolder(TenantId tenantId, FolderId folderId) {
-    return findByTenant(tenantId).filter!(e => e.folderId == folderId).count;
+    return findByFolder(tenantId, folderId).count;
   }
 
   Document[] findByFolder(TenantId tenantId, FolderId folderId) {
-    return findByTenant(tenantId).filter!(e => e.folderId == folderId).array;
+    return findByFolder(tenantId, folderId).array;
   }
 
   void removeByFolder(TenantId tenantId, FolderId folderId) {
-    string[] toRemove = findByTenant(tenantId).filter!(e => e.folderId == folderId).map!(e => e.id).array;
-    foreach (k; toRemove)
-      store.remove(k);
+    findByFolder(tenantId, folderId).each!(e => store.remove(e.id));
   }
 
   size_t countByStatus(TenantId tenantId, DocumentStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).count;
+    return findByStatus(tenantId, status).count;
   }
 
   Document[] findByStatus(TenantId tenantId, DocumentStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return findByStatus(tenantId, status).array;
   }
 
   void removeByStatus(TenantId tenantId, DocumentStatus status) {
-    string[] toRemove = findByTenant(tenantId).filter!(e => e.status == status).map!(e => e.id).array;
-    foreach (k; toRemove)
-      store.remove(k);
+    findByStatus(tenantId, status).each!(e => store.remove(e.id));
+  }
+
+  size_t countByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).count;
   }
 
   Document[] findByName(TenantId tenantId, string name) {
@@ -63,7 +61,7 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
     return findByTenant(tenantId).filter!(e => e.name.toLower().canFind(lowerName)).array;
   }
 
-  size_t countByName(TenantId tenantId, string name) {
-    return findByName(tenantId, name).count;
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(e => store.remove(e.id));
   }
 }

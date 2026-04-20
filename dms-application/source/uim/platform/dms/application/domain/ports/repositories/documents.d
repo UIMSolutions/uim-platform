@@ -14,15 +14,17 @@ mixin(ShowModule!());
 interface IDocumentRepository : ITenantRepository!(Document, DocumentId) {
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
   Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
+  void removeByRepository(TenantId tenantId, RepositoryId repositoryId);
   
   size_t countByFolder(TenantId tenantId, FolderId folderId);
   Document[] findByFolder(TenantId tenantId, FolderId folderId);
+  void removeByFolder(TenantId tenantId, FolderId folderId);
 
   size_t countByStatus(TenantId tenantId, DocumentStatus status);
   Document[] findByStatus(TenantId tenantId, DocumentStatus status);
+  void removeByStatus(TenantId tenantId, DocumentStatus status);
 
   size_t countByName(TenantId tenantId, string name);
   Document[] findByName(TenantId tenantId, string name);
-  
-  void removeByFolder(TenantId tenantId, FolderId folderId);
+  void removeByName(TenantId tenantId, string name);
 }

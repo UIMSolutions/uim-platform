@@ -34,9 +34,10 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "User ID is required");
 
     // Check if permission already exists for this user+resource
-    auto existing = permissions.findByResourceAndUser(r.tenantId, r.resourceId,
-      r.resourceType, r.userId);
-    if (existing !is null) {
+    if (!permissions.existsByResourceAndUser(r.tenantId, r.resourceId,
+      r.resourceType, r.userId)) {
+      auto existing = permissions.findByResourceAndUser(r.tenantId, r.resourceId,
+        r.resourceType, r.userId);
       // Update existing
       existing.level = r.level;
       permissions.update(existing);
@@ -71,10 +72,10 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    auto entity = permissions.findById(r.tenantId, r.id);
-    if (entity is null)
+    if (!permissions.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Permission not found");
 
+    auto entity = permissions.findById(r.tenantId, r.id);
     entity.level = r.level;
     permissions.update(entity);
     return CommandResult(entity.id, "");

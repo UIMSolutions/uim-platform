@@ -20,18 +20,18 @@ mixin(ShowModule!());
 @safe:
 class ManageSharesUseCase { // TODO: UIMUseCase {
   private IShareRepository shareRepo;
-  private IDocumentRepository docRepo;
+  private IDocumentRepository docs;
 
-  this(IShareRepository shareRepo, IDocumentRepository docRepo) {
+  this(IShareRepository shareRepo, IDocumentRepository docs) {
     this.shareRepo = shareRepo;
-    this.docRepo = docRepo;
+    this.docs = docs;
   }
 
   CommandResult createShare(CreateShareRequest r) {
     if (r.documentId.isEmpty)
       return CommandResult(false, "", "Document ID is required");
 
-    auto doc = docRepo.findById(r.documentId, r.tenantId);
+    auto doc = docs.findById(r.documentId, r.tenantId);
     if (doc is null)
       return CommandResult(false, "", "Document not found");
 
@@ -48,7 +48,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     entity.createdAt = Clock.currStdTime();
 
     shareRepo.save(entity);
-    return CommandResult(entity.id, "");
+    return CommandResult(true, entity.id.value, "");
   }
 
   Share[] listShares(TenantId tenantId) {
@@ -64,21 +64,20 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokeShare(TenantId tenantId, ShareId id) {
-    auto entity = shareRepo.findById(tenantId, id);
-    if (entity is null)
+    if (!shareRepo.existsById(tenantId, id))
       return CommandResult(false, "", "Share not found");
 
+    auto entity = shareRepo.findById(tenantId, id);
     entity.status = ShareStatus.revoked;
     shareRepo.update(entity);
-    return CommandResult(entity.id, "");
+    return CommandResult(true, entity.id.value, "");
   }
 
   CommandResult deleteShare(TenantId tenantId, ShareId id) {
-    auto entity = shareRepo.findById(tenantId, id);
-    if (entity is null)
+    if (!shareRepo.existsById(tenantId, id))
       return CommandResult(false, "", "Share not found");
 
     shareRepo.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

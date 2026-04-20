@@ -31,9 +31,10 @@ class VersioningService {
 
   /// Check out a document (lock it for editing).
   bool checkOut(TenantId tenantId, DocumentId docId, UserId userId) {
-    auto doc = docs.findById(tenantId, docId);
-    if (doc is null)
+    if (!docs.existsById(tenantId, docId))
       return false;
+
+    auto doc = docs.findById(tenantId, docId);
     if (doc.status == DocumentStatus.locked)
       return false; // already checked out
 
@@ -46,9 +47,10 @@ class VersioningService {
   /// Check in a document, creating a new version.
   DocumentVersion checkIn(TenantId tenantId, DocumentId docId, UserId userId, bool isMajor,
       string comment, string fileName, string mimeType, long fileSize, string checksum) {
-    auto doc = docs.findById(tenantId, docId);
-    if (doc is null)
+    if (!docs.existsById(tenantId, docId))
       return null;
+
+    auto doc = docs.findById(tenantId, docId);
     if (doc.status != DocumentStatus.locked)
       return null; // must be checked out first
 

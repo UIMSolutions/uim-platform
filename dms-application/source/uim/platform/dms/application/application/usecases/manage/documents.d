@@ -22,14 +22,14 @@ mixin(ShowModule!());
 @safe:
 class ManageDocumentsUseCase { // TODO: UIMUseCase {
   private IDocumentRepository docs;
-  private IDocumentVersionRepository versionRepo;
-  private IFolderRepository folderRepo;
+  private IDocumentVersionRepository versions;
+  private IFolderRepository folders;
 
-  this(IDocumentRepository docs, IDocumentVersionRepository versionRepo,
-      IFolderRepository folderRepo) {
+  this(IDocumentRepository docs, IDocumentVersionRepository versions,
+      IFolderRepository folders) {
     this.docs = docs;
-    this.versionRepo = versionRepo;
-    this.folderRepo = folderRepo;
+    this.versions = versions;
+    this.folders = folders;
   }
 
   CommandResult createDocument(CreateDocumentRequest r) {
@@ -40,8 +40,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
 
     // Validate folder exists if provided
     if (r.folderId.length > 0) {
-      auto folder = folderRepo.findById(r.folderId, r.tenantId);
-      if (folder is null)
+      if (!folders.existsById(r.tenantId, r.folderId))
         return CommandResult(false, "", "Folder not found");
     }
 
@@ -83,7 +82,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.status = DocumentStatus.active;
 
     docs.save(doc);
-    versionRepo.save(ver);
+    versions.save(ver);
 
     return CommandResult(true, doc.id.toString, "");
   }
@@ -133,7 +132,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
 
     auto doc = docs.findById(r.tenantId, r.id);
     if (r.newFolderId.value.length > 0) {
-      auto folder = folderRepo.findById(r.tenantId, r.newFolderId);
+      auto folder = folders.findById(r.tenantId, r.newFolderId);
       if (folder is null)
         return CommandResult(false, "", "Target folder not found");
     }
@@ -160,7 +159,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document not found");
 
     // Cascade delete versions
-    versionRepo.removeByDocument(tenantId, id);
+    versions.removeByDocument(tenantId, id);
     docs.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }

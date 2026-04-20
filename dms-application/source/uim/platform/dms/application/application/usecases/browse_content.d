@@ -60,13 +60,13 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   }
 
   /// Get repository summary.
-  RepositorySummary getRepositorySummary(TenantId tenantId, string repositoryId) {
+  RepositorySummary getRepositorySummary(TenantId tenantId, RepositoryId repositoryId) {
     RepositorySummary summary;
-    auto repo = repositories.findById(tenantId, repositoryId);
-    if (repo is null)
+    if (!repositories.existsById(tenantId, repositoryId))
       return summary;
 
-    summary.repositoryId = repositoryId;
+    auto repo = repositories.findById(tenantId, repositoryId);
+    summary.repositoryId = RepositoryId(repositoryId);
     summary.name = repo.name;
     summary.totalDocuments = docs.countByRepository(tenantId, repositoryId);
     summary.totalFolders = folders.findByRepository(tenantId, repositoryId).length;
@@ -77,9 +77,8 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   /// Add a favorite.
   CommandResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
-    auto existing = favorites.findByUserAndResource(r.tenantId, r.userId, r.resourceId);
-    if (existing !is null)
-      return CommandResult(existing.id, "");
+    if (favorites.existsByUserAndResource(r.tenantId, r.userId, r.resourceId))
+      return CommandResult(true, existing.id.toString(), "");
 
     auto fav = new Favorite();
     fav.id = randomUUID();
@@ -90,7 +89,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     fav.createdAt = Clock.currStdTime();
 
     favorites.save(fav);
-    return CommandResult(fav.id, "");
+    return CommandResult(true, fav.id.toString(), "");
   }
 
   /// Get user favorites.
@@ -100,12 +99,11 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
 
   /// Remove a favorite.
   CommandResult removeFavorite(TenantId tenantId, FavoriteId favoriteId) {
-    auto fav = favorites.findById(tenantId, favoriteId);
-    if (fav is null)
+    if (!favorites.existsById(tenantId, favoriteId))
       return CommandResult(false, "", "Favorite not found");
 
     favorites.remove(tenantId, favoriteId);
-    return CommandResult(true, favoriteId.toString, "");
+    return CommandResult(true, favoriteId.toString(), "");
   }
 }
 
