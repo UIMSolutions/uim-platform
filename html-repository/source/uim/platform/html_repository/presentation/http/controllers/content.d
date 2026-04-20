@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.content;
 
-import uim.platform.html_repository.application.usecases.manage.app_files;
-import uim.platform.html_repository.application.usecases.manage.content_cache;
-import uim.platform.html_repository.application.dto;
-import uim.platform.html_repository.presentation.http.json_utils;
+// import uim.platform.html_repository.application.usecases.manage.app_files;
+// import uim.platform.html_repository.application.usecases.manage.content_cache;
+// import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.presentation.http.json_utils;
 
-import uim.platform.htmls;
+// import uim.platform.htmls;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 class ContentController : PlatformController {
   private ManageAppFilesUseCase fileUc;
   private ManageContentCacheUseCase cacheUc;

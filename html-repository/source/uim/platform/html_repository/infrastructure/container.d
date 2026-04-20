@@ -5,40 +5,44 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.container;
 
-import uim.platform.html_repository.infrastructure.config;
+// import uim.platform.html_repository.infrastructure.config;
 
-// Repositories
-import uim.platform.html_repository.infrastructure.persistence.memory.html_app_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_version_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
+// // Repositories
+// import uim.platform.html_repository.infrastructure.persistence.memory.html_app_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.app_version_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
+// import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
 
-// Use Cases
-import uim.platform.html_repository.application.usecases.manage.html_apps;
-import uim.platform.html_repository.application.usecases.manage.app_versions;
-import uim.platform.html_repository.application.usecases.manage.app_files;
-import uim.platform.html_repository.application.usecases.manage.service_instances;
-import uim.platform.html_repository.application.usecases.deploy_application;
-import uim.platform.html_repository.application.usecases.manage.app_routes;
-import uim.platform.html_repository.application.usecases.manage.content_cache;
-import uim.platform.html_repository.application.usecases.get_deployment_history;
-import uim.platform.html_repository.application.usecases.get_overview;
+// // Use Cases
+// import uim.platform.html_repository.application.usecases.manage.html_apps;
+// import uim.platform.html_repository.application.usecases.manage.app_versions;
+// import uim.platform.html_repository.application.usecases.manage.app_files;
+// import uim.platform.html_repository.application.usecases.manage.service_instances;
+// import uim.platform.html_repository.application.usecases.deploy_application;
+// import uim.platform.html_repository.application.usecases.manage.app_routes;
+// import uim.platform.html_repository.application.usecases.manage.content_cache;
+// import uim.platform.html_repository.application.usecases.get_deployment_history;
+// import uim.platform.html_repository.application.usecases.get_overview;
 
-// Controllers
-import uim.platform.html_repository.presentation.http.controllers.html_app;
-import uim.platform.html_repository.presentation.http.controllers.app_version;
-import uim.platform.html_repository.presentation.http.controllers.app_file;
-import uim.platform.html_repository.presentation.http.controllers.service_instance;
-import uim.platform.html_repository.presentation.http.controllers.deployment;
-import uim.platform.html_repository.presentation.http.controllers.app_route;
-import uim.platform.html_repository.presentation.http.controllers.content_cache;
-import uim.platform.html_repository.presentation.http.controllers.content;
-import uim.platform.html_repository.presentation.http.controllers.overview;
-import uim.platform.html_repository.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.html_repository.presentation.http.controllers.html_app;
+// import uim.platform.html_repository.presentation.http.controllers.app_version;
+// import uim.platform.html_repository.presentation.http.controllers.app_file;
+// import uim.platform.html_repository.presentation.http.controllers.service_instance;
+// import uim.platform.html_repository.presentation.http.controllers.deployment;
+// import uim.platform.html_repository.presentation.http.controllers.app_route;
+// import uim.platform.html_repository.presentation.http.controllers.content_cache;
+// import uim.platform.html_repository.presentation.http.controllers.content;
+// import uim.platform.html_repository.presentation.http.controllers.overview;
+// import uim.platform.html_repository.presentation.http.controllers.health;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct Container {
   // Repositories (driven adapters)
   HtmlAppMemoryRepository appRepo;

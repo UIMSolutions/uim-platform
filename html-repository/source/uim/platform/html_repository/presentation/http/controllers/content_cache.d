@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.content_cache;
 
-import uim.platform.html_repository.application.usecases.manage.content_cache;
-import uim.platform.html_repository.application.dto;
-import uim.platform.html_repository.presentation.http.json_utils;
+// import uim.platform.html_repository.application.usecases.manage.content_cache;
+// import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.presentation.http.json_utils;
 
-import uim.platform.htmls;
+// import uim.platform.htmls;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 class ContentCacheController : PlatformController {
   private ManageContentCacheUseCase uc;
 
@@ -22,6 +26,7 @@ class ContentCacheController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/cache", &handleCreate);
     router.get("/api/v1/cache", &handleList);
     router.get("/api/v1/cache/*", &handleGet);

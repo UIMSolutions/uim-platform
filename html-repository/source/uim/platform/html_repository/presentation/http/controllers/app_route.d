@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.app_route;
 
-import uim.platform.html_repository.application.usecases.manage.app_routes;
-import uim.platform.html_repository.application.dto;
-import uim.platform.html_repository.presentation.http.json_utils;
+// import uim.platform.html_repository.application.usecases.manage.app_routes;
+// import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.presentation.http.json_utils;
 
-import uim.platform.htmls;
+// import uim.platform.htmls;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 class AppRouteController : PlatformController {
   private ManageAppRoutesUseCase usecase;
 
