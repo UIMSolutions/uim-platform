@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.space;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.space;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.space;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying spaces.
 interface SpaceRepository {
   Space[] findByOrg(OrgId orgtenantId, id tenantId);

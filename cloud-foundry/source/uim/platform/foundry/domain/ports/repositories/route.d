@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.route;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.route;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.route;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying routes.
 interface IRouteRepository {
   Route[] findBySpace(SpaceId spacetenantId, id tenantId);

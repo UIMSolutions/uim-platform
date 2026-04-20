@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.buildpack;
 
-import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.types;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// A buildpack — provides the runtime detection, compilation, and start
 /// scripts for staging applications (e.g. Java, Node.js, Go, Python).
 struct Buildpack {

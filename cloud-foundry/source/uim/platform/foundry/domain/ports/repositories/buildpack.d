@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.buildpack;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.buildpack;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.buildpack;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying buildpacks.
 interface IBuildpackRepository {
   Buildpack[] findByTenant(TenantId tenantId);

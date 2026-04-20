@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.cf_domain;
 
-import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.types;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// A Cloud Foundry domain — a DNS namespace under which routes are created.
 /// Can be shared (platform-wide), private (org-scoped), or internal.
 struct CfDomain {
