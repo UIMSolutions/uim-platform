@@ -14,6 +14,16 @@ struct ScheduleConfig {
     string endDate;
     string timezone;
     int repeatCount;
+
+    Json toJson() const {
+        return Json()
+            .set("frequency", frequency.toString())
+            .set("cronExpression", cronExpression)
+            .set("startDate", startDate)
+            .set("endDate", endDate)
+            .set("timezone", timezone)
+            .set("repeatCount", repeatCount);
+    }
 }
 
 struct WebhookConfig {
@@ -21,12 +31,20 @@ struct WebhookConfig {
     string secret;
     string[] allowedIps;
     string authType;
+
+    Json toJson() const {
+        return Json()
+            .set("url", url)
+            .set("secret", secret)
+            .set("allowedIps", allowedIps.array)
+            .set("authType", authType);
+    }
 }
 
 struct Trigger {
-    TriggerId id;
+    mixin TenantEntity!(TriggerId);
+
     ProcessId processId;
-    TenantId tenantId;
     string name;
     string description;
     TriggerType type;
@@ -36,9 +54,22 @@ struct Trigger {
     string eventType;
     string eventSource;
     string filterExpression;
-    string createdBy;
-    long createdAt;
-    long modifiedAt;
     long lastFiredAt;
     long fireCount;
+
+    Json toJson() const {
+        return entityToJson()
+            .set("processId", processId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.toString())
+            .set("status", status.toString())
+            .set("schedule", schedule.toJson())
+            .set("webhook", webhook.toJson())
+            .set("eventType", eventType)
+            .set("eventSource", eventSource)
+            .set("filterExpression", filterExpression)
+            .set("lastFiredAt", lastFiredAt)
+            .set("fireCount", fireCount);
+    }
 }

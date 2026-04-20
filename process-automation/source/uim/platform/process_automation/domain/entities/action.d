@@ -15,16 +15,31 @@ struct ActionParameter {
     bool required;
     string defaultValue;
     string description;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("type", type)
+            .set("required", required)
+            .set("defaultValue", defaultValue)
+            .set("description", description);
+    }
 }
 
 struct ActionHeader {
     string name;
     string value;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("value", value);
+    }
 }
 
 struct Action {
-    ActionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ActionId);
+
     ProjectId projectId;
     string name;
     string description;
@@ -39,8 +54,24 @@ struct Action {
     string authType;
     string destinationName;
     string version_;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("projectId", projectId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("status", status.toString)
+            .set("type", type.toString)
+            .set("method", method.toString)
+            .set("baseUrl", baseUrl)
+            .set("path", path)
+            .set("headers", headers.map!(h => h.toJson()).array)
+            .set("inputParameters", inputParameters.map!(p => p.toJson()).array)
+            .set("outputParameters", outputParameters.map!(p => p.toJson()).array)
+            .set("authType", authType)
+            .set("destinationName", destinationName)
+            .set("version_", version_);
+
+        return j;
+    }
 }

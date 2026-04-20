@@ -25,31 +25,15 @@ struct Theme {
   bool isDefault;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("mode", mode.toString)
       .set("baseTheme", baseTheme)
-      .set("colors", Json.emptyObject
-          .set("primaryColor", colors.primaryColor)
-          .set("secondaryColor", colors.secondaryColor)
-          .set("accentColor", colors.accentColor)
-          .set("backgroundColor", colors.backgroundColor)
-          .set("shellColor", colors.shellColor)
-          .set("textColor", colors.textColor)
-          .set("linkColor", colors.linkColor)
-          .set("headerColor", colors.headerColor)
-          .set("footerColor", colors.footerColor)
-          .set("tileBackgroundColor", colors.tileBackgroundColor))
-      .set("fonts", Json.emptyObject
-          .set("fontFamily", fonts.fontFamily)
-          .set("headerFontFamily", fonts.headerFontFamily)
-          .set("fontSize", fonts.fontSize)
-          .set("headerFontSize", fonts.headerFontSize))
+      .set("colors", colors.toJson())
+      .set("fonts", fonts.toJson())
       .set("customCss", customCss)
       .set("isDefault", isDefault);
-
-    return j;
   }
 }
 

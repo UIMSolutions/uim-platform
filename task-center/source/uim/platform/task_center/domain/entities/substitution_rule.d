@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct SubstitutionRule {
-    SubstitutionRuleId id;
-    TenantId tenantId;
+    mixin TenantEntity!(SubstitutionRuleId);
 
     UserId userId;
     UserId substituteId;
@@ -25,8 +24,14 @@ struct SubstitutionRule {
     string endDate;
     bool isAutoForward;
 
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+    Json toJson() const {
+        return entityToJson()
+            .set("userId", userId.value)
+            .set("substituteId", substituteId.value)
+            .set("taskDefinitionId", taskDefinitionId.value)
+            .set("status", status)
+            .set("startDate", startDate)
+            .set("endDate", endDate)
+            .set("isAutoForward", isAutoForward);
+    }
 }

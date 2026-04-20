@@ -60,7 +60,7 @@ struct AutomationRule {
     long failureCount;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("templateId", templateId.value)
             .set("name", name)
             .set("description", description)
@@ -74,7 +74,5 @@ struct AutomationRule {
             .set("triggerCount", triggerCount)
             .set("successCount", successCount)
             .set("failureCount", failureCount);
-
-        return j;
     }
 }

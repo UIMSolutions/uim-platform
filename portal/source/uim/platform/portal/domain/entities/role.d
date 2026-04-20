@@ -22,13 +22,11 @@ struct Role {
   string[] groupIds;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("scope", scope_)
       .set("userIds", userIds)
       .set("groupIds", groupIds);
-
-    return j;
   }
 }

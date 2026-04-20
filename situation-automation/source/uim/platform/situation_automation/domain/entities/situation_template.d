@@ -44,7 +44,7 @@ struct SituationTemplate {
     string escalationTargetUserId;
     
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("category", category.toString())
@@ -58,7 +58,5 @@ struct SituationTemplate {
             .set("autoResolveTimeoutMinutes", autoResolveTimeoutMinutes)
             .set("escalationEnabled", escalationEnabled)
             .set("escalationTargetUserId", escalationTargetUserId);
-
-        return j;
     }
 }

@@ -37,14 +37,12 @@ struct EntityType {
     string[] relatedTemplateIds;
     
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("category", category.toString())
             .set("sourceSystem", sourceSystem)
             .set("attributes", attributes.map!(attr => attr.toJson()).array)
             .set("relatedTemplateIds", relatedTemplateIds.array);
-
-        return j;
     }
 }
