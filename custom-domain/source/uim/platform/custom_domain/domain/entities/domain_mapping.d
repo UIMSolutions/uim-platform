@@ -8,8 +8,8 @@ module uim.platform.custom_domain.domain.entities.domain_mapping;
 import uim.platform.custom_domain.domain.types;
 
 struct DomainMapping {
-    DomainMappingId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DomainMappingId);
+
     string customDomainId;
     string standardRoute;
     string customRoute;
@@ -18,7 +18,18 @@ struct DomainMapping {
     string applicationName;
     string organizationId;
     string spaceId;
-    string createdBy;
-    long createdAt;
-    long modifiedAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("customDomainId", customDomainId)
+            .set("standardRoute", standardRoute)
+            .set("customRoute", customRoute)
+            .set("mappingType", mappingType.to!string)
+            .set("status", status.to!string)
+            .set("applicationName", applicationName)
+            .set("organizationId", organizationId)
+            .set("spaceId", spaceId);
+
+        return j;
+    }
 }

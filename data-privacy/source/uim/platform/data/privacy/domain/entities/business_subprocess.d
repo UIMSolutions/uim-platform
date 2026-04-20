@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A business subprocess — a subset of a business process.
 struct BusinessSubprocess {
-  BusinessSubprocessId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BusinessSubprocessId);
+
   BusinessProcessId parentProcessId;
   string name;
   string description;
@@ -22,6 +22,17 @@ struct BusinessSubprocess {
   PersonalDataCategory[] dataCategories;
   string owner;
   bool isActive = true;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("parentProcessId", parentProcessId)
+      .set("name", name)
+      .set("description", description)
+      .set("purposes", purposes)
+      .set("dataCategories", dataCategories)
+      .set("owner", owner)
+      .set("isActive", isActive);
+
+    return j;
+  }
 }

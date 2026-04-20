@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to archive personal and transactional data.
 struct ArchiveRequest {
-  ArchiveRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ArchiveRequestId);
+
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   ArchiveStatus status = ArchiveStatus.scheduled;
@@ -26,4 +26,21 @@ struct ArchiveRequest {
   long scheduledAt; // 0 = immediate
   long startedAt;
   long completedAt;
+
+  Json toJson() const {
+      auto j = entityToJson
+          .set("dataSubjectId", dataSubjectId)
+          .set("requestedBy", requestedBy)
+          .set("status", status.to!string)
+          .set("targetSystems", targetSystems)
+          .set("categories", categories.map!(c => c.to!string))
+          .set("archiveLocation", archiveLocation)
+          .set("reason", reason)
+          .set("isTestMode", isTestMode)
+          .set("scheduledAt", scheduledAt)
+          .set("startedAt", startedAt)
+          .set("completedAt", completedAt);
+
+      return j;
+  }
 }

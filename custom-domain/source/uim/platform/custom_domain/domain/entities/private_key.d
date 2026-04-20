@@ -8,8 +8,8 @@ module uim.platform.custom_domain.domain.entities.private_key;
 import uim.platform.custom_domain.domain.types;
 
 struct PrivateKey {
-    PrivateKeyId id;
-    TenantId tenantId;
+    mixin TenantEntity!(PrivateKeyId);
+
     string subject;
     string[] domains;
     KeyAlgorithm algorithm;
@@ -17,6 +17,17 @@ struct PrivateKey {
     int keySize;
     string csrPem;
     string publicKeyFingerprint;
-    string createdBy;
-    long createdAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("subject", subject)
+            .set("domains", domains)
+            .set("algorithm", algorithm.to!string)
+            .set("status", status.to!string)
+            .set("keySize", keySize)
+            .set("csrPem", csrPem)
+            .set("publicKeyFingerprint", publicKeyFingerprint);
+
+        return j;
+    }
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A business process — a set of activities performed to achieve a business goal.
 struct BusinessProcess {
-  BusinessProcessId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BusinessProcessId);
+
   string name;
   string description;
   DataControllerId controllerId;
@@ -22,6 +22,17 @@ struct BusinessProcess {
   LegalBasis[] legalBases;
   string owner; // responsible person
   bool isActive = true;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("controllerId", controllerId)
+      .set("purposes", purposes)
+      .set("legalBases", legalBases)
+      .set("owner", owner)
+      .set("isActive", isActive);
+
+    return j;
+  }
 }

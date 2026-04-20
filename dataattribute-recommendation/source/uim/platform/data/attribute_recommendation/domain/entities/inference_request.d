@@ -10,10 +10,18 @@ import uim.platform.data.attribute_recommendation.domain.types;
 /// A request to predict/recommend attributes for input data
 /// using a deployed model.
 struct InferenceRequest {
-  InferenceRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(InferenceRequestId);
+
   DeploymentId deploymentId;
   string inputData; // JSON: input attribute key-value pairs
   InferenceStatus status = InferenceStatus.pending;
-  long createdAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("deploymentId", deploymentId)
+      .set("inputData", inputData)
+      .set("status", status);
+
+    return j;
+  }
 }

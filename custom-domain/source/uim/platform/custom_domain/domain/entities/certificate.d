@@ -16,8 +16,8 @@ struct CertificateChainEntry {
 }
 
 struct Certificate {
-    CertificateId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CertificateId);
+
     string keyId;
     CertificateType type;
     CertificateStatus status;
@@ -31,7 +31,30 @@ struct Certificate {
     long validFrom;
     long validTo;
     string[] activatedDomains;
-    string createdBy;
-    long createdAt;
     long activatedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("keyId", keyId)
+            .set("type", type.to!string)
+            .set("status", status.to!string)
+            .set("subjectDn", subjectDn)
+            .set("issuerDn", issuerDn)
+            .set("serialNumber", serialNumber)
+            .set("subjectAlternativeNames", subjectAlternativeNames)
+            .set("certificatePem", certificatePem)
+            .set("chain", chain.map!(entry => Json.emptyObject
+                .set("subjectDn", entry.subjectDn)
+                .set("issuerDn", entry.issuerDn)
+                .set("serialNumber", entry.serialNumber)
+                .set("validFrom", entry.validFrom)
+                .set("validTo", entry.validTo)))        
+            .set("fingerprint", fingerprint)
+            .set("validFrom", validFrom)
+            .set("validTo", validTo)
+            .set("activatedDomains", activatedDomains)
+            .set("activatedAt", activatedAt);
+
+        return j;
+    }
 }

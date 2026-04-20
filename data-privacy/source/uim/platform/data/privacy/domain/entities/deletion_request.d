@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to erase personal data for a data subject (GDPR Art. 17).
 struct DeletionRequest {
-  DeletionRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DeletionRequestId);
+
   DataSubjectId dataSubjectId;
   UserId requestedBy; // DPO or the data subject themselves
   RequestType requestType = RequestType.deletion;
@@ -26,4 +26,21 @@ struct DeletionRequest {
   long requestedAt;
   long completedAt;
   long deadline; // regulatory deadline (e.g. 30 days)
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("requestedBy", requestedBy)
+      .set("requestType", requestType.to!string)
+      .set("status", status.to!string)
+      .set("targetSystems", targetSystems)
+      .set("categories", categories)
+      .set("reason", reason)
+      .set("blockerReason", blockerReason)
+      .set("requestedAt", requestedAt)
+      .set("completedAt", completedAt)
+      .set("deadline", deadline);
+
+    return j;
+  }
 }

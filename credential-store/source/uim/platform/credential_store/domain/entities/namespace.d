@@ -8,11 +8,16 @@ module uim.platform.credential_store.domain.entities.namespace;
 import uim.platform.credential_store.domain.types;
 
 struct Namespace {
-  NamespaceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(NamespaceId);
+
   string name;
   string description;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description);
+
+    return j;
+  }
 }

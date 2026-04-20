@@ -20,14 +20,24 @@ struct AnonymizationRule {
 
 /// Configuration for data anonymization/pseudonymization.
 struct AnonymizationConfig {
-  AnonymizationConfigId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AnonymizationConfigId);
+
   string name;
   string description;
   AnonymizationConfigStatus status = AnonymizationConfigStatus.draft;
   AnonymizationRule[] rules;
   bool isReversible; // true = pseudonymization, false = anonymization
   string[] targetSystems;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("rules", rules)
+      .set("isReversible", isReversible)
+      .set("targetSystems", targetSystems);
+
+    return j;
+  }
 }

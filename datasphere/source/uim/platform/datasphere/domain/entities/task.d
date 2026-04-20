@@ -8,8 +8,8 @@ module uim.platform.datasphere.domain.entities.task;
 import uim.platform.datasphere.domain.types;
 
 struct Task {
-  TaskId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TaskId);
+
   SpaceId spaceId;
   string name;
   string description;
@@ -24,6 +24,24 @@ struct Task {
   string lastRunMessage;
   int retryCount;
   int maxRetries;
-  long createdAt;
-  long modifiedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.to!string)
+      .set("status", status.to!string)
+      .set("targetObjectId", targetObjectId)
+      .set("scheduleExpression", scheduleExpression)
+      .set("scheduleFrequency", scheduleFrequency.to!string)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("lastRunDurationMs", lastRunDurationMs)
+      .set("lastRunMessage", lastRunMessage)
+      .set("retryCount", retryCount)
+      .set("maxRetries", maxRetries);
+
+    return j;
+  }
 }
