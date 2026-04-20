@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// An external content provider — integration connector for third-party content sources.
 struct ExternalContentProvider {
-  ExternalContentProviderId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ExternalContentProviderId);
+
   string name;
   string description;
   ProviderType providerType = ProviderType.rest;
@@ -21,6 +21,18 @@ struct ExternalContentProvider {
   string[] contentTypes; // types of content provided
   int refreshIntervalSec;
   long lastSyncAt;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("providerType", providerType.toString())
+      .set("status", status.toString())
+      .set("endpointUrl", endpointUrl)
+      .set("authType", authType)
+      .set("authConfig", authConfig)
+      .set("contentTypes", contentTypes.array)
+      .set("refreshIntervalSec", refreshIntervalSec)
+      .set("lastSyncAt", lastSyncAt);
+  }
 }

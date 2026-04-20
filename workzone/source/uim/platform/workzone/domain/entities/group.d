@@ -9,14 +9,22 @@ import uim.platform.workzone.domain.types;
 
 /// A user group — for role and content assignment.
 struct Group {
-  GroupId id;
-  TenantId tenantId;
+  mixin TenantEntity!(GroupId);
+
   string name;
   string description;
   GroupType groupType = GroupType.security;
   UserId[] memberIds;
   RoleId[] roleIds;
   bool active = true;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("groupType", groupType.toString())
+      .set("memberIds", memberIds.map!(u => u.value).array)
+      .set("roleIds", roleIds.map!(r => r.value).array)
+      .set("active", active);
+  }
 }

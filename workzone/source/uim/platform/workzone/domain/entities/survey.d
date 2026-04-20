@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A survey or poll within a workspace.
 struct Survey {
-  SurveyId id;
+  mixin TenantEntity!(SurveyId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string description;
   UserId creatorId;
@@ -23,8 +23,22 @@ struct Survey {
   int responseCount;
   long startsAt;
   long endsAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("workspaceId", workspaceId.value)
+      .set("title", title)
+      .set("description", description)
+      .set("creatorId", creatorId.value)
+      .set("creatorName", creatorName)
+      .set("status", status.toString())
+      .set("questions", questions.map!(q => q.toJson()).array)
+      .set("anonymous", anonymous)
+      .set("allowMultipleResponses", allowMultipleResponses)
+      .set("responseCount", responseCount)
+      .set("startsAt", startsAt)
+      .set("endsAt", endsAt);
+  }
 }
 
 /// A single question within a survey.
@@ -35,4 +49,14 @@ struct SurveyQuestion {
   string[] options;
   bool required_;
   int sortOrder;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("questionId", questionId)
+      .set("text", text)
+      .set("questionType", questionType.toString())
+      .set("options", options.array)
+      .set("required", required_)
+      .set("sortOrder", sortOrder);
+  }
 }

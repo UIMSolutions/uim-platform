@@ -12,10 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskProvider {
-    TaskProviderId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TaskProviderId);
 
-    string name;
+    string name; // e.g., "Jira", "GitHub", "Custom API"
     string description;
     ProviderType providerType = ProviderType.custom;
     ProviderStatus status = ProviderStatus.inactive;
@@ -29,8 +28,18 @@ struct TaskProvider {
     string lastSyncError;
     long taskCount;
 
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("providerType", providerType.toString())
+            .set("status", status.toString())
+            .set("authType", authType.toString())
+            .set("endpointUrl", endpointUrl)
+            .set("authEndpointUrl", authEndpointUrl)
+            .set("clientId", clientId)
+            .set("lastSyncAt", lastSyncAt)
+            .set("lastSyncError", lastSyncError)
+            .set("taskCount", taskCount);
+    }
 }

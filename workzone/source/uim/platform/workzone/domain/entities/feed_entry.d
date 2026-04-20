@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// An activity feed entry — records actions and events in a workspace.
 struct FeedEntry {
-  FeedEntryId id;
+  mixin TenantEntity!(FeedEntryId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   UserId actorId;
   string actorName;
   string action; // e.g., "created", "updated", "commented", "joined"
@@ -20,5 +20,17 @@ struct FeedEntry {
   string objectTitle;
   string message;
   string[] mentionedUserIds;
-  long createdAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("workspaceId", workspaceId.value)
+      .set("actorId", actorId.value)
+      .set("actorName", actorName)
+      .set("action", action)
+      .set("objectType", objectType)
+      .set("objectId", objectId)
+      .set("objectTitle", objectTitle)
+      .set("message", message)
+      .set("mentionedUserIds", mentionedUserIds.array);
+  }
 }

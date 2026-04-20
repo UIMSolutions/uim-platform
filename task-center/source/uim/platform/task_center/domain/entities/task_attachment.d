@@ -12,15 +12,24 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskAttachment {
-    TaskAttachmentId id;
-    TenantId tenantId;
-    TaskId taskId;
+    mixin TenantEntity!(TaskAttachmentId);
 
+    TaskId taskId;
     string fileName;
     string fileSize;
     string mimeType;
     AttachmentStatus status = AttachmentStatus.available;
-
     string uploadedBy;
     string uploadedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("taskId", taskId.value)
+            .set("fileName", fileName)
+            .set("fileSize", fileSize)
+            .set("mimeType", mimeType)
+            .set("status", status.toString())
+            .set("uploadedBy", uploadedBy)
+            .set("uploadedAt", uploadedAt);
+    }
 }

@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// A unified task — aggregated from multiple backend systems into a single inbox.
 struct Task {
-  TaskId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TaskId);
+
   UserId assigneeId;
   string assigneeName;
   UserId creatorId;
@@ -26,6 +26,25 @@ struct Task {
   string[] tags;
   long dueDate;
   long completedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("assigneeId", assigneeId.value)
+      .set("assigneeName", assigneeName)
+      .set("creatorId", creatorId.value)
+      .set("creatorName", creatorName)
+      .set("title", title)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("priority", priority.toString())
+      .set("sourceApp", sourceApp)
+      .set("sourceTaskId", sourceTaskId)
+      .set("actionUrl", actionUrl)
+      .set("category", category)
+      .set("tags", tags.array)
+      .set("dueDate", dueDate)
+      .set("completedAt", completedAt);
+
+    return j;
+  }
 }

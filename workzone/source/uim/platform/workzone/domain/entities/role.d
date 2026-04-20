@@ -9,14 +9,22 @@ import uim.platform.workzone.domain.types;
 
 /// A role — defines access permissions for site content and workspaces.
 struct Role {
-  RoleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RoleId);
+
   string name;
   string description;
   string[] permissions; // e.g., "read:workspace", "admin:site"
   UserId[] assignedUserIds;
   GroupId[] assignedGroupIds;
   bool isDefault;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("permissions", permissions.array)
+      .set("assignedUserIds", assignedUserIds.map!(u => u.value).array)
+      .set("assignedGroupIds", assignedGroupIds.map!(g => g.value).array)
+      .set("isDefault", isDefault);
+  }
 }

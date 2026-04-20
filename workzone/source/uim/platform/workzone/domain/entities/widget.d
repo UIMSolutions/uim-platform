@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A widget instance placed on a workspace page.
 struct Widget {
-  WidgetId id;
+  mixin TenantEntity!(WidgetId);
+
   WorkpageId pageId;
-  TenantId tenantId;
   string title;
   CardId cardId; // references an integration card
   AppId appId; // or references a registered app
@@ -21,8 +21,20 @@ struct Widget {
   int sortOrder;
   bool visible = true;
   WidgetConfig config;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("pageId", pageId.value)
+      .set("title", title)
+      .set("cardId", cardId.value)
+      .set("appId", appId.value)
+      .set("size", size.toString())
+      .set("row", row)
+      .set("col", col)
+      .set("sortOrder", sortOrder)
+      .set("visible", visible)
+      .set("config", config.toJson());
+  }
 }
 
 /// Per-instance widget configuration.
@@ -32,4 +44,13 @@ struct WidgetConfig {
   int refreshIntervalSec;
   string filterExpression;
   string[string] parameters;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("customTitle", customTitle)
+      .set("maxItems", maxItems)
+      .set("refreshIntervalSec", refreshIntervalSec)
+      .set("filterExpression", filterExpression)
+      .set("parameters", parameters);
+  }
 }

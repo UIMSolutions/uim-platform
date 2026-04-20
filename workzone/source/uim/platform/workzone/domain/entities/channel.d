@@ -9,17 +9,26 @@ import uim.platform.workzone.domain.types;
 
 /// A content channel — a feed source within a workspace for activity streams.
 struct Channel {
-  ChannelId id;
+  mixin TenantEntity!(ChannelId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string name;
   string description;
   ChannelType channelType = ChannelType.activity;
   bool active = true;
   RoleId[] allowedRoleIds;
   ChannelConfig config;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("workspaceId", workspaceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("channelType", channelType.toString())
+      .set("active", active)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("config", config.toJson());
+  }
 }
 
 /// Channel-specific configuration.
@@ -29,4 +38,13 @@ struct ChannelConfig {
   string authType;
   string authToken;
   int maxItems;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("sourceUrl", sourceUrl)
+      .set("pollIntervalSec", pollIntervalSec)
+      .set("authType", authType)
+      .set("authToken", authToken)
+      .set("maxItems", maxItems);
+  }
 }
