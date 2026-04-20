@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceBinding {
-  ServiceBindingId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ServiceBindingId);
+
   string name;
   BucketId bucketId;
   string accessKeyId;
@@ -21,6 +21,13 @@ class ServiceBinding {
   BindingPermission permission = BindingPermission.readOnly;
   BindingStatus status = BindingStatus.active;
   long expiresAt; // 0 = no expiry
-  UserId createdBy;
-  long createdAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("name", name)
+          .set("bucketId", bucketId.value)
+          .set("permission", permission.to!string)
+          .set("status", status.to!string)
+          .set("expiresAt", expiresAt);
+  }
 }

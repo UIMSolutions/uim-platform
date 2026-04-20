@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct RefreshToken {
-    RefreshTokenId id;
-    TenantId tenantId;
+    mixin TenantEntity!(RefreshTokenId);
+    
     string tokenValue;
     TokenStatus status = TokenStatus.active;
     string clientId;
@@ -22,20 +22,16 @@ struct RefreshToken {
     string accessTokenId;
     long expiresAt;
     string issuedAt;
-    string createdAt;
 
-    Json refreshTokenToJson() {
-        import std.conv : to;
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
+    Json toJson() const {
+        return entityToJson
+            .set("tokenValue", tokenValue)
             .set("status", status.to!string)
             .set("clientId", clientId)
             .set("userId", userId)
             .set("scopes", scopes)
             .set("accessTokenId", accessTokenId)
             .set("expiresAt", expiresAt)
-            .set("issuedAt", issuedAt)
-            .set("createdAt", createdAt);
+            .set("issuedAt", issuedAt);
     }
 }

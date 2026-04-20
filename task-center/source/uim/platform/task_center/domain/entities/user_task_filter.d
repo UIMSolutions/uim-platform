@@ -14,18 +14,27 @@ mixin(ShowModule!());
 struct FilterCriterion {
     FilterCriterionType criterionType;
     string value;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("criterionType", criterionType.to!string)
+            .set("value", value);
+    }
 }
 
 struct UserTaskFilter {
-    UserTaskFilterId id;
-    TenantId tenantId;
-    UserId userId;
+    mixin TenantEntity!(UserTaskFilterId);
 
     string name;
     string description;
     FilterCriterion[] criteria;
     bool isDefault;
 
-    string createdAt;
-    string modifiedAt;
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("criteria", criteria.map!(c => c.toJson()).array)
+            .set("isDefault", isDefault);
+    }
 }

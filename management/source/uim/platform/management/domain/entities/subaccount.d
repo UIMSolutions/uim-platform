@@ -15,7 +15,8 @@ mixin(ShowModule!());
 /// and applications are deployed. It is always part of a global account
 /// and optionally part of a directory.
 struct Subaccount {
-  SubaccountId id;
+  mixin TenantEntity!(SubaccountId);
+
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId; // empty if directly under global account
   string displayName;
@@ -27,10 +28,23 @@ struct Subaccount {
   bool betaEnabled = false;
   bool usedForProduction = false;
   string technicalName;
-  TenantId tenantId; // associated identity tenant
-  long createdAt;
-  long modifiedAt;
-  string createdBy;
   string[string] labels;
   string[string] customProperties;
+
+  Json toJson() const {
+      return entityToJson
+          .set("globalAccountId", globalAccountId.value)
+          .set("parentDirectoryId", parentDirectoryId.value)
+          .set("displayName", displayName)
+          .set("description", description)
+          .set("subdomain", subdomain)
+          .set("region", region)
+          .set("status", status.to!string)
+          .set("usage", usage.to!string)
+          .set("betaEnabled", betaEnabled)
+          .set("usedForProduction", usedForProduction)
+          .set("technicalName", technicalName)
+          .set("labels", labels)
+          .set("customProperties", customProperties);
+  }
 }

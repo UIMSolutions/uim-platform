@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// A change log entry for tracking master data modifications.
 struct ChangeLogEntry {
-  ChangeLogEntryId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ChangeLogEntryId);
+
   MasterDataObjectId objectId;
   DataModelId dataModelId;
   MasterDataCategory category = MasterDataCategory.businessPartner;
@@ -35,4 +35,23 @@ struct ChangeLogEntry {
   string deltaToken;
 
   long timestamp;
+
+  Json toJson() const {
+    return entityToJson
+      .set("objectId", objectId.value)
+      .set("dataModelId", dataModelId.value)
+      .set("category", category.to!string)
+      .set("changeType", changeType.to!string)
+      .set("objectType", objectType)
+      .set("changedFields", changedFields.array)
+      .set("oldValues", oldValues)
+      .set("newValues", newValues)
+      .set("sourceSystem", sourceSystem)
+      .set("sourceClient", sourceClient)
+      .set("changedBy", changedBy)
+      .set("fromVersion", fromVersion)
+      .set("toVersion", toVersion)
+      .set("deltaToken", deltaToken)
+      .set("timestamp", timestamp);
+  }
 }

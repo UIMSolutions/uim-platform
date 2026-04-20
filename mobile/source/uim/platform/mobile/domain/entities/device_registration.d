@@ -8,8 +8,8 @@ module uim.platform.mobile.domain.entities.device_registration;
 import uim.platform.mobile.domain.types;
 
 struct DeviceRegistration {
-  DeviceRegistrationId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DeviceRegistrationId);
+
   MobileAppId appId;
   string deviceModel;
   string osVersion;
@@ -20,5 +20,18 @@ struct DeviceRegistration {
   string deviceToken;    // unique device identifier
   long lastConnectedAt;
   long registeredAt;
-  long updatedAt;
+  
+  Json toJson() const {
+      return entityToJson
+          .set("appId", appId.value)
+          .set("deviceModel", deviceModel)
+          .set("osVersion", osVersion)
+          .set("appVersion", appVersion)
+          .set("platform", platform.to!string)
+          .set("status", status.to!string)
+          .set("userId", userId)
+          .set("deviceToken", deviceToken)
+          .set("lastConnectedAt", lastConnectedAt)
+          .set("registeredAt", registeredAt);
+  }
 }

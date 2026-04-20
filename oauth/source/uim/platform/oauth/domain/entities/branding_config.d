@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct BrandingConfig {
-    BrandingConfigId id;
-    TenantId tenantId;
+    mixin TenantEntity!(BrandingConfigId);
+    
     string name;
     string description;
     string logoUrl;
@@ -23,15 +23,9 @@ struct BrandingConfig {
     string pageTitle;
     string footerText;
     string customCss;
-    string createdAt;
-    string updatedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json brandingConfigToJson() {
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("logoUrl", logoUrl)
@@ -40,10 +34,6 @@ struct BrandingConfig {
             .set("secondaryColor", secondaryColor)
             .set("pageTitle", pageTitle)
             .set("footerText", footerText)
-            .set("customCss", customCss)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("customCss", customCss);
     }
 }

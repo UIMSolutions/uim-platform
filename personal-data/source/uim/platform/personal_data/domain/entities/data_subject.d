@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DataSubject {
-    DataSubjectId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DataSubjectId);
+    
     DataSubjectType subjectType;
     DataSubjectStatus status;
     string firstName;
@@ -26,26 +26,20 @@ struct DataSubject {
     string organizationId;
     string externalId;
     string[] applicationIds;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("externalId", externalId)
-            .set("tenantId", tenantId)
-            .set("organizationId", organizationId)
+    Json toJson() const {
+        return entityToJson
             .set("subjectType", subjectType.to!string)
             .set("status", status.to!string)
             .set("firstName", firstName)
             .set("lastName", lastName)
             .set("email", email)
-            .set("phone", phoneNumber)
+            .set("phoneNumber", phoneNumber)
             .set("dateOfBirth", dateOfBirth)
+            .set("nationality", nationality)
             .set("organizationName", organizationName)
-            .set("createdBy", createdBy)
-            .set("createdAt", createdAt);
+            .set("organizationId", organizationId)
+            .set("externalId", externalId)  
+            .set("applicationIds", applicationIds); 
     }
 }

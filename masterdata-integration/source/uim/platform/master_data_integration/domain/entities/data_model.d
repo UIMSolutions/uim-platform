@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// Defines the schema/structure of a master data entity type.
 struct DataModel {
-  DataModelId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataModelId);
+
   string name; // e.g. "BusinessPartner", "CostCenter"
   string namespace; // e.g. "sap.odm.businesspartner"
   string version_; // e.g. "2.0.0"
@@ -22,9 +22,19 @@ struct DataModel {
   string[] requiredFields;
 
   bool isActive;
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("namespace", namespace)
+      .set("version", version_)
+      .set("description", description)
+      .set("category", category.to!string)
+      .set("fields", fields.map!(f => f.toJson()).array)
+      .set("keyFields", keyFields.array)
+      .set("requiredFields", requiredFields.array)
+      .set("isActive", isActive);
+  }
 }
 
 /// A field definition within a data model.
@@ -38,4 +48,17 @@ struct FieldDefinition {
   int maxLength;
   string referenceModel; // For reference fields
   string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("displayName", displayName)
+      .set("type", type_.to!string)
+      .set("isRequired", isRequired)
+      .set("isKey", isKey)
+      .set("defaultValue", defaultValue)
+      .set("maxLength", maxLength)
+      .set("referenceModel", referenceModel)
+      .set("description", description);
+  }
 }
