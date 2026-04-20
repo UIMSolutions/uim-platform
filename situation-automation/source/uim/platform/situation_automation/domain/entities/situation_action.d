@@ -24,8 +24,8 @@ struct ApiConfig {
 }
 
 struct SituationAction {
-    SituationActionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(SituationActionId);
+
     string name;
     string description;
     ActionType type;
@@ -35,10 +35,21 @@ struct SituationAction {
     string emailTemplate;
     string scriptContent;
     string[] applicableTemplateIds;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
     long lastExecutedAt;
     long executionCount;
+
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.toString())
+            .set("status", status.toString())
+            .set("apiConfig", apiConfig.toJson())
+            .set("webhookUrl", webhookUrl)
+            .set("emailTemplate", emailTemplate)
+            .set("scriptContent", scriptContent)
+            .set("applicableTemplateIds", applicableTemplateIds.array)
+            .set("lastExecutedAt", lastExecutedAt)
+            .set("executionCount", executionCount);
+    }
 }

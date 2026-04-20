@@ -13,14 +13,24 @@ mixin(ShowModule!());
 @safe:
 /// Content catalog — groups tiles for content administration.
 struct Catalog {
-  TenantId tenantId;
-  CatalogId catalogId;
+  mixin TenantEntity!(CatalogId);
+
   string title;
   string description;
   ProviderId providerId;
   TileId[] tileIds;
   RoleId[] allowedRoleIds;
   bool active = true;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("title", title)
+      .set("description", description)
+      .set("providerId", providerId.value)
+      .set("tileIds", tileIds.map!(id => id.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array)
+      .set("active", active);
+
+    return j;
+  }
 }

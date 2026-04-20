@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// A theme / branding configuration for a site.
 struct Theme {
-  ThemeId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ThemeId);
+
   string name;
   string description;
   string baseTheme; // e.g., "sap_horizon", "sap_fiori_3"
@@ -19,8 +19,18 @@ struct Theme {
   string faviconUrl;
   string customCss;
   bool isDefault;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("baseTheme", baseTheme)
+      .set("colors", colors.toJson())
+      .set("logoUrl", logoUrl)
+      .set("faviconUrl", faviconUrl)
+      .set("customCss", customCss)
+      .set("isDefault", isDefault);
+  }
 }
 
 /// Color palette for a theme.
@@ -32,4 +42,15 @@ struct ThemeColors {
   string textColor;
   string linkColor;
   string accentColor;
+
+  Json toJson() const {
+    return Json()
+      .set("primaryColor", primaryColor)
+      .set("secondaryColor", secondaryColor)
+      .set("backgroundColor", backgroundColor)
+      .set("headerColor", headerColor)
+      .set("textColor", textColor)
+      .set("linkColor", linkColor)
+      .set("accentColor", accentColor);
+  }
 }

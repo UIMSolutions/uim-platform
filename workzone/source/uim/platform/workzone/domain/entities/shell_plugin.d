@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// A shell plugin — extensibility plugin for the shell / framework.
 struct ShellPlugin {
-  ShellPluginId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ShellPluginId);
+
   string name;
   string description;
   string version_;
@@ -21,5 +21,17 @@ struct ShellPlugin {
   SiteId[] assignedSiteIds;
   string[] hookPoints; // e.g., "header", "footer", "sidebar", "shell-bar"
   long installedAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("version", version_)
+      .set("vendor", vendor)
+      .set("scriptUrl", scriptUrl)
+      .set("configSchemaUrl", configSchemaUrl)
+      .set("status", status.toString())
+      .set("assignedSiteIds", assignedSiteIds.map!(s => s.value).array)
+      .set("hookPoints", hookPoints.array);
+  }
 }

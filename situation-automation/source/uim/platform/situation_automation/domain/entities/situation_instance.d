@@ -21,9 +21,9 @@ struct ResolutionInfo {
 }
 
 struct SituationInstance {
-    SituationInstanceId id;
+    mixin TenantEntity!(SituationInstanceId);
+
     SituationTemplateId templateId;
-    TenantId tenantId;
     string description;
     InstanceStatus status;
     SituationSeverity severity;
@@ -37,5 +37,30 @@ struct SituationInstance {
     int retryCount;
     long detectedAt;
     long dueAt;
-    long modifiedAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("templateId", templateId.value)
+            .set("description", description)
+            .set("status", status)
+            .set("severity", severity)
+            .set("entityId", entityId)
+            .set("entityTypeId", entityTypeId)
+            .set("contextData", contextData.map!(cd => cd.array).array)
+            .set("resolution", resolution.type != ResolutionType.none ? Json.init
+                .set("type", resolution.type)
+                .set("resolvedBy", resolution.resolvedBy)
+                .set("actionId", resolution.actionId)
+                .set("ruleId", resolution.ruleId)
+                .set("outcome", resolution.outcome)
+                .set("resolvedAt", resolution.resolvedAt) : Json(null))
+            .set("assignedTo", assignedTo)
+            .set("sourceSystem", sourceSystem)
+            .set("sourceInstanceId", sourceInstanceId)
+            .set("retryCount", retryCount)
+            .set("detectedAt", detectedAt)
+            .set("dueAt", dueAt);
+
+        return j;
+    }
 }

@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A calendar event within a workspace.
 struct Event {
-  EventId id;
+  mixin TenantEntity!(EventId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string description;
   string location;
@@ -25,6 +25,22 @@ struct Event {
   long endTime;
   string timezone;
   string recurrenceRule; // iCal RRULE
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("workspaceId", workspaceId.value)
+      .set("title", title)
+      .set("description", description)
+      .set("location", location)
+      .set("meetingUrl", meetingUrl)
+      .set("organizerId", organizerId.value)
+      .set("organizerName", organizerName)
+      .set("attendeeIds", attendeeIds.map!(id => id.value).array)
+      .set("status", status.toString())
+      .set("allDay", allDay)
+      .set("startTime", startTime)
+      .set("endTime", endTime)
+      .set("timezone", timezone)
+      .set("recurrenceRule", recurrenceRule);
+  }
 }

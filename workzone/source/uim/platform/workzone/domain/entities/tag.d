@@ -9,12 +9,20 @@ import uim.platform.workzone.domain.types;
 
 /// A tag / category — for content tagging and categorization.
 struct Tag {
-  TagId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TagId);
+
   string name;
   string description;
   string color;
   string parentTagId; // for hierarchical categories
   int usageCount;
-  long createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("color", color)
+      .set("parentTagId", parentTagId)
+      .set("usageCount", usageCount);
+  }
 }

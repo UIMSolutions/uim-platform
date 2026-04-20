@@ -17,6 +17,19 @@ struct AutomationStep {
     string[] nextSteps;
     int retryCount;
     int timeoutSeconds;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id.value)
+            .set("name", name)
+            .set("type", type)
+            .set("application", application)
+            .set("activity", activity)
+            .set("parameters", parameters.array)
+            .set("nextSteps", nextSteps.array)
+            .set("retryCount", retryCount)
+            .set("timeoutSeconds", timeoutSeconds);
+    }
 }
 
 struct AutomationRun {
@@ -30,11 +43,25 @@ struct AutomationRun {
     string errorMessage;
     long startedAt;
     long completedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id.value)
+            .set("automationId", automationId.value)
+            .set("status", status)
+            .set("triggeredBy", triggeredBy)
+            .set("agentId", agentId)
+            .set("inputData", inputData)
+            .set("outputData", outputData)
+            .set("errorMessage", errorMessage)
+            .set("startedAt", startedAt)
+            .set("completedAt", completedAt);
+    }
 }
 
 struct Automation {
-    AutomationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(AutomationId);
+
     ProjectId projectId;
     string name;
     string description;
@@ -43,8 +70,25 @@ struct Automation {
     AutomationStep[] steps;
     string targetApplication;
     string version_;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("projectId", projectId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("status", status)
+            .set("type", type)
+            .set("steps", steps.map!(s => Json.init
+                .set("id", s.id.value)
+                .set("name", s.name)
+                .set("type", s.type)
+                .set("application", s.application)
+                .set("activity", s.activity)
+                .set("parameters", s.parameters.array)
+                .set("nextSteps", s.nextSteps.array)
+                .set("retryCount", s.retryCount)
+                .set("timeoutSeconds", s.timeoutSeconds)).array)
+            .set("targetApplication", targetApplication)
+            .set("version", version_);
+    }
 }

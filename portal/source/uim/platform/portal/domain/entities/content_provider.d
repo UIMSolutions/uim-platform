@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Content provider — source of apps and content.
 struct ContentProvider {
-  ProviderId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ProviderId);
+
   string name;
   string description;
   ProviderType providerType = ProviderType.local;
@@ -22,7 +22,18 @@ struct ContentProvider {
   string authToken; // bearer token for remote providers
   bool active = true;
   CatalogId[] catalogIds;
-  long createdAt;
-  long updatedAt;
   long lastSyncedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("providerType", providerType.toString())
+      .set("contentEndpointUrl", contentEndpointUrl)
+      .set("active", active)
+      .set("catalogIds", catalogIds.map!(id => id.value).array)
+      .set("lastSyncedAt", lastSyncedAt);
+
+    return j;
+  }
 }
