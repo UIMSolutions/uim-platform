@@ -17,6 +17,18 @@ mixin template TenantEntity(TId) {
         return id.isEmpty;
     }
 
+    void createEntity(TenantId tenantId) {
+        id = randomUUID();
+        this.tenantId = tenantId;
+        createdAt = Clock.currStdTime();
+        updatedAt = createdAt;
+    }
+
+    void updateEntity(TenantId tenantId, TId id) {
+        id = id;
+        this.tenantId = tenantId;
+    }
+
     Json entityToJson() const {
         return Json.emptyObject
             .set("id", id)

@@ -13,8 +13,8 @@ struct ArtifactLabel {
 }
 
 struct Artifact {
-  ArtifactId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ArtifactId);
+
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
   ExecutionId executionId;
@@ -23,6 +23,22 @@ struct Artifact {
   ArtifactKind kind;
   string url;
   ArtifactLabel[] labels;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("scenarioId", scenarioId)
+      .set("executionId", executionId)
+      .set("name", name)
+      .set("description", description)
+      .set("kind", kind.to!string)
+      .set("url", url);
+
+    if (labels.length > 0) {
+      auto lbls = labels.map!(l => Json.emptyObject.set("key", l.key).set("value", l.value)).array.toJson;
+      j["labels"] = lbls;
+    }
+
+    return j;
+  }
 }

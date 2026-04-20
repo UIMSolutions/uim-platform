@@ -12,8 +12,7 @@ mixin(ShowModule!());
 
 /// Business role for authorization in the ABAP environment.
 struct BusinessRole {
-  BusinessRoleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BusinessRoleId);
   SystemInstanceId systemInstanceId;
   string name;
   string description;
@@ -23,15 +22,8 @@ struct BusinessRole {
   string[] restrictionTypes;
   CatalogAssignment[] assignedCatalogs;
 
-  /// Metadata
-  string createdBy;
-  long createdAt;
-  long updatedAt;
-
   Json toJson() const {
-    auto j = Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+    auto j = entityToJson
       .set("systemInstanceId", systemInstanceId)
       .set("name", name)
       .set("description", description)

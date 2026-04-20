@@ -30,13 +30,24 @@ struct CustomInfo {
 }
 
 struct Metric {
-  MetricId id;
-  TenantId tenantId;
+  mixin TenantEntity!(MetricId);
+
   ResourceGroupId resourceGroupId;
   ExecutionId executionId;
   MetricLabel[] labels;
   MetricTag[] tags;
   MetricValue[] metrics;
   CustomInfo[] customInfo;
-  long createdAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("executionId", executionId)
+      .set("labels", labels)
+      .set("tags", tags)
+      .set("metrics", metrics)
+      .set("customInfo", customInfo);
+
+    return j;
+  }
 }

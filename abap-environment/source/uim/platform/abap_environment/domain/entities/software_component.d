@@ -17,8 +17,7 @@ struct ComponentCommit {
 
 /// ABAP software component (git-managed development object container).
 struct SoftwareComponent {
-  SoftwareComponentId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SoftwareComponentId);
   SystemInstanceId systemInstanceId;
   string name;
   string description;
@@ -40,6 +39,33 @@ struct SoftwareComponent {
   string clonedBy;
   long clonedAt;
   long lastPulledAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("systemInstanceId", systemInstanceId)
+      .set("name", name)
+      .set("description", description)
+      .set("componentType", componentType.to!string)
+      .set("status", status.to!string)
+      .set("repositoryUrl", repositoryUrl)
+      .set("branch", branch)
+      .set("branchStrategy", branchStrategy.to!string)
+      .set("currentCommitId", currentCommitId)
+      .set("namespace", namespace)
+      .set("softwareComponentVersion", softwareComponentVersion)
+      .set("clonedBy", clonedBy)
+      .set("clonedAt", clonedAt)
+      .set("lastPulledAt", lastPulledAt);
+
+    if (commitHistory.length > 0) {
+      auto history = commitHistory.map!(c => Json.emptyObject
+        .set("commitId", c.commitId)
+        .set("message", c.message)
+        .set("author", c.author)
+        .set("timestamp", c.timestamp))();
+      j["commitHistory"] = history;
+    }
+
+    return j;
+  }
 }

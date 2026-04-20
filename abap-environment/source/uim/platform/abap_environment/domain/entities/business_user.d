@@ -19,8 +19,7 @@ struct RoleAssignment {
 
 /// Business user in the ABAP environment.
 struct BusinessUser {
-  BusinessUserId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BusinessUserId);
   SystemInstanceId systemInstanceId;
   string username;
   string firstName;
@@ -36,8 +35,26 @@ struct BusinessUser {
   long lastLoginAt;
   int failedLoginAttempts;
 
-  /// Metadata
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("systemInstanceId", systemInstanceId)
+      .set("username", username)
+      .set("firstName", firstName)
+      .set("lastName", lastName)
+      .set("email", email)
+      .set("status", status.to!string)
+      .set("passwordChangeRequired", passwordChangeRequired)
+      .set("lastLoginAt", lastLoginAt)
+      .set("failedLoginAttempts", failedLoginAttempts);
+
+    if (roleAssignments.length > 0) {
+      auto roles = roleAssignments.map!(r => Json.emptyObject
+        .set("roleId", r.roleId)
+        .set("roleName", r.roleName)
+        .set("assignedAt", r.assignedAt))();
+      j = j.set("roleAssignments", roles);
+    }
+
+    return j;
+  }
 }

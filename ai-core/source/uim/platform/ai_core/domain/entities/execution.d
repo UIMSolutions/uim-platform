@@ -13,8 +13,8 @@ struct OutputArtifactRef {
 }
 
 struct Execution {
-  ExecutionId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ExecutionId);
+
   ResourceGroupId resourceGroupId;
   ConfigurationId configurationId;
   ScenarioId scenarioId;
@@ -25,6 +25,24 @@ struct Execution {
   OutputArtifactRef[] outputArtifacts;
   long startedAt;
   long completedAt;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("configurationId", configurationId)
+      .set("scenarioId", scenarioId)
+      .set("executableId", executableId)
+      .set("status", status.to!string)
+      .set("targetStatus", targetStatus.to!string)
+      .set("statusMessage", statusMessage)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+
+    if (outputArtifacts.length > 0) {
+      auto oars = outputArtifacts.map!(o => Json.emptyObject.set("key", o.key).set("artifactId", o.artifactId)).array.toJson;
+      j["outputArtifacts"] = oars;
+    }
+
+    return j;
+  }
 }

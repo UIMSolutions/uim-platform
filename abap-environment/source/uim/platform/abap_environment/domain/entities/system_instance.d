@@ -9,8 +9,8 @@ import uim.platform.abap_environment.domain.types;
 
 /// Provisioned ABAP Cloud system instance.
 struct SystemInstance {
-  SystemInstanceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SystemInstanceId);
+
   SubaccountId subaccountId;
   string name;
   string description;
@@ -33,8 +33,24 @@ struct SystemInstance {
   string softwareVersion;
   string stackVersion;
 
-  /// Metadata
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("subaccountId", subaccountId)
+      .set("name", name)
+      .set("description", description)
+      .set("plan", plan.to!string)
+      .set("status", status.to!string)
+      .set("region", region)
+      .set("sapSystemId", sapSystemId)
+      .set("adminEmail", adminEmail)
+      .set("abapRuntimeSize", abapRuntimeSize)
+      .set("hanaMemorySize", hanaMemorySize)
+      .set("serviceUrl", serviceUrl)
+      .set("webSocketUrl", webSocketUrl)
+      .set("sapClient", sapClient)
+      .set("softwareVersion", softwareVersion)
+      .set("stackVersion", stackVersion);
+
+    return j;
+  }
 }

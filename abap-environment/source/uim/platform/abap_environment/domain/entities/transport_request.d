@@ -20,8 +20,8 @@ struct TransportTask {
 
 /// Transport request for managing changes between systems (CTS-like).
 struct TransportRequest {
-  TransportRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TransportRequestId);
+
   SystemInstanceId sourceSystemId;
   SystemInstanceId targetSystemId;
   string description;
@@ -34,7 +34,33 @@ struct TransportRequest {
   TransportTask[] tasks;
 
   /// Metadata
-  long createdAt;
   long releasedAt;
   long importedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("sourceSystemId", sourceSystemId)
+      .set("targetSystemId", targetSystemId)
+      .set("description", description)
+      .set("owner", owner)
+      .set("transportType", transportType.to!string)
+      .set("status", status.to!string)
+      .set("createdAt", createdAt)
+      .set("releasedAt", releasedAt)
+      .set("importedAt", importedAt);
+
+    if (tasks.length > 0) {
+      auto ts = tasks.map!(t => Json.emptyObject
+        .set("taskId", t.taskId)
+        .set("owner", t.owner)
+        .set("status", t.status.to!string)
+        .set("description", t.description)
+        .set("objectList", t.objectList.array.toJson())
+        .set("createdAt", t.createdAt)
+        .set("releasedAt", t.releasedAt))();
+      j["tasks"] = ts;
+    }
+
+    return j;
+  }
 }

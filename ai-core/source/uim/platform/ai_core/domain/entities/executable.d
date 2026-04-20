@@ -27,8 +27,8 @@ struct ParameterBinding {
 }
 
 struct Executable {
-  ExecutableId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ExecutableId);
+
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
   string name;
@@ -40,6 +40,21 @@ struct Executable {
   ParameterBinding[] parameters;
   string[] labels;
   string deployable;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("scenarioId", scenarioId)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.to!string)
+      .set("versionId", versionId)
+      .set("inputArtifacts", inputArtifacts)
+      .set("outputArtifacts", outputArtifacts)
+      .set("parameters", parameters)
+      .set("labels", labels)
+      .set("deployable", deployable);
+
+    return j;
+  }
 }

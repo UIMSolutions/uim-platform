@@ -17,8 +17,7 @@ struct CommunicationEndpoint {
 
 /// Communication arrangement linking scenario, system, and credentials.
 struct CommunicationArrangement {
-  CommunicationArrangementId id;
-  TenantId tenantId;
+  mixin TenantEntity!(CommunicationArrangementId);
   SystemInstanceId systemInstanceId;
   CommunicationScenarioId scenarioId;
   string name;
@@ -40,24 +39,15 @@ struct CommunicationArrangement {
   CommunicationEndpoint[] inboundServices;
   CommunicationEndpoint[] outboundServices;
 
-  /// Metadata
-  string createdBy;
-  long createdAt;
-  long updatedAt;
-
   Json toJson() const {
-    auto j = Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+    auto j = entityToJson
       .set("systemInstanceId", systemInstanceId)
       .set("scenarioId", scenarioId)
       .set("name", name)
       .set("description", description)
       .set("direction", direction.to!string)
       .set("status", status.to!string)
-      .set("authMethod", authMethod.to!string)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("authMethod", authMethod.to!string);
 
     if (inboundServices.length > 0) {
       auto services = inboundServices.map!(e => Json.emptyObject

@@ -8,8 +8,8 @@ module uim.platform.ai_core.domain.entities.deployment;
 import uim.platform.ai_core.domain.types;
 
 struct Deployment {
-  DeploymentId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DeploymentId);
+
   ResourceGroupId resourceGroupId;
   ConfigurationId configurationId;
   ScenarioId scenarioId;
@@ -22,6 +22,21 @@ struct Deployment {
   string lastOperation;
   long startedAt;
   long completedAt;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("configurationId", configurationId)
+      .set("scenarioId", scenarioId)
+      .set("executableId", executableId)
+      .set("status", status.to!string)
+      .set("targetStatus", targetStatus.to!string)
+      .set("statusMessage", statusMessage)
+      .set("deploymentUrl", deploymentUrl)
+      .set("ttl", ttl)
+      .set("lastOperation", lastOperation)
+      .set("completedAt", completedAt);
+
+    return j;
+  }
 }

@@ -15,8 +15,7 @@ mixin(ShowModule!());
 
 /// Application job definition and schedule.
 struct ApplicationJob {
-  ApplicationJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ApplicationJobId);
   SystemInstanceId systemInstanceId;
   string name;
   string description;
@@ -35,15 +34,8 @@ struct ApplicationJob {
   /// Parameters
   string[string] jobParameters;
 
-  /// Metadata
-  string createdBy;
-  long createdAt;
-  long updatedAt;
-
   Json toJson() const {
-    auto j = Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+    auto j = entityToJson
       .set("systemInstanceId", systemInstanceId)
       .set("name", name)
       .set("description", description)
@@ -52,9 +44,7 @@ struct ApplicationJob {
       .set("scheduledAt", scheduledAt)
       .set("cronExpression", cronExpression)
       .set("active", active)
-      .set("status", status.to!string)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("status", status.to!string);
 
     if (executionHistory.length > 0) {
       auto history = executionHistory.map!(e => e.toJson)();
