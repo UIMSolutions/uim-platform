@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A Kyma environment — a managed Kubernetes cluster with Kyma modules.
 struct KymaEnvironment {
-  TenantId tenantId;
-  KymaEnvironmentId id;
+  mixin TenantEntity!(KymaEnvironmentId);
+
   SubaccountId subaccountId;
   ClusterId clusterId;
   string name;
@@ -43,9 +43,31 @@ struct KymaEnvironment {
   // Administrator list
   string[] administrators;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
   long expiresAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("subaccountId", subaccountId.value)
+      .set("clusterId", clusterId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("plan", plan.toString())
+      .set("region", region)
+      .set("kubernetesVersion", kubernetesVersion)
+      .set("status", status.toString())
+      .set("machineCount", machineCount)
+      .set("machineType", machineType)
+      .set("autoScalerMin", autoScalerMin)
+      .set("autoScalerMax", autoScalerMax)
+      .set("oidcIssuerUrl", oidcIssuerUrl)
+      .set("oidcClientId", oidcClientId)
+      .set("oidcGroupsClaim", oidcGroupsClaim.array)
+      .set("oidcUsernameClaim", oidcUsernameClaim.array)
+      .set("shootDomain", shootDomain)
+      .set("kubeApiServerUrl", kubeApiServerUrl)
+      .set("administrators", administrators.array)
+      .set("expiresAt", expiresAt);
+
+    return j;
+  }
 }

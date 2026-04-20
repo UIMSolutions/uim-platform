@@ -13,9 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// A Kubernetes namespace within a Kyma environment.
 struct Namespace {
-  NamespaceId id;
+  mixin TenantEntity!(NamespaceId);
+
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   NamespaceStatus status = NamespaceStatus.active;
@@ -35,28 +35,21 @@ struct Namespace {
   // Istio sidecar injection
   bool istioInjection = true;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
-
-  Json toJson() {
-    return Json.emptyObject
-      .set("id", id.value)
+  Json toJson() const {
+    auto j = entityToJson
       .set("environmentId", environmentId.value)
-      .set("tenantId", tenantId.value)
       .set("name", name)
       .set("description", description)
-      .set("status", status.to!string())
+      .set("status", status.toString())
       .set("cpuLimit", cpuLimit)
       .set("memoryLimit", memoryLimit)
       .set("cpuRequest", cpuRequest)
       .set("memoryRequest", memoryRequest)
       .set("podLimit", podLimit)
-      .set("quotaEnforcement", quotaEnforcement.to!string)
-      .set("labels", labels)
-      .set("annotations", annotations)
+      .set("quotaEnforcement", quotaEnforcement.toString())
       .set("istioInjection", istioInjection)
-      .set("createdBy", createdBy);
-  } 
+      .set("labels", labels)
+      .set("annotations", annotations);
+    return j;
+  }
 }

@@ -8,8 +8,8 @@ module uim.platform.mobile.domain.entities.client_resource;
 import uim.platform.mobile.domain.types;
 
 struct ClientResource {
-  ClientResourceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ClientResourceId);
+
   MobileAppId appId;
   string name;
   string description;
@@ -18,7 +18,18 @@ struct ClientResource {
   string data;              // base64-encoded content
   long sizeBytes;
   long version_;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("appId", appId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.toString())
+      .set("contentType", contentType)
+      .set("data", data)
+      .set("sizeBytes", sizeBytes)
+      .set("version", version_);
+
+    return j;
+  }
 }

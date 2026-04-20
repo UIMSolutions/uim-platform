@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct AccessToken {
-    AccessTokenId id;
-    TenantId tenantId;
+    mixin TenantEntity!(AccessTokenId);
+
     string tokenValue;
     TokenType tokenType = TokenType.bearer;
     TokenStatus status = TokenStatus.active;
@@ -22,20 +22,16 @@ struct AccessToken {
     string scopes;
     long expiresAt;
     string issuedAt;
-    string createdAt;
 
-    Json accessTokenToJson() {
-        import std.conv : to;
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
-            .set("tokenType", tokenType.to!string)
-            .set("status", status.to!string)
+    Json toJson() const {
+        return entityToJson
+            .set("tokenValue", tokenValue)
+            .set("tokenType", tokenType.toString())
+            .set("status", status.toString())
             .set("clientId", clientId)
             .set("userId", userId)
             .set("scopes", scopes)
             .set("expiresAt", expiresAt)
-            .set("issuedAt", issuedAt)
-            .set("createdAt", createdAt);
+            .set("issuedAt", issuedAt);
     }
 }

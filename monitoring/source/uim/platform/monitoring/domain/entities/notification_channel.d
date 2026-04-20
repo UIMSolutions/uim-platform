@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A notification channel for delivering alert notifications.
 struct NotificationChannel {
-  NotificationChannelId id;
-  TenantId tenantId;
+  mixin TenantEntity!(NotificationChannelId);
+
   string name;
   string description;
   ChannelType channelType = ChannelType.email;
@@ -34,7 +34,21 @@ struct NotificationChannel {
   int onPremisePort;
   string onPremiseProtocol;
 
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("channelType", channelType.toString())
+      .set("state", state.toString())
+      .set("emailRecipients", emailRecipients)
+      .set("emailSubjectPrefix", emailSubjectPrefix)
+      .set("webhookUrl", webhookUrl)
+      .set("webhookSecret", webhookSecret)
+      .set("webhookMethod", webhookMethod)
+      .set("onPremiseHost", onPremiseHost)
+      .set("onPremisePort", onPremisePort)
+      .set("onPremiseProtocol", onPremiseProtocol);
+
+    return j;
+  }
 }

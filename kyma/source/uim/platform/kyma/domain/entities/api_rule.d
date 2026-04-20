@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An API rule — exposes a service or function via the API Gateway.
 struct ApiRule {
-  TenantId tenantId;
-  ApiRuleId id;
+  mixin TenantEntity!(ApiRuleId id);
+  
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;
@@ -45,10 +45,35 @@ struct ApiRule {
   // Labels
   string[string] labels;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("namespaceId", namespaceId.value)
+      .set("environmentId", environmentId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString)
+      .set("serviceName", serviceName)
+      .set("servicePort", servicePort)
+      .set("gateway", gateway)
+      .set("host", host)
+      .set("rules", rules.map!(r => Json.init
+        .set("path", r.path)
+        .set("methods", r.methods.map!(m => m.toString()).array)
+        .set("accessStrategy", r.accessStrategy.toString())
+        .set("requiredScopes", r.requiredScopes.array)
+        .set("audiences", r.audiences.array)
+        .set("trustedIssuers", r.trustedIssuers.array)).array)
+      .set("tlsEnabled", tlsEnabled)
+      .set("tlsSecretName", tlsSecretName)
+      .set("corsEnabled", corsEnabled)
+      .set("corsAllowOrigins", corsAllowOrigins.array)
+      .set("corsAllowMethods", corsAllowMethods.array)
+      .set("corsAllowHeaders", corsAllowHeaders.array)
+      .set("labels", labels);
+
+    return j;
+  }
+
 }
 
 /// A single rule entry within an API rule.

@@ -12,9 +12,9 @@ import uim.platform.data.attribute_recommendation.domain.types;
 struct InferenceRequest {
   mixin TenantEntity!(InferenceRequestId);
 
-  DeploymentId deploymentId;
+  DeploymentId deploymentId; // ID of the model deployment to use for inference
   string inputData; // JSON: input attribute key-value pairs
-  InferenceStatus status = InferenceStatus.pending;
+  InferenceStatus status = InferenceStatus.pending; // pending, running, completed, failed
   
   Json toJson() const {
     auto j = entityToJson

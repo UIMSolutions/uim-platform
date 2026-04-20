@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A serverless function deployed in a Kyma namespace.
 struct ServerlessFunction {
-  TenantId tenantId;
-  ServerlessFunctionId id;
+  mixin TenantEntity!(ServerlessFunctionId);
+
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;
@@ -47,8 +47,28 @@ struct ServerlessFunction {
   // Timeout in seconds
   int timeoutSeconds = 180;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("namespaceId", namespaceId.value)
+      .set("environmentId", environmentId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("runtime", runtime.toString())
+      .set("status", status.toString())
+      .set("sourceCode", sourceCode)
+      .set("handler", handler)
+      .set("dependencies", dependencies)
+      .set("scalingType", scalingType.toString())
+      .set("minReplicas", minReplicas)
+      .set("maxReplicas", maxReplicas)
+      .set("cpuRequest", cpuRequest)
+      .set("cpuLimit", cpuLimit)
+      .set("memoryRequest", memoryRequest)
+      .set("memoryLimit", memoryLimit)
+      .set("envVars", envVars)
+      .set("labels", labels)
+      .set("timeoutSeconds", timeoutSeconds);
+
+    return j;
+  }
 }

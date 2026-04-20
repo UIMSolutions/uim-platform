@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct AuthorizationCode {
-    AuthorizationCodeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(AuthorizationCodeId);
+
     string code;
     string clientId;
     string userId;
@@ -22,21 +22,16 @@ struct AuthorizationCode {
     AuthCodeStatus status = AuthCodeStatus.active;
     long expiresAt;
     string issuedAt;
-    string createdAt;
 
-    Json authorizationCodeToJson() {
-        import std.conv : to;
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
+    Json toJson() const {
+        return entityToJson
             .set("code", code)
             .set("clientId", clientId)
             .set("userId", userId)
             .set("redirectUri", redirectUri)
             .set("scopes", scopes)
-            .set("status", status.to!string)
+            .set("status", status.toString())
             .set("expiresAt", expiresAt)
-            .set("issuedAt", issuedAt)
-            .set("createdAt", createdAt);
+            .set("issuedAt", issuedAt);
     }
 }

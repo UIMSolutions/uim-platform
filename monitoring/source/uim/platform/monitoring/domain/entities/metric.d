@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A single metric data point.
 struct Metric {
-  MetricId id;
-  TenantId tenantId;
+  mixin TenantEntity!(MetricId);
+
   MonitoredResourceId resourceId;
   MetricDefinitionId definitionId;
   string name;
@@ -23,6 +23,20 @@ struct Metric {
   MetricCategory category = MetricCategory.custom;
   string[string] labels;
   long timestamp;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceId", resourceId.value)
+      .set("definitionId", definitionId.value)
+      .set("name", name)
+      .set("value", value_)
+      .set("unit", unit.toString())
+      .set("category", category.toString())
+      .set("labels", labels)
+      .set("timestamp", timestamp);
+
+    return j;
+  }
 }
 
 /// Aggregated metric summary over a time window.

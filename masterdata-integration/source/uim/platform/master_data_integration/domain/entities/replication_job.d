@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// A replication job — executes data synchronization between systems.
 struct ReplicationJob {
-  ReplicationJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ReplicationJobId);
+
   DistributionModelId distributionModelId;
 
   string name;
@@ -38,6 +38,28 @@ struct ReplicationJob {
   // Timing
   long startedAt;
   long completedAt;
-  long createdAt;
-  string createdBy;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("distributionModelId", distributionModelId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("trigger", trigger.to!string)
+      .set("categories", categories.map!(c => c.to!string).array)
+      .set("sourceClientId", sourceClientId.value)
+      .set("targetClientIds", targetClientIds.map!(id => id.value).array)
+      .set("totalRecords", totalRecords)
+      .set("processedRecords", processedRecords)
+      .set("successRecords", successRecords)
+      .set("errorRecords", errorRecords)
+      .set("skippedRecords", skippedRecords)
+      .set("errorMessages", errorMessages.array)
+      .set("lastDeltaToken", lastDeltaToken)
+      .set("isInitialLoad", isInitialLoad)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+
+    return j;
+  }
 }

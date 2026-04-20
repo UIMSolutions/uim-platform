@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An external application connected to the Kyma environment.
 struct Application {
-  TenantId tenantId;
-  ApplicationId id;
+  mixin TenantEntity!(ApplicationId);
+
   KymaEnvironmentId environmentId;
   string name;
   string description;
@@ -37,10 +37,30 @@ struct Application {
   // Labels
   string[string] labels;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("environmentId", environmentId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("registrationType", registrationType.toString())
+      .set("connectorUrl", connectorUrl)
+      .set("accessLabel", accessLabel)
+      .set("apis", apis.map!(api => Json.init
+        .set("name", api.name)
+        .set("description", api.description)
+        .set("targetUrl", api.targetUrl)
+        .set("specUrl", api.specUrl)
+        .set("authType", api.authType)).array)
+      .set("events", events.map!(event => Json.init
+        .set("name", event.name)
+        .set("description", event.description)
+        .set("version", event.version_)).array)
+      .set("boundNamespaces", boundNamespaces.array)
+      .set("labels", labels);
+
+    return j;
+  }
 }
 
 /// An API entry registered by an external application.
