@@ -13,13 +13,16 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying buildpacks.
-interface IBuildpackRepository {
-  Buildpack[] findByTenant(TenantId tenantId);
-  Buildpack* findById(BuildpackId tenantId, id tenantId);
-  Buildpack* findByName(TenantId tenantId, string name);
+interface IBuildpackRepository : ITenantRepository!(Buildpack, BuildpackId) {
+  bool existsByName(TenantId tenantId, string name);
+  Buildpack findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+  
+  size_t countEnabled(TenantId tenantId);
   Buildpack[] findEnabled(TenantId tenantId);
-  Buildpack[] findByStack(TenantId tenantId, string stack);
-  void save(Buildpack buildpack);
-  void update(Buildpack buildpack);
-  void remove(BuildpackId tenantId, id tenantId);
+  void removeEnabled(TenantId tenantId);
+
+  size_t countEnabled(TenantId tenantId);
+  Buildpack[] findEnabled(TenantId tenantId);
+  void removeEnabled(TenantId tenantId);
 }

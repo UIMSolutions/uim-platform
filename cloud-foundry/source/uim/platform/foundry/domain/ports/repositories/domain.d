@@ -13,13 +13,16 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying Cloud Foundry domains.
-interface IDomainRepository {
-  CfDomain[] findByOrg(OrgId orgtenantId, id tenantId);
-  CfDomain* findById(DomainId tenantId, id tenantId);
-  CfDomain* findByName(TenantId tenantId, string name);
+interface IDomainRepository : ITenantRepository!(CfDomain, DomainId) {
+  bool existsByName(TenantId tenantId, string name);
+  CfDomain findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+  
+  size_t countByOrg(TenantId tenantId, OrgId orgId);
+  CfDomain[] findByOrg(TenantId tenantId, OrgId orgId);
+  void removeByOrg(TenantId tenantId, OrgId orgId);
+  
+  size_t countShared(TenantId tenantId);
   CfDomain[] findShared(TenantId tenantId);
-  CfDomain[] findByTenant(TenantId tenantId);
-  void save(CfDomain domain);
-  void update(CfDomain domain);
-  void remove(DomainId tenantId, id tenantId);
+  void removeShared(TenantId tenantId);
 }

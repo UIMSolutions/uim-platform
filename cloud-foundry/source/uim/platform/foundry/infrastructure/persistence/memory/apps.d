@@ -5,17 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.apps;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.application;
-import uim.platform.foundry.domain.ports.repositories.app;
+    // import uim.platform.foundry.domain.types;
+    // import uim.platform.foundry.domain.entities.application;
+    // import uim.platform.foundry.domain.ports.repositories.app;
 
-// import std.algorithm : filter;
-// import std.array : array;
+import uim.platform.foundry;
+
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryAppRepository : AppRepository {
   private Application[AppId] store;
 
-  Application[] findBySpace(SpaceId spacetenantId, id tenantId) {
+  Application[] findBySpace(SpaceId spaceId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
@@ -26,14 +29,14 @@ class MemoryAppRepository : AppRepository {
     return null;
   }
 
-  Application* findByName(SpaceId spacetenantId, id tenantId, string name) {
+  Application* findByName(SpaceId spaceId, id tenantId, string name) {
     foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
         return &e;
     return null;
   }
 
-  Application[] findByState(SpaceId spacetenantId, id tenantId, AppState state) {
+  Application[] findByState(SpaceId spaceId, id tenantId, AppState state) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.spaceId == spaceId && e.state == state).array;
   }
@@ -42,8 +45,8 @@ class MemoryAppRepository : AppRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  size_t countBySpace(SpaceId spacetenantId, id tenantId) {
-    return findBySpace(spacetenantId, id).length;
+  size_t countBySpace(SpaceId spaceId, id tenantId) {
+    return findBySpace(spaceId, id).length;
   }
 
   void save(Application app) {

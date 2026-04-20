@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.buildpack;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.buildpack;
-import uim.platform.foundry.domain.ports.repositories.buildpack;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.buildpack;
+// import uim.platform.foundry.domain.ports.repositories.buildpack;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryBuildpackRepository : BuildpackRepository {
   private Buildpack[BuildpackId] store;
 

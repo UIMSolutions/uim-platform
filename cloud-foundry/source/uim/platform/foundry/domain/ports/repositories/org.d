@@ -5,14 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.org;
 
-// import uim.platform.foundry.domain.types;
-// import uim.platform.foundry.domain.entities.organization;
-import uim.platform.foundry;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.organization;
 
-mixin(ShowModule!());
-
-@safe:
 /// Port for persisting and querying organizations.
-interface IOrgRepository : ITenantRepository!(Organization, OrgId) 
-  Organization findByName(TenantId tenantId, string name)
+interface IOrgRepository : ITenantRepository!(Organization, OrgId) {
+  bool existsByName(TenantId tenantId, string name);
+  Organization findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 }

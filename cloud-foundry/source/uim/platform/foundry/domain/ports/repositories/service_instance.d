@@ -13,13 +13,16 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying service instances.
-interface IServiceInstanceRepository {
+interface IServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
+  bool existsByName(SpaceId spacetenantId, id tenantId, string name);
+  ServiceInstance findByName(SpaceId spacetenantId, id tenantId, string name);
+  void removeByName(SpaceId spacetenantId, id tenantId, string name);
+  
+  size_t countBySpace(SpaceId spacetenantId, id tenantId);
   ServiceInstance[] findBySpace(SpaceId spacetenantId, id tenantId);
-  ServiceInstance* findById(ServiceInstanceId tenantId, id tenantId);
-  ServiceInstance* findByName(SpaceId spacetenantId, id tenantId, string name);
+  void removeBySpace(SpaceId spacetenantId, id tenantId);
+
+  size_t countByServiceName(SpaceId spacetenantId, id tenantId, string serviceName);
   ServiceInstance[] findByServiceName(SpaceId spacetenantId, id tenantId, string serviceName);
-  ServiceInstance[] findByTenant(TenantId tenantId);
-  void save(ServiceInstance instance);
-  void update(ServiceInstance instance);
-  void remove(ServiceInstanceId tenantId, id tenantId);
+  void removeByServiceName(SpaceId spacetenantId, id tenantId, string serviceName);
 }
