@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct LogicFlow {
-    LogicFlowId id;
-    TenantId tenantId;
+    mixin TenantEntity!(LogicFlowId);
+
     ApplicationId applicationId;
     PageId pageId;
     string name;
@@ -25,17 +25,11 @@ struct LogicFlow {
     string connections;
     string variables;
     string errorHandler;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json logicFlowToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("applicationId", applicationId)
-            .set("pageId", pageId)
+    Json toJson() const {
+        return entityToJson
+            .set("applicationId", applicationId.value)
+            .set("pageId", pageId.value)
             .set("name", name)
             .set("description", description)
             .set("trigger", trigger.to!string)
@@ -44,10 +38,6 @@ struct LogicFlow {
             .set("nodes", nodes)
             .set("connections", connections)
             .set("variables", variables)
-            .set("errorHandler", errorHandler)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("errorHandler", errorHandler);
     }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DataEntity {
-    DataEntityId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DataEntityId);
+
     ApplicationId applicationId;
     string name;
     string description;
@@ -24,16 +24,10 @@ struct DataEntity {
     string validationRules;
     string defaultValues;
     string relations;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json dataEntityToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("applicationId", applicationId)
+    Json toJson() const {
+        return entityToJson
+            .set("applicationId", applicationId.value)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
@@ -42,10 +36,6 @@ struct DataEntity {
             .set("indexes", indexes)
             .set("validationRules", validationRules)
             .set("defaultValues", defaultValues)
-            .set("relations", relations)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("relations", relations);
     }
 }

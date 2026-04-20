@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct UIComponent {
-    UIComponentId id;
-    TenantId tenantId;
+    mixin TenantEntity!(UIComponentId);
+
     string name;
     string description;
     ComponentCategory category = ComponentCategory.basic;
@@ -26,15 +26,9 @@ struct UIComponent {
     string childComponents;
     string iconUrl;
     string previewUrl;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json uiComponentToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("category", category.to!string)
@@ -46,10 +40,6 @@ struct UIComponent {
             .set("dataBindings", dataBindings)
             .set("childComponents", childComponents)
             .set("iconUrl", iconUrl)
-            .set("previewUrl", previewUrl)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("previewUrl", previewUrl);
     }
 }

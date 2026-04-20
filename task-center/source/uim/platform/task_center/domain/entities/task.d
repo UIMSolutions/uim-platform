@@ -39,7 +39,7 @@ struct Task {
     string completedAt;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("taskDefinitionId", taskDefinitionId.value)
             .set("providerId", providerId.value)
             .set("externalTaskId", externalTaskId)
@@ -48,4 +48,15 @@ struct Task {
             .set("status", status.toString)
             .set("priority", priority.toString)
             .set("category", category.toString)
+            .set("assignee", assignee)
+            .set("creator", creator)
+            .set("processor", processor)
+            .set("sourceApplication", sourceApplication)
+            .set("allowedActions", allowedActions.array)
+            .set("customAttributes", customAttributes)
+            .set("isClaimed", isClaimed)
+            .set("claimedBy", claimedBy)
+            .set("dueDate", dueDate)
+            .set("completedAt", completedAt);
+    }
 }

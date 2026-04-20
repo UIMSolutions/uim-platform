@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Execution {
-    ExecutionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ExecutionId);
+
     CommandId commandId;
     ExecutionStatus status = ExecutionStatus.pending;
     ExecutionPriority priority = ExecutionPriority.medium;
@@ -26,16 +26,12 @@ struct Execution {
     string errorMessage;
     string triggeredBy;
     string retryAttempt;
-    string createdBy;
-    string createdAt;
 
-    Json executionToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("commandId", commandId)
-            .set("status", status.to!string)
-            .set("priority", priority.to!string)
+    Json toJson() const {
+        return entityToJson
+            .set("commandId", commandId.value)
+            .set("status", status.to!string())
+            .set("priority", priority.to!string())
             .set("inputValues", inputValues)
             .set("outputValues", outputValues)
             .set("logs", logs)
@@ -44,8 +40,7 @@ struct Execution {
             .set("duration", duration)
             .set("errorMessage", errorMessage)
             .set("triggeredBy", triggeredBy)
-            .set("retryAttempt", retryAttempt)
-            .set("createdBy", createdBy)
-            .set("createdAt", createdAt);
+            .set("retryAttempt", retryAttempt);
     }
+
 }

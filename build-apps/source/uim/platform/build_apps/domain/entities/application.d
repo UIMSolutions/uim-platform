@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Application {
-    ApplicationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ApplicationId);
+
     string name;
     string description;
     ApplicationType appType = ApplicationType.web;
@@ -25,15 +25,9 @@ struct Application {
     string defaultLanguage;
     string supportedLanguages;
     string owner;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json applicationToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("appType", appType.to!string)
@@ -44,10 +38,6 @@ struct Application {
             .set("globalVariables", globalVariables)
             .set("defaultLanguage", defaultLanguage)
             .set("supportedLanguages", supportedLanguages)
-            .set("owner", owner)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("owner", owner);
     }
 }

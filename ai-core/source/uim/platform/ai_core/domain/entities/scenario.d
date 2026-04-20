@@ -8,12 +8,18 @@ module uim.platform.ai_core.domain.entities.scenario;
 import uim.platform.ai_core.domain.types;
 
 struct Scenario {
-  ScenarioId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ScenarioId);
+
   ResourceGroupId resourceGroupId;
   string name;
   string description;
   string[] labels;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("resourceGroupId", resourceGroupId.value)
+          .set("name", name)
+          .set("description", description)
+          .set("labels", labels.array);
+  }
 }

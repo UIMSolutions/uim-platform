@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceAccount {
-    ServiceAccountId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServiceAccountId);
+
     string name;
     string description;
     ServiceAccountStatus status = ServiceAccountStatus.active;
@@ -21,25 +21,15 @@ struct ServiceAccount {
     string permissions;
     string lastUsedAt;
     string expiresAt;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json serviceAccountToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
             .set("clientId", clientId)
             .set("permissions", permissions)
             .set("lastUsedAt", lastUsedAt)
-            .set("expiresAt", expiresAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("expiresAt", expiresAt);
     }
 }

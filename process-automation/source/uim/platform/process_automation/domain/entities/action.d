@@ -56,7 +56,7 @@ struct Action {
     string version_;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("projectId", projectId.value)
             .set("name", name)
             .set("description", description)
@@ -71,7 +71,5 @@ struct Action {
             .set("authType", authType)
             .set("destinationName", destinationName)
             .set("version_", version_);
-
-        return j;
     }
 }
