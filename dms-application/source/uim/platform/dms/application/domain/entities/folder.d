@@ -12,14 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 class Folder {
-  FolderId id;
-  TenantId tenantId;
+  mixin TenantEntity!(FolderId);
+
   RepositoryId repositoryId;
   FolderId parentFolderId; // empty for root folders
   string name;
   string description;
   string path; // e.g. "/root/subfolder/child"
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json  toJson() const {
+    auto j = entityToJson
+      .set("repositoryId", repositoryId.value)
+      .set("parentFolderId", parentFolderId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("path", path);
+
+    return j;
+  }
 }

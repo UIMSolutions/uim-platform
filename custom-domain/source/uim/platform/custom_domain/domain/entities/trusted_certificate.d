@@ -8,8 +8,8 @@ module uim.platform.custom_domain.domain.entities.trusted_certificate;
 import uim.platform.custom_domain.domain.types;
 
 struct TrustedCertificate {
-    TrustedCertificateId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TrustedCertificateId);
+
     string customDomainId;
     string subjectDn;
     string issuerDn;
@@ -20,6 +20,20 @@ struct TrustedCertificate {
     ClientAuthMode authMode;
     long validFrom;
     long validTo;
-    string createdBy;
-    long createdAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("customDomainId", customDomainId)
+            .set("subjectDn", subjectDn)
+            .set("issuerDn", issuerDn)
+            .set("serialNumber", serialNumber)
+            .set("certificatePem", certificatePem)
+            .set("fingerprint", fingerprint)
+            .set("status", status.to!string)
+            .set("authMode", authMode.to!string)
+            .set("validFrom", validFrom)
+            .set("validTo", validTo);
+
+        return j;
+    }
 }

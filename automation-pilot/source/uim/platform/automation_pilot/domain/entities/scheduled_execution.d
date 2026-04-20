@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ScheduledExecution {
-    ScheduledExecutionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ScheduledExecutionId);
+
     CommandId commandId;
     ScheduleType scheduleType = ScheduleType.oneTime;
     ScheduleStatus status = ScheduleStatus.active;
@@ -25,15 +25,9 @@ struct ScheduledExecution {
     string description;
     string maxRetries;
     string retryDelay;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json scheduledExecutionToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        auto j = entityToJson
             .set("commandId", commandId)
             .set("scheduleType", scheduleType.to!string)
             .set("status", status.to!string)
@@ -44,10 +38,8 @@ struct ScheduledExecution {
             .set("inputValues", inputValues)
             .set("description", description)
             .set("maxRetries", maxRetries)
-            .set("retryDelay", retryDelay)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("retryDelay", retryDelay);
+
+        return j;
     }
 }

@@ -13,12 +13,19 @@ mixin(ShowModule!());
 @safe:
 /// A grouping of data controllers for organizational management.
 struct DataControllerGroup {
-  DataControllerGroupId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataControllerGroupId);
+
   string name;
   string description;
   DataControllerId[] controllerIds;
   bool isActive = true;
-  long createdAt;
-  long updatedAt;
+ 
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("controllerIds", controllerIds.map!(id => id.value).array);
+
+    return j;
+  }
 }

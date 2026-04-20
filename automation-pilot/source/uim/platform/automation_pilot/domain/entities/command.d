@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Command {
-    CommandId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CommandId);
+
     CatalogId catalogId;
     string name;
     string description;
@@ -26,15 +26,9 @@ struct Command {
     string timeout;
     string retryCount;
     string tags;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
-
-    Json commandToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("catalogId", catalogId)
             .set("name", name)
             .set("description", description)
@@ -46,10 +40,8 @@ struct Command {
             .set("steps", steps)
             .set("timeout", timeout)
             .set("retryCount", retryCount)
-            .set("tags", tags)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("tags", tags);
+
+        return j;
     }
 }

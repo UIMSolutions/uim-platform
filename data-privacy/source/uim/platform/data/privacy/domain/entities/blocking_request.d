@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to restrict processing of personal data (GDPR Art. 18).
 struct BlockingRequest {
-  BlockingRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BlockingRequestId);
+
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   BlockingStatus status = BlockingStatus.requested;
@@ -24,4 +24,19 @@ struct BlockingRequest {
   long requestedAt;
   long activatedAt;
   long releasedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("requestedBy", requestedBy)
+      .set("status", status.to!string)
+      .set("targetSystems", targetSystems)
+      .set("categories", categories.map!(c => c.to!string))
+      .set("reason", reason)
+      .set("requestedAt", requestedAt)
+      .set("activatedAt", activatedAt)
+      .set("releasedAt", releasedAt);
+
+    return j;
+  }
 }

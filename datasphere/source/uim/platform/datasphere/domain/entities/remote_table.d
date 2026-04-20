@@ -18,8 +18,8 @@ struct ColumnDefinition {
 }
 
 struct RemoteTable {
-  RemoteTableId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RemoteTableId);
+
   SpaceId spaceId;
   ConnectionId connectionId;
   string name;
@@ -31,6 +31,28 @@ struct RemoteTable {
   ColumnDefinition[] columns;
   long rowCount;
   long lastReplicatedAt;
-  long createdAt;
-  long modifiedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("spaceId", spaceId.value)
+      .set("connectionId", connectionId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("remoteSchema", remoteSchema)
+      .set("remoteObjectName", remoteObjectName)
+      .set("replicationMode", replicationMode.toString())
+      .set("replicationSchedule", replicationSchedule)
+      .set("columns", columns.map!(col => Json()
+        .set("name", col.name)
+        .set("dataType", col.dataType)
+        .set("nullable", col.nullable)
+        .set("length", col.length)
+        .set("precision", col.precision)
+        .set("scale", col.scale)
+        .set("description", col.description)).array)
+      .set("rowCount", rowCount)
+      .set("lastReplicatedAt", lastReplicatedAt);
+
+    return j;
+  }
 }

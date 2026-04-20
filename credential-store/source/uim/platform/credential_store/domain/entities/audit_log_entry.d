@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct AuditLogEntry {
-  AuditLogEntryId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AuditLogEntryId);
+
   NamespaceId namespaceId;
   OperationType operation;
   ResourceType resourceType;
@@ -23,4 +23,19 @@ struct AuditLogEntry {
   string details;
   string sourceIp;
   bool success;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("namespaceId", namespaceId)
+      .set("operation", operation.to!string)
+      .set("resourceType", resourceType.to!string)
+      .set("resourceName", resourceName)
+      .set("performedBy", performedBy)
+      .set("timestamp", timestamp)
+      .set("details", details)
+      .set("sourceIp", sourceIp)
+      .set("success", success);
+
+    return j;
+  }
 }

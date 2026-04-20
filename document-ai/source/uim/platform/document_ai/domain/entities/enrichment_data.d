@@ -17,14 +17,26 @@ struct EnrichmentField {
 }
 
 struct EnrichmentData {
-  EnrichmentDataId id;
-  TenantId tenantId;
+  mixin TenantEntity!(EnrichmentDataId);
+
   ClientId clientId;
   DocumentTypeId documentTypeId;
   string name;
   string description;
   string subtype;
   EnrichmentField[] fields;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("clientId", clientId.value)
+      .set("documentTypeId", documentTypeId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("subtype", subtype)
+      .set("fields", fields.map!(f => Json.init
+        .set("key", f.key)
+        .set("value", f.value)).array);
+
+    return j;
+  }
 }

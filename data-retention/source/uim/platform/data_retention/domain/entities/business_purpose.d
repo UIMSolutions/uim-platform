@@ -6,8 +6,8 @@ mixin(ShowModule!());
 @safe:
 
 struct BusinessPurpose {
-    BusinessPurposeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(BusinessPurposeId);
+
     string name;
     string description;
     ApplicationGroupId applicationGroupId;
@@ -17,6 +17,18 @@ struct BusinessPurpose {
     long referenceDate;
     long endOfPurposeDate;
     string createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("applicationGroupId", applicationGroupId.value)
+            .set("dataSubjectRoleId", dataSubjectRoleId.value)
+            .set("legalEntityId", legalEntityId.value)
+            .set("status", status.toString())
+            .set("referenceDate", referenceDate)
+            .set("endOfPurposeDate", endOfPurposeDate);
+
+        return j;
+    }
 }

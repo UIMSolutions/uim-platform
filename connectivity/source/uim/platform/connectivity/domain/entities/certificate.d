@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Certificate store entry for mTLS, SAML signing, etc.
 struct Certificate {
-  CertificateId id;
-  TenantId tenantId;
+  mixin TenantEntity!(CertificateId);
+
   string name;
   string description;
   CertificateType certType = CertificateType.x509;
@@ -26,8 +26,6 @@ struct Certificate {
   long validFrom;
   long validTo;
   bool active = true;
-  long createdAt;
-  long updatedAt;
 
   /// Check if certificate is expired relative to the given timestamp.
   bool isExpired(long now) const {
@@ -38,5 +36,22 @@ struct Certificate {
   bool expiresWithinDays(long now, uint days) const {
     enum secsPerDay = 86_400L;
     return validTo > 0 && (validTo - now) < (days * secsPerDay);
+  }
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("certType", certType.to!string)
+      .set("usage", usage.to!string)
+      .set("subjectDN", subjectDN)
+      .set("issuerDN", issuerDN)
+      .set("serialNumber", serialNumber)
+      .set("fingerprint", fingerprint)
+      .set("validFrom", validFrom)
+      .set("validTo", validTo)
+      .set("active", active); 
+
+    return j;
   }
 }
