@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceBinding {
-    ServiceBindingId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServiceBindingId);
+
     string name;
     ServiceInstanceId instanceId;
     ServiceBindingStatus status = ServiceBindingStatus.creating;
@@ -17,7 +17,16 @@ struct ServiceBinding {
     string bindResource;
     string context;
     string labels;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return Json.entityToJson()
+            .set("name", name)
+            .set("instanceId", instanceId.value)
+            .set("status", status.toString())
+            .set("credentials", credentials)
+            .set("parameters", parameters)
+            .set("bindResource", bindResource)
+            .set("context", context)
+            .set("labels", labels);
+    }
 }

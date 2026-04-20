@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceOffering {
-    ServiceOfferingId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServiceOfferingId);
+
     ServiceBrokerId brokerId;
     string name;
     string description;
@@ -21,7 +21,20 @@ struct ServiceOffering {
     bool planUpdateable = true;
     string metadata;
     string tags;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return Json.entityToJson()
+            .set("brokerId", brokerId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("catalogName", catalogName)
+            .set("status", status.toString())
+            .set("category", category.toString())
+            .set("bindable", bindable)
+            .set("instancesRetrievable", instancesRetrievable)
+            .set("bindingsRetrievable", bindingsRetrievable)
+            .set("planUpdateable", planUpdateable)
+            .set("metadata", metadata)
+            .set("tags", tags);
+    }
 }

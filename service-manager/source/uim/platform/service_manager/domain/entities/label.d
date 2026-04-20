@@ -7,11 +7,18 @@ mixin(ShowModule!());
 @safe:
 
 struct Label {
-    LabelId id;
-    TenantId tenantId;
+    mixin TenantEntity!(LabelId);
+
     string resourceId;
     string resourceType;
     string key;
     string value;
-    long createdAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("resourceId", resourceId)
+            .set("resourceType", resourceType)
+            .set("key", key)
+            .set("value", value);
+    }
 }

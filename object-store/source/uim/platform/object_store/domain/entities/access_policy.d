@@ -12,15 +12,24 @@ mixin(ShowModule!());
 
 @safe:
 class AccessPolicy {
-  AccessPolicyId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AccessPolicyId);
+
   BucketId bucketId;
   string name;
   PolicyEffect effect = PolicyEffect.allow;
   string principal; // user/group/service identifier, "*" for all
   string actions; // JSON array, e.g. '["GetObject","PutObject"]'
   string resources; // JSON array of key patterns, e.g. '["images/*"]'
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("bucketId", bucketId.value)
+      .set("name", name)
+      .set("effect", effect.toString())
+      .set("principal", principal)
+      .set("actions", actions)
+      .set("resources", resources);
+
+    return j;
+  }
 }

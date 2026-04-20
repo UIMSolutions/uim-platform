@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ProcessingPurpose {
-    ProcessingPurposeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ProcessingPurposeId);
+
     string name;
     string description;
     LegalBasis legalBasis;
@@ -23,8 +23,17 @@ struct ProcessingPurpose {
     string retentionPeriod;
     string dataProtectionOfficer;
     bool requiresConsent;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+
+    Json toJson() const {
+        return Json.entityToJson()
+            .set("name", name)
+            .set("description", description)
+            .set("legalBasis", legalBasis.toString())
+            .set("status", status.toString())
+            .set("dataCategoryIds", dataCategoryIds)
+            .set("applicationIds", applicationIds)
+            .set("retentionPeriod", retentionPeriod)
+            .set("dataProtectionOfficer", dataProtectionOfficer)
+            .set("requiresConsent", requiresConsent);
+    }
 }

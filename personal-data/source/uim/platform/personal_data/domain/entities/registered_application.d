@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct RegisteredApplication {
-    RegisteredApplicationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(RegisteredApplicationId);
+
     string name;
     string description;
     ApplicationStatus status;
@@ -26,5 +26,20 @@ struct RegisteredApplication {
     string registeredBy;
     string modifiedBy;
     string registeredAt;
-    string modifiedAt;
+
+    Json toJson() const {
+        return Json.entityToJson()
+            .set("name", name)
+            .set("description", description)
+            .set("status", status.toString())
+            .set("endpointUrl", endpointUrl)
+            .set("apiVersion", apiVersion)
+            .set("dataCategoryIds", dataCategoryIds)
+            .set("purposeIds", purposeIds)
+            .set("contactEmail", contactEmail)
+            .set("contactName", contactName)
+            .set("registeredBy", registeredBy)
+            .set("modifiedBy", modifiedBy)
+            .set("registeredAt", registeredAt);
+    }
 }

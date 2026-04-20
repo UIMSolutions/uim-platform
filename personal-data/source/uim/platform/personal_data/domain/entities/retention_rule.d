@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct RetentionRule {
-    RetentionRuleId id;
-    TenantId tenantId;
+    mixin TenantEntity!(RetentionRuleId);
+
     string name;
     string description;
     RetentionRuleStatus status;
@@ -25,8 +25,21 @@ struct RetentionRule {
     bool autoDelete;
     bool notifyBeforeExpiry;
     int notifyDaysBefore;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("status", status)
+            .set("retentionPeriod", retentionPeriod)
+            .set("periodUnit", periodUnit)
+            .set("dataCategoryIds", dataCategoryIds)
+            .set("applicationIds", applicationIds)
+            .set("purposeIds", purposeIds)
+            .set("autoDelete", autoDelete)
+            .set("notifyBeforeExpiry", notifyBeforeExpiry)
+            .set("notifyDaysBefore", notifyDaysBefore);
+
+        return j;
+    }
 }

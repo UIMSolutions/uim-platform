@@ -13,10 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// Navigation menu item within a site.
 struct MenuItem {
-  TenantId tenantId;
-  SiteId siteId;
+  mixin TenantEntity!(MenuItemId);
+
   MenuItemId parentId; // empty = top-level
-  MenuItemId menuItemId;
   string title;
   string icon;
   PageId targetPageId; // internal page link
@@ -25,24 +24,19 @@ struct MenuItem {
   RoleId[] allowedRoleIds;
   int sortOrder;
   bool visible = true;
-  long createdAt;
-  long updatedAt;
-
+  
   Json toJson() const {
-    return Json.emptyObject
-      .set("tenantId", tenantId)
-      .set("siteId", siteId)
-      .set("parentId", parentId)
-      .set("id", id)
+    auto j = entityToJson
+      .set("parentId", parentId.value)
       .set("title", title)
       .set("icon", icon)
-      .set("targetPageId", targetPageId)
+      .set("targetPageId", targetPageId.value)
       .set("targetUrl", targetUrl)
-      .set("navigationTarget", navigationTarget)
-      .set("allowedRoleIds", allowedRoleIds)
+      .set("navigationTarget", navigationTarget.toString())
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
       .set("sortOrder", sortOrder)
-      .set("visible", visible)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("visible", visible);
+
+    return j;
   }
 }
