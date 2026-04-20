@@ -15,17 +15,31 @@ struct DataLakeEndpoint {
   string host;
   int port;
   string coordinator;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("host", host)
+          .set("port", port)
+          .set("coordinator", coordinator);
+  }
 }
 
 struct DataLakeStorage {
   StorageTier tier;
   long capacityGB;
   long usedGB;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("tier", tier.to!string)
+          .set("capacityGB", capacityGB)
+          .set("usedGB", usedGB);
+  }
 }
 
 struct DataLake {
-  DataLakeId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataLakeId);
+
   InstanceId instanceId;
   string name;
   string description;
@@ -34,6 +48,16 @@ struct DataLake {
   DataLakeStorage[] storage;
   FileFormat[] supportedFormats;
   int computeNodes;
-  long createdAt;
-  long modifiedAt;
+  
+  Json toJson() const {
+      return entityToJson
+          .set("instanceId", instanceId.value)
+          .set("name", name)
+          .set("description", description)
+          .set("status", status.to!string)
+          .set("endpoint", endpoint.toJson())
+          .set("storage", storage.map!(s => s.toJson()).array)
+          .set("supportedFormats", supportedFormats.map!(f => f.to!string).array)
+          .set("computeNodes", computeNodes);
+  }
 }

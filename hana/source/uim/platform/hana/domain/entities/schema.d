@@ -16,11 +16,19 @@ struct SchemaObject {
   string objectType;
   long rowCount;
   long sizeBytes;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("name", name)
+          .set("objectType", objectType)
+          .set("rowCount", rowCount)
+          .set("sizeBytes", sizeBytes);
+  }
 }
 
 struct Schema {
-  SchemaId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SchemaId);
+
   InstanceId instanceId;
   string name;
   string owner;
@@ -30,6 +38,17 @@ struct Schema {
   long viewCount;
   long procedureCount;
   long sizeBytes;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("instanceId", instanceId.value)
+          .set("name", name)
+          .set("owner", owner)
+          .set("type", type.to!string)
+          .set("hasPrivileges", hasPrivileges)
+          .set("tableCount", tableCount)
+          .set("viewCount", viewCount)
+          .set("procedureCount", procedureCount)
+          .set("sizeBytes", sizeBytes);
+  }
 }

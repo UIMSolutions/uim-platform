@@ -41,4 +41,21 @@ struct ScenarioStepTemplate {
   bool requiresTargetSystem;
   int[] dependsOnSteps; // sequence numbers of prerequisite steps
   int estimatedDurationMinutes;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("name", name)
+          .set("description", description)
+          .set("type", type_.to!string)
+          .set("priority", priority.to!string)
+          .set("sequenceNumber", sequenceNumber)
+          .set("assignedRole", assignedRole)
+          .set("instructions", instructions)
+          .set("automationEndpoint", automationEndpoint)
+          .set("automationPayload", automationPayload)
+          .set("requiresSourceSystem", requiresSourceSystem)
+          .set("requiresTargetSystem", requiresTargetSystem)
+          .set("dependsOnSteps", dependsOnSteps.array)
+          .set("estimatedDurationMinutes", estimatedDurationMinutes);
+  }
 }

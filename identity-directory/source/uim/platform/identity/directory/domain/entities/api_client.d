@@ -13,20 +13,29 @@ mixin(ShowModule!());
 @safe:
 /// API client / technical user for service-to-service access.
 struct ApiClient {
-  ApiClientId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ApiClientId);
+  
   string name;
   string description;
   string clientId;
   string clientSecret;
   string[] scopes;
   bool active = true;
-  long createdAt;
   long expiresAt; // 0 = no expiry
   long lastUsedAt;
 
-  bool isExpired(long now) const
-  {
+  bool isExpired(long now) const {
     return expiresAt > 0 && now > expiresAt;
+  }
+
+  Json toJson() const {
+      return entityToJson
+          .set("name", name)
+          .set("description", description)
+          .set("clientId", clientId)
+          .set("scopes", scopes.array)
+          .set("active", active)
+          .set("expiresAt", expiresAt)
+          .set("lastUsedAt", lastUsedAt);
   }
 }

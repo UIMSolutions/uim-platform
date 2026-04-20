@@ -18,11 +18,21 @@ struct TemplateRegion {
   double y;
   double width;
   double height;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("fieldName", fieldName)
+          .set("page", page)
+          .set("x", x)
+          .set("y", y)
+          .set("width", width)
+          .set("height", height);
+  }
 }
 
 struct Template {
-  TemplateId id;
-  TenantId tenantId;
+ mixin TenantEntity!(TemplateId);
+
   ClientId clientId;
   SchemaId schemaId;
   DocumentTypeId documentTypeId;
@@ -31,6 +41,16 @@ struct Template {
   TemplateStatus status;
   TemplateRegion[] regions;
   string[] sampleDocumentIds;
-  long createdAt;
-  long modifiedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("clientId", clientId.value)
+          .set("schemaId", schemaId.value)
+          .set("documentTypeId", documentTypeId.value)
+          .set("name", name)
+          .set("description", description)
+          .set("status", status.to!string)
+          .set("regions", regions.map!(r => r.toJson()).array)
+          .set("sampleDocumentIds", sampleDocumentIds.array);
+  }
 }

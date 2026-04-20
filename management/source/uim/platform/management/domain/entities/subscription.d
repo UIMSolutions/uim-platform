@@ -14,7 +14,8 @@ mixin(ShowModule!());
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).
 struct Subscription {
-  SubscriptionId id;
+  mixin TenantEntity!(SubscriptionId);
+
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
   string appName; // technical name of the SaaS app
@@ -25,13 +26,32 @@ struct Subscription {
   string providerSubaccountId; // SaaS provider's subaccount
   SubscriptionStatus status = SubscriptionStatus.subscribing;
   string appUrl; // URL to the subscribed application
-  TenantId tenantId; // consumer tenant created for subscription
   bool isSubscriptionDone = false;
   string errorDescription;
   string[] dependentServices; // services required by this subscription
   long subscribedAt;
-  long modifiedAt;
   string subscribedBy;
   string[string] parameters;
   string[string] labels;
+
+  Json toJson() const {
+      return entityToJson
+          .set("subaccountId", subaccountId.value)
+          .set("globalAccountId", globalAccountId.value)
+          .set("appName", appName)
+          .set("appDisplayName", appDisplayName)
+          .set("appDescription", appDescription)
+          .set("planName", planName)
+          .set("commercialAppName", commercialAppName)
+          .set("providerSubaccountId", providerSubaccountId)
+          .set("status", status.to!string())
+          .set("appUrl", appUrl)
+          .set("isSubscriptionDone", isSubscriptionDone)
+          .set("errorDescription", errorDescription)
+          .set("dependentServices", dependentServices.array)
+          .set("subscribedAt", subscribedAt)
+          .set("subscribedBy", subscribedBy)
+          .set("parameters", parameters)
+          .set("labels", labels);
+  }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct RunLog {
-    TenantId tenantId;
-    RunLogId id;
+    mixin TenantEntity!(RunLogId);
+
     ScheduleId scheduleId;
     JobId jobId;
     RunStatus status;
@@ -23,5 +23,17 @@ struct RunLog {
     long triggeredAt;
     long completedAt;
     long executionDurationMs;
-    long createdAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("scheduleId", scheduleId.value)
+            .set("jobId", jobId.value)
+            .set("status", status.to!string())
+            .set("statusMessage", statusMessage)
+            .set("httpStatus", httpStatus)
+            .set("scheduledAt", scheduledAt)
+            .set("triggeredAt", triggeredAt)
+            .set("completedAt", completedAt)
+            .set("executionDurationMs", executionDurationMs);
+    }
 }

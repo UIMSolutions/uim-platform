@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Topic {
-    TopicId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TopicId);
+    
     BrokerServiceId brokerServiceId;
     string name;
     string description;
@@ -26,16 +26,10 @@ struct Topic {
     string publishRate;
     string subscribeRate;
     string retainedMessage;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
-
-    Json topicToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("brokerServiceId", brokerServiceId)
+    
+    Json toJson() const {
+        return entityToJson
+            .set("brokerServiceId", brokerServiceId.value)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
@@ -46,10 +40,6 @@ struct Topic {
             .set("subscriberCount", subscriberCount)
             .set("publishRate", publishRate)
             .set("subscribeRate", subscribeRate)
-            .set("retainedMessage", retainedMessage)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("retainedMessage", retainedMessage);
     }
 }
