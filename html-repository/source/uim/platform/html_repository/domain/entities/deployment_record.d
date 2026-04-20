@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.entities.deployment_record;
 
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct DeploymentRecord {
   DeploymentRecordId id;
   TenantId tenantId;

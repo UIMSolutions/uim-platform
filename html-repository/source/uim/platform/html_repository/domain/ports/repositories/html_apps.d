@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.html_apps;
 
-import uim.platform.html_repository.domain.entities.html_app;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.html_app;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface HtmlAppRepository {
   bool existsById(HtmlAppId id);
   HtmlApp findById(HtmlAppId id);

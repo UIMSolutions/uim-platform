@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.services.visibility_service;
 
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.domain.entities.html_app;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.html_app;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct VisibilityService {
   // Check if an app is accessible from a given space
   static bool isAccessible(HtmlApp app, SpaceId requestingSpace) {

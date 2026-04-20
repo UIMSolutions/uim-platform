@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.services.deployment_validator;
 
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct DeploymentValidator {
   enum MAX_APP_SIZE_BYTES = 100 * 1024 * 1024; // 100 MB per service instance
   enum MAX_DEPLOYS_PER_MINUTE = 50;

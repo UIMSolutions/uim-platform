@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.services.content_delivery_service;
 
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.types;
 
-import std.conv : to;
-import std.digest.md : md5Of, toHexString;
+// import std.conv : to;
+// import std.digest.md : md5Of, toHexString;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct ContentDeliveryService {
   // Generate ETag from content data
   static string generateEtag(string data) {

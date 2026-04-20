@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
 
-import uim.platform.html_repository.domain.ports.repositories.app_routes;
-import uim.platform.html_repository.domain.entities.app_route;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.ports.repositories.app_routes;
+// import uim.platform.html_repository.domain.entities.app_route;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
   AppRoute findById(AppRouteId id) {
     foreach (e; store) {

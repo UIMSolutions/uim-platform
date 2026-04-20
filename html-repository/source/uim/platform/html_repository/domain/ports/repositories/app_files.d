@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.app_files;
 
-import uim.platform.html_repository.domain.entities.app_file;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.app_file;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface AppFileRepository {
   bool existsById(AppFileId id);
   AppFile findById(AppFileId id);

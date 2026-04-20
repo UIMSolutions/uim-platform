@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.app_routes;
 
-import uim.platform.html_repository.domain.entities.app_route;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.app_route;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface AppRouteRepository {
   bool existsById(AppRouteId id);
   AppRoute findById(AppRouteId id);

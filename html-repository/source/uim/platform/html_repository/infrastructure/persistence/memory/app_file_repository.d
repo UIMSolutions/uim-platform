@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
 
-import uim.platform.html_repository.domain.ports.repositories.app_files;
-import uim.platform.html_repository.domain.entities.app_file;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.ports.repositories.app_files;
+// import uim.platform.html_repository.domain.entities.app_file;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 class AppFileMemoryRepository : AppFileRepository {
   private AppFile[] store;
 

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.deployment_records;
 
-import uim.platform.html_repository.domain.entities.deployment_record;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.deployment_record;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface DeploymentRecordRepository {
   bool existsById(DeploymentRecordId id);
   DeploymentRecord findById(DeploymentRecordId id);

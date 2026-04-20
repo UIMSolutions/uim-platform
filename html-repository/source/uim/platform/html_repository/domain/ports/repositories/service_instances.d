@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.service_instances;
 
-import uim.platform.html_repository.domain.entities.service_instance;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.service_instance;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface ServiceInstanceRepository {
   bool existsById(ServiceInstanceId id);
   ServiceInstance findById(ServiceInstanceId id);

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.entities.service_instance;
 
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 struct ServiceInstance {
   mixin TenantEntity!(ServiceInstanceId);
 

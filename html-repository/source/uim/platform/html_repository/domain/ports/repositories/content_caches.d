@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.content_caches;
 
-import uim.platform.html_repository.domain.entities.content_cache;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.entities.content_cache;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 interface ContentCacheRepository {
   bool existsById(ContentCacheId id);
   ContentCache findById(ContentCacheId id);
