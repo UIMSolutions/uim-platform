@@ -14,8 +14,7 @@ mixin(ShowModule!());
 /// Tracks security-critical configuration changes.
 @safe:
 struct ConfigChangeLog {
-  AuditLogId auditLogId; // references parent audit entry
-  TenantId tenantId;
+  mixin TenantEntity!(AuditLogId);
   UserId changedBy;
   string configType; // e.g., "security_policy", "idp_settings", "role_mapping"
   string configObjectId;
@@ -24,9 +23,7 @@ struct ConfigChangeLog {
   long timestamp;
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("auditLogId", auditLogId.toString)
-      .set("tenantId", tenantId.toString)
+    return entityToJson()
       .set("changedBy", changedBy.toString)
       .set("configType", configType)
       .set("configObjectId", configObjectId)

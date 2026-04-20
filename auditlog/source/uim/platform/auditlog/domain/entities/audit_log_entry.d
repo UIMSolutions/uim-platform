@@ -13,8 +13,7 @@ mixin(ShowModule!());
 /// Core audit log record — an immutable chronological entry.
 @safe:
 struct AuditLogEntry {
-  AuditLogId id; // message_uuid
-  TenantId tenantId;
+  mixin TenantEntity!(AuditLogId);
   UserId userId;
   string userName;
   ServiceId serviceId; // app_or_service_id
@@ -41,9 +40,7 @@ struct AuditLogEntry {
         .set("newValue", a.newValue)
     ).array.toJson;
 
-    return Json.emptyObject
-      .set("id", id.toString)
-      .set("tenantId", tenantId.toString)
+    return entityToJson
       .set("userId", userId.toString)
       .set("userName", userName)
       .set("serviceId", serviceId.toString)

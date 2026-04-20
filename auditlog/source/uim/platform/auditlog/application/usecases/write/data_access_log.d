@@ -52,18 +52,18 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     auditRepo.save(entry);
 
     // Create data access record
-    auto dal = DataAccessLog();
-    dal.auditLogId = entry.id;
-    dal.tenantId = req.tenantId;
-    dal.accessedBy = req.accessedBy;
-    dal.dataSubject = req.dataSubject;
-    dal.dataObjectType = req.dataObjectType;
-    dal.dataObjectId = req.dataObjectId;
-    dal.accessedFields = req.accessedFields;
-    dal.purpose = req.purpose;
-    dal.channel = req.channel;
-    dal.timestamp = entry.timestamp;
-    dalRepo.save(dal);
+    auto daLog = DataAccessLog();
+    daLog.id = entry.id;
+    daLog.tenantId = req.tenantId;
+    daLog.accessedBy = req.accessedBy;
+    daLog.dataSubject = req.dataSubject;
+    daLog.dataObjectType = req.dataObjectType;
+    daLog.dataObjectId = req.dataObjectId;
+    daLog.accessedFields = req.accessedFields;
+    daLog.purpose = req.purpose;
+    daLog.channel = req.channel;
+    daLog.timestamp = entry.timestamp;
+    dalRepo.save(daLog);
 
     return CommandResult(true, entry.id.toString(), "");
   }

@@ -44,7 +44,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
     entry.category = AuditCategory.securityEvents;
     entry.severity = req.outcome == AuditOutcome.failure ? AuditSeverity.warning
       : AuditSeverity.info;
-    entry.action = mapEventTypeToAction(req.eventType);
+    entry.action = req.eventType.to!AuditAction;
     entry.outcome = req.outcome;
     entry.message = buildSecurityMessage(req);
     entry.ipAddress = req.ipAddress;
@@ -71,29 +71,6 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
     secRepo.save(secEvent);
 
     return CommandResult(true, entry.id.toString(), "");
-  }
-
-  private AuditAction mapEventTypeToAction(string eventType) {
-    switch (eventType) {
-    case "login":
-      return AuditAction.login;
-    case "logout":
-      return AuditAction.logout;
-    case "loginFailed":
-      return AuditAction.loginFailed;
-    case "passwordChange":
-      return AuditAction.passwordChange;
-    case "mfaEnroll":
-      return AuditAction.mfaEnroll;
-    case "mfaVerify":
-      return AuditAction.mfaVerify;
-    case "tokenIssue":
-      return AuditAction.tokenIssue;
-    case "tokenRevoke":
-      return AuditAction.tokenRevoke;
-    default:
-      return AuditAction.login;
-    }
   }
 
   private string buildSecurityMessage(WriteSecurityEventRequest req) {

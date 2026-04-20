@@ -67,10 +67,10 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   CommandResult updateConfig(UpdateAuditConfigRequest req) {
-    if (!configs.existsById(req.tenantId, req.id))
+    auto cfg = configs.findById(req.tenantId, req.id);
+    if (cfg.isNull)
       return CommandResult(false, "", "Audit config not found");
 
-    auto cfg = configs.findById(req.tenantId, req.id);
     if (req.name.length > 0)
       cfg.name = req.name;
     cfg.status = req.status;

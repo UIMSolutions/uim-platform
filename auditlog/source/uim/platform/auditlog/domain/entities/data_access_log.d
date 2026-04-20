@@ -14,8 +14,7 @@ mixin(ShowModule!());
 /// Tracks read-access to sensitive / personal data.
 @safe:
 struct DataAccessLog {
-  AuditLogId auditLogId; // references parent audit entry
-  TenantId tenantId;
+  mixin TenantEntity!(AuditLogId);
   UserId accessedBy;
   string dataSubject; // person whose data was accessed
   string dataObjectType; // e.g., "user_profile", "payment_info"
@@ -26,9 +25,7 @@ struct DataAccessLog {
   long timestamp;
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("auditLogId", auditLogId)
-      .set("tenantId", tenantId)
+    return entityToJson()
       .set("accessedBy", accessedBy)
       .set("dataSubject", dataSubject)
       .set("dataObjectType", dataObjectType)

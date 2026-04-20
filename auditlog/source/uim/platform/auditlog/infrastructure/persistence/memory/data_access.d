@@ -21,12 +21,12 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
   private DataAccessLog[] store;
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
+    return findByTenant(tenantId).any!(e => e.id == auditLogId);
   }
 
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (e; store)
-      if (e.auditLogId == auditLogId && e.tenantId == tenantId)
+    foreach (e; findByTenant(tenantId))
+      if (e.id == auditLogId)
         return e;
     return DataAccessLog.init;
   }

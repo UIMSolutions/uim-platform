@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// Tenant-level audit logging configuration.
 struct AuditConfig {
-  AuditConfigId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AuditConfigId);
   string name;
   ConfigStatus status = ConfigStatus.enabled;
   bool logDataAccess = true;
@@ -26,13 +25,9 @@ struct AuditConfig {
   string[] excludedServices; // services exempt from logging
   AuditSeverity minimumSeverity = AuditSeverity.info;
   int rateLimitPerSecond = 8; // per-tenant rate limit
-  long createdAt;
-  long updatedAt;
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("id", id.toString)
-      .set("tenantId", tenantId.toString)
+    return entityToJson()
       .set("name", name)
       .set("status", status.to!string)
       .set("logDataAccess", logDataAccess)
@@ -43,8 +38,30 @@ struct AuditConfig {
       .set("maskedFields", maskedFields.toJson)
       .set("excludedServices", excludedServices.toJson)
       .set("minimumSeverity", minimumSeverity.to!string)
-      .set("rateLimitPerSecond", rateLimitPerSecond)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("rateLimitPerSecond", rateLimitPerSecond);
   }
+}
+///
+unittest {
+  AuditConfig config;
+  config.id = AuditConfigId("config1");
+  config.tenantId = TenantId("tenant1");
+  config.name = "config1";
+  config.status = ConfigStatus.enabled;
+  config.logDataAccess = true;
+  config.maskedFields = ["password", "ssn"];
+  config.excludedServices = ["AuthService"];
+  config.minimumSeverity = AuditSeverity.warning;
+  config.rateLimitPerSecond = 5;
+
+  auto json = config.toJson();
+  assert(json["id"] == "config1");
+  assert(json["tenantId"] == "tenant1");
+  assert(json["name"] == "config1");
+  assert(json["status"] == "enabled");
+  assert(json["logDataAccess"] == true);
+  assert(json["maskedFields"] == ["password", "ssn"].toJson);
+  assert(json["excludedServices"] == ["AuthService"].toJson);
+  assert(json["minimumSeverity"] == "warning");
+  assert(json["rateLimitPerSecond"] == 5);
 }

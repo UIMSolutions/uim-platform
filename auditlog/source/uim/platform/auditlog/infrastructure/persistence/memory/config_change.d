@@ -29,12 +29,12 @@ class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
   }
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return store.any!(e => e.auditLogId == auditLogId && e.tenantId == tenantId);
+    return findByTenant(tenantId).any!(e => e.id == auditLogId);
   }
 
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (e; store)
-      if (e.auditLogId == auditLogId && e.tenantId == tenantId)
+    foreach (e; findByTenant(tenantId))
+      if (e.id == auditLogId)
         return e;
     return ConfigChangeLog.init;
   }
@@ -64,7 +64,7 @@ class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
 unittest {  
   auto repository = new MemoryConfigChangeLogRepository();
   auto log = ConfigChangeLog();
-  log.auditLogId = "log1";
+  log.id = "log1";
   log.tenantId = "tenant1";
   log.changedBy = "user1";
   log.configType = "type1";

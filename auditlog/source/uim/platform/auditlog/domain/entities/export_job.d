@@ -14,8 +14,7 @@ mixin(ShowModule!());
 /// An audit log export job.
 @safe:
 struct ExportJob {
-  ExportJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ExportJobId);
   UserId requestedBy;
   ExportFormat format_ = ExportFormat.json;
   ExportStatus status = ExportStatus.pending;
@@ -24,14 +23,11 @@ struct ExportJob {
   long timeTo;
   string downloadUrl; // set when completed
   long totalRecords;
-  long createdAt;
   long completedAt;
   string errorMessage;
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("id", id.toString)
-      .set("tenantId", tenantId.toString)
+    return entityToJson()
       .set("requestedBy", requestedBy.toString)
       .set("format", format_.to!string)
       .set("status", status.to!string)

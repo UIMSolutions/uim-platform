@@ -52,16 +52,16 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
     auditRepo.save(entry);
 
     // Create config change record
-    auto ccl = ConfigChangeLog();
-    ccl.auditLogId = entry.id;
-    ccl.tenantId = req.tenantId;
-    ccl.changedBy = req.changedBy;
-    ccl.configType = req.configType;
-    ccl.configObjectId = req.configObjectId;
-    ccl.changes = req.changes;
-    ccl.reason = req.reason;
-    ccl.timestamp = entry.timestamp;
-    cclRepo.save(ccl);
+    auto ccLog = ConfigChangeLog();
+    ccLog.id = entry.id;
+    ccLog.tenantId = req.tenantId;
+    ccLog.changedBy = req.changedBy;
+    ccLog.configType = req.configType;
+    ccLog.configObjectId = req.configObjectId;
+    ccLog.changes = req.changes;
+    ccLog.reason = req.reason;
+    ccLog.timestamp = entry.timestamp;
+    cclRepo.save(ccLog);
 
     return CommandResult(true, entry.id.toString(), "");
   }

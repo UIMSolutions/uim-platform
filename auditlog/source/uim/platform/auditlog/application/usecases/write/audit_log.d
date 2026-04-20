@@ -14,7 +14,7 @@ module uim.platform.auditlog.application.usecases.write.audit_log;
 // import uim.platform.auditlog.domain.ports.repositories.audit_configs;
 // import uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog; 
+import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
@@ -36,8 +36,8 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Message is required");
 
     // Check if logging is enabled for this tenant/category
-    if (configRepo.existsByTenant(req.tenantId)) {
-      auto cfg = configRepo.getByTenant(req.tenantId);
+    auto cfg = configRepo.getByTenant(req.tenantId);
+    if (!cfg.isNull) {
       if (cfg.status == ConfigStatus.disabled)
         return CommandResult(false, "", "Audit logging is disabled for this tenant");
 
