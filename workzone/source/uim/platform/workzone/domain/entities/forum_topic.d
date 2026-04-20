@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A forum topic / discussion thread within a workspace.
 struct ForumTopic {
-  ForumTopicId id;
+  mixin TenantEntity!(ForumTopicId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string body_;
   UserId authorId;
@@ -24,6 +24,21 @@ struct ForumTopic {
   bool pinned;
   bool locked;
   long lastReplyAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("workspaceId", workspaceId.value)
+          .set("title", title)
+          .set("body", body_)
+          .set("authorId", authorId.value)
+          .set("authorName", authorName)
+          .set("status", status.to!string())
+          .set("tags", tags.array)
+          .set("replyCount", replyCount)
+          .set("viewCount", viewCount)
+          .set("likeCount", likeCount)
+          .set("pinned", pinned)
+          .set("locked", locked)
+          .set("lastReplyAt", lastReplyAt);
+  }
 }

@@ -12,13 +12,17 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskComment {
-    TaskCommentId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TaskCommentId);
+
     TaskId taskId;
 
     string author;
     string content;
 
-    string createdAt;
-    string modifiedAt;
+    Json toJson() const {
+        return entityToJson
+            .set("taskId", taskId.value)
+            .set("author", author)
+            .set("content", content);
+    }
 }

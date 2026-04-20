@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A knowledge base article — structured documentation within a workspace.
 struct KnowledgeBaseArticle {
-  KBArticleId id;
+  mixin TenantEntity!(KBArticleId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string body_;
   string summary;
@@ -26,6 +26,23 @@ struct KnowledgeBaseArticle {
   int helpfulCount;
   int version_;
   long publishedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("workspaceId", workspaceId.value)
+          .set("title", title)
+          .set("body", body_)
+          .set("summary", summary)
+          .set("authorId", authorId.value)
+          .set("authorName", authorName)
+          .set("status", status.to!string())
+          .set("category", category)
+          .set("tags", tags.array)
+          .set("relatedArticleIds", relatedArticleIds.array)
+          .set("language", language)
+          .set("viewCount", viewCount)
+          .set("helpfulCount", helpfulCount)
+          .set("version", version_)
+          .set("publishedAt", publishedAt);
+  }
 }

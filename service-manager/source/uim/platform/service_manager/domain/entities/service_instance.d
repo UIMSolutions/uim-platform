@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceInstance {
-    ServiceInstanceId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServiceInstanceId);
+    
     string name;
     ServicePlanId planId;
     ServiceOfferingId offeringId;
@@ -21,7 +21,20 @@ struct ServiceInstance {
     bool shared_ = false;
     bool usable = true;
     string labels;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("planId", planId)
+            .set("offeringId", offeringId)
+            .set("platformId", platformId)
+            .set("status", status.to!string())
+            .set("context", context)
+            .set("parameters", parameters)
+            .set("dashboardUrl", dashboardUrl)
+            .set("maintenanceInfo", maintenanceInfo)
+            .set("shared", shared_)
+            .set("usable", usable)
+            .set("labels", labels);
+    }
 }

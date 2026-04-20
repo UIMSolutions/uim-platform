@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A content item within a workspace — blog, wiki, KB article, forum post, etc.
 struct ContentItem {
-  ContentId id;
+  mixin TenantEntity!(ContentId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string body_; // rich text / markdown body
   string summary;
@@ -27,6 +27,24 @@ struct ContentItem {
   bool pinned;
   bool commentsEnabled = true;
   long publishedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("workspaceId", workspaceId.value)
+          .set("title", title)
+          .set("body", body_)
+          .set("summary", summary)
+          .set("contentType", contentType.to!string())
+          .set("status", status.to!string())
+          .set("authorId", authorId.value)
+          .set("authorName", authorName)
+          .set("tags", tags.array)
+          .set("attachmentUrls", attachmentUrls.array)
+          .set("language", language)
+          .set("viewCount", viewCount)
+          .set("likeCount", likeCount)
+          .set("pinned", pinned)
+          .set("commentsEnabled", commentsEnabled)
+          .set("publishedAt", publishedAt);
+  }
 }

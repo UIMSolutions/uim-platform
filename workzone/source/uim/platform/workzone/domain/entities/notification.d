@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// A user notification — cross-system alerts and action items.
 struct Notification {
-  NotificationId id;
-  TenantId tenantId;
+  mixin TenantEntity!(NotificationId);
+
   UserId recipientId;
   string title;
   string body_;
@@ -20,7 +20,21 @@ struct Notification {
   string actionUrl; // deep link
   NotificationPriority priority = NotificationPriority.medium;
   NotificationStatus status = NotificationStatus.unread;
-  long createdAt;
   long readAt;
   long expiresAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("recipientId", recipientId.value)
+          .set("title", title)
+          .set("body", body_)
+          .set("sourceApp", sourceApp)
+          .set("sourceObjectType", sourceObjectType)
+          .set("sourceObjectId", sourceObjectId)
+          .set("actionUrl", actionUrl)
+          .set("priority", priority.to!string())
+          .set("status", status.to!string())
+          .set("readAt", readAt)
+          .set("expiresAt", expiresAt);
+  }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 class LifecycleRule {
-  LifecycleRuleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(LifecycleRuleId);
+
   BucketId bucketId;
   string name;
   string prefix; // key prefix filter, e.g. "logs/"
@@ -22,7 +22,16 @@ class LifecycleRule {
   int transitionDays; // days after creation to transition (0 = disabled)
   StorageClass transitionStorageClass = StorageClass.nearline;
   int abortIncompleteUploadDays; // days to abort incomplete multipart uploads
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+      return entityToJson
+          .set("bucketId", bucketId.value)
+          .set("name", name)
+          .set("prefix", prefix)
+          .set("status", status.to!string())
+          .set("expirationDays", expirationDays)
+          .set("transitionDays", transitionDays)
+          .set("transitionStorageClass", transitionStorageClass.to!string())
+          .set("abortIncompleteUploadDays", abortIncompleteUploadDays);
+  }
 }

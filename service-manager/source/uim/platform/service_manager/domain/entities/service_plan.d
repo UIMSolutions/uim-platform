@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServicePlan {
-    ServicePlanId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServicePlanId);
+
     ServiceOfferingId offeringId;
     string name;
     string description;
@@ -20,7 +20,19 @@ struct ServicePlan {
     int maxInstances;
     string schemas;
     string metadata;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("offeringId", offeringId)
+            .set("name", name)
+            .set("description", description)
+            .set("catalogName", catalogName)
+            .set("pricing", pricing.to!string())
+            .set("free", free)
+            .set("bindable", bindable)
+            .set("planUpdateable", planUpdateable)
+            .set("maxInstances", maxInstances)
+            .set("schemas", schemas)
+            .set("metadata", metadata);
+    }
 }

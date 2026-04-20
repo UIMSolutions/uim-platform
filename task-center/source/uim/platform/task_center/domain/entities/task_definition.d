@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskDefinition {
-    TaskDefinitionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TaskDefinitionId);
+    
     TaskProviderId providerId;
 
     string name;
@@ -26,8 +26,15 @@ struct TaskDefinition {
     bool isActive = true;
     bool requiresClaim;
 
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+    Json toJson() const {
+        return entityToJson
+            .set("providerId", providerId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("category", category.to!string)
+            .set("allowedActions", allowedActions)
+            .set("taskSchema", taskSchema)
+            .set("isActive", isActive)
+            .set("requiresClaim", requiresClaim);
+    }
 }

@@ -7,14 +7,20 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceBroker {
-    ServiceBrokerId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ServiceBrokerId);
+
     string name;
     string description;
     string brokerUrl;
     ServiceBrokerStatus status = ServiceBrokerStatus.active;
     long lastCatalogFetch;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("brokerUrl", brokerUrl)
+            .set("status", status.to!string())
+            .set("lastCatalogFetch", lastCatalogFetch);
+    }
 }

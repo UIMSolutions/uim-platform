@@ -13,9 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// A page within a site; contains sections.
 struct Page {
-  PageId pageId;
+  mixin TenantEntity!(PageId);
+
   SiteId siteId;
-  TenantId tenantId;
   string title;
   string description;
   string alias_; // URL-friendly path
@@ -24,6 +24,17 @@ struct Page {
   RoleId[] allowedRoleIds;
   int sortOrder;
   bool visible = true;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("siteId", siteId.value)
+          .set("title", title)
+          .set("description", description)
+          .set("alias", alias_)
+          .set("layout", layout.to!string())
+          .set("sectionIds", sectionIds)
+          .set("allowedRoleIds", allowedRoleIds)
+          .set("sortOrder", sortOrder)
+          .set("visible", visible);
+  }
 }

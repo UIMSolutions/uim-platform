@@ -34,4 +34,14 @@ struct AppConfig {
   string sapSystemAlias;
   string oDataServiceUrl;
   string componentId;
+
+  Json toJson() const {
+      return Json()
+          .set("authType", authType)
+          .set("authEndpoint", authEndpoint)
+          .set("enableSso", enableSso)
+          .set("sapSystemAlias", sapSystemAlias)
+          .set("oDataServiceUrl", oDataServiceUrl)
+          .set("componentId", componentId);
+  }
 }
