@@ -15,7 +15,11 @@ module uim.platform.foundry.presentation.http.controllers.route;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.route;
 // import uim.platform.foundry.domain.entities.cf_domain;
-import uim.platform.connectivity;
+import uim.platform.foundry;
+
+mixin(ShowModule!());
+
+@safe:
 
 class RouteController : PlatformController {
   private ManageRoutesUseCase useCase;

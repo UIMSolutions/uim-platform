@@ -5,41 +5,45 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.container;
 
-import uim.platform.foundry.infrastructure.config;
+// import uim.platform.foundry.infrastructure.config;
 
-// Repositories
-import uim.platform.foundry.infrastructure.persistence.memory.org;
-import uim.platform.foundry.infrastructure.persistence.memory.space;
-import uim.platform.foundry.infrastructure.persistence.memory.app;
-import uim.platform.foundry.infrastructure.persistence.memory.service_instance;
-import uim.platform.foundry.infrastructure.persistence.memory.service_binding;
-import uim.platform.foundry.infrastructure.persistence.memory.route;
-import uim.platform.foundry.infrastructure.persistence.memory.domain;
-import uim.platform.foundry.infrastructure.persistence.memory.buildpack;
+// // Repositories
+// import uim.platform.foundry.infrastructure.persistence.memory.org;
+// import uim.platform.foundry.infrastructure.persistence.memory.space;
+// import uim.platform.foundry.infrastructure.persistence.memory.app;
+// import uim.platform.foundry.infrastructure.persistence.memory.service_instance;
+// import uim.platform.foundry.infrastructure.persistence.memory.service_binding;
+// import uim.platform.foundry.infrastructure.persistence.memory.route;
+// import uim.platform.foundry.infrastructure.persistence.memory.domain;
+// import uim.platform.foundry.infrastructure.persistence.memory.buildpack;
 
-// Domain Services
-import uim.platform.foundry.domain.services.app_lifecycle_manager;
-import uim.platform.foundry.domain.services.route_resolver;
+// // Domain Services
+// import uim.platform.foundry.domain.services.app_lifecycle_manager;
+// import uim.platform.foundry.domain.services.route_resolver;
 
-// Use Cases
-import uim.platform.foundry.application.usecases.manage.orgs;
-import uim.platform.foundry.application.usecases.manage.spaces;
-import uim.platform.foundry.application.usecases.manage.apps;
-import uim.platform.foundry.application.usecases.manage.services;
-import uim.platform.foundry.application.usecases.manage.routes;
-import uim.platform.foundry.application.usecases.manage.buildpacks;
-import uim.platform.foundry.application.usecases.monitor_apps;
+// // Use Cases
+// import uim.platform.foundry.application.usecases.manage.orgs;
+// import uim.platform.foundry.application.usecases.manage.spaces;
+// import uim.platform.foundry.application.usecases.manage.apps;
+// import uim.platform.foundry.application.usecases.manage.services;
+// import uim.platform.foundry.application.usecases.manage.routes;
+// import uim.platform.foundry.application.usecases.manage.buildpacks;
+// import uim.platform.foundry.application.usecases.monitor_apps;
 
-// Controllers
-import uim.platform.foundry.presentation.http.org;
-import uim.platform.foundry.presentation.http.space;
-import uim.platform.foundry.presentation.http.app;
-import uim.platform.foundry.presentation.http.service;
-import uim.platform.foundry.presentation.http.route;
-import uim.platform.foundry.presentation.http.buildpack;
-import uim.platform.foundry.presentation.http.monitoring;
-import uim.platform.foundry.presentation.http.health;
+// // Controllers
+// import uim.platform.foundry.presentation.http.org;
+// import uim.platform.foundry.presentation.http.space;
+// import uim.platform.foundry.presentation.http.app;
+// import uim.platform.foundry.presentation.http.service;
+// import uim.platform.foundry.presentation.http.route;
+// import uim.platform.foundry.presentation.http.buildpack;
+// import uim.platform.foundry.presentation.http.monitoring;
+// import uim.platform.foundry.presentation.http.health;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)

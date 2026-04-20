@@ -8,14 +8,18 @@ module uim.platform.foundry.application.usecases.manage.spaces;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.space;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.space;
 
-// import uim.platform.foundry.domain.ports.repositories.space;
-// import uim.platform.foundry.domain.ports.repositories.org;
-import uim.platform.foundry.domain.ports;
-import uim.platform.foundry.application.dto;
+// // import uim.platform.foundry.domain.ports.repositories.space;
+// // import uim.platform.foundry.domain.ports.repositories.org;
+// import uim.platform.foundry.domain.ports;
+// import uim.platform.foundry.application.dto;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSpacesUseCase { // TODO: UIMUseCase {
   private SpaceRepository repo;
   private OrgRepository orgRepo;

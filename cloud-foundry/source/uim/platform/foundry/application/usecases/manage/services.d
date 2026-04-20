@@ -8,15 +8,19 @@ module uim.platform.foundry.application.usecases.manage.services;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.service_instance;
-import uim.platform.foundry.domain.entities.service_binding;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.service_instance;
+// import uim.platform.foundry.domain.entities.service_binding;
 
-// import uim.platform.foundry.domain.ports.repositories.service_instance;
-// import uim.platform.foundry.domain.ports.repositories.service_binding;
-import uim.platform.foundry.domain.ports;
-import uim.platform.foundry.application.dto;
+// // import uim.platform.foundry.domain.ports.repositories.service_instance;
+// // import uim.platform.foundry.domain.ports.repositories.service_binding;
+// import uim.platform.foundry.domain.ports;
+// import uim.platform.foundry.application.dto;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageServicesUseCase { // TODO: UIMUseCase {
   private ServiceInstanceRepository instanceRepo;
   private ServiceBindingRepository bindingRepo;

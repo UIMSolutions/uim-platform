@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.application.dto;
 
-import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.types;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 // ──────────────── Organization DTOs ────────────────
 
 struct CreateOrgRequest {

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.service_instance;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.service_instance;
-import uim.platform.foundry.domain.ports.repositories.service_instance;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.service_instance;
+// import uim.platform.foundry.domain.ports.repositories.service_instance;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 

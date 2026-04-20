@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.domain;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.cf_domain;
-import uim.platform.foundry.domain.ports.repositories.domain;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.cf_domain;
+// import uim.platform.foundry.domain.ports.repositories.domain;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDomainRepository : DomainRepository {
   private CfDomain[DomainId] store;
 

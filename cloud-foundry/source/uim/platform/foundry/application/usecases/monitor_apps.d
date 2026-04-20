@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.application.usecases.monitor_apps;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.application;
-import uim.platform.foundry.domain.entities.service_instance;
-import uim.platform.foundry.domain.entities.route;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.application;
+// import uim.platform.foundry.domain.entities.service_instance;
+// import uim.platform.foundry.domain.entities.route;
 
-// import uim.platform.foundry.domain.ports.repositories.app;
-// import uim.platform.foundry.domain.ports.repositories.service_instance;
-// import uim.platform.foundry.domain.ports.repositories.route;
-import uim.platform.foundry.domain.ports;
+// // import uim.platform.foundry.domain.ports.repositories.app;
+// // import uim.platform.foundry.domain.ports.repositories.service_instance;
+// // import uim.platform.foundry.domain.ports.repositories.route;
+// import uim.platform.foundry.domain.ports;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// Read-only summaries for application health and space resource usage.
 struct AppHealthSummary {
   AppId appId;

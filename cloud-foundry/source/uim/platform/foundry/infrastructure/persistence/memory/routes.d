@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.route;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.route;
-import uim.platform.foundry.domain.ports.repositories.route;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.route;
+// import uim.platform.foundry.domain.ports.repositories.route;
 
 // import std.algorithm : canFind, filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryRouteRepository : RouteRepository {
   private Route[RouteId] store;
 

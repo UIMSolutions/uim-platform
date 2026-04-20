@@ -14,7 +14,7 @@ module uim.platform.foundry.presentation.http.controllers.buildpack;
 // import uim.platform.foundry.application.dto;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.buildpack;
-import uim.platform.connectivity;
+import uim.platform.foundry;
 
 class BuildpackController : PlatformController {
   private ManageBuildpacksUseCase useCase;

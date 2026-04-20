@@ -14,7 +14,7 @@ module uim.platform.foundry.presentation.http.controllers.org;
 // import uim.platform.foundry.application.dto;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.organization;
-import uim.platform.connectivity;
+import uim.platform.foundry;
 
 class OrgController : PlatformController {
   private ManageOrgsUseCase useCase;

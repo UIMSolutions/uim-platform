@@ -8,14 +8,18 @@ module uim.platform.foundry.application.usecases.manage.apps;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.application;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.application;
 
-// import uim.platform.foundry.domain.ports.repositories.app;
-import uim.platform.foundry.domain.ports;
-import uim.platform.foundry.domain.services.app_lifecycle_manager;
-import uim.platform.foundry.application.dto;
+// // import uim.platform.foundry.domain.ports.repositories.app;
+// import uim.platform.foundry.domain.ports;
+// import uim.platform.foundry.domain.services.app_lifecycle_manager;
+// import uim.platform.foundry.application.dto;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageAppsUseCase { // TODO: UIMUseCase {
   private AppRepository repo;
   private AppLifecycleManager lifecycle;

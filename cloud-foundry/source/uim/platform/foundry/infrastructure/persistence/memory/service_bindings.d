@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.service_binding;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.service_binding;
-import uim.platform.foundry.domain.ports.repositories.service_binding;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.service_binding;
+// import uim.platform.foundry.domain.ports.repositories.service_binding;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 

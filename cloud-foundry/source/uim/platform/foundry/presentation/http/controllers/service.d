@@ -15,7 +15,11 @@ module uim.platform.foundry.presentation.http.controllers.service;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.service_instance;
 // import uim.platform.foundry.domain.entities.service_binding;
-import uim.platform.connectivity;
+import uim.platform.foundry;
+
+mixin(ShowModule!());
+
+@safe:
 
 class ServiceController : PlatformController {
   private ManageServicesUseCase useCase;

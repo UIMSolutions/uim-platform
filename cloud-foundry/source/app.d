@@ -9,10 +9,14 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.foundry.infrastructure.config;
-import uim.platform.foundry.infrastructure.container;
+// import uim.platform.foundry.infrastructure.config;
+// import uim.platform.foundry.infrastructure.container;
 
-// import std.stdio : writefln;
+import uim.platform.foundry;
+
+mixin(ShowModule!());
+
+@safe:
 @safe:
 
 version (unittest) {

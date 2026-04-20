@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.org;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.organization;
-import uim.platform.foundry.domain.ports.repositories.org;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.organization;
+// import uim.platform.foundry.domain.ports.repositories.org;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryOrgRepository : OrgRepository {
   private Organization[OrgId] store;
 

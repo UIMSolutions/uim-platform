@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.services.route_resolver;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.route;
-import uim.platform.foundry.domain.entities.cf_domain;
-import uim.platform.foundry.domain.ports.repositories.route;
-import uim.platform.foundry.domain.ports.repositories.domain;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.route;
+// import uim.platform.foundry.domain.entities.cf_domain;
+// import uim.platform.foundry.domain.ports.repositories.route;
+// import uim.platform.foundry.domain.ports.repositories.domain;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : canFind, remove;
 
 /// Domain service that handles route resolution —

@@ -12,7 +12,7 @@ module uim.platform.foundry.presentation.http.controllers.monitoring;
 
 // import uim.platform.foundry.application.usecases.monitor_apps;
 // import uim.platform.foundry.domain.types;
-import uim.platform.connectivity;
+import uim.platform.foundry;
 
 class MonitoringController : PlatformController {
   private MonitorAppsUseCase useCase;

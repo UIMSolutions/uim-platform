@@ -14,7 +14,7 @@ module uim.platform.foundry.presentation.http.controllers.app;
 // import uim.platform.foundry.application.dto;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.application;
-import uim.platform.connectivity;
+import uim.platform.foundry;
 
 mixin(ShowModule!());
 

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.apps;
 
-    // import uim.platform.foundry.domain.types;
-    // import uim.platform.foundry.domain.entities.application;
-    // import uim.platform.foundry.domain.ports.repositories.app;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.application;
+// import uim.platform.foundry.domain.ports.repositories.app;
 
 import uim.platform.foundry;
 
