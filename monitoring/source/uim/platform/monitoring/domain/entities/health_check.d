@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Configuration for a health or availability check.
 struct HealthCheck {
-  TenantId tenantId;
-  HealthCheckId id;
+  mixin TenantEntity!(HealthCheckId);
+
   MonitoredResourceId resourceId;
   string name;
   string description;
@@ -39,7 +39,24 @@ struct HealthCheck {
   double criticalThreshold = 0;
   ThresholdOperator thresholdOperator = ThresholdOperator.greaterThan;
 
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceId", resourceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("checkType", checkType.to!string)
+      .set("isEnabled", isEnabled)
+      .set("intervalSeconds", intervalSeconds)
+      .set("url", url)
+      .set("expectedStatus", expectedStatus)
+      .set("mbeanName", mbeanName)
+      .set("mbeanAttribute", mbeanAttribute)
+      .set("customUrl", customUrl)
+      .set("expectedResponseContains", expectedResponseContains)
+      .set("warningThreshold", warningThreshold)
+      .set("criticalThreshold", criticalThreshold)
+      .set("thresholdOperator", thresholdOperator.to!string);
+
+    return j;
+  }
 }

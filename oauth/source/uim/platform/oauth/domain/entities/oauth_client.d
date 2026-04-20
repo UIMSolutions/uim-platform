@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct OAuthClient {
-    OAuthClientId id;
-    TenantId tenantId;
+    mixin TenantEntity!(OAuthClientId);
+
     string clientId;
     string clientSecret;
     string name;
@@ -26,16 +26,10 @@ struct OAuthClient {
     long accessTokenValidity = 3600;
     long refreshTokenValidity = 86400;
     string contacts;
-    string createdAt;
-    string updatedAt;
-    string createdBy;
-    string modifiedBy;
 
     Json oauthClientToJson() {
         import std.conv : to;
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
+        return Json.entityToJson
             .set("clientId", clientId)
             .set("name", name)
             .set("description", description)
@@ -46,10 +40,6 @@ struct OAuthClient {
             .set("grantTypes", grantTypes)
             .set("accessTokenValidity", accessTokenValidity)
             .set("refreshTokenValidity", refreshTokenValidity)
-            .set("contacts", contacts)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("contacts", contacts);
     }
 }

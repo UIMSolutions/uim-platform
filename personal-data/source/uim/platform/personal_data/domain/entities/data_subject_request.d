@@ -15,11 +15,18 @@ struct ProcessingComment {
     string author;
     string comment;
     string createdAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("author", author)
+            .set("comment", comment)
+            .set("createdAt", createdAt);
+    }
 }
 
 struct DataSubjectRequest {
-    DataSubjectRequestId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DataSubjectRequestId);
+
     DataSubjectId dataSubjectId;
     RequestType requestType;
     RequestStatus status;
@@ -32,8 +39,22 @@ struct DataSubjectRequest {
     string dueDate;
     string completedAt;
     string rejectionReason;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("dataSubjectId", dataSubjectId.value)
+            .set("requestType", requestType)
+            .set("status", status)
+            .set("priority", priority)
+            .set("description", description)
+            .set("applicationIds", applicationIds)
+            .set("dataCategoryIds", dataCategoryIds)
+            .set("comments", comments.map!(c => c.toJson()).array)
+            .set("assignedTo", assignedTo)
+            .set("dueDate", dueDate)
+            .set("completedAt", completedAt)
+            .set("rejectionReason", rejectionReason);
+
+        return j;
+    }
 }

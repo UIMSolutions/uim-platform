@@ -12,29 +12,18 @@ mixin(ShowModule!());
 @safe:
 
 struct OAuthScope {
-    OAuthScopeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(OAuthScopeId);
+
     string applicationId;
     string name;
     string description;
     ScopeStatus status = ScopeStatus.active;
-    string createdAt;
-    string updatedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json oauthScopeToJson() {
-        import std.conv : to;
-        return Json.emptyObject
-            .set("id", id.value)
-            .set("tenantId", tenantId.value)
+    Json toJson() const {
+        return Json.entityToJson
             .set("applicationId", applicationId)
             .set("name", name)
             .set("description", description)
-            .set("status", status.to!string)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("status", status.to!string);
     }
 }

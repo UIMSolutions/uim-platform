@@ -8,8 +8,8 @@ module uim.platform.mobile.domain.entities.offline_store;
 import uim.platform.mobile.domain.types;
 
 struct OfflineStore {
-  OfflineStoreId id;
-  TenantId tenantId;
+  mixin TenantEntity!(OfflineStoreId);
+
   MobileAppId appId;
   string name;
   string serviceUrl;         // backend OData service URL
@@ -18,7 +18,18 @@ struct OfflineStore {
   SyncStatus syncStatus;
   long lastSyncAt;
   long sizeBytes;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("appId", appId.value)
+      .set("name", name)
+      .set("serviceUrl", serviceUrl)
+      .set("definingRequests", definingRequests)
+      .set("storeType", storeType)
+      .set("syncStatus", syncStatus)
+      .set("lastSyncAt", lastSyncAt)
+      .set("sizeBytes", sizeBytes);
+
+    return j;
+  }
 }

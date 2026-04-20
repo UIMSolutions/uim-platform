@@ -8,8 +8,8 @@ module uim.platform.mobile.domain.entities.usage_report;
 import uim.platform.mobile.domain.types;
 
 struct UsageReport {
-  UsageReportId id;
-  TenantId tenantId;
+  mixin TenantEntity!(UsageReportId);
+
   MobileAppId appId;
   DeviceRegistrationId deviceId;
   string userId;
@@ -20,5 +20,20 @@ struct UsageReport {
   AppPlatform platform;
   string appVersion;
   long timestamp;
-  long createdAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("appId", appId.value)
+      .set("deviceId", deviceId.value)
+      .set("userId", userId)
+      .set("metricType", metricType)
+      .set("metricKey", metricKey)
+      .set("metricValue", metricValue)
+      .set("sessionId", sessionId)
+      .set("platform", platform)
+      .set("appVersion", appVersion)
+      .set("timestamp", timestamp);
+
+    return j;
+  }
 }

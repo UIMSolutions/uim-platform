@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An alert rule that defines thresholds for triggering alerts.
 struct AlertRule {
-  TenantId tenantId;
-  AlertRuleId id;
+  mixin TenantEntity!(AlertRuleId);
+
   MonitoredResourceId resourceId;
   string name;
   string description;
@@ -28,20 +28,14 @@ struct AlertRule {
   AlertSeverity severity = AlertSeverity.warning;
   bool isEnabled = true;
   NotificationChannelId[] channelIds;
-  string createdBy;
-  long createdAt;
-  long updatedAt;
-
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
-      .set("resourceId", resourceId)
+    auto j = entityToJson
+      .set("resourceId", resourceId.value)
       .set("name", name)
       .set("description", description)
       .set("metricName", metricName)
-      .set("metricDefinitionId", metricDefinitionId)
+      .set("metricDefinitionId", metricDefinitionId.value)
       .set("operator", operator_.to!string)
       .set("warningThreshold", warningThreshold)
       .set("criticalThreshold", criticalThreshold)
@@ -49,9 +43,8 @@ struct AlertRule {
       .set("consecutiveBreaches", consecutiveBreaches)
       .set("severity", severity.to!string)
       .set("isEnabled", isEnabled)
-      .set("channelIds", channelIds.toJson)
-      .set("createdBy", createdBy)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("channelIds", channelIds.map!(id => id.value).array);
+
+    return j;
   }
 }

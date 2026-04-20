@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 class Bucket {
-  BucketId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BucketId);
+
   string name;
   string region;
   StorageClass storageClass = StorageClass.standard;
@@ -24,7 +24,20 @@ class Bucket {
   long quotaBytes = 0; // 0 = unlimited
   long usedBytes = 0;
   long objectCount = 0;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("region", region)
+      .set("storageClass", storageClass.toString())
+      .set("versioningEnabled", versioningEnabled)
+      .set("encryptionType", encryptionType.toString())
+      .set("encryptionKeyId", encryptionKeyId)
+      .set("status", status.toString())
+      .set("quotaBytes", quotaBytes)
+      .set("usedBytes", usedBytes)
+      .set("objectCount", objectCount);
+
+    return j;
+  }
 }

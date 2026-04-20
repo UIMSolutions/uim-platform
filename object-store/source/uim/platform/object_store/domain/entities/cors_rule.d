@@ -12,14 +12,24 @@ mixin(ShowModule!());
 
 @safe:
 class CorsRule {
-  CorsRuleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(CorsRuleId);
+
   BucketId bucketId;
   string allowedOrigins; // JSON array, e.g. '["https://example.com"]'
   string allowedMethods; // JSON array, e.g. '["GET","PUT","POST"]'
   string allowedHeaders; // JSON array, e.g. '["Content-Type","Authorization"]'
   string exposedHeaders; // JSON array, e.g. '["ETag"]'
   int maxAgeSeconds = 3600;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("bucketId", bucketId.value)
+      .set("allowedOrigins", allowedOrigins)
+      .set("allowedMethods", allowedMethods)
+      .set("allowedHeaders", allowedHeaders)
+      .set("exposedHeaders", exposedHeaders)
+      .set("maxAgeSeconds", maxAgeSeconds);
+
+    return j;
+  }
 }
