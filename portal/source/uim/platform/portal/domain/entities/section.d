@@ -14,14 +14,23 @@ mixin(ShowModule!());
 @safe:
 /// A section within a page — groups tiles together.
 struct PortalSection {
-  SectionId id;
+  mixin TenantEntity!(SectionId);
+
   PageId pageId;
-  TenantId tenantId;
   string title;
   TileId[] tileIds;
   int sortOrder;
   bool visible = true;
   int columns = 4; // grid columns
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return Json.enityToJson
+      .set("id", id.value)
+      .set("pageId", pageId.value)
+      .set("title", title)
+      .set("tileIds", tileIds.map!(t => t.value).array)
+      .set("sortOrder", sortOrder)
+      .set("visible", visible)
+      .set("columns", columns);
+  }
 }

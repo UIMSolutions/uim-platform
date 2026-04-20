@@ -16,19 +16,35 @@ struct EntityAttribute {
     string type;
     string description;
     bool isKey;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("type", type)
+            .set("description", description)
+            .set("isKey", isKey);
+    }
 }
 
 struct EntityType {
-    EntityTypeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(EntityTypeId);
+
     string name;
     string description;
     EntityCategory category;
     string sourceSystem;
     EntityAttribute[] attributes;
     string[] relatedTemplateIds;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("category", category.toString())
+            .set("sourceSystem", sourceSystem)
+            .set("attributes", attributes.map!(attr => attr.toJson()).array)
+            .set("relatedTemplateIds", relatedTemplateIds.array);
+
+        return j;
+    }
 }

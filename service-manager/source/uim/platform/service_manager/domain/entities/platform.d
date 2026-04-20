@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Platform {
-    PlatformId id;
-    TenantId tenantId;
+    mixin TenantEntity!(PlatformId);
+
     string name;
     string description;
     PlatformType type = PlatformType.other;
@@ -17,7 +17,16 @@ struct Platform {
     string credentials;
     string region;
     string subaccountId;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return Json.entityToJson()
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.toString())
+            .set("status", status.toString())
+            .set("brokerUrl", brokerUrl)
+            .set("credentials", credentials)
+            .set("region", region)
+            .set("subaccountId", subaccountId);
+    }
 }

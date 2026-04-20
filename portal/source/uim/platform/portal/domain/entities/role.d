@@ -13,13 +13,22 @@ mixin(ShowModule!());
 @safe:
 /// Role for portal access — controls what content users can see.
 struct Role {
-  RoleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RoleId);
+
   string name;
   string description;
   RoleScope scope_ = RoleScope.site;
   string[] userIds;
   string[] groupIds;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("scope", scope_)
+      .set("userIds", userIds)
+      .set("groupIds", groupIds);
+
+    return j;
+  }
 }

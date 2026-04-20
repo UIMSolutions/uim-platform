@@ -19,6 +19,22 @@ struct ProcessStep {
     string[] nextSteps;
     string condition;
     int timeoutMinutes;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id.value)
+            .set("name", name)
+            .set("type", type.toString())
+            .set("description", description)
+            .set("assignee", assignee)
+            .set("formId", formId)
+            .set("decisionId", decisionId)
+            .set("automationId", automationId)
+            .set("nextSteps", nextSteps.array)
+            .set("condition", condition)
+            .set("timeoutMinutes", timeoutMinutes);
+
+    }
 }
 
 struct ProcessVariable {
@@ -27,11 +43,20 @@ struct ProcessVariable {
     string defaultValue;
     bool required;
     string description;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("type", type)
+            .set("defaultValue", defaultValue)
+            .set("required", required)
+            .set("description", description);
+    }
 }
 
 struct Process {
-    ProcessId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ProcessId);
+
     ProjectId projectId;
     string name;
     string description;
@@ -40,8 +65,18 @@ struct Process {
     string version_;
     ProcessStep[] steps;
     ProcessVariable[] variables;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("projectId", projectId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("status", status.toString())
+            .set("category", category.toString())
+            .set("version", version_)
+            .set("steps", steps.map!(step => step.toJson()).array)
+            .set("variables", variables.map!(var => var.toJson()).array);
+
+        return j;
+    }
 }

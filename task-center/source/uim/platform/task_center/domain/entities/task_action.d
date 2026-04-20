@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskAction {
-    TaskActionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TaskActionId);
+
     TaskId taskId;
 
     ActionType actionType = ActionType.approve;
@@ -22,4 +22,14 @@ struct TaskAction {
     string comment;
 
     string performedAt;
+
+    Json toJson() const {
+        return Json.enityToJson(this)
+            .set("taskId", taskId.value)
+            .set("actionType", actionType)
+            .set("performedBy", performedBy)
+            .set("forwardTo", forwardTo)
+            .set("comment", comment)
+            .set("performedAt", performedAt);
+    }
 }

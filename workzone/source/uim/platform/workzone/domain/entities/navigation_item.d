@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 
 /// A navigation item / menu entry — defines site navigation structure.
 struct NavigationItem {
-  NavigationItemId id;
+  mixin TenantEntity!(NavigationItemId);
+
   SiteId siteId;
-  TenantId tenantId;
   string title;
   string icon;
   NavigationItemType itemType = NavigationItemType.link;
@@ -23,6 +23,20 @@ struct NavigationItem {
   int sortOrder;
   bool visible = true;
   bool openInNewWindow;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("siteId", siteId.value)
+      .set("title", title)
+      .set("icon", icon)
+      .set("itemType", itemType.toString())
+      .set("targetUrl", targetUrl)
+      .set("targetAppId", targetAppId.value)
+      .set("targetPageId", targetPageId.value)
+      .set("parentId", parentId.value)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("sortOrder", sortOrder)
+      .set("visible", visible)
+      .set("openInNewWindow", openInNewWindow);
+  }
 }

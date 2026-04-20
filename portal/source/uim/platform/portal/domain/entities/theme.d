@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Theme definition for portal sites.
 struct Theme {
-  ThemeId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ThemeId);
+
   string name;
   string description;
   ThemeMode mode = ThemeMode.light;
@@ -23,8 +23,34 @@ struct Theme {
   ThemeFonts fonts;
   string customCss;
   bool isDefault;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("mode", mode.toString)
+      .set("baseTheme", baseTheme)
+      .set("colors", Json.emptyObject
+          .set("primaryColor", colors.primaryColor)
+          .set("secondaryColor", colors.secondaryColor)
+          .set("accentColor", colors.accentColor)
+          .set("backgroundColor", colors.backgroundColor)
+          .set("shellColor", colors.shellColor)
+          .set("textColor", colors.textColor)
+          .set("linkColor", colors.linkColor)
+          .set("headerColor", colors.headerColor)
+          .set("footerColor", colors.footerColor)
+          .set("tileBackgroundColor", colors.tileBackgroundColor))
+      .set("fonts", Json.emptyObject
+          .set("fontFamily", fonts.fontFamily)
+          .set("headerFontFamily", fonts.headerFontFamily)
+          .set("fontSize", fonts.fontSize)
+          .set("headerFontSize", fonts.headerFontSize))
+      .set("customCss", customCss)
+      .set("isDefault", isDefault);
+
+    return j;
+  }
 }
 
 /// Theme color palette.
@@ -39,6 +65,20 @@ struct ThemeColors {
   string headerColor;
   string footerColor;
   string tileBackgroundColor;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("primaryColor", primaryColor)
+      .set("secondaryColor", secondaryColor)
+      .set("accentColor", accentColor)
+      .set("backgroundColor", backgroundColor)
+      .set("shellColor", shellColor)
+      .set("textColor", textColor)
+      .set("linkColor", linkColor)
+      .set("headerColor", headerColor)
+      .set("footerColor", footerColor)
+      .set("tileBackgroundColor", tileBackgroundColor);
+  }
 }
 
 /// Theme font configuration.
@@ -47,4 +87,12 @@ struct ThemeFonts {
   string headerFontFamily;
   string fontSize;
   string headerFontSize;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("fontFamily", fontFamily)
+      .set("headerFontFamily", headerFontFamily)
+      .set("fontSize", fontSize)
+      .set("headerFontSize", headerFontSize);
+  }
 }

@@ -16,11 +16,19 @@ struct ConditionDefinition {
     ConditionOperator operator;
     string value;
     string valueType;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("field", field)
+            .set("operator", operator)
+            .set("value", value)
+            .set("valueType", valueType);
+    }
 }
 
 struct SituationTemplate {
-    SituationTemplateId id;
-    TenantId tenantId;
+    mixin TenantEntity!(SituationTemplateId);
+
     string name;
     string description;
     SituationCategory category;
@@ -34,8 +42,23 @@ struct SituationTemplate {
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
     string escalationTargetUserId;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+    
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("category", category.toString())
+            .set("defaultSeverity", defaultSeverity.toString())
+            .set("status", status.toString())
+            .set("entityTypeId", entityTypeId)
+            .set("conditions", conditions.map!(c => c.toJson()).array)
+            .set("suggestedActionIds", suggestedActionIds)
+            .set("sourceSystem", sourceSystem)
+            .set("sourceTemplateId", sourceTemplateId)
+            .set("autoResolveTimeoutMinutes", autoResolveTimeoutMinutes)
+            .set("escalationEnabled", escalationEnabled)
+            .set("escalationTargetUserId", escalationTargetUserId);
+
+        return j;
+    }
 }
