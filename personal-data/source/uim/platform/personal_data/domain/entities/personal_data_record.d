@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct PersonalDataRecord {
-    PersonalDataRecordId id;
-    TenantId tenantId;
+    mixin TenantEntity!(PersonalDataRecordId);
+
     DataSubjectId dataSubjectId;
     RegisteredApplicationId applicationId;
     string dataCategoryId;
@@ -27,25 +27,21 @@ struct PersonalDataRecord {
     string validFrom;
     string validTo;
     bool isAnonymized;
-    string createdBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("dataSubjectId", dataSubjectId)
-            .set("tenantId", tenantId)
-            .set("applicationId", applicationId)
-            .set("dataCategory", dataCategory.to!string)
-            .set("sensitivity", sensitivity.to!string)
+    Json toJson() const {
+        return entityToJson
+            .set("dataSubjectId", dataSubjectId.value)
+            .set("applicationId", applicationId.value)
+            .set("dataCategoryId", dataCategoryId)
+            .set("sensitivity", sensitivity.toString())
             .set("fieldName", fieldName)
             .set("fieldValue", fieldValue)
             .set("purposeId", purposeId)
-            .set("legalBasis", legalBasis.to!string)
+            .set("legalBasis", legalBasis)
+            .set("sourceSystem", sourceSystem)
             .set("retentionRuleId", retentionRuleId)
-            .set("isAnonymized", isAnonymized)
-            .set("createdBy", createdBy)
-            .set("createdAt", createdAt);
+            .set("validFrom", validFrom)
+            .set("validTo", validTo)
+            .set("isAnonymized", isAnonymized);
     }
 }

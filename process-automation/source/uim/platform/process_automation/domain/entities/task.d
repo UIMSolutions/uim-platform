@@ -24,9 +24,9 @@ struct TaskAttachment {
 }
 
 struct Task {
-    TaskId id;
+    mixin TenantEntity!(TaskId);
+
     ProcessInstanceId processInstanceId;
-    TenantId tenantId;
     string name;
     string description;
     TaskType type;
@@ -41,7 +41,27 @@ struct Task {
     TaskAttachment[] attachments;
     string completedBy;
     string outcome;
-    long createdAt;
     long dueDate;
     long completedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("processInstanceId", processInstanceId.value)
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.toString())
+            .set("status", status.toString())
+            .set("priority", priority.toString())
+            .set("assignee", assignee)
+            .set("candidateUsers", candidateUsers.array)
+            .set("candidateGroups", candidateGroups.array)
+            .set("formId", formId)
+            .set("formData", formData)
+            .set("comments", comments.map!(c => c.toJson()).array)
+            .set("attachments", attachments.map!(a => a.toJson()).array)
+            .set("completedBy", completedBy)
+            .set("outcome", outcome)
+            .set("dueDate", dueDate)
+            .set("completedAt", completedAt);
+    }
 }

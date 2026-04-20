@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A tile / app launcher within a section.
 struct Tile {
-  TileId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TileId);
+
   CatalogId catalogId;
   string title;
   string subtitle;
@@ -31,8 +31,28 @@ struct Tile {
   TileConfiguration config;
   int sortOrder;
   bool visible = true;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("catalogId", catalogId.value)
+      .set("title", title)
+      .set("subtitle", subtitle)
+      .set("description", description)
+      .set("icon", icon)
+      .set("info", info)
+      .set("tileType", tileType.toString())
+      .set("appType", appType.toString())
+      .set("url", url)
+      .set("appId", appId)
+      .set("navigationTarget", navigationTarget.toString())
+      .set("keywords", keywords)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value))
+      .set("config", config.toJson())
+      .set("sortOrder", sortOrder)
+      .set("visible", visible);
+
+    return j;
+  }
 }
 
 /// Additional tile configuration.

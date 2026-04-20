@@ -16,6 +16,14 @@ struct DashboardMetric {
     MetricType type;
     string field;
     string filterExpression;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("type", type.toString())
+            .set("field", field)
+            .set("filterExpression", filterExpression);
+    }
 }
 
 struct DashboardWidget {
@@ -25,19 +33,39 @@ struct DashboardWidget {
     DashboardMetric[] metrics;
     string[] templateIds;
     int order;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id)
+            .set("name", name)
+            .set("widgetType", widgetType)
+            .set("metrics", metrics.map!(m => m.toJson()).array)
+            .set("templateIds", templateIds.array)
+            .set("order", order);
+    }
 }
 
 struct Dashboard {
-    DashboardId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DashboardId);
+
     string name;
     string description;
     DashboardType type;
     DashboardWidget[] widgets;
     TimeRange defaultTimeRange;
     int refreshIntervalSeconds;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.toString())
+            .set("widgets", widgets.map!(w => w.toJson()).array)
+            .set("defaultTimeRange", Json.emptyObject
+                    .set("startTime", defaultTimeRange.startTime)
+                    .set("endTime", defaultTimeRange.endTime))
+            .set("refreshIntervalSeconds", refreshIntervalSeconds);
+
+        return j;
+    }
 }

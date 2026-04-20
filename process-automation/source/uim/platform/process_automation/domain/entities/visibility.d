@@ -24,8 +24,8 @@ struct VisibilityFilter {
 }
 
 struct Visibility {
-    VisibilityId id;
-    TenantId tenantId;
+    mixin TenantEntity!(VisibilityId);
+
     string name;
     string description;
     VisibilityStatus status;
@@ -34,8 +34,28 @@ struct Visibility {
     VisibilityMetric[] metrics;
     VisibilityFilter[] filters;
     string refreshIntervalSeconds;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("status", status.toString())
+            .set("dashboardType", dashboardType.toString())
+            .set("processIds", processIds.map!(p => p.value).array)
+            .set("metrics", metrics.map!(m => Json.init
+                .set("id", m.id)
+                .set("name", m.name)
+                .set("type", m.type.toString())
+                .set("sourceField", m.sourceField)
+                .set("unit", m.unit)
+                .set("warningThreshold", m.warningThreshold)
+                .set("criticalThreshold", m.criticalThreshold)).array)
+            .set("filters", filters.map!(f => Json.init
+                .set("field", f.field)
+                .set("operator", f.operator)
+                .set("value", f.value)).array)
+            .set("refreshIntervalSeconds", refreshIntervalSeconds);
+
+        return j;
+    }
 }

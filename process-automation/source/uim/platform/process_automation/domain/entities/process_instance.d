@@ -11,6 +11,13 @@ struct ContextVariable {
     string name;
     string value;
     string type;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("value", value)
+            .set("type", type);
+    }
 }
 
 struct ExecutionLog {
@@ -20,12 +27,22 @@ struct ExecutionLog {
     string message;
     long startedAt;
     long completedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("stepId", stepId.value)
+            .set("stepName", stepName)
+            .set("status", status)
+            .set("message", message)
+            .set("startedAt", startedAt)
+            .set("completedAt", completedAt);
+    }
 }
 
 struct ProcessInstance {
-    ProcessInstanceId id;
+    mixin TenantEntity!(ProcessInstanceId);
+
     ProcessId processId;
-    TenantId tenantId;
     string processName;
     InstanceStatus status;
     InstancePriority priority;
@@ -38,4 +55,23 @@ struct ProcessInstance {
     long startedAt;
     long completedAt;
     long dueDate;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("processId", processId.value)
+            .set("processName", processName)
+            .set("status", status.toString())
+            .set("priority", priority.toString())
+            .set("startedBy", startedBy)
+            .set("currentStepId", currentStepId)
+            .set("context", context.map!(c => c.toJson()).array)
+            .set("executionLogs", executionLogs.map!(log => log.toJson()).array)
+            .set("errorMessage", errorMessage)
+            .set("retryCount", retryCount)
+            .set("startedAt", startedAt)
+            .set("completedAt", completedAt)
+            .set("dueDate", dueDate);
+
+        return j;
+    }
 }

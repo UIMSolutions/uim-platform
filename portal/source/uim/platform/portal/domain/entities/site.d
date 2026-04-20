@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Portal site — the top-level container for pages, navigation, and content.
 struct Site {
-  SiteId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SiteId);
+
   string name;
   string description;
   string alias_; // URL-friendly slug
@@ -24,12 +24,24 @@ struct Site {
   MenuItemId[] menuItemIds;
   RoleId[] allowedRoleIds;
   SiteSettings settings;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
 
   bool isPublished() const {
     return status == SiteStatus.published;
+  }
+
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("alias", alias_)
+      .set("status", status.toString())
+      .set("themeId", themeId.value)
+      .set("pageIds", pageIds)
+      .set("menuItemIds", menuItemIds.map!(id => id.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array)
+      .set("settings", settings.toJson());
+
+    return j;
   }
 }
 

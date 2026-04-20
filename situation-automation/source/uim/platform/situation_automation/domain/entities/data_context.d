@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 @safe:
 struct DataContext {
-    DataContextId id;
+    mixin TenantEntity!(DataContextId);
+
     SituationInstanceId instanceId;
-    TenantId tenantId;
     string entityId;
     string entityTypeId;
     string[][] data;
@@ -22,4 +22,18 @@ struct DataContext {
     bool containsPersonalData;
     long capturedAt;
     long expiresAt;
+
+    Json toJson() const {
+        auto j = entityToJson
+            .set("instanceId", instanceId.value)
+            .set("entityId", entityId)
+            .set("entityTypeId", entityTypeId)
+            .set("data", data.map!(row => row.array).array)
+            .set("sourceSystem", sourceSystem)
+            .set("containsPersonalData", containsPersonalData)
+            .set("capturedAt", capturedAt)
+            .set("expiresAt", expiresAt);
+
+        return j;
+    }
 }

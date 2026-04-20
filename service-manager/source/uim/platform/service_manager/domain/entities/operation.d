@@ -7,8 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Operation {
-    OperationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(OperationId);
+
     string resourceId;
     string resourceType;
     OperationType type = OperationType.create;
@@ -18,6 +18,17 @@ struct Operation {
     int rescheduleCount;
     long startedAt;
     long completedAt;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("resourceId", resourceId)
+            .set("resourceType", resourceType)
+            .set("type", type.toString())
+            .set("status", status.toString())
+            .set("description", description)
+            .set("errorMessage", errorMessage)
+            .set("rescheduleCount", rescheduleCount)
+            .set("startedAt", startedAt)
+            .set("completedAt", completedAt);
+    }
 }
