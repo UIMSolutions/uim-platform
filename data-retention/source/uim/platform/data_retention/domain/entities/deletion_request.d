@@ -6,8 +6,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DeletionRequest {
-    DeletionRequestId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DeletionRequestId);
+
     DataSubjectId dataSubjectId;
     ApplicationGroupId applicationGroupId;
     DeletionActionType actionType = DeletionActionType.delete_;
@@ -17,6 +17,17 @@ struct DeletionRequest {
     long requestedAt;
     long completedAt;
     string errorMessage;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("dataSubjectId", dataSubjectId.value)
+            .set("applicationGroupId", applicationGroupId.value)
+            .set("actionType", actionType.to!string())
+            .set("status", status.to!string())
+            .set("reason", reason)
+            .set("requestedBy", requestedBy)
+            .set("requestedAt", requestedAt)
+            .set("completedAt", completedAt)
+            .set("errorMessage", errorMessage);
+    }
 }

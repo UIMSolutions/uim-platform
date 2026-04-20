@@ -13,9 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// On-premise Cloud Connector registration.
 struct CloudConnector {
-  ConnectorId id;
+  mixin TenantEntity!(ConnectorId);
+
   SubaccountId subaccountId;
-  TenantId tenantId;
   string locationId; // distinguishes multiple CCs per subaccount
   string description;
   string connectorVersion;
@@ -25,6 +25,18 @@ struct CloudConnector {
   long lastHeartbeat;
   long connectedSince;
   string tunnelEndpoint; // internal tunnel address
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("subaccountId", subaccountId.value)
+          .set("locationId", locationId)
+          .set("description", description)
+          .set("connectorVersion", connectorVersion)
+          .set("host", host)
+          .set("port", port)
+          .set("status", status.to!string)
+          .set("lastHeartbeat", lastHeartbeat)
+          .set("connectedSince", connectedSince)
+          .set("tunnelEndpoint", tunnelEndpoint);
+  }
 }

@@ -11,11 +11,18 @@ struct CipherSuite {
     string name;
     CipherSuiteStrength strength;
     bool enabled;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("name", name)
+            .set("strength", strength.to!string)
+            .set("enabled", enabled);
+    }
 }
 
 struct TlsConfiguration {
-    TlsConfigurationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TlsConfigurationId);
+
     string name;
     string description;
     TlsProtocolVersion minProtocolVersion;
@@ -25,8 +32,17 @@ struct TlsConfiguration {
     bool hstsEnabled;
     long hstsMaxAge;
     bool hstsIncludeSubDomains;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("minProtocolVersion", minProtocolVersion.to!string)
+            .set("maxProtocolVersion", maxProtocolVersion.to!string)
+            .set("cipherSuites", cipherSuites.map!(cs => cs.toJson()).array)
+            .set("http2Enabled", http2Enabled)
+            .set("hstsEnabled", hstsEnabled)
+            .set("hstsMaxAge", hstsMaxAge)
+            .set("hstsIncludeSubDomains", hstsIncludeSubDomains);
+    }
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A data controller — the legal entity responsible for data protection compliance.
 struct DataController {
-  DataControllerId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataControllerId);
+
   string name;
   string description;
   string legalEntityName;
@@ -25,6 +25,20 @@ struct DataController {
   string dpoName; // Data Protection Officer
   string dpoEmail;
   bool isActive = true;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("name", name)
+          .set("description", description)
+          .set("legalEntityName", legalEntityName)
+          .set("contactEmail", contactEmail)
+          .set("contactPhone", contactPhone)
+          .set("address", address)
+          .set("country", country)
+          .set("dpoName", dpoName)
+          .set("dpoEmail", dpoEmail)
+          .set("isActive", isActive)
+          .set("createdAt", createdAt)
+          .set("updatedAt", updatedAt);
+  }
 }

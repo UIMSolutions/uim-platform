@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A data subject access request — retrieve all personal data (GDPR Art. 15).
 struct DataRetrievalRequest {
-  DataRetrievalRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataRetrievalRequestId);
+
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   RequestType requestType = RequestType.access;
@@ -27,4 +27,20 @@ struct DataRetrievalRequest {
   long requestedAt;
   long completedAt;
   long deadline; // regulatory deadline (30 days)
+
+  Json toJson() const {
+      return entityToJson
+          .set("dataSubjectId", dataSubjectId.value)
+          .set("requestedBy", requestedBy.value)
+          .set("requestType", requestType.to!string)
+          .set("status", status.to!string)
+          .set("targetSystems", targetSystems.array)
+          .set("categories", categories.map!(c => c.to!string).array)
+          .set("downloadUrl", downloadUrl)
+          .set("totalFields", totalFields)
+          .set("reason", reason)
+          .set("requestedAt", requestedAt)
+          .set("completedAt", completedAt)
+          .set("deadline", deadline);
+  }
 }

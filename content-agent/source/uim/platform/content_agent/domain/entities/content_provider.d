@@ -18,12 +18,21 @@ struct ProvidedContentType {
   ContentCategory category;
   string description;
   string version_;
+
+  Json toJson() const {
+      return Json.emptyObject
+          .set("contentTypeId", contentTypeId.value)
+          .set("name", name)
+          .set("category", category.to!string)
+          .set("description", description)
+          .set("version", version_);
+  }
 }
 
 /// A registered content provider from which content can be discovered and assembled.
 struct ContentProvider {
-  TenantId tenantId;
-  ContentProviderId contentProviderId;
+  mixin TenantEntity!(ContentProviderId);
+
   string name;
   string description;
   string endpoint;
@@ -33,4 +42,17 @@ struct ContentProvider {
   string createdBy;
   long registeredAt;
   long lastSyncAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("name", name)
+          .set("description", description)
+          .set("endpoint", endpoint)
+          .set("authToken", authToken)
+          .set("status", status.to!string)
+          .set("contentTypes", contentTypes.map!(c => c.toJson).array)
+          .set("createdBy", createdBy)
+          .set("registeredAt", registeredAt)
+          .set("lastSyncAt", lastSyncAt);
+  }
 }

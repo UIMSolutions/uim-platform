@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A consent purpose configuration — templated consent form for a business process.
 struct ConsentPurpose {
-  ConsentPurposeId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ConsentPurposeId);
+
   DataControllerId controllerId;
   string name;
   string description;
@@ -26,6 +26,19 @@ struct ConsentPurpose {
   bool requiresExplicitConsent;
   long validFrom;
   long validUntil; // 0 = indefinite
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("controllerId", controllerId.value)
+          .set("name", name)
+          .set("description", description)
+          .set("purpose", purpose.to!string)
+          .set("dataCategories", dataCategories.map!(dc => dc.to!string).array)
+          .set("status", status.to!string)
+          .set("consentFormTemplate", consentFormTemplate)
+          .set("version", version_)
+          .set("requiresExplicitConsent", requiresExplicitConsent)
+          .set("validFrom", validFrom)
+          .set("validUntil", validUntil);
+  }
 }

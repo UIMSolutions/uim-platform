@@ -10,8 +10,8 @@ import uim.platform.data.attribute_recommendation.domain.types;
 /// Represents a single training run of a model configuration, tracking
 /// progress, metrics, and completion status.
 struct TrainingJob {
-  TrainingJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TrainingJobId);
+
   ModelConfigId modelConfigId;
   JobStatus status = JobStatus.queued;
   string metrics; // JSON: {accuracy, precision, recall, f1Score}
@@ -20,6 +20,4 @@ struct TrainingJob {
   string errorMessage;
   long startedAt;
   long completedAt;
-  UserId createdBy;
-  long createdAt;
 }
