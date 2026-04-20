@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DevSpaceType {
-    DevSpaceTypeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DevSpaceTypeId);
+
     string name;
     string description;
     DevSpaceTypeCategory category = DevSpaceTypeCategory.predefined;
@@ -21,25 +21,17 @@ struct DevSpaceType {
     string supportedProjectTypes;
     string runtimeStack;
     string iconUrl;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
-
-    Json devSpaceTypeToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("name", name)
             .set("description", description)
             .set("category", category.to!string)
             .set("predefinedExtensions", predefinedExtensions)
             .set("supportedProjectTypes", supportedProjectTypes)
             .set("runtimeStack", runtimeStack)
-            .set("iconUrl", iconUrl)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("iconUrl", iconUrl);
+
+        return j;
     }
 }

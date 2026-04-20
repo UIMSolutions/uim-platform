@@ -10,16 +10,26 @@ import uim.platform.foundry.domain.types;
 /// A route — maps incoming HTTP/TCP traffic to one or more applications
 /// via a domain, optional host prefix, and optional URL path.
 struct Route {
-  RouteId id;
-  SpaceId spaceId;
-  DomainId domainId;
-  TenantId tenantId;
+  mixin TenantEntity!(RouteId);
+
+  SpaceId spaceId; // the space this route belongs to
+  DomainId domainId; // the domain this route is associated with
   string host; // subdomain portion (e.g. "myapp")
   string path; // URL path prefix (e.g. "/api")
   int port; // port number for TCP routes
   RouteProtocol protocol = RouteProtocol.http;
   string[] mappedAppIds; // applications mapped to this route
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("spaceId", spaceId)
+      .set("domainId", domainId)
+      .set("host", host)
+      .set("path", path)
+      .set("port", port)
+      .set("protocol", protocol.to!string)
+      .set("mappedAppIds", mappedAppIds);
+
+    return j;
+  }
 }

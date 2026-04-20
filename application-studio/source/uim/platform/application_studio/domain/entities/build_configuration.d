@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct BuildConfiguration {
-    BuildConfigurationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(BuildConfigurationId);
     ProjectId projectId;
     string name;
     string description;
@@ -26,15 +25,9 @@ struct BuildConfiguration {
     string lastBuildAt;
     string lastDeployAt;
     string buildLog;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json buildConfigurationToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        auto j = entityToJson
             .set("projectId", projectId)
             .set("name", name)
             .set("description", description)
@@ -46,10 +39,8 @@ struct BuildConfiguration {
             .set("mtaDescriptor", mtaDescriptor)
             .set("lastBuildAt", lastBuildAt)
             .set("lastDeployAt", lastDeployAt)
-            .set("buildLog", buildLog)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("buildLog", buildLog);
+
+        return j;
     }
 }

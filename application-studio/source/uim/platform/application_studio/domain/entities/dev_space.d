@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DevSpace {
-    DevSpaceId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DevSpaceId);
+
     string name;
     string description;
     DevSpaceStatus status = DevSpaceStatus.stopped;
@@ -26,15 +26,9 @@ struct DevSpace {
     string hibernateAfterDays;
     string memoryLimit;
     string diskLimit;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
-
-    Json devSpaceToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
@@ -46,10 +40,8 @@ struct DevSpace {
             .set("lastAccessedAt", lastAccessedAt)
             .set("hibernateAfterDays", hibernateAfterDays)
             .set("memoryLimit", memoryLimit)
-            .set("diskLimit", diskLimit)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("diskLimit", diskLimit);
+
+        return j;
     }
 }

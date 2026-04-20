@@ -13,9 +13,16 @@ struct ResourceGroupLabel {
 }
 
 struct ResourceGroup {
-  ResourceGroupId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ResourceGroupId);
+
   string status;
   ResourceGroupLabel[] labels;
-  long createdAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("status", status)
+      .set("labels", labels);
+
+    return j;
+  }
 }

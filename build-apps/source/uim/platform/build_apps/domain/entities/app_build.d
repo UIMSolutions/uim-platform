@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct AppBuild {
-    AppBuildId id;
-    TenantId tenantId;
+    mixin TenantEntity!(AppBuildId);
+
     ApplicationId applicationId;
     string name;
     string description;
@@ -28,15 +28,9 @@ struct AppBuild {
     string signingConfig;
     string lastBuildAt;
     string lastDeployAt;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
-
-    Json appBuildToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("applicationId", applicationId)
             .set("name", name)
             .set("description", description)
@@ -50,10 +44,8 @@ struct AppBuild {
             .set("buildConfig", buildConfig)
             .set("signingConfig", signingConfig)
             .set("lastBuildAt", lastBuildAt)
-            .set("lastDeployAt", lastDeployAt)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("lastDeployAt", lastDeployAt);
+
+        return j;
     }
 }

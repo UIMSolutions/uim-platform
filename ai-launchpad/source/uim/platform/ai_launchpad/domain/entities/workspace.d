@@ -8,12 +8,20 @@ module uim.platform.ai_launchpad.domain.entities.workspace;
 import uim.platform.ai_launchpad.domain.types;
 
 struct Workspace {
-  WorkspaceId id;
+  mixin TenantEntity!(WorkspaceId);
+
   string name;
   string description;
-  TenantId tenantId;
   WorkspaceStatus status;
   int connectionCount;
-  string createdAt;
-  string modifiedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("status", status)
+      .set("connectionCount", connectionCount);
+
+    return j;
+  }
 }

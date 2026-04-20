@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Project {
-    ProjectId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ProjectId);
+
     DevSpaceId devSpaceId;
     string name;
     string description;
@@ -24,15 +24,9 @@ struct Project {
     string gitRepositoryUrl;
     string gitBranch;
     string namespace_;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
-
-    Json projectToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("devSpaceId", devSpaceId)
             .set("name", name)
             .set("description", description)
@@ -42,10 +36,8 @@ struct Project {
             .set("rootPath", rootPath)
             .set("gitRepositoryUrl", gitRepositoryUrl)
             .set("gitBranch", gitBranch)
-            .set("namespace", namespace_)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("namespace", namespace_);
+
+        return j;
     }
 }

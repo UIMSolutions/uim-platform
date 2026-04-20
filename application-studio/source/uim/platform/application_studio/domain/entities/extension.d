@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Extension {
-    ExtensionId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ExtensionId);
+
     string name;
     string description;
     ExtensionScope scope_ = ExtensionScope.predefined;
@@ -24,15 +24,9 @@ struct Extension {
     string dependencies;
     string capabilities;
     string iconUrl;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
-
-    Json extensionToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        auto j = entityToJson
             .set("name", name)
             .set("description", description)
             .set("scope", scope_.to!string)
@@ -42,10 +36,8 @@ struct Extension {
             .set("category", category)
             .set("dependencies", dependencies)
             .set("capabilities", capabilities)
-            .set("iconUrl", iconUrl)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("iconUrl", iconUrl);
+
+        return j;
     }
 }

@@ -8,8 +8,8 @@ module uim.platform.ai_core.domain.entities.object_store_secret;
 import uim.platform.ai_core.domain.types;
 
 struct ObjectStoreSecret {
-  ObjectStoreSecretId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ObjectStoreSecretId);
+
   ResourceGroupId resourceGroupId;
   string name;
   string type;
@@ -17,6 +17,17 @@ struct ObjectStoreSecret {
   string region;
   string endpoint;
   string pathPrefix;
-  long createdAt;
-  long modifiedAt;
+  
+  Json toJson() const {
+    auto j = entityToJson
+      .set("resourceGroupId", resourceGroupId)
+      .set("name", name)
+      .set("type", type)
+      .set("bucket", bucket)
+      .set("region", region)
+      .set("endpoint", endpoint)
+      .set("pathPrefix", pathPrefix);
+
+    return j;
+  }
 }

@@ -6,17 +6,19 @@ mixin(ShowModule!());
 @safe:
 
 mixin template TenantEntity(TId) {
-    TenantId tenantId;
-    TId id;
-    UserId createdBy;
-    long createdAt;
-    UserId updatedBy;
-    long updatedAt;
+    TenantId tenantId; // required for multi-tenancy support
+    TId id; // unique identifier for the entity
+    UserId createdBy; // user who created the entity
+    long createdAt; // timestamp of when the entity was created
+    UserId updatedBy; // user who last updated the entity
+    long updatedAt; // timestamp of when the entity was last updated
 
+    // Helper method to check if the entity is new (i.e. has no ID assigned yet)
     bool isNull() const {
         return id.isEmpty;
     }
 
+    // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
     void createEntity(TenantId tenantId) {
         id = randomUUID();
         this.tenantId = tenantId;
@@ -24,11 +26,14 @@ mixin template TenantEntity(TId) {
         updatedAt = createdAt;
     }
 
-    void updateEntity(TenantId tenantId, TId id) {
-        id = id;
-        this.tenantId = tenantId;
+    // Call this method when updating an existing entity to update timestamps
+    void updateEntity(TenantId newTenantId, TId newId) {
+        id = newId;
+        tenantId = newTenantId;
+        updatedAt = Clock.currStdTime();
     }
 
+    // Convert the entity to a JSON object, excluding internal fields like createdBy/createdAt
     Json entityToJson() const {
         return Json.emptyObject
             .set("id", id)
