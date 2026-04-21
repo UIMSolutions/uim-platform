@@ -12,12 +12,10 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface HDIContainerRepository {
-  HDIContainer findById(HDIContainerId id);
-  HDIContainer[] findByTenant(TenantId tenantId);
+interface HDIContainerRepository : ITenantRepository!(HDIContainer, HDIContainerId) {
+
+  size_t countByInstance(InstanceId instanceId);
   HDIContainer[] findByInstance(InstanceId instanceId);
-  void save(HDIContainer c);
-  void update(HDIContainer c);
-  void remove(HDIContainerId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
+
 }

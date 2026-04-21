@@ -12,20 +12,14 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface AppRouteRepository {
-  bool existsById(AppRouteId id);
-  AppRoute findById(AppRouteId id);
+interface AppRouteRepository : ITenantRepository!(AppRoute, AppRouteId) {
 
   bool existsByPathPrefix(TenantId tenantId, string pathPrefix);
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix);
+  void removeByPathPrefix(TenantId tenantId, string pathPrefix);
 
   size_t countByApp(HtmlAppId appId);
   AppRoute[] findByApp(HtmlAppId appId);
+  void removeByApp(HtmlAppId appId);
   
-  size_t countByTenant(TenantId tenantId);
-  AppRoute[] findByTenant(TenantId tenantId);
-
-  void save(AppRoute route);
-  void update(AppRoute route);
-  void remove(AppRouteId id);
 }

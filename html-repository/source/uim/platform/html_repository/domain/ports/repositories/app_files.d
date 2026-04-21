@@ -12,7 +12,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface AppFileRepository {
+interface AppFileRepository : ITenantRepository!(AppFile, AppFileId) {
   bool existsById(AppFileId id);
   AppFile findById(AppFileId id);
   

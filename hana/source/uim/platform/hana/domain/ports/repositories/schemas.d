@@ -12,12 +12,10 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface SchemaRepository {
-  Schema findById(SchemaId id);
-  Schema[] findByTenant(TenantId tenantId);
+interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {
+
+  size_t countByInstance(InstanceId instanceId);
   Schema[] findByInstance(InstanceId instanceId);
-  void save(Schema s);
-  void update(Schema s);
-  void remove(SchemaId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
+
 }

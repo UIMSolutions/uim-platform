@@ -12,19 +12,18 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface ServiceInstanceRepository {
-  bool existsById(ServiceInstanceId id);
-  ServiceInstance findById(ServiceInstanceId id);
+interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
 
   bool existsByName(TenantId tenantId, string name);
-  ServiceInstance findByName(TenantId tenantId, string name);
-  
-  ServiceInstance[] findByTenant(TenantId tenantId);
-  ServiceInstance[] findBySpace(SpaceId spaceId);
-  ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan);
+  ServiceInstance findByName(TenantId tenantId, string name);  
+  void removeByName(TenantId tenantId, string name);
 
-  void save(ServiceInstance instance);
-  void update(ServiceInstance instance);
-  void remove(ServiceInstanceId id);
-  size_t countByTenant(TenantId tenantId);
+  size_t countBySpace(SpaceId spaceId);
+  ServiceInstance[] findBySpace(SpaceId spaceId);
+  void removeBySpace(SpaceId spaceId);
+
+  size_t countByPlan(TenantId tenantId, ServicePlan plan);
+  ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan);
+  void removeByPlan(TenantId tenantId, ServicePlan plan);
+
 }

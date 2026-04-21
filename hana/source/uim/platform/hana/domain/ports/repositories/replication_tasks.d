@@ -12,12 +12,9 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface ReplicationTaskRepository {
-  ReplicationTask findById(ReplicationTaskId id);
-  ReplicationTask[] findByTenant(TenantId tenantId);
+interface ReplicationTaskRepository : ITenantRepository!(ReplicationTask, ReplicationTaskId) {
+
+  size_t countByInstance(InstanceId instanceId);
   ReplicationTask[] findByInstance(InstanceId instanceId);
-  void save(ReplicationTask t);
-  void update(ReplicationTask t);
-  void remove(ReplicationTaskId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
 }

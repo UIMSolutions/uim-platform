@@ -12,11 +12,10 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — authorization policy persistence.
-interface PolicyRepository {
-  AuthorizationPolicy findById(PolicyId id);
-  AuthorizationPolicy[] findByTenant(TenantId tenantId);
+interface PolicyRepository : ITenantRepository!(AuthorizationPolicy, PolicyId) {
+
+  size_t countByApplication(ApplicationId appId);
   AuthorizationPolicy[] findByApplication(ApplicationId appId);
-  void save(AuthorizationPolicy policy);
-  void update(AuthorizationPolicy policy);
-  void remove(PolicyId id);
+  void removeByApplication(ApplicationId appId);
+
 }

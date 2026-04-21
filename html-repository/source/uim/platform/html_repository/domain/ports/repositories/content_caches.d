@@ -12,22 +12,15 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface ContentCacheRepository {
-  bool existsById(ContentCacheId id);
-  ContentCache findById(ContentCacheId id);
+interface ContentCacheRepository : ITenantRepository!(ContentCache, ContentCacheId) {
 
-  bool existsByFileId(AppFileId fileId);
-  ContentCache findByFileId(AppFileId fileId);
-  
-  size_t countByTenant(TenantId tenantId);
-  ContentCache[] findByTenant(TenantId tenantId);
-
+  size_t countByStatus(CacheStatus status);
   ContentCache[] findByStatus(CacheStatus status);
-  ContentCache[] findExpired(long currentTime);
+  void removeByStatus(CacheStatus status);
   
-  void save(ContentCache cache);
-  void update(ContentCache cache);
-  void remove(ContentCacheId id);
+  size_t countExpired(long currentTime);
+  ContentCache[] findExpired(long currentTime);
   void removeExpired(long currentTime);
+  
   long totalSizeByTenant(TenantId tenantId);
 }
