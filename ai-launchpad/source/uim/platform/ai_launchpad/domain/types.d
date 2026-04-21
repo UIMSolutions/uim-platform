@@ -114,15 +114,6 @@ struct StatisticsId {
 
   mixin DomainId;
 }
-struct TenantId {
-      string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 // Connection to an AI runtime instance
 enum ConnectionStatus { active, inactive, error, pending }

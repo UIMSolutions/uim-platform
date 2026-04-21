@@ -68,7 +68,11 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  Application* getApp(AppId tenantId, id tenantId) {
+  Application getApp(TenantId tenantId, AppId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  Application getApp(TenantId tenantId, AppId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -76,8 +80,8 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Application[] listBySpace(SpaceId spacetenantId, id tenantId) {
-    return repo.findBySpace(spacetenantId, id);
+  Application[] listBySpace(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
   CommandResult updateApp(UpdateAppRequest req) {

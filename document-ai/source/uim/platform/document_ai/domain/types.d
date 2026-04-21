@@ -90,16 +90,6 @@ struct ClientId {
   mixin DomainId;
 }
 
-struct TenantId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
-
 struct ResourceGroupId {
   string value;
 
