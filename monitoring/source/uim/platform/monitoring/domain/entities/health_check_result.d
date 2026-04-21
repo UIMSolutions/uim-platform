@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Result of executing a health check.
 struct HealthCheckResult {
-  TenantId tenantId;
-  HealthCheckResultId id;
+  mixin TenantEntity!(HealthCheckResultId);
+
   HealthCheckId checkId;
   MonitoredResourceId resourceId;
   CheckStatus status = CheckStatus.unknown;
@@ -23,4 +23,16 @@ struct HealthCheckResult {
   int responseTimeMs;
   int httpStatusCode;
   long executedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("checkId", checkId)
+      .set("resourceId", resourceId)
+      .set("status", status.to!string)
+      .set("value", value_)
+      .set("message", message)
+      .set("responseTimeMs", responseTimeMs)
+      .set("httpStatusCode", httpStatusCode)
+      .set("executedAt", executedAt);
+  }
 }

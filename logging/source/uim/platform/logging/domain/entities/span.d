@@ -15,11 +15,18 @@ struct SpanEvent {
   string name;
   long timestamp;
   string[string] attributes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("timestamp", timestamp)
+      .set("attributes", attributes);
+  }
 }
 
 struct Span {
-  SpanId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SpanId);
+  
   TraceId traceId;
   SpanId parentSpanId;
   string operationName;
@@ -32,4 +39,20 @@ struct Span {
   string[string] attributes;
   SpanEvent[] events;
   string[string] resourceAttributes;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("traceId", traceId)
+      .set("parentSpanId", parentSpanId)
+      .set("operationName", operationName)
+      .set("serviceName", serviceName)
+      .set("startTime", startTime)
+      .set("endTime", endTime)
+      .set("durationMs", durationMs)
+      .set("status", status.to!string)
+      .set("kind", kind.to!string)
+      .set("attributes", attributes)
+      .set("events", events.map!(e => e.toJson()).array)
+      .set("resourceAttributes", resourceAttributes);
+  }
 }

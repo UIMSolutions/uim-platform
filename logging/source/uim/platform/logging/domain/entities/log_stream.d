@@ -12,14 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 struct LogStream {
-  LogStreamId id;
-  TenantId tenantId;
+  mixin TenantEntity!(LogStreamId);
+
   string name;
   string description;
   LogSourceType sourceType = LogSourceType.application;
   RetentionPolicyId retentionPolicyId;
   bool isActive = true;
   string createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("sourceType", sourceType.to!string)
+      .set("retentionPolicyId", retentionPolicyId)
+      .set("isActive", isActive)
+      .set("createdBy", createdBy);
+  }
 }

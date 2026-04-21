@@ -13,10 +13,10 @@ mixin(ShowModule!());
 @safe:
 /// A service instance provisioned from the BTP service catalog.
 struct ServiceInstance {
-  ServiceInstanceId id;
+  mixin TenantEntity!(ServiceInstanceId);
+
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   ServiceInstanceStatus status = ServiceInstanceStatus.creating;
@@ -36,29 +36,19 @@ struct ServiceInstance {
   // Binding count
   int bindingCount;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
-
-  Json toJson() {
-    return Json.emptyObject
-      .set("id", id.value)
-      .set("namespaceId", namespaceId.value)
-      .set("environmentId", environmentId.value)
-      .set("tenantId", tenantId.value)
+  Json toJson() const {
+    return Json.entityToJson
+      .set("namespaceId", namespaceId)
+      .set("environmentId", environmentId)
       .set("name", name)
       .set("description", description)
-      .set("status", status.to!string())
+      .set("status", status.to!string)
       .set("serviceOfferingName", serviceOfferingName)
       .set("servicePlanName", servicePlanName)
       .set("servicePlanId", servicePlanId)
       .set("externalName", externalName)
       .set("parametersJson", parametersJson)
       .set("labels", labels)
-      .set("bindingCount", bindingCount)
-      .set("createdBy", createdBy)
-      .set("createdAt", createdAt)
-      .set("modifiedAt", modifiedAt);
+      .set("bindingCount", bindingCount);
   }
 }

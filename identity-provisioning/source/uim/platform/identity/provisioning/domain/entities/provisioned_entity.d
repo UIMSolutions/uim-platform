@@ -10,8 +10,8 @@ import uim.platform.identity.provisioning.domain.types;
 /// A tracked identity entity (user or group) that has been
 /// provisioned from a source to a target system.
 struct ProvisionedEntity {
-  ProvisionedEntityId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ProvisionedEntityId);
+  
   string externalId; // id in the external system
   EntityType entityType = EntityType.user;
   SourceSystemId sourceSystemId;
@@ -19,6 +19,15 @@ struct ProvisionedEntity {
   string attributes; // JSON: provisioned attribute snapshot
   EntityStatus status = EntityStatus.pending;
   long lastSyncAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("externalId", externalId)
+      .set("entityType", entityType.to!string)
+      .set("sourceSystemId", sourceSystemId)
+      .set("targetSystemId", targetSystemId)
+      .set("attributes", attributes)
+      .set("status", status.to!string)
+      .set("lastSyncAt", lastSyncAt);
+  }
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Definition of a metric that can be collected for monitored resources.
 struct MetricDefinition {
-  MetricDefinitionId id;
-  TenantId tenantId;
+  mixin TenantEntity!(MetricDefinitionId);
+
   string name;
   string displayName;
   string description;
@@ -23,6 +23,16 @@ struct MetricDefinition {
   AggregationMethod aggregation = AggregationMethod.average;
   bool isCustom;
   bool isEnabled = true;
-  string createdBy;
-  long createdAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("name", name)
+      .set("displayName", displayName)
+      .set("description", description)
+      .set("category", category.to!string)
+      .set("unit", unit.to!string)
+      .set("aggregation", aggregation.to!string)
+      .set("isCustom", isCustom)
+      .set("isEnabled", isEnabled);
+  }
 }

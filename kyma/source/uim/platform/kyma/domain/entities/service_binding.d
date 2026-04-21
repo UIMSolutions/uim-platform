@@ -13,11 +13,12 @@ mixin(ShowModule!());
 @safe:
 /// A service binding — connects a service instance to an application/function.
 struct ServiceBinding {
-  ServiceBindingId id;
+  mixin TenantEntity!(ServiceBindingId);
+
   ServiceInstanceId serviceInstanceId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
+
   string name;
   string description;
   ServiceBindingStatus status = ServiceBindingStatus.creating;
@@ -35,26 +36,19 @@ struct ServiceBinding {
   // Labels
   string[string] labels;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
-
-  Json toJson() {
-    return Json.emptyObject
-      .set("id", id.value)
-      .set("serviceInstanceId", serviceInstanceId.value)
-      .set("namespaceId", namespaceId.value)
-      .set("environmentId", environmentId.value)
-      .set("tenantId", tenantId.value)
+  Json toJson() const {
+    return Json.entityToJson
+      .set("serviceInstanceId", serviceInstanceId)
+      .set("namespaceId", namespaceId)
+      .set("environmentId", environmentId)
       .set("name", name)
       .set("description", description)
-      .set("status", status.to!string())
+      .set("status", status.to!string)
       .set("secretName", secretName)
       .set("secretNamespace", secretNamespace)
       .set("parametersJson", parametersJson)
       .set("credentials", credentials)
-      .set("labels", labels)
-      .set("createdBy", createdBy);
+      .set("labels", labels);
   }
+  
 }

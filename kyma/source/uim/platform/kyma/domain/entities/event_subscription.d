@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An event subscription — subscribes to events from a source.
 struct EventSubscription {
-  TenantId tenantId;
-  EventSubscriptionId id;
+  mixin TenantEntity!(EventSubscriptionId);
+
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;
@@ -41,8 +41,21 @@ struct EventSubscription {
   // Labels
   string[string] labels;
 
-  // Metadata
-  string createdBy;
-  long createdAt;
-  long modifiedAt;
+  Json toJson() const {
+    return Json.entityToJson
+      .set("namespaceId", namespaceId)
+      .set("environmentId", environmentId)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("source", source)
+      .set("eventTypes", eventTypes)
+      .set("typeEncoding", typeEncoding.to!string)    
+      .set("sinkUrl", sinkUrl)
+      .set("sinkServiceName", sinkServiceName)
+      .set("sinkServicePort", sinkServicePort)
+      .set("maxInFlightMessages", maxInFlightMessages)
+      .set("exactTypeMatching", exactTypeMatching)
+      .set("filterAttributes", filterAttributes)
+      .set("labels", labels);
 }

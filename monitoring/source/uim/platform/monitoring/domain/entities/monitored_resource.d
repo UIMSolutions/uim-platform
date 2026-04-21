@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A monitored application, database system, or service on SAP BTP.
 struct MonitoredResource {
-  MonitoredResourceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(MonitoredResourceId);
+  
   SubaccountId subaccountId;
   string name;
   string description;
@@ -29,10 +29,8 @@ struct MonitoredResource {
   long registeredAt;
   long lastSeenAt;
 
-    Json toJson() {
-    return Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+  Json toJson() const {
+    return Json.entityToJson
       .set("subaccountId", subaccountId)
       .set("name", name)
       .set("description", description)
