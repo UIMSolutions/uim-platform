@@ -11,18 +11,22 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SubscriptionRepository {
-    bool existsById(SubscriptionId id);
-    EventSubscription findById(SubscriptionId id);
+interface SubscriptionRepository : ITenantRepository{
 
-    EventSubscription[] findAll();
-    EventSubscription[] findByTenant(TenantId tenantId);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId);
     EventSubscription[] findByBrokerService(BrokerServiceId brokerServiceId);
-    EventSubscription[] findByTopic(TopicId topicId);
-    EventSubscription[] findByApplication(EventApplicationId applicationId);
-    EventSubscription[] findByStatus(SubscriptionStatus status);
+    void removeByBrokerService(BrokerServiceId brokerServiceId);
 
-    void save(EventSubscription subscription);
-    void update(EventSubscription subscription);
-    void remove(SubscriptionId id);
+    size_t countByTopic(TopicId topicId);
+    EventSubscription[] findByTopic(TopicId topicId);
+    void removeByTopic(TopicId topicId);
+
+    size_t countByApplication(EventApplicationId applicationId);
+    EventSubscription[] findByApplication(EventApplicationId applicationId);
+    void removeByApplication(EventApplicationId applicationId);
+
+    size_t countByStatus(SubscriptionStatus status);
+    EventSubscription[] findByStatus(SubscriptionStatus status);
+    void removeByStatus(SubscriptionStatus status);
+
 }

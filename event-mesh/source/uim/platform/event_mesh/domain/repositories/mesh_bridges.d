@@ -11,17 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MeshBridgeRepository {
-    bool existsById(MeshBridgeId id);
-    MeshBridge findById(MeshBridgeId id);
+interface MeshBridgeRepository : ITenantRepository!(MeshBridge, MeshBridgeId) {
 
-    MeshBridge[] findAll();
-    MeshBridge[] findByTenant(TenantId tenantId);
+    size_t countBySourceBroker(BrokerServiceId sourceBrokerId);
     MeshBridge[] findBySourceBroker(BrokerServiceId sourceBrokerId);
-    MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId);
-    MeshBridge[] findByStatus(BridgeStatus status);
+    void removeBySourceBroker(BrokerServiceId sourceBrokerId);
 
-    void save(MeshBridge bridge);
-    void update(MeshBridge bridge);
-    void remove(MeshBridgeId id);
+    size_t countByTargetBroker(BrokerServiceId targetBrokerId);
+    MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId);
+    void removeByTargetBroker(BrokerServiceId targetBrokerId);
+
+    size_t countByStatus(BridgeStatus status);
+    MeshBridge[] findByStatus(BridgeStatus status);
+    void removeByStatus(BridgeStatus status);
+
 }

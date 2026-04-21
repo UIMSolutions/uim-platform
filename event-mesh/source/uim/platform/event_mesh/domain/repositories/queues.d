@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface QueueRepository {
-    bool existsById(QueueId id);
-    Queue findById(QueueId id);
+interface QueueRepository : ITenantRepository{
 
-    Queue[] findAll();
-    Queue[] findByTenant(TenantId tenantId);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId);
     Queue[] findByBrokerService(BrokerServiceId brokerServiceId);
-    Queue[] findByStatus(QueueStatus status);
+    void removeByBrokerService(BrokerServiceId brokerServiceId);
 
-    void save(Queue queue);
-    void update(Queue queue);
-    void remove(QueueId id);
+    size_t countByStatus(QueueStatus status);
+    Queue[] findByStatus(QueueStatus status);
+    void removeByStatus(QueueStatus status);
+
 }

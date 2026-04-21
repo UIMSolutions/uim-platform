@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomerRepository {
-    bool existsById(CustomerId id);
-    Customer findById(CustomerId id);
-    
-    Customer[] findAll();
-    Customer[] findByTenant(TenantId tenantId);
+interface CustomerRepository : ITenantRepository{
+
+    size_t countByType(CustomerType customerType);
     Customer[] findByType(CustomerType customerType);
+    void removeByType(CustomerType customerType);
+
+    size_t countByStatus(CustomerStatus status);
     Customer[] findByStatus(CustomerStatus status);
+    void removeByStatus(CustomerStatus status);
     
-    void save(Customer customer);
-    void update(Customer customer);
-    void remove(CustomerId id);
 }

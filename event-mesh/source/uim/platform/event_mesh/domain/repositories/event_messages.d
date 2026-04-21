@@ -11,18 +11,22 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventMessageRepository {
-    bool existsById(EventMessageId id);
-    EventMessage findById(EventMessageId id);
+interface EventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
 
-    EventMessage[] findAll();
-    EventMessage[] findByTenant(TenantId tenantId);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId);
     EventMessage[] findByBrokerService(BrokerServiceId brokerServiceId);
-    EventMessage[] findByTopic(TopicId topicId);
-    EventMessage[] findByQueue(QueueId queueId);
-    EventMessage[] findByStatus(MessageStatus status);
+    void removeByBrokerService(BrokerServiceId brokerServiceId);
 
-    void save(EventMessage message);
-    void update(EventMessage message);
-    void remove(EventMessageId id);
+    size_t countByTopic(TopicId topicId);
+    EventMessage[] findByTopic(TopicId topicId);
+    void removeByTopic(TopicId topicId);
+
+    size_t countByQueue(QueueId queueId);
+    EventMessage[] findByQueue(QueueId queueId);
+    void removeByQueue(QueueId queueId);
+
+    size_t countByStatus(MessageStatus status);
+    EventMessage[] findByStatus(MessageStatus status);
+    void removeByStatus(MessageStatus status);
+
 }

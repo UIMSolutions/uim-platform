@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TopicRepository {
-    bool existsById(TopicId id);
-    Topic findById(TopicId id);
+interface TopicRepository : ITenantRepository!(Topic, TopicId) {
 
-    Topic[] findAll();
-    Topic[] findByTenant(TenantId tenantId);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId);
     Topic[] findByBrokerService(BrokerServiceId brokerServiceId);
-    Topic[] findByStatus(TopicStatus status);
+    void removeByBrokerService(BrokerServiceId brokerServiceId);
 
-    void save(Topic topic);
-    void update(Topic topic);
-    void remove(TopicId id);
+    size_t countByStatus(TopicStatus status);
+    Topic[] findByStatus(TopicStatus status);
+    void removeByStatus(TopicStatus status);
+
 }

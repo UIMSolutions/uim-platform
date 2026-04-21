@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BrokerServiceRepository {
-    bool existsById(BrokerServiceId id);
-    BrokerService findById(BrokerServiceId id);
+interface BrokerServiceRepository : ITenantRepository!(BrokerService, BrokerServiceId) {
 
-    BrokerService[] findAll();
-    BrokerService[] findByTenant(TenantId tenantId);
+    size_t countByStatus(BrokerServiceStatus status);
     BrokerService[] findByStatus(BrokerServiceStatus status);
-    BrokerService[] findByCloudProvider(CloudProvider provider);
+    void removeByStatus(BrokerServiceStatus status);
 
-    void save(BrokerService service);
-    void update(BrokerService service);
-    void remove(BrokerServiceId id);
+    size_t countByCloudProvider(CloudProvider provider);
+    BrokerService[] findByCloudProvider(CloudProvider provider);
+    void removeByCloudProvider(CloudProvider provider);
+
 }

@@ -11,17 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AssignmentRepository {
-    bool existsById(AssignmentId id);
-    Assignment findById(AssignmentId id);
+interface AssignmentRepository : ITenantRepository!(Assignment, AssignmentId) {
 
-    Assignment[] findAll();
-    Assignment[] findByTenant(TenantId tenantId);
+    size_t countByActivity(ActivityId activityId);
     Assignment[] findByActivity(ActivityId activityId);
-    Assignment[] findByTechnician(TechnicianId technicianId);
-    Assignment[] findByStatus(AssignmentStatus status);
+    void removeByActivity(ActivityId activityId);
 
-    void save(Assignment assignment);
-    void update(Assignment assignment);
-    void remove(AssignmentId id);
+    size_t countByTechnician(TechnicianId technicianId);
+    Assignment[] findByTechnician(TechnicianId technicianId);
+    void removeByTechnician(TechnicianId technicianId);
+
+    size_t countByStatus(AssignmentStatus status);
+    Assignment[] findByStatus(AssignmentStatus status);
+    void removeByStatus(AssignmentStatus status);
+
 }

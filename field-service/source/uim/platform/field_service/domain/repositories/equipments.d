@@ -11,17 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EquipmentRepository {
-    bool existsById(EquipmentId id);
-    Equipment findById(EquipmentId id);
+interface EquipmentRepository : ITenantRepository!(Equipment, EquipmentId) {
 
-    Equipment[] findAll();
-    Equipment[] findByTenant(TenantId tenantId);
+    size_t countByCustomer(CustomerId customerId);
     Equipment[] findByCustomer(CustomerId customerId);
-    Equipment[] findByType(EquipmentType equipmentType);
-    Equipment[] findByStatus(EquipmentStatus status);
+    void removeByCustomer(CustomerId customerId);
 
-    void save(Equipment equipment);
-    void update(Equipment equipment);
-    void remove(EquipmentId id);
+    size_t countByType(EquipmentType equipmentType);
+    Equipment[] findByType(EquipmentType equipmentType);
+    void removeByType(EquipmentType equipmentType);
+
+    size_t countByStatus(EquipmentStatus status);
+    Equipment[] findByStatus(EquipmentStatus status);
+    void removeByStatus(EquipmentStatus status);
+
 }
