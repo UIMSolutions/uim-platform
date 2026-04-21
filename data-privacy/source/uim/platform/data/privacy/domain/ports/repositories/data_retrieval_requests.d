@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data subject access / retrieval requests.
-interface DataRetrievalRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  DataRetrievalRequest[] findByTenant(TenantId tenantId);
- 
-  bool existsById(DataRetrievalRequestId tenantId, id tenantId);
-  DataRetrievalRequest findById(DataRetrievalRequestId tenantId, id tenantId);
+interface DataRetrievalRequestRepository : ITenantRepository!(DataRetrievalRequest, DataRetrievalRequestId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(DataRetrievalRequest request);
-  void update(DataRetrievalRequest request);
-  void remove(DataRetrievalRequestId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, RetrievalStatus status);
+  DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status);
+  void removeByStatus(TenantId tenantId, RetrievalStatus status);
+
 }

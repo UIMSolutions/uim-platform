@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data deletion requests.
-interface DeletionRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  DeletionRequest[] findByTenant(TenantId tenantId);
+interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
 
-  bool existsById(DeletionRequestId tenantId, id tenantId);
-  DeletionRequest findById(DeletionRequestId tenantId, id tenantId);
-
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(DeletionRequest request);
-  void update(DeletionRequest request);
-  void remove(DeletionRequestId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, DeletionStatus status);
+  DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status);
+  void removeByStatus(TenantId tenantId, DeletionStatus status);
+
 }

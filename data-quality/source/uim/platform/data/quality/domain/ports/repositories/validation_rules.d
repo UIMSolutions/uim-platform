@@ -15,14 +15,18 @@ mixin(ShowModule!());
 @safe:
 
 /// Port for persisting validation rules.
-interface ValidationRuleRepository {
-  ValidationRule[] findAll();
-  ValidationRule[] findByTenant(TenantId tenantId);
-  ValidationRule findById(RuleId id);
+interface ValidationRuleRepository : ITenantRepository!(ValidationRule, RuleId) {
+  
+  size_t countByDataset(TenantId tenantId, string datasetPattern);
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern);
+  void removeByDataset(TenantId tenantId, string datasetPattern);
+
+  size_t countByField(TenantId tenantId, string fieldName);
   ValidationRule[] findByField(TenantId tenantId, string fieldName);
+  void removeByField(TenantId tenantId, string fieldName);
+
+  size_t countActive(TenantId tenantId);
   ValidationRule[] findActive(TenantId tenantId);
-  void save(ValidationRule rule);
-  void update(ValidationRule rule);
-  void remove(RuleId tenantId, id tenantId);
+  void removeActive(TenantId tenantId);
+
 }

@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data retention rules.
-interface RetentionRuleRepository {
-  bool existsByTenant(TenantId tenantId);
-  RetentionRule[] findByTenant(TenantId tenantId);
- 
-  bool existsById(RetentionRuleId tenantId, id tenantId);
-  RetentionRule findById(RetentionRuleId tenantId, id tenantId);
+interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
 
+  bool existsDefault(TenantId tenantId);
   RetentionRule findDefault(TenantId tenantId);
-  RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+  void removeDefault(TenantId tenantId);
 
-  void save(RetentionRule rule);
-  void update(RetentionRule rule);
-  void remove(RetentionRuleId tenantId, id tenantId);
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+  RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+
 }

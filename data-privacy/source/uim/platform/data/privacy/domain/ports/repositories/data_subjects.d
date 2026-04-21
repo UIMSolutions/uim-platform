@@ -13,20 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data subjects.
-interface DataSubjectRepository {
-  bool existsByTenant(TenantId tenantId);
-  DataSubject[] findByTenant(TenantId tenantId);
- 
-  bool existsById(DataSubjectId tenantId, id tenantId);
-  DataSubject findById(DataSubjectId tenantId, id tenantId);
+interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
 
   bool existsByExternalId(string externaltenantId, id tenantId);
   DataSubject findByExternalId(string externaltenantId, id tenantId);
+  void removeByExternalId(string externaltenantId, id tenantId);
   
+  size_t countByType(TenantId tenantId, DataSubjectType subjectType);
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType);
+  void removeByType(TenantId tenantId, DataSubjectType subjectType);
+
+  size_t countBySourceSystem(TenantId tenantId, string sourceSystem);
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem);
+  void removeBySourceSystem(TenantId tenantId, string sourceSystem);
   
-  void save(DataSubject subject);
-  void update(DataSubject subject);
-  void remove(DataSubjectId tenantId, id tenantId);
 }

@@ -8,11 +8,5 @@ module uim.platform.datasphere.domain.ports.repositories.spaces;
 import uim.platform.datasphere.domain.types;
 import uim.platform.datasphere.domain.entities.space;
 
-interface SpaceRepository {
-  Space findById(SpaceId id);
-  Space[] findByTenant(TenantId tenantId);
-  void save(Space s);
-  void update(Space s);
-  void remove(SpaceId id);
-  size_t countByTenant(TenantId tenantId);
+interface SpaceRepository : ITenantRepository!(Space, SpaceId) {
 }

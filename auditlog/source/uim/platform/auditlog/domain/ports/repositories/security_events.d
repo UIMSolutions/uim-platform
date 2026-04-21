@@ -14,15 +14,19 @@ mixin(ShowModule!());
 
 /// Port for persisting enriched security events.
 @safe:
-interface SecurityEventRepository {
-  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
-  SecurityEvent findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
+interface SecurityEventRepository : ITenantRepository!(SecurityEvent, SecurityEventId) {
 
-  SecurityEvent[] findByTenant(TenantId tenantId);
+  size_t countByUser(TenantId tenantId, UserId userId);
   SecurityEvent[] findByUser(TenantId tenantId, UserId userId);
-  SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome);
-  SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  void removeByUser(TenantId tenantId, UserId userId);
 
-  void save(SecurityEvent event);
+  size_t countByOutcome(TenantId tenantId, AuditOutcome outcome);
+  SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome);
+  void removeByOutcome(TenantId tenantId, AuditOutcome outcome);
+
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

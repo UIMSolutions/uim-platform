@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceAccountRepository {
-    bool existsById(ServiceAccountId id);
-    ServiceAccount findById(ServiceAccountId id);
+interface ServiceAccountRepository : ITenantRepository!(ServiceAccount, ServiceAccountId) {
 
-    ServiceAccount[] findAll();
-    ServiceAccount[] findByTenant(TenantId tenantId);
+    size_t countByStatus(ServiceAccountStatus status);
     ServiceAccount[] findByStatus(ServiceAccountStatus status);
+    void removeByStatus(ServiceAccountStatus status);
 
-    void save(ServiceAccount account);
-    void update(ServiceAccount account);
-    void remove(ServiceAccountId id);
 }
