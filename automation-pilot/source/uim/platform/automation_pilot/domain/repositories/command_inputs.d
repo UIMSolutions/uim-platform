@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CommandInputRepository {
-    bool existsById(CommandInputId id);
-    CommandInput findById(CommandInputId id);
+interface CommandInputRepository : ITenantRepository!(CommandInput, CommandInputId) {
 
-    CommandInput[] findAll();
-    CommandInput[] findByTenant(TenantId tenantId);
+    size_t countByType(InputType inputType);    
     CommandInput[] findByType(InputType inputType);
+    void removeByType(InputType inputType);
 
-    void save(CommandInput input);
-    void update(CommandInput input);
-    void remove(CommandInputId id);
 }

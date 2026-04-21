@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TriggerRepository {
-    bool existsById(TriggerId id);
-    Trigger findById(TriggerId id);
-
-    Trigger[] findAll();
-    Trigger[] findByTenant(TenantId tenantId);
-    Trigger[] findByCommand(CommandId commandId);
+interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
+    
+    size_t countByStatus(TriggerStatus status);
     Trigger[] findByStatus(TriggerStatus status);
+    void removeByStatus(TriggerStatus status);
 
-    void save(Trigger trigger);
-    void update(Trigger trigger);
-    void remove(TriggerId id);
+    size_t countByCommand(CommandId commandId);
+    Trigger[] findByCommand(CommandId commandId);
+    void removeByCommand(CommandId commandId);
+
 }

@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CatalogRepository {
-    bool existsById(CatalogId id);
-    Catalog findById(CatalogId id);
+interface CatalogRepository : ITenantRepository!(Catalog, CatalogId) {
 
-    Catalog[] findAll();
-    Catalog[] findByTenant(TenantId tenantId);
+    size_t countByStatus(CatalogStatus status);
     Catalog[] findByStatus(CatalogStatus status);
-    Catalog[] findByType(CatalogType catalogType);
+    void removeByStatus(CatalogStatus status);
 
-    void save(Catalog catalog);
-    void update(Catalog catalog);
-    void remove(CatalogId id);
+    size_t countByType(CatalogType catalogType);
+    Catalog[] findByType(CatalogType catalogType);
+    void removeByType(CatalogType catalogType);
+
 }

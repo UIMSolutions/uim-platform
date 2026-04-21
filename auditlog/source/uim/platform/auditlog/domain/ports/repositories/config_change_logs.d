@@ -16,15 +16,21 @@ mixin(ShowModule!());
 mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
-interface ConfigChangeLogRepository {
+interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
-
-  ConfigChangeLog[] findByTenant(TenantId tenantId);
+  void findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
+  
+  size_t countByUser(TenantId tenantId, UserId changedBy);
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy);
+  void removeByUser(TenantId tenantId, UserId changedBy);
+  
+  size_t countByConfigType(TenantId tenantId, string configType);
   ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType);
+  void removeByConfigType(TenantId tenantId, string configType);
+  
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
   ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
 
-  void save(ConfigChangeLog log);
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

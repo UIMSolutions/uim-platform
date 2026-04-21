@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScheduledExecutionRepository {
-    bool existsById(ScheduledExecutionId id);
-    ScheduledExecution findById(ScheduledExecutionId id);
-
-    ScheduledExecution[] findAll();
-    ScheduledExecution[] findByTenant(TenantId tenantId);
+interface ScheduledExecutionRepository : ITenantRepository!(ScheduledExecution, ScheduledExecutionId) {
+    
+    size_t countByCommand(CommandId commandId);
     ScheduledExecution[] findByCommand(CommandId commandId);
-    ScheduledExecution[] findByStatus(ScheduleStatus status);
+    void removeByCommand(CommandId commandId);
 
-    void save(ScheduledExecution scheduledExecution);
-    void update(ScheduledExecution scheduledExecution);
-    void remove(ScheduledExecutionId id);
+    size_t countByStatus(ScheduleStatus status);
+    ScheduledExecution[] findByStatus(ScheduleStatus status);
+    void removeByStatus(ScheduleStatus status);
+
 }

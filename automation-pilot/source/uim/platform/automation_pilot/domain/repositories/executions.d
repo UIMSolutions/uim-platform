@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ExecutionRepository {
-    bool existsById(ExecutionId id);
-    Execution findById(ExecutionId id);
+interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
 
-    Execution[] findAll();
-    Execution[] findByTenant(TenantId tenantId);
+    size_t countByCommand(CommandId commandId);
     Execution[] findByCommand(CommandId commandId);
-    Execution[] findByStatus(ExecutionStatus status);
+    void removeByCommand(CommandId commandId);
 
-    void save(Execution execution);
-    void update(Execution execution);
-    void remove(ExecutionId id);
+    size_t countByStatus(ExecutionStatus status);
+    Execution[] findByStatus(ExecutionStatus status);
+    void removeByStatus(ExecutionStatus status);
+
 }

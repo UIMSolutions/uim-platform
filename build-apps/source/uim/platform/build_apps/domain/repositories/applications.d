@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ApplicationRepository {
-    bool existsById(ApplicationId id);
-    Application findById(ApplicationId id);
+interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
-    Application[] findAll();
-    Application[] findByTenant(TenantId tenantId);
+    size_t countByOwner(string owner);
     Application[] findByOwner(string owner);
-    Application[] findByStatus(ApplicationStatus status);
+    void removeByOwner(string owner);
 
-    void save(Application entity);
-    void update(Application entity);
-    void remove(ApplicationId id);
+    size_t countByStatus(ApplicationStatus status);
+    Application[] findByStatus(ApplicationStatus status);
+    void removeByStatus(ApplicationStatus status);
+
 }

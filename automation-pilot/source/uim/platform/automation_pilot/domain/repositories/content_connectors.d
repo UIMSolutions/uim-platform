@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ContentConnectorRepository {
-    bool existsById(ContentConnectorId id);
-    ContentConnector findById(ContentConnectorId id);
+interface ContentConnectorRepository : ITenantRepository!(ContentConnector, ContentConnectorId) {
 
-    ContentConnector[] findAll();
-    ContentConnector[] findByTenant(TenantId tenantId);
+    size_t countByType(ConnectorType connectorType);
     ContentConnector[] findByType(ConnectorType connectorType);
-    ContentConnector[] findByStatus(ConnectorStatus status);
+    void removeByType(ConnectorType connectorType);
 
-    void save(ContentConnector connector);
-    void update(ContentConnector connector);
-    void remove(ContentConnectorId id);
+    size_t countByStatus(ConnectorStatus status);
+    ContentConnector[] findByStatus(ConnectorStatus status);
+    void removeByStatus(ConnectorStatus status);
+
 }

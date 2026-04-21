@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AppBuildRepository {
-    bool existsById(AppBuildId id);
-    AppBuild findById(AppBuildId id);
-
-    AppBuild[] findAll();
-    AppBuild[] findByTenant(TenantId tenantId);
+interface AppBuildRepository : ITenantRepository!(AppBuild, AppBuildId) {
+    
+    size_t countByApplication(ApplicationId applicationId);
     AppBuild[] findByApplication(ApplicationId applicationId);
+    void removeByApplication(ApplicationId applicationId);
+    
+    size_t countByBuildStatus(BuildStatus status);
     AppBuild[] findByBuildStatus(BuildStatus status);
+    void removeByBuildStatus(BuildStatus status);
 
-    void save(AppBuild entity);
-    void update(AppBuild entity);
-    void remove(AppBuildId id);
 }

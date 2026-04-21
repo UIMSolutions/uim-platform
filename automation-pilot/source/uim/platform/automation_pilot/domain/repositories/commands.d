@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CommandRepository {
-    bool existsById(CommandId id);
-    Command findById(CommandId id);
+interface CommandRepository : ITenantRepository!(Command, CommandId) {
 
-    Command[] findAll();
-    Command[] findByTenant(TenantId tenantId);
+    size_t countByCatalog(CatalogId catalogId);
     Command[] findByCatalog(CatalogId catalogId);
-    Command[] findByStatus(CommandStatus status);
+    void removeByCatalog(CatalogId catalogId);
 
-    void save(Command command);
-    void update(Command command);
-    void remove(CommandId id);
+    size_t countByStatus(CommandStatus status);
+    Command[] findByStatus(CommandStatus status);
+    void removeByStatus(CommandStatus status);
+
 }
