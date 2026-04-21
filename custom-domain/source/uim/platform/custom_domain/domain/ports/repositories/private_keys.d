@@ -11,11 +11,5 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrivateKeyRepository {
-    PrivateKey findById(PrivateKeyId id);
-    PrivateKey[] findByTenant(TenantId tenantId);
-    void save(PrivateKey k);
-    void update(PrivateKey k);
-    void remove(PrivateKeyId id);
-    size_t countByTenant(TenantId tenantId);
+interface PrivateKeyRepository : ITenantRepository!(PrivateKey, PrivateKeyId) {
 }

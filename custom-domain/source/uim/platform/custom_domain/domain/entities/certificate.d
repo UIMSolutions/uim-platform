@@ -17,6 +17,16 @@ struct CertificateChainEntry {
     string serialNumber;
     long validFrom;
     long validTo;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("subjectDn", subjectDn)
+            .set("issuerDn", issuerDn)
+            .set("serialNumber", serialNumber)
+            .set("validFrom", validFrom)
+            .set("validTo", validTo);
+    }
+
 }
 
 struct Certificate {
@@ -47,12 +57,7 @@ struct Certificate {
             .set("serialNumber", serialNumber)
             .set("subjectAlternativeNames", subjectAlternativeNames)
             .set("certificatePem", certificatePem)
-            .set("chain", chain.map!(entry => Json.emptyObject
-                .set("subjectDn", entry.subjectDn)
-                .set("issuerDn", entry.issuerDn)
-                .set("serialNumber", entry.serialNumber)
-                .set("validFrom", entry.validFrom)
-                .set("validTo", entry.validTo)))        
+            .set("chain", chain.map!(entry => entry.toJson()))        
             .set("fingerprint", fingerprint)
             .set("validFrom", validFrom)
             .set("validTo", validTo)

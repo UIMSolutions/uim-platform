@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct DnsRecord {
-    DnsRecordId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DnsRecordId);
+
     string customDomainId;
     DnsRecordType recordType;
     string hostname;
@@ -21,7 +21,15 @@ struct DnsRecord {
     int ttl;
     DnsValidationStatus validationStatus;
     long lastValidatedAt;
-    string createdBy;
-    long createdAt;
-    long modifiedAt;
+    
+    Json toJson() const {
+        return Json.entityToJson
+            .set("customDomainId", customDomainId)
+            .set("recordType", recordType.toString())
+            .set("hostname", hostname)
+            .set("value", value)
+            .set("ttl", ttl)
+            .set("validationStatus", validationStatus.toString())
+            .set("lastValidatedAt", lastValidatedAt);
+    }
 }

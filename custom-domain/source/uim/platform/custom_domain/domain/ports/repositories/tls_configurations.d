@@ -12,10 +12,4 @@ mixin(ShowModule!());
 @safe:
 
 interface TlsConfigurationRepository {
-    TlsConfiguration findById(TlsConfigurationId id);
-    TlsConfiguration[] findByTenant(TenantId tenantId);
-    void save(TlsConfiguration c);
-    void update(TlsConfiguration c);
-    void remove(TlsConfigurationId id);
-    size_t countByTenant(TenantId tenantId);
 }

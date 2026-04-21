@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class CertificateController : PlatformController {
-    private ManageCertificatesUseCase uc;
+    private ManageCertificatesUseCase certificates;
 
-    this(ManageCertificatesUseCase uc) {
-        this.uc = uc;
+    this(ManageCertificatesUseCase certificates) {
+        this.certificates = certificates;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/custom-domain/certificates", &handleList);
         router.get("/api/v1/custom-domain/certificates/*", &handleGet);
         router.post("/api/v1/custom-domain/certificates", &handleCreate);
@@ -39,7 +40,7 @@ class CertificateController : PlatformController {
             r.certificateType = j.getString("certificateType");
             r.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(r);
+            auto result = certificates.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
@@ -56,7 +57,7 @@ class CertificateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto certs = uc.list(tenantId);
+            auto certs = certificates.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
@@ -96,7 +97,7 @@ class CertificateController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            auto c = uc.getById(id);
+            auto c = certificates.getById(id);
             if (c.id.isEmpty) {
                 writeError(res, 404, "Certificate not found");
                 return;
@@ -147,7 +148,7 @@ class CertificateController : PlatformController {
             r.id = id;
             r.certificatePem = j.getString("certificatePem");
 
-            auto result = uc.uploadChain(r);
+            auto result = certificates.uploadChain(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -176,7 +177,7 @@ class CertificateController : PlatformController {
             r.id = id;
             r.domains = getStringArray(j, "domains");
 
-            auto result = uc.activate(r);
+            auto result = certificates.activate(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -198,7 +199,7 @@ class CertificateController : PlatformController {
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.deactivate(id);
+            auto result = certificates.deactivate(id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -218,7 +219,7 @@ class CertificateController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(id);
+            auto result = certificates.remove(id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

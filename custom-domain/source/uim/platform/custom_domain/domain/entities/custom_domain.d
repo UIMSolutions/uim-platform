@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct CustomDomain {
-    CustomDomainId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CustomDomainId);
+
     string domainName;
     string organizationId;
     string spaceId;
@@ -24,8 +24,18 @@ struct CustomDomain {
     bool isShared;
     string sharedWithOrgs;
     bool clientAuthEnabled;
-    string createdBy;
-    string modifiedBy;
-    long createdAt;
-    long modifiedAt;
+
+    Json toJson() const {
+        return Json.entityToJson
+            .set("domainName", domainName)
+            .set("organizationId", organizationId)
+            .set("spaceId", spaceId)
+            .set("status", status.toString())
+            .set("environment", environment.toString())
+            .set("activeCertificateId", activeCertificateId)
+            .set("tlsConfigurationId", tlsConfigurationId)
+            .set("isShared", isShared)
+            .set("sharedWithOrgs", sharedWithOrgs)
+            .set("clientAuthEnabled", clientAuthEnabled);
+    }
 }

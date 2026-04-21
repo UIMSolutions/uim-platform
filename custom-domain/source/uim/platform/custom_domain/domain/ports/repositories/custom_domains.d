@@ -11,13 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomDomainRepository {
-    CustomDomain findById(CustomDomainId id);
+interface CustomDomainRepository : ITenantRepository!(CustomDomain, CustomDomainId) {
+    
+    size_t countByDomainName(TenantId tenantId, string domainName);
     CustomDomain findByDomainName(TenantId tenantId, string domainName);
-    CustomDomain[] findByTenant(TenantId tenantId);
+    void removeByDomainName(TenantId tenantId, string domainName);
+
+    size_t countByOrganization(TenantId tenantId, string organizationId);
     CustomDomain[] findByOrganization(TenantId tenantId, string organizationId);
-    void save(CustomDomain d);
-    void update(CustomDomain d);
-    void remove(CustomDomainId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByOrganization(TenantId tenantId, string organizationId);
+    
 }

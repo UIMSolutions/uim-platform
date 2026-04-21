@@ -11,12 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DnsRecordRepository {
-    DnsRecord findById(DnsRecordId id);
-    DnsRecord[] findByTenant(TenantId tenantId);
+interface DnsRecordRepository : ITenantRepository!(DnsRecord, DnsRecordId) {
+
+    size_t countByDomain(CustomDomainId domainId);
     DnsRecord[] findByDomain(CustomDomainId domainId);
-    void save(DnsRecord r);
-    void update(DnsRecord r);
-    void remove(DnsRecordId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByDomain(CustomDomainId domainId);
+    
 }

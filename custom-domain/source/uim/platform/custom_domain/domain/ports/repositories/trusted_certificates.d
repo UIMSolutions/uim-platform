@@ -12,11 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 interface TrustedCertificateRepository {
-    TrustedCertificate findById(TrustedCertificateId id);
-    TrustedCertificate[] findByTenant(TenantId tenantId);
+
+    size_t countByDomain(CustomDomainId domainId);
     TrustedCertificate[] findByDomain(CustomDomainId domainId);
-    void save(TrustedCertificate c);
-    void update(TrustedCertificate c);
-    void remove(TrustedCertificateId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByDomain(CustomDomainId domainId);
+
 }

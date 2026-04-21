@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DomainDashboardRepository {
+interface DomainDashboardRepository  {
     DomainDashboard findById(DomainDashboardId id);
     DomainDashboard findByTenant(TenantId tenantId);
     void save(DomainDashboard d);

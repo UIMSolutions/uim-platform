@@ -11,18 +11,15 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CertificateRepository {
-    bool existsById(CertificateId id);
-    Certificate findById(CertificateId id);
+/// Repository interface for managing TLS certificates associated with custom domains.
+interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
-    Certificate[] findByTenant(TenantId tenantId);
+    size_t countByKey(PrivateKeyId keyId);
     Certificate[] findByKey(PrivateKeyId keyId);
+    void removeByKey(PrivateKeyId keyId);
+
+    size_t countExpiring(TenantId tenantId, long beforeTimestamp);
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp);
-
-    size_t countByTenant(TenantId tenantId);
-
-    void save(Certificate c);
-    void update(Certificate c);
-    void remove(CertificateId id);
+    void removeExpiring(TenantId tenantId, long beforeTimestamp);
     
 }
