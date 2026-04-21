@@ -5,33 +5,37 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.manage.content_packages;
 
-import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.entities.content_provider;
-import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.repositories.content_packages;
-import uim.platform.content_agent.domain.ports.repositories.content_providers;
-import uim.platform.content_agent.domain.ports.repositories.content_activitys;
-import uim.platform.content_agent.domain.services.package_assembler;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.entities.content_provider;
+// import uim.platform.content_agent.domain.entities.content_activity;
+// import uim.platform.content_agent.domain.ports.repositories.content_packages;
+// import uim.platform.content_agent.domain.ports.repositories.content_providers;
+// import uim.platform.content_agent.domain.ports.repositories.content_activitys;
+// import uim.platform.content_agent.domain.services.package_assembler;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.conv : to;
 
 /// Application service for content package CRUD and assembly.
 class ManageContentPackagesUseCase { // TODO: UIMUseCase {
-  private ContentPackageRepository packageRepo;
-  private ContentProviderRepository providerRepo;
-  private ContentActivityRepository activityRepo;
+  private ContentPackageRepository packages;
+  private ContentProviderRepository providers;
+  private ContentActivityRepository activities;
 
-  this(ContentPackageRepository packageRepo,
-      ContentProviderRepository providerRepo, ContentActivityRepository activityRepo) {
-    this.packageRepo = packageRepo;
-    this.providerRepo = providerRepo;
-    this.activityRepo = activityRepo;
+  this(ContentPackageRepository packages,
+      ContentProviderRepository providers, ContentActivityRepository activities) {
+    this.packages = packages;
+    this.providers = providers;
+    this.activities = activities;
   }
 
   CommandResult createPackage(CreatePackageRequest req) {
-    auto existing = packageRepo.findByName(req.tenantId, req.name);
+    auto existing = packages.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
 
@@ -59,7 +63,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.createdAt = clockSeconds();
     pkg.updatedAt = pkg.createdAt;
 
-    packageRepo.save(pkg);
+    packages.save(pkg);
     recordActivity(req.tenantId, ActivityType.packageCreated, id, req.name,
         "Package created", req.createdBy);
 
@@ -67,7 +71,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
-    auto pkg = packageRepo.findById(id);
+    auto pkg = packages.findById(id);
     if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
@@ -85,19 +89,19 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     if (req.items.length > 0)
       pkg.status = PackageStatus.draft;
 
-    packageRepo.update(pkg);
+    packages.update(pkg);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult assemblePackage(AssemblePackageRequest req) {
-    auto pkg = packageRepo.findById(req.packageId);
+    auto pkg = packages.findById(req.packageId);
     if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
     if (pkg.status != PackageStatus.draft)
       return CommandResult(false, "", "Package must be in draft state to assemble");
 
-    auto providers = providerRepo.findByTenant(req.tenantId);
+    auto providers = providers.findByTenant(req.tenantId);
     auto result = PackageAssembler.validate(pkg, providers);
     if (!result.valid) {
       string msg = "Assembly validation failed: ";
@@ -114,7 +118,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.updatedAt = pkg.assembledAt;
     pkg.packageSizeBytes = result.estimatedSizeBytes;
 
-    packageRepo.update(pkg);
+    packages.update(pkg);
     recordActivity(req.tenantId, ActivityType.packageAssembled, req.packageId,
         pkg.name, "Package assembled", req.assembledBy);
 
@@ -122,24 +126,24 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   ContentPackage getPackage(ContentPackageId id) {
-    return packageRepo.findById(id);
+    return packages.findById(id);
   }
 
   ContentPackage[] listPackages(TenantId tenantId) {
-    return packageRepo.findByTenant(tenantId);
+    return packages.findByTenant(tenantId);
   }
 
   ContentPackage[] listByStatus(TenantId tenantId, string statusStr) {
     auto status = parsePackageStatus(statusStr);
-    return packageRepo.findByStatus(tenantId, status);
+    return packages.findByStatus(tenantId, status);
   }
 
   CommandResult deletePackage(ContentPackageId id) {
-    auto pkg = packageRepo.findById(id);
+    auto pkg = packages.findById(id);
     if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
-    packageRepo.remove(id);
+    packages.remove(id);
     recordActivity(pkg.tenantId, ActivityType.packageDeleted, id, pkg.name, "Package deleted", "");
 
     return CommandResult(true, id.toString, "");
@@ -158,7 +162,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     activity.description = desc;
     activity.performedBy = by;
     activity.timestamp = clockSeconds();
-    activityRepo.save(activity);
+    activities.save(activity);
   }
 
   private static ContentFormat parseContentFormat(string s) {

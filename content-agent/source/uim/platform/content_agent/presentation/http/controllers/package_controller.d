@@ -3,18 +3,22 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.presentation.http.package;
+module uim.platform.content_agent.presentation.http.controllers.package_controller;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.content_agent.application.usecases.manage.content_packages;
-import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.usecases.manage.content_packages;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 class PackageController : PlatformController {
   private ManageContentPackagesUseCase uc;
 
