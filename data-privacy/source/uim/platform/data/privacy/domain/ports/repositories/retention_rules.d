@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.retention_rules;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.retention_rule;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.retention_rule;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting data retention rules.
 interface RetentionRuleRepository {
   bool existsByTenant(TenantId tenantId);

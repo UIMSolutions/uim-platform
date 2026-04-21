@@ -5,22 +5,26 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.purpose_records;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.purpose_record;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.purpose_record;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying purpose records.
-interface PurposeRecordRepository {
-  bool existsByTenant(TenantId tenantId);
-  PurposeRecord[] findByTenant(TenantId tenantId);
- 
-  bool existsById(PurposeRecordId tenantId, id tenantId);
-  PurposeRecord findById(PurposeRecordId tenantId, id tenantId);
+interface PurposeRecordRepository : ITenantRepository!(PurposeRecord, PurposeRecordId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status);
-  PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(PurposeRecord record);
-  void update(PurposeRecord record);
-  void remove(PurposeRecordId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, PurposeRecordStatus status);
+  PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status);
+  void removeByStatus(TenantId tenantId, PurposeRecordStatus status);
+
+  size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId);
+  PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);
+  void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId);
+
 }

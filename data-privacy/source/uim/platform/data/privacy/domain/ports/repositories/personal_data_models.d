@@ -5,23 +5,30 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.personal_data_model;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.personal_data_model;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting personal data model definitions.
-interface PersonalDataModelRepository {
-  bool existsByTenant(TenantId tenantId);
-  PersonalDataModel[] findByTenant(TenantId tenantId);
- 
-  bool existsById(PersonalDataModelId tenantId, id tenantId);
-  PersonalDataModel findById(PersonalDataModelId tenantId, id tenantId);
+interface PersonalDataModelRepository : ITenantRepository!(PersonalDataModel, PersonalDataModelId) {
 
+  size_t countByCategory(TenantId tenantId, PersonalDataCategory category);
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);
-  PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem);
-  PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType);
-  PersonalDataModel[] findSpecialCategories(TenantId tenantId);
+  void removeByCategory(TenantId tenantId, PersonalDataCategory category);
 
-  void save(PersonalDataModel model);
-  void update(PersonalDataModel model);
-  void remove(PersonalDataModelId tenantId, id tenantId);
+  size_t countBySourceSystem(TenantId tenantId, string sourceSystem);
+  PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem);
+  void removeBySourceSystem(TenantId tenantId, string sourceSystem);
+
+  size_t countBySubjectType(TenantId tenantId, DataSubjectType subjectType);
+  PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType);
+  void removeBySubjectType(TenantId tenantId, DataSubjectType subjectType);
+
+  size_t countSpecialCategories(TenantId tenantId);
+  PersonalDataModel[] findSpecialCategories(TenantId tenantId);
+  void removeSpecialCategories(TenantId tenantId);
+
 }

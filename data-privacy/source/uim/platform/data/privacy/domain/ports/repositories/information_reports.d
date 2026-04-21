@@ -5,21 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.information_reports;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.information_report;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.information_report;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying information reports.
-interface InformationReportRepository {
-  bool existsByTenant(TenantId tenantId);
-  InformationReport[] findByTenant(TenantId tenantId);
- 
-  bool existsById(InformationReportId tenantId, id tenantId);
-  InformationReport findById(InformationReportId tenantId, id tenantId);
+interface InformationReportRepository : ITenantRepository!(InformationReport, InformationReportId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(InformationReport report);
-  void update(InformationReport report);
-  void remove(InformationReportId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, InformationReportStatus status);
+  InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status);
+  void removeByStatus(TenantId tenantId, InformationReportStatus status);
+
 }

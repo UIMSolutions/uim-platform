@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.rule_sets;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.rule_set;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.rule_set;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying rule sets.
 interface RuleSetRepository {
   bool existsByTenant(TenantId tenantId);

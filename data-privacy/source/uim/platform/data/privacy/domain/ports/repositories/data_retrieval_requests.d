@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.data_retrieval_request;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.data_retrieval_request;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting data subject access / retrieval requests.
 interface DataRetrievalRequestRepository {
   bool existsByTenant(TenantId tenantId);
