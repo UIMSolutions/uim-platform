@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.infrastructure.persistence.memory.in_memory_import_job;
+module uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
 
-import uim.platform.content_agent.domain.types;
-import uim.platform.content_agent.domain.entities.import_job;
-import uim.platform.content_agent.domain.ports.repositories.import_jobs;
+// import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.import_job;
+// import uim.platform.content_agent.domain.ports.repositories.import_jobs;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryImportJobRepository : ImportJobRepository {
   private ImportJob[ImportJobId] store;
 

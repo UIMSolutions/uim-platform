@@ -10,10 +10,14 @@ module uim.platform.content_agent.presentation.http.controllers.activity_control
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.content_agent.application.usecases.monitor_activities;
-import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.usecases.monitor_activities;
+// import uim.platform.content_agent.domain.entities.content_activity;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 class ActivityController : PlatformController {
   private MonitorActivitiesUseCase uc;
 

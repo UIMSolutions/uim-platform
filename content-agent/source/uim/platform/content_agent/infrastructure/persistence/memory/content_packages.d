@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.infrastructure.persistence.memory.content_package;
+module uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
 
-import uim.platform.content_agent.domain.types;
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.ports.repositories.content_packages;
+// import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.ports.repositories.content_packages;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryContentPackageRepository : ContentPackageRepository {
   private ContentPackage[ContentPackageId] store;
 

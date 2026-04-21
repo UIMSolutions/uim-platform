@@ -5,43 +5,44 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure.container;
 
-import uim.platform.content_agent.infrastructure.config;
+// import uim.platform.content_agent.infrastructure.config;
 
-// Repositories
-import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
-import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
-import uim.platform.content_agent.infrastructure.persistence.memory.transport_requests;
-import uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
-import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
-import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
-import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
+// // Repositories
+// import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
+// import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
+// import uim.platform.content_agent.infrastructure.persistence.memory.transport_requests;
+// import uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
+// import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
+// import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
+// import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
 
-// Use Cases
-import uim.platform.content_agent.application.usecases.manage.content_packages;
-import uim.platform.content_agent.application.usecases.manage.content_providers;
-import uim.platform.content_agent.application.usecases.manage.transport_requests;
-import uim.platform.content_agent.application.usecases.export_content;
-import uim.platform.content_agent.application.usecases.import_content;
-import uim.platform.content_agent.application.usecases.manage.transport_queues;
-import uim.platform.content_agent.application.usecases.monitor_activities;
+// // Use Cases
+// import uim.platform.content_agent.application.usecases.manage.content_packages;
+// import uim.platform.content_agent.application.usecases.manage.content_providers;
+// import uim.platform.content_agent.application.usecases.manage.transport_requests;
+// import uim.platform.content_agent.application.usecases.export_content;
+// import uim.platform.content_agent.application.usecases.import_content;
+// import uim.platform.content_agent.application.usecases.manage.transport_queues;
+// import uim.platform.content_agent.application.usecases.monitor_activities;
 
-// Controllers
-import uim.platform.content_agent.presentation.http.package;
-import uim.platform.content_agent.presentation.http.provider;
-import uim.platform.content_agent.presentation.http.transport;
-import uim.platform.content_agent.presentation.http.export;
-import uim.platform.content_agent.presentation.http.import ;
-import uim.platform.content_agent.presentation.http.queue;
-import uim.platform.content_agent.presentation.http.activity;
-import uim.platform.content_agent.presentation.http.health;
+// // Controllers
+// import uim.platform.content_agent.presentation.http.package;
+// import uim.platform.content_agent.presentation.http.provider;
+// import uim.platform.content_agent.presentation.http.transport;
+// import uim.platform.content_agent.presentation.http.export;
+// import uim.platform.content_agent.presentation.http.import ;
+// import uim.platform.content_agent.presentation.http.queue;
+// import uim.platform.content_agent.presentation.http.activity;
+// import uim.platform.content_agent.presentation.http.health;
 
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 
 /// Dependency injection container - wires all layers together.
 struct Container {
-
-  
-
   // Repositories (driven adapters)
   MemoryContentPackageRepository packageRepo;
 
