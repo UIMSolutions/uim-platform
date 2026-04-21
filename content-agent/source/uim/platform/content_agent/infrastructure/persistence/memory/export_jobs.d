@@ -16,36 +16,29 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryExportJobRepository : ExportJobRepository {
-  private ExportJob[ExportJobId] store;
+class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
 
-  ExportJob findById(ExportJobId id) {
-    if (auto p = id in store)
-      return *p;
-    return ExportJob.init;
-  }
-
-  ExportJob[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  size_t countByPackage(ContentPackageId packageId) {
+    return findByPackage(packageId).length;
   }
 
   ExportJob[] findByPackage(ContentPackageId packageId) {
-    return store.byValue().filter!(e => e.packageId == packageId).array;
+    return findAll.filter!(e => e.packageId == packageId).array;
+  }
+
+  void removeByPackage(ContentPackageId packageId) {
+    findByPackage(packageId).each!(e => remove(e));
+  }
+
+  size_t countByStatus(TenantId tenantId, ExportStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   ExportJob[] findByStatus(TenantId tenantId, ExportStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void save(ExportJob job) {
-    store[job.id] = job;
-  }
-
-  void update(ExportJob job) {
-    store[job.id] = job;
-  }
-
-  void remove(ExportJobId id) {
-    store.remove(id);
+  void removeByStatus(TenantId tenantId, ExportStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 }

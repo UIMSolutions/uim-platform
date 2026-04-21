@@ -16,39 +16,44 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryContentPackageRepository : ContentPackageRepository {
-  private ContentPackage[ContentPackageId] store;
+class MemoryContentPackageRepository : TenantRepository!(ContentPackage, ContentPackageId), ContentPackageRepository {
 
-  ContentPackage findById(ContentPackageId id) {
-    if (auto p = id in store)
-      return *p;
-    return ContentPackage.init;
-  }
-
-  ContentPackage[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
-  }
-
-  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+  // #region byName
+  bool existsByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return true;
+    return false;
   }
 
   ContentPackage findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return ContentPackage.init;
   }
 
-  void save(ContentPackage pkg) {
-    store[pkg.id] = pkg;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name) {
+        store.remove(e.id);
+        return;
+      }
+  }
+  // #region byName
+
+  // #region byStatus
+  size_t countByStatus(TenantId tenantId, PackageStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  void update(ContentPackage pkg) {
-    store[pkg.id] = pkg;
+  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status) {
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void remove(ContentPackageId id) {
-    store.remove(id);
+  void removeByStatus(TenantId tenantId, PackageStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
+  // #endregion byStatus
+
 }

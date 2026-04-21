@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports.repositories.content_providers;
 
-import uim.platform.content_agent.domain.entities.content_provider;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.content_provider;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - content provider persistence.
 interface ContentProviderRepository : ITenantRepository!(ContentProvider, ContentProviderId) {
 
@@ -18,5 +22,5 @@ interface ContentProviderRepository : ITenantRepository!(ContentProvider, Conten
   size_t countByStatus(TenantId tenantId, ProviderStatus status);
   ContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status);
   void removeByStatus(TenantId tenantId, ProviderStatus status);
-  
+
 }

@@ -16,39 +16,44 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryContentProviderRepository : ContentProviderRepository {
-  private ContentProvider[ContentProviderId] store;
+class MemoryContentProviderRepository : TenantRepository!(ContentProvider, ContentProviderId), ContentProviderRepository {
 
-  ContentProvider findById(ContentProviderId id) {
-    if (auto p = id in store)
-      return *p;
-    return ContentProvider.init;
-  }
-
-  ContentProvider[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  // #region byName
+  bool existsByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return true;
+    return false;
   }
 
   ContentProvider findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return ContentProvider.init;
   }
 
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name) {
+        store.remove(e.id);
+        return;
+      }
+  }
+  // #region byName
+  
+  // #region byStatus
+  size_t countByStatus(TenantId tenantId, ProviderStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
   ContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void save(ContentProvider provider) {
-    store[provider.id] = provider;
+  void removeByStatus(TenantId tenantId, ProviderStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
+  // #endregion byStatus
 
-  void update(ContentProvider provider) {
-    store[provider.id] = provider;
-  }
-
-  void remove(ContentProviderId id) {
-    store.remove(id);
-  }
 }

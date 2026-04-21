@@ -27,4 +27,5 @@ interface ContentActivityRepository : ITenantRepository!(ContentActivity, Conten
   size_t countRecent(TenantId tenantId, int limit);
   ContentActivity[] findRecent(TenantId tenantId, int limit);
   void removeRecent(TenantId tenantId, int limit);
+  
 }

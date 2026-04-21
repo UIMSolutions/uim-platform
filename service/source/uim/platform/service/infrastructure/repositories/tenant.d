@@ -31,6 +31,14 @@ class TenantRepository(TEntity, TId) {
     return tenantId in store ? true : false;
   }
 
+  TEntity[] findAll() {
+    TEntity[] allItems;
+    foreach (tenantId, items; store) {
+      allItems ~= items.byValue.array;
+    }
+    return allItems;
+  }
+
   TEntity[] findByTenant(TenantId tenantId) {
     return existsByTenant(tenantId) ? store[tenantId].values.array : null;
   }

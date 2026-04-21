@@ -7,15 +7,19 @@ mixin(ShowModule!());
 @safe:
 
 class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
-    protected TEntity[TId] store;
+  protected TEntity[TId] store;
 
-    bool existsById(TId id) {
-        return id in store ? true : false;
-    }
+  bool existsById(TId id) {
+    return id in store ? true : false;
+  }
 
-    TEntity findById(TId id) {
-        return id in store ? store[id] : TEntity.init;
-    }
+  TEntity findById(TId id) {
+    return id in store ? store[id] : TEntity.init;
+  }
+
+  TEntity[] findAll() {
+    return store.byValue.array;
+  }
 
   void save(TEntity item) {
     store[item.id] = item;

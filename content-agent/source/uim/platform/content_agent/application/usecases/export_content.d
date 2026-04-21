@@ -74,6 +74,10 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  ExportJob getExportJob(string id) {
+    return getExport;
+  }
+
   ExportJob getExportJob(ExportJobId id) {
     return exportRepo.findById(id);
   }
