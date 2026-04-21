@@ -12,11 +12,19 @@ mixin(ShowModule!());
 
 @safe:
 struct KeyringVersion {
-  KeyringVersionId id;
+  mixin TenantEntity!(KeyringVersionId);
+
   CredentialId keyringId;
-  TenantId tenantId;
   long versionNumber;
   string keyMaterial;      // base64-encoded key material
   bool isActive;           // latest version is active for encryption; older only for decryption
   long createdAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("keyringId", keyringId)
+      .set("versionNumber", versionNumber)
+      .set("isActive", isActive)
+      .set("createdAt", createdAt);
+  }
 }

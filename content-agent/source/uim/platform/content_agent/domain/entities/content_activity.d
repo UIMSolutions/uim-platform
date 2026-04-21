@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Audit record for a content operation.
 struct ContentActivity {
-  TenantId tenantId;
-  ContentActivityId id;
+  mixin TenantEntity!(ContentActivityId);
+
   ActivityType activityType;
   ActivitySeverity severity = ActivitySeverity.info;
   string entityId;
@@ -23,4 +23,16 @@ struct ContentActivity {
   string performedBy;
   long timestamp;
   string details;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("activityType", activityType.to!string)
+      .set("severity", severity.to!string)
+      .set("entityId", entityId)
+      .set("entityName", entityName)
+      .set("description", description)
+      .set("performedBy", performedBy)
+      .set("timestamp", timestamp)
+      .set("details", details);
+  }
 }

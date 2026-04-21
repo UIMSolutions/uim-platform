@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Trigger {
-    TriggerId id;
-    TenantId tenantId;
+    mixin TenantEntity!(TriggerId);
+
     CommandId commandId;
     string name;
     string description;
@@ -25,15 +25,9 @@ struct Trigger {
     string inputMapping;
     string webhookUrl;
     string lastTriggeredAt;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json triggerToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return Json.entityToJson
             .set("commandId", commandId)
             .set("name", name)
             .set("description", description)
@@ -44,10 +38,6 @@ struct Trigger {
             .set("filterExpression", filterExpression)
             .set("inputMapping", inputMapping)
             .set("webhookUrl", webhookUrl)
-            .set("lastTriggeredAt", lastTriggeredAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("lastTriggeredAt", lastTriggeredAt);
     }
 }

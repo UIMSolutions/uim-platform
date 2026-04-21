@@ -14,14 +14,22 @@ mixin(ShowModule!());
 /// A service binding — connects an application to a service instance,
 /// injecting credentials into the application's VCAP_SERVICES environment.
 struct ServiceBinding {
-  ServiceBindingId id;
+  mixin TenantEntity!(ServiceBindingId);
+
   AppId appId;
   ServiceInstanceId serviceInstanceId;
-  TenantId tenantId;
   string name;
   BindingStatus status = BindingStatus.creating;
   string credentials; // JSON string of binding credentials
   string bindingOptions; // JSON string of binding parameters
-  string createdBy;
-  long createdAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+        .set("appId", appId)
+        .set("serviceInstanceId", serviceInstanceId)
+        .set("name", name)
+        .set("status", status.to!string)
+        .set("credentials", credentials)
+        .set("bindingOptions", bindingOptions);
+  }
 }

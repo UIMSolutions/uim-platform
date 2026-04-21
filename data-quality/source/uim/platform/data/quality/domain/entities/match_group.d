@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A group of records identified as potential duplicates.
 struct MatchGroup {
-  MatchGroupId groupId;
-  TenantId tenantId;
+  mixin TenantEntity!(MatchGroupId);
+
   DatasetId datasetId;
   MatchStrategy strategy;
   MatchCandidate[] candidates;
@@ -22,6 +22,17 @@ struct MatchGroup {
   bool resolved;
   long detectedAt;
   long resolvedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("datasetId", datasetId)
+      .set("strategy", strategy.to!string)
+      .set("resolved", resolved)
+      .set("detectedAt", detectedAt)
+      .set("resolvedAt", resolvedAt)
+      .set("survivorRecordId", survivorRecordId)
+      .set("candidates", candidates.map!(c => c.toJson()).array);
+  }
 }
 
 /// A candidate record within a match group.
@@ -31,6 +42,15 @@ struct MatchCandidate {
   MatchConfidence confidence;
   FieldMatch[] fieldMatches; // per-field match details
   bool isSurvivor; // chosen as golden record
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("recordId", recordId)
+      .set("score", score)
+      .set("confidence", confidence.to!string)
+      .set("isSurvivor", isSurvivor)
+      .set("fieldMatches", fieldMatches.map!(fm => fm.toJson()).array);
+  }
 }
 
 /// Per-field match detail for duplicate detection.
@@ -39,5 +59,14 @@ struct FieldMatch {
   string valueA;
   string valueB;
   double similarity; // 0.0 - 1.0
-  MatchStrategy matchMethod;
+  MatchStrategy matchMethod; // e.g. exact, fuzzy, etc.
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("fieldName", fieldName)
+      .set("valueA", valueA)
+      .set("valueB", valueB)
+      .set("similarity", similarity)
+      .set("matchMethod", matchMethod.to!string);
+  }
 }

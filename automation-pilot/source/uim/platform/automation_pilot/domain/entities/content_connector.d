@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ContentConnector {
-    ContentConnectorId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ContentConnectorId);
+
     string name;
     string description;
     ConnectorType connectorType = ConnectorType.github;
@@ -24,15 +24,9 @@ struct ContentConnector {
     string lastBackupAt;
     string lastRestoreAt;
     BackupStatus backupStatus = BackupStatus.pending;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json contentConnectorToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return Json.entityToJson
             .set("name", name)
             .set("description", description)
             .set("connectorType", connectorType.to!string)
@@ -42,10 +36,6 @@ struct ContentConnector {
             .set("path", path)
             .set("lastBackupAt", lastBackupAt)
             .set("lastRestoreAt", lastRestoreAt)
-            .set("backupStatus", backupStatus.to!string)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("backupStatus", backupStatus.to!string);
     }
 }

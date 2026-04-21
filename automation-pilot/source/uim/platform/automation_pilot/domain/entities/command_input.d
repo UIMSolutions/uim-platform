@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct CommandInput {
-    CommandInputId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CommandInputId);
+
     string name;
     string description;
     InputType inputType = InputType.string_;
@@ -22,26 +22,16 @@ struct CommandInput {
     string values;
     string version_;
     string commandId;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
 
-    Json commandInputToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return Json.entityToJson
             .set("name", name)
             .set("description", description)
             .set("inputType", inputType.to!string)
             .set("sensitivity", sensitivity.to!string)
             .set("keys", keys)
-            .set("values", sensitivity == InputSensitivity.secret ? "***" : values)
+            .set("values", values)
             .set("version", version_)
-            .set("commandId", commandId)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("commandId", commandId);
     }
 }

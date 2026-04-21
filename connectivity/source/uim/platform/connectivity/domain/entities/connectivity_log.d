@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Immutable connectivity event log entry.
 struct ConnectivityLog {
-  ConnectivityLogId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ConnectivityLogId);
+
   ConnectivityEventType eventType;
   LogSeverity severity = LogSeverity.info;
   string sourceId; // destination, connector, or channel ID
@@ -23,4 +23,16 @@ struct ConnectivityLog {
   string remoteHost;
   ushort remotePort;
   long timestamp;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("eventType", eventType.to!string)
+      .set("severity", severity.to!string)
+      .set("sourceId", sourceId)
+      .set("sourceType", sourceType)
+      .set("message", message)
+      .set("remoteHost", remoteHost)
+      .set("remotePort", remotePort)
+      .set("timestamp", timestamp);
+  }
 }
