@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RunConfigurationRepository {
-    bool existsById(RunConfigurationId id);
-    RunConfiguration findById(RunConfigurationId id);
-
-    RunConfiguration[] findAll();
-    RunConfiguration[] findByTenant(TenantId tenantId);
+interface RunConfigurationRepository : ITenantRepository!(RunConfiguration, RunConfigurationId) {
+    
+    size_t countByProject(ProjectId projectId);
     RunConfiguration[] findByProject(ProjectId projectId);
+    void removeByProject(ProjectId projectId);
 
-    void save(RunConfiguration entity);
-    void update(RunConfiguration entity);
-    void remove(RunConfigurationId id);
 }

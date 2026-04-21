@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBuildpacksUseCase { // TODO: UIMUseCase {
-  private BuildpackRepository repo;
+  private BuildpackRepository buildpacks;
 
-  this(BuildpackRepository repo) {
-    this.repo = repo;
+  this(BuildpackRepository buildpacks) {
+    this.buildpacks = buildpacks;
   }
 
   CommandResult createBuildpack(CreateBuildpackRequest req) {
@@ -32,7 +32,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Buildpack name is required");
 
-    auto existing = repo.findByName(req.tenantId, req.name);
+    auto existing = buildpacks.findByName(req.tenantId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Buildpack with this name already exists");
 
@@ -51,20 +51,20 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     bp.createdAt = now;
     bp.updatedAt = now;
 
-    repo.save(bp);
+    buildpacks.save(bp);
     return CommandResult(bp.id, "");
   }
 
   Buildpack* getBuildpack(BuildpackId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+    return buildpacks.findById(tenantId, id);
   }
 
   Buildpack[] listBuildpacks(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return buildpacks.findByTenant(tenantId);
   }
 
   Buildpack[] listEnabled(TenantId tenantId) {
-    return repo.findEnabled(tenantId);
+    return buildpacks.findEnabled(tenantId);
   }
 
   CommandResult updateBuildpack(UpdateBuildpackRequest req) {
@@ -73,7 +73,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = buildpacks.findById(req.id, req.tenantId);
     if (existing is null)
       return CommandResult(false, "", "Buildpack not found");
 
@@ -90,19 +90,19 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     updated.locked = req.locked;
     updated.updatedAt = Clock.currStdTime();
 
-    repo.update(updated);
+    buildpacks.update(updated);
     return CommandResult(updated.id, "");
   }
 
   CommandResult deleteBuildpack(BuildpackId tenantId, id tenantId) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = buildpacks.findById(tenantId, id);
     if (existing is null)
       return CommandResult(false, "", "Buildpack not found");
 
     if (existing.locked)
       return CommandResult(false, "", "Cannot delete a locked buildpack");
 
-    repo.remove(tenantId, id);
+    buildpacks.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

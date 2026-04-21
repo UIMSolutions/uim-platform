@@ -8,10 +8,5 @@ module uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 
-interface IWorkspaceRepository {
-  void save(Workspace w);
-  Workspace findById(WorkspaceId id);
-  Workspace[] findByTenant(TenantId tenantId);
-  Workspace[] findAll();
-  void remove(WorkspaceId id);
+interface IWorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
 }

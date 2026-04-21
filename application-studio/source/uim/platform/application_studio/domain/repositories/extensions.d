@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ExtensionRepository {
-    bool existsById(ExtensionId id);
-    Extension findById(ExtensionId id);
-
-    Extension[] findAll();
-    Extension[] findByTenant(TenantId tenantId);
+interface ExtensionRepository : ITenantRepository!(Extension, ExtensionId) {
+    
+    size_t countByScope(ExtensionScope scope_);
     Extension[] findByScope(ExtensionScope scope_);
+    void removeByScope(ExtensionScope scope_);
+    
+    size_t countByStatus(ExtensionStatus status);
     Extension[] findByStatus(ExtensionStatus status);
-
-    void save(Extension entity);
-    void update(Extension entity);
-    void remove(ExtensionId id);
+    void removeByStatus(ExtensionStatus status);
+    
 }

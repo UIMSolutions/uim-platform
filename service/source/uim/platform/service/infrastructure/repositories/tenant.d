@@ -9,6 +9,14 @@ mixin(ShowModule!());
 class TenantRepository(TEntity, TId) {
   protected TEntity[TId][TenantId] store;
 
+  bool existsById(TId id) {
+    return findAll().any!(e => e.id == id);
+  }
+
+  bool existsAllById(TId[] ids) {
+    return ids.all!(id => existsById(id));
+  }
+
   bool existsById(TenantId tenantId, TId id) {
     return existsByTenant(tenantId) && (id in store[tenantId]);
   }
@@ -55,16 +63,27 @@ class TenantRepository(TEntity, TId) {
     store[item.tenantId][item.id] = item;
   }
 
+  void save(TEntity[] items) {
+    items.each!(item => save(item));
+  }
+
   void update(TEntity item) {
     if (existsById(item.tenantId, item.id)) {
       store[item.tenantId][item.id] = item;
     }
   }
 
+  void update(TEntity[] items) {
+    items.each!(item => update(item));
+  }
+
   void remove(TEntity item, bool deleteTenantIfEmpty = false) {
     removeById(item.tenantId, item.id, deleteTenantIfEmpty);
   }
 
+  void remove(TEntity[] items, bool deleteTenantIfEmpty = false) {
+    items.each!(item => remove(item, deleteTenantIfEmpty));
+  }
 }
 /// TODO: 
 // unittest {  

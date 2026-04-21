@@ -17,38 +17,21 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId), AddressRepository {
-  // private AddressRecord[AddressId][TenantId] store;
 
-  // AddressRecord[] findByTenant(TenantId tenantId) {
-  //   return store.byValue().filter!(r => r.tenantId == tenantId).array;
-  // }
-
-  // AddressRecord findById(AddressId tenantId, id tenantId) {
-  //   if (auto p = tenantId in store)
-  //     if (auto r = id in p)
-  //       return r;
-  //   return null;
-  // }
+  size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
+    return findBySourceRecord(tenantId, sourceRecordId).length;
+  }
 
   AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
     return findByTenant(tenantId).filter!(r => r.sourceRecordId == sourceRecordId).array;
+  }
+
+  void removeBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
+    return findBySourceRecord(tenantId, sourceRecordId).each!(e => remove(e));
   }
 
   AddressRecord[] findByQuality(TenantId tenantId, AddressQuality quality) {
     return findByTenant(tenantId).filter!(r => r.quality == quality).array;
   }
 
-  // void save(AddressRecord record) {
-    // store[record.id] = record;
-  // }
-// 
-  // void update(AddressRecord record) {
-    // store[record.id] = record;
-  // }
-// 
-  // void remove(TenantId tenantId, AddressId id) {
-    // if (auto p = id in store)
-      // if (p.tenantId == tenantId)
-        // store.remove(id);
-  // }
 }

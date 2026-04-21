@@ -8,11 +8,5 @@ module uim.platform.ai_core.domain.ports.repositories.resource_groups;
 import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core.domain.entities.resource_group;
 
-interface ResourceGroupRepository {
-  ResourceGroup findById(ResourceGroupId id);
-  ResourceGroup[] findByTenant(TenantId tenantId);
-  void save(ResourceGroup rg);
-  void update(ResourceGroup rg);
-  void remove(ResourceGroupId id);
-  size_t countByTenant(TenantId tenantId);
+interface ResourceGroupRepository : ITenantRepository!(ResourceGroup, ResourceGroupId) {
 }
