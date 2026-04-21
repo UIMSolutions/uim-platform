@@ -33,3 +33,28 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
     }
   }
 }
+// ///
+// unittest {
+//   import uim.platform.service.domain.ports.repositories.id;
+//   import uim.platform.service.infrastructure.repositories.id;
+
+//   IdRepository!(string, string) repo;
+
+//   string id = "item-123";
+//   string value = "Test Item";
+
+//   // Test save and findById
+//   repo.save((id, value));
+//   assert(repo.existsById(id));
+//   assert(repo.findById(id).id == id);
+//   assert(repo.findById(id).value == value);
+
+//   // Test update
+//   string newValue = "Updated Item";
+//   repo.update((id, newValue));
+//   assert(repo.findById(id).value == newValue);
+
+//   // Test remove
+//   repo.remove(id);
+//   assert(!repo.existsById(id));
+// }
