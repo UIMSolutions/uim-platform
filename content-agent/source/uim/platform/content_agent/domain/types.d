@@ -5,6 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.types;
 
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
 /// Unique identifier type aliases for type safety.
 struct ContentPackageId {
   string value;

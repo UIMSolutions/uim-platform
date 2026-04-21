@@ -15,7 +15,16 @@ mixin(ShowModule!());
 
 /// Port: outgoing - content activity (audit log) persistence.
 interface ContentActivityRepository : ITenantRepository!(ContentActivity, ContentActivityId) {
+  
+  size_t countByEntity(string entityId);
   ContentActivity[] findByEntity(string entityId);
+  void removeByEntity(string entityId);
+
+  size_t countByType(TenantId tenantId, ActivityType activityType);
   ContentActivity[] findByType(TenantId tenantId, ActivityType activityType);
+  void removeByType(TenantId tenantId, ActivityType activityType);
+  
+  size_t countRecent(TenantId tenantId, int limit);
   ContentActivity[] findRecent(TenantId tenantId, int limit);
+  void removeRecent(TenantId tenantId, int limit);
 }

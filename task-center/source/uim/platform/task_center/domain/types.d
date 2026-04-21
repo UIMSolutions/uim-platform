@@ -85,15 +85,6 @@ struct UserTaskFilterId  {
 
     mixin DomainId;
 }
-struct UserId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin DomainId;
-}
 
 // --- Enums ---
 

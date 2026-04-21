@@ -5,16 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports.repositories.transport_queues;
 
-import uim.platform.content_agent.domain.entities.transport_queue;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.transport_queue;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - transport queue persistence.
-interface TransportQueueRepository {
-  TransportQueue findById(TransportQueueId id);
-  TransportQueue[] findByTenant(TenantId tenantId);
+interface TransportQueueRepository : ITenantRepository!(TransportQueue, TransportQueueId) {
+
+  bool existsDefault(TenantId tenantId);
   TransportQueue findDefault(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
+
+  bool existsByName(TenantId tenantId, string name);
   TransportQueue findByName(TenantId tenantId, string name);
-  void save(TransportQueue queue);
-  void update(TransportQueue queue);
-  void remove(TransportQueueId id);
+  void findByName(TenantId tenantId, string name);
+
 }

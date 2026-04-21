@@ -7,6 +7,7 @@ module uim.platform.content_agent.domain.entities;
 
 public {
     import uim.platform.content_agent.domain.entities.content_activity;
+    import uim.platform.content_agent.domain.entities.content_package;
     import uim.platform.content_agent.domain.entities.content_provider;
     import uim.platform.content_agent.domain.entities.export_job;
     import uim.platform.content_agent.domain.entities.import_job;

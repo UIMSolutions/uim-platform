@@ -60,16 +60,7 @@ struct TokenId {
   mixin DomainId;
 }
 
-/// Authentication method supported by the platform.
-enum AuthMethod {
-  form,
-  spnego,
-  social,
-  certificate,
-  saml,
-  oidc,
-  apiKey,
-}
+
 
 /// Multi-factor authentication type.
 enum MfaType {
@@ -79,11 +70,7 @@ enum MfaType {
   email,
 }
 
-/// SSO protocol.
-enum SsoProtocol {
-  saml2,
-  oidc,
-}
+
 
 /// User status in the identity directory.
 enum UserStatus {
