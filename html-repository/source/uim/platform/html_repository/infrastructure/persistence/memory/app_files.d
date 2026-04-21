@@ -16,6 +16,13 @@ mixin(ShowModule!());
 class AppFileMemoryRepository : AppFileRepository {
   private AppFile[] store;
 
+  bool existsById(AppFileId id) {
+    foreach (e; store) {
+      if (e.id == id) return true;
+    }
+    return false;
+  }
+
   AppFile findById(AppFileId id) {
     foreach (e; store) {
       if (e.id == id) return e;

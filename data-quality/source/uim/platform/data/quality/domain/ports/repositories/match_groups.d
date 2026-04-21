@@ -13,12 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting duplicate match groups.
-interface MatchGroupRepository {
-  MatchGroup[] findByTenant(TenantId tenantId);
-  MatchGroup findById(TenantId tenantId, MatchGroupId groupId);
+interface MatchGroupRepository : ITenantRepository!(MatchGroup, MatchGroupId) {
+
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId);
+  void removeByDataset(TenantId tenantId, DatasetId datasetId);
+
+  size_t countUnresolved(TenantId tenantId);
   MatchGroup[] findUnresolved(TenantId tenantId);
-  void save(MatchGroup group);
-  void update(MatchGroup group);
-  void remove(TenantId tenantId, MatchGroupId groupId);
+  void removeUnresolved(TenantId tenantId);
+
 }

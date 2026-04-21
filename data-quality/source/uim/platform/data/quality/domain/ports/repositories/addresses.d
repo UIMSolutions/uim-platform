@@ -13,12 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting address records.
-interface AddressRepository {
-  AddressRecord[] findByTenant(TenantId tenantId);
-  AddressRecord* findById(TenantId tenantId, AddressId addressId);
+interface AddressRepository : ITenantRepository!(AddressRecord, AddressId) {
+
+  size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
   AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
+  void removeBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
+
+  size_t countByQuality(TenantId tenantId, AddressQuality quality);
   AddressRecord[] findByQuality(TenantId tenantId, AddressQuality quality);
-  void save(AddressRecord record);
-  void update(AddressRecord record);
-  void remove(TenantId tenantId, AddressId addressId);
+  void removeByQuality(TenantId tenantId, AddressQuality quality);
+
 }

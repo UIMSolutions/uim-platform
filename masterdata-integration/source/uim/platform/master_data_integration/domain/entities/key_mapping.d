@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// A key mapping entry — maps IDs across different systems.
 struct KeyMapping {
-  KeyMappingId id;
-  TenantId tenantId;
+  mixin TenantEntity!(KeyMappingId);
+  
   MasterDataObjectId masterDataObjectId;
   MasterDataCategory category = MasterDataCategory.businessPartner;
 
@@ -19,8 +19,13 @@ struct KeyMapping {
   // Mapping pairs
   KeyMappingEntry[] entries;
 
-  long createdAt;
-  long modifiedAt;
+  Json toJson() const {
+    return Json.entityToJson
+      .set("masterDataObjectId", masterDataObjectId)
+      .set("category", category.to!string)
+      .set("objectType", objectType)
+      .set("entries", entries.map!(e => e.toJson()).array);
+  }
 }
 
 /// A single system-to-key mapping entry.
@@ -30,4 +35,13 @@ struct KeyMappingEntry {
   string localKey;
   KeyMappingSourceType sourceType = KeyMappingSourceType.local;
   bool isPrimary;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("clientId", clientId)
+      .set("systemId", systemId)
+      .set("localKey", localKey)
+      .set("sourceType", sourceType.to!string)
+      .set("isPrimary", isPrimary);
+  }
 }

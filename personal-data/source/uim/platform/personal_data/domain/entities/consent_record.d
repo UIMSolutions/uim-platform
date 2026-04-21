@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ConsentRecord {
-    ConsentRecordId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ConsentRecordId);
+    
     DataSubjectId dataSubjectId;
     ProcessingPurposeId purposeId;
     ConsentStatus status;
@@ -25,15 +25,10 @@ struct ConsentRecord {
     string ipAddress;
     string userAgent;
     string source;
-    string createdBy;
-    string createdAt;
-    string modifiedAt;
-
+    
     Json toJson() const {
-        return Json.emptyObject
-            .set("id", id)
+        return Json.entityToJson
             .set("dataSubjectId", dataSubjectId)
-            .set("tenantId", tenantId)
             .set("purposeId", purposeId)
             .set("status", status.to!string)
             .set("consentText", consentText)
@@ -41,9 +36,8 @@ struct ConsentRecord {
             .set("givenAt", givenAt)
             .set("withdrawnAt", withdrawnAt)
             .set("expiresAt", expiresAt)
-            .set("source", source)
-            .set("createdBy", createdBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("ipAddress", ipAddress)
+            .set("userAgent", userAgent)
+            .set("source", source);
     }
 }

@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data profiling results.
-interface DataProfileRepository {
-  DataProfile[] findByTenant(TenantId tenantId);
-  DataProfile findById(TenantId tenantId, ProfileId profileId);
+interface DataProfileRepository : ITenantRepository!(DataProfile, DataProfileId) {
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId);
+
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId);
-  void save(DataProfile profile);
-  void remove(TenantId tenantId, ProfileId profileId);
+  void removeByDataset(TenantId tenantId, DatasetId datasetId);
+
 }

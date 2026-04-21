@@ -9,15 +9,20 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 
 /// Port for persisting and querying workflow instances.
-interface WorkflowRepository {
-  Workflow[] findByTenant(TenantId tenantId);
-  Workflow* findById(WorkflowId tenantId, id tenantId);
-  Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId);
-  Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status);
-  Workflow[] findByCreator(TenantId tenantId, UserId createdBy);
-  size_t countByTenant(TenantId tenantId);
+interface WorkflowRepository : ITenantRepository!(Workflow, WorkflowId) {
+
   size_t countActiveByTenant(TenantId tenantId);
-  void save(Workflow workflow);
-  void update(Workflow workflow);
-  void remove(WorkflowId tenantId, id tenantId);
+
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId);
+  Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId);
+
+  size_t countByStatus(TenantId tenantId, WorkflowStatus status);
+  Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status);
+  void removeByStatus(TenantId tenantId, WorkflowStatus status);
+
+  size_t countByCreator(TenantId tenantId, UserId createdBy);
+  Workflow[] findByCreator(TenantId tenantId, UserId createdBy);
+  void removeByCreator(TenantId tenantId, UserId createdBy);
+  
 }

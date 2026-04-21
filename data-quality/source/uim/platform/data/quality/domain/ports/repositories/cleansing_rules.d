@@ -12,13 +12,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data cleansing rules.
-interface CleansingRuleRepository {
+interface CleansingRuleRepository : ITenantRepository!(CleansingRule, CleansingRuleId) {
+
   CleansingRule[] findAll();
-  CleansingRule[] findByTenant(TenantId tenantId);
-  CleansingRule findById(RuleId id);
+
+  size_t countByDataset(TenantId tenantId, string datasetPattern);
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern);
+  void removeByDataset(TenantId tenantId, string datasetPattern);
+
   CleansingRule[] findActive(TenantId tenantId);
-  void save(CleansingRule rule);
-  void update(CleansingRule rule);
-  void remove(RuleId tenantId, id tenantId);
+
 }
