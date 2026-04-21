@@ -10,10 +10,13 @@ import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository {
-  TransportRequest findById(TransportRequestId id);
+
+  size_t countByTenant(TenantId tenantId);
   TransportRequest[] findByTenant(TenantId tenantId);
+  void removeByTenant(TenantId tenantId);
+
+  size_t countByStatus(TenantId tenantId, TransportStatus status);
   TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status);
-  void save(TransportRequest request);
-  void update(TransportRequest request);
-  void remove(TransportRequestId id);
+  void removeByStatus(TenantId tenantId, TransportStatus status);
+
 }

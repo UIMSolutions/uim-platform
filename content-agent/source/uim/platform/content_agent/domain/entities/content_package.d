@@ -20,12 +20,23 @@ struct ContentItem {
   string version_;
   string description;
   string[] dependencies;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("id", id)
+      .set("name", name)
+      .set("category", category.to!string)
+      .set("providerId", providerId)
+      .set("version", version_)
+      .set("description", description)
+      .set("dependencies", dependencies);
+  }
 }
 
 /// A package containing bundled content for transport across landscapes.
 struct ContentPackage {
-  TenantId tenantId;
-  ContentPackageId id;
+  mixin TenantEntity!(ContentPackageId);
+
   SubaccountId subaccountId;
   string name;
   string description;
@@ -34,9 +45,20 @@ struct ContentPackage {
   ContentFormat format = ContentFormat.mtar;
   ContentItem[] items;
   string[] tags;
-  string createdBy;
-  long createdAt;
-  long updatedAt;
   long assembledAt;
   long packageSizeBytes;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("subaccountId", subaccountId)
+      .set("name", name)
+      .set("description", description)
+      .set("version", version_)
+      .set("status", status.to!string)
+      .set("format", format.to!string)
+      .set("items", items.map!(item => item.toJson()).array)
+      .set("tags", tags)
+      .set("assembledAt", assembledAt)
+      .set("packageSizeBytes", packageSizeBytes);
+  }
 }

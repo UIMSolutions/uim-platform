@@ -18,7 +18,7 @@ interface ContentPackageRepository : ITenantRepository!(ContentPackage, ContentP
   ContentPackage findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
+  size_t countByStatus(TenantId tenantId, PackageStatus status);
   ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status);
-  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status);
-  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status);
+  void removeByStatus(TenantId tenantId, PackageStatus status);
 }

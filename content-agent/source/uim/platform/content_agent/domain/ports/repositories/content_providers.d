@@ -9,12 +9,14 @@ import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content provider persistence.
-interface ContentProviderRepository {
-  ContentProvider findById(ContentProviderId id);
-  ContentProvider[] findByTenant(TenantId tenantId);
+interface ContentProviderRepository : ITenantRepository!(ContentProvider, ContentProviderId) {
+
+  bool existsByName(TenantId tenantId, string name);
   ContentProvider findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
+  size_t countByStatus(TenantId tenantId, ProviderStatus status);
   ContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status);
-  void save(ContentProvider provider);
-  void update(ContentProvider provider);
-  void remove(ContentProviderId id);
+  void removeByStatus(TenantId tenantId, ProviderStatus status);
+  
 }

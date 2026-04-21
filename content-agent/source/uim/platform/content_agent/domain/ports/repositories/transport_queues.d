@@ -21,6 +21,6 @@ interface TransportQueueRepository : ITenantRepository!(TransportQueue, Transpor
 
   bool existsByName(TenantId tenantId, string name);
   TransportQueue findByName(TenantId tenantId, string name);
-  void findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
 }

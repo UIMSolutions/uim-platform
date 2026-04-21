@@ -9,12 +9,12 @@ import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - import job persistence.
-interface ImportJobRepository {
-  ImportJob findById(ImportJobId id);
-  ImportJob[] findByTenant(TenantId tenantId);
+interface ImportJobRepository : ITenantRepository!(ImportJob, ImportJobId) {
+  size_t countByPackage(ContentPackageId packageId);
   ImportJob[] findByPackage(ContentPackageId packageId);
+  void removeByPackage(ContentPackageId packageId);
+
+  size_t countByStatus(TenantId tenantId, ImportStatus status);
   ImportJob[] findByStatus(TenantId tenantId, ImportStatus status);
-  void save(ImportJob job);
-  void update(ImportJob job);
-  void remove(ImportJobId id);
+  void removeByStatus(TenantId tenantId, ImportStatus status);
 }

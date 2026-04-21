@@ -13,12 +13,14 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: outgoing - export job persistence.
-interface ExportJobRepository {
-  ExportJob findById(ExportJobId id);
-  ExportJob[] findByTenant(TenantId tenantId);
+interface ExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
+
+  size_t countByPackage(ContentPackageId packageId);
   ExportJob[] findByPackage(ContentPackageId packageId);
-  ExportJob[] findByStatus(TenantId tenantId, ExportStatus status);
-  void save(ExportJob job);
-  void update(ExportJob job);
-  void remove(ExportJobId id);
+  void removeByPackage(ContentPackageId packageId);
+
+  size_t countByPackage(ContentPackageId packageId);
+  ExportJob[] findByPackage(ContentPackageId packageId);
+  void removeByPackage(ContentPackageId packageId);
+
 }
