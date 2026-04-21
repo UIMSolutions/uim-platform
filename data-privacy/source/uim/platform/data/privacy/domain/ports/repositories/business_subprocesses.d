@@ -9,15 +9,10 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.business_subprocess;
 
 /// Port for persisting and querying business subprocesses.
-interface BusinessSubprocessRepository {
-  bool existsByTenant(TenantId tenantId);
-  BusinessSubprocess[] findByTenant(TenantId tenantId);
+interface BusinessSubprocessRepository : ITenantRepository!(BusinessSubprocess, BusinessSubprocessId) {
 
-  bool existsById(BusinessSubprocessId tenantId, id tenantId);
-  BusinessSubprocess findById(BusinessSubprocessId tenantId, id tenantId);
+  bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId);
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId);
+  void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId);
   
-  void save(BusinessSubprocess subprocess);
-  void update(BusinessSubprocess subprocess);
-  void remove(BusinessSubprocessId tenantId, id tenantId);
 }

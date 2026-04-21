@@ -9,17 +9,14 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;
 
 /// Port for persisting data blocking / restriction requests.
-interface BlockingRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  BlockingRequest[] findByTenant(TenantId tenantId);
- 
-  bool existsById(BlockingRequestId tenantId, id tenantId);
-  BlockingRequest findById(BlockingRequestId tenantId, id tenantId);
+interface BlockingRequestRepository : ITenantRepository!(BlockingRequest, BlockingRequestId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  BlockingRequest[] findByStatus(TenantId tenantId, BlockingStatus status);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(BlockingRequest request);
-  void update(BlockingRequest request);
-  void remove(BlockingRequestId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, BlockingStatus status);
+  BlockingRequest[] findByStatus(TenantId tenantId, BlockingStatus status);
+  void removeByStatus(TenantId tenantId, BlockingStatus status);
+
 }

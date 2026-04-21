@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataEntityRepository {
-    bool existsById(DataEntityId id);
-    DataEntity findById(DataEntityId id);
+interface DataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
 
-    DataEntity[] findAll();
-    DataEntity[] findByTenant(TenantId tenantId);
+    size_t countByApplication(ApplicationId applicationId);
     DataEntity[] findByApplication(ApplicationId applicationId);
+    void removeByApplication(ApplicationId applicationId);
 
-    void save(DataEntity entity);
-    void update(DataEntity entity);
-    void remove(DataEntityId id);
 }

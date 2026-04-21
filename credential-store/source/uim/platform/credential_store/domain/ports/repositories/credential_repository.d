@@ -8,15 +8,18 @@ module uim.platform.credential_store.domain.ports.repositories.credentials;
 import uim.platform.credential_store.domain.entities.credential;
 import uim.platform.credential_store.domain.types;
 
-interface CredentialRepository {
-  Credential findById(CredentialId id);
+interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
+
+  bool existsByName(NamespaceId namespaceId, string name, CredentialType type);
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type);
-  Credential[] findByNamespace(NamespaceId namespaceId);
-  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
-  Credential[] findByTenant(TenantId tenantId);
-  void save(Credential cred);
-  void update(Credential cred);
-  void remove(CredentialId id);
+  void removeByName(NamespaceId namespaceId, string name, CredentialType type);
+
   size_t countByNamespace(NamespaceId namespaceId);
-  size_t countByTenant(TenantId tenantId);
+  Credential[] findByNamespace(NamespaceId namespaceId);
+  void removeByNamespace(NamespaceId namespaceId);
+
+  size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
+  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
+  void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
+
 }

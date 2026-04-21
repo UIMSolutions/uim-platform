@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataConnectionRepository {
-    bool existsById(DataConnectionId id);
-    DataConnection findById(DataConnectionId id);
+interface DataConnectionRepository : ITenantRepository!(DataConnection, DataConnectionId) {
 
-    DataConnection[] findAll();
-    DataConnection[] findByTenant(TenantId tenantId);
+    size_t countByApplication(ApplicationId applicationId);
     DataConnection[] findByApplication(ApplicationId applicationId);
-    DataConnection[] findByStatus(ConnectionStatus status);
+    void removeByApplication(ApplicationId applicationId);
 
-    void save(DataConnection entity);
-    void update(DataConnection entity);
-    void remove(DataConnectionId id);
+    size_t countByStatus(ConnectionStatus status);
+    DataConnection[] findByStatus(ConnectionStatus status);
+    void removeByStatus(ConnectionStatus status);
+
 }

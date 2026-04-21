@@ -9,17 +9,14 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.archive_request;
 
 /// Port for persisting and querying archive requests.
-interface ArchiveRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  ArchiveRequest[] findByTenant(TenantId tenantId);
+interface ArchiveRequestRepository : ITenantRepository!(ArchiveRequest, ArchiveRequestId) {
 
-  bool existsById(ArchiveRequestId tenantId, id tenantId);
-  ArchiveRequest findById(ArchiveRequestId tenantId, id tenantId);
-
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+
+  size_t countByStatus(TenantId tenantId, ArchiveStatus status);
   ArchiveRequest[] findByStatus(TenantId tenantId, ArchiveStatus status);
+  void removeByStatus(TenantId tenantId, ArchiveStatus status);
   
-  void save(ArchiveRequest request);
-  void update(ArchiveRequest request);
-  void remove(ArchiveRequestId tenantId, id tenantId);
 }

@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UIComponentRepository {
-    bool existsById(UIComponentId id);
-    UIComponent findById(UIComponentId id);
+interface UIComponentRepository : ITenantRepository!(UIComponent, UIComponentId) {
 
-    UIComponent[] findAll();
-    UIComponent[] findByTenant(TenantId tenantId);
+    size_t countByCategory(ComponentCategory category);
     UIComponent[] findByCategory(ComponentCategory category);
+    void removeByCategory(ComponentCategory category);
 
-    void save(UIComponent entity);
-    void update(UIComponent entity);
-    void remove(UIComponentId id);
 }

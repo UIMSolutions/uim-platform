@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PageRepository {
-    bool existsById(PageId id);
-    Page findById(PageId id);
+interface PageRepository : ITenantRepository!(Page, PageId) {
 
-    Page[] findAll();
-    Page[] findByTenant(TenantId tenantId);
+    size_t countByApplication(ApplicationId applicationId);
     Page[] findByApplication(ApplicationId applicationId);
+    void removeByApplication(ApplicationId applicationId);
 
-    void save(Page entity);
-    void update(Page entity);
-    void remove(PageId id);
 }

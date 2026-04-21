@@ -13,18 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - cloud connector persistence.
-interface ConnectorRepository {
-
-  bool existsById(ConnectorId id);
-  CloudConnector findById(ConnectorId id);
+interface ConnectorRepository : ITenantRepository!(CloudConnector, ConnectorId) {
 
   bool existsByLocationId(SubaccountId subaccountId, string locationId);
   CloudConnector findByLocationId(SubaccountId subaccountId, string locationId);
+  void removeByLocationId(SubaccountId subaccountId, string locationId);
 
+  size_t countBySubaccount(SubaccountId subaccountId);
   CloudConnector[] findBySubaccount(SubaccountId subaccountId);
-  CloudConnector[] findByTenant(TenantId tenantId);
-  
-  void save(CloudConnector connector);
-  void update(CloudConnector connector);
-  void remove(ConnectorId id);
+  void removeBySubaccount(SubaccountId subaccountId);
+
 }

@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - certificate store persistence.
-interface CertificateRepository {
-  bool existsById(CertificateId id);
-  Certificate findById(CertificateId id);
+interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
   bool existsName(TenantId tenantId, string name);
   Certificate findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  Certificate[] findByTenant(TenantId tenantId);
+  size_t countExpiring(TenantId tenantId, long now, uint withinDays);
   Certificate[] findExpiring(TenantId tenantId, long now, uint withinDays);
+  void removeExpiring(TenantId tenantId, long now, uint withinDays);
 
-  void save(Certificate cert);
-  void update(Certificate cert);
-  void remove(CertificateId id);
 }
