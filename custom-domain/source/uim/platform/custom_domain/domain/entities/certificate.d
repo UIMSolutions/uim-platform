@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.certificate;
 
-import uim.platform.custom_domain.domain.types;
+// import uim.platform.custom_domain.domain.types;
+import uim.platform.custom_domain;
 
+mixin(ShowModule!());
+
+@safe:
 struct CertificateChainEntry {
     string subjectDn;
     string issuerDn;

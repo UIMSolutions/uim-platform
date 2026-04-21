@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.tls_configuration;
 
-import uim.platform.custom_domain.domain.types;
+// import uim.platform.custom_domain.domain.types;
+import uim.platform.custom_domain;
 
+mixin(ShowModule!());
+
+@safe:
 struct CipherSuite {
     string name;
     CipherSuiteStrength strength;

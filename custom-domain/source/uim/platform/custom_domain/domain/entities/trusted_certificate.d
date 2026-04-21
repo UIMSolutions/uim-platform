@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.trusted_certificate;
 
-import uim.platform.custom_domain.domain.types;
+// import uim.platform.custom_domain.domain.types;
+import uim.platform.custom_domain;
 
+mixin(ShowModule!());
+
+@safe:
 struct TrustedCertificate {
     mixin TenantEntity!(TrustedCertificateId);
 
@@ -22,7 +26,7 @@ struct TrustedCertificate {
     long validTo;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("customDomainId", customDomainId)
             .set("subjectDn", subjectDn)
             .set("issuerDn", issuerDn)
@@ -33,7 +37,5 @@ struct TrustedCertificate {
             .set("authMode", authMode.to!string)
             .set("validFrom", validFrom)
             .set("validTo", validTo);
-
-        return j;
     }
 }

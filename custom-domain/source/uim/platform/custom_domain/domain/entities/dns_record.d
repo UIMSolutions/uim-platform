@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.dns_record;
 
-import uim.platform.custom_domain.domain.types;
+// import uim.platform.custom_domain.domain.types;
+import uim.platform.custom_domain;
 
+mixin(ShowModule!());
+
+@safe:
 struct DnsRecord {
     DnsRecordId id;
     TenantId tenantId;

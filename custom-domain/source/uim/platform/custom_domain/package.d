@@ -7,6 +7,7 @@ module uim.platform.custom_domain;
 
 public {
     import uim.platform.service;
+    
     import uim.platform.custom_domain.domain;
     import uim.platform.custom_domain.application;
     import uim.platform.custom_domain.infrastructure;

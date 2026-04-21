@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.private_key;
 
-import uim.platform.custom_domain.domain.types;
+// import uim.platform.custom_domain.domain.types;
+import uim.platform.custom_domain;
 
+mixin(ShowModule!());
+
+@safe:
 struct PrivateKey {
     mixin TenantEntity!(PrivateKeyId);
 
@@ -19,7 +23,7 @@ struct PrivateKey {
     string publicKeyFingerprint;
     
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("subject", subject)
             .set("domains", domains)
             .set("algorithm", algorithm.to!string)
@@ -27,7 +31,5 @@ struct PrivateKey {
             .set("keySize", keySize)
             .set("csrPem", csrPem)
             .set("publicKeyFingerprint", publicKeyFingerprint);
-
-        return j;
     }
 }
