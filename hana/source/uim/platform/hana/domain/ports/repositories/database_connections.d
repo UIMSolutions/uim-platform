@@ -12,12 +12,10 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface DatabaseConnectionRepository {
-  DatabaseConnection findById(DatabaseConnectionId id);
-  DatabaseConnection[] findByTenant(TenantId tenantId);
+interface DatabaseConnectionRepository : ITenantRepository!(DatabaseConnection, DatabaseConnectionId) {
+
+  size_t countByInstance(InstanceId instanceId);
   DatabaseConnection[] findByInstance(InstanceId instanceId);
-  void save(DatabaseConnection c);
-  void update(DatabaseConnection c);
-  void remove(DatabaseConnectionId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
+
 }

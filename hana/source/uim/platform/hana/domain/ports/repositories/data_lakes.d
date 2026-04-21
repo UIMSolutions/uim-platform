@@ -12,12 +12,10 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface DataLakeRepository {
-  DataLake findById(DataLakeId id);
-  DataLake[] findByTenant(TenantId tenantId);
+interface DataLakeRepository : ITenantRepository!(DataLake, DataLakeId) {
+
+  size_t countByInstance(InstanceId instanceId);
   DataLake[] findByInstance(InstanceId instanceId);
-  void save(DataLake d);
-  void update(DataLake d);
-  void remove(DataLakeId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
+
 }
