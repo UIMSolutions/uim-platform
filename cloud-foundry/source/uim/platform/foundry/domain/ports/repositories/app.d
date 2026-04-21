@@ -14,6 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// Port for persisting and querying applications.
 interface IAppRepository : ITenantRepository!(Application, AppId) {
+
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name);
   Application findByName(TenantId tenantId, SpaceId spaceId, string name);
   void removeByName(TenantId tenantId, SpaceId spaceId, string name);
@@ -25,4 +26,5 @@ interface IAppRepository : ITenantRepository!(Application, AppId) {
   size_t countByState(TenantId tenantId, SpaceId spaceId, AppState state);
   Application[] findByState(TenantId tenantId, SpaceId spaceId, AppState state);
   void removeByState(TenantId tenantId, SpaceId spaceId, AppState state);
+  
 }

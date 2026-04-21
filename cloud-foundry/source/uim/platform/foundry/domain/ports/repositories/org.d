@@ -10,7 +10,9 @@ import uim.platform.foundry.domain.entities.organization;
 
 /// Port for persisting and querying organizations.
 interface IOrgRepository : ITenantRepository!(Organization, OrgId) {
+
   bool existsByName(TenantId tenantId, string name);
   Organization findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
+  
 }

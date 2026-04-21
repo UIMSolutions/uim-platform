@@ -14,19 +14,21 @@ mixin(ShowModule!());
 @safe:
 /// Port for persisting and querying routes.
 interface IRouteRepository : ITenantRepository!(Route, RouteId) {
+
   bool existsByHostAndDomain(TenantId tenantId, string host, DomainId domainId);
   Route findByHostAndDomain(TenantId tenantId, string host, DomainId domainId);
   void removeByHostAndDomain(TenantId tenantId, string host, DomainId domainId);
   
-  size_t countBySpace(TenantId tenantId, SpaceId spacetenantId);
-  Route[] findBySpace(TenantId tenantId, SpaceId spacetenantId);
-  void removeBySpace(TenantId tenantId, SpaceId spacetenantId);
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  Route[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
   
-  size_t countByDomain(TenantId tenantId, DomainId domaintenantId);
-  Route[] findByDomain(TenantId tenantId, DomainId domaintenantId);
-  void removeByDomain(TenantId tenantId, DomainId domaintenantId);
+  size_t countByDomain(TenantId tenantId, DomainId domainId);
+  Route[] findByDomain(TenantId tenantId, DomainId domainId);
+  void removeByDomain(TenantId tenantId, DomainId domainId);
   
-  size_t countByApp(TenantId tenantId, AppId apptenantId);
-  Route[] findByApp(TenantId tenantId, AppId apptenantId);
-  void removeByApp(TenantId tenantId, AppId apptenantId);
+  size_t countByApp(TenantId tenantId, AppId appId);
+  Route[] findByApp(TenantId tenantId, AppId appId);
+  void removeByApp(TenantId tenantId, AppId appId);
+  
 }
