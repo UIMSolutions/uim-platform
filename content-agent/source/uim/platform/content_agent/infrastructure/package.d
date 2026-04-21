@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure;
+
+public {
+    import uim.platform.content_agent.infrastructure.config;
+    import uim.platform.content_agent.infrastructure.container;
+    import uim.platform.content_agent.infrastructure.persistence;
+}

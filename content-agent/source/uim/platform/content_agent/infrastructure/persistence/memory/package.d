@@ -4,3 +4,14 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure.persistence.memory;
+
+public {
+    import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
+    import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
+    import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
+    import uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
+    import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
+    import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
+    import uim.platform.content_agent.infrastructure.persistence.memory.transport_requests;
+
+}
