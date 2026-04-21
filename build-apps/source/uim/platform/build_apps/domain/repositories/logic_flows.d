@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LogicFlowRepository {
-    bool existsById(LogicFlowId id);
-    LogicFlow findById(LogicFlowId id);
+interface LogicFlowRepository : ITenantRepository!(LogicFlow, LogicFlowId) {
 
-    LogicFlow[] findAll();
-    LogicFlow[] findByTenant(TenantId tenantId);
+    size_t countByApplication(ApplicationId applicationId);
     LogicFlow[] findByApplication(ApplicationId applicationId);
-    LogicFlow[] findByPage(PageId pageId);
+    void removeByApplication(ApplicationId applicationId);
 
-    void save(LogicFlow entity);
-    void update(LogicFlow entity);
-    void remove(LogicFlowId id);
+    size_t countByPage(PageId pageId);
+    LogicFlow[] findByPage(PageId pageId);
+    void removeByPage(PageId pageId);
+
 }

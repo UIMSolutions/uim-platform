@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying destruction requests.
-interface DestructionRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  DestructionRequest[] findByTenant(TenantId tenantId);
- 
-  bool existsById(DestructionRequestId tenantId, id tenantId);
-  DestructionRequest findById(DestructionRequestId tenantId, id tenantId);
+interface DestructionRequestRepository : ITenantRepository!(DestructionRequest, DestructionRequestId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(DestructionRequest request);
-  void update(DestructionRequest request);
-  void remove(DestructionRequestId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, DestructionStatus status);
+  DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status);
+  void removeByStatus(TenantId tenantId, DestructionStatus status);
+
 }

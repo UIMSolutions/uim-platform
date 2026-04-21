@@ -10,10 +10,6 @@ import uim.platform.content_agent;
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository : IIdRepository!(TransportRequest, TransportRequestId) {
 
-  size_t countByTenant(TenantId tenantId);
-  TransportRequest[] findByTenant(TenantId tenantId);
-  void removeByTenant(TenantId tenantId);
-
   size_t countByStatus(TenantId tenantId, TransportStatus status);
   TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status);
   void removeByStatus(TenantId tenantId, TransportStatus status);

@@ -13,16 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data controllers.
-interface DataControllerRepository {
-  bool existsByTenant(TenantId tenantId);
-  DataController[] findByTenant(TenantId tenantId);
- 
-  bool existsById(DataControllerId tenantId, id tenantId);
-  DataController findById(DataControllerId tenantId, id tenantId);
+interface DataControllerRepository : ITenantRepository!(DataController, DataControllerId) {
 
+  size_t countByCountry(TenantId tenantId, string country);
   DataController[] findByCountry(TenantId tenantId, string country);
+  void removeByCountry(TenantId tenantId, string country);
 
-  void save(DataController controller);
-  void update(DataController controller);
-  void remove(DataControllerId tenantId, id tenantId);
 }

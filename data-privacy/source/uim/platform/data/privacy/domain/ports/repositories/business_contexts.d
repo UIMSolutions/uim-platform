@@ -9,17 +9,14 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.business_context;
 
 /// Port for persisting and querying business contexts.
-interface BusinessContextRepository {
-  bool existsByTenant(TenantId tenantId);
-  BusinessContext[] findByTenant(TenantId tenantId);
+interface BusinessContextRepository : ITenantRepository!(BusinessContext, BusinessContextId) {
   
-  bool existsById(BusinessContextId tenantId, id tenantId);
-  BusinessContext findById(BusinessContextId tenantId, id tenantId);
-  
+  size_t countByStatus(TenantId tenantId, BusinessContextStatus status);
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status);
-  BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId);
+  void removeByStatus(TenantId tenantId, BusinessContextStatus status);
   
-  void save(BusinessContext context);
-  void update(BusinessContext context);
-  void remove(BusinessContextId tenantId, id tenantId);
+  size_t countByControllerGroup(TenantId tenantId, DataControllerGroupId groupId);
+  BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId);
+  void removeByControllerGroup(TenantId tenantId, DataControllerGroupId groupId);
+  
 }
