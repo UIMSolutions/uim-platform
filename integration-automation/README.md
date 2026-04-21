@@ -196,7 +196,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `ScenarioId` | `string` | Integration scenario identifier |
 | `WorkflowId` | `string` | Workflow instance identifier |
 | `StepId` | `string` | Workflow step identifier |
-| `SystemId` | `string` | System landscape entry identifier |
+| `SystemConnectionId` | `string` | System landscape entry identifier |
 | `DestinationId` | `string` | Destination endpoint identifier |
 | `TaskAssignmentId` | `string` | Task assignment identifier |
 | `ExecutionLogId` | `string` | Execution log entry identifier |
@@ -277,8 +277,8 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `currentStepIndex` | `int` | 0-based index of current step |
 | `totalSteps` | `int` | Total number of steps |
 | `completedSteps` | `int` | Count of completed steps |
-| `sourceSystemId` | `SystemId` | Selected source system |
-| `targetSystemId` | `SystemId` | Selected target system |
+| `sourceSystemConnectionId` | `SystemConnectionId` | Selected source system |
+| `targetSystemConnectionId` | `SystemConnectionId` | Selected target system |
 | `createdBy` | `string` | Creator user ID |
 | `startedAt` | `long` | Workflow start timestamp |
 | `completedAt` | `long` | Workflow completion timestamp |
@@ -303,8 +303,8 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `instructions` | `string` | Detailed instructions |
 | `automationEndpoint` | `string` | Endpoint for automated execution |
 | `automationPayload` | `string` | Payload for automated execution |
-| `sourceSystemId` | `SystemId` | Source system reference |
-| `targetSystemId` | `SystemId` | Target system reference |
+| `sourceSystemConnectionId` | `SystemConnectionId` | Source system reference |
+| `targetSystemConnectionId` | `SystemConnectionId` | Target system reference |
 | `dependencies` | `StepId[]` | IDs of steps that must complete first |
 | `result` | `string` | Outcome details / response |
 | `errorMessage` | `string` | Error message on failure |
@@ -317,7 +317,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 
 | Field | Type | Description |
 |---|---|---|
-| `id` | `SystemId` | Unique system identifier |
+| `id` | `SystemConnectionId` | Unique system identifier |
 | `tenantId` | `TenantId` | Owning tenant |
 | `name` | `string` | System display name (e.g. "Production S/4HANA") |
 | `description` | `string` | Description |
@@ -343,7 +343,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `tenantId` | `TenantId` | Owning tenant |
 | `name` | `string` | Unique destination name per tenant |
 | `description` | `string` | Description |
-| `systemId` | `SystemId` | Linked system connection |
+| `systemId` | `SystemConnectionId` | Linked system connection |
 | `destinationType` | `DestinationType` | Protocol (HTTP, RFC, OData, SOAP, RestApi) |
 | `url` | `string` | Full URL for the destination |
 | `authenticationType` | `AuthenticationType` | Authentication method |
@@ -452,8 +452,8 @@ curl -X POST http://localhost:8090/api/v1/workflows \
   -d '{
     "scenarioId": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Q1 Migration Workflow",
-    "sourceSystemId": "sys-001",
-    "targetSystemId": "sys-002",
+    "sourceSystemConnectionId": "sys-001",
+    "targetSystemConnectionId": "sys-002",
     "createdBy": "project-manager"
   }'
 ```

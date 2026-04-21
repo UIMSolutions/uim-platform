@@ -273,13 +273,13 @@ NSOV-1  Integration Automation Services
 │  │ currentStepIndex : int       │    │ status : StepStatus     │   │
 │  │ totalSteps : int             │    │ priority : StepPriority  │   │
 │  │ completedSteps : int         │    │ sequenceNumber : int    │   │
-│  │ sourceSystemId : SystemId    │    │ assignedTo : UserId     │   │
-│  │ targetSystemId : SystemId    │    │ assignedRole : string   │   │
+│  │ sourceSystemConnectionId : SystemConnectionId    │    │ assignedTo : UserId     │   │
+│  │ targetSystemConnectionId : SystemConnectionId    │    │ assignedRole : string   │   │
 │  │ createdBy : UserId           │    │ instructions : string   │   │
 │  │ startedAt, completedAt       │    │ automationEndpoint      │   │
 │  │ createdAt, updatedAt : long  │    │ automationPayload       │   │
-│  └─────────────────────────────┘    │ sourceSystemId          │   │
-│                                      │ targetSystemId          │   │
+│  └─────────────────────────────┘    │ sourceSystemConnectionId          │   │
+│                                      │ targetSystemConnectionId          │   │
 │                                      │ dependencies : StepId[] │   │
 │                                      │ result : string         │   │
 │                                      │ errorMessage : string   │   │
@@ -295,10 +295,10 @@ NSOV-1  Integration Automation Services
 │  ┌─────────────────────────────┐    ┌────────────────────────┐   │
 │  │  SystemConnection            │1:N │  Destination            │   │
 │  ├─────────────────────────────┤───▸├────────────────────────┤   │
-│  │ id : SystemId                │    │ id : DestinationId      │   │
+│  │ id : SystemConnectionId                │    │ id : DestinationId      │   │
 │  │ tenantId : TenantId          │    │ tenantId : TenantId     │   │
 │  │ name, description : string   │    │ name, description       │   │
-│  │ systemType : SystemType      │    │ systemId : SystemId     │   │
+│  │ systemType : SystemType      │    │ systemId : SystemConnectionId     │   │
 │  │ host : string                │    │ destinationType         │   │
 │  │ port : ushort                │    │ url : string            │   │
 │  │ client : string              │    │ authenticationType      │   │

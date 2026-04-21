@@ -44,8 +44,8 @@ class WorkflowController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.sourceSystemId = j.getString("sourceSystemId");
-      r.targetSystemId = j.getString("targetSystemId");
+      r.sourceSystemConnectionId = j.getString("sourceSystemConnectionId");
+      r.targetSystemConnectionId = j.getString("targetSystemConnectionId");
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createWorkflow(r);
@@ -214,8 +214,8 @@ class WorkflowController : PlatformController {
      .set("currentStepIndex", w.currentStepIndex)
      .set("totalSteps", w.totalSteps)
      .set("completedSteps", w.completedSteps)
-     .set("sourceSystemId", w.sourceSystemId)
-     .set("targetSystemId", w.targetSystemId)
+     .set("sourceSystemConnectionId", w.sourceSystemConnectionId)
+     .set("targetSystemConnectionId", w.targetSystemConnectionId)
      .set("createdBy", w.createdBy)
      .set("startedAt", w.startedAt)
      .set("completedAt", w.completedAt)

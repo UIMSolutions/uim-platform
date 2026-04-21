@@ -45,8 +45,8 @@ struct CreateWorkflowRequest {
   ScenarioId scenarioId;
   string name;
   string description;
-  SystemId sourceSystemId;
-  SystemId targetSystemId;
+  SystemConnectionId sourceSystemConnectionId;
+  SystemConnectionId targetSystemConnectionId;
   string createdBy;
 }
 
@@ -71,8 +71,8 @@ struct CreateStepRequest {
   string instructions;
   string automationEndpoint;
   string automationPayload;
-  SystemId sourceSystemId;
-  SystemId targetSystemId;
+  SystemConnectionId sourceSystemConnectionId;
+  SystemConnectionId targetSystemConnectionId;
   StepId[] dependencies;
   int estimatedDurationMinutes;
 }
@@ -124,7 +124,7 @@ struct CreateSystemRequest {
 }
 
 struct UpdateSystemRequest {
-  SystemId id;
+  SystemConnectionId id;
   TenantId tenantId;
   string name;
   string description;
@@ -146,7 +146,7 @@ struct CreateDestinationRequest {
   TenantId tenantId;
   string name;
   string description;
-  SystemId systemId;
+  SystemConnectionId systemId;
   DestinationType destinationType;
   string url;
   AuthenticationType authenticationType;
@@ -165,7 +165,7 @@ struct UpdateDestinationRequest {
   TenantId tenantId;
   string name;
   string description;
-  SystemId systemId;
+  SystemConnectionId systemId;
   DestinationType destinationType;
   string url;
   AuthenticationType authenticationType;

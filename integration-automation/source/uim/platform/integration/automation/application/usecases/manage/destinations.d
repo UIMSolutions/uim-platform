@@ -80,7 +80,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Destination[] listBySystem(TenantId tenantId, SystemId systemId) {
+  Destination[] listBySystem(TenantId tenantId, SystemConnectionId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 

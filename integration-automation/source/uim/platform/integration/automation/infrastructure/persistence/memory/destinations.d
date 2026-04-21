@@ -28,7 +28,7 @@ class MemoryDestinationRepository : DestinationRepository {
     return null;
   }
 
-  Destination[] findBySystem(TenantId tenantId, SystemId systemId) {
+  Destination[] findBySystem(TenantId tenantId, SystemConnectionId systemId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.systemId == systemId).array;
   }
 

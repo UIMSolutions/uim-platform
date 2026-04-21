@@ -36,7 +36,7 @@ struct StepId {
   mixin DomainId;
 }
 
-struct SystemId {
+struct SystemConnectionId {
   string value;
 
   this(string value) {

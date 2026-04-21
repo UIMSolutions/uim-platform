@@ -19,8 +19,8 @@ struct Workflow {
   int currentStepIndex; // 0-based index of current step
   int totalSteps;
   int completedSteps;
-  SystemId sourceSystemId; // selected source system
-  SystemId targetSystemId; // selected target system
+  SystemConnectionId sourceSystemConnectionId; // selected source system
+  SystemConnectionId targetSystemConnectionId; // selected target system
   string createdBy;
   long startedAt;
   long completedAt;

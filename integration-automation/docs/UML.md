@@ -209,8 +209,8 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       currentStepIndex : int
       totalSteps : int
       completedSteps : int
-      sourceSystemId : SystemId
-      targetSystemId : SystemId
+      sourceSystemConnectionId : SystemConnectionId
+      targetSystemConnectionId : SystemConnectionId
       createdBy : string
       startedAt, completedAt : long
       createdAt, updatedAt : long
@@ -230,8 +230,8 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       instructions : string
       automationEndpoint : string
       automationPayload : string
-      sourceSystemId : SystemId
-      targetSystemId : SystemId
+      sourceSystemConnectionId : SystemConnectionId
+      targetSystemConnectionId : SystemConnectionId
       dependencies : StepId[]
       result : string
       errorMessage : string
@@ -241,7 +241,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     class SystemConnection << (E,#66BB6A) >> {
-      id : SystemId
+      id : SystemConnectionId
       tenantId : TenantId
       name, description : string
       systemType : SystemType
@@ -262,7 +262,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       id : DestinationId
       tenantId : TenantId
       name, description : string
-      systemId : SystemId
+      systemId : SystemConnectionId
       destinationType : DestinationType
       url : string
       authenticationType : AuthenticationType

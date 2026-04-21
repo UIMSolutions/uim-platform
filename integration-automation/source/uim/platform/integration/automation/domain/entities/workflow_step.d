@@ -24,8 +24,8 @@ struct WorkflowStep {
   string instructions; // detailed step-by-step instructions
   string automationEndpoint; // endpoint for automated execution
   string automationPayload; // payload for automated execution
-  SystemId sourceSystemId;
-  SystemId targetSystemId;
+  SystemConnectionId sourceSystemConnectionId;
+  SystemConnectionId targetSystemConnectionId;
   StepId[] dependencies; // IDs of steps that must complete first
   string result; // outcome details / response
   string errorMessage;

@@ -65,8 +65,8 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.currentStepIndex = 0;
     wf.totalSteps = cast(int) scenario.stepTemplates.length;
     wf.completedSteps = 0;
-    wf.sourceSystemId = req.sourceSystemId;
-    wf.targetSystemId = req.targetSystemId;
+    wf.sourceSystemConnectionId = req.sourceSystemConnectionId;
+    wf.targetSystemConnectionId = req.targetSystemConnectionId;
     wf.createdBy = req.createdBy;
     wf.createdAt = now;
     wf.updatedAt = now;
@@ -90,9 +90,9 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       step.automationEndpoint = tmpl.automationEndpoint;
       step.automationPayload = tmpl.automationPayload;
       if (tmpl.requiresSourceSystem)
-        step.sourceSystemId = req.sourceSystemId;
+        step.sourceSystemConnectionId = req.sourceSystemConnectionId;
       if (tmpl.requiresTargetSystem)
-        step.targetSystemId = req.targetSystemId;
+        step.targetSystemConnectionId = req.targetSystemConnectionId;
       step.estimatedDurationMinutes = tmpl.estimatedDurationMinutes;
       step.createdAt = now;
 

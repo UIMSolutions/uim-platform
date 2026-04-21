@@ -15,13 +15,13 @@ import uim.platform.integration.automation.domain.ports;
 // import std.array : array;
 
 class MemorySystemRepository : SystemRepository {
-  private SystemConnection[SystemId] store;
+  private SystemConnection[SystemConnectionId] store;
 
   SystemConnection[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  SystemConnection* findById(SystemId tenantId, id tenantId) {
+  SystemConnection* findById(SystemConnectionId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -44,7 +44,7 @@ class MemorySystemRepository : SystemRepository {
     store[system.id] = system;
   }
 
-  void remove(SystemId tenantId, id tenantId) {
+  void remove(SystemConnectionId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

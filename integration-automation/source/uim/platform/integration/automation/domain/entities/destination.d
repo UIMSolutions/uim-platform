@@ -14,7 +14,7 @@ struct Destination {
   TenantId tenantId;
   string name; // unique destination name
   string description;
-  SystemId systemId; // linked system connection
+  SystemConnectionId systemId; // linked system connection
   DestinationType destinationType;
   string url; // full URL for the destination
   AuthenticationType authenticationType;
