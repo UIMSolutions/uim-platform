@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Customer {
-    CustomerId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CustomerId);
+    
     string name;
     string description;
     CustomerType customerType = CustomerType.commercial;
@@ -27,15 +27,9 @@ struct Customer {
     string website;
     string industry;
     string accountNumber;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
-
-    Json customerToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        return Json.entityToJson
             .set("name", name)
             .set("description", description)
             .set("customerType", customerType.to!string)
@@ -48,10 +42,6 @@ struct Customer {
             .set("longitude", longitude)
             .set("website", website)
             .set("industry", industry)
-            .set("accountNumber", accountNumber)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("accountNumber", accountNumber);
     }
 }

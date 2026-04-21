@@ -6,8 +6,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ArchivingJob {
-    ArchivingJobId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ArchivingJobId);
+    
     ApplicationGroupId applicationGroupId;
     ArchivingOperationType operationType = ArchivingOperationType.archive;
     ArchivingJobStatus status = ArchivingJobStatus.scheduled;
@@ -18,7 +18,18 @@ struct ArchivingJob {
     int recordsProcessed;
     int recordsFailed;
     string errorMessage;
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return Json.entityToJson
+            .set("applicationGroupId", applicationGroupId)
+            .set("operationType", operationType.to!string)
+            .set("status", status.to!string)
+            .set("selectionCriteria", selectionCriteria)
+            .set("scheduledAt", scheduledAt)
+            .set("startedAt", startedAt)
+            .set("completedAt", completedAt)
+            .set("recordsProcessed", recordsProcessed)
+            .set("recordsFailed", recordsFailed)
+            .set("errorMessage", errorMessage);
+    }
 }

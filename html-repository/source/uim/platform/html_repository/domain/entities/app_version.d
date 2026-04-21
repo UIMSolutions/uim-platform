@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct AppVersion {
-  AppVersionId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AppVersionId);
+  
   HtmlAppId appId;
   string versionCode;       // semantic version e.g. "1.0.0"
   string description;
@@ -21,7 +21,15 @@ struct AppVersion {
   long totalSizeBytes;
   int fileCount;
   long deployedAt;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("appId", appId)
+      .set("versionCode", versionCode)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("totalSizeBytes", totalSizeBytes)
+      .set("fileCount", fileCount)
+      .set("deployedAt", deployedAt);
+  }
 }

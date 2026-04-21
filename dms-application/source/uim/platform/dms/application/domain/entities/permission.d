@@ -12,12 +12,18 @@ mixin(ShowModule!());
 
 @safe:
 struct Permission {
-  PermissionId id;
-  TenantId tenantId;
+  mixin TenantEntity!(PermissionId);
+  
   string resourceId; // documentId or folderId
   ResourceType resourceType;
   UserId userId;
   PermissionLevel level = PermissionLevel.read;
-  UserId createdBy;
-  long createdAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("resourceId", resourceId)
+      .set("resourceType", resourceType.to!string)
+      .set("userId", userId)
+      .set("level", level.to!string);
+  }
 }

@@ -10,22 +10,41 @@ import uim.platform.datasphere.domain.types;
 struct SpaceLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct StorageAssignment {
   StorageType type;
   long quotaBytes;
   long usedBytes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("type", type.to!string)
+      .set("quotaBytes", quotaBytes)
+      .set("usedBytes", usedBytes);
+  }
 }
 
 struct SpaceMember {
   string userId;
   string role;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("userId", userId)
+      .set("role", role);
+  }
 }
 
 struct Space {
-  SpaceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(SpaceId);
+  
   string name;
   string description;
   string businessName;
@@ -34,6 +53,16 @@ struct Space {
   SpaceLabel[] labels;
   int priority;
   bool enableAuditLog;
-  long createdAt;
-  long modifiedAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("businessName", businessName)
+      .set("storage", storage.map!(s => s.toJson()).array)
+      .set("members", members.map!(m => m.toJson()).array)
+      .set("labels", labels.map!(l => l.toJson()).array)
+      .set("priority", priority)
+      .set("enableAuditLog", enableAuditLog);
+  }
 }

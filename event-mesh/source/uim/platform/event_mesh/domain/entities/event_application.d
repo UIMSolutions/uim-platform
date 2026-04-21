@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct EventApplication {
-    EventApplicationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(EventApplicationId);
+
     BrokerServiceId brokerServiceId;
     string name;
     string description;
@@ -31,15 +31,9 @@ struct EventApplication {
     string webhookAuthToken;
     string maxConnections;
     string currentConnections;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
-
-    Json eventApplicationToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        return Json.entityToJson
             .set("brokerServiceId", brokerServiceId)
             .set("name", name)
             .set("description", description)
@@ -54,11 +48,8 @@ struct EventApplication {
             .set("publishTopics", publishTopics)
             .set("subscribeTopics", subscribeTopics)
             .set("webhookUrl", webhookUrl)
+            .set("webhookAuthToken", webhookAuthToken)
             .set("maxConnections", maxConnections)
-            .set("currentConnections", currentConnections)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("currentConnections", currentConnections);
     }
 }

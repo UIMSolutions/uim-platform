@@ -16,11 +16,19 @@ struct AlertThreshold {
   double warningValue;
   double criticalValue;
   string unit;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("metric", metric)
+      .set("warningValue", warningValue)
+      .set("criticalValue", criticalValue)
+      .set("unit", unit);
+  }
 }
 
 struct Alert {
-  AlertId id;
-  TenantId tenantId;
+  mixin TenantEntity!(AlertId);
+  
   InstanceId instanceId;
   string name;
   string description;
@@ -35,5 +43,22 @@ struct Alert {
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;
-  long createdAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("instanceId", instanceId)
+      .set("name", name)
+      .set("description", description)
+      .set("severity", severity.to!string)
+      .set("status", status.to!string)
+      .set("category", category.to!string)
+      .set("source", source)
+      .set("metricName", metricName)
+      .set("metricValue", metricValue)
+      .set("threshold", threshold.toJson())
+      .set("acknowledgedBy", acknowledgedBy)
+      .set("triggeredAt", triggeredAt)
+      .set("acknowledgedAt", acknowledgedAt)
+      .set("resolvedAt", resolvedAt);
+  }
 }

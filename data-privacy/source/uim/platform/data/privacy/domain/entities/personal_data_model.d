@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Defines a field of personal data within a system — what data exists and where.
 struct PersonalDataModel {
-  PersonalDataModelId id;
-  TenantId tenantId;
+  mixin TenantEntity!(PersonalDataModelId);
+
   string fieldName; // e.g. "employee.firstName"
   string fieldDescription;
   PersonalDataCategory category;
@@ -24,6 +24,17 @@ struct PersonalDataModel {
   DataSubjectType subjectType = DataSubjectType.naturalPerson;
   bool isSpecialCategory; // GDPR Art. 9
   string legalReference; // e.g. "GDPR Art. 9(2)(a)"
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("fieldName", fieldName)
+      .set("fieldDescription", fieldDescription)
+      .set("category", category.to!string)
+      .set("sensitivity", sensitivity.to!string)
+      .set("sourceSystem", sourceSystem)
+      .set("sourceEntity", sourceEntity)
+      .set("subjectType", subjectType.to!string)
+      .set("isSpecialCategory", isSpecialCategory)
+      .set("legalReference", legalReference);
+  }
 }

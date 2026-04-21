@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A recorded legal basis for processing personal data (GDPR Art. 6 / Art. 9).
 struct LegalGround {
-  LegalGroundId id;
-  TenantId tenantId;
+  mixin TenantEntity!(LegalGroundId);
+
   DataSubjectId dataSubjectId;
   LegalBasis basis;
   ProcessingPurpose purpose;
@@ -24,5 +24,17 @@ struct LegalGround {
   bool isActive = true;
   long validFrom;
   long validUntil; // 0 = indefinite
-  long createdAt;
+  
+  Json toJson() const {
+    return Json.entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("basis", basis.to!string)
+      .set("purpose", purpose.to!string)
+      .set("description", description)
+      .set("legalReference", legalReference)
+      .set("categories", categories.map!(c => c.to!string).array)
+      .set("isActive", isActive)
+      .set("validFrom", validFrom)
+      .set("validUntil", validUntil);
+  }
 }

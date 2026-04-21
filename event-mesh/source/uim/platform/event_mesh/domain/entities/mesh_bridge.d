@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct MeshBridge {
-    MeshBridgeId id;
-    TenantId tenantId;
+    mixin TenantEntity!(MeshBridgeId);
+    
     BrokerServiceId sourceBrokerId;
     BrokerServiceId targetBrokerId;
     string name;
@@ -32,15 +32,9 @@ struct MeshBridge {
     string egressFlowWindowSize;
     string uplinkThroughput;
     string downlinkThroughput;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
-
-    Json meshBridgeToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        return Json.entityToJson
             .set("sourceBrokerId", sourceBrokerId)
             .set("targetBrokerId", targetBrokerId)
             .set("name", name)
@@ -58,10 +52,6 @@ struct MeshBridge {
             .set("retryDelay", retryDelay)
             .set("egressFlowWindowSize", egressFlowWindowSize)
             .set("uplinkThroughput", uplinkThroughput)
-            .set("downlinkThroughput", downlinkThroughput)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("downlinkThroughput", downlinkThroughput);
     }
 }
