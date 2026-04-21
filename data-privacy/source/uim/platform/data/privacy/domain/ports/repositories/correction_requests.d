@@ -5,21 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.correction_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.correction_request;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.correction_request;
 
+import uim.platform.data.privacy;
+
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying correction requests.
-interface CorrectionRequestRepository {
-  bool existsByTenant(TenantId tenantId);
-  CorrectionRequest[] findByTenant(TenantId tenantId);
- 
-  bool existsById(CorrectionRequestId tenantId, id tenantId);
-  CorrectionRequest findById(CorrectionRequestId tenantId, id tenantId);
+interface CorrectionRequestRepository : ITenantRepository!(CorrectionRequest, CorrectionRequestId) {
   
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+
+  size_t countByStatus(TenantId tenantId, CorrectionStatus status);
   CorrectionRequest[] findByStatus(TenantId tenantId, CorrectionStatus status);
+  void removeByStatus(TenantId tenantId, CorrectionStatus status);
   
-  void save(CorrectionRequest request);
-  void update(CorrectionRequest request);
-  void remove(CorrectionRequestId tenantId, id tenantId);
 }

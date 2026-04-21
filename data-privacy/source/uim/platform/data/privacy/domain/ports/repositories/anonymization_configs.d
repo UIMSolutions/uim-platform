@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.anonymization_configs;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.anonymization_config;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.anonymization_config;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying anonymization configurations.
 interface AnonymizationConfigRepository : IBaseRepository!(AnonymizationConfig, AnonymizationConfigId) {
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status);

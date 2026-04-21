@@ -9,17 +9,14 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_purpose;
 
 /// Port for persisting and querying consent purpose configurations.
-interface ConsentPurposeRepository {
-  bool existsByTenant(TenantId tenantId);
-  ConsentPurpose[] findByTenant(TenantId tenantId);
- 
-  bool existsById(ConsentPurposeId tenantId, id tenantId);
-  ConsentPurpose findById(ConsentPurposeId tenantId, id tenantId);
+interface ConsentPurposeRepository : ITenantRepository!(ConsentPurpose, ConsentPurposeId) {
   
+  size_t countByController(TenantId tenantId, DataControllerId controllerId);
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId);
+  void removeByController(TenantId tenantId, DataControllerId controllerId);
+
+  size_t countByStatus(TenantId tenantId, ConsentPurposeStatus status);
   ConsentPurpose[] findByStatus(TenantId tenantId, ConsentPurposeStatus status);
+  void removeByStatus(TenantId tenantId, ConsentPurposeStatus status);
   
-  void save(ConsentPurpose purpose);
-  void update(ConsentPurpose purpose);
-  void remove(ConsentPurposeId tenantId, id tenantId);
 }

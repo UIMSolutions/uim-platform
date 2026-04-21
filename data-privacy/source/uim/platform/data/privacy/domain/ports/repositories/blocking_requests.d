@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.blocking_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.blocking_request;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.blocking_request;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting data blocking / restriction requests.
 interface BlockingRequestRepository : ITenantRepository!(BlockingRequest, BlockingRequestId) {
 

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.business_subprocesses;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.business_subprocess;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.business_subprocess;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying business subprocesses.
 interface BusinessSubprocessRepository : ITenantRepository!(BusinessSubprocess, BusinessSubprocessId) {
 
