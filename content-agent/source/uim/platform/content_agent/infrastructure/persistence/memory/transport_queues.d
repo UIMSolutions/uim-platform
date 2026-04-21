@@ -16,42 +16,46 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTransportQueueRepository : TransportQueueRepository {
-  private TransportQueue[TransportQueueId] store;
+class MemoryTransportQueueRepository : TenantRepository!(TransportQueue, TransportQueueId) {
 
-  TransportQueue findById(TransportQueueId id) {
-    if (auto p = id in store)
-      return *p;
-    return TransportQueue.init;
-  }
-
-  TransportQueue[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  bool existsDefault(TenantId tenantId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.isDefault)
+        return true;
+    return false;
   }
 
   TransportQueue findDefault(TenantId tenantId) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.isDefault)
+    foreach (e; findByTenant(tenantId))
+      if (e.isDefault)
         return e;
     return TransportQueue.init;
+  }
+
+  void removeDefault(TenantId tenantId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.isDefault)
+        remove(e);
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return true;
+    return false;
   }
 
   TransportQueue findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return TransportQueue.init;
   }
 
-  void save(TransportQueue queue) {
-    store[queue.id] = queue;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        remove(e);
   }
 
-  void update(TransportQueue queue) {
-    store[queue.id] = queue;
-  }
-
-  void remove(TransportQueueId id) {
-    store.remove(id);
-  }
 }

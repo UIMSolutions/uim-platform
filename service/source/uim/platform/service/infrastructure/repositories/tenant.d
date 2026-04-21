@@ -16,11 +16,11 @@ class TenantRepository(TEntity, TId) {
   TEntity findById(TenantId tenantId, TId id) {
     return existsById(tenantId, id) ? store[tenantId][id] : TEntity.init;
   }
-  
+
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
-     if (existsById(tenantId, id)) {
+    if (existsById(tenantId, id)) {
       store[tenantId].remove(id);
-      
+
       if (deleteTenantIfEmpty && store[tenantId].empty) {
         store.remove(tenantId);
       }
@@ -51,7 +51,7 @@ class TenantRepository(TEntity, TId) {
     if (!existsByTenant(item.tenantId)) {
       TEntity[TId] entities;
       store[item.tenantId] = entities;
-    } 
+    }
     store[item.tenantId][item.id] = item;
   }
 

@@ -10,11 +10,12 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   protected TEntity[TId] store;
 
   bool existsById(TId id) {
-    return id in store ? true : false;
+    return (id in store) !is null;
   }
 
   TEntity findById(TId id) {
-    return id in store ? store[id] : TEntity.init;
+    auto entity = id in store;
+    return entity is null ? TEntity.init : *entity;
   }
 
   TEntity[] findAll() {
@@ -26,39 +27,50 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   }
 
   void update(TEntity item) {
-    if (item.id in store) {
-      store[item.id] = item;
+    auto existing = item.id in store;
+    if (existing !is null) {
+      *existing = item;
     }
   }
 
   void remove(TId id) {
-    if (id in store) {
-      store.remove(id);
-    }
+    store.remove(id);
   }
 }
-// ///
-// unittest {
-//   import uim.platform.service.domain.ports.repositories.id;
-//   import uim.platform.service.infrastructure.repositories.id;
 
-//   IdRepository!(string, string) repo;
+unittest {
+  import uim.platform.service.infrastructure.repositories.id;
 
-//   string id = "item-123";
-//   string value = "Test Item";
+  struct SampleEntity {
+    string id;
+    string value;
+  }
 
-//   // Test save and findById
-//   repo.save((id, value));
-//   assert(repo.existsById(id));
-//   assert(repo.findById(id).id == id);
-//   assert(repo.findById(id).value == value);
+  auto repo = new IdRepository!(SampleEntity, string)();
 
-//   // Test update
-//   string newValue = "Updated Item";
-//   repo.update((id, newValue));
-//   assert(repo.findById(id).value == newValue);
+  assert(!repo.existsById("missing"));
+  assert(repo.findById("missing") == SampleEntity.init);
 
-//   // Test remove
-//   repo.remove(id);
-//   assert(!repo.existsById(id));
-// }
+  repo.save(SampleEntity("item-123", "Test Item"));
+  assert(repo.existsById("item-123"));
+
+  auto saved = repo.findById("item-123");
+  assert(saved.id == "item-123");
+  assert(saved.value == "Test Item");
+
+  repo.update(SampleEntity("item-123", "Updated Item"));
+  auto updated = repo.findById("item-123");
+  assert(updated.value == "Updated Item");
+
+  repo.update(SampleEntity("missing", "no-op"));
+  assert(!repo.existsById("missing"));
+
+  auto all = repo.findAll();
+  assert(all.length == 1);
+  assert(all[0].id == "item-123");
+
+  repo.remove("item-123");
+  assert(!repo.existsById("item-123"));
+
+  repo.remove("item-123");
+}

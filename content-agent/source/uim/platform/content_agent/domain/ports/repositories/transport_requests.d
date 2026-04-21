@@ -5,11 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports.repositories.transport_requests;
 
-import uim.platform.content_agent.domain.entities.transport_request;
-import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository {
+interface TransportRequestRepository : IIdRepository!(TransportRequest, TransportRequestId) {
 
   size_t countByTenant(TenantId tenantId);
   TransportRequest[] findByTenant(TenantId tenantId);
