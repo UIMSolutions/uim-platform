@@ -12,12 +12,10 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface BackupRepository {
-  Backup findById(BackupId id);
-  Backup[] findByTenant(TenantId tenantId);
+interface BackupRepository : ITenantRepository!(Backup, BackupId) {
+
+  size_t countByInstance(InstanceId instanceId);
   Backup[] findByInstance(InstanceId instanceId);
-  void save(Backup b);
-  void update(Backup b);
-  void remove(BackupId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByInstance(InstanceId instanceId);
+
 }

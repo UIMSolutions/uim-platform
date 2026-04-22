@@ -12,13 +12,14 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository {
-  Configuration findById(ConfigurationId id);
-  Configuration[] findByTenant(TenantId tenantId);
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+
+  size_t countByInstance(InstanceId instanceId);
   Configuration[] findByInstance(InstanceId instanceId);
+  void removeByInstance(InstanceId instanceId);
+
+  size_t countBySection(InstanceId instanceId, string section);
   Configuration[] findBySection(InstanceId instanceId, string section);
-  void save(Configuration c);
-  void update(Configuration c);
-  void remove(ConfigurationId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeBySection(InstanceId instanceId, string section);
+
 }

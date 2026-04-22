@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventSchemaRepository {
-    bool existsById(EventSchemaId id);
-    EventSchema findById(EventSchemaId id);
+interface EventSchemaRepository : ITenantRepository!(EventSchema, EventSchemaId) {
 
-    EventSchema[] findAll();
-    EventSchema[] findByTenant(TenantId tenantId);
+    size_t countByFormat(SchemaFormat format);
     EventSchema[] findByFormat(SchemaFormat format);
-    EventSchema[] findByStatus(SchemaStatus status);
+    void removeByFormat(SchemaFormat format);
 
-    void save(EventSchema schema);
-    void update(EventSchema schema);
-    void remove(EventSchemaId id);
+    size_t countByStatus(SchemaStatus status);
+    EventSchema[] findByStatus(SchemaStatus status);
+    void removeByStatus(SchemaStatus status);
+
 }

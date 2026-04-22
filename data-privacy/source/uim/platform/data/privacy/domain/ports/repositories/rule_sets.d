@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying rule sets.
-interface RuleSetRepository {
-  bool existsByTenant(TenantId tenantId);
-  RuleSet[] findByTenant(TenantId tenantId);
- 
-  bool existsById(RuleSetId tenantId, id tenantId);
-  RuleSet findById(RuleSetId tenantId, id tenantId);
+interface RuleSetRepository : ITenantRepository!(RuleSet, RuleSetId) {
 
+  size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId);
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);
-  RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status);
+  void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId);
 
-  void save(RuleSet ruleSet);
-  void update(RuleSet ruleSet);
-  void remove(RuleSetId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, RuleSetStatus status);
+  RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status);
+  void removeByStatus(TenantId tenantId, RuleSetStatus status);
+
 }

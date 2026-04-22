@@ -11,17 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventApplicationRepository {
-    bool existsById(EventApplicationId id);
-    EventApplication findById(EventApplicationId id);
+interface EventApplicationRepository : ITenantRepository!(EventApplication, EventApplicationId) {
 
-    EventApplication[] findAll();
-    EventApplication[] findByTenant(TenantId tenantId);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId);
     EventApplication[] findByBrokerService(BrokerServiceId brokerServiceId);
-    EventApplication[] findByStatus(EventApplicationStatus status);
-    EventApplication[] findByType(EventApplicationType appType);
+    void removeByBrokerService(BrokerServiceId brokerServiceId);
 
-    void save(EventApplication application);
-    void update(EventApplication application);
-    void remove(EventApplicationId id);
+    size_t countByStatus(EventApplicationStatus status);
+    EventApplication[] findByStatus(EventApplicationStatus status);
+    void removeByStatus(EventApplicationStatus status);
+
+    size_t countByType(EventApplicationType appType);
+    EventApplication[] findByType(EventApplicationType appType);
+    void removeByType(EventApplicationType appType);
+
 }

@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SkillRepository {
-    bool existsById(SkillId id);
-    Skill findById(SkillId id);
+interface SkillRepository : ITenantRepository!(Skill, SkillId) {
 
-    Skill[] findAll();
-    Skill[] findByTenant(TenantId tenantId);
+    size_t countByTechnician(TechnicianId technicianId);
     Skill[] findByTechnician(TechnicianId technicianId);
-    Skill[] findByCategory(SkillCategory category);
+    void removeByTechnician(TechnicianId technicianId);
 
-    void save(Skill skill);
-    void update(Skill skill);
-    void remove(SkillId id);
+    size_t countByCategory(SkillCategory category);
+    Skill[] findByCategory(SkillCategory category);
+    void removeByCategory(SkillCategory category);
+
 }

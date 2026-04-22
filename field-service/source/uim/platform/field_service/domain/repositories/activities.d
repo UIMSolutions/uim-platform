@@ -11,18 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ActivityRepository {
-    Activity[] findAll();
+interface ActivityRepository : ITenantRepository!(Activity, ActivityId) {
 
-    bool findById(ActivityId id);
-    Activity findById(ActivityId id);
-
-    Activity[] findByTenant(TenantId tenantId);
+    size_t countByServiceCall(ServiceCallId serviceCallId);
     Activity[] findByServiceCall(ServiceCallId serviceCallId);
+    void removeByServiceCall(ServiceCallId serviceCallId);
+
+    size_t countByTechnician(TechnicianId technicianId);
     Activity[] findByTechnician(TechnicianId technicianId);
+    void removeByTechnician(TechnicianId technicianId);
+
+    size_t countByStatus(ActivityStatus status);
     Activity[] findByStatus(ActivityStatus status);
+    void removeByStatus(ActivityStatus status);
     
-    void save(Activity activity);
-    void update(Activity activity);
-    void remove(ActivityId id);
 }
