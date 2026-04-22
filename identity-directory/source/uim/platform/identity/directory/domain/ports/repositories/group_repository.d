@@ -9,13 +9,14 @@ import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — group persistence.
-interface GroupRepository {
-  Group findById(GroupId id);
+interface GroupRepository : ITenantRepository!(Group, GroupId) {
+  
+  bool existsByDisplayName(TenantId tenantId, string displayName);
   Group findByDisplayName(TenantId tenantId, string displayName);
-  Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  void removeByDisplayName(TenantId tenantId, string displayName);
+  
+  size_t countByMember(string memberId);
   Group[] findByMember(string memberId);
-  void save(Group group);
-  void update(Group group);
-  void remove(GroupId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByMember(string memberId);
+  
 }

@@ -12,11 +12,14 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface InstanceRepository {
-  DatabaseInstance findById(InstanceId id);
-  DatabaseInstance[] findByTenant(TenantId tenantId);
-  void save(DatabaseInstance i);
-  void update(DatabaseInstance i);
-  void remove(InstanceId id);
-  size_t countByTenant(TenantId tenantId);
+interface InstanceRepository : ITenantRepository!(DatabaseInstance, InstanceId) {
+
+  size_t countByStatus(InstanceStatus status);
+  DatabaseInstance[] findByStatus(InstanceStatus status);
+  void removeByStatus(InstanceStatus status);
+
+  size_t countByType(InstanceType type);
+  DatabaseInstance[] findByType(InstanceType type);
+  void removeByType(InstanceType type);
+
 }

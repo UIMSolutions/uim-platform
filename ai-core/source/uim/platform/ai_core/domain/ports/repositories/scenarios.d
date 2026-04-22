@@ -8,12 +8,10 @@ module uim.platform.ai_core.domain.ports.repositories.scenarios;
 import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core.domain.entities.scenario;
 
-interface ScenarioRepository {
-  Scenario findById(ScenarioId id, ResourceGroupId rgId);
-  Scenario[] findByResourceGroup(ResourceGroupId rgId);
-  Scenario[] findByTenant(TenantId tenantId);
-  void save(Scenario s);
-  void update(Scenario s);
-  void remove(ScenarioId id, ResourceGroupId rgId);
+interface ScenarioRepository : ITenantRepository!(Scenario, ScenarioId) {
+
   size_t countByResourceGroup(ResourceGroupId rgId);
+  Scenario[] findByResourceGroup(ResourceGroupId rgId);
+  void removeByResourceGroup(ResourceGroupId rgId);
+
 }

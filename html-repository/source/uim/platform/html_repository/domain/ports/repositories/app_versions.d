@@ -12,22 +12,18 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface AppVersionRepository {
-  bool existsById(AppVersionId id);
-  AppVersion findById(AppVersionId id);
-
+interface AppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
+  
   bool existsLatest(HtmlAppId appId);
   AppVersion findLatest(HtmlAppId appId);
+  void removeLatest(HtmlAppId appId);
   
   size_t countByApp(HtmlAppId appId);
   AppVersion[] findByApp(HtmlAppId appId);
+  void removeByApp(HtmlAppId appId);
 
-  size_t countByTenant(TenantId tenantId);
-  AppVersion[] findByTenant(TenantId tenantId);
-  
+  size_t countByStatus(HtmlAppId appId, VersionStatus status);
   AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status);
+  void removeByStatus(HtmlAppId appId, VersionStatus status);
   
-  void save(AppVersion appVersion);
-  void update(AppVersion appVersion);
-  void remove(AppVersionId id);
 }

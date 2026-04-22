@@ -13,23 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 interface AppFileRepository : ITenantRepository!(AppFile, AppFileId) {
-  bool existsById(AppFileId id);
-  AppFile findById(AppFileId id);
   
   bool existsByPath(AppVersionId versionId, string filePath);
   AppFile findByPath(AppVersionId versionId, string filePath);
+  void removeByPath(AppVersionId versionId, string filePath);
 
   size_t countByVersion(AppVersionId versionId);
   AppFile[] findByVersion(AppVersionId versionId);
-
-  size_t countByTenant(TenantId tenantId);
-  AppFile[] findByTenant(TenantId tenantId);
-  
-  AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
-  
-  void save(AppFile file);
-  void update(AppFile file);
-  void remove(AppFileId id);
   void removeByVersion(AppVersionId versionId);
+
+  size_t countByCategory(AppVersionId versionId, FileCategory category);
+  AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
+  void removeByCategory(AppVersionId versionId, FileCategory category);
+  
   long totalSizeByVersion(AppVersionId versionId);
 }

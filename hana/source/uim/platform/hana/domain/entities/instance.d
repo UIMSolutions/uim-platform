@@ -15,6 +15,13 @@ struct InstanceEndpoint {
   string host;
   int port;
   string protocol;
+
+  Json toJson() const {
+    return Json.emptyObject()
+      .set("host", host)
+      .set("port", port)
+      .set("protocol", protocol);
+  }
 }
 
 struct InstanceResource {
@@ -22,6 +29,14 @@ struct InstanceResource {
   int vcpus;
   long storageGB;
   long usedStorageGB;
+
+  Json toJson() const {
+    return Json.emptyObject()
+      .set("memoryGB", memoryGB)
+      .set("vcpus", vcpus)
+      .set("storageGB", storageGB)
+      .set("usedStorageGB", usedStorageGB);
+  }
 }
 
 struct InstanceLabel {

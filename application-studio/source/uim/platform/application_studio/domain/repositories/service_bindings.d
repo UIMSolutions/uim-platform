@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBindingRepository {
-    bool existsById(ServiceBindingId id);
-    ServiceBinding findById(ServiceBindingId id);
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
-    ServiceBinding[] findAll();
-    ServiceBinding[] findByTenant(TenantId tenantId);
+    size_t countByDevSpace(DevSpaceId devSpaceId);
     ServiceBinding[] findByDevSpace(DevSpaceId devSpaceId);
+    void removeByDevSpace(DevSpaceId devSpaceId);
+    
+    size_t countByStatus(BindingStatus status);
     ServiceBinding[] findByStatus(BindingStatus status);
+    void removeByStatus(BindingStatus status);
 
-    void save(ServiceBinding entity);
-    void update(ServiceBinding entity);
-    void remove(ServiceBindingId id);
 }
