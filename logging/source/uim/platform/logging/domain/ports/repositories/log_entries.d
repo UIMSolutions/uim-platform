@@ -12,21 +12,31 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface LogEntryRepository {
-  bool existsById(LogEntryId id);
-  LogEntry findById(LogEntryId id);
+interface LogEntryRepository : ITenantRepository!(LogEntry, LogEntryId) {
 
-  size_t countByTenant(TenantId tenantId);
-  LogEntry[] findByTenant(TenantId tenantId);
-  
+  size_t countByStream(TenantId tenantId, LogStreamId streamId);
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId);
-  LogEntry[] findByLevel(TenantId tenantId, LoggingLevel level);
-  LogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
-  LogEntry[] search(TenantId tenantId, string query);
-  LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId);
-  LogEntry[] findByCorrelation(TenantId tenantId, string correlationId);
+  void removeByStream(TenantId tenantId, LogStreamId streamId);
 
-  void save(LogEntry entry);
-  void saveAll(LogEntry[] entries);
+  size_t countByLevel(TenantId tenantId, LoggingLevel level);
+  LogEntry[] findByLevel(TenantId tenantId, LoggingLevel level);
+  void removeByLevel(TenantId tenantId, LoggingLevel level);
+
+  size_t countByTimeRange(TenantId tenantId, long startTime, long endTime);
+  LogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
+  void removeByTimeRange(TenantId tenantId, long startTime, long endTime);
+
+  size_t countBySearch(TenantId tenantId, string query);
+  LogEntry[] search(TenantId tenantId, string query);
+  void removeBySearch(TenantId tenantId, string query);
+
+  size_t countByTraceId(TenantId tenantId, TraceId traceId);
+  LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId);
+  void removeByTraceId(TenantId tenantId, TraceId traceId);
+
+  size_t countByCorrelation(TenantId tenantId, string correlationId);
+  LogEntry[] findByCorrelation(TenantId tenantId, string correlationId);
+  void removeByCorrelation(TenantId tenantId, string correlationId);
+
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

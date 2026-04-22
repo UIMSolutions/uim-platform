@@ -13,18 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — external application connectivity persistence.
-interface ApplicationRepository {
-  bool existsById(ApplicationId id);
-  Application findById(ApplicationId id);
+interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
   bool existsByName(KymaEnvironmentId envId, string name);
   Application findByName(KymaEnvironmentId envId, string name);
+  void removeByName(KymaEnvironmentId envId, string name);
 
+  size_t countByEnvironment(KymaEnvironmentId envId);
   Application[] findByEnvironment(KymaEnvironmentId envId);
-  Application[] findByStatus(AppConnectivityStatus status);
-  Application[] findByTenant(TenantId tenantId);
+  void removeByEnvironment(KymaEnvironmentId envId);
 
-  void save(Application app);
-  void update(Application app);
-  void remove(ApplicationId id);
+  size_t countByStatus(AppConnectivityStatus status);
+  Application[] findByStatus(AppConnectivityStatus status);
+  void removeByStatus(AppConnectivityStatus status);
+
 }

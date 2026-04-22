@@ -12,14 +12,10 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface DashboardRepository {
-  bool existsById(DashboardId id);
-  Dashboard findById(DashboardId id);
+interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {
 
-  Dashboard[] findByTenant(TenantId tenantId);
+  bool existsDefault(TenantId tenantId);
   Dashboard findDefault(TenantId tenantId);
-  void save(Dashboard d);
-  void update(Dashboard d);
-  void remove(DashboardId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
+
 }

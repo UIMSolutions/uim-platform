@@ -12,17 +12,18 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface AlertRepository {
-  bool existsById(AlertId id);
-  Alert findById(AlertId id);
+interface AlertRepository : ITenantRepository!(Alert, AlertId) {
 
-  Alert[] findByTenant(TenantId tenantId);
-  Alert[] findByState(TenantId tenantId, AlertState state);
-  Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity);
-  Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId);
-  void save(Alert a);
-  void update(Alert a);
-  void remove(AlertId id);
-  size_t countByTenant(TenantId tenantId);
   size_t countByState(TenantId tenantId, AlertState state);
+  Alert[] findByState(TenantId tenantId, AlertState state);
+  void removeByState(TenantId tenantId, AlertState state);
+
+  size_t countBySeverity(TenantId tenantId, AlertSeverity severity);
+  Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity);
+  void removeBySeverity(TenantId tenantId, AlertSeverity severity);
+
+  size_t countByRule(TenantId tenantId, AlertRuleId ruleId);
+  Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId);
+  void removeByRule(TenantId tenantId, AlertRuleId ruleId);
+
 }

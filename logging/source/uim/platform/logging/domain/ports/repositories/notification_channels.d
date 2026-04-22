@@ -13,15 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 interface NotificationChannelRepository {
-  bool existsById(NotificationChannelId id);
-  NotificationChannel findById(NotificationChannelId id);
 
-  size_t countByTenant(TenantId tenantId);
-  NotificationChannel[] findByTenant(TenantId tenantId);
-
+  size_t countActive(TenantId tenantId);
   NotificationChannel[] findActive(TenantId tenantId);
+  void removeActive(TenantId tenantId);
 
-  void save(NotificationChannel ch);
-  void update(NotificationChannel ch);
-  void remove(NotificationChannelId id);
 }

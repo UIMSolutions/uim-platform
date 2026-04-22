@@ -19,17 +19,14 @@ mixin(ShowModule!());
   *
   * The NamespaceRepository interface defines the contract for persisting and retrieving namespace entities. It includes methods for checking the existence of a namespace by its ID or name, finding namespaces by their environment or tenant, and saving, updating, or removing namespace entities.
   */
-interface NamespaceRepository {
-  bool existsById(NamespaceId id);
-  Namespace findById(NamespaceId id);
+interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
 
   bool existsByName(KymaEnvironmentId envId, string name);
   Namespace findByName(KymaEnvironmentId envId, string name);
+  void removeByName(KymaEnvironmentId envId, string name);
 
+  size_t countByEnvironment(KymaEnvironmentId envId);
   Namespace[] findByEnvironment(KymaEnvironmentId envId);
-  Namespace[] findByTenant(TenantId tenantId);
+  void removeByEnvironment(KymaEnvironmentId envId);
 
-  void save(Namespace ns);
-  void update(Namespace ns);
-  void remove(NamespaceId id);
 }

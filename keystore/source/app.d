@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module app;
 
+import uim.platform.keystore;
 import uim.platform.keystore.infrastructure.config;
 import uim.platform.keystore.infrastructure.container;
-
-@safe:
+import std.stdio : writefln;
 
 version (unittest) {
 } else {

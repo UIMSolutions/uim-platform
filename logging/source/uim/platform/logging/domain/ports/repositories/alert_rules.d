@@ -12,14 +12,10 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface AlertRuleRepository {
-  bool existsById(AlertRuleId id);
-  AlertRule findById(AlertRuleId id);
+interface AlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {
 
-  AlertRule[] findByTenant(TenantId tenantId);
+  size_t countEnabled(TenantId tenantId);
   AlertRule[] findEnabled(TenantId tenantId);
+  void removeEnabled(TenantId tenantId);
   
-  void save(AlertRule rule);
-  void update(AlertRule rule);
-  void remove(AlertRuleId id);
 }
