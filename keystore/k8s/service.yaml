@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keystore
+  labels:
+    app: keystore
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: keystore
+  ports:
+  - name: http
+    port: 8115
+    targetPort: 8115
+    protocol: TCP

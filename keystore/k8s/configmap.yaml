@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keystore-config
+  labels:
+    app: keystore
+    part-of: uim-platform
+data:
+  KEYSTORE_HOST: "0.0.0.0"
+  KEYSTORE_PORT: "8115"
