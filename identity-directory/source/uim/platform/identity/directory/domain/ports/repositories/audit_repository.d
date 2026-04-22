@@ -9,14 +9,18 @@ import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — audit event persistence.
-interface AuditRepository {
-  void save(AuditEvent event);
-  AuditEvent[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+interface AuditRepository  : ITenantRepository!(AuditEvent, AuditEventId) {
+
+  size_t countByActor(string actorId);
   AuditEvent[] findByActor(string actorId, uint offset = 0, uint limit = 100);
+  void removeByActor(string actorId);
+
+  size_t countByTarget(string targetId);
   AuditEvent[] findByTarget(string targetId, uint offset = 0, uint limit = 100);
-  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType,
-      uint offset = 0, uint limit = 100);
-  AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to,
-      uint offset = 0, uint limit = 100);
-  size_t countByTenant(TenantId tenantId);
+  void removeByTarget(string targetId);
+
+  size_t countByType(TenantId tenantId, AuditEventType eventType);
+  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType, uint offset = 0, uint limit = 100);
+  void removeByType(TenantId tenantId, AuditEventType eventType);
+  
 }

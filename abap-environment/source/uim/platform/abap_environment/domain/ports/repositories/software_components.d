@@ -10,16 +10,13 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - software component persistence.
 interface SoftwareComponentRepository : ITenantRepository!(SoftwareComponent, SoftwareComponentId) {
-  // bool existsById(SoftwareComponentId id);
-  // SoftwareComponent findById(SoftwareComponentId id);
 
   bool existsName(SystemInstanceId systemId, string name);
   SoftwareComponent findByName(SystemInstanceId systemId, string name);
+  void removeByName(SystemInstanceId systemId, string name);
 
+  size_t countBySystem(SystemInstanceId systemId);
   SoftwareComponent[] findBySystem(SystemInstanceId systemId);
-//   SoftwareComponent[] findByTenant(TenantId tenantId);
+  void removeBySystem(SystemInstanceId systemId);
 
-//  void save(SoftwareComponent component);
-//  void update(SoftwareComponent component);
-//  void remove(SoftwareComponentId id);
 }

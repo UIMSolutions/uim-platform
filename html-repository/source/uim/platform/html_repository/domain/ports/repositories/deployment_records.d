@@ -12,18 +12,18 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface DeploymentRecordRepository {
-  bool existsById(DeploymentRecordId id);
-  DeploymentRecord findById(DeploymentRecordId id);
+interface DeploymentRecordRepository : ITenantRepository!(DeploymentRecord, DeploymentRecordId) {
 
-  size_t countByTenant(TenantId tenantId);
-  DeploymentRecord[] findByTenant(TenantId tenantId);
-
+  size_t countByApp(HtmlAppId appId);
   DeploymentRecord[] findByApp(HtmlAppId appId);
-  DeploymentRecord[] findByVersion(AppVersionId versionId);
-  DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status);
+  void removeByApp(HtmlAppId appId);
 
-  void save(DeploymentRecord record);
-  void update(DeploymentRecord record);
-  void remove(DeploymentRecordId id);
+  size_t countByVersion(AppVersionId versionId);
+  DeploymentRecord[] findByVersion(AppVersionId versionId);
+  void removeByVersion(AppVersionId versionId);
+
+  size_t countByStatus(TenantId tenantId, DeploymentStatus status);
+  DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status);
+  void removeByStatus(TenantId tenantId, DeploymentStatus status);
+
 }

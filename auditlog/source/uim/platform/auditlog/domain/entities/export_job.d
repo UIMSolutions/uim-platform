@@ -15,6 +15,7 @@ mixin(ShowModule!());
 @safe:
 struct ExportJob {
   mixin TenantEntity!(ExportJobId);
+
   UserId requestedBy;
   ExportFormat format_ = ExportFormat.json;
   ExportStatus status = ExportStatus.pending;
@@ -36,7 +37,6 @@ struct ExportJob {
       .set("timeTo", timeTo)
       .set("downloadUrl", downloadUrl)
       .set("totalRecords", totalRecords)
-      .set("createdAt", createdAt)
       .set("completedAt", completedAt)
       .set("errorMessage", errorMessage);
   }

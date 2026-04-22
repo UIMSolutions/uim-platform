@@ -10,12 +10,17 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
-  // TransportRequest* findById(TransportRequestId id);
+
+  size_t countBySystem(SystemInstanceId systemId);
   TransportRequest[] findBySystem(SystemInstanceId systemId);
-  // TransportRequest[] findByTenant(TenantId tenantId);
+  void removeBySystem(SystemInstanceId systemId);
+
+  size_t countByStatus(SystemInstanceId systemId, TransportStatus status);
   TransportRequest[] findByStatus(SystemInstanceId systemId, TransportStatus status);
+  void removeByStatus(SystemInstanceId systemId, TransportStatus status);
+
+  size_t countByOwner(SystemInstanceId systemId, string owner);
   TransportRequest[] findByOwner(SystemInstanceId systemId, string owner);
-  // void save(TransportRequest request);
-  // void update(TransportRequest request);
-  // void remove(TransportRequestId id);
+  void removeByOwner(SystemInstanceId systemId, string owner);
+
 }

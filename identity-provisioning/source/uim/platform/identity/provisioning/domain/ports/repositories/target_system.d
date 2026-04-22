@@ -8,19 +8,18 @@ module uim.platform.identity.provisioning.domain.ports.repositories.target_syste
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.target_system;
 
-interface TargetSystemRepository {
-  bool existsById(TargetSystemId tenantId, id tenantId);
-  TargetSystem findById(TargetSystemId tenantId, id tenantId);
+interface TargetSystemRepository : ITenantRepository!(TargetSystem, TargetSystemId) {
 
   bool existsByName(TenantId tenantId, string name);
   TargetSystem findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  TargetSystem[] findByTenant(TenantId tenantId);
-  TargetSystem[] findByTenant(TenantId tenantId);
-  TargetSystem[] findByType(TenantId tenantId, SystemType systemType);
-  TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status);
+  size_t countByType(TenantId tenantId, SystemType systemType);
+  TargetSystem[] findByType(TenantId tenantId, SystemType systemType, uint offset = 0, uint limit = 0);
+  void removeByType(TenantId tenantId, SystemType systemType);
 
-  void save(TargetSystem entity);
-  void update(TargetSystem entity);
-  void remove(TargetSystemId tenantId, id tenantId);
+  size_t countByStatus(TenantId tenantId, SystemStatus status);
+  TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status, uint offset = 0, uint limit = 0);
+  void removeByStatus(TenantId tenantId, SystemStatus status);
+
 }
