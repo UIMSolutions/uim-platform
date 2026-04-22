@@ -8,18 +8,19 @@ module uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 
-interface ProvisioningLogRepository {
-  bool existsById(ProvisioningLogId tenantId, id tenantId);
-  ProvisioningLog findById(ProvisioningLogId tenantId, id tenantId);
+interface ProvisioningLogRepository : ITenantRepository!(ProvisioningLog, ProvisioningLogId) {
 
-  ProvisioningLog[] findByTenant(TenantId tenantId);
-  ProvisioningLog[] findByJob(ProvisioningJobId jobtenantId, id tenantId);
-  ProvisioningLog[] findByEntity(string entitytenantId, id tenantId);
+  size_t countByJob(TenantId tenantId, ProvisioningJobId jobId);
+  ProvisioningLog[] findByJob(TenantId tenantId, ProvisioningJobId jobId);
+  void removeByJob(TenantId tenantId, ProvisioningJobId jobId);
+
+  size_t countByEntity(TenantId tenantId, string entityId);
+  ProvisioningLog[] findByEntity(TenantId tenantId, string entityId);
+  void removeByEntity(TenantId tenantId, string entityId);
+
+  size_t countByStatus(TenantId tenantId, LogStatus status);
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status);
+  void removeByStatus(TenantId tenantId, LogStatus status);
   
-  size_t countByJob(ProvisioningJobId jobtenantId, id tenantId);
-  size_t countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status);
-  void save(ProvisioningLog entity);
-  void remove(ProvisioningLogId tenantId, id tenantId);
-  void removeByJob(ProvisioningJobId jobtenantId, id tenantId);
+  size_t countByJobAndStatus(TenantId tenantId, ProvisioningJobId jobId, LogStatus status);
 }

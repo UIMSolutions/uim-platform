@@ -8,14 +8,18 @@ module uim.platform.mobile.domain.ports.repositories.push_registrations;
 import uim.platform.mobile.domain.entities.push_registration;
 import uim.platform.mobile.domain.types;
 
-interface PushRegistrationRepository {
-  PushRegistration findById(PushRegistrationId id);
+interface PushRegistrationRepository : ITenantRepository!(PushRegistration, PushRegistrationId) {
+
+  bool existsByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
   PushRegistration findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
-  PushRegistration[] findByApp(MobileAppId appId);
-  PushRegistration[] findByTopic(MobileAppId appId, string topic);
-  PushRegistration[] findByTenant(TenantId tenantId);
-  void save(PushRegistration reg);
-  void update(PushRegistration reg);
-  void remove(PushRegistrationId id);
+  void findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
+
   size_t countByApp(MobileAppId appId);
+  PushRegistration[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
+  size_t countByTopic(MobileAppId appId, string topic);
+  PushRegistration[] findByTopic(MobileAppId appId, string topic);
+  void removeByTopic(MobileAppId appId, string topic);
+
 }

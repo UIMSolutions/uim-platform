@@ -9,12 +9,14 @@ import uim.platform.master_data_integration.domain.entities.replication_job;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — replication job persistence.
-interface ReplicationJobRepository {
-  ReplicationJob findById(ReplicationJobId id);
-  ReplicationJob[] findByTenant(TenantId tenantId);
+interface ReplicationJobRepository : ITenantRepository!(ReplicationJob, ReplicationJobId) {
+
+  size_t countByStatus(TenantId tenantId, ReplicationJobStatus status);
   ReplicationJob[] findByStatus(TenantId tenantId, ReplicationJobStatus status);
+  void removeByStatus(TenantId tenantId, ReplicationJobStatus status);
+
+  size_t countByDistributionModel(TenantId tenantId, DistributionModelId modelId);
   ReplicationJob[] findByDistributionModel(TenantId tenantId, DistributionModelId modelId);
-  void save(ReplicationJob job);
-  void update(ReplicationJob job);
-  void remove(ReplicationJobId id);
+  void removeByDistributionModel(TenantId tenantId, DistributionModelId modelId);
+
 }

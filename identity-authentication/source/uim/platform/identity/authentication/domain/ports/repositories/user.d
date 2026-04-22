@@ -12,14 +12,18 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — user persistence.
-interface UserRepository {
-  User findById(UserId id);
+interface UserRepository : ITenantRepository!(User, UserId) {
+
+  bool existsByEmail(TenantId tenantId, string email);
   User findByEmail(TenantId tenantId, string email);
+  void removeByEmail(TenantId tenantId, string email);
+
+  bool existsByUserName(TenantId tenantId, string userName);
   User findByUserName(TenantId tenantId, string userName);
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  void removeByUserName(TenantId tenantId, string userName);
+
+  size_t countByGroupId(GroupId groupId);
   User[] findByGroupId(GroupId groupId);
-  void save(User user);
-  void update(User user);
-  void remove(UserId id);
-  size_t countByTenant(TenantId tenantId);
+  void removeByGroupId(GroupId groupId);
+
 }

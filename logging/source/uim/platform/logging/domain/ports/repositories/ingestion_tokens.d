@@ -12,16 +12,10 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface IngestionTokenRepository {
-  bool existsById(IngestionTokenId id);
-  IngestionToken findById(IngestionTokenId id);
+interface IngestionTokenRepository : ITenantRepository!(IngestionToken, IngestionTokenId) {
 
   bool existsByHash(string tokenHash);
   IngestionToken findByHash(string tokenHash);
+  void removeByHash(string tokenHash);
 
-  IngestionToken[] findByTenant(TenantId tenantId);
-  
-  void save(IngestionToken t);
-  void update(IngestionToken t);
-  void remove(IngestionTokenId id);
 }

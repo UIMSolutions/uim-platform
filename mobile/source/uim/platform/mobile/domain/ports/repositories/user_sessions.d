@@ -8,16 +8,22 @@ module uim.platform.mobile.domain.ports.repositories.user_sessions;
 import uim.platform.mobile.domain.entities.user_session;
 import uim.platform.mobile.domain.types;
 
-interface UserSessionRepository {
-  UserSession findById(UserSessionId id);
+interface UserSessionRepository : ITenantRepository!(UserSession, UserSessionId) {
+
+  size_t countByUser(string userId);
   UserSession[] findByUser(string userId);
+  void removeByUser(string userId);
+
+  size_t countByDevice(DeviceRegistrationId deviceId);
   UserSession[] findByDevice(DeviceRegistrationId deviceId);
+  void removeByDevice(DeviceRegistrationId deviceId);
+
+  size_t countByApp(MobileAppId appId);
   UserSession[] findByApp(MobileAppId appId);
-  UserSession[] findActive(MobileAppId appId);
-  UserSession[] findByTenant(TenantId tenantId);
-  void save(UserSession session);
-  void update(UserSession session);
-  void remove(UserSessionId id);
+  void removeByApp(MobileAppId appId);
+
   size_t countActive(MobileAppId appId);
-  size_t countByTenant(TenantId tenantId);
+  UserSession[] findActive(MobileAppId appId);
+  void removeActive(MobileAppId appId);
+
 }

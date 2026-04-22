@@ -13,17 +13,22 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - alert persistence.
-interface AlertRepository {
-  Alert findById(AlertId id);
-  bool existsById(AlertId id);
+interface AlertRepository : ITenantRepository!(Alert, AlertId) {
 
-  Alert[] findByTenant(TenantId tenantId);
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId);
+
+  size_t countByState(TenantId tenantId, AlertState state);
   Alert[] findByState(TenantId tenantId, AlertState state);
+  void removeByState(TenantId tenantId, AlertState state);
+
+  size_t countBySeverity(TenantId tenantId, AlertSeverity severity);
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity);
+  void removeBySeverity(TenantId tenantId, AlertSeverity severity);
+
+  size_t countByRule(TenantId tenantId, AlertRuleId ruleId);
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId);
+  void removeByRule(TenantId tenantId, AlertRuleId ruleId);
   
-  void save(Alert alert);
-  void update(Alert alert);
-  void remove(AlertId id);
 }
