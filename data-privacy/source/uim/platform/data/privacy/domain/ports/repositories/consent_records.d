@@ -13,19 +13,22 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting consent records.
-interface ConsentRecordRepository {
-  bool existsByTenant(TenantId tenantId);
-  ConsentRecord[] findByTenant(TenantId tenantId);
- 
-  bool existsById(ConsentRecordId tenantId, id tenantId);
-  ConsentRecord findById(ConsentRecordId tenantId, id tenantId);
+interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
 
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
-  ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
-  ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status);
-  ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-  void save(ConsentRecord record);
-  void update(ConsentRecord record);
-  void remove(ConsentRecordId tenantId, id tenantId);
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+  ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose);
+
+  size_t countByStatus(TenantId tenantId, ConsentStatus status);
+  ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status);
+  void removeByStatus(TenantId tenantId, ConsentStatus status);
+
+  size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
+  ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
+  void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
+
 }

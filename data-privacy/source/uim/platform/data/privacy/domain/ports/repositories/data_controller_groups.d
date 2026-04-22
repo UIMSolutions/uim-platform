@@ -13,14 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data controller groups.
-interface DataControllerGroupRepository {
-  bool existsByTenant(TenantId tenantId);
-  DataControllerGroup[] findByTenant(TenantId tenantId);
- 
-  bool existsById(DataControllerGroupId tenantId, id tenantId);
-  DataControllerGroup findById(DataControllerGroupId tenantId, id tenantId);
+interface DataControllerGroupRepository : ITenantRepository!(DataControllerGroup, DataControllerGroupId) {
 
-  void save(DataControllerGroup group);
-  void update(DataControllerGroup group);
-  void remove(DataControllerGroupId tenantId, id tenantId);
+  size_t countByName(TenantId tenantId, string name);
+  DataControllerGroup[] findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+  
 }

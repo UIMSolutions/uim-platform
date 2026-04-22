@@ -14,16 +14,23 @@ mixin(ShowModule!());
 
 /// Port for persisting data access log records.
 @safe:
-interface DataAccessLogRepository {
-  DataAccessLog[] findByTenant(TenantId tenantId);
+interface DataAccessLogRepository : ITenantRepository!(DataAccessLog, DataAccessLogId) {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
 
+  size_t countByAccessor(TenantId tenantId, UserId accessedBy);
   DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy);
-  DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject);
-  DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  void removeByAccessor(TenantId tenantId, UserId accessedBy);
 
-  void save(DataAccessLog log);
+  size_t countByDataSubject(TenantId tenantId, string dataSubject);
+  DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject);
+  void removeByDataSubject(TenantId tenantId, string dataSubject);
+
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

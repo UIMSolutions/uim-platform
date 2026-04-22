@@ -13,6 +13,12 @@ mixin(ShowModule!());
 struct ClientLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject()
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct Client {

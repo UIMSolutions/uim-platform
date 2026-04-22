@@ -12,15 +12,10 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface ClientRepository {
-  bool existsById(ClientId id);
-  Client findById(ClientId id);
+interface ClientRepository : ITenantRepository!(Client, ClientId) {
   
-  size_t countByTenant(TenantId tenantId);
+  size_t countByName(TenantId tenantId, string name);
+  Client[] findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  Client[] findByTenant(TenantId tenantId);
-
-  void save(Client c);
-  void update(Client c);
-  void remove(ClientId id);
 }
