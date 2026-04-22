@@ -8,21 +8,19 @@ module uim.platform.identity.provisioning.domain.ports.repositories.provisioned_
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
-interface ProvisionedEntityRepository {
-  bool existsById(ProvisionedEntityId tenantId, id tenantId);
-  ProvisionedEntity findById(ProvisionedEntityId tenantId, id tenantId);
-  
-  bool existsByExternalId(string externalId, TargetSystemId targettenantId, id tenantId);
-  ProvisionedEntity findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId);
+interface ProvisionedEntityRepository : ITenantRepository!(ProvisionedEntity, ProvisionedEntityId) {
 
-  ProvisionedEntity[] findByTenant(TenantId tenantId);
-  ProvisionedEntity[] findByTenant(TenantId tenantId);
-  ProvisionedEntity[] findBySource(SourceSystemId sourcetenantId, id tenantId);
-  ProvisionedEntity[] findByTarget(TargetSystemId targettenantId, id tenantId);
+  bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
+  ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
+  void removeByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
+
+  ProvisionedEntity[] findBySource(TenantId tenantId, SourceSystemId sourcetenantId);
+
+  size_t countByTarget(TenantId tenantId, TargetSystemId targettenantId);
+  ProvisionedEntity[] findByTarget(TenantId tenantId, TargetSystemId targettenantId);
+
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status);
+
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType);
-  size_t countByTarget(TargetSystemId targettenantId, id tenantId);
-  void save(ProvisionedEntity entity);
-  void update(ProvisionedEntity entity);
-  void remove(ProvisionedEntityId tenantId, id tenantId);
+
 }

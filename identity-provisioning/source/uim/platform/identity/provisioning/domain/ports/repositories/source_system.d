@@ -8,18 +8,18 @@ module uim.platform.identity.provisioning.domain.ports.repositories.source_syste
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.source_system;
 
-interface SourceSystemRepository {
-  bool existsById(SourceSystemId tenantId, id tenantId);
-  SourceSystem findById(SourceSystemId tenantId, id tenantId);
-
+interface SourceSystemRepository : ITenantRepository!(SourceSystem, SourceSystemId) {
+  
   bool existsByName(TenantId tenantId, string name);
   SourceSystem findByName(TenantId tenantId, string name);
-
-  SourceSystem[] findByTenant(TenantId tenantId);
-  SourceSystem[] findByType(TenantId tenantId, SystemType systemType);
-  SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status);
+  void removeByName(TenantId tenantId, string name);
   
-  void save(SourceSystem entity);
-  void update(SourceSystem entity);
-  void remove(SourceSystemId tenantId, id tenantId);
+  size_t countByType(TenantId tenantId, SystemType systemType);
+  SourceSystem[] findByType(TenantId tenantId, SystemType systemType);
+  void removeByType(TenantId tenantId, SystemType systemType);
+  
+  size_t countByStatus(TenantId tenantId, SystemStatus status);
+  SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status);
+  void removeByStatus(TenantId tenantId, SystemStatus status);
+  
 }

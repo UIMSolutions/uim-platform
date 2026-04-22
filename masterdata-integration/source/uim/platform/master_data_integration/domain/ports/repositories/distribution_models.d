@@ -9,12 +9,14 @@ import uim.platform.master_data_integration.domain.entities.distribution_model;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — distribution model persistence.
-interface DistributionModelRepository {
-  DistributionModel findById(DistributionModelId id);
-  DistributionModel[] findByTenant(TenantId tenantId);
+interface DistributionModelRepository : ITenantRepository!(DistributionModel, DistributionModelId) {
+
+  size_t countByStatus(TenantId tenantId, DistributionModelStatus status);
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status);
+  void removeByStatus(TenantId tenantId, DistributionModelStatus status);
+
+  size_t countBySourceClient(TenantId tenantId, ClientId sourceClientId);
   DistributionModel[] findBySourceClient(TenantId tenantId, ClientId sourceClientId);
-  void save(DistributionModel model);
-  void update(DistributionModel model);
-  void remove(DistributionModelId id);
+  void removeBySourceClient(TenantId tenantId, ClientId sourceClientId);
+
 }

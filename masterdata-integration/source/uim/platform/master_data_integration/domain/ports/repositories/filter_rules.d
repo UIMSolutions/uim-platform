@@ -9,12 +9,14 @@ import uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — filter rule persistence.
-interface FilterRuleRepository {
-  FilterRule findById(FilterRuleId id);
-  FilterRule[] findByTenant(TenantId tenantId);
+interface FilterRuleRepository : ITenantRepository!(FilterRule, FilterRuleId) {
+
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category);
   FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category);
+  void removeByCategory(TenantId tenantId, MasterDataCategory category);
+
+  size_t countActive(TenantId tenantId);
   FilterRule[] findActive(TenantId tenantId);
-  void save(FilterRule rule);
-  void update(FilterRule rule);
-  void remove(FilterRuleId id);
+  void removeActive(TenantId tenantId);
+
 }

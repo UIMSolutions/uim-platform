@@ -9,12 +9,14 @@ import uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — connected client system persistence.
-interface ClientRepository {
-  Client findById(ClientId id);
-  Client[] findByTenant(TenantId tenantId);
+interface ClientRepository : ITenantRepository!(Client, ClientId) {
+
+  size_t countByStatus(TenantId tenantId, ClientStatus status);
   Client[] findByStatus(TenantId tenantId, ClientStatus status);
+  void removeByStatus(TenantId tenantId, ClientStatus status);
+
+  size_t countByType(TenantId tenantId, ClientType clientType);
   Client[] findByType(TenantId tenantId, ClientType clientType);
-  void save(Client client);
-  void update(Client client);
-  void remove(ClientId id);
+  void removeByType(TenantId tenantId, ClientType clientType);
+
 }
