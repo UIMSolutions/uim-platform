@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - monitored resource persistence.
-interface MonitoredResourceRepository {
-  bool existsById(MonitoredResourceId id);
-  MonitoredResource findById(MonitoredResourceId id);
+interface MonitoredResourceRepository : ITenantRepository!(MonitoredResource, MonitoredResourceId) {
 
   bool existsByName(TenantId tenantId, string name);
   MonitoredResource findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  MonitoredResource[] findByTenant(TenantId tenantId);
+  size_t countByType(TenantId tenantId, ResourceType type);
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type);
+  void removeByType(TenantId tenantId, ResourceType type);
 
-  void save(MonitoredResource resource);
-  void update(MonitoredResource resource);
-  void remove(MonitoredResourceId id);
 }

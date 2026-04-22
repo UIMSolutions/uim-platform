@@ -13,15 +13,17 @@ mixin(ShowModule!());
 
 @safe:
 interface JobRepository : ITenantRepository!(Job, JobId) {
-    // Job[] findByTenant(TenantId tenantId);
 
-    // void save(Job j);
-    // void update(Job j);
-    // void remove(TenantId tenantId, JobId id);
+    bool existsByName(TenantId tenantId, string name);
     Job findByName(TenantId tenantId, string name);
+    void removeByName(TenantId tenantId, string name);
+    
+    size_t countByStatus(TenantId tenantId, JobStatus status);
     Job[] findByStatus(TenantId tenantId, JobStatus status);
+    void removeByStatus(TenantId tenantId, JobStatus status);
+    
     Job[] search(TenantId tenantId, string query);
-    size_t countByTenant(TenantId tenantId);
     size_t countActiveByTenant(TenantId tenantId);
     size_t countInactiveByTenant(TenantId tenantId);
+    
 }

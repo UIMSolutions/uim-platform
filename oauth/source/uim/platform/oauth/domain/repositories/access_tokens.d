@@ -11,16 +11,23 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AccessTokenRepository {
-    bool existsById(AccessTokenId id);
-    AccessToken findById(AccessTokenId id);
+interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId) {
+
+    bool existsByTokenValue(string tokenValue);
     AccessToken findByTokenValue(string tokenValue);
-    AccessToken[] findAll();
-    AccessToken[] findByTenant(TenantId tenantId);
+    void removeByTokenValue(string tokenValue);
+
     AccessToken[] findByClientId(string clientId);
+    AccessToken[] findByClientId(string clientId);
+    AccessToken[] findByClientId(string clientId);
+
     AccessToken[] findByUserId(string userId);
+    AccessToken[] findByUserId(string userId);
+    AccessToken[] findByUserId(string userId);
+
     AccessToken[] findByStatus(TokenStatus status);
-    void save(AccessToken entity);
-    void update(AccessToken entity);
-    void remove(AccessTokenId id);
+    AccessToken[] findByStatus(TokenStatus status);
+    AccessToken[] findByStatus(TokenStatus status);
+
+
 }

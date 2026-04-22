@@ -12,15 +12,14 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface RetentionPolicyRepository {
-  bool existsById(RetentionPolicyId id);
-  RetentionPolicy findById(RetentionPolicyId id);
+interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {
 
-  RetentionPolicy[] findByTenant(TenantId tenantId);
+  bool existsDefault(TenantId tenantId);
   RetentionPolicy findDefault(TenantId tenantId);
-  RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt);
+  void removeDefault(TenantId tenantId);
 
-  void save(RetentionPolicy p);
-  void update(RetentionPolicy p);
-  void remove(RetentionPolicyId id);
+  size_t countByDataType(TenantId tenantId, DataType dt);
+  RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt);
+  void removeByDataType(TenantId tenantId, DataType dt);
+
 }

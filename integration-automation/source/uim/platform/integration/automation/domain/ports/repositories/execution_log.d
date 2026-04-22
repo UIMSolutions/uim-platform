@@ -9,14 +9,22 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
 
 /// Port for persisting and querying execution logs.
-interface ExecutionLogRepository {
-  ExecutionLog[] findByWorkflow(WorkflowId workflowtenantId, id tenantId);
-  ExecutionLog[] findByStep(StepId steptenantId, id tenantId);
-  ExecutionLog[] findByTenant(TenantId tenantId);
+interface ExecutionLogRepository : ITenantRepository!(ExecutionLog, ExecutionLogId) {
+
+  size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId);
+  ExecutionLog[] findByWorkflow(TenantId tenantId, WorkflowId workflowId);
+  void removeByWorkflow(TenantId tenantId, WorkflowId workflowId);
+
+  size_t countByStep(TenantId tenantId, StepId stepId);
+  ExecutionLog[] findByStep(TenantId tenantId, StepId stepId);
+  void removeByStep(TenantId tenantId, StepId stepId);
+
+  size_t countByOutcome(TenantId tenantId, ExecutionOutcome outcome);
   ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome);
+  void removeByOutcome(TenantId tenantId, ExecutionOutcome outcome);
+
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
-  size_t countByWorkflow(WorkflowId workflowtenantId, id tenantId);
-  void save(ExecutionLog log);
-  void removeByWorkflow(WorkflowId workflowtenantId, id tenantId);
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp);
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+
 }
