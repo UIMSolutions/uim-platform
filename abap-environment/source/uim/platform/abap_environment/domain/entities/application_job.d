@@ -16,6 +16,7 @@ mixin(ShowModule!());
 /// Application job definition and schedule.
 struct ApplicationJob {
   mixin TenantEntity!(ApplicationJobId);
+  
   SystemInstanceId systemInstanceId;
   string name;
   string description;

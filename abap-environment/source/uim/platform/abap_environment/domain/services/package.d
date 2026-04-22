@@ -6,5 +6,5 @@
 module uim.platform.abap_environment.domain.services;
 
 public {
-    import uim.platform.abap_environment.domain.services.system_lifecycle_service;
+    import uim.platform.abap_environment.domain.services.validators;
 }

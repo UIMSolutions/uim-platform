@@ -10,11 +10,13 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - service binding persistence.
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
-  // ServiceBinding* findById(ServiceBindingId id);
+
+  size_t countBySystem(SystemInstanceId systemId);
   ServiceBinding[] findBySystem(SystemInstanceId systemId);
-  // ServiceBinding[] findByTenant(TenantId tenantId);
+  void removeBySystem(SystemInstanceId systemId);
+
+  size_t countByType(SystemInstanceId systemId, BindingType bindingType);
   ServiceBinding[] findByType(SystemInstanceId systemId, BindingType bindingType);
-  // void save(ServiceBinding binding);
-  // void update(ServiceBinding binding);
-  // void remove(ServiceBindingId id);
+  void removeByType(SystemInstanceId systemId, BindingType bindingType);
+
 }

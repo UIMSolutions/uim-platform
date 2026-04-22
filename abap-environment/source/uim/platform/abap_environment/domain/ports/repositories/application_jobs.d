@@ -10,11 +10,13 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - application job persistence.
 interface ApplicationJobRepository : ITenantRepository!(ApplicationJob, ApplicationJobId) {
-  // ApplicationJob* findById(ApplicationJobId id);
+
+  size_t countBySystem(SystemInstanceId systemId);
   ApplicationJob[] findBySystem(SystemInstanceId systemId);
-  // ApplicationJob[] findByTenant(TenantId tenantId);
+  void removeBySystem(SystemInstanceId systemId);
+
+  size_t countByStatus(SystemInstanceId systemId, JobStatus status);
   ApplicationJob[] findByStatus(SystemInstanceId systemId, JobStatus status);
-  // void save(ApplicationJob job);
-  // void update(ApplicationJob job);
-  // void remove(ApplicationJobId id);
+  void removeByStatus(SystemInstanceId systemId, JobStatus status);
+
 }

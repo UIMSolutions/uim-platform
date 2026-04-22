@@ -38,6 +38,11 @@ module uim.platform.abap_environment.infrastructure.container;
 // import uim.platform.abap_environment.presentation.http.application_job;
 // import uim.platform.abap_environment.presentation.http.health;
 
+import uim.platform.abap_environment;
+
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)

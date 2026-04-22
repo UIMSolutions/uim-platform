@@ -10,12 +10,17 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - business user persistence.
 interface BusinessUserRepository : ITenantRepository!(BusinessUser, BusinessUserId) {
-  // BusinessUser* findById(BusinessUserId id);
+
+  bool existsByUsername(SystemInstanceId systemId, string username);
+  BusinessUser findByUsername(SystemInstanceId systemId, string username);
+  void removeByUsername(SystemInstanceId systemId, string username);
+  
+  bool existsByEmail(SystemInstanceId systemId, string email);
+  BusinessUser findByEmail(SystemInstanceId systemId, string email);
+  void removeByEmail(SystemInstanceId systemId, string email);
+
+  size_t countBySystem(SystemInstanceId systemId);
   BusinessUser[] findBySystem(SystemInstanceId systemId);
-  // BusinessUser[] findByTenant(TenantId tenantId);
-  BusinessUser* findByUsername(SystemInstanceId systemId, string username);
-  BusinessUser* findByEmail(SystemInstanceId systemId, string email);
-  // void save(BusinessUser user);
-  // void update(BusinessUser user);
-  // void remove(BusinessUserId id);
+  void removeBySystem(SystemInstanceId systemId);
+
 }

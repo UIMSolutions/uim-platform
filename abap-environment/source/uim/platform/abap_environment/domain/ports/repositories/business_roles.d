@@ -10,11 +10,13 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - business role persistence.
 interface BusinessRoleRepository : ITenantRepository!(BusinessRole, BusinessRoleId) {
-  // BusinessRole* findById(BusinessRoleId id);
+
+  bool existsByName(SystemInstanceId systemId, string name);
+  BusinessRole findByName(SystemInstanceId systemId, string name);
+  void removeByName(SystemInstanceId systemId, string name);
+
+  size_t countBySystem(SystemInstanceId systemId);
   BusinessRole[] findBySystem(SystemInstanceId systemId);
-  // BusinessRole[] findByTenant(TenantId tenantId);
-  BusinessRole* findByName(SystemInstanceId systemId, string name);
-  // void save(BusinessRole role);
-  // void update(BusinessRole role);
-  // void remove(BusinessRoleId id);
+  void removeBySystem(SystemInstanceId systemId);
+
 }
