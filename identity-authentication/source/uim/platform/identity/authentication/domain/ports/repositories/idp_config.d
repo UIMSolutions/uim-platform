@@ -10,14 +10,17 @@ module uim.platform.identity_authentication.domain.ports.repositories.idp_config
 import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
+
 @safe:
 /// Port: outgoing — external IdP configuration persistence.
-interface IdpConfigRepository {
-  IdpConfig findById(string id);
+interface IdpConfigRepository : ITenantRepository!(IdpConfig, IdpConfigId) {
+
+  bool existsDefaultForTenant(TenantId tenantId);
   IdpConfig findDefaultForTenant(TenantId tenantId);
-  IdpConfig[] findByTenant(TenantId tenantId);
+  void removeDefaultForTenant(TenantId tenantId);
+
+  bool existsByDomainHint(TenantId tenantId, string emailDomain);
   IdpConfig findByDomainHint(TenantId tenantId, string emailDomain);
-  void save(IdpConfig config);
-  void update(IdpConfig config);
-  void remove(string id);
+  void removeByDomainHint(TenantId tenantId, string emailDomain);
+
 }

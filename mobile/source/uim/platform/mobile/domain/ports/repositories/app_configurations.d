@@ -8,14 +8,18 @@ module uim.platform.mobile.domain.ports.repositories.app_configurations;
 import uim.platform.mobile.domain.entities.app_configuration;
 import uim.platform.mobile.domain.types;
 
-interface AppConfigurationRepository {
-  AppConfiguration findById(AppConfigurationId id);
+interface AppConfigurationRepository : ITenantRepository!(AppConfiguration, AppConfigurationId) {
+
+  bool existsByKey(MobileAppId appId, string key);
   AppConfiguration findByKey(MobileAppId appId, string key);
-  AppConfiguration[] findByApp(MobileAppId appId);
-  AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform);
-  AppConfiguration[] findByTenant(TenantId tenantId);
-  void save(AppConfiguration config);
-  void update(AppConfiguration config);
-  void remove(AppConfigurationId id);
+  void removeByKey(MobileAppId appId, string key);
+
   size_t countByApp(MobileAppId appId);
+  AppConfiguration[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
+  size_t countByAppAndPlatform(MobileAppId appId, AppPlatform platform);
+  AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform);
+  void removeByAppAndPlatform(MobileAppId appId, AppPlatform platform);
+
 }

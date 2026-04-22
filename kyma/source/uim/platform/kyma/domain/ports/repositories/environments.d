@@ -13,15 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — Kyma environment persistence.
-interface EnvironmentRepository {
-  bool existsById(KymaEnvironmentId id);
-  KymaEnvironment findById(KymaEnvironmentId id);
+interface EnvironmentRepository : ITenantRepository!(KymaEnvironment, KymaEnvironmentId) {
 
-  KymaEnvironment[] findByTenant(TenantId tenantId);
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+
+  size_t countByStatus(EnvironmentStatus status);
   KymaEnvironment[] findByStatus(EnvironmentStatus status);
+  void removeByStatus(EnvironmentStatus status);
   
-  void save(KymaEnvironment env);
-  void update(KymaEnvironment env);
-  void remove(KymaEnvironmentId id);
 }

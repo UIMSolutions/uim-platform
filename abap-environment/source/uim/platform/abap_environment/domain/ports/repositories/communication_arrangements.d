@@ -10,11 +10,13 @@ import uim.platform.abap_environment.domain.types;
 
 /// Port: outgoing - communication arrangement persistence.
 interface CommunicationArrangementRepository : ITenantRepository!(CommunicationArrangement, CommunicationArrangementId) {
-  // CommunicationArrangement* findById(CommunicationArrangementId id);
+
+  size_t countBySystem(SystemInstanceId systemId);
   CommunicationArrangement[] findBySystem(SystemInstanceId systemId);
-  // CommunicationArrangement[] findByTenant(TenantId tenantId);
+  void removeBySystem(SystemInstanceId systemId);
+
+  size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir);
   CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir);
-  // void save(CommunicationArrangement arrangement);
-  // void update(CommunicationArrangement arrangement);
-  // void remove(CommunicationArrangementId id);
+  void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir);
+
 }

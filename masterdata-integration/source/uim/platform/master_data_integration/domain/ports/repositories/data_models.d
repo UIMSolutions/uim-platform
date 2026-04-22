@@ -9,12 +9,14 @@ import uim.platform.master_data_integration.domain.entities.data_model;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — data model/schema persistence.
-interface DataModelRepository {
-  DataModel findById(DataModelId id);
-  DataModel[] findByTenant(TenantId tenantId);
-  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category);
+interface DataModelRepository : ITenantRepository!(DataModel, DataModelId) {
+
+  bool existsByName(TenantId tenantId, string name);
   DataModel findByName(TenantId tenantId, string name);
-  void save(DataModel model);
-  void update(DataModel model);
-  void remove(DataModelId id);
+  void removeByName(TenantId tenantId, string name);
+
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category);
+  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category);
+  void removeByCategory(TenantId tenantId, MasterDataCategory category);
+
 }

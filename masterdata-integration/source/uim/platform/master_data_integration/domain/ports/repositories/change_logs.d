@@ -10,12 +10,21 @@ import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — change log persistence.
 interface ChangeLogRepository : ITenantRepository!(ChangeLogEntry, ChangeLogEntryId) {
-  // ChangeLogEntry findById(ChangeLogEntryId id);
-  // ChangeLogEntry[] findByTenant(TenantId tenantId);
+
+  size_t countByObjectId(TenantId tenantId, MasterDataObjectId objectId);
   ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId);
+  void removeByObjectId(TenantId tenantId, MasterDataObjectId objectId);
+
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category);
   ChangeLogEntry[] findByCategory(TenantId tenantId, MasterDataCategory category);
+  void removeByCategory(TenantId tenantId, MasterDataCategory category);
+
+  size_t countSinceDeltaToken(TenantId tenantId, string deltaToken);
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken);
+  void removeSinceDeltaToken(TenantId tenantId, string deltaToken);
+
+  size_t countSinceTimestamp(TenantId tenantId, long sinceTimestamp);
   ChangeLogEntry[] findSinceTimestamp(TenantId tenantId, long sinceTimestamp);
-  // void save(ChangeLogEntry entry);
-  // void remove(ChangeLogEntryId id);
+  void removeSinceTimestamp(TenantId tenantId, long sinceTimestamp);
+
 }

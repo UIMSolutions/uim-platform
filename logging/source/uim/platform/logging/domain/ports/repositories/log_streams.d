@@ -12,16 +12,10 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface LogStreamRepository {
-  bool existsById(LogStreamId id);
-  LogStream findById(LogStreamId id);
+interface LogStreamRepository : ITenantRepository!(LogStream, LogStreamId) {
 
   bool existsByName(TenantId tenantId, string name);
   LogStream findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  LogStream[] findByTenant(TenantId tenantId);
-
-  void save(LogStream stream);
-  void update(LogStream stream);
-  void remove(LogStreamId id);
 }
