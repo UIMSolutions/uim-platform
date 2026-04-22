@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BuildConfigurationRepository {
-    bool existsById(BuildConfigurationId id);
-    BuildConfiguration findById(BuildConfigurationId id);
+interface BuildConfigurationRepository : ITenantRepository!(BuildConfiguration, BuildConfigurationId) {
 
-    BuildConfiguration[] findAll();
-    BuildConfiguration[] findByTenant(TenantId tenantId);
+    size_t countByProject(ProjectId projectId);
     BuildConfiguration[] findByProject(ProjectId projectId);
-    BuildConfiguration[] findByStatus(BuildStatus status);
+    void removeByProject(ProjectId projectId);
 
-    void save(BuildConfiguration entity);
-    void update(BuildConfiguration entity);
-    void remove(BuildConfigurationId id);
+    size_t countByStatus(BuildStatus status);
+    BuildConfiguration[] findByStatus(BuildStatus status);
+    void removeByStatus(BuildStatus status);
+
 }

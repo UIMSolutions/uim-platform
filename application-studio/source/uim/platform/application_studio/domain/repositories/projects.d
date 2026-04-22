@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProjectRepository {
-    bool existsById(ProjectId id);
-    Project findById(ProjectId id);
+interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
 
-    Project[] findAll();
-    Project[] findByTenant(TenantId tenantId);
+    size_t countByDevSpace(DevSpaceId devSpaceId);
     Project[] findByDevSpace(DevSpaceId devSpaceId);
-    Project[] findByType(ProjectType projectType);
+    void removeByDevSpace(DevSpaceId devSpaceId);
 
-    void save(Project entity);
-    void update(Project entity);
-    void remove(ProjectId id);
+    size_t countByType(ProjectType projectType);
+    Project[] findByType(ProjectType projectType);
+    void removeByType(ProjectType projectType);
+
 }

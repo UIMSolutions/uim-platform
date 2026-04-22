@@ -35,20 +35,35 @@ class TenantRepository(TEntity, TId) {
     }
   }
 
-  bool existsByTenant(TenantId tenantId) {
-    return tenantId in store ? true : false;
-  }
-
-  TEntity[] findAll() {
+  TEntity[] findAll(uint offset = 0, uint limit = 0) {
     TEntity[] allItems;
+    uint idx;
     foreach (tenantId, items; store) {
-      allItems ~= items.byValue.array;
+      foreach (item; items.values.array) {
+        if (idx >= offset && (limit == 0 || allItems.length < limit))
+          allItems ~= item;
+        idx++;
+      }
     }
     return allItems;
   }
 
-  TEntity[] findByTenant(TenantId tenantId) {
-    return existsByTenant(tenantId) ? store[tenantId].values.array : null;
+  bool existsByTenant(TenantId tenantId) {
+    return tenantId in store ? true : false;
+  }
+
+  TEntity[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 0) {
+    if (!existsByTenant(tenantId)) {
+      return null;
+    }
+    TEntity[] allItems;
+    uint idx;
+    foreach (item; store[tenantId].values.array) {
+      if (idx >= offset && (limit == 0 || allItems.length < limit))
+        allItems ~= item;
+      idx++;
+    }
+    return allItems;
   }
 
   void removeByTenant(TenantId tenantId, bool deleteTenantIfEmpty = false) {

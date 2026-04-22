@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProjectTemplateRepository {
-    bool existsById(ProjectTemplateId id);
-    ProjectTemplate findById(ProjectTemplateId id);
+interface ProjectTemplateRepository : ITenantRepository!(ProjectTemplate, ProjectTemplateId) {
 
-    ProjectTemplate[] findAll();
-    ProjectTemplate[] findByTenant(TenantId tenantId);
-    ProjectTemplate[] findByCategory(TemplateCategory category);
+    size_t countByCategoryCount(TemplateCategory category);
+    ProjectTemplate[] findByCategory(TemplateCategory category, uint offset = 0, uint limit = 100);
+    void removeByCategory(TemplateCategory category);
 
-    void save(ProjectTemplate entity);
-    void update(ProjectTemplate entity);
-    void remove(ProjectTemplateId id);
 }

@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DevSpaceRepository {
-    bool existsById(DevSpaceId id);
-    DevSpace findById(DevSpaceId id);
+interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
 
-    DevSpace[] findAll();
-    DevSpace[] findByTenant(TenantId tenantId);
+    size_t countByOwner(string owner);
     DevSpace[] findByOwner(string owner);
-    DevSpace[] findByStatus(DevSpaceStatus status);
+    void removeByOwner(string owner);
 
-    void save(DevSpace entity);
-    void update(DevSpace entity);
-    void remove(DevSpaceId id);
+    size_t countByStatus(DevSpaceStatus status);
+    DevSpace[] findByStatus(DevSpaceStatus status);
+    void removeByStatus(DevSpaceStatus status);
+
 }

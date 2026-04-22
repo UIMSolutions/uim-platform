@@ -12,22 +12,22 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface HtmlAppRepository {
-  bool existsById(HtmlAppId id);
-  HtmlApp findById(HtmlAppId id);
+interface HtmlAppRepository : ITenantRepository!(HtmlApp, HtmlAppId) {
 
-  bool existsByName(TenantId tenantId, string name);
-  HtmlApp findByName(TenantId tenantId, string name);
+  size_t countByName(TenantId tenantId, string name);
+  HtmlApp[] findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
   
-  size_t countByTenant(TenantId tenantId);
-  HtmlApp[] findByTenant(TenantId tenantId);
-
   size_t countByServiceInstance(ServiceInstanceId instanceId);
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId);
-  
+  void removeByServiceInstance(ServiceInstanceId instanceId);
+
+  size_t countBySpace(SpaceId spaceId);
   HtmlApp[] findBySpace(SpaceId spaceId);
+  void removeBySpace(SpaceId spaceId);
+
+  size_t countPublic(TenantId tenantId);
   HtmlApp[] findPublic(TenantId tenantId);
-  void save(HtmlApp app);
-  void update(HtmlApp app);
-  void remove(HtmlAppId id);
+  void removePublic(TenantId tenantId);
+
 }

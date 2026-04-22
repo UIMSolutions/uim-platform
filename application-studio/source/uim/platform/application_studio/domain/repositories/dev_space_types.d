@@ -11,15 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DevSpaceTypeRepository {
-    bool existsById(DevSpaceTypeId id);
-    DevSpaceType findById(DevSpaceTypeId id);
+interface DevSpaceTypeRepository : ITenantRepository!(DevSpaceType, DevSpaceTypeId) {
 
-    DevSpaceType[] findAll();
-    DevSpaceType[] findByTenant(TenantId tenantId);
+    size_t countByCategory(DevSpaceTypeCategory category);
     DevSpaceType[] findByCategory(DevSpaceTypeCategory category);
+    void removeByCategory(DevSpaceTypeCategory category);
 
-    void save(DevSpaceType entity);
-    void update(DevSpaceType entity);
-    void remove(DevSpaceTypeId id);
 }

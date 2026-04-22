@@ -13,16 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — destination fragment persistence.
-interface FragmentRepository {
-  bool existsById(FragmentId id);
-  DestinationFragment findById(FragmentId id);
+interface FragmentRepository : ITenantRepository!(DestinationFragment, FragmentId) {
   
-  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
-  DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name);
+  size_t countByName(TenantId tenantId, SubaccountId subaccountId, string name);
+  DestinationFragment[] findByName(TenantId tenantId, SubaccountId subaccountId, string name);
+  void removeByName(TenantId tenantId, SubaccountId subaccountId, string name);
 
-  DestinationFragment[] findByTenant(TenantId tenantId);
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   DestinationFragment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
-  void save(DestinationFragment fragment);
-  void update(DestinationFragment fragment);
-  void remove(FragmentId id);
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+
 }
