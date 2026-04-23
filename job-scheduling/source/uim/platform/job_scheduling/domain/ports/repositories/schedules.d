@@ -12,15 +12,19 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-interface ScheduleRepository {
-    Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId);
-    Schedule[] findByJob(JobId jobtenantId, id tenantId);
-    Schedule[] findByStatus(ScheduleStatus status, JobId jobtenantId, id tenantId);
+interface ScheduleRepository : ITenantRepository!(Schedule, ScheduleId) {
+
+    size_t countByJob(TenantId tenantId, JobId jobId);
+    Schedule[] findByJob(TenantId tenantId, JobId jobId);
+    void removeByJob(TenantId tenantId, JobId jobId);
+
+    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
+    Schedule[] findByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
+    void removeByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
+
+    size_t countActiveByTenant(TenantId tenantId);
     Schedule[] findActiveByTenant(TenantId tenantId);
-    Schedule[] search(string query, TenantId tenantId);
-    void save(Schedule s);
-    void update(Schedule s);
-    void remove(ScheduleId id, JobId jobtenantId, id tenantId);
-    void removeAllByJob(JobId jobtenantId, id tenantId);
-    size_t countByJob(JobId jobtenantId, id tenantId);
+    void removeActiveByTenant(TenantId tenantId);
+
+    Schedule[] search(TenantId tenantId, string query);
 }

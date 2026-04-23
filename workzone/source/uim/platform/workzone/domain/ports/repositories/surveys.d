@@ -14,12 +14,12 @@ mixin(ShowModule!());
 @safe:
 interface SurveyRepository : ITenantRepository!(Survey, SurveyId) {
 
-  size_t countByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  Survey[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  void removeByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  Survey[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
 
-  size_t countByStatus(SurveyStatus status, TenantId tenantId);
-  Survey[] findByStatus(SurveyStatus status, TenantId tenantId);
-  void removeByStatus(SurveyStatus status, TenantId tenantId);
+  size_t countByStatus(TenantId tenantId, SurveyStatus status);
+  Survey[] findByStatus(TenantId tenantId, SurveyStatus status);
+  void removeByStatus(TenantId tenantId, SurveyStatus status);
 
 }

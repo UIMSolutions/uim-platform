@@ -12,13 +12,22 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface ContentRepository {
-  ContentItem[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  ContentItem* findById(ContentId tenantId, id tenantId);
-  ContentItem[] findByAuthor(UserId authortenantId, id tenantId);
-  ContentItem[] findByType(ContentType contentType, WorkspaceId workspacetenantId, id tenantId);
-  ContentItem[] findByTag(string tag, TenantId tenantId);
-  void save(ContentItem item);
-  void update(ContentItem item);
-  void remove(ContentId tenantId, id tenantId);
+interface ContentRepository : ITenantRepository!(ContentItem, ContentId) {
+
+  size_t countByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
+  ContentItem[] findByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
+
+  size_t countByAuthor(TenantID tenantId, UserId authorId);
+  ContentItem[] findByAuthor(TenantID tenantId, UserId authorId);
+  void removeByAuthor(TenantID tenantId, UserId authorId);
+
+  size_t countByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
+  ContentItem[] findByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
+  void removeByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
+
+  size_t countByStatus(TenantID tenantId, ContentStatus status, WorkspaceId workspaceId);
+  ContentItem[] findByTag(TenantID tenantId, string tag);
+  void removeByTag(TenantID tenantId, string tag);
+  
 }

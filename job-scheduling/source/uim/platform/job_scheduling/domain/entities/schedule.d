@@ -30,4 +30,27 @@ struct Schedule {
     long nextRunAt;
     long createdAt;
     long modifiedAt;
+
+    static Schedule createFromRequest(CreateScheduleRequest request) {
+        Schedule schedule;
+        schedule.id = randomUUID();
+        schedule.jobId = request.jobId;
+        schedule.tenantId = request.tenantId;
+        schedule.description = request.description;
+        schedule.type = request.type.to!ScheduleType;
+        schedule.format = request.format.to!ScheduleFormat;
+        schedule.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        schedule.active = request.active;
+        schedule.cronExpression = request.cronExpression;
+        schedule.humanReadableSchedule = request.humanReadableSchedule;
+        schedule.repeatInterval = request.repeatInterval;
+        schedule.repeatAt = request.repeatAt;
+        schedule.time = request.time;
+        schedule.startTime = request.startTime;
+        schedule.endTime = request.endTime;
+        schedule.createdAt = now;
+        schedule.modifiedAt = now;
+
+        return schedule;
+    }
 }

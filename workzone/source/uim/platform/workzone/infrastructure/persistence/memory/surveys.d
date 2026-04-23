@@ -47,16 +47,16 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   // #endregion ByOrganizer
 
   // #region ByStatus
-  size_t countByStatus(SurveyStatus status, TenantId tenantId) {
-    return findByStatus(status, tenantId).length;
+  size_t countByStatus(TenantId tenantId, SurveyStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  Survey[] findByStatus(SurveyStatus status, TenantId tenantId) {
+  Survey[] findByStatus(TenantId tenantId, SurveyStatus status) {
     return store.byValue().filter!(s => s.tenantId == tenantId && s.status == status).array;
   }
 
-  void removeByStatus(SurveyStatus status, TenantId tenantId) {
-    return findByStatus(status, tenantId).each!(s => remove(s));
+  void removeByStatus(TenantId tenantId, SurveyStatus status) {
+    return findByStatus(tenantId, status).each!(s => remove(s));
   }
   // #endregion ByStatus
 

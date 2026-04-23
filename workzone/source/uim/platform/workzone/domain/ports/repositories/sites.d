@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface SiteRepository : ITenantRepository!(Site, SiteId) {
 
-  bool existsByAlias(string alias_, TenantId tenantId);
-  Site findByAlias(string alias_, TenantId tenantId);
-  void removeByAlias(string alias_, TenantId tenantId);
+  bool existsByAlias(TenantId tenantId, string alias_);
+  Site findByAlias(TenantId tenantId, string alias_);
+  void removeByAlias(TenantId tenantId, string alias_);
 
 }

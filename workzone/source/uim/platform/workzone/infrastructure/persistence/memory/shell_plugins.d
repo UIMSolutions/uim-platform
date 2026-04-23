@@ -41,16 +41,16 @@ class MemoryShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId
   // #endregion BySite
 
   // #region ByStatus
-  size_t countByStatus(PluginStatus status, TenantId tenantId) {
-    return findByStatus(status, tenantId).length;
+  size_t countByStatus(TenantId tenantId, PluginStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId) {
+  ShellPlugin[] findByStatus(TenantId tenantId, PluginStatus status) {
     return findByTenant(tenantId).filter!(p => p.status == status).array;
   }
 
-  void removeByStatus(PluginStatus status, TenantId tenantId) {
-    findByStatus(status, tenantId).each!(p => remove(p));
+  void removeByStatus(TenantId tenantId, PluginStatus status) {
+    findByStatus(tenantId, status).each!(p => remove(p));
   }
   // #endregion ByStatus
 

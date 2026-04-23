@@ -57,8 +57,8 @@ class ProvisioningEngine {
   }
 
   /// Execute a provisioning job (simulated).
-  ProvisioningJob* runJob(ProvisioningJobId jobtenantId, id tenantId) {
-    auto job = jobRepo.findById(jobtenantId, id);
+  ProvisioningJob* runJob(TenantId tenantId, ProvisioningJobId jobId) {
+    auto job = jobRepo.findById(tenantId, jobId);
     if (job is null)
       return null;
 
@@ -69,14 +69,14 @@ class ProvisioningEngine {
     job.startedAt = now;
     jobRepo.update(*job);
 
-    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
-    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
+    auto src = sourceRepo.findById(tenantId, job.sourceSystemId);
+    auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
     string srcName = src !is null ? src.name : job.sourceSystemId;
     string tgtName = tgt !is null ? tgt.name : job.targetSystemId;
 
     // Simulate provisioning 5 users and 2 groups
-    simulateEntities(job, tenantId, srcName, tgtName, EntityType.user, 5);
-    simulateEntities(job, tenantId, srcName, tgtName, EntityType.group, 2);
+    simulateEntities(tenantId, job, srcName, tgtName, EntityType.user, 5);
+    simulateEntities(tenantId, job, srcName, tgtName, EntityType.group, 2);
 
     // Complete
     job.totalEntities = 7;
@@ -100,8 +100,8 @@ class ProvisioningEngine {
   }
 
   /// Cancel a running or scheduled job.
-  bool cancelJob(ProvisioningJobId jobtenantId, id tenantId) {
-    auto job = jobRepo.findById(jobtenantId, id);
+  bool cancelJob(TenantId tenantId, ProvisioningJobId jobId) {
+    auto job = jobRepo.findById(tenantId, jobId);
     if (job is null)
       return false;
     if (job.status != JobStatus.running && job.status != JobStatus.scheduled)
@@ -113,7 +113,7 @@ class ProvisioningEngine {
     return true;
   }
 
-  private void simulateEntities(ProvisioningJob* job, TenantId tenantId,
+  private void simulateEntities(TenantId tenantId, ProvisioningJob* job,
       string srcName, string tgtName, EntityType eType, int count) {
     auto now = Clock.currStdTime();
     foreach (i; 0 .. count) {

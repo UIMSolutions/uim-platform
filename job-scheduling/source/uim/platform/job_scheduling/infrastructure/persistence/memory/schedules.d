@@ -17,33 +17,51 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryScheduleRepository : ScheduleRepository {
-    private Schedule[] store;
+class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), ScheduleRepository {
 
-    Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId) {
-        foreach (s; store) {
-            if (s.id == id && s.jobId == jobId && s.tenantId == tenantId)
+    Schedule findById(TenantId tenantId, ScheduleId id, JobId jobId) {
+        foreach (s; findByTenant(tenantId)) {
+            if (s.id == id && s.jobId == jobId)
                 return s;
         }
         return Schedule.init;
     }
 
-    Schedule[] findByJob(JobId jobtenantId, id tenantId) {
-        return store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array;
+    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
+        return findByStatus(tenantId, status, jobId).length;
     }
 
-    Schedule[] findByStatus(ScheduleStatus status, JobId jobtenantId, id tenantId) {
-        return store.filter!(s => s.status == status && s.jobId == jobId && s.tenantId == tenantId).array;
+    Schedule[] findByJob(Schedule[] items, JobId jobId) {
+        return items.filter!(s => s.jobId == jobId).array;
+    }
+
+    Schedule[] findByJob(TenantId tenantId, JobId jobId) {
+        return findByJob(findByTenant(tenantId), jobId);
+    }
+
+    void removeByJob(TenantId tenantId, JobId jobId) {
+        return findByJob(tenantId, jobId).each!(s => remove(s));
+    }
+
+    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
+        return findByStatus(tenantId, status, jobId).length;
+    }
+
+    Schedule[] findByStatus(TenantId tenantId, JobId jobId, ScheduleStatus status) {
+        return findByJob(tenantId, jobId).filter!(s => s.status == status).array;
+    }
+
+    void removeByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
+        return findByStatus(tenantId, jobId, status).each!(s => remove(s));
     }
 
     Schedule[] findActiveByTenant(TenantId tenantId) {
-        return store.filter!(s => s.active && s.tenantId == tenantId).array;
+        return findByTenant(tenantId).filter!(s => s.active).array;
     }
 
-    Schedule[] search(string query, TenantId tenantId) {
+    Schedule[] search(TenantId tenantId, string query) {
         auto q = query.toLower;
-        return store.filter!(s => s.tenantId == tenantId
-            && (s.description.toLower.canFind(q) || s.jobId.toLower.canFind(q))).array;
+        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.toLower.canFind(q)).array;
     }
 
     void save(Schedule s) {
@@ -51,7 +69,7 @@ class MemoryScheduleRepository : ScheduleRepository {
     }
 
     void update(Schedule s) {
-        foreach (existing; store) {
+        foreach (existing; findByTenant(s.tenantId)) {
             if (existing.id == s.id && existing.jobId == s.jobId) {
                 existing = s;
                 return;
@@ -59,15 +77,15 @@ class MemoryScheduleRepository : ScheduleRepository {
         }
     }
 
-    void remove(ScheduleId id, JobId jobtenantId, id tenantId) {
-        store = store.filter!(s => !(s.id == id && s.jobId == jobId && s.tenantId == tenantId)).array;
+    void remove(ScheduleId id, TenantId tenantId, JobId jobId) {
+         findByTenant(tenantId).filter!(s => !(s.id == id && s.jobId == jobId)).each!(s => remove(s));
     }
 
-    void removeAllByJob(JobId jobtenantId, id tenantId) {
-        store = store.filter!(s => !(s.jobId == jobId && s.tenantId == tenantId)).array;
+    void removeAllByJob(TenantId tenantId, JobId jobId) {
+        findByTenant(tenantId).filter!(s => !(s.jobId == jobId)).each!(s => remove(s));
     }
 
-    size_t countByJob(JobId jobtenantId, id tenantId) {
-        return store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array.length;
+    size_t countByJob(TenantId tenantId, JobId jobId) {
+        return findByTenant(tenantId).filter!(s => s.jobId == jobId).array.length;
     }
 }
