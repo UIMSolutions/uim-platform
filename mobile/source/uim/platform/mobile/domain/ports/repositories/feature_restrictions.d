@@ -9,13 +9,17 @@ import uim.platform.mobile.domain.entities.feature_restriction;
 import uim.platform.mobile.domain.types;
 
 interface FeatureRestrictionRepository {
-  FeatureRestriction findById(FeatureRestrictionId id);
+
+  bool existsByKey(MobileAppId appId, string featureKey);
   FeatureRestriction findByKey(MobileAppId appId, string featureKey);
-  FeatureRestriction[] findByApp(MobileAppId appId);
-  FeatureRestriction[] findEnabled(MobileAppId appId);
-  FeatureRestriction[] findByTenant(TenantId tenantId);
-  void save(FeatureRestriction restriction);
-  void update(FeatureRestriction restriction);
-  void remove(FeatureRestrictionId id);
+  void removeByKey(MobileAppId appId, string featureKey);
+
   size_t countByApp(MobileAppId appId);
+  FeatureRestriction[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
+  size_t countEnabled(MobileAppId appId);
+  FeatureRestriction[] findEnabled(MobileAppId appId);
+  void removeEnabled(MobileAppId appId);
+
 }

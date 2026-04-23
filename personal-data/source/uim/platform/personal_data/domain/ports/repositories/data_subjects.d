@@ -11,16 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRepository {
-    bool existsById(DataSubjectId id);
-    DataSubject findById(DataSubjectId id);
+interface DataSubjectRepository : IRepository!(DataSubject, DataSubjectId) {
 
-    DataSubject[] findByTenant(TenantId tenantId);
+    bool existsByEmail(string email);
     DataSubject findByEmail(string email);
+    void removeByEmail(string email);
+
+    size_t countByName(string firstName, string lastName);
     DataSubject[] findByName(string firstName, string lastName);
+    void removeByName(string firstName, string lastName);
+
+    size_t countByOrganization(string organizationId);
     DataSubject[] findByOrganization(string organizationId);
+    void removeByOrganization(string organizationId);
     
-    void save(DataSubject entity);
-    void update(DataSubject entity);
-    void remove(DataSubjectId id);
 }

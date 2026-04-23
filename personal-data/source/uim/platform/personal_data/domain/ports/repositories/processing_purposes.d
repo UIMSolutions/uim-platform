@@ -11,15 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProcessingPurposeRepository {
-    bool existsById(ProcessingPurposeId id);
-    ProcessingPurpose findById(ProcessingPurposeId id);
+interface ProcessingPurposeRepository : ITenantRepository!(ProcessingPurpose, ProcessingPurposeId) {
 
-    ProcessingPurpose[] findByTenant(TenantId tenantId);
+    size_t countByLegalBasis(LegalBasis basis);
     ProcessingPurpose[] findByLegalBasis(LegalBasis basis);
+    void removeByLegalBasis(LegalBasis basis);
+
+    size_t countByApplication(RegisteredApplicationId applicationId);
     ProcessingPurpose[] findByApplication(RegisteredApplicationId applicationId);
+    void removeByApplication(RegisteredApplicationId applicationId);
     
-    void save(ProcessingPurpose entity);
-    void update(ProcessingPurpose entity);
-    void remove(ProcessingPurposeId id);
 }

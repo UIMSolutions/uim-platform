@@ -8,15 +8,22 @@ module uim.platform.mobile.domain.ports.repositories.usage_reports;
 import uim.platform.mobile.domain.entities.usage_report;
 import uim.platform.mobile.domain.types;
 
-interface UsageReportRepository {
-  UsageReport findById(UsageReportId id);
-  UsageReport[] findByApp(MobileAppId appId);
-  UsageReport[] findByDevice(DeviceRegistrationId deviceId);
-  UsageReport[] findByUser(string userId);
-  UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType);
-  UsageReport[] findByTenant(TenantId tenantId);
-  void save(UsageReport report);
-  void remove(UsageReportId id);
+interface UsageReportRepository : ITenantRepository!(UsageReport, UsageReportId) {
+
   size_t countByApp(MobileAppId appId);
-  size_t countByTenant(TenantId tenantId);
+  UsageReport[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
+  size_t countByDevice(DeviceRegistrationId deviceId);
+  UsageReport[] findByDevice(DeviceRegistrationId deviceId);
+  void removeByDevice(DeviceRegistrationId deviceId);
+
+  size_t countByUser(string userId);
+  UsageReport[] findByUser(string userId);
+  void removeByUser(string userId);
+
+  size_t countByMetricType(MobileAppId appId, MetricType metricType);
+  UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType);
+  void removeByMetricType(MobileAppId appId, MetricType metricType);
+
 }

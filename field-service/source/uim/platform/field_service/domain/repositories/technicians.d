@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TechnicianRepository {
-    bool existsById(TechnicianId id);
-    Technician findById(TechnicianId id);
-    
-    Technician[] findAll();
-    Technician[] findByTenant(TenantId tenantId);
+interface TechnicianRepository : ITenantRepository!(Technician, TechnicianId) {
+
+    size_t countByStatus(TechnicianStatus status);
     Technician[] findByStatus(TechnicianStatus status);
-    Technician[] findByRegion(string region);
-    
-    void save(Technician technician);
-    void update(Technician technician);
-    void remove(TechnicianId id);
+    void removeByStatus(TechnicianStatus status);
+
+    size_t countByRegion(string region);    
+    Technician[] findByRegion(string region);    
+    void removeByRegion(string region);    
+
 }

@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RegisteredApplicationRepository {
-    bool existsById(RegisteredApplicationId id);
-    RegisteredApplication findById(RegisteredApplicationId id);
+interface RegisteredApplicationRepository : ITenantRepository!(RegisteredApplication, RegisteredApplicationId) {
 
-    RegisteredApplication[] findByTenant(TenantId tenantId);
+    bool existsByName(string name);
     RegisteredApplication findByName(string name);
-    RegisteredApplication[] findByStatus(ApplicationStatus status);
-    void save(RegisteredApplication entity);
-    void update(RegisteredApplication entity);
-    void remove(RegisteredApplicationId id);
+    void removeByName(string name);
+
+    size_t countByStatus(ApplicationStatus status);
+    RegisteredApplication[] findByStatus(ApplicationStatus status, uint offset = 0, uint limit = 100);
+    void removeByStatus(ApplicationStatus status);
+
 }

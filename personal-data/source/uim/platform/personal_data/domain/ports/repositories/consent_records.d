@@ -11,16 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ConsentRecordRepository {
-    bool existsById(ConsentRecordId id);
-    ConsentRecord findById(ConsentRecordId id);
-    
-    ConsentRecord[] findByTenant(TenantId tenantId);
+interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
+
+    size_t countByDataSubject(DataSubjectId dataSubjectId);
     ConsentRecord[] findByDataSubject(DataSubjectId dataSubjectId);
+    void removeByDataSubject(DataSubjectId dataSubjectId);
+
+    size_t countByPurpose(ProcessingPurposeId purposeId);
     ConsentRecord[] findByPurpose(ProcessingPurposeId purposeId);
+    void removeByPurpose(ProcessingPurposeId purposeId);
+
     ConsentRecord findByDataSubjectAndPurpose(DataSubjectId dataSubjectId, ProcessingPurposeId purposeId);
     
-    void save(ConsentRecord entity);
-    void update(ConsentRecord entity);
-    void remove(ConsentRecordId id);
 }
