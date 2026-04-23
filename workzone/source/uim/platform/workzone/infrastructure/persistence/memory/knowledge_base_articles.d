@@ -12,39 +12,30 @@ import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryKnowledgeBaseArticleRepository : KnowledgeBaseArticleRepository {
-  private KnowledgeBaseArticle[KBArticleId] store;
-
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(a => a.tenantId == tenantId && a.workspaceId == workspaceId).array;
+class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArticle, KBArticleId), KnowledgeBaseArticleRepository {
+  
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  KnowledgeBaseArticle* findById(KBArticleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  KnowledgeBaseArticle[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(a => a.workspaceId == workspaceId).array;
   }
 
-  KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId) {
-    return store.byValue().filter!(a => a.tenantId == tenantId && a.category == category).array;
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(a => remove(a));
   }
 
-  KnowledgeBaseArticle[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(a => a.tenantId == tenantId).array;
+  size_t countByCategory(TenantId tenantId, string category) {
+    return findByCategory(tenantId, category).length;
   }
 
-  void save(KnowledgeBaseArticle article) {
-    store[article.id] = article;
+  KnowledgeBaseArticle[] findByCategory(TenantId tenantId, string category) {
+    return findByTenant(tenantId).filter!(a => a.category == category).array;
   }
 
-  void update(KnowledgeBaseArticle article) {
-    store[article.id] = article;
+  void removeByCategory(TenantId tenantId, string category) {
+    return findByCategory(tenantId, category).each!(a => remove(a));
   }
 
-  void remove(KBArticleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

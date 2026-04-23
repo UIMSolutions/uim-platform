@@ -12,38 +12,25 @@ import uim.platform.workzone.domain.ports.repositories.sites;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemorySiteRepository : SiteRepository {
-  private Site[SiteId] store;
+class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
 
-  Site[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(s => s.tenantId == tenantId).array;
+  // #region ByAlias
+  bool existsByAlias(TenantId tenantId, string alias_) {
+    return findByTenant(tenantId).any!(s => s.alias_ == alias_);
   }
 
-  Site* findById(SiteId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Site findByAlias(TenantId tenantId, string alias_) {
+    foreach (s; findByTenant(tenantId))
+      if (s.alias_ == alias_)
+        return s;
+    return Site.init;
   }
 
-  Site* findByAlias(string alias_, TenantId tenantId) {
-    foreach (s; store.byValue())
-      if (s.tenantId == tenantId && s.alias_ == alias_)
-        return &s;
-    return null;
+  void removeByAlias(TenantId tenantId, string alias_) {
+    foreach (s; findByTenant(tenantId))
+      if (s.alias_ == alias_)
+        store.remove(s);
   }
+  // #endregion ByAlias
 
-  void save(Site site) {
-    store[site.id] = site;
-  }
-
-  void update(Site site) {
-    store[site.id] = site;
-  }
-
-  void remove(SiteId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

@@ -12,42 +12,40 @@ import uim.platform.workzone.domain.ports.repositories.tags;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTagRepository : TagRepository {
-  private Tag[TagId] store;
+class MemoryTagRepository : TenantRepository!(Tag, TagId), TagRepository {
 
-  Tag[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  // #region ByName
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(t => t.name == name);
   }
 
-  Tag* findById(TagId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Tag findByName(TenantId tenantId, string name) {
+    foreach (t; findByTenant(tenantId))
+      if (t.name == name)
+        return t;
+    return Tag.init;
   }
 
-  Tag* findByName(string name, TenantId tenantId) {
-    foreach (t; store.byValue())
-      if (t.tenantId == tenantId && t.name == name)
-        return &t;
-    return null;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (t; findByTenant(tenantId))
+      if (t.name == name) {
+        store.remove(t);
+        break;
+      }
+  }
+  // #endregion ByName
+
+  // #region ByParent
+  size_t countByParent(TenantId tenantId, TagId parentTagId) {
+    return findByParent(tenantId, parentTagId).length;
   }
 
-  Tag[] findByParent(TagId parentTagtenantId, id tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId && t.parentTagId == parentTagId).array;
+  Tag[] findByParent(TenantId tenantId, TagId parentTagId) {
+    return findByTenant(tenantId).filter!(t => t.parentTagId == parentTagId).array;
   }
 
-  void save(Tag tag) {
-    store[tag.id] = tag;
+  void removeByParent(TenantId tenantId, TagId parentTagId) {
+    findByParent(tenantId, parentTagId).each!(t => remove(t));
   }
-
-  void update(Tag tag) {
-    store[tag.id] = tag;
-  }
-
-  void remove(TagId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
+  // #endregion ByParent
 }

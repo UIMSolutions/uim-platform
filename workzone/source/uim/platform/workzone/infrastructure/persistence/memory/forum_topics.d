@@ -12,39 +12,30 @@ import uim.platform.workzone.domain.ports.repositories.forum_topics;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryForumTopicRepository : ForumTopicRepository {
-  private ForumTopic[ForumTopicId] store;
+class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {
 
-  ForumTopic[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId && t.workspaceId == workspaceId).array;
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  ForumTopic* findById(ForumTopicId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  ForumTopic[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(t => t.workspaceId == workspaceId).array;
   }
 
-  ForumTopic[] findByAuthor(UserId authortenantId, id tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId && t.authorId == authorId).array;
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(t => remove(t));
   }
 
-  ForumTopic[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  size_t countByAuthor(TenantId tenantId, UserId authorId) {
+    return findByAuthor(tenantId, authorId).length;
   }
 
-  void save(ForumTopic topic) {
-    store[topic.id] = topic;
+  ForumTopic[] findByAuthor(TenantId tenantId, UserId authorId) {
+    return findByTenant(tenantId).filter!(t => t.authorId == authorId).array;
   }
 
-  void update(ForumTopic topic) {
-    store[topic.id] = topic;
+  void removeByAuthor(TenantId tenantId, UserId authorId) {
+    return findByAuthor(tenantId, authorId).each!(t => remove(t));
   }
 
-  void remove(ForumTopicId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

@@ -12,40 +12,34 @@ import uim.platform.workzone.domain.ports.repositories.tasks;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTaskRepository : TaskRepository {
-  private Task[TaskId] store;
+class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
 
-  Task[] findByAssignee(UserId assigneetenantId, id tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId && t.assigneeId == assigneeId).array;
+  // #region ByAssignee
+  size_t countByAssignee(TenantId tenantId, UserId assigneeId) {
+    return findByAssignee(tenantId, assigneeId).length;
   }
 
-  Task* findById(TaskId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Task[] findByAssignee(TenantId tenantId, UserId assigneeId) {
+    return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId).array;
   }
 
-  Task[] findByStatus(TaskStatus status, UserId assigneetenantId, id tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId
-        && t.assigneeId == assigneeId && t.status == status).array;
+  void removeByAssignee(TenantId tenantId, UserId assigneeId) {
+    return findByAssignee(tenantId, assigneeId).each!(t => remove(t));
+  }
+  // #endregion ByAssignee
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+    return findByStatus(tenantId, status, assigneeId).length;
   }
 
-  Task[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  Task[] findByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+    return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId && t.status == status).array;
   }
 
-  void save(Task task) {
-    store[task.id] = task;
+  void removeByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+    return findByStatus(tenantId, status, assigneeId).each!(t => remove(t));
   }
+  // #endregion ByStatus
 
-  void update(Task task) {
-    store[task.id] = task;
-  }
-
-  void remove(TaskId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

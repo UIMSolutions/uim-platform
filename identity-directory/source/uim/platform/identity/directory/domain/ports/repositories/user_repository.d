@@ -9,16 +9,24 @@ import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
-interface UserRepository {
-  User findById(UserId id);
+interface UserRepository : ITenantRepository!(User, UserId) {
+
+  bool existsByUserName(TenantId tenantId, string userName);
   User findByUserName(TenantId tenantId, string userName);
+  void removeByUserName(TenantId tenantId, string userName);
+
+  bool existsByExternalId(TenantId tenantId, string externalId);
   User findByExternalId(TenantId tenantId, string externalId);
+  void removeByExternalId(TenantId tenantId, string externalId);
+
+  size_t countByEmail(TenantId tenantId, string email);
   User[] findByEmail(TenantId tenantId, string email);
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  void removeByEmail(TenantId tenantId, string email);
+
+  size_t countByGroupId(GroupId groupId);
   User[] findByGroupId(GroupId groupId);
+  void removeByGroupId(GroupId groupId);
+
   User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100);
-  void save(User user);
-  void update(User user);
-  void remove(UserId id);
-  size_t countByTenant(TenantId tenantId);
+
 }

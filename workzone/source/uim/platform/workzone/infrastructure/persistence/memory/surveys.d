@@ -12,39 +12,48 @@ import uim.platform.workzone.domain.ports.repositories.surveys;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemorySurveyRepository : SurveyRepository {
-  private Survey[SurveyId] store;
+class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyRepository {
 
-  Survey[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(s => s.tenantId == tenantId && s.workspaceId == workspaceId).array;
+  // #region ByWorkspace
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  Survey* findById(SurveyId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Survey[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(s => s.workspaceId == workspaceId).array;
+  }
+
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(s => remove(s));
+  }
+  // #endregion ByWorkspace
+
+  // #region ByOrganizer
+  size_t countByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByOrganizer(tenantId, organizerId).length;
+  }
+
+  Survey[] findByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByTenant(tenantId).filter!(s => s.organizerId == organizerId).array;
+  }
+
+  void removeByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByOrganizer(tenantId, organizerId).each!(s => remove(s));
+  }
+  // #endregion ByOrganizer
+
+  // #region ByStatus
+  size_t countByStatus(SurveyStatus status, TenantId tenantId) {
+    return findByStatus(status, tenantId).length;
   }
 
   Survey[] findByStatus(SurveyStatus status, TenantId tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId && s.status == status).array;
   }
 
-  Survey[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(s => s.tenantId == tenantId).array;
+  void removeByStatus(SurveyStatus status, TenantId tenantId) {
+    return findByStatus(status, tenantId).each!(s => remove(s));
   }
+  // #endregion ByStatus
 
-  void save(Survey survey) {
-    store[survey.id] = survey;
-  }
-
-  void update(Survey survey) {
-    store[survey.id] = survey;
-  }
-
-  void remove(SurveyId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

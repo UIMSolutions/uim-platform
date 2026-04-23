@@ -12,39 +12,34 @@ import uim.platform.workzone.domain.ports.repositories.events;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryEventRepository : EventRepository {
-  private Event[EventId] store;
+class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository {
 
-  Event[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId).array;
+  // #region ByWorkspace
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  Event* findById(EventId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Event[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
   }
 
-  Event[] findByOrganizer(UserId organizertenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.organizerId == organizerId).array;
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
+  }
+  // #endregion ByWorkspace
+
+  // #region ByOrganizer
+  size_t countByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByOrganizer(tenantId, organizerId).length;
   }
 
-  Event[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  Event[] findByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByTenant(tenantId).filter!(e => e.organizerId == organizerId).array;
   }
 
-  void save(Event event) {
-    store[event.id] = event;
+  void removeByOrganizer(TenantId tenantId, UserId organizerId) {
+    return findByOrganizer(tenantId, organizerId).each!(e => remove(e));
   }
+  // #endregion ByOrganizer
 
-  void update(Event event) {
-    store[event.id] = event;
-  }
-
-  void remove(EventId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

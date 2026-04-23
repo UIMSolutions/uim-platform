@@ -12,42 +12,37 @@ import uim.platform.workzone.domain.ports.repositories.page_templates;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryPageTemplateRepository : PageTemplateRepository {
-  private PageTemplate[PageTemplateId] store;
+class MemoryPageTemplateRepository : TenantRRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
 
-  PageTemplate[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  bool existsDefault(TenantId tenantId) {
+    return findByTenant(tenantId).any!(t => t.isDefault);
   }
 
-  PageTemplate* findById(PageTemplateId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  PageTemplate findDefault(TenantId tenantId) {
+    foreach (t; findByTenant(tenantId))
+      if (t.isDefault)
+        return t;
+    return PageTemplate.init;
   }
 
-  PageTemplate* findDefault(TenantId tenantId) {
-    foreach (t; store.byValue())
-      if (t.tenantId == tenantId && t.isDefault)
-        return &t;
-    return null;
+  void removeDefault(TenantId tenantId) {
+    foreach (t; findByTenant(tenantId))
+      if (t.isDefault) {
+        remove(t);
+        break;
+      }
+  }
+
+  size_t countPublic() {
+    return findPublic().length;
   }
 
   PageTemplate[] findPublic() {
     return store.byValue().filter!(t => t.isPublic).array;
   }
 
-  void save(PageTemplate template_) {
-    store[template_.id] = template_;
+  void removePublic() {
+    findPublic().each!(t => remove(t));
   }
 
-  void update(PageTemplate template_) {
-    store[template_.id] = template_;
-  }
-
-  void remove(PageTemplateId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

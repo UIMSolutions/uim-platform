@@ -12,28 +12,17 @@ import uim.platform.workzone.domain.ports.repositories.roles;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryRoleRepository : RoleRepository {
-  private Role[RoleId] store;
+class MemoryRoleRepository : TenantRRepository!(Role, RoleId), RoleRepository {
 
-  Role[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
   }
 
-  Role* findById(RoleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Role[] findByUser(UserId usertenantId, id tenantId) {
+  Role[] findByUser(TenantId tenantId, UserId userId) {
     Role[] result;
-    foreach (r; store.byValue()) {
-      if (r.tenantId != tenantId)
-        continue;
+    foreach (r; findByTenant(tenantId)) {
       foreach (uid; r.assignedUserIds)
-        if (uid == userId)
-        {
+        if (uid == userId) {
           result ~= r;
           break;
         }
@@ -41,17 +30,8 @@ class MemoryRoleRepository : RoleRepository {
     return result;
   }
 
-  void save(Role role) {
-    store[role.id] = role;
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(r => remove(r));
   }
 
-  void update(Role role) {
-    store[role.id] = role;
-  }
-
-  void remove(RoleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }
