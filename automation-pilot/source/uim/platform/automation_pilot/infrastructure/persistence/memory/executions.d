@@ -19,7 +19,7 @@ class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId),  Ex
     }
 
     Execution[] findByCommand(CommandId commandId) {
-        return store.filter!(e => e.commandId == commandId).array;
+        return findAll().filter!(e => e.commandId == commandId).array;
     }
 
     void removeByCommand(CommandId commandId) {
@@ -33,7 +33,7 @@ class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId),  Ex
     }
 
     Execution[] findByStatus(ExecutionStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void removeByStatus(ExecutionStatus status) {

@@ -18,7 +18,7 @@ class MemoryCommandInputRepository : TenantREpository!(CommandInput, CommandInpu
     }
 
     CommandInput[] findByType(InputType inputType) {
-        return store.filter!(e => e.inputType == inputType).array;
+        return findAll().filter!(e => e.inputType == inputType).array;
     }
 
     void removeByType(InputType inputType) {

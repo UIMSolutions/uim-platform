@@ -19,7 +19,7 @@ class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRe
     }
 
     Command[] findByCatalog(CatalogId catalogId) {
-        return store.filter!(e => e.catalogId == catalogId).array;
+        return findAll().filter!(e => e.catalogId == catalogId).array;
     }
 
     void removeByCatalog(CatalogId catalogId) {
@@ -33,7 +33,7 @@ class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRe
     }
 
     Command[] findByStatus(CommandStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void removeByStatus(CommandStatus status) {
