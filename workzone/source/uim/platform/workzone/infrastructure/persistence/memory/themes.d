@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.themes;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.theme;
-import uim.platform.workzone.domain.ports.repositories.themes;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.theme;
+// import uim.platform.workzone.domain.ports.repositories.themes;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
 
   bool existsDefault(TenantId tenantId) {

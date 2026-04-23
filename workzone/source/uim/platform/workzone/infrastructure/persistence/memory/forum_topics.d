@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.forum_topics;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.forum_topic;
-import uim.platform.workzone.domain.ports.repositories.forum_topics;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.forum_topic;
+// import uim.platform.workzone.domain.ports.repositories.forum_topics;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : filter;
 // import std.array : array;
 

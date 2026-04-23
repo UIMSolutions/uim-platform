@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.roles;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.role;
-import uim.platform.workzone.domain.ports.repositories.roles;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.role;
+// import uim.platform.workzone.domain.ports.repositories.roles;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryRoleRepository : TenantRRepository!(Role, RoleId), RoleRepository {
 
   size_t countByUser(TenantId tenantId, UserId userId) {

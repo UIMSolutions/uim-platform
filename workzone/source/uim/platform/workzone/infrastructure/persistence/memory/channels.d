@@ -5,39 +5,29 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.channel;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.channel;
-import uim.platform.workzone.domain.ports.repositories.channels;
+  // import uim.platform.workzone.domain.types;
+  // import uim.platform.workzone.domain.entities.channel;
+  // import uim.platform.workzone.domain.ports.repositories.channels;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.workzone;
 
-class MemoryChannelRepository : ChannelRepository {
-  private Channel[ChannelId] store;
+mixin(ShowModule!());
 
-  Channel[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId && c.workspaceId == workspaceId)
-      .array;
+@safe:
+class MemoryChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRepository {
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  Channel* findById(ChannelId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Channel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId).array;
   }
 
-  void save(Channel channel) {
-    store[channel.id] = channel;
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
   }
 
-  void update(Channel channel) {
-    store[channel.id] = channel;
-  }
-
-  void remove(ChannelId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

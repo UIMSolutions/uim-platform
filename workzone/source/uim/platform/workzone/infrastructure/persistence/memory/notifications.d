@@ -3,46 +3,43 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.workzone.infrastructure.persistence.memory.notification;
+module uim.platform.workzone.infrastructure.persistence.memory.notifications;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.notification;
-import uim.platform.workzone.domain.ports.repositories.notifications;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.notification;
+// import uim.platform.workzone.domain.ports.repositories.notifications;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryNotificationRepository : NotificationRepository {
-  private Notification[NotificationId] store;
+class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
 
-  Notification[] findByRecipient(UserId recipienttenantId, id tenantId) {
-    return store.byValue().filter!(n => n.tenantId == tenantId && n.recipientId == recipientId)
-      .array;
+  size_t countByRecipient(TenantId tenantId, UserId recipientId) {
+    return findByRecipient(tenantId, recipientId).length;
   }
 
-  Notification* findById(NotificationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Notification[] findByRecipient(TenantId tenantId, UserId recipientId) {
+    return findByTenant(tenantId).filter!(n => n.recipientId == recipientId).array;
   }
 
-  Notification[] findUnread(UserId recipienttenantId, id tenantId) {
-    return store.byValue().filter!(n => n.tenantId == tenantId
-        && n.recipientId == recipientId && n.status == NotificationStatus.unread).array;
+  void removeByRecipient(TenantId tenantId, UserId recipientId) {
+    return findByRecipient(tenantId, recipientId).each!(n => remove(n));
   }
 
-  void save(Notification notification) {
-    store[notification.id] = notification;
+  size_t countUnread(TenantId tenantId, UserId recipientId) {
+    return findUnread(tenantId, recipientId).length;
   }
 
-  void update(Notification notification) {
-    store[notification.id] = notification;
+  Notification[] findUnread(TenantId tenantId, UserId recipientId) {
+    return findByTenant(tenantId).filter!(n => n.recipientId == recipientId && n.status == NotificationStatus.unread).array;
   }
 
-  void remove(NotificationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  void removeUnread(TenantId tenantId, UserId recipientId) {
+    return findUnread(tenantId, recipientId).each!(n => remove(n));
   }
+
 }

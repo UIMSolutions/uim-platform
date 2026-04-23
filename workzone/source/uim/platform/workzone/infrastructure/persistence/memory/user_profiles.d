@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.user_profile;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.user_profile;
-import uim.platform.workzone.domain.ports.repositories.user_profiles;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.user_profile;
+// import uim.platform.workzone.domain.ports.repositories.user_profiles;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId), UserProfileRepository {
 
   // #region ByUserId

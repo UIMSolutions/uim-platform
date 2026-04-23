@@ -12,45 +12,54 @@ import uim.platform.workzone.domain.ports.repositories.contents;
 // import std.algorithm : canFind, filter;
 // import std.array : array;
 
-class MemoryContentRepository : ContentRepository {
-  private ContentItem[ContentId] store;
+class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), ContentRepository {
 
-  ContentItem[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId && c.workspaceId == workspaceId)
-      .array;
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  ContentItem* findById(ContentId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  ContentItem[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId).array;
   }
 
-  ContentItem[] findByAuthor(UserId authortenantId, id tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId && c.authorId == authorId).array;
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
   }
 
-  ContentItem[] findByType(ContentType contentType, WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId
-        && c.workspaceId == workspaceId && c.contentType == contentType).array;
+  size_t countByAuthor(TenantId tenantId, UserId authorId) {
+    return findByAuthor(tenantId, authorId).length;
   }
 
-  ContentItem[] findByTag(string tag, TenantId tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId && c.tags.canFind(tag)).array;
+  ContentItem[] findByAuthor(TenantId tenantId, UserId authorId) {
+    return findByTenant(tenantId).filter!(c => c.authorId == authorId).array;
   }
 
-  void save(ContentItem item) {
-    store[item.id] = item;
+  void removeByAuthor(TenantId tenantId, UserId authorId) {
+    return findByAuthor(tenantId, authorId).each!(c => remove(c));
   }
 
-  void update(ContentItem item) {
-    store[item.id] = item;
+  size_t countByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
+    return findByType(tenantId, contentType, workspaceId).length;
   }
 
-  void remove(ContentId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  ContentItem[] findByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.contentType == contentType).array;
   }
+
+  void removeByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
+    return findByType(tenantId, contentType, workspaceId).each!(c => remove(c));
+  }
+
+  size_t countByTag(TenantId tenantId, string tag) {
+    return findByTag(tenantId, tag).length;
+  }
+
+  ContentItem[] findByTag(TenantId tenantId, string tag) {
+    return findByTenant(tenantId).filter!(c => c.tags.canFind(tag)).array;
+  }
+
+  void removeByTag(TenantId tenantId, string tag) {
+    return findByTag(tenantId, tag).each!(c => remove(c));
+  }
+
 }

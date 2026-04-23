@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.workpage;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workpage;
-import uim.platform.workzone.domain.ports.repositories.workpages;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.workpage;
+// import uim.platform.workzone.domain.ports.repositories.workpages;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : filter;
 // import std.array : array;
 
