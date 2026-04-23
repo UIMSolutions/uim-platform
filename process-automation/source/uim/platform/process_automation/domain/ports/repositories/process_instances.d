@@ -8,13 +8,14 @@ module uim.platform.process_automation.domain.ports.repositories.process_instanc
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.process_instance;
 
-interface ProcessInstanceRepository {
-    ProcessInstance findById(ProcessInstanceId id);
-    ProcessInstance[] findByTenant(TenantId tenantId);
+interface ProcessInstanceRepository : ITenantRepository!(ProcessInstance, ProcessInstanceId) {
+
+    size_t countByProcess(ProcessId processId);
     ProcessInstance[] findByProcess(ProcessId processId);
+    void removeByProcess(ProcessId processId);
+
+    size_t countByStatus(TenantId tenantId, InstanceStatus status);
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status);
-    void save(ProcessInstance i);
-    void update(ProcessInstance i);
-    void remove(ProcessInstanceId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByStatus(TenantId tenantId, InstanceStatus status);
+
 }

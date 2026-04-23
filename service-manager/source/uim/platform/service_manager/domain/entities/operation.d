@@ -11,8 +11,8 @@ struct Operation {
 
     string resourceId;
     string resourceType;
-    OperationType type = OperationType.create;
-    OperationStatus status = OperationStatus.pending;
+        OperationType type = OperationType.create;
+        OperationStatus status = OperationStatus.pending;
     string description;
     string errorMessage;
     int rescheduleCount;

@@ -8,12 +8,10 @@ module uim.platform.process_automation.domain.ports.repositories.decisions;
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.decision;
 
-interface DecisionRepository {
-    Decision findById(DecisionId id);
-    Decision[] findByTenant(TenantId tenantId);
+interface DecisionRepository : ITenantRepository!(Decision, DecisionId) {
+
+    size_t countByProject(ProjectId projectId);
     Decision[] findByProject(ProjectId projectId);
-    void save(Decision d);
-    void update(Decision d);
-    void remove(DecisionId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByProject(ProjectId projectId);
+
 }

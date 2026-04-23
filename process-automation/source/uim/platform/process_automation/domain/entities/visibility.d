@@ -15,6 +15,8 @@ struct VisibilityMetric {
     string unit;
     double warningThreshold;
     double criticalThreshold;
+
+    
 }
 
 struct VisibilityFilter {

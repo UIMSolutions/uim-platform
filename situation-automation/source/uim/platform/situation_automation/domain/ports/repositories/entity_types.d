@@ -14,12 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EntityTypeRepository {
-    EntityType findById(EntityTypeId id);
-    EntityType[] findByTenant(TenantId tenantId);
+interface EntityTypeRepository : ITenantRepository!(EntityType, EntityTypeId) {
+
+    size_t countByCategory(TenantId tenantId, EntityCategory category);
     EntityType[] findByCategory(TenantId tenantId, EntityCategory category);
-    void save(EntityType e);
-    void update(EntityType e);
-    void remove(EntityTypeId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByCategory(TenantId tenantId, EntityCategory category);
+
 }

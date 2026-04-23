@@ -14,14 +14,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface NotificationRepository {
-    Notification findById(NotificationId id);
-    Notification[] findByTenant(TenantId tenantId);
+interface NotificationRepository : ITenantRepository!(Notification, NotificationId) {
+
+    size_t countByRecipient(TenantId tenantId, string recipientId);
     Notification[] findByRecipient(TenantId tenantId, string recipientId);
+    void removeByRecipient(TenantId tenantId, string recipientId);
+
+    size_t countByInstance(SituationInstanceId instanceId);
     Notification[] findByInstance(SituationInstanceId instanceId);
+    void removeByInstance(SituationInstanceId instanceId);
+
+    size_t countByStatus(TenantId tenantId, NotificationStatus status);
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status);
-    void save(Notification n);
-    void update(Notification n);
-    void remove(NotificationId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByStatus(TenantId tenantId, NotificationStatus status);
+
 }

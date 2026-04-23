@@ -14,13 +14,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AutomationRuleRepository {
-    AutomationRule findById(AutomationRuleId id);
-    AutomationRule[] findByTenant(TenantId tenantId);
+interface AutomationRuleRepository : ITenantRepository!(AutomationRule, AutomationRuleId) {
+    
+    size_t countByTemplate(SituationTemplateId templateId);
     AutomationRule[] findByTemplate(SituationTemplateId templateId);
+    void removeByTemplate(SituationTemplateId templateId);
+    
+    size_t countActive(TenantId tenantId);
     AutomationRule[] findActive(TenantId tenantId);
-    void save(AutomationRule r);
-    void update(AutomationRule r);
-    void remove(AutomationRuleId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeActive(TenantId tenantId);
+
 }

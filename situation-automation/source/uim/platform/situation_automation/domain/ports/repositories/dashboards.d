@@ -14,12 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DashboardRepository {
-    Dashboard findById(DashboardId id);
-    Dashboard[] findByTenant(TenantId tenantId);
+interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {
+
+    size_t countByType(TenantId tenantId, DashboardType type);
     Dashboard[] findByType(TenantId tenantId, DashboardType type);
-    void save(Dashboard d);
-    void update(Dashboard d);
-    void remove(DashboardId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByType(TenantId tenantId, DashboardType type);
+
 }
