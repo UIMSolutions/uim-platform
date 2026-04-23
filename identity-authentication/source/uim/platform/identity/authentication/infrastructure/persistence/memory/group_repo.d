@@ -26,7 +26,7 @@ class MemoryGroupRepository : GroupRepository {
   IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     IdaGroup[] result;
     uint idx;
-    foreach (g; store.byValue()) {
+    foreach (g; findAll()) {
       if (g.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= g;

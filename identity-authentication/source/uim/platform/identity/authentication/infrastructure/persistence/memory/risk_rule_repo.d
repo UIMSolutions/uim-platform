@@ -28,7 +28,7 @@ class MemoryRiskRuleRepository : RiskRuleRepository {
   }
 
   RiskRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   void save(RiskRule rule) {

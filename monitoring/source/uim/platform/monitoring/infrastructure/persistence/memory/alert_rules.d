@@ -28,7 +28,7 @@ class MemoryAlertRuleRepository : AlertRuleRepository {
   }
 
   AlertRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   AlertRule[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {

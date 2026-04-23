@@ -28,7 +28,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByEmail(TenantId tenantId, string email) {
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.email == email)
         return u;
     }
@@ -36,7 +36,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -46,7 +46,7 @@ class MemoryUserRepository : UserRepository {
   User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= u;
@@ -57,7 +57,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User[] findByGroupId(GroupId groupId) {
-    return store.byValue().filter!(u => u.groupIds.canFind(groupId)).array;
+    return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
   void save(User user) {
@@ -73,6 +73,6 @@ class MemoryUserRepository : UserRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.byValue().count!(u => u.tenantId == tenantId);
+    return findAll().count!(u => u.tenantId == tenantId);
   }
 }

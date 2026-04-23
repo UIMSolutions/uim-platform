@@ -30,11 +30,11 @@ class MemoryPolicyRepository : PolicyRepository {
   }
 
   AuthorizationPolicy[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+    return findAll().filter!(p => p.tenantId == tenantId).array;
   }
 
   AuthorizationPolicy[] findByApplication(ApplicationId appId) {
-    return store.byValue().filter!(p => p.applicationIds.canFind(appId)).array;
+    return findAll().filter!(p => p.applicationIds.canFind(appId)).array;
   }
 
   void save(AuthorizationPolicy policy) {

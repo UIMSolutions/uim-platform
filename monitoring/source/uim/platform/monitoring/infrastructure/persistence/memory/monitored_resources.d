@@ -32,18 +32,18 @@ class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
   }
 
   MonitoredResource findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll()
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return MonitoredResource.init;
   }
 
   MonitoredResource[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.resourceType == type).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.resourceType == type).array;
   }
 
   void save(MonitoredResource resource) {

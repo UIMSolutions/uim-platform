@@ -39,7 +39,7 @@ class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   }
 
   MetricDefinition[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category) {

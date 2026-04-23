@@ -26,7 +26,7 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
   }
 
   IdpConfig findDefaultForTenant(TenantId tenantId) {
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()) {
       if (c.tenantId == tenantId && c.isDefault)
         return c;
     }
@@ -35,7 +35,7 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
 
   IdpConfig[] findByTenant(TenantId tenantId) {
     IdpConfig[] result;
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()) {
       if (c.tenantId == tenantId)
         result ~= c;
     }
@@ -43,7 +43,7 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
   }
 
   IdpConfig findByDomainHint(TenantId tenantId, string emailDomain) {
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()) {
       if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
         return c;
     }

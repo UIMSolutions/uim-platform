@@ -24,7 +24,7 @@ class MemoryApplicationRepository : ApplicationRepository {
   }
 
   Application findByClientId(string clientId) {
-    foreach (a; store.byValue()) {
+    foreach (a; findAll()) {
       if (a.clientId == clientId)
         return a;
     }
@@ -34,7 +34,7 @@ class MemoryApplicationRepository : ApplicationRepository {
   Application[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Application[] result;
     uint idx;
-    foreach (a; store.byValue()) {
+    foreach (a; findAll()) {
       if (a.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= a;
