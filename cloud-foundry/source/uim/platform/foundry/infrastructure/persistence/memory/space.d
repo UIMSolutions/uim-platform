@@ -12,51 +12,21 @@ import uim.platform.foundry.domain.ports.repositories.space;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemorySpaceRepository : SpaceRepository {
-  private Space[SpaceId] store;
+class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
 
-  Space[] findByOrg(OrgId orgtenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.orgId == orgId).array;
+  size_t countByOrg(OrgId orgId, TenantId tenantId) {
+    return findByOrg(orgId, tenantId).length;
   }
 
-  Space* findById(SpaceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Space* findByName(OrgId orgtenantId, id tenantId, string name) {
-    foreach (e; store.byValue())
+  Space findByName(OrgId orgId, TenantId tenantId, string name) {
+    foreach (e; findByTenant)
       if (e.tenantId == tenantId && e.orgId == orgId && e.name == name)
-        return &e;
+        return e;
     return null;
   }
 
-  Space[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  Space[] findByOrg(OrgId orgId, TenantId tenantId) {
+    return findAll.filter!(e => e.tenantId == tenantId && e.orgId == orgId).array;
   }
 
-  void removeByOrg(OrgId orgtenantId, id tenantId) {
-    SpaceId[] toRemove;
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.orgId == orgId)
-        toRemove ~= e.id;
-    foreach (id; toRemove)
-      store.remove(id);
-  }
-
-  void save(Space space) {
-    store[space.id] = space;
-  }
-
-  void update(Space space) {
-    store[space.id] = space;
-  }
-
-  void remove(SpaceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

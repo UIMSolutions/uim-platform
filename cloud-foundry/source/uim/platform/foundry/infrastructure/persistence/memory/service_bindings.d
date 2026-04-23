@@ -17,48 +17,29 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[ServiceBindingId] store;
 
-  ServiceBinding[] findByApp(AppId apptenantId, id tenantId) {
+  size_t countByApp(TenantId tenantId, AppId appId) {
+    return findByApp(tenantId, appId).length;
+  }
+
+  ServiceBinding[] findByApp(TenantId tenantId, AppId appId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
   }
 
-  ServiceBinding* findById(ServiceBindingId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  void removeByApp(TenantId tenantId, AppId appId) {
+    findByApp(tenantId, appId).each!(e => remove(e));
   }
 
-  ServiceBinding[] findByServiceInstance(ServiceInstanceId instancetenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.serviceInstanceId == instanceId).array;
+  size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    return findByServiceInstance(tenantId, instanceId).length;
   }
 
-  ServiceBinding[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    return findByTenant(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;
   }
 
-  void removeByApp(AppId apptenantId, id tenantId) {
-    ServiceBindingId[] toRemove;
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.appId == appId)
-        toRemove ~= e.id;
-    foreach (id; toRemove)
-      store.remove(id);
+  void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    findByServiceInstance(tenantId, instanceId).each!(e => remove(e));
   }
 
-  void save(ServiceBinding binding) {
-    store[binding.id] = binding;
-  }
-
-  void update(ServiceBinding binding) {
-    store[binding.id] = binding;
-  }
-
-  void remove(ServiceBindingId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

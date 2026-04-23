@@ -11,42 +11,29 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLogicFlowRepository : LogicFlowRepository {
-    private LogicFlow[] store;
+class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
 
-    bool existsById(LogicFlowId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    LogicFlow findById(LogicFlowId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return LogicFlow.init;
-    }
-
-    LogicFlow[] findAll() { return store; }
-
-    LogicFlow[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByApplication(ApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
 
     LogicFlow[] findByApplication(ApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findByTenant(tenantId).filter!(e => e.applicationId == applicationId).array;
+    }
+
+    void removeByApplication(ApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
+    }
+
+     size_t countByPage(PageId pageId) {
+        return findByPage(pageId).length;
     }
 
     LogicFlow[] findByPage(PageId pageId) {
-        return store.filter!(e => e.pageId == pageId).array;
+        return findByTenant(tenantId).filter!(e => e.pageId == pageId).array;
     }
 
-    void save(LogicFlow entity) { store ~= entity; }
-
-    void update(LogicFlow entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(LogicFlowId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByPage(PageId pageId) {
+        findByPage(pageId).each!(e => remove(e));
     }
 }

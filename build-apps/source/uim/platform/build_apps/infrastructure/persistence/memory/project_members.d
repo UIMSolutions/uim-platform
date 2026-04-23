@@ -11,46 +11,42 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProjectMemberRepository : ProjectMemberRepository {
-    private ProjectMember[] store;
+class MemoryProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMemberId), ProjectMemberRepository {
 
-    bool existsById(ProjectMemberId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ProjectMember findById(ProjectMemberId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ProjectMember.init;
-    }
-
-    ProjectMember[] findAll() { return store; }
-
-    ProjectMember[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByApplication(ApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
 
     ProjectMember[] findByApplication(ApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll.filter!(e => e.applicationId == applicationId).array;
+    }
+
+    void removeByApplication(ApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
+    }
+
+     size_t countByRole(MemberRole role) {
+        return findByRole(role).length;
     }
 
     ProjectMember[] findByRole(MemberRole role) {
-        return store.filter!(e => e.role == role).array;
+        return findAll.filter!(e => e.role == role).array;
+    }
+
+    void removeByRole(MemberRole role) {
+        findByRole(role).each!(e => remove(e));
+    }
+
+     size_t countByUserId(string userId) {
+        return findByUserId(userId).length;
     }
 
     ProjectMember[] findByUserId(string userId) {
-        return store.filter!(e => e.userId == userId).array;
+        return findAll.filter!(e => e.userId == userId).array;
     }
 
-    void save(ProjectMember entity) { store ~= entity; }
-
-    void update(ProjectMember entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByUserId(string userId) {
+        findByUserId(userId).each!(e => remove(e));
     }
 
-    void remove(ProjectMemberId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

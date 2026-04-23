@@ -12,41 +12,29 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryScheduledExecutionRepository : ScheduledExecutionRepository {
-    private ScheduledExecution[] store;
 
-    bool existsById(ScheduledExecutionId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ScheduledExecution findById(ScheduledExecutionId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ScheduledExecution.init;
-    }
-
-    ScheduledExecution[] findAll() { return store; }
-
-    ScheduledExecution[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByCommand(CommandId commandId) {
+        return findByCommand(commandId).length;
     }
 
     ScheduledExecution[] findByCommand(CommandId commandId) {
-        return store.filter!(e => e.commandId == commandId).array;
+        return findAll().filter!(e => e.commandId == commandId).array;
+    }
+
+    void removeByCommand(CommandId commandId) {
+        findByCommand(commandId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(ScheduleStatus status) {
+        return findByStatus(status).length;
     }
 
     ScheduledExecution[] findByStatus(ScheduleStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(ScheduledExecution scheduledExecution) { store ~= scheduledExecution; }
-
-    void update(ScheduledExecution scheduledExecution) {
-        foreach (ref e; store)
-            if (e.id == scheduledExecution.id) { e = scheduledExecution; return; }
+    void removeByStatus(ScheduleStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(ScheduledExecutionId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

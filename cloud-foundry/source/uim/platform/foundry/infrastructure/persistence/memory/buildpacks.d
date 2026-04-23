@@ -16,44 +16,60 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBuildpackRepository : BuildpackRepository {
-  private Buildpack[BuildpackId] store;
+class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), BuildpackRepository {
 
-  Buildpack[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  bool existsByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return true;
+    return false;
   }
 
-  Buildpack* findById(BuildpackId tenantId, id tenantId) {
-    if (auto p = id in store && p.tenantId == tenantId)
-      return p;
-    return null;
+  Buildpack findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return e;
+    return Buildpack.init;
   }
 
-  Buildpack* findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
-        return &e;
-    return null;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return remove(e);
+  }
+
+  // #region 
+  // Buildpacks can be enabled/disabled globally, but also filtered by stack. So we need to be able to find them by these criteria.
+  size_t countEnabled(TenantId tenantId) {
+    return findEnabled(tenantId).length;
   }
 
   Buildpack[] findEnabled(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.enabled).array;
+    return findByTenant(tenantId).filter!(e => e.enabled).array;
+  }
+
+  void removeEnabled(TenantId tenantId) {
+    findEnabled(tenantId).each!(e => remove(e));
+  }
+
+  size_t countByStack(TenantId tenantId, string stack) {
+    return findByStack(tenantId, stack).length;
+  }
+
+  void removeByStack(TenantId tenantId, string stack) {
+    findByStack(tenantId, stack).each!(e => remove(e));
+  }
+
+  size_t countByStack(TenantId tenantId, string stack) {
+    return findByStack(tenantId, stack).length;
   }
 
   Buildpack[] findByStack(TenantId tenantId, string stack) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.stack == stack).array;
+    return findByTenant(tenantId).filter!(e => e.stack == stack).array;
   }
 
-  void save(Buildpack bp) {
-    store[bp.id] = bp;
+  void removeByStack(TenantId tenantId, string stack) {
+    findByStack(tenantId, stack).each!(e => remove(e));
   }
 
-  void update(Buildpack bp) {
-    store[bp.id] = bp;
-  }
-
-  void remove(BuildpackId tenantId, id tenantId) {
-    if (auto p = id in store && p.tenantId == tenantId)
-      store.remove(id);
-  }
 }

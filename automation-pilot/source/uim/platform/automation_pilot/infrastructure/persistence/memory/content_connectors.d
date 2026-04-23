@@ -11,42 +11,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryContentConnectorRepository : ContentConnectorRepository {
-    private ContentConnector[] store;
+class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, ContentConnectorId), ContentConnectorRepository {
 
-    bool existsById(ContentConnectorId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ContentConnector findById(ContentConnectorId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ContentConnector.init;
-    }
-
-    ContentConnector[] findAll() { return store; }
-
-    ContentConnector[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByType(ConnectorType connectorType) {
+        return findByType(connectorType).length;
     }
 
     ContentConnector[] findByType(ConnectorType connectorType) {
-        return store.filter!(e => e.connectorType == connectorType).array;
+        return findAll.filter!(e => e.connectorType == connectorType).array;
+    }
+
+    void removeByType(ConnectorType connectorType) {
+        findByType(connectorType).each!(e => remove(e));
+    }
+
+    size_t countByStatus(ConnectorStatus status) {
+        return findByStatus(status).length;
     }
 
     ContentConnector[] findByStatus(ConnectorStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll.filter!(e => e.status == status).array;
     }
 
-    void save(ContentConnector connector) { store ~= connector; }
-
-    void update(ContentConnector connector) {
-        foreach (ref e; store)
-            if (e.id == connector.id) { e = connector; return; }
+    void removeByStatus(ConnectorStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(ContentConnectorId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

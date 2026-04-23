@@ -15,6 +15,12 @@ mixin(ShowModule!());
 struct PromptMessage {
   PromptRole role;
   string content;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("role", role)
+      .set("content", content);
+  }
 }
 
 struct PromptParameters {
@@ -23,6 +29,15 @@ struct PromptParameters {
   double topP;
   double frequencyPenalty;
   double presencePenalty;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("temperature", temperature)
+      .set("max_tokens", maxTokens)
+      .set("top_p", topP)
+      .set("frequency_penalty", frequencyPenalty)
+      .set("presence_penalty", presencePenalty);
+  }
 }
 
 struct Prompt {
@@ -39,4 +54,17 @@ struct Prompt {
   string createdBy;
   string createdAt;
   string modifiedAt;
+
+  Json toJson() const {
+    return Json.entityToJson
+      .set("collection_id", collectionId)
+      .set("name", name)
+      .set("model_name", modelName)
+      .set("model_version", modelVersion)
+      .set("messages", messages.map!(m => m.toJson)())
+      .set("parameters", parameters.toJson)
+      .set("input_params", inputParams)
+      .set("last_output", lastOutput)
+      .set("status", status);
+  }
 }

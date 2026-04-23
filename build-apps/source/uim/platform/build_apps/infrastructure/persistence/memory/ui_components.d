@@ -11,38 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUIComponentRepository : UIComponentRepository {
-    private UIComponent[] store;
+class MemoryUIComponentRepository : TenantRepository!(UIComponent, UIComponentId), UIComponentRepository {
 
-    bool existsById(UIComponentId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    UIComponent findById(UIComponentId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return UIComponent.init;
-    }
-
-    UIComponent[] findAll() { return store; }
-
-    UIComponent[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByCategory(ComponentCategory category) {
+        return findByCategory(category).length;
     }
 
     UIComponent[] findByCategory(ComponentCategory category) {
-        return store.filter!(e => e.category == category).array;
+        return findAll.filter!(e => e.category == category).array;
     }
 
-    void save(UIComponent entity) { store ~= entity; }
-
-    void update(UIComponent entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByCategory(ComponentCategory category) {
+        findByCategory(category).each!(e => remove(e));
     }
 
-    void remove(UIComponentId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

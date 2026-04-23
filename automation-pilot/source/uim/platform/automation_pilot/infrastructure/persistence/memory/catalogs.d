@@ -11,42 +11,29 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCatalogRepository : CatalogRepository {
-    private Catalog[] store;
+class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRepository {
 
-    bool existsById(CatalogId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Catalog findById(CatalogId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Catalog.init;
-    }
-
-    Catalog[] findAll() { return store; }
-
-    Catalog[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByStatus(CatalogStatus status) {
+        return findByStatus(status).length;
     }
 
     Catalog[] findByStatus(CatalogStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
+    }
+
+    void removeByStatus(CatalogStatus status) {
+        findByStatus(status).each!(e => remove(e));
+    }
+
+    size_t countByType(CatalogType catalogType) {
+        return findByType(catalogType).length;
     }
 
     Catalog[] findByType(CatalogType catalogType) {
-        return store.filter!(e => e.catalogType == catalogType).array;
+        return findAll().filter!(e => e.catalogType == catalogType).array;
     }
 
-    void save(Catalog catalog) { store ~= catalog; }
-
-    void update(Catalog catalog) {
-        foreach (ref e; store)
-            if (e.id == catalog.id) { e = catalog; return; }
-    }
-
-    void remove(CatalogId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByType(CatalogType catalogType) {
+        findByType(catalogType).each!(e => remove(e));
     }
 }
