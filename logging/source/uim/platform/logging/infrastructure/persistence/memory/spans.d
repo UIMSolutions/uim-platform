@@ -32,19 +32,19 @@ class MemorySpanRepository : SpanRepository {
   }
 
   Span[] findByTraceId(TenantId tenantId, TraceId traceId) {
-    return store.filter!(s => s.tenantId == tenantId && s.traceId == traceId).array;
+    return findAll().filter!(s => s.tenantId == tenantId && s.traceId == traceId).array;
   }
 
   Span[] findByService(TenantId tenantId, string serviceName) {
-    return store.filter!(s => s.tenantId == tenantId && s.serviceName == serviceName).array;
+    return findAll().filter!(s => s.tenantId == tenantId && s.serviceName == serviceName).array;
   }
 
   Span[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return store.filter!(s => s.tenantId == tenantId && s.startTime >= startTime && s.startTime <= endTime).array;
+    return findAll().filter!(s => s.tenantId == tenantId && s.startTime >= startTime && s.startTime <= endTime).array;
   }
 
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName) {
-    return store.filter!(
+    return findAll().filter!(
         s => s.tenantId == tenantId && s.serviceName == serviceName && s.operationName == operationName).array;
   }
 
@@ -57,10 +57,10 @@ class MemorySpanRepository : SpanRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(s => !(s.tenantId == tenantId && s.startTime < beforeTimestamp)).array;
+    store = findAll().filter!(s => !(s.tenantId == tenantId && s.startTime < beforeTimestamp)).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(s => s.tenantId == tenantId).array.length;
+    return findAll().filter!(s => s.tenantId == tenantId).array.length;
   }
 }

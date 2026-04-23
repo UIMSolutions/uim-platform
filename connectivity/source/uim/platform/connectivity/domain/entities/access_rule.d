@@ -27,8 +27,9 @@ struct AccessRule {
   long createdAt;
   long updatedAt;
 
-  AccessRule createFromRequest(CreateAccessRuleRequest req) {
+  static AccessRule createFromRequest(CreateAccessRuleRequest req) {
     AccessRule rule;
+
     rule.id = randomUUID();
     rule.connectorId = req.connectorId;
     rule.tenantId = req.tenantId;
@@ -39,11 +40,13 @@ struct AccessRule {
     rule.urlPathPrefix = req.urlPathPrefix;
     rule.policy = req.policy.toLower().to!AccessPolicy;
     rule.principalPropagation = req.principalPropagation;
+
     return rule;
   }
 
-  AccessRule updateFromRequest(UpdateAccessRuleRequest req) {
+  static AccessRule updateFromRequest(UpdateAccessRuleRequest req) const {
     AccessRule updated = this;
+
     if (req.description.length > 0)
       updated.description = req.description;
     if (req.protocol.length > 0)

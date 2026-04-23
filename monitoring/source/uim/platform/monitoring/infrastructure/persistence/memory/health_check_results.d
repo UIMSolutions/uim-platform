@@ -39,7 +39,7 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   }
 
   HealthCheckResult[] findByTenant(TenantId tenantId) {
-    return store.filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
@@ -69,6 +69,6 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp)).array;
+    store = findAll().filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp)).array;
   }
 }

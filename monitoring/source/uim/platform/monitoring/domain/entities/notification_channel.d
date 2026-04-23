@@ -52,7 +52,7 @@ struct NotificationChannel {
     return j;
   }
 
-  NotificationChannel createFromRequest(const CreateNotificationChannelRequest req) {
+  static NotificationChannel createFromRequest(const CreateNotificationChannelRequest req) {
     NotificationChannel channel;
     
     channel.id = randomUUID();

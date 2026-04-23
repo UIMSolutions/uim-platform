@@ -18,23 +18,23 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
   private ExecutionLog[] store;
 
   ExecutionLog[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    return store.filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).array;
   }
 
   ExecutionLog[] findByStep(StepId steptenantId, id tenantId) {
-    return store.filter!(e => e.stepId == stepId && e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.stepId == stepId && e.tenantId == tenantId).array;
   }
 
   ExecutionLog[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
-    return store.filter!(e => e.tenantId == tenantId && e.outcome == outcome).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.outcome == outcome).array;
   }
 
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return store.filter!((e) {
+    return findAll().filter!((e) {
       if (e.tenantId != tenantId)
         return false;
       if (timeFrom > 0 && e.timestamp < timeFrom)
@@ -54,10 +54,10 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
   }
 
   void removeByWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    store = store.filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
+    store = findAll().filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
+    store = findAll().filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 }

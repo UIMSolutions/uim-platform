@@ -11,42 +11,29 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBuildConfigurationRepository : BuildConfigurationRepository {
-    private BuildConfiguration[] store;
+class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration, BuildConfigurationId), BuildConfigurationRepository {
 
-    bool existsById(BuildConfigurationId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    BuildConfiguration findById(BuildConfigurationId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return BuildConfiguration.init;
-    }
-
-    BuildConfiguration[] findAll() { return store; }
-
-    BuildConfiguration[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
+    }   
 
     BuildConfiguration[] findByProject(ProjectId projectId) {
         return findAll().filter!(e => e.projectId == projectId).array;
+    }
+
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(e => remove(e.id));
+    }
+
+    size_t countByStatus(BuildStatus status) {
+        return findByStatus(status).length;
     }
 
     BuildConfiguration[] findByStatus(BuildStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(BuildConfiguration entity) { store ~= entity; }
-
-    void update(BuildConfiguration entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(BuildConfigurationId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByStatus(BuildStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
     }
 }

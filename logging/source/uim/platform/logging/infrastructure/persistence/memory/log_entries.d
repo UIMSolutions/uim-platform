@@ -34,7 +34,7 @@ class MemoryLogEntryRepository : LogEntryRepository {
   }
 
   LogEntry[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId) {

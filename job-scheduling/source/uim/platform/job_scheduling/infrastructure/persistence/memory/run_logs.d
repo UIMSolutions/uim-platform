@@ -28,16 +28,16 @@ class MemoryRunLogRepository : RunLogRepository {
     }
 
     RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
-        return store.filter!(r => r.scheduleId == scheduleId
+        return findAll().filter!(r => r.scheduleId == scheduleId
             && r.jobId == jobId && r.tenantId == tenantId).array;
     }
 
     RunLog[] findByJob(JobId jobtenantId, id tenantId) {
-        return store.filter!(r => r.jobId == jobId && r.tenantId == tenantId).array;
+        return findAll().filter!(r => r.jobId == jobId && r.tenantId == tenantId).array;
     }
 
     RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId) {
-        return store.filter!(r => r.status == status
+        return findAll().filter!(r => r.status == status
             && r.jobId == jobId && r.tenantId == tenantId).array;
     }
 
@@ -55,6 +55,6 @@ class MemoryRunLogRepository : RunLogRepository {
     }
 
     size_t countBySchedule(ScheduleId scheduleId) {
-        return store.filter!(r => r.scheduleId == scheduleId).array.length;
+        return findAll().filter!(r => r.scheduleId == scheduleId).array.length;
     }
 }

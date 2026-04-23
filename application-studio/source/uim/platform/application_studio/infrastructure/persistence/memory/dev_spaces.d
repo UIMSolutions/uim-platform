@@ -11,42 +11,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDevSpaceRepository : DevSpaceRepository {
-    private DevSpace[] store;
+class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpaceRepository {
 
-    bool existsById(DevSpaceId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    DevSpace findById(DevSpaceId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return DevSpace.init;
-    }
-
-    DevSpace[] findAll() { return store; }
-
-    DevSpace[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByOwner(string owner) {
+        return findByOwner(owner).length;
     }
 
     DevSpace[] findByOwner(string owner) {
         return findAll().filter!(e => e.owner == owner).array;
     }
 
+    void removeByOwner(string owner) {
+        findByOwner(owner).each!(e => remove(e.id));
+    }
+
+    size_t countByStatus(DevSpaceStatus status) {
+        return findByStatus(status).length;
+    }
+
     DevSpace[] findByStatus(DevSpaceStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(DevSpace entity) { store ~= entity; }
-
-    void update(DevSpace entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByStatus(DevSpaceStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
     }
 
-    void remove(DevSpaceId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

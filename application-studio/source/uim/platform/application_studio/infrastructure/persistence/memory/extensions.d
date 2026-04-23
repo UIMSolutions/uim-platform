@@ -11,42 +11,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryExtensionRepository : ExtensionRepository {
-    private Extension[] store;
+class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), ExtensionRepository {
 
-    bool existsById(ExtensionId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Extension findById(ExtensionId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Extension.init;
-    }
-
-    Extension[] findAll() { return store; }
-
-    Extension[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByScope(ExtensionScope scope_) {
+        return findByScope(scope_).length;
     }
 
     Extension[] findByScope(ExtensionScope scope_) {
         return findAll().filter!(e => e.scope_ == scope_).array;
     }
 
+    void removeByScope(ExtensionScope scope_) {
+        findByScope(scope_).each!(e => remove(e.id));
+    }
+
+    size_t countByStatus(ExtensionStatus status) {
+        return findByStatus(status).length;
+    }
+
     Extension[] findByStatus(ExtensionStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(Extension entity) { store ~= entity; }
-
-    void update(Extension entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByStatus(ExtensionStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
     }
 
-    void remove(ExtensionId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }
