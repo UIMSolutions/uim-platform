@@ -16,7 +16,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
   private DataProfile[ProfileId] store;
 
   DataProfile[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+    return findAll().filter!(p => p.tenantId == tenantId).array;
   }
 
   DataProfile* findById(ProfileId tenantId, id tenantId) {
@@ -29,7 +29,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
   DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile* latest;
     long latestTime = 0;
-    foreach (p; store.byValue()) {
+    foreach (p; findAll()) {
       if (p.tenantId == tenantId && p.datasetId == datasetId && p.profiledAt > latestTime) {
         latest = &p;
         latestTime = p.profiledAt;
@@ -39,7 +39,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
   }
 
   DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId && p.datasetId == datasetId).array;
+    return findAll().filter!(p => p.tenantId == tenantId && p.datasetId == datasetId).array;
   }
 
   void save(DataProfile profile) {

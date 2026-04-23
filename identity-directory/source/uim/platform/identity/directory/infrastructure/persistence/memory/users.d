@@ -29,11 +29,11 @@ class MemoryUserRepository : UserRepository {
   }
 
   bool existsByUserName(TenantId tenantId, string userName) {
-    return store.byValue().any!(u => u.tenantId == tenantId && u.userName == userName);
+    return findAll().any!(u => u.tenantId == tenantId && u.userName == userName);
   }
 
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -41,11 +41,11 @@ class MemoryUserRepository : UserRepository {
   }
 
   bool existsByExternalId(TenantId tenantId, string externalId) {
-    return store.byValue().any!(u => u.tenantId == tenantId && u.externalId == externalId);
+    return findAll().any!(u => u.tenantId == tenantId && u.externalId == externalId);
   }
 
   User findByExternalId(TenantId tenantId, string externalId) {
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.externalId == externalId)
         return u;
     }
@@ -54,7 +54,7 @@ class MemoryUserRepository : UserRepository {
 
   User[] findByEmail(TenantId tenantId, string email) {
     User[] result;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId) {
         foreach (e; u.emails)
         {
@@ -71,7 +71,7 @@ class MemoryUserRepository : UserRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId)
         count++;
     }
@@ -81,7 +81,7 @@ class MemoryUserRepository : UserRepository {
   User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= u;
@@ -93,7 +93,7 @@ class MemoryUserRepository : UserRepository {
 
   User[] findByGroupId(GroupId groupId) {
     User[] result;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.groupIds.canFind(groupId))
         result ~= u;
     }
@@ -104,7 +104,7 @@ class MemoryUserRepository : UserRepository {
     User[] result;
     auto lowerFilter = filter.toLower();
     uint idx;
-    foreach (u; store.byValue()) {
+    foreach (u; findAll()) {
       if (u.tenantId != tenantId)
         continue;
 

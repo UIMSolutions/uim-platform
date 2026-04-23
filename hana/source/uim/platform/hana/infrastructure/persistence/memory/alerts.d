@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
   bool existsById(AlertId id) {
-    return store.byValue().any!(tenantId => (id in store[tenantId]) ? true : false);
+    return findAll().any!(tenantId => (id in store[tenantId]) ? true : false);
   }
 
   Alert findById(AlertId id) {
@@ -34,7 +34,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
   }
 
   Alert[] findByInstance(InstanceId instanceId) {
-    return store.byValue().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
+    return findAll().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
   }
 
   Alert[] findByInstance(TenantId tenantId, InstanceId instanceId) {
@@ -50,7 +50,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
   }
 
   size_t countAll() {
-    return store.byValue().map!(alerts => alerts.length).sum;
+    return findAll().map!(alerts => alerts.length).sum;
   }
 
   void remove(AlertId id) {

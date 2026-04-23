@@ -16,7 +16,7 @@ class MemoryCleansingJobRepository : CleansingJobRepository {
   private CleansingJob[CleansingJobId] store;
 
   CleansingJob[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(j => j.tenantId == tenantId).array;
+    return findAll().filter!(j => j.tenantId == tenantId).array;
   }
 
   CleansingJob findById(CleansingJobId tenantId, id tenantId) {
@@ -27,11 +27,11 @@ class MemoryCleansingJobRepository : CleansingJobRepository {
   }
 
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return store.byValue().filter!(j => j.tenantId == tenantId && j.datasetId == datasetId).array;
+    return findAll().filter!(j => j.tenantId == tenantId && j.datasetId == datasetId).array;
   }
 
   CleansingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return store.byValue().filter!(j => j.tenantId == tenantId && j.status == status).array;
+    return findAll().filter!(j => j.tenantId == tenantId && j.status == status).array;
   }
 
   void save(CleansingJob job) {

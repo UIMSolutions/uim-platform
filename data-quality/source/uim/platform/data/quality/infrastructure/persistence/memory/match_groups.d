@@ -16,7 +16,7 @@ class MemoryMatchGroupRepository : MatchGroupRepository {
   private MatchGroup[MatchGroupId] store;
 
   MatchGroup[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(g => g.tenantId == tenantId).array;
+    return findAll().filter!(g => g.tenantId == tenantId).array;
   }
 
   MatchGroup* findById(MatchGroupId tenantId, id tenantId) {
@@ -27,11 +27,11 @@ class MemoryMatchGroupRepository : MatchGroupRepository {
   }
 
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return store.byValue().filter!(g => g.tenantId == tenantId && g.datasetId == datasetId).array;
+    return findAll().filter!(g => g.tenantId == tenantId && g.datasetId == datasetId).array;
   }
 
   MatchGroup[] findUnresolved(TenantId tenantId) {
-    return store.byValue().filter!(g => g.tenantId == tenantId && !g.resolved).array;
+    return findAll().filter!(g => g.tenantId == tenantId && !g.resolved).array;
   }
 
   void save(MatchGroup group) {

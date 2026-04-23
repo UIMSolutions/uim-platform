@@ -16,7 +16,7 @@ class MemoryValidationResultRepository : ValidationResultRepository {
   private ValidationResult[RecordId] store;
 
   ValidationResult[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   ValidationResult* findByRecord(RecordId recordtenantId, id tenantId) {
@@ -27,7 +27,7 @@ class MemoryValidationResultRepository : ValidationResultRepository {
   }
 
   ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId && r.datasetId == datasetId).array;
+    return findAll().filter!(r => r.tenantId == tenantId && r.datasetId == datasetId).array;
   }
 
   void save(ValidationResult result) {
@@ -36,7 +36,7 @@ class MemoryValidationResultRepository : ValidationResultRepository {
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     RecordId[] toRemove;
-    foreach (r; store.byValue())
+    foreach (r; findAll())
       if (r.tenantId == tenantId && r.datasetId == datasetId)
         toRemove ~= r.recordId;
     foreach (id; toRemove)

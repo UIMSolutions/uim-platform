@@ -22,7 +22,7 @@ class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
   }
 
   PasswordPolicy findActiveForTenant(TenantId tenantId) {
-    foreach (p; store.byValue()) {
+    foreach (p; findAll()) {
       if (p.tenantId == tenantId && p.active)
         return p;
     }
@@ -31,7 +31,7 @@ class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
 
   PasswordPolicy[] findByTenant(TenantId tenantId) {
     PasswordPolicy[] result;
-    foreach (p; store.byValue()) {
+    foreach (p; findAll()) {
       if (p.tenantId == tenantId)
         result ~= p;
     }

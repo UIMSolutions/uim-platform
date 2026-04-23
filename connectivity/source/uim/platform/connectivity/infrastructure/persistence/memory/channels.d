@@ -25,7 +25,7 @@ class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), Ch
   }
 
   ServiceChannel[] findByConnector(ConnectorId connectorId) {
-    return store.byValue().filter!(e => e.connectorId == connectorId).array;
+    return findAll().filter!(e => e.connectorId == connectorId).array;
   }
 
   void removeByConnector(ConnectorId connectorId) {

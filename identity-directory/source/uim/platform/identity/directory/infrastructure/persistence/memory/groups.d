@@ -26,11 +26,11 @@ class MemoryGroupRepository : GroupRepository {
   }
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
-    return store.byValue().any!(g => g.tenantId == tenantId && g.displayName == displayName);
+    return findAll().any!(g => g.tenantId == tenantId && g.displayName == displayName);
   }
   
   Group findByDisplayName(TenantId tenantId, string displayName) {
-    foreach (g; store.byValue()) {
+    foreach (g; findAll()) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
@@ -39,7 +39,7 @@ class MemoryGroupRepository : GroupRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (g; store.byValue()) {
+    foreach (g; findAll()) {
       if (g.tenantId == tenantId)
         count++;
     }
@@ -47,7 +47,7 @@ class MemoryGroupRepository : GroupRepository {
   }
 
   Group[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(g => g.tenantId == tenantId).array;
+    return findAll().filter!(g => g.tenantId == tenantId).array;
   }
 
   Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
@@ -62,7 +62,7 @@ class MemoryGroupRepository : GroupRepository {
   }
 
   Group[] findByMember(string memberId) {
-    return store.byValue().filter!(g => g.hasMember(memberId)).array;
+    return findAll().filter!(g => g.hasMember(memberId)).array;
   }
 
   void save(Group group) {

@@ -26,15 +26,15 @@ class MemoryImportJobRepository : ImportJobRepository {
   }
 
   ImportJob[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   ImportJob[] findByPackage(ContentPackageId packageId) {
-    return store.byValue().filter!(e => e.packageId == packageId).array;
+    return findAll().filter!(e => e.packageId == packageId).array;
   }
 
   ImportJob[] findByStatus(TenantId tenantId, ImportStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   void save(ImportJob job) {

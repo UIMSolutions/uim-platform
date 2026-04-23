@@ -16,11 +16,11 @@ class MemoryCleansingRuleRepository : CleansingRuleRepository {
   private CleansingRule[RuleId] store;
 
   CleansingRule[] findAll() {
-    return store.byValue().array;
+    return findAll().array;
   }
 
   CleansingRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   CleansingRule* findById(RuleId id) {
@@ -30,12 +30,12 @@ class MemoryCleansingRuleRepository : CleansingRuleRepository {
   }
 
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return store.byValue().filter!(r => r.tenantId == tenantId
+    return findAll().filter!(r => r.tenantId == tenantId
         && r.datasetPattern == datasetPattern).array;
   }
 
   CleansingRule[] findActive(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
+    return findAll().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
       .array;
   }
 

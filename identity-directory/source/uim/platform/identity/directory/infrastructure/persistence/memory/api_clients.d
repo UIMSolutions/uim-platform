@@ -26,11 +26,11 @@ class MemoryApiClientRepository : ApiClientRepository {
   }
 
   bool existsByClientId(string clientId) {
-    return store.byValue().any!(c => c.clientId == clientId);{
+    return findAll().any!(c => c.clientId == clientId);{
   }
 
   ApiClient findByClientId(string clientId) {
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()) {
       if (c.clientId == clientId)
         return c;
     }
@@ -40,7 +40,7 @@ class MemoryApiClientRepository : ApiClientRepository {
   ApiClient[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     ApiClient[] result;
     uint idx;
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()) {
       if (c.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= c;

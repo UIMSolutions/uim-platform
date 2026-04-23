@@ -16,11 +16,11 @@ class MemoryValidationRuleRepository : ValidationRuleRepository {
   private ValidationRule[RuleId] store;
 
   ValidationRule[] findAll() {
-    return store.byValue().array;
+    return findAll().array;
   }
 
   ValidationRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   ValidationRule* findById(RuleId id) {
@@ -30,16 +30,16 @@ class MemoryValidationRuleRepository : ValidationRuleRepository {
   }
 
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return store.byValue().filter!(r => r.tenantId == tenantId
+    return findAll().filter!(r => r.tenantId == tenantId
         && r.datasetPattern == datasetPattern).array;
   }
 
   ValidationRule[] findByField(TenantId tenantId, string fieldName) {
-    return store.byValue().filter!(r => r.tenantId == tenantId && r.fieldName == fieldName).array;
+    return findAll().filter!(r => r.tenantId == tenantId && r.fieldName == fieldName).array;
   }
 
   ValidationRule[] findActive(TenantId tenantId) {
-    return store.byValue().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
+    return findAll().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
       .array;
   }
 
