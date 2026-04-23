@@ -22,11 +22,11 @@ class MemoryTriggerRepository : TriggerRepository {
     }
 
     Trigger[] findByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array;
+        return findAll().filter!(t => t.tenantId == tenantId).array;
     }
 
     Trigger[] findByProcess(ProcessId processId) {
-        return store.filter!(t => t.processId == processId).array;
+        return findAll().filter!(t => t.processId == processId).array;
     }
 
     void save(Trigger t) {
@@ -43,10 +43,10 @@ class MemoryTriggerRepository : TriggerRepository {
     }
 
     void remove(TriggerId id) {
-        store = store.filter!(t => t.id != id).array;
+        store = findAll().filter!(t => t.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array.length;
+        return findAll().filter!(t => t.tenantId == tenantId).array.length;
     }
 }

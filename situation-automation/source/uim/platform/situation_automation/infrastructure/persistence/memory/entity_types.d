@@ -22,11 +22,11 @@ class MemoryEntityTypeRepository : EntityTypeRepository {
     }
 
     EntityType[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     EntityType[] findByCategory(TenantId tenantId, EntityCategory category) {
-        return store.filter!(e => e.tenantId == tenantId && e.category == category).array;
+        return findAll().filter!(e => e.tenantId == tenantId && e.category == category).array;
     }
 
     void save(EntityType e) {
@@ -43,10 +43,10 @@ class MemoryEntityTypeRepository : EntityTypeRepository {
     }
 
     void remove(EntityTypeId id) {
-        store = store.filter!(e => e.id != id).array;
+        store = findAll().filter!(e => e.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array.length;
+        return findAll().filter!(e => e.tenantId == tenantId).array.length;
     }
 }

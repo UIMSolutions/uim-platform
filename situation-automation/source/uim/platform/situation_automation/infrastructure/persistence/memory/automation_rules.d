@@ -22,15 +22,15 @@ class MemoryAutomationRuleRepository : AutomationRuleRepository {
     }
 
     AutomationRule[] findByTenant(TenantId tenantId) {
-        return store.filter!(r => r.tenantId == tenantId).array;
+        return findAll().filter!(r => r.tenantId == tenantId).array;
     }
 
     AutomationRule[] findByTemplate(SituationTemplateId templateId) {
-        return store.filter!(r => r.templateId == templateId).array;
+        return findAll().filter!(r => r.templateId == templateId).array;
     }
 
     AutomationRule[] findActive(TenantId tenantId) {
-        return store.filter!(r => r.tenantId == tenantId && r.enabled && r.status == RuleStatus.active).array;
+        return findAll().filter!(r => r.tenantId == tenantId && r.enabled && r.status == RuleStatus.active).array;
     }
 
     void save(AutomationRule r) {
@@ -47,10 +47,10 @@ class MemoryAutomationRuleRepository : AutomationRuleRepository {
     }
 
     void remove(AutomationRuleId id) {
-        store = store.filter!(r => r.id != id).array;
+        store = findAll().filter!(r => r.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(r => r.tenantId == tenantId).array.length;
+        return findAll().filter!(r => r.tenantId == tenantId).array.length;
     }
 }

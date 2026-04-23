@@ -22,19 +22,19 @@ class MemoryNotificationRepository : NotificationRepository {
     }
 
     Notification[] findByTenant(TenantId tenantId) {
-        return store.filter!(n => n.tenantId == tenantId).array;
+        return findAll().filter!(n => n.tenantId == tenantId).array;
     }
 
     Notification[] findByRecipient(TenantId tenantId, string recipientId) {
-        return store.filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
+        return findAll().filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
     }
 
     Notification[] findByInstance(SituationInstanceId instanceId) {
-        return store.filter!(n => n.instanceId == instanceId).array;
+        return findAll().filter!(n => n.instanceId == instanceId).array;
     }
 
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
-        return store.filter!(n => n.tenantId == tenantId && n.status == status).array;
+        return findAll().filter!(n => n.tenantId == tenantId && n.status == status).array;
     }
 
     void save(Notification n) {
@@ -51,10 +51,10 @@ class MemoryNotificationRepository : NotificationRepository {
     }
 
     void remove(NotificationId id) {
-        store = store.filter!(n => n.id != id).array;
+        store = findAll().filter!(n => n.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(n => n.tenantId == tenantId).array.length;
+        return findAll().filter!(n => n.tenantId == tenantId).array.length;
     }
 }

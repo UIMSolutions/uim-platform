@@ -22,19 +22,19 @@ class MemorySituationInstanceRepository : SituationInstanceRepository {
     }
 
     SituationInstance[] findByTenant(TenantId tenantId) {
-        return store.filter!(i => i.tenantId == tenantId).array;
+        return findAll().filter!(i => i.tenantId == tenantId).array;
     }
 
     SituationInstance[] findByTemplate(SituationTemplateId templateId) {
-        return store.filter!(i => i.templateId == templateId).array;
+        return findAll().filter!(i => i.templateId == templateId).array;
     }
 
     SituationInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return store.filter!(i => i.tenantId == tenantId && i.status == status).array;
+        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
     }
 
     SituationInstance[] findByEntity(TenantId tenantId, string entityId) {
-        return store.filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
+        return findAll().filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
     }
 
     void save(SituationInstance i) {
@@ -51,14 +51,14 @@ class MemorySituationInstanceRepository : SituationInstanceRepository {
     }
 
     void remove(SituationInstanceId id) {
-        store = store.filter!(i => i.id != id).array;
+        store = findAll().filter!(i => i.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(i => i.tenantId == tenantId).array.length;
+        return findAll().filter!(i => i.tenantId == tenantId).array.length;
     }
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
-        return store.filter!(i => i.tenantId == tenantId && i.status == status).array.length;
+        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array.length;
     }
 }

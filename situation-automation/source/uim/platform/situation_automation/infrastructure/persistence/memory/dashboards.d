@@ -22,11 +22,11 @@ class MemoryDashboardRepository : DashboardRepository {
     }
 
     Dashboard[] findByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array;
+        return findAll().filter!(d => d.tenantId == tenantId).array;
     }
 
     Dashboard[] findByType(TenantId tenantId, DashboardType type) {
-        return store.filter!(d => d.tenantId == tenantId && d.type == type).array;
+        return findAll().filter!(d => d.tenantId == tenantId && d.type == type).array;
     }
 
     void save(Dashboard d) {
@@ -43,10 +43,10 @@ class MemoryDashboardRepository : DashboardRepository {
     }
 
     void remove(DashboardId id) {
-        store = store.filter!(d => d.id != id).array;
+        store = findAll().filter!(d => d.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array.length;
+        return findAll().filter!(d => d.tenantId == tenantId).array.length;
     }
 }

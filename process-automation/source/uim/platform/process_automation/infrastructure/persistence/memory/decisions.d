@@ -22,11 +22,11 @@ class MemoryDecisionRepository : DecisionRepository {
     }
 
     Decision[] findByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array;
+        return findAll().filter!(d => d.tenantId == tenantId).array;
     }
 
     Decision[] findByProject(ProjectId projectId) {
-        return store.filter!(d => d.projectId == projectId).array;
+        return findAll().filter!(d => d.projectId == projectId).array;
     }
 
     void save(Decision d) {
@@ -43,10 +43,10 @@ class MemoryDecisionRepository : DecisionRepository {
     }
 
     void remove(DecisionId id) {
-        store = store.filter!(d => d.id != id).array;
+        store = findAll().filter!(d => d.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array.length;
+        return findAll().filter!(d => d.tenantId == tenantId).array.length;
     }
 }

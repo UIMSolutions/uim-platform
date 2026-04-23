@@ -22,15 +22,15 @@ class MemoryDataContextRepository : DataContextRepository {
     }
 
     DataContext[] findByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array;
+        return findAll().filter!(d => d.tenantId == tenantId).array;
     }
 
     DataContext[] findByInstance(SituationInstanceId instanceId) {
-        return store.filter!(d => d.instanceId == instanceId).array;
+        return findAll().filter!(d => d.instanceId == instanceId).array;
     }
 
     DataContext[] findPersonalData(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId && d.containsPersonalData).array;
+        return findAll().filter!(d => d.tenantId == tenantId && d.containsPersonalData).array;
     }
 
     void save(DataContext d) {
@@ -47,14 +47,14 @@ class MemoryDataContextRepository : DataContextRepository {
     }
 
     void remove(DataContextId id) {
-        store = store.filter!(d => d.id != id).array;
+        store = findAll().filter!(d => d.id != id).array;
     }
 
     void removeByInstance(SituationInstanceId instanceId) {
-        store = store.filter!(d => d.instanceId != instanceId).array;
+        store = findAll().filter!(d => d.instanceId != instanceId).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array.length;
+        return findAll().filter!(d => d.tenantId == tenantId).array.length;
     }
 }

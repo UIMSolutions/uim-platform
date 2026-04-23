@@ -22,11 +22,11 @@ class MemoryActionRepository : ActionRepository {
     }
 
     Action[] findByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array;
+        return findAll().filter!(a => a.tenantId == tenantId).array;
     }
 
     Action[] findByProject(ProjectId projectId) {
-        return store.filter!(a => a.projectId == projectId).array;
+        return findAll().filter!(a => a.projectId == projectId).array;
     }
 
     void save(Action a) {
@@ -43,10 +43,10 @@ class MemoryActionRepository : ActionRepository {
     }
 
     void remove(ActionId id) {
-        store = store.filter!(a => a.id != id).array;
+        store = findAll().filter!(a => a.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array.length;
+        return findAll().filter!(a => a.tenantId == tenantId).array.length;
     }
 }

@@ -22,11 +22,11 @@ class MemoryFormRepository : FormRepository {
     }
 
     Form[] findByTenant(TenantId tenantId) {
-        return store.filter!(f => f.tenantId == tenantId).array;
+        return findAll().filter!(f => f.tenantId == tenantId).array;
     }
 
     Form[] findByProject(ProjectId projectId) {
-        return store.filter!(f => f.projectId == projectId).array;
+        return findAll().filter!(f => f.projectId == projectId).array;
     }
 
     void save(Form f) {
@@ -43,10 +43,10 @@ class MemoryFormRepository : FormRepository {
     }
 
     void remove(FormId id) {
-        store = store.filter!(f => f.id != id).array;
+        store = findAll().filter!(f => f.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(f => f.tenantId == tenantId).array.length;
+        return findAll().filter!(f => f.tenantId == tenantId).array.length;
     }
 }

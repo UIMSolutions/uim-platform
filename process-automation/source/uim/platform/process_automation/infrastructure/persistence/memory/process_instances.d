@@ -22,15 +22,15 @@ class MemoryProcessInstanceRepository : ProcessInstanceRepository {
     }
 
     ProcessInstance[] findByTenant(TenantId tenantId) {
-        return store.filter!(i => i.tenantId == tenantId).array;
+        return findAll().filter!(i => i.tenantId == tenantId).array;
     }
 
     ProcessInstance[] findByProcess(ProcessId processId) {
-        return store.filter!(i => i.processId == processId).array;
+        return findAll().filter!(i => i.processId == processId).array;
     }
 
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return store.filter!(i => i.tenantId == tenantId && i.status == status).array;
+        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
     }
 
     void save(ProcessInstance i) {
@@ -47,10 +47,10 @@ class MemoryProcessInstanceRepository : ProcessInstanceRepository {
     }
 
     void remove(ProcessInstanceId id) {
-        store = store.filter!(i => i.id != id).array;
+        store = findAll().filter!(i => i.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(i => i.tenantId == tenantId).array.length;
+        return findAll().filter!(i => i.tenantId == tenantId).array.length;
     }
 }

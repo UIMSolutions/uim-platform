@@ -22,11 +22,11 @@ class MemoryAutomationRepository : AutomationRepository {
     }
 
     Automation[] findByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array;
+        return findAll().filter!(a => a.tenantId == tenantId).array;
     }
 
     Automation[] findByProject(ProjectId projectId) {
-        return store.filter!(a => a.projectId == projectId).array;
+        return findAll().filter!(a => a.projectId == projectId).array;
     }
 
     void save(Automation a) {
@@ -43,10 +43,10 @@ class MemoryAutomationRepository : AutomationRepository {
     }
 
     void remove(AutomationId id) {
-        store = store.filter!(a => a.id != id).array;
+        store = findAll().filter!(a => a.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array.length;
+        return findAll().filter!(a => a.tenantId == tenantId).array.length;
     }
 }

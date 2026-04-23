@@ -22,15 +22,15 @@ class MemoryProcessRepository : ProcessRepository {
     }
 
     Process[] findByTenant(TenantId tenantId) {
-        return store.filter!(p => p.tenantId == tenantId).array;
+        return findAll().filter!(p => p.tenantId == tenantId).array;
     }
 
     Process[] findByProject(ProjectId projectId) {
-        return store.filter!(p => p.projectId == projectId).array;
+        return findAll().filter!(p => p.projectId == projectId).array;
     }
 
     Process[] findByCategory(TenantId tenantId, ProcessCategory category) {
-        return store.filter!(p => p.tenantId == tenantId && p.category == category).array;
+        return findAll().filter!(p => p.tenantId == tenantId && p.category == category).array;
     }
 
     void save(Process p) {
@@ -47,10 +47,10 @@ class MemoryProcessRepository : ProcessRepository {
     }
 
     void remove(ProcessId id) {
-        store = store.filter!(p => p.id != id).array;
+        store = findAll().filter!(p => p.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(p => p.tenantId == tenantId).array.length;
+        return findAll().filter!(p => p.tenantId == tenantId).array.length;
     }
 }

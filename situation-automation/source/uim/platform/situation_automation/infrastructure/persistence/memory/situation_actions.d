@@ -22,11 +22,11 @@ class MemorySituationActionRepository : SituationActionRepository {
     }
 
     SituationAction[] findByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array;
+        return findAll().filter!(a => a.tenantId == tenantId).array;
     }
 
     SituationAction[] findByType(TenantId tenantId, ActionType type) {
-        return store.filter!(a => a.tenantId == tenantId && a.type == type).array;
+        return findAll().filter!(a => a.tenantId == tenantId && a.type == type).array;
     }
 
     void save(SituationAction a) {
@@ -43,10 +43,10 @@ class MemorySituationActionRepository : SituationActionRepository {
     }
 
     void remove(SituationActionId id) {
-        store = store.filter!(a => a.id != id).array;
+        store = findAll().filter!(a => a.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(a => a.tenantId == tenantId).array.length;
+        return findAll().filter!(a => a.tenantId == tenantId).array.length;
     }
 }

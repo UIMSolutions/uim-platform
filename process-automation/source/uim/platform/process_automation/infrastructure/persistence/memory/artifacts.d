@@ -26,11 +26,11 @@ class MemoryArtifactRepository : ArtifactRepository {
     }
 
     Artifact[] findByType(ArtifactType type) {
-        return store.filter!(a => a.type == type).array;
+        return findAll().filter!(a => a.type == type).array;
     }
 
     Artifact[] findByCategory(string category) {
-        return store.filter!(a => a.category == category).array;
+        return findAll().filter!(a => a.category == category).array;
     }
 
     void save(Artifact a) {
@@ -47,7 +47,7 @@ class MemoryArtifactRepository : ArtifactRepository {
     }
 
     void remove(ArtifactId id) {
-        store = store.filter!(a => a.id != id).array;
+        store = findAll().filter!(a => a.id != id).array;
     }
 
     size_t countAll() {

@@ -22,7 +22,7 @@ class MemoryVisibilityRepository : VisibilityRepository {
     }
 
     Visibility[] findByTenant(TenantId tenantId) {
-        return store.filter!(v => v.tenantId == tenantId).array;
+        return findAll().filter!(v => v.tenantId == tenantId).array;
     }
 
     void save(Visibility v) {
@@ -39,10 +39,10 @@ class MemoryVisibilityRepository : VisibilityRepository {
     }
 
     void remove(VisibilityId id) {
-        store = store.filter!(v => v.id != id).array;
+        store = findAll().filter!(v => v.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(v => v.tenantId == tenantId).array.length;
+        return findAll().filter!(v => v.tenantId == tenantId).array.length;
     }
 }

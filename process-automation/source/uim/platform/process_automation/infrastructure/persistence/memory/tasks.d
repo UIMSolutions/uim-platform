@@ -22,19 +22,19 @@ class MemoryTaskRepository : TaskRepository {
     }
 
     Task[] findByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array;
+        return findAll().filter!(t => t.tenantId == tenantId).array;
     }
 
     Task[] findByAssignee(TenantId tenantId, string assignee) {
-        return store.filter!(t => t.tenantId == tenantId && t.assignee == assignee).array;
+        return findAll().filter!(t => t.tenantId == tenantId && t.assignee == assignee).array;
     }
 
     Task[] findByProcessInstance(ProcessInstanceId instanceId) {
-        return store.filter!(t => t.processInstanceId == instanceId).array;
+        return findAll().filter!(t => t.processInstanceId == instanceId).array;
     }
 
     Task[] findByStatus(TenantId tenantId, TaskStatus status) {
-        return store.filter!(t => t.tenantId == tenantId && t.status == status).array;
+        return findAll().filter!(t => t.tenantId == tenantId && t.status == status).array;
     }
 
     void save(Task t) {
@@ -51,10 +51,10 @@ class MemoryTaskRepository : TaskRepository {
     }
 
     void remove(TaskId id) {
-        store = store.filter!(t => t.id != id).array;
+        store = findAll().filter!(t => t.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array.length;
+        return findAll().filter!(t => t.tenantId == tenantId).array.length;
     }
 }

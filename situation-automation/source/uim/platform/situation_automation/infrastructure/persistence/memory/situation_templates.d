@@ -22,15 +22,15 @@ class MemorySituationTemplateRepository : SituationTemplateRepository {
     }
 
     SituationTemplate[] findByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array;
+        return findAll().filter!(t => t.tenantId == tenantId).array;
     }
 
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category) {
-        return store.filter!(t => t.tenantId == tenantId && t.category == category).array;
+        return findAll().filter!(t => t.tenantId == tenantId && t.category == category).array;
     }
 
     SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId) {
-        return store.filter!(t => t.tenantId == tenantId && t.entityTypeId == entityTypeId).array;
+        return findAll().filter!(t => t.tenantId == tenantId && t.entityTypeId == entityTypeId).array;
     }
 
     void save(SituationTemplate t) {
@@ -47,10 +47,10 @@ class MemorySituationTemplateRepository : SituationTemplateRepository {
     }
 
     void remove(SituationTemplateId id) {
-        store = store.filter!(t => t.id != id).array;
+        store = findAll().filter!(t => t.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(t => t.tenantId == tenantId).array.length;
+        return findAll().filter!(t => t.tenantId == tenantId).array.length;
     }
 }
