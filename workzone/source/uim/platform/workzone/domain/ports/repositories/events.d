@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.events;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.event;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.event;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface EventRepository : ITenantRepository!(Event, EventId) {
   
-  size_t countByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Event[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  void removeByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  Event[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   
-  size_t countByOrganizer(UserId organizertenantId, id tenantId);
-  Event[] findByOrganizer(UserId organizertenantId, id tenantId);
-  void removeByOrganizer(UserId organizertenantId, id tenantId);
+  size_t countByOrganizer(TenantId tenantId, UserId organizerId);
+  Event[] findByOrganizer(TenantId tenantId, UserId organizerId);
+  void removeByOrganizer(TenantId tenantId, UserId organizerId);
 
 }

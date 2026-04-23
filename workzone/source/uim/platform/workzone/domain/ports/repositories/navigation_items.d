@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.navigation_items;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.navigation_item;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.navigation_item;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface NavigationItemRepository : ITenantRepository!(NavigationItem, NavigationItemId) {
 
   size_t countBySite(TenantId tenantId, SiteId siteId);

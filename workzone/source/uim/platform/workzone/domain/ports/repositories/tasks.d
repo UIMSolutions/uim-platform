@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.tasks;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.task;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.task;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface TaskRepository : ITenantRepository!(Task, TaskId) {
 
   size_t countByAssignee(TenantId tenantId, UserId assignee);

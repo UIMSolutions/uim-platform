@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.themes;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.theme;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.theme;
 
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {
 
   bool existsDefault(TenantId tenantId);

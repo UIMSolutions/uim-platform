@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.user_profiles;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.user_profile;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.user_profile;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface UserProfileRepository : ITenantRepository!(UserProfile, UserProfileId) {
 
   bool existsByUserId(UserId usertenantId, id tenantId);

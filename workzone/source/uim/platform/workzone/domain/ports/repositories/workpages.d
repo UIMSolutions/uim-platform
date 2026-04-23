@@ -8,10 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.workpages;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
 
-interface WorkpageRepository {
-  Workpage[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Workpage* findById(WorkpageId tenantId, id tenantId);
-  void save(Workpage page);
-  void update(Workpage page);
-  void remove(WorkpageId tenantId, id tenantId);
+interface WorkpageRepository : ITenantRepository!(Workpage, WorkpageId) {
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  Workpage[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+
 }

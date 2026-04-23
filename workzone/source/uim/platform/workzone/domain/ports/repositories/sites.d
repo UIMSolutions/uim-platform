@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.sites;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.site;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.site;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface SiteRepository : ITenantRepository!(Site, SiteId) {
 
   bool existsByAlias(string alias_, TenantId tenantId);

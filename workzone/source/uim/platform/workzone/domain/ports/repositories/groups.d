@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.groups;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.group;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.group;
 
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 interface GroupRepository : ITenantRepository!(Group, GroupId) {
 
   size_t countByMember(TenantId tenantId, UserId userId);

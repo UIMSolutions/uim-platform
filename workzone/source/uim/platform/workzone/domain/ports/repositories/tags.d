@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.tags;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.tag;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.tag;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface TagRepository : ITenantRepository!(Tag, TagId) {
 
   bool existsByName(TenantId tenantId, string name);
   Tag findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
+  size_t countByParent(TenantId tenantId, TagId parentTag);
   Tag[] findByParent(TenantId tenantId, TagId parentTag);
-  Tag[] findByParent(TenantId tenantId, TagId parentTag);
-  Tag[] findByParent(TenantId tenantId, TagId parentTag);
+  void removeByParent(TenantId tenantId, TagId parentTag);
 
 }

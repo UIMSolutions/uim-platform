@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.contents;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.content_item;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.content_item;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface ContentRepository {
   ContentItem[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
   ContentItem* findById(ContentId tenantId, id tenantId);

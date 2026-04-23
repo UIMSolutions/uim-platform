@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.external_content_providers;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.external_content_provider;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.external_content_provider;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface ExternalContentProviderRepository : ITenantRepository!(ExternalContentProvider, ExternalContentProviderId) {
 
   size_t countByStatus(TenantId tenantId, ProviderStatus status);

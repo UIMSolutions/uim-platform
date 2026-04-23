@@ -5,13 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.feeds;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.feed_entry;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.feed_entry;
+import uim.platform.workzone;
 
-interface FeedRepository {
-  FeedEntry[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  FeedEntry* findById(FeedEntryId tenantId, id tenantId);
-  FeedEntry[] findByActor(UserId actortenantId, id tenantId);
-  void save(FeedEntry entry);
-  void remove(FeedEntryId tenantId, id tenantId);
+mixin(ShowModule!());
+
+@safe:
+interface FeedRepository : ITenantRepository!(FeedEntry, FeedEntryId) {
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  FeedEntry[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  
+  size_t countByActor(TenantId tenantId, UserId actorId);
+  FeedEntry[] findByActor(TenantId tenantId, UserId actorId);
+  void removeByActor(TenantId tenantId, UserId actorId);
+
 }

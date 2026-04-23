@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.widgets;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.widget;
+  // import uim.platform.workzone.domain.types;
+  // import uim.platform.workzone.domain.entities.widget;
+import uim.platform.workzone;
 
-interface WidgetRepository {
-  Widget[] findByPage(WorkpageId pagetenantId, id tenantId);
-  Widget* findById(WidgetId tenantId, id tenantId);
-  void save(Widget widget);
-  void update(Widget widget);
-  void remove(WidgetId tenantId, id tenantId);
+mixin(ShowModule!());
+
+@safe:
+interface WidgetRepository : ITenantRepository!(Widget, WidgetId) {
+
+  size_t countBySite(TenantId tenantId, SiteId siteId);
+  Widget[] findBySite(TenantId tenantId, SiteId siteId);
+  void removeBySite(TenantId tenantId, SiteId siteId);
+
 }

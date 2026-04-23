@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.surveys;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.survey;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.survey;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface SurveyRepository : ITenantRepository!(Survey, SurveyId) {
 
   size_t countByWorkspace(WorkspaceId workspaceId, TenantId tenantId);

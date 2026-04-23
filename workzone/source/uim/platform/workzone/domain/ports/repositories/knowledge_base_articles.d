@@ -10,12 +10,12 @@ import uim.platform.workzone.domain.entities.knowledge_base_article;
 
 interface KnowledgeBaseArticleRepository : ITenantRepository!(KnowledgeBaseArticle, KBArticleId) {
 
-  size_t countByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  void removeByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  KnowledgeBaseArticle[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
 
-  size_t countByCategory(string category, TenantId tenantId);
-  KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId);
-  void removeByCategory(string category, TenantId tenantId);
+  size_t countByCategory(TenantId tenantId, string category);
+  KnowledgeBaseArticle[] findByCategory(TenantId tenantId, string category);
+  void removeByCategory(TenantId tenantId, string category);
 
 }

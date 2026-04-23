@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.page_templates;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.page_template;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.page_template;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface PageTemplateRepository : ITenantRepository!(PageTemplate, PageTemplateId) {
 
   bool existsDefault(TenantId tenantId);

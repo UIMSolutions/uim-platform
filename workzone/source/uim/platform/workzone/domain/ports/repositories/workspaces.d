@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.workspaces;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workspace;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.workspace;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface WorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
 
-  bool existsByAlias(string alias_, TenantId tenantId);
-  Workspace findByAlias(string alias_, TenantId tenantId);
-  void removeByAlias(string alias_, TenantId tenantId);
+  bool existsByAlias(TenantId tenantId, string alias_);
+  Workspace findByAlias(TenantId tenantId, string alias_);
+  void removeByAlias(TenantId tenantId, string alias_);
 
-  size_t countByMember(UserId usertenantId, id tenantId);
-  Workspace[] findByMember(UserId usertenantId, id tenantId);
-  void removeByMember(UserId usertenantId, id tenantId);
+  size_t countByMember(TenantId tenantId, UserId userId);
+  Workspace[] findByMember(TenantId tenantId, UserId userId);
+  void removeByMember(TenantId tenantId, UserId userId);
 
 }
