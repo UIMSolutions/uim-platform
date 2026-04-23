@@ -12,35 +12,18 @@ import uim.platform.workzone.domain.ports.repositories.cards;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCardRepository : CardRepository {
-  private Card[CardId] store;
+class MemoryCardRepository : TenantRepository!(Card, CardId), CardRepository {
 
-  Card[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId).array;
+  size_t countByType(TenantId tenantId, CardType cardType) {
+    return findByType(tenantId, cardType).length;
   }
 
-  Card* findById(CardId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Card[] findByType(TenantId tenantId, CardType cardType) {
+    return findByTenant(tenantId).filter!(c => c.cardType == cardType).array;
   }
 
-  Card[] findByType(CardType cardType, TenantId tenantId) {
-    return store.byValue().filter!(c => c.tenantId == tenantId && c.cardType == cardType).array;
+  void removeByType(TenantId tenantId, CardType cardType) {
+    return findByType(tenantId, cardType).each!(c => remove(c));
   }
 
-  void save(Card card) {
-    store[card.id] = card;
-  }
-
-  void update(Card card) {
-    store[card.id] = card;
-  }
-
-  void remove(CardId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

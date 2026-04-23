@@ -12,35 +12,17 @@ import uim.platform.workzone.domain.ports.repositories.apps;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryAppRepository : AppRepository {
-  private AppRegistration[AppId] store;
+class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {
 
-  AppRegistration[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(a => a.tenantId == tenantId).array;
+  size_t countByStatus(TenantId tenantId, AppStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  AppRegistration* findById(AppId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  AppRegistration[] findByStatus(TenantId tenantId, AppStatus status) {
+    return findByTenant(tenantId).filter!(a => a.status == status).array;
   }
 
-  AppRegistration[] findByStatus(AppStatus status, TenantId tenantId) {
-    return store.byValue().filter!(a => a.tenantId == tenantId && a.status == status).array;
-  }
-
-  void save(AppRegistration app) {
-    store[app.id] = app;
-  }
-
-  void update(AppRegistration app) {
-    store[app.id] = app;
-  }
-
-  void remove(AppId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  void removeByStatus(TenantId tenantId, AppStatus status) {
+    return findByStatus(tenantId, status).each!(a => remove(a));
   }
 }

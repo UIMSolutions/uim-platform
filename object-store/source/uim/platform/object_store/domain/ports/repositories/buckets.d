@@ -13,16 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - bucket persistence.
-interface BucketRepository {
-  bool existsById(BucketId id);
-  Bucket findById(BucketId id);
+interface BucketRepository : ITenantRepository!(Bucket, BucketId) {
 
   bool existsByName(TenantId tenantId, string name);
   Bucket findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
   
-  Bucket[] findByTenant(TenantId tenantId);
-  
-  void save(Bucket bucket);
-  void update(Bucket bucket);
-  void remove(BucketId id);
 }

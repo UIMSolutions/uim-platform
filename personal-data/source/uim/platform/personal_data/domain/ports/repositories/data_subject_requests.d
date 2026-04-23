@@ -11,16 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRequestRepository {
-    bool existsById(DataSubjectRequestId id);
-    DataSubjectRequest findById(DataSubjectRequestId id);
+interface DataSubjectRequestRepository : ITenantRepository!(DataSubjectRequest, DataSubjectRequestId) {
 
-    DataSubjectRequest[] findByTenant(TenantId tenantId);
+    size_t countByDataSubject(DataSubjectId dataSubjectId);
     DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId);
-    DataSubjectRequest[] findByStatus(RequestStatus status);
-    DataSubjectRequest[] findByAssignee(string assignedTo);
+    void removeByDataSubject(DataSubjectId dataSubjectId);
 
-    void save(DataSubjectRequest entity);
-    void update(DataSubjectRequest entity);
-    void remove(DataSubjectRequestId id);
+    size_t countByStatus(RequestStatus status);
+    DataSubjectRequest[] findByStatus(RequestStatus status);
+    void removeByStatus(RequestStatus status);
+
+    size_t countByAssignee(string assignedTo);
+    DataSubjectRequest[] findByAssignee(string assignedTo);
+    void removeByAssignee(string assignedTo);
+
 }

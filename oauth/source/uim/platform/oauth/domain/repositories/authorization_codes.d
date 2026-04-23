@@ -11,15 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AuthorizationCodeRepository {
-    bool existsById(AuthorizationCodeId id);
-    AuthorizationCode findById(AuthorizationCodeId id);
+interface AuthorizationCodeRepository : ITenantRepository!(AuthorizationCode, AuthorizationCodeId) {
+
+    bool existsByCode(string code);
     AuthorizationCode findByCode(string code);
-    AuthorizationCode[] findAll();
-    AuthorizationCode[] findByTenant(TenantId tenantId);
+    void removeByCode(string code);
+
+    size_t countByClientId(string clientId);
     AuthorizationCode[] findByClientId(string clientId);
+    void removeByClientId(string clientId);
+
+    size_t countByStatus(AuthCodeStatus status);
     AuthorizationCode[] findByStatus(AuthCodeStatus status);
-    void save(AuthorizationCode entity);
-    void update(AuthorizationCode entity);
-    void remove(AuthorizationCodeId id);
+    void removeByStatus(AuthCodeStatus status);
+
 }

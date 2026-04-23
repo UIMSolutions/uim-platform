@@ -11,15 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataProcessingLogRepository {
-    bool exitstsById(DataProcessingLogId id);
-    DataProcessingLog findById(DataProcessingLogId id);
+interface DataProcessingLogRepository : ITenantRepository!(DataProcessingLog, DataProcessingLogId) {
 
-    DataProcessingLog[] findByTenant(TenantId tenantId);
+    size_t countByDataSubject(DataSubjectId dataSubjectId);
     DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId);
+    void removeByDataSubject(DataSubjectId dataSubjectId);
+
+    size_t countByRequest(DataSubjectRequestId requestId);
     DataProcessingLog[] findByRequest(DataSubjectRequestId requestId);
+    void removeByRequest(DataSubjectRequestId requestId);
+
+    size_t countByApplication(string applicationId);
     DataProcessingLog[] findByApplication(string applicationId);
+    void removeByApplication(string applicationId);
     
-    void save(DataProcessingLog entity);
-    void remove(DataProcessingLogId id);
 }

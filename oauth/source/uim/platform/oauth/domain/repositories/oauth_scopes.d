@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OAuthScopeRepository {
-    bool existsById(OAuthScopeId id);
-    OAuthScope findById(OAuthScopeId id);
-    OAuthScope[] findAll();
-    OAuthScope[] findByTenant(TenantId tenantId);
+interface OAuthScopeRepository  : ITenantRepository!(OAuthScope, OAuthScopeId) {
+
+    size_t countByApplication(string applicationId);
     OAuthScope[] findByApplication(string applicationId);
+    void removeByApplication(string applicationId);
+
+    size_t countByStatus(ScopeStatus status);
     OAuthScope[] findByStatus(ScopeStatus status);
-    void save(OAuthScope entity);
-    void update(OAuthScope entity);
-    void remove(OAuthScopeId id);
+    void removeByStatus(ScopeStatus status);
+
 }

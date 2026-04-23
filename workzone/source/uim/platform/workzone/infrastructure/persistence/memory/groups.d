@@ -12,28 +12,17 @@ import uim.platform.workzone.domain.ports.repositories.groups;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryGroupRepository : GroupRepository {
-  private Group[GroupId] store;
+class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository {
 
-  Group[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(g => g.tenantId == tenantId).array;
+  size_t countByMember(TenantId tenantId, UserId userId) {
+    return findByMember(tenantId, userId).length;
   }
 
-  Group* findById(GroupId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Group[] findByMember(UserId usertenantId, id tenantId) {
+  Group[] findByMember(TenantId tenantId, UserId userId) {
     Group[] result;
-    foreach (g; store.byValue()) {
-      if (g.tenantId != tenantId)
-        continue;
+    foreach (g; findByTenant(tenantId)) {
       foreach (mid; g.memberIds)
-        if (mid == userId)
-        {
+        if (mid == userId) {
           result ~= g;
           break;
         }
@@ -41,17 +30,8 @@ class MemoryGroupRepository : GroupRepository {
     return result;
   }
 
-  void save(Group group) {
-    store[group.id] = group;
+  void removeByMember(TenantId tenantId, UserId userId) {
+    return findByMember(tenantId, userId).each!(g => remove(g));
   }
 
-  void update(Group group) {
-    store[group.id] = group;
-  }
-
-  void remove(GroupId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

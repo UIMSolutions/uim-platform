@@ -11,15 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RefreshTokenRepository {
-    bool existsById(RefreshTokenId id);
-    RefreshToken findById(RefreshTokenId id);
+interface RefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshTokenId) {
+
+    bool existsByTokenValue(string tokenValue);
     RefreshToken findByTokenValue(string tokenValue);
-    RefreshToken[] findAll();
-    RefreshToken[] findByTenant(TenantId tenantId);
+    void removeByTokenValue(string tokenValue);
+
+    size_t countByClientId(string clientId);
     RefreshToken[] findByClientId(string clientId);
+    void removeByClientId(string clientId);
+
+    size_t countByStatus(TokenStatus status);
     RefreshToken[] findByStatus(TokenStatus status);
-    void save(RefreshToken entity);
-    void update(RefreshToken entity);
-    void remove(RefreshTokenId id);
+    void removeByStatus(TokenStatus status);
+
 }

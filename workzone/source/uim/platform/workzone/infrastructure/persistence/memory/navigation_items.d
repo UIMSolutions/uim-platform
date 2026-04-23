@@ -12,39 +12,33 @@ import uim.platform.workzone.domain.ports.repositories.navigation_items;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryNavigationItemRepository : NavigationItemRepository {
-  private NavigationItem[NavigationItemId] store;
+class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, NavigationItemId), NavigationItemRepository {
 
-  NavigationItem[] findBySite(SiteId sitetenantId, id tenantId) {
-    return store.byValue().filter!(n => n.tenantId == tenantId && n.siteId == siteId).array;
+  // #region bySite
+  size_t countBySite(TenantId tenantId, SiteId siteId) {
+    return findBySite(tenantId, siteId).length;
   }
 
-  NavigationItem* findById(NavigationItemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  NavigationItem[] findBySite(TenantId tenantId, SiteId siteId) {
+    return findByTenant(tenantId).filter!(n => n.siteId == siteId).array;
   }
 
-  NavigationItem[] findByParent(NavigationItemId parenttenantId, id tenantId) {
-    return store.byValue().filter!(n => n.tenantId == tenantId && n.parentId == parentId).array;
+  void removeBySite(TenantId tenantId, SiteId siteId) {
+    return findBySite(tenantId, siteId).each!(n => remove(n));
+  }
+  // #endregion bySite
+
+  // #region byParent
+  size_t countByParent(TenantId tenantId, NavigationItemId parentId) {
+    return findByParent(tenantId, parentId).length;
   }
 
-  NavigationItem[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(n => n.tenantId == tenantId).array;
+  NavigationItem[] findByParent(TenantId tenantId, NavigationItemId parentId) {
+    return findByTenant(tenantId).filter!(n => n.parentId == parentId).array;
   }
 
-  void save(NavigationItem item) {
-    store[item.id] = item;
+  void removeByParent(TenantId tenantId, NavigationItemId parentId) {
+    return findByParent(tenantId, parentId).each!(n => remove(n));
   }
-
-  void update(NavigationItem item) {
-    store[item.id] = item;
-  }
-
-  void remove(NavigationItemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
+  // #endregion byParent
 }
