@@ -22,15 +22,15 @@ class MemoryDataModelRepository : DataModelRepository {
   }
 
   DataModel[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   DataModel findByName(TenantId tenantId, string name) {
-    foreach (m; store.byValue()) {
+    foreach (m; findAll()
       if (m.tenantId == tenantId && m.name == name)
         return m;
     }

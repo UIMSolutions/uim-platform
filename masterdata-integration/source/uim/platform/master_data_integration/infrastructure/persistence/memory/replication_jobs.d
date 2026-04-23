@@ -22,15 +22,15 @@ class MemoryReplicationJobRepository : ReplicationJobRepository {
   }
 
   ReplicationJob[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   ReplicationJob[] findByStatus(TenantId tenantId, ReplicationJobStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   ReplicationJob[] findByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.distributionModelId == modelId).array;
   }
 

@@ -22,21 +22,21 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   }
 
   ChangeLogEntry[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId)
+    return findAll()r!(e => e.tenantId == tenantId)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
   }
 
   ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.objectId == objectId)
+    return findAll()r!(e => e.tenantId == tenantId && e.objectId == objectId)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
   }
 
   ChangeLogEntry[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category)
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
@@ -45,21 +45,21 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
     // Find the timestamp associated with the delta token
     long tokenTimestamp = 0;
-    foreach (entry; store.byValue()) {
+    foreach (entry; findAll()
       if (entry.tenantId == tenantId && entry.deltaToken == deltaToken) {
         tokenTimestamp = entry.timestamp;
         break;
       }
     }
     // Return all entries after that timestamp
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)
+    return findAll()r!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
   }
 
   ChangeLogEntry[] findSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.timestamp > sinceTimestamp)
+    return findAll()r!(e => e.tenantId == tenantId && e.timestamp > sinceTimestamp)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;

@@ -28,21 +28,21 @@ class MemoryBucketRepository : BucketRepository {
   }
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll()
       if (e.tenantId == tenantId && e.name == name)
         return true;
     return false;
   }
   
   Bucket findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll()
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return Bucket.init;
   }
 
   Bucket[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   void save(Bucket entity) {

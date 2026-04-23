@@ -28,23 +28,23 @@ class MemoryStorageObjectRepository : StorageObjectRepository {
   }
 
   bool existsByKey(BucketId bucketId, string key) {
-    return store.byValue().any!(e => e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active);
+    return findAll()e => e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active);
   }
 
   StorageObject findByKey(BucketId bucketId, string key) {
-    foreach (e; store.byValue())
+    foreach (e; findAll()
       if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
         return e;
     return StorageObject.init;
   }
 
   StorageObject[] findByBucket(BucketId bucketId) {
-    return store.byValue().filter!(e => e.bucketId == bucketId
+    return findAll()r!(e => e.bucketId == bucketId
         && e.status == ObjectStatus.active).array;
   }
 
   StorageObject[] findByPrefix(BucketId bucketId, string prefix) {
-    return store.byValue().filter!(e => e.bucketId == bucketId
+    return findAll()r!(e => e.bucketId == bucketId
         && e.status == ObjectStatus.active && e.key.startsWith(prefix)).array;
   }
 

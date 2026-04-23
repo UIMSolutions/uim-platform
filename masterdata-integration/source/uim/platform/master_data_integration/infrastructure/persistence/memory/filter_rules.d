@@ -22,15 +22,15 @@ class MemoryFilterRuleRepository : FilterRuleRepository {
   }
 
   FilterRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   FilterRule[] findActive(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.isActive).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.isActive).array;
   }
 
   void save(FilterRule rule) {

@@ -22,20 +22,20 @@ class MemoryKeyMappingRepository : KeyMappingRepository {
   }
 
   KeyMapping[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   KeyMapping[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.masterDataObjectId == objectId).array;
   }
 
   KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
-    foreach (mapping; store.byValue()) {
+    foreach (mapping; findAll()
       if (mapping.tenantId != tenantId)
         continue;
       foreach (entry; mapping.entries) {

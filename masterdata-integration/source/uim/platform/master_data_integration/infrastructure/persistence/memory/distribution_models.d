@@ -23,15 +23,15 @@ class MemoryDistributionModelRepository : DistributionModelRepository {
   }
 
   DistributionModel[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   DistributionModel[] findBySourceClient(TenantId tenantId, ClientId sourceClientId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.sourceClientId == sourceClientId).array;
   }
 

@@ -28,11 +28,11 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding[] findByBucket(BucketId bucketId) {
-    return store.byValue().filter!(e => e.bucketId == bucketId).array;
+    return findAll()r!(e => e.bucketId == bucketId).array;
   }
 
   ServiceBinding[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   void save(ServiceBinding entity) {

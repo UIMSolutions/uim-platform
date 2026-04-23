@@ -23,25 +23,25 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
   }
 
   MasterDataObject[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.dataModelId == dataModelId)
+    return findAll()r!(e => e.tenantId == tenantId && e.dataModelId == dataModelId)
       .array;
   }
 
   MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.sourceSystem == sourceSystem).array;
   }
 
   MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
-    foreach (obj; store.byValue()) {
+    foreach (obj; findAll()
       if (obj.tenantId == tenantId && obj.globalId == globalId)
         return obj;
     }
