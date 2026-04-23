@@ -13,36 +13,38 @@ import uim.platform.abap_environment.domain.ports.repositories.communication_arr
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCommunicationArrangementRepository : CommunicationArrangementRepository {
-  private CommunicationArrangement[CommunicationArrangementId] store;
-
-  CommunicationArrangement* findById(CommunicationArrangementId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+class MemoryCommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
+  
+  // #region BySystem
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findAll().count!(e => e.systemInstanceId == systemId);
   }
 
   CommunicationArrangement[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
 
-  CommunicationArrangement[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeBySystem(SystemInstanceId systemId) {
+    foreach (ca; findBySystem(systemId)) {
+      remove(ca.id);
+    }
+  }
+  // #endregion BySystem
+
+  // #region ByDirection
+  size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
+    return findAll().count!(e => e.systemInstanceId == systemId && e.direction == dir);
   }
 
   CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId && e.direction == dir).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId && e.direction == dir).array;
   }
 
-  void save(CommunicationArrangement arrangement) {
-    store[arrangement.id] = arrangement;
+  void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
+    foreach (ca; findByDirection(systemId, dir)) {
+      remove(ca.id);
+    }
   }
+  // #endregion ByDirection
 
-  void update(CommunicationArrangement arrangement) {
-    store[arrangement.id] = arrangement;
-  }
-
-  void remove(CommunicationArrangementId id) {
-    store.remove(id);
-  }
 }

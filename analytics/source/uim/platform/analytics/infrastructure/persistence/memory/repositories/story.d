@@ -20,7 +20,7 @@ class MemoryStoryRepository : StoryRepository {
 
   Story[] findByOwner(EntityId ownerId) {
     Story[] result;
-    foreach (s; store.byValue())
+    foreach (s; findAll())
       if (s.ownerId == ownerId)
         result ~= s;
     return result;

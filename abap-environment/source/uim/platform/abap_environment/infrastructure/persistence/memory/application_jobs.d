@@ -27,15 +27,15 @@ class MemoryApplicationJobRepository : MemoryTenantRepository!(ApplicationJob, A
   // }
 
   ApplicationJob[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
 
 // /  ApplicationJob[] findByTenant(TenantId tenantId) {
-// /    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+// /    return findAll().filter!(e => e.tenantId == tenantId).array;
 // /  }
 
   ApplicationJob[] findByStatus(SystemInstanceId systemId, JobStatus status) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId && e.status == status).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId && e.status == status).array;
   }
 
   // void save(ApplicationJob job) {

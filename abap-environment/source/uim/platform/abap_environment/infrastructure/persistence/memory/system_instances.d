@@ -25,18 +25,18 @@ class MemorySystemInstanceRepository : SystemInstanceRepository {
   }
 
   SystemInstance[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   SystemInstance findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return SystemInstance.init;
   }
 
   SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   void save(SystemInstance instance) {

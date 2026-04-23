@@ -20,7 +20,7 @@ class MemoryWidgetRepository : WidgetRepository {
 
   Widget[] findByDataset(EntityId datasetId) {
     Widget[] result;
-    foreach (w; store.byValue())
+    foreach (w; findAll())
       if (w.datasetId == datasetId)
         result ~= w;
     return result;

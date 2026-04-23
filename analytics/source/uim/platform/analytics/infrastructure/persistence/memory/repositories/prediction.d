@@ -20,7 +20,7 @@ class MemoryPredictionRepository : PredictionRepository {
 
   Prediction[] findByDataset(EntityId datasetId) {
     Prediction[] result;
-    foreach (p; store.byValue())
+    foreach (p; findAll())
       if (p.datasetId == datasetId)
         result ~= p;
     return result;

@@ -26,15 +26,15 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
 
   ServiceBinding[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   ServiceBinding[] findByType(SystemInstanceId systemId, BindingType bindingType) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId
+    return findAll().filter!(e => e.systemInstanceId == systemId
         && e.bindingType == bindingType).array;
   }
 

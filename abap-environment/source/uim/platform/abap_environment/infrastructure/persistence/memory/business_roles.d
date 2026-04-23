@@ -27,15 +27,15 @@ class MemoryBusinessRoleRepository : MemoryTenantRepository!(BusinessRole, Busin
   // }
 
   BusinessRole[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
 
 //  BusinessRole[] findByTenant(TenantId tenantId) {
-//    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+//    return findAll().filter!(e => e.tenantId == tenantId).array;
 //  }
 
   BusinessRole findByName(SystemInstanceId systemId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.systemInstanceId == systemId && e.name == name)
         return e;
     return BusinessRole.init;

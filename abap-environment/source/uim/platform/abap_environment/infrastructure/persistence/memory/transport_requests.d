@@ -27,19 +27,19 @@ class MemoryTransportRequestRepository : TransportRequestRepository {
   }
 
   TransportRequest[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.sourceSystemId == systemId).array;
+    return findAll().filter!(e => e.sourceSystemId == systemId).array;
   }
 
   TransportRequest[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   TransportRequest[] findByStatus(SystemInstanceId systemId, TransportStatus status) {
-    return store.byValue().filter!(e => e.sourceSystemId == systemId && e.status == status).array;
+    return findAll().filter!(e => e.sourceSystemId == systemId && e.status == status).array;
   }
 
   TransportRequest[] findByOwner(SystemInstanceId systemId, string owner) {
-    return store.byValue().filter!(e => e.sourceSystemId == systemId && e.owner == owner).array;
+    return findAll().filter!(e => e.sourceSystemId == systemId && e.owner == owner).array;
   }
 
   void save(TransportRequest request) {

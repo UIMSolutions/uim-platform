@@ -26,7 +26,7 @@ class MemoryDashboardRepository : DashboardRepository {
 
   Dashboard[] findByOwner(EntityId ownerId) {
     Dashboard[] result;
-    foreach (d; store.byValue())
+    foreach (d; findAll())
       if (d.ownerId == ownerId)
         result ~= d;
     return result;
@@ -34,7 +34,7 @@ class MemoryDashboardRepository : DashboardRepository {
 
   Dashboard[] findByStatus(ArtifactStatus status) {
     Dashboard[] result;
-    foreach (d; store.byValue())
+    foreach (d; findAll())
       if (d.status == status)
         result ~= d;
     return result;

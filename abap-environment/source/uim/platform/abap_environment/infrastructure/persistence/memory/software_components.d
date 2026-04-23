@@ -28,22 +28,22 @@ class MemorySoftwareComponentRepository : SoftwareComponentRepository {
   }
 
   SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
 
   SoftwareComponent[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   bool existsName(SystemInstanceId systemId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.systemInstanceId == systemId && e.name == name)
         return true;
     return false;
   }
 
   SoftwareComponent findByName(SystemInstanceId systemId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.systemInstanceId == systemId && e.name == name)
         return store[e.id];
     return SoftwareComponent.init;

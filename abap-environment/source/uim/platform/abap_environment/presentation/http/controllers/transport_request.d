@@ -10,11 +10,16 @@ module uim.platform.abap_environment.presentation.http.transport_request;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.abap_environment.application.usecases.manage.transport_requests;
-import uim.platform.abap_environment.application.dto;
-import uim.platform.abap_environment.domain.entities.transport_request;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.application.usecases.manage.transport_requests;
+// import uim.platform.abap_environment.application.dto;
+// import uim.platform.abap_environment.domain.entities.transport_request;
+// import uim.platform.abap_environment.domain.types;
 
+import uim.platform.abap_environment;
+
+mixin(ShowModule!());
+
+@safe:
 class TransportRequestController : PlatformController {
   private ManageTransportRequestsUseCase uc;
 
