@@ -43,7 +43,7 @@ class MemoryJobRepository : JobRepository {
         return Job.init;
     }
 
-    Job findByName(string name, TenantId tenantId) {
+    Job findByName(TenantId tenantId, string name) {
         if (!existsByTenant(tenantId)) {
             return Job.init;
         }
@@ -55,14 +55,14 @@ class MemoryJobRepository : JobRepository {
         return Job.init;
     }
 
-    Job[] findByStatus(JobStatus status, TenantId tenantId) {
+    Job[] findByStatus(TenantId tenantId, JobStatus status) {
         if (!existsByTenant(tenantId)) {
             return null;
         }
         return findByTenant(tenantId).filter!(j => j.status == status).array;
     }
 
-    Job[] search(string query, TenantId tenantId) {
+    Job[] search(TenantId tenantId, string query) {
         if (!existsByTenant(tenantId)) {
             return null;
         }
@@ -86,7 +86,7 @@ class MemoryJobRepository : JobRepository {
         }
     }
 
-    void remove(JobId id, TenantId tenantId) {
+    void remove(TenantId tenantId, JobId id) {
         if (auto t = tenantId in store) {
             *t = (*t).filter!(j => j.id != id).array;
         }

@@ -67,23 +67,24 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     return result;
   }
 
-  JobSummary getJobSummary(ProvisioningJobId tenantId, id tenantId) {
-    auto job = jobRepo.findById(tenantId, id);
-    if (job is null)
+  JobSummary getJobSummary(TenantId tenantId, ProvisioningJobId jobId) {
+    auto job = jobRepo.findById(tenantId, jobId);
+    if (job.isNull)
       return JobSummary.init;
-    return buildJobSummary(*job, tenantId);
+
+    return buildJobSummary(tenantId, *job);
   }
 
-  ProvisioningLog[] getJobLogs(ProvisioningJobId jobtenantId, id tenantId) {
-    return logRepo.findByJob(jobtenantId, id);
+  ProvisioningLog[] getJobLogs(TenantId tenantId, ProvisioningJobId jobId) {
+    return logRepo.findByJob(tenantId, jobId);
   }
 
   ProvisionedEntity[] listProvisionedEntities(TenantId tenantId) {
     return entityRepo.findByTenant(tenantId);
   }
 
-  ProvisionedEntity[] listByTarget(TargetSystemId targettenantId, id tenantId) {
-    return entityRepo.findByTarget(targettenantId, id);
+  ProvisionedEntity[] listByTarget(TenantId tenantId, TargetSystemId systemId) {
+    return entityRepo.findByTarget(tenantId, systemId);
   }
 
   ProvisioningSummary getPipelineSummary(TenantId tenantId) {
@@ -102,7 +103,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
         s.activeTargetSystems++;
 
     auto jobs = jobRepo.findByTenant(tenantId);
-    s.totalJobs = cast(int) jobs.length;
+    s.totalJobs = jobs.length;
     foreach (j; jobs) {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
@@ -118,7 +119,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     return s;
   }
 
-  private JobSummary buildJobSummary(ProvisioningJob job, TenantId tenantId) {
+  private JobSummary buildJobSummary(TenantId tenantId, ProvisioningJob job) {
     JobSummary s;
     s.jobId = job.id;
     s.jobType = job.jobType;
@@ -130,11 +131,11 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     s.completedAt = job.completedAt;
 
     auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
-    if (src !is null)
+    if (!src.isNull)
       s.sourceName = src.name;
 
     auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
-    if (tgt !is null)
+    if (!tgt.isNull)
       s.targetName = tgt.name;
 
     return s;

@@ -31,15 +31,15 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         return repo.findById(id);
     }
 
-    RunLog[] listBySchedule(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
-        return repo.findBySchedule(scheduleId, jobId, tenantId);
+    RunLog[] listBySchedule(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
+        return repo.findBySchedule(tenantId, scheduleId, jobId);
     }
 
     RunLog[] listByJob(TenantId tenantId, JobId jobId) {
         return repo.findByJob(tenantId, jobId);
     }
 
-    CommandResult createRunLog(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
+    CommandResult createRunLog(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
         import std.uuid : randomUUID;
 
         auto id = randomUUID();
@@ -66,7 +66,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Run log not found");
 
         auto existing = repo.findById(req.runLogId);
-        auto targetStatus = parseRunStatus(req.status);
+        auto targetStatus = req.status.to!RunStatus;
         if (!RunTracker.canTransition(existing.status, targetStatus))
             return CommandResult(false, "", "Invalid status transition");
 
@@ -87,20 +87,4 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    private static RunStatus parseRunStatus(string status) {
-        switch (status) {
-        case "triggered":
-            return RunStatus.triggered;
-        case "running":
-            return RunStatus.running;
-        case "completed":
-            return RunStatus.completed;
-        case "failed":
-            return RunStatus.failed;
-        case "deadLettered":
-            return RunStatus.deadLettered;
-        default:
-            return RunStatus.scheduled;
-        }
-    }
 }
