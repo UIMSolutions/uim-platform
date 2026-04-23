@@ -5,7 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.entities.connection;
 
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct Connection {
   ConnectionId id;

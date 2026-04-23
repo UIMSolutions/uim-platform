@@ -5,7 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.entities.configuration;
 
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.types;
+
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ParameterBinding {
   string key;
