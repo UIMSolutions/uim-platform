@@ -14,13 +14,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SituationTemplateRepository {
-    SituationTemplate findById(SituationTemplateId id);
-    SituationTemplate[] findByTenant(TenantId tenantId);
+interface SituationTemplateRepository : ITenantRepository!(SituationTemplate, SituationTemplateId) {
+
+    size_t countByCategory(TenantId tenantId, SituationCategory category);
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category);
+    void removeByCategory(TenantId tenantId, SituationCategory category);
+
+    size_t countByEntityType(TenantId tenantId, string entityTypeId);
     SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId);
-    void save(SituationTemplate t);
-    void update(SituationTemplate t);
-    void remove(SituationTemplateId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByEntityType(TenantId tenantId, string entityTypeId);
+
 }

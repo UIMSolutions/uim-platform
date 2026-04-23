@@ -8,13 +8,10 @@ module uim.platform.mobile.domain.ports.repositories.offline_stores;
 import uim.platform.mobile.domain.entities.offline_store;
 import uim.platform.mobile.domain.types;
 
-interface OfflineStoreRepository {
-  OfflineStore findById(OfflineStoreId id);
-  OfflineStore findByName(MobileAppId appId, string name);
-  OfflineStore[] findByApp(MobileAppId appId);
-  OfflineStore[] findByTenant(TenantId tenantId);
-  void save(OfflineStore store);
-  void update(OfflineStore store);
-  void remove(OfflineStoreId id);
+interface OfflineStoreRepository : ITenantRepository!(OfflineStore, OfflineStoreId) {
+
   size_t countByApp(MobileAppId appId);
+  OfflineStore[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
 }

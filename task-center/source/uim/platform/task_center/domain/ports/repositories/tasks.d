@@ -11,15 +11,26 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskRepository {
-    Task findById(TaskId id);
-    Task[] findByTenant(TenantId tenantId);
+interface TaskRepository : ITenantRepository!(Task, TaskId) {
+
+    size_t countByAssignee(string assignee);
     Task[] findByAssignee(string assignee);
+    void removeByAssignee(string assignee);
+
+    size_t countByStatus(TaskStatus status);
     Task[] findByStatus(TaskStatus status);
+    void removeByStatus(TaskStatus status);
+
+    size_t countByProvider(TaskProviderId providerId);    
     Task[] findByProvider(TaskProviderId providerId);
+    void removeByProvider(TaskProviderId providerId);
+
+    size_t countByCategory(TaskCategory category);
     Task[] findByCategory(TaskCategory category);
+    void removeByCategory(TaskCategory category);
+
+    size_t countByPriority(TaskPriority priority);
     Task[] findByPriority(TaskPriority priority);
-    void save(Task entity);
-    void update(Task entity);
-    void remove(TaskId id);
+    void removeByPriority(TaskPriority priority);
+
 }

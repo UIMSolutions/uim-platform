@@ -8,15 +8,18 @@ module uim.platform.mobile.domain.ports.repositories.device_registrations;
 import uim.platform.mobile.domain.entities.device_registration;
 import uim.platform.mobile.domain.types;
 
-interface DeviceRegistrationRepository {
-  DeviceRegistration findById(DeviceRegistrationId id);
+interface DeviceRegistrationRepository : ITenantRepository!(DeviceRegistration, DeviceRegistrationId) {
+
+  bool existsByDeviceToken(string deviceToken);
   DeviceRegistration findByDeviceToken(string deviceToken);
-  DeviceRegistration[] findByApp(MobileAppId appId);
-  DeviceRegistration[] findByUser(string userId);
-  DeviceRegistration[] findByTenant(TenantId tenantId);
-  void save(DeviceRegistration reg);
-  void update(DeviceRegistration reg);
-  void remove(DeviceRegistrationId id);
+  void removeByDeviceToken(string deviceToken);
+
   size_t countByApp(MobileAppId appId);
-  size_t countByTenant(TenantId tenantId);
+  DeviceRegistration[] findByApp(MobileAppId appId);
+  void removeByApp(MobileAppId appId);
+
+  size_t countByUser(string userId);
+  DeviceRegistration[] findByUser(string userId);
+  void removeByUser(string userId);
+
 }

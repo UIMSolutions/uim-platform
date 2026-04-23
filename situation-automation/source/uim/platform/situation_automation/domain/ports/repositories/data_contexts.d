@@ -14,14 +14,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataContextRepository {
-    DataContext findById(DataContextId id);
-    DataContext[] findByTenant(TenantId tenantId);
+interface DataContextRepository : ITenantRepository!(DataContext, DataContextId) {
+
+    size_t countByInstance(SituationInstanceId instanceId);
     DataContext[] findByInstance(SituationInstanceId instanceId);
-    DataContext[] findPersonalData(TenantId tenantId);
-    void save(DataContext d);
-    void update(DataContext d);
-    void remove(DataContextId id);
     void removeByInstance(SituationInstanceId instanceId);
-    size_t countByTenant(TenantId tenantId);
+
+    size_t countByPersonalData(TenantId tenantId);
+    DataContext[] findPersonalData(TenantId tenantId);
+    void removePersonalData(TenantId tenantId);
+
 }

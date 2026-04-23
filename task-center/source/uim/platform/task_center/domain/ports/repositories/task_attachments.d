@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskAttachmentRepository {
-    TaskAttachment findById(TaskAttachmentId id);
-    TaskAttachment[] findByTenant(TenantId tenantId);
+interface TaskAttachmentRepository : ITenantRepository!(TaskAttachment, TaskAttachmentId) {
+
+    size_t countByTask(TaskId taskId);
     TaskAttachment[] findByTask(TaskId taskId);
-    void save(TaskAttachment entity);
-    void remove(TaskAttachmentId id);
+    void removeByTask(TaskId taskId);
+
 }

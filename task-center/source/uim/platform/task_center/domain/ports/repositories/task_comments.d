@@ -11,11 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskCommentRepository {
-    TaskComment findById(TaskCommentId id);
-    TaskComment[] findByTenant(TenantId tenantId);
-    TaskComment[] findByTask(TaskId taskId);
-    void save(TaskComment entity);
-    void update(TaskComment entity);
-    void remove(TaskCommentId id);
+interface TaskCommentRepository : ITenantRepository!(TaskComment, TaskCommentId) {
+
+    size_t countByTask(TenantId tenantId, TaskId taskId);
+    TaskComment[] findByTask(TenantId tenantId, TaskId taskId);
+    void removeByTask(TenantId tenantId, TaskId taskId);
 }

@@ -14,12 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SituationActionRepository {
-    SituationAction findById(SituationActionId id);
-    SituationAction[] findByTenant(TenantId tenantId);
+interface SituationActionRepository : ITenantRepository!(SituationAction, SituationActionId) {
+
+    size_t countByType(TenantId tenantId, ActionType type);
     SituationAction[] findByType(TenantId tenantId, ActionType type);
-    void save(SituationAction a);
-    void update(SituationAction a);
-    void remove(SituationActionId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByType(TenantId tenantId, ActionType type);
+
 }
