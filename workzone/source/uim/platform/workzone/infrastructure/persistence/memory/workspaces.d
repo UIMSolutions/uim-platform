@@ -12,35 +12,37 @@ import uim.platform.workzone.domain.ports.repositories.workspaces;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryWorkspaceRepository : WorkspaceRepository {
-  private Workspace[WorkspaceId] store;
+class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
 
-  Workspace[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(w => w.tenantId == tenantId).array;
+  bool existsByAlias(TenantId tenantId, string alias_) {
+    return findByTenant(tenantId).any!(w => w.alias_ == alias_);
   }
 
-  Workspace* findById(WorkspaceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Workspace findByAlias(TenantId tenantId, string alias_) {
+    foreach (w; findByTenant(tenantId))
+      if (w.alias_ == alias_)
+        return w;
+    return Workspace.init;
   }
 
-  Workspace* findByAlias(string alias_, TenantId tenantId) {
-    foreach (w; store.byValue())
-      if (w.tenantId == tenantId && w.alias_ == alias_)
-        return &w;
-    return null;
+  void removeByAlias(TenantId tenantId, string alias_) {
+    foreach (w; findByTenant(tenantId))
+      if (w.alias_ == alias_) {
+        remove(w.id);
+        return;
+      }
   }
 
-  Workspace[] findByMember(UserId usertenantId, id tenantId) {
+
+  size_t countByMember(TenantId tenantId, UserId userId) {
+    return findByMember(tenantId, userId).length;
+  }
+  
+  Workspace[] findByMember(TenantId tenantId, UserId userId) {
     Workspace[] result;
-    foreach (w; store.byValue()) {
-      if (w.tenantId != tenantId)
-        continue;
+    foreach (w; findByTenant(tenantId)) {
       foreach (m; w.members)
-        if (m.userId == userId)
-        {
+        if (m.userId == userId) {
           result ~= w;
           break;
         }
@@ -48,17 +50,8 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
     return result;
   }
 
-  void save(Workspace workspace) {
-    store[workspace.id] = workspace;
+  void removeByMember(TenantId tenantId, UserId userId) {
+    findByMember(tenantId, userId).each!(w => remove(w.id));
   }
 
-  void update(Workspace workspace) {
-    store[workspace.id] = workspace;
-  }
-
-  void remove(WorkspaceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

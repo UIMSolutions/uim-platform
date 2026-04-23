@@ -17,9 +17,9 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemorySecurityEventRepository : SecurityEventRepository {
-  private SecurityEvent[] store;
+class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), SecurityEventRepository {
 
+  // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
@@ -31,16 +31,44 @@ class MemorySecurityEventRepository : SecurityEventRepository {
     return SecurityEvent.init;
   }
 
-  SecurityEvent[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    if (existsByAuditLogId(tenantId, auditLogId)) {
+      remove(findByAuditLogId(tenantId, auditLogId));
+    }
+  }
+  // #endregion ByAuditLogId
+
+  // #region ByUser
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
   }
 
   SecurityEvent[] findByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).filter!(e => e.userId == userId).array;
   }
 
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(e => remove(e));
+  }
+  // #endregion ByUser
+
+  // #region ByOutcome
+  size_t countByOutcome(TenantId tenantId, AuditOutcome outcome) {
+    return findByOutcome(tenantId, outcome).length;
+  }
+
   SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome) {
     return findByTenant(tenantId).filter!(e => e.outcome == outcome).array;
+  }
+
+  void removeByOutcome(TenantId tenantId, AuditOutcome outcome) {
+    findByOutcome(tenantId, outcome).each!(e => remove(e));
+  }
+  // #endregion ByOutcome
+
+  // #region ByTimeRange
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTimeRange(tenantId, timeFrom, timeTo).length;
   }
 
   SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -48,11 +76,9 @@ class MemorySecurityEventRepository : SecurityEventRepository {
       .array;
   }
 
-  void save(SecurityEvent event) {
-    store ~= event;
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
+  // #endregion ByTimeRange
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
-  }
 }

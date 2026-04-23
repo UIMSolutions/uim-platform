@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.services.connection_validator;
 
-import uim.platform.ai_launchpad.domain.entities.connection : Connection;
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.entities.connection : Connection;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ValidationResult {
   bool valid;

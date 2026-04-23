@@ -12,32 +12,37 @@ import uim.platform.workzone.domain.ports.repositories.user_profiles;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryUserProfileRepository : UserProfileRepository {
-  private UserProfile[UserProfileId] store;
+class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId), UserProfileRepository {
 
-  UserProfile[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+  // #region ByUserId
+  bool existsByUserId(TenantId tenantId, UserId userId) {
+    return findByTenant(tenantId).any!(p => p.userId == userId);
   }
 
-  UserProfile* findById(UserProfileId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
+  UserProfile findByUserId(TenantId tenantId, UserId userId) {
+    foreach (p; findByTenant(tenantId))
+      if (p.userId == userId)
         return p;
-    return null;
+    return UserProfile.init;
   }
 
-  UserProfile* findByUserId(UserId usertenantId, id tenantId) {
-    foreach (p; store.byValue())
-      if (p.tenantId == tenantId && p.userId == userId)
-        return &p;
-    return null;
+  void removeByUserId(TenantId tenantId, UserId userId) {
+    foreach (p; findByTenant(tenantId))
+      if (p.userId == userId) {
+        remove(p.id);
+        break;
+      }
+  }
+  // #endregion ByUserId
+
+  // #region ByGroup
+  size_t countByGroup(TenantId tenantId, GroupId groupId) {
+    return findByGroup(tenantId, groupId).length;
   }
 
-  UserProfile[] findByGroup(GroupId grouptenantId, id tenantId) {
+  UserProfile[] findByGroup(TenantId tenantId, GroupId groupId) {
     UserProfile[] result;
-    foreach (p; store.byValue()) {
-      if (p.tenantId != tenantId)
-        continue;
+    foreach (p; findByTenant(tenantId)) {
       foreach (gid; p.groupIds)
         if (gid == groupId)
         {
@@ -48,17 +53,9 @@ class MemoryUserProfileRepository : UserProfileRepository {
     return result;
   }
 
-  void save(UserProfile profile) {
-    store[profile.id] = profile;
+  void removeByGroup(TenantId tenantId, GroupId groupId) {
+    findByGroup(tenantId, groupId).each!(p => remove(p));
   }
+  // #endregion ByGroup
 
-  void update(UserProfile profile) {
-    store[profile.id] = profile;
-  }
-
-  void remove(UserProfileId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

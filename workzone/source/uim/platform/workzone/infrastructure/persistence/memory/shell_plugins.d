@@ -12,28 +12,18 @@ import uim.platform.workzone.domain.ports.repositories.shell_plugins;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryShellPluginRepository : ShellPluginRepository {
-  private ShellPlugin[ShellPluginId] store;
+class MemoryShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId), ShellPluginRepository {
 
-  ShellPlugin[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+  // #region BySite
+  size_t countBySite(TenantId tenantId, SiteId siteId) {
+    return findBySite(tenantId, siteId).length;
   }
 
-  ShellPlugin* findById(ShellPluginId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  ShellPlugin[] findBySite(SiteId sitetenantId, id tenantId) {
+  ShellPlugin[] findBySite(TenantId tenantId, SiteId siteId) {
     ShellPlugin[] result;
-    foreach (p; store.byValue()) {
-      if (p.tenantId != tenantId)
-        continue;
+    foreach (p; findByTenant(tenantId)) {
       foreach (sid; p.assignedSiteIds)
-        if (sid == siteId)
-        {
+        if (sid == siteId) {
           result ~= p;
           break;
         }
@@ -41,21 +31,23 @@ class MemoryShellPluginRepository : ShellPluginRepository {
     return result;
   }
 
+  void removeBySite(TenantId tenantId, SiteId siteId) {
+    findBySite(tenantId, siteId).each!(p => remove(p));
+  }
+  // #endregion BySite
+
+  // #region ByStatus
+  size_t countByStatus(PluginStatus status, TenantId tenantId) {
+    return findByStatus(status, tenantId).length;
+  }
+
   ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId && p.status == status).array;
+    return findByTenant(tenantId).filter!(p => p.status == status).array;
   }
 
-  void save(ShellPlugin plugin) {
-    store[plugin.id] = plugin;
+  void removeByStatus(PluginStatus status, TenantId tenantId) {
+    findByStatus(status, tenantId).each!(p => remove(p));
   }
+  // #endregion ByStatus
 
-  void update(ShellPlugin plugin) {
-    store[plugin.id] = plugin;
-  }
-
-  void remove(ShellPluginId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

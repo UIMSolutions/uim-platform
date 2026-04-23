@@ -12,35 +12,17 @@ import uim.platform.workzone.domain.ports.repositories.external_content_provider
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryExternalContentProviderRepository : ExternalContentProviderRepository {
-  private ExternalContentProvider[ExternalContentProviderId] store;
+class MemoryExternalContentProviderRepository : TenantRepository!(ExternalContentProvider, ExternalContentProviderId), ExternalContentProviderRepository {
 
-  ExternalContentProvider[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+  size_t countByStatus(TenantId tenantId, ProviderStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  ExternalContentProvider* findById(ExternalContentProviderId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  ExternalContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
+    return findByTenant(tenantId).filter!(p => p.status == status).array;
   }
 
-  ExternalContentProvider[] findByStatus(ProviderStatus status, TenantId tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId && p.status == status).array;
-  }
-
-  void save(ExternalContentProvider provider) {
-    store[provider.id] = provider;
-  }
-
-  void update(ExternalContentProvider provider) {
-    store[provider.id] = provider;
-  }
-
-  void remove(ExternalContentProviderId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
+  void removeByStatus(TenantId tenantId, ProviderStatus status) {
+    findByStatus(tenantId, status).each!(p => remove(p));
+  } 
 }

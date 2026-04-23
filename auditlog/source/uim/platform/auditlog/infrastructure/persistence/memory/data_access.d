@@ -17,9 +17,9 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataAccessLogRepository : DataAccessLogRepository {
-  private DataAccessLog[] store;
+class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, AuditLogId), DataAccessLogRepository {
 
+  // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.id == auditLogId);
   }
@@ -31,16 +31,44 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
     return DataAccessLog.init;
   }
 
-  DataAccessLog[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    if (existsByAuditLogId(tenantId, auditLogId)) {
+      remove(findByAuditLogId(tenantId, auditLogId));
+    }
+  }
+  // #endregion ByAuditLogId
+
+  // #region ByAccessor
+  size_t countByAccessor(TenantId tenantId, UserId accessedBy) {
+    return findByAccessor(tenantId, accessedBy).length;
   }
 
   DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy) {
     return findByTenant(tenantId).filter!(e => e.accessedBy == accessedBy).array;
   }
 
+  void removeByAccessor(TenantId tenantId, UserId accessedBy) {
+    findByAccessor(tenantId, accessedBy).each!(e => remove(e));
+  }
+  // #endregion ByAccessor
+
+  // #region ByDataSubject
+  size_t countByDataSubject(TenantId tenantId, string dataSubject) {
+    return findByDataSubject(tenantId, dataSubject).length;
+  }
+
   DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject) {
     return findByTenant(tenantId).filter!(e => e.dataSubject == dataSubject).array;
+  }
+
+  void removeByDataSubject(TenantId tenantId, string dataSubject) {
+    findByDataSubject(tenantId, dataSubject).each!(e => remove(e));
+  }
+  // #endregion ByDataSubject
+
+  // #region ByTimeRange
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTimeRange(tenantId, timeFrom, timeTo).length;
   }
 
   DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -48,11 +76,12 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
       .array;
   }
 
-  void save(DataAccessLog log) {
-    store ~= log;
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
+  // #endregion ByTimeRange
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findByTenant(tenantId).filter!(e => e.timestamp >= beforeTimestamp).array;
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 }

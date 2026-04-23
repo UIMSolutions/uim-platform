@@ -17,16 +17,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
-  private ConfigChangeLog[] store;
-
-  bool existsByTenant(TenantId tenantId) {
-    return store.any!(e => e.tenantId == tenantId);
-  }
-
-  ConfigChangeLog[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
-  }
+class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.id == auditLogId);
@@ -37,6 +28,12 @@ class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
       if (e.id == auditLogId)
         return e;
     return ConfigChangeLog.init;
+  }
+
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    if (existsByAuditLogId(tenantId, auditLogId)) {
+      remove(findByAuditLogId(tenantId, auditLogId));
+    }
   }
 
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy) {

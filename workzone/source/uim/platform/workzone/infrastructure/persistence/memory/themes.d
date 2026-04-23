@@ -12,38 +12,24 @@ import uim.platform.workzone.domain.ports.repositories.themes;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryThemeRepository : ThemeRepository {
-  private Theme[ThemeId] store;
+class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
 
-  Theme[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+  bool existsDefault(TenantId tenantId) {
+    return findByTenant(tenantId).any!(t => t.isDefault);
   }
 
-  Theme* findById(ThemeId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Theme findDefault(TenantId tenantId) {
+    foreach (t; findByTenant(tenantId))
+      if (t.isDefault)
+        return t;
+    return Theme.init;
   }
 
-  Theme* findDefault(TenantId tenantId) {
-    foreach (t; store.byValue())
-      if (t.tenantId == tenantId && t.isDefault)
-        return &t;
-    return null;
-  }
-
-  void save(Theme theme) {
-    store[theme.id] = theme;
-  }
-
-  void update(Theme theme) {
-    store[theme.id] = theme;
-  }
-
-  void remove(ThemeId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  void removeDefault(TenantId tenantId) {
+    foreach (t; findByTenant(tenantId))
+      if (t.isDefault) {
+        remove(t);
+        break;
+      }
   }
 }
