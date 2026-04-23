@@ -27,19 +27,19 @@ class MemorySmartformRepository : SmartformRepository {
     Smartform[] findAll() { return store; }
 
     Smartform[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Smartform[] findByServiceCall(ServiceCallId serviceCallId) {
-        return store.filter!(e => e.serviceCallId == serviceCallId).array;
+        return findAll().filter!(e => e.serviceCallId == serviceCallId).array;
     }
 
     Smartform[] findByActivity(ActivityId activityId) {
-        return store.filter!(e => e.activityId == activityId).array;
+        return findAll().filter!(e => e.activityId == activityId).array;
     }
 
     Smartform[] findByStatus(SmartformStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Smartform smartform) { store ~= smartform; }

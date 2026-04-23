@@ -27,15 +27,15 @@ class MemoryOAuthScopeRepository : OAuthScopeRepository {
     OAuthScope[] findAll() { return store; }
 
     OAuthScope[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     OAuthScope[] findByApplication(string applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll().filter!(e => e.applicationId == applicationId).array;
     }
 
     OAuthScope[] findByStatus(ScopeStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(OAuthScope entity) { store ~= entity; }

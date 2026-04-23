@@ -21,15 +21,15 @@ class MemoryCustomerRepository : CustomerRepository {
     Customer[] findAll() { return store; }
 
     Customer[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Customer[] findByType(CustomerType customerType) {
-        return store.filter!(e => e.customerType == customerType).array;
+        return findAll().filter!(e => e.customerType == customerType).array;
     }
 
     Customer[] findByStatus(CustomerStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Customer customer) { store ~= customer; }

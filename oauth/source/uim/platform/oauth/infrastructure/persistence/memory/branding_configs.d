@@ -27,7 +27,7 @@ class MemoryBrandingConfigRepository : BrandingConfigRepository {
     BrandingConfig[] findAll() { return store; }
 
     BrandingConfig[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     void save(BrandingConfig entity) { store ~= entity; }

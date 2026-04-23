@@ -27,15 +27,15 @@ class MemoryTechnicianRepository : TechnicianRepository {
     Technician[] findAll() { return store; }
 
     Technician[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Technician[] findByStatus(TechnicianStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     Technician[] findByRegion(string region) {
-        return store.filter!(e => e.region == region).array;
+        return findAll().filter!(e => e.region == region).array;
     }
 
     void save(Technician technician) { store ~= technician; }

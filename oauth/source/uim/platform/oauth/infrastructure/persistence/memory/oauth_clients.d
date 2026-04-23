@@ -33,11 +33,11 @@ class MemoryOAuthClientRepository : OAuthClientRepository {
     OAuthClient[] findAll() { return store; }
 
     OAuthClient[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     OAuthClient[] findByStatus(ClientStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(OAuthClient entity) { store ~= entity; }

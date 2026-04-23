@@ -33,15 +33,15 @@ class MemoryAuthorizationCodeRepository : AuthorizationCodeRepository {
     AuthorizationCode[] findAll() { return store; }
 
     AuthorizationCode[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     AuthorizationCode[] findByClientId(string clientId) {
-        return store.filter!(e => e.clientId == clientId).array;
+        return findAll().filter!(e => e.clientId == clientId).array;
     }
 
     AuthorizationCode[] findByStatus(AuthCodeStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(AuthorizationCode entity) { store ~= entity; }

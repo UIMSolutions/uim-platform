@@ -33,19 +33,19 @@ class MemoryAccessTokenRepository : AccessTokenRepository {
     AccessToken[] findAll() { return store; }
 
     AccessToken[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     AccessToken[] findByClientId(string clientId) {
-        return store.filter!(e => e.clientId == clientId).array;
+        return findAll().filter!(e => e.clientId == clientId).array;
     }
 
     AccessToken[] findByUserId(string userId) {
-        return store.filter!(e => e.userId == userId).array;
+        return findAll().filter!(e => e.userId == userId).array;
     }
 
     AccessToken[] findByStatus(TokenStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(AccessToken entity) { store ~= entity; }

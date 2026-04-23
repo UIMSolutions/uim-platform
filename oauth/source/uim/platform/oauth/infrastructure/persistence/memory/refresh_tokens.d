@@ -33,15 +33,15 @@ class MemoryRefreshTokenRepository : RefreshTokenRepository {
     RefreshToken[] findAll() { return store; }
 
     RefreshToken[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     RefreshToken[] findByClientId(string clientId) {
-        return store.filter!(e => e.clientId == clientId).array;
+        return findAll().filter!(e => e.clientId == clientId).array;
     }
 
     RefreshToken[] findByStatus(TokenStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(RefreshToken entity) { store ~= entity; }

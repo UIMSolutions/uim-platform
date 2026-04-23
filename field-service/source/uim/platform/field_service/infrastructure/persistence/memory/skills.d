@@ -30,15 +30,15 @@ class MemorySkillRepository : SkillRepository {
     }
 
     Skill[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Skill[] findByTechnician(TechnicianId technicianId) {
-        return store.filter!(e => e.technicianId == technicianId).array;
+        return findAll().filter!(e => e.technicianId == technicianId).array;
     }
 
     Skill[] findByCategory(SkillCategory category) {
-        return store.filter!(e => e.category == category).array;
+        return findAll().filter!(e => e.category == category).array;
     }
 
     void save(Skill skill) {

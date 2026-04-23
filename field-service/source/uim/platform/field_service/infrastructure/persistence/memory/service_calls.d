@@ -27,19 +27,19 @@ class MemoryServiceCallRepository : ServiceCallRepository {
     ServiceCall[] findAll() { return store; }
 
     ServiceCall[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     ServiceCall[] findByStatus(ServiceCallStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     ServiceCall[] findByPriority(ServiceCallPriority priority) {
-        return store.filter!(e => e.priority == priority).array;
+        return findAll().filter!(e => e.priority == priority).array;
     }
 
     ServiceCall[] findByCustomer(CustomerId customerId) {
-        return store.filter!(e => e.customerId == customerId).array;
+        return findAll().filter!(e => e.customerId == customerId).array;
     }
 
     void save(ServiceCall serviceCall) { store ~= serviceCall; }

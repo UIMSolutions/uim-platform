@@ -27,19 +27,19 @@ class MemoryEquipmentRepository : EquipmentRepository {
     Equipment[] findAll() { return store; }
 
     Equipment[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Equipment[] findByCustomer(CustomerId customerId) {
-        return store.filter!(e => e.customerId == customerId).array;
+        return findAll().filter!(e => e.customerId == customerId).array;
     }
 
     Equipment[] findByType(EquipmentType equipmentType) {
-        return store.filter!(e => e.equipmentType == equipmentType).array;
+        return findAll().filter!(e => e.equipmentType == equipmentType).array;
     }
 
     Equipment[] findByStatus(EquipmentStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Equipment equipment) { store ~= equipment; }
