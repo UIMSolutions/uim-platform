@@ -12,14 +12,20 @@ mixin(ShowModule!());
 
 @safe:
 class Repository {
-  RepositoryId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RepositoryId);
+
   string name;
   string description;
   RepositoryStatus status = RepositoryStatus.active;
   long maxFileSize = 104_857_600; // 100 MB default
   string allowedFileTypes; // JSON array of extensions, e.g. '["pdf","docx"]'
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("maxFileSize", maxFileSize)
+      .set("allowedFileTypes", allowedFileTypes);
+  }
 }

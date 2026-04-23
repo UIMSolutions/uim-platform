@@ -125,8 +125,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
-    auto entity = folders.findById(tenantId, id);
-    if (entity is null)
+    if (!folders.existsById(tenantId, id))
       return CommandResult(false, "", "Folder not found");
 
     folders.remove(tenantId, id);

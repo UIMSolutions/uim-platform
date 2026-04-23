@@ -131,14 +131,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static CertificateType parseCertType(string s) {
-    switch (s) {
-    case "truststore":
-      return CertificateType.truststore;
-    default:
-      return CertificateType.keystore;
-    }
-  }
+
 
   private static CertificateFormat parseCertFormat(string s) {
     switch (s) {

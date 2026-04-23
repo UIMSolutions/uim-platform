@@ -12,10 +12,16 @@ mixin(ShowModule!());
 
 @safe:
 struct Favorite {
-  FavoriteId id;
-  TenantId tenantId;
+  mixin TenantEntity!(FavoriteId);
+
   UserId userId;
   string resourceId; // documentId or folderId
   ResourceType resourceType;
-  long createdAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("userId", userId.value)
+      .set("resourceId", resourceId)
+      .set("resourceType", resourceType.toString);
+  }
 }

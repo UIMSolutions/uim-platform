@@ -56,11 +56,9 @@ class FolderController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,16 +68,14 @@ class FolderController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listFolders(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (f; items)
-        arr ~= serializeFolder(f);
+      auto arr = items.map!(f => f.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +90,7 @@ class FolderController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeFolder(f), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -115,14 +110,11 @@ class FolderController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Folder not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -141,14 +133,11 @@ class FolderController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Folder not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -157,18 +146,16 @@ class FolderController : PlatformController {
     try {
       auto parentId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listChildren(parenttenantId, id);
+      auto items = uc.listChildren(tenantId, parentId);
 
-      auto arr = Json.emptyArray;
-      foreach (f; items)
-        arr ~= serializeFolder(f);
+      auto arr = items.map!(f => f.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -176,32 +163,17 @@ class FolderController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteFolder(tenantId, id);
+      auto result = uc.deleteFolder(req.getTenantId, FolderId(id));
+
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeFolder(const Folder f) {
-    return Json.emptyObject
-    .set("id", f.id)
-    .set("tenantId", f.tenantId)
-    .set("repositoryId", f.repositoryId)
-    .set("parentFolderId", f.parentFolderId)
-    .set("name", f.name)
-    .set("description", f.description)
-    .set("path", f.path)
-    .set("createdBy", f.createdBy)
-    .set("createdAt", f.createdAt)
-    .set("updatedAt", f.updatedAt);
   }
 }

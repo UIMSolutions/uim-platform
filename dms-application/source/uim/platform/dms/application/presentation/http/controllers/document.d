@@ -58,14 +58,13 @@ class DocumentController : PlatformController {
 
       auto result = uc.createDocument(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,16 +74,14 @@ class DocumentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listDocuments(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; items)
-        arr ~= serializeDoc(d);
+      auto arr = items.map!(d => d.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -99,26 +96,22 @@ class DocumentController : PlatformController {
         // import std.string : indexOf;
 
         auto qIdx = uri.indexOf("q=");
-        if (qIdx >= 0)
-        {
+        if (qIdx >= 0) {
           auto rest = uri[cast(size_t)(qIdx + 2) .. $];
           auto ampIdx = rest.indexOf('&');
-          query = ampIdx >= 0 ? rest[0 .. cast(size_t) ampIdx] : rest;
+          query = ampIdx >= 0 ? rest[0 .. cast(size_t)ampIdx] : rest;
         }
       }
 
       auto items = uc.searchByName(query, tenantId);
+      auto arr = items.map!(d => d.toJson).array.toJson;
 
-      auto arr = Json.emptyArray;
-      foreach (d; items)
-        arr ~= serializeDoc(d);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -132,9 +125,8 @@ class DocumentController : PlatformController {
         writeError(res, 404, "Document not found");
         return;
       }
-      res.writeJsonBody(serializeDoc(doc), 200);
-    }
-    catch (Exception e) {
+      res.writeJsonBody(doc.toJson(), 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -153,17 +145,15 @@ class DocumentController : PlatformController {
 
       auto result = uc.updateDocument(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Document not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -179,17 +169,15 @@ class DocumentController : PlatformController {
 
       auto result = uc.moveDocument(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Document not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -200,15 +188,14 @@ class DocumentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.archiveDocument(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("archived");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "archived");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -219,35 +206,14 @@ class DocumentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteDocument(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeDoc(const Document d) {
-    return Json.emptyObject
-    .set("id", d.id)
-    .set("tenantId", d.tenantId)
-    .set("repositoryId", d.repositoryId)
-    .set("folderId", d.folderId)
-    .set("name", d.name)
-    .set("description", d.description)
-    .set("contentCategory", d.contentCategory.to!string)
-    .set("mimeType", d.mimeType)
-    .set("fileSize", d.fileSize)
-    .set("status", d.status.to!string)
-    .set("currentVersionId", d.currentVersionId)
-    .set("tags", d.tags)
-    .set("properties", d.properties)
-    .set("createdBy", d.createdBy)
-    .set("createdAt", d.createdAt)
-    .set("updatedAt", d.updatedAt);
   }
 }

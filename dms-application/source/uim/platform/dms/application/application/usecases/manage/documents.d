@@ -107,47 +107,38 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return docs.findByName(tenantId, name);
   }
 
-  CommandResult updateDocument(UpdateDocumentRequest r) {
-    if (!docs.existsById(r.tenantId, r.id))
+  CommandResult updateDocument(UpdateDocumentRequest request) {
+    if (!docs.existsById(request.tenantId, request.id))
       return CommandResult(false, "", "Document not found");
 
-    auto doc = docs.findById(r.tenantId, r.id);
-    if (r.name.length > 0)
-      doc.name = r.name;
-    if (r.description.length > 0)
-      doc.description = r.description;
-    if (r.tags.length > 0)
-      doc.tags = r.tags;
-    if (r.properties.length > 0)
-      doc.properties = r.properties;
-    doc.updatedAt = Clock.currStdTime();
-
+    auto doc = docs.findById(request.tenantId, request.id);
+    doc = doc.updateFromRequest(request);
     docs.update(doc);
     return CommandResult(true, doc.id.toString, "");
   }
 
-  CommandResult moveDocument(MoveDocumentRequest r) {
-    if (!docs.existsById(r.tenantId, r.id))
+  CommandResult moveDocument(MoveDocumentRequest request) {
+    auto doc = docs.findById(request.tenantId, request.id);
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
-    auto doc = docs.findById(r.tenantId, r.id);
-    if (r.newFolderId.value.length > 0) {
-      auto folder = folders.findById(r.tenantId, r.newFolderId);
-      if (folder is null)
+    if (request.newFolderId.value.length > 0) {
+      auto folder = folders.findById(request.tenantId, request.newFolderId);
+      if (folder.isNull)
         return CommandResult(false, "", "Target folder not found");
     }
 
-    doc.folderId = r.newFolderId;
+    doc.folderId = request.newFolderId;
     doc.updatedAt = Clock.currStdTime();
     docs.update(doc);
     return CommandResult(true, doc.id.toString, "");
   }
 
   CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
-    if (!docs.existsById(tenantId, id))
+    auto doc = docs.findById(tenantId, id);
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
-    auto doc = docs.findById(tenantId, id);
     doc.status = DocumentStatus.archived;
     doc.updatedAt = Clock.currStdTime();
     docs.update(doc);
@@ -155,7 +146,8 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
-    if (!docs.existsById(tenantId, id))
+    auto doc = docs.findById(tenantId, id);
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
     // Cascade delete versions

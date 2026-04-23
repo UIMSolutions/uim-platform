@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct Document {
-  DocumentId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DocumentId);
+
   RepositoryId repositoryId;
   FolderId folderId;
   string name;
@@ -25,7 +25,40 @@ struct Document {
   DocumentVersionId currentVersionId;
   string tags; // JSON array of strings
   string properties; // JSON object for custom metadata
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("repositoryId", repositoryId.value)
+      .set("folderId", folderId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("contentCategory", contentCategory.toString)
+      .set("mimeType", mimeType)
+      .set("fileSize", fileSize)
+      .set("status", status.toString)
+      .set("currentVersionId", currentVersionId.value)
+      .set("tags", tags)
+      .set("properties", properties);
+  }
+
+  Document updateFromRequest(const UpdateDocumentRequest r) const {
+    Document updated = this.dup;
+
+    if (r.name.length > 0)
+      updated.name = r.name;
+    if (r.description.length > 0)
+      updated.description = r.description;
+    if (r.contentCategory != ContentCategory.unknown)
+      updated.contentCategory = r.contentCategory;
+    if (r.mimeType.length > 0)
+      updated.mimeType = r.mimeType;
+    if (r.fileSize >= 0)
+      updated.fileSize = r.fileSize;
+    if (r.tags.length > 0)
+      updated.tags = r.tags;
+    if (r.properties.length > 0)
+      updated.properties = r.properties;
+
+    return updated;
+  }
 }

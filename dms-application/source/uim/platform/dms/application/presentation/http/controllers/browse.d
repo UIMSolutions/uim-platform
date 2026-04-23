@@ -46,19 +46,15 @@ class BrowseController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto contents = uc.browseFolderContents(tenantId, folderId);
 
-      auto fArr = Json.emptyArray;
-      foreach (f; contents.subfolders)
-        fArr ~= serializeFolder(f);
+      auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
+      auto dArr = contents.documents.map!(d => serializeDoc(d)).array.toJson;
 
-      auto dArr = Json.emptyArray;
-      foreach (d; contents.documents)
-        dArr ~= serializeDoc(d);
+      auto resp = Json.emptyObject
+        .set("subfolders", fArr)
+        .set("documents", dArr)
+        .set("totalSubfolders", contents.subfolders.length)
+        .set("totalDocuments", contents.documents.length);
 
-      auto resp = Json.emptyObject;
-      resp["subfolders"] = fArr;
-      resp["documents"] = dArr;
-      resp["totalSubfolders"] = Json(contents.subfolders.length);
-      resp["totalDocuments"] = Json(contents.documents.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -100,8 +96,9 @@ class BrowseController : PlatformController {
 
       auto result = uc.addFavorite(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -116,13 +113,12 @@ class BrowseController : PlatformController {
       auto userId = req.headers.get("X-User-Id", "system");
       auto items = uc.getFavorites(tenantId, userId);
 
-      auto arr = Json.emptyArray;
-      foreach (f; items)
-        arr ~= serializeFavorite(f);
+      auto arr = items.map!(f => f.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -135,39 +131,14 @@ class BrowseController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.removeFavorite(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeFolder(const Folder f) {
-    return Json.emptyObject
-      .set("id", f.id)
-      .set("name", f.name)
-      .set("path", f.path)
-      .set("parentFolderId", f.parentFolderId);
-  }
-
-  private static Json serializeDoc(const Document d) {
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("name", d.name)
-      .set("mimeType", d.mimeType)
-      .set("fileSize", d.fileSize)
-      .set("status", d.status.to!string);
-  }
-
-  private static Json serializeFavorite(const Favorite f) {
-    return Json.emptyObject
-      .set("id", f.id)
-      .set("userId", f.userId)
-      .set("resourceId", f.resourceId)
-      .set("resourceType", f.resourceType.to!string)
-      .set("createdAt", f.createdAt);
   }
 }

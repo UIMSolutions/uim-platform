@@ -21,13 +21,11 @@ class Folder {
   string path; // e.g. "/root/subfolder/child"
   
   Json  toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("repositoryId", repositoryId.value)
       .set("parentFolderId", parentFolderId.value)
       .set("name", name)
       .set("description", description)
       .set("path", path);
-
-    return j;
   }
 }
