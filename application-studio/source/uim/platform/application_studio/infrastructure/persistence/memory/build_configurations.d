@@ -27,15 +27,15 @@ class MemoryBuildConfigurationRepository : BuildConfigurationRepository {
     BuildConfiguration[] findAll() { return store; }
 
     BuildConfiguration[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     BuildConfiguration[] findByProject(ProjectId projectId) {
-        return store.filter!(e => e.projectId == projectId).array;
+        return findAll().filter!(e => e.projectId == projectId).array;
     }
 
     BuildConfiguration[] findByStatus(BuildStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(BuildConfiguration entity) { store ~= entity; }

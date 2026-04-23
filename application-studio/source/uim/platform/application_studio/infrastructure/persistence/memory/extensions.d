@@ -27,15 +27,15 @@ class MemoryExtensionRepository : ExtensionRepository {
     Extension[] findAll() { return store; }
 
     Extension[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Extension[] findByScope(ExtensionScope scope_) {
-        return store.filter!(e => e.scope_ == scope_).array;
+        return findAll().filter!(e => e.scope_ == scope_).array;
     }
 
     Extension[] findByStatus(ExtensionStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Extension entity) { store ~= entity; }

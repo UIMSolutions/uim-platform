@@ -27,15 +27,15 @@ class MemoryDevSpaceRepository : DevSpaceRepository {
     DevSpace[] findAll() { return store; }
 
     DevSpace[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     DevSpace[] findByOwner(string owner) {
-        return store.filter!(e => e.owner == owner).array;
+        return findAll().filter!(e => e.owner == owner).array;
     }
 
     DevSpace[] findByStatus(DevSpaceStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(DevSpace entity) { store ~= entity; }

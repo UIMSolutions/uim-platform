@@ -27,15 +27,15 @@ class MemoryProjectRepository : ProjectRepository {
     Project[] findAll() { return store; }
 
     Project[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Project[] findByDevSpace(DevSpaceId devSpaceId) {
-        return store.filter!(e => e.devSpaceId == devSpaceId).array;
+        return findAll().filter!(e => e.devSpaceId == devSpaceId).array;
     }
 
     Project[] findByType(ProjectType projectType) {
-        return store.filter!(e => e.projectType == projectType).array;
+        return findAll().filter!(e => e.projectType == projectType).array;
     }
 
     void save(Project entity) { store ~= entity; }

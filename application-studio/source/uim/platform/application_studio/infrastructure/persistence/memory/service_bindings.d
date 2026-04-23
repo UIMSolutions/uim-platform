@@ -11,42 +11,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository : ServiceBindingRepository {
-    private ServiceBinding[] store;
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-    bool existsById(ServiceBindingId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ServiceBinding findById(ServiceBindingId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ServiceBinding.init;
-    }
-
-    ServiceBinding[] findAll() { return store; }
-
-    ServiceBinding[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByDevSpace(DevSpaceId devSpaceId) {
+        return findByDevSpace(devSpaceId).length;
     }
 
     ServiceBinding[] findByDevSpace(DevSpaceId devSpaceId) {
-        return store.filter!(e => e.devSpaceId == devSpaceId).array;
+        return findAll().filter!(e => e.devSpaceId == devSpaceId).array;
+    }
+    
+    void removeByDevSpace(DevSpaceId devSpaceId) {
+        findByDevSpace(devSpaceId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(BindingStatus status) {
+        return findByStatus(status).length;
     }
 
     ServiceBinding[] findByStatus(BindingStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(ServiceBinding entity) { store ~= entity; }
-
-    void update(ServiceBinding entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByStatus(BindingStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(ServiceBindingId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

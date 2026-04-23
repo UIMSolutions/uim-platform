@@ -27,11 +27,11 @@ class MemoryDevSpaceTypeRepository : DevSpaceTypeRepository {
     DevSpaceType[] findAll() { return store; }
 
     DevSpaceType[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     DevSpaceType[] findByCategory(DevSpaceTypeCategory category) {
-        return store.filter!(e => e.category == category).array;
+        return findAll().filter!(e => e.category == category).array;
     }
 
     void save(DevSpaceType entity) { store ~= entity; }

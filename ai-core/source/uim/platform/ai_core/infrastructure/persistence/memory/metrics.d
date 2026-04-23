@@ -24,11 +24,11 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   Metric[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return store.filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array;
+    return findAll().filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array;
   }
 
   Metric[] findByResourceGroup(ResourceGroupId rgId) {
-    return store.filter!(m => m.resourceGroupId == rgId).array;
+    return findAll().filter!(m => m.resourceGroupId == rgId).array;
   }
 
   void save(Metric m) {
@@ -36,10 +36,10 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   void remove(MetricId id, ResourceGroupId rgId) {
-    store = store.filter!(m => !(m.id == id && m.resourceGroupId == rgId)).array;
+    store = findAll().filter!(m => !(m.id == id && m.resourceGroupId == rgId)).array;
   }
 
   size_t countByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return store.filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
+    return findAll().filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
   }
 }

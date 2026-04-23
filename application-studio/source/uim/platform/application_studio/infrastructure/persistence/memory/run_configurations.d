@@ -27,11 +27,11 @@ class MemoryRunConfigurationRepository : RunConfigurationRepository {
     RunConfiguration[] findAll() { return store; }
 
     RunConfiguration[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     RunConfiguration[] findByProject(ProjectId projectId) {
-        return store.filter!(e => e.projectId == projectId).array;
+        return findAll().filter!(e => e.projectId == projectId).array;
     }
 
     void save(RunConfiguration entity) { store ~= entity; }

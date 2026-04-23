@@ -16,30 +16,10 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-class MemorySoftwareComponentRepository : SoftwareComponentRepository {
-  private SoftwareComponent[SoftwareComponentId] store;
-
-  bool existsById(SoftwareComponentId id) {
-    return (id in store) ? true : false;
-  }
-
-  SoftwareComponent findById(SoftwareComponentId id) {
-    return existsById(id) ? store[id] : SoftwareComponent.init;
-  }
-
-  SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
-  }
-
-  SoftwareComponent[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
-  }
+class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 
   bool existsName(SystemInstanceId systemId, string name) {
-    foreach (e; findAll())
-      if (e.systemInstanceId == systemId && e.name == name)
-        return true;
-    return false;
+    return findAll().any!(e => e.systemInstanceId == systemId && e.name == name);
   }
 
   SoftwareComponent findByName(SystemInstanceId systemId, string name) {
@@ -49,15 +29,21 @@ class MemorySoftwareComponentRepository : SoftwareComponentRepository {
     return SoftwareComponent.init;
   }
 
-  void save(SoftwareComponent component) {
-    store[component.id] = component;
+  void removeByName(SystemInstanceId systemId, string name) {
+    foreach (e; findAll())
+      if (e.systemInstanceId == systemId && e.name == name)
+        remove(e.id);
   }
 
-  void update(SoftwareComponent component) {
-    store[component.id] = component;
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
   }
 
-  void remove(SoftwareComponentId id) {
-    store.remove(id);
+  SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+  }
+
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e.id));
   }
 }

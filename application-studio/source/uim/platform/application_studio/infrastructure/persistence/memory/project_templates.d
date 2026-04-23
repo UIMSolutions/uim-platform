@@ -27,11 +27,11 @@ class MemoryProjectTemplateRepository : ProjectTemplateRepository {
     ProjectTemplate[] findAll() { return store; }
 
     ProjectTemplate[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     ProjectTemplate[] findByCategory(TemplateCategory category) {
-        return store.filter!(e => e.category == category).array;
+        return findAll().filter!(e => e.category == category).array;
     }
 
     void save(ProjectTemplate entity) { store ~= entity; }
