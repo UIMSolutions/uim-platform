@@ -17,40 +17,35 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : CertificateRepository {
-  private Certificate[CertificateId] store;
+class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
-  Certificate findById(CertificateId id) {
-    if (auto p = id in store)
-      return *p;
-    return Certificate.init;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
 
   Certificate findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return Certificate.init;
   }
 
-  Certificate[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return remove(e);
+  }
+
+  size_t countExpiring(TenantId tenantId, long now, uint withinDays) {
+    return findExpiring(tenantId, now, withinDays).length;
   }
 
   Certificate[] findExpiring(TenantId tenantId, long now, uint withinDays) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.expiresWithinDays(now, withinDays)).array;
+    return findByTenant(tenantId).filter!(e => e.expiresWithinDays(now, withinDays)).array;
   }
 
-  void save(Certificate entity) {
-    store[entity.id] = entity;
+  void removeExpiring(TenantId tenantId, long now, uint withinDays) {
+    findExpiring(tenantId, now, withinDays).each!(e => remove(e));
   }
 
-  void update(Certificate entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(CertificateId id) {
-    store.remove(id);
-  }
 }

@@ -16,54 +16,41 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDestinationRepository : DestinationRepository {
-  private Destination[DestinationId] store;
+class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
-  bool existsById(DestinationId id) {
-    return (id in store) ? true : false;
-  }
-
-  bool existsById(TenantId tenantId, DestinationId id) {
-    return (id in store) && (store[id].tenantId == tenantId);
-  }
-
-  bool existsByTenant(TenantId tenantId) {
-    return store.byValue().any!(e => e.tenantId == tenantId);
-  }
-
-  long countByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).length;
-  }
-
-  Destination findById(DestinationId id) {
-    return existsById(id) ? store[id] : Destination.init;
+  // #region ByName
+  bool existsByName(TenantId tenantId, string name) {
+    findByTenant(tenantId).any!(e => e.name == name);
   }
 
   Destination findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId)) {
       if (e.name == name)
         return e;
-      return Destination.init;
     }
+    return Destination.init;
   }
 
-  Destination[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId)) {
+      if (e.name == name)
+        return remove(e);
+    }
+  }
+  // #endregion ByName
+
+  // #region ByProxyType
+  size_t countByProxyType(TenantId tenantId, ProxyType proxyType) {
+    return findByProxyType(tenantId, proxyType).length;
   }
 
   Destination[] findByProxyType(TenantId tenantId, ProxyType proxyType) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.proxyType == proxyType).array;
+    return findByTenant(tenantId).filter!(e => e.proxyType == proxyType).array;
   }
 
-  void save(Destination entity) {
-    store[entity.id] = entity;
+  void removeByProxyType(TenantId tenantId, ProxyType proxyType) {
+    findByProxyType(tenantId, proxyType).each!(e => remove(e));
   }
+  // #endregion ByProxyType
 
-  void update(Destination entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(DestinationId id) {
-    store.remove(id);
-  }
 }

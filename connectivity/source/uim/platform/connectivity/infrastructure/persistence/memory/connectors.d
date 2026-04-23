@@ -16,15 +16,35 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectorRepository : MemoryTenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
+class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
+ 
+  bool existsByLocationId(SubaccountId subaccountId, string locationId) {
+    return findAll.any!(e => e.subaccountId == subaccountId && e.locationId == locationId);
+  }
+
   CloudConnector findByLocationId(SubaccountId subaccountId, string locationId) {
-    foreach (e; store.byValue())
+    foreach (e; findAll)
       if (e.subaccountId == subaccountId && e.locationId == locationId)
         return e;
     return CloudConnector.init;
   }
 
-  CloudConnector[] findBySubaccount(SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+  void removeByLocationId(SubaccountId subaccountId, string locationId) {
+    foreach (e; findAll)
+      if (e.subaccountId == subaccountId && e.locationId == locationId)
+         return remove(e);
   }
+
+  size_t countBySubaccount(SubaccountId subaccountId) {
+    return findBySubaccount(subaccountId).length;
+  }
+
+  CloudConnector[] findBySubaccount(SubaccountId subaccountId) {
+    return findAll.filter!(e => e.subaccountId == subaccountId).array;
+  }
+
+  void removeBySubaccount(SubaccountId subaccountId) {
+    findBySubaccount(subaccountId).each!(e => remove(e));
+  }
+
 }

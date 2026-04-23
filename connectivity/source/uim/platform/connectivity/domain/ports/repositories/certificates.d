@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// Port: outgoing - certificate store persistence.
 interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
-  bool existsName(TenantId tenantId, string name);
+  bool existsByName(TenantId tenantId, string name);
   Certificate findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 

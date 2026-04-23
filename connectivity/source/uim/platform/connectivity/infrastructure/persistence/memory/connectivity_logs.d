@@ -17,22 +17,34 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectivityLogRepository : ConnectivityLogRepository {
-  private ConnectivityLog[] logs;
+class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, ConnectivityLogId), ConnectivityLogRepository {
 
-  ConnectivityLog[] findByTenant(TenantId tenantId) {
-    return logs.filter!(e => e.tenantId == tenantId).array;
+  // #region BySeverity
+  size_t countBySeverity(TenantId tenantId, LogSeverity severity) {
+    return findBySeverity(tenantId, severity).length;
   }
 
   ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity) {
     return logs.filter!(e => e.tenantId == tenantId && e.severity == severity).array;
   }
 
-  ConnectivityLog[] findBySource(string sourceId) {
-    return logs.filter!(e => e.sourceId == sourceId).array;
+  void removeBySeverity(TenantId tenantId, LogSeverity severity) {
+    findByTenant(tenantId).filter!(e => e.severity == severity).each!(e => remove(e));
+  }
+  // #endregion BySeverity
+
+  // #region BySource
+  size_t countBySource(TenantId tenantId, string sourceId) {
+    return findBySource(tenantId, sourceId).length;
   }
 
-  void save(ConnectivityLog entry) {
-    logs ~= entry;
+  ConnectivityLog[] findBySource(TenantId tenantId, string sourceId) {
+    return findByTenant(tenantId).filter!(e => e.sourceId == sourceId).array;
   }
+
+  void removeBySource(TenantId tenantId, string sourceId) {
+    findByTenant(tenantId).filter!(e => e.sourceId == sourceId).each!(e => remove(e));
+  }
+  // #endregion BySource
+
 }

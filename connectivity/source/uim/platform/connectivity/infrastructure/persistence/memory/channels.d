@@ -18,36 +18,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryChannelRepository : ChannelRepository {
-  private ServiceChannel[ChannelId] store;
+class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), ChannelRepository {
 
-  ServiceChannel findById(ChannelId id) {
-    if (auto p = id in store)
-      return *p;
-    return ServiceChannel.init;
+  size_t countByConnector(ConnectorId connectorId) {
+    return findByConnector(connectorId).length;
   }
 
   ServiceChannel[] findByConnector(ConnectorId connectorId) {
     return store.byValue().filter!(e => e.connectorId == connectorId).array;
   }
 
-  ServiceChannel[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeByConnector(ConnectorId connectorId) {
+    findByConnector(connectorId).each!(e => remove(e));
+  }
+
+  size_t countByStatus(TenantId tenantId, ChannelStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
-  void save(ServiceChannel entity) {
-    store[entity.id] = entity;
+  void removeByStatus(TenantId tenantId, ChannelStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
-  void update(ServiceChannel entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ChannelId id) {
-    store.remove(id);
-  }
 }

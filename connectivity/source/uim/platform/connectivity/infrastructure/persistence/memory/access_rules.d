@@ -17,56 +17,18 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAccessRuleRepository : AccessRuleRepository {
-  private AccessRule[RuleId] store;
+class MemoryAccessRuleRepository : TenantRepository!(AccessRule, RuleId), AccessRuleRepository {
 
-  size_t countAll() {
-    return store.length;
-  }
-
-bool existsById(TenantId tenantId, RuleId id) {
-    return (id in store) && (store[id].tenantId == tenantId);
-  }
-
-  bool existsByTenant(TenantId tenantId) {
-    return store.byValue().any!(e => e.tenantId == tenantId);
-  }
-
-  bool existsById(RuleId id) {
-    return (id in store) ? true : false;
-  }
-
-  AccessRule findById(RuleId id) {
-    return existsById(id) ? store[id] : AccessRule.init;
-  }
-
-  AccessRule findById(TenantId tenantId, RuleId id) {
-    if (existsById(tenantId, id))
-      return store[id];
-    return AccessRule.init;
+  size_t countByConnector(ConnectorId connectorId) {
+    return findByConnector(connectorId).length;
   }
 
   AccessRule[] findByConnector(ConnectorId connectorId) {
-    return store.byValue().filter!(e => e.connectorId == connectorId).array;
+    return findAll.filter!(e => e.connectorId == connectorId).array;
   }
 
-  AccessRule[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeByConnector(ConnectorId connectorId) {
+    findByConnector(connectorId).each!(e => remove(e));
   }
 
-  ulong countByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).length;
-  }
-
-  void save(AccessRule entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(AccessRule entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(RuleId id) {
-    store.remove(id);
-  }
 }
