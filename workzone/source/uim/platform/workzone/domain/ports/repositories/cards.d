@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.cards;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
 
-interface CardRepository {
-  Card[] findByTenant(TenantId tenantId);
-  Card* findById(CardId tenantId, id tenantId);
+interface CardRepository : ITenantRepository!(Card, CardId) {
+
+  size_t countByType(CardType cardType, TenantId tenantId);
   Card[] findByType(CardType cardType, TenantId tenantId);
-  void save(Card card);
-  void update(Card card);
-  void remove(CardId tenantId, id tenantId);
+  void removeByType(CardType cardType, TenantId tenantId);
+
 }

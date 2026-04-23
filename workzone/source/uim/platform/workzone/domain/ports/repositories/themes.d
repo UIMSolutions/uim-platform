@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.themes;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.theme;
 
-interface ThemeRepository {
-  Theme[] findByTenant(TenantId tenantId);
-  Theme* findById(ThemeId tenantId, id tenantId);
-  Theme* findDefault(TenantId tenantId);
-  void save(Theme theme);
-  void update(Theme theme);
-  void remove(ThemeId tenantId, id tenantId);
+interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {
+
+  bool existsDefault(TenantId tenantId);
+  Theme findDefault(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
+
 }

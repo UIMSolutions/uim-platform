@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.groups;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.group;
 
-interface GroupRepository {
-  Group[] findByTenant(TenantId tenantId);
-  Group* findById(GroupId tenantId, id tenantId);
-  Group[] findByMember(UserId usertenantId, id tenantId);
-  void save(Group group);
-  void update(Group group);
-  void remove(GroupId tenantId, id tenantId);
+interface GroupRepository : ITenantRepository!(Group, GroupId) {
+
+  size_t countByMember(TenantId tenantId, UserId userId);
+  Group[] findByMember(TenantId tenantId, UserId userId);
+  void removeByMember(TenantId tenantId, UserId userId);
+
 }

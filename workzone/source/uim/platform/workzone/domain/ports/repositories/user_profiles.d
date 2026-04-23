@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.user_profiles;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.user_profile;
 
-interface UserProfileRepository {
-  UserProfile[] findByTenant(TenantId tenantId);
-  UserProfile* findById(UserProfileId tenantId, id tenantId);
-  UserProfile* findByUserId(UserId usertenantId, id tenantId);
+interface UserProfileRepository : ITenantRepository!(UserProfile, UserProfileId) {
+
+  bool existsByUserId(UserId usertenantId, id tenantId);
+  UserProfile findByUserId(UserId usertenantId, id tenantId);
+  void removeByUserId(UserId usertenantId, id tenantId);
+
+  size_t countByGroup(GroupId grouptenantId, id tenantId);
   UserProfile[] findByGroup(GroupId grouptenantId, id tenantId);
-  void save(UserProfile profile);
-  void update(UserProfile profile);
-  void remove(UserProfileId tenantId, id tenantId);
+  void removeByGroup(GroupId grouptenantId, id tenantId);
+
 }

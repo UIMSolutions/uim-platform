@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.apps;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
 
-interface AppRepository {
-  AppRegistration[] findByTenant(TenantId tenantId);
-  AppRegistration* findById(AppId tenantId, id tenantId);
+interface AppRepository : ITenantRepository!(AppRegistration, AppId) {
+
+  size_t countByStatus(AppStatus status, TenantId tenantId);
   AppRegistration[] findByStatus(AppStatus status, TenantId tenantId);
-  void save(AppRegistration app);
-  void update(AppRegistration app);
-  void remove(AppId tenantId, id tenantId);
+  void removeByStatus(AppStatus status, TenantId tenantId);
+
 }

@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.knowledge_base_article;
 
-interface KnowledgeBaseArticleRepository {
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  KnowledgeBaseArticle* findById(KBArticleId tenantId, id tenantId);
+interface KnowledgeBaseArticleRepository : ITenantRepository!(KnowledgeBaseArticle, KBArticleId) {
+
+  size_t countByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  void removeByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+
+  size_t countByCategory(string category, TenantId tenantId);
   KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId);
-  KnowledgeBaseArticle[] findByTenant(TenantId tenantId);
-  void save(KnowledgeBaseArticle article);
-  void update(KnowledgeBaseArticle article);
-  void remove(KBArticleId tenantId, id tenantId);
+  void removeByCategory(string category, TenantId tenantId);
+
 }

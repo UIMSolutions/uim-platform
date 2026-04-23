@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.external_content_provider
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.external_content_provider;
 
-interface ExternalContentProviderRepository {
-  ExternalContentProvider[] findByTenant(TenantId tenantId);
-  ExternalContentProvider* findById(ExternalContentProviderId tenantId, id tenantId);
-  ExternalContentProvider[] findByStatus(ProviderStatus status, TenantId tenantId);
-  void save(ExternalContentProvider provider);
-  void update(ExternalContentProvider provider);
-  void remove(ExternalContentProviderId tenantId, id tenantId);
+interface ExternalContentProviderRepository : ITenantRepository!(ExternalContentProvider, ExternalContentProviderId) {
+
+  size_t countByStatus(TenantId tenantId, ProviderStatus status);
+  ExternalContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status);
+  void removeByStatus(TenantId tenantId, ProviderStatus status);
+
 }

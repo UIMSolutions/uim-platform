@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.events;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.event;
 
-interface EventRepository {
+interface EventRepository : ITenantRepository!(Event, EventId) {
+  
+  size_t countByWorkspace(WorkspaceId workspacetenantId, id tenantId);
   Event[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Event* findById(EventId tenantId, id tenantId);
+  void removeByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  
+  size_t countByOrganizer(UserId organizertenantId, id tenantId);
   Event[] findByOrganizer(UserId organizertenantId, id tenantId);
-  Event[] findByTenant(TenantId tenantId);
-  void save(Event event);
-  void update(Event event);
-  void remove(EventId tenantId, id tenantId);
+  void removeByOrganizer(UserId organizertenantId, id tenantId);
+
 }
