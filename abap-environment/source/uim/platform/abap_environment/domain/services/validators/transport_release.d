@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.services.transport_release_validator;
 
-import uim.platform.abap_environment.domain.entities.transport_request;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.entities.transport_request;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Validation result for transport operations.
 struct TransportValidation {
   bool valid;

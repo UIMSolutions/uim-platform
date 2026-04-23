@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.ports.repositories.business_users;
 
-import uim.platform.abap_environment.domain.entities.business_user;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.entities.business_user;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - business user persistence.
 interface BusinessUserRepository : ITenantRepository!(BusinessUser, BusinessUserId) {
 

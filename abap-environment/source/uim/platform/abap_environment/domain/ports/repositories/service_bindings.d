@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.ports.repositories.service_binding;
 
-import uim.platform.abap_environment.domain.entities.service_binding;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.entities.service_binding;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - service binding persistence.
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 

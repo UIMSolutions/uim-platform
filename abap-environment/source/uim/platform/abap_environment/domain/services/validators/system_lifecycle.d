@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.services.validators.system_lifecycle;
 
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Validation result for system lifecycle transitions.
 struct LifecycleValidation {
   bool valid;
