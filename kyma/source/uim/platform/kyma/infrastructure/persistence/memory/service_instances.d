@@ -41,15 +41,15 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   }
 
   ServiceInstance[] findByNamespace(NamespaceId nsId) {
-    return store.byValue().filter!(e => e.namespaceId == nsId).array;
+    return findAll()r!(e => e.namespaceId == nsId).array;
   }
 
   ServiceInstance[] findByEnvironment(KymaEnvironmentId envId) {
-    return store.byValue().filter!(e => e.environmentId == envId).array;
+    return findAll()r!(e => e.environmentId == envId).array;
   }
 
   ServiceInstance[] findByOffering(string offeringName) {
-    return store.byValue().filter!(e => e.serviceOfferingName == offeringName).array;
+    return findAll()r!(e => e.serviceOfferingName == offeringName).array;
   }
 
   void save(ServiceInstance inst) {

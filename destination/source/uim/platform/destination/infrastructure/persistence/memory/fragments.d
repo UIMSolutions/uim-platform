@@ -30,22 +30,22 @@ class MemoryFragmentRepository : FragmentRepository {
   }
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return store.byValue().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
 
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return e;
     return DestinationFragment.init;
   }
 
   DestinationFragment[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   DestinationFragment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 

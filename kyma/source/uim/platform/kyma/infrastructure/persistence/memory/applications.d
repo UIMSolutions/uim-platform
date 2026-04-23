@@ -41,15 +41,15 @@ class MemoryApplicationRepository : ApplicationRepository {
   }
 
   Application[] findByEnvironment(KymaEnvironmentId envId) {
-    return store.byValue().filter!(e => e.environmentId == envId).array;
+    return findAll()r!(e => e.environmentId == envId).array;
   }
 
   Application[] findByStatus(AppConnectivityStatus status) {
-    return store.byValue().filter!(e => e.status == status).array;
+    return findAll()r!(e => e.status == status).array;
   }
 
   Application[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   void save(Application app) {

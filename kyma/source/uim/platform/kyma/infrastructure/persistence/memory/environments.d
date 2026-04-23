@@ -30,16 +30,16 @@ class MemoryEnvironmentRepository : EnvironmentRepository {
   }
 
   KymaEnvironment[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 
   KymaEnvironment[] findByStatus(EnvironmentStatus status) {
-    return store.byValue().filter!(e => e.status == status).array;
+    return findAll()r!(e => e.status == status).array;
   }
 
   void save(KymaEnvironment env) {

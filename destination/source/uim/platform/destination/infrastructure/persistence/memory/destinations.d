@@ -30,32 +30,32 @@ class MemoryDestinationRepository : DestinationRepository {
   }
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return store.byValue().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
 
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return e;
     return Destination.init;
   }
 
   Destination[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 
   Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.serviceInstanceId == instanceId).array;
   }
 
   Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId && e.level == level).array;
   }
 

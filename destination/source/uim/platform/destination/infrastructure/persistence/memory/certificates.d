@@ -28,21 +28,21 @@ class MemoryCertificateRepository : CertificateRepository {
   }
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return true;
     return false;
   }
 
   Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return e;
     return Certificate.init;
   }
 
   Certificate[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {

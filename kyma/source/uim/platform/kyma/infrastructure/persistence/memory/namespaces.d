@@ -41,11 +41,11 @@ class MemoryNamespaceRepository : NamespaceRepository {
   }
 
   Namespace[] findByEnvironment(KymaEnvironmentId envId) {
-    return store.byValue().filter!(e => e.environmentId == envId).array;
+    return findAll()r!(e => e.environmentId == envId).array;
   }
 
   Namespace[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   void save(Namespace ns) {
