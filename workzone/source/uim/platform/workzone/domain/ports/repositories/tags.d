@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.tags;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.tag;
 
-interface TagRepository {
-  Tag[] findByTenant(TenantId tenantId);
-  Tag* findById(TagId tenantId, id tenantId);
-  Tag* findByName(string name, TenantId tenantId);
-  Tag[] findByParent(TagId parentTagtenantId, id tenantId);
-  void save(Tag tag);
-  void update(Tag tag);
-  void remove(TagId tenantId, id tenantId);
+interface TagRepository : ITenantRepository!(Tag, TagId) {
+
+  bool existsByName(TenantId tenantId, string name);
+  Tag findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
+  Tag[] findByParent(TenantId tenantId, TagId parentTag);
+  Tag[] findByParent(TenantId tenantId, TagId parentTag);
+  Tag[] findByParent(TenantId tenantId, TagId parentTag);
+
 }

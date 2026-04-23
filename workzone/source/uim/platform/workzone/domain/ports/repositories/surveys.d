@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.surveys;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.survey;
 
-interface SurveyRepository {
-  Survey[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Survey* findById(SurveyId tenantId, id tenantId);
+interface SurveyRepository : ITenantRepository!(Survey, SurveyId) {
+
+  size_t countByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  Survey[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+  void removeByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
+
+  size_t countByStatus(SurveyStatus status, TenantId tenantId);
   Survey[] findByStatus(SurveyStatus status, TenantId tenantId);
-  Survey[] findByTenant(TenantId tenantId);
-  void save(Survey survey);
-  void update(Survey survey);
-  void remove(SurveyId tenantId, id tenantId);
+  void removeByStatus(SurveyStatus status, TenantId tenantId);
+
 }

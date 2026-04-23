@@ -8,11 +8,10 @@ module uim.platform.workzone.domain.ports.repositories.sites;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.site;
 
-interface SiteRepository {
-  Site[] findByTenant(TenantId tenantId);
-  Site* findById(SiteId tenantId, id tenantId);
-  Site* findByAlias(string alias_, TenantId tenantId);
-  void save(Site site);
-  void update(Site site);
-  void remove(SiteId tenantId, id tenantId);
+interface SiteRepository : ITenantRepository!(Site, SiteId) {
+
+  bool existsByAlias(string alias_, TenantId tenantId);
+  Site findByAlias(string alias_, TenantId tenantId);
+  void removeByAlias(string alias_, TenantId tenantId);
+
 }

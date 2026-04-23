@@ -13,17 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - metric definition persistence.
-interface MetricDefinitionRepository {
-  bool existsById(MetricDefinitionId id);
-  MetricDefinition findById(MetricDefinitionId id);
+interface MetricDefinitionRepository : ITenantRepository!(MetricDefinition, MetricDefinitionId) {
 
   bool existsByName(TenantId tenantId, string name);
   MetricDefinition findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  MetricDefinition[] findByTenant(TenantId tenantId);
+  size_t countByCategory(TenantId tenantId, MetricCategory category);
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category);
+  void removeByCategory(TenantId tenantId, MetricCategory category);
   
-  void save(MetricDefinition def);
-  void update(MetricDefinition def);
-  void remove(MetricDefinitionId id);
 }

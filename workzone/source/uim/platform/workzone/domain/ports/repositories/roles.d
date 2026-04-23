@@ -8,11 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.roles;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.role;
 
-interface RoleRepository {
-  Role[] findByTenant(TenantId tenantId);
-  Role* findById(RoleId tenantId, id tenantId);
-  Role[] findByUser(UserId usertenantId, id tenantId);
-  void save(Role role);
-  void update(Role role);
-  void remove(RoleId tenantId, id tenantId);
+interface RoleRepository : ITenantRepository!(Role, RoleId) {
+
+  Role[] findByUser(TenantId tenantId, UserId userId);
 }

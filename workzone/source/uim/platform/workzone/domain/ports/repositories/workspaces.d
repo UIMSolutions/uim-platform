@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.workspaces;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
 
-interface WorkspaceRepository {
-  Workspace[] findByTenant(TenantId tenantId);
-  Workspace* findById(WorkspaceId tenantId, id tenantId);
-  Workspace* findByAlias(string alias_, TenantId tenantId);
+interface WorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
+
+  bool existsByAlias(string alias_, TenantId tenantId);
+  Workspace findByAlias(string alias_, TenantId tenantId);
+  void removeByAlias(string alias_, TenantId tenantId);
+
+  size_t countByMember(UserId usertenantId, id tenantId);
   Workspace[] findByMember(UserId usertenantId, id tenantId);
-  void save(Workspace workspace);
-  void update(Workspace workspace);
-  void remove(WorkspaceId tenantId, id tenantId);
+  void removeByMember(UserId usertenantId, id tenantId);
+
 }

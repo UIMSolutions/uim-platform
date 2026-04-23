@@ -13,15 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - notification channel persistence.
-interface NotificationChannelRepository {
-  bool existsById(NotificationChannelId id);
-  NotificationChannel findById(NotificationChannelId id);
+interface NotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {
 
-  NotificationChannel[] findByTenant(TenantId tenantId);
+  size_t countByType(TenantId tenantId, ChannelType channelType);
   NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType);
+  void removeByType(TenantId tenantId, ChannelType channelType);
+
+  size_t countActive(TenantId tenantId);
   NotificationChannel[] findActive(TenantId tenantId);
+  void removeActive(TenantId tenantId);
   
-  void save(NotificationChannel channel);
-  void update(NotificationChannel channel);
-  void remove(NotificationChannelId id);
 }

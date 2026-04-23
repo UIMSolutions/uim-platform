@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.page_templates;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.page_template;
 
-interface PageTemplateRepository {
-  PageTemplate[] findByTenant(TenantId tenantId);
-  PageTemplate* findById(PageTemplateId tenantId, id tenantId);
-  PageTemplate* findDefault(TenantId tenantId);
+interface PageTemplateRepository : ITenantRepository!(PageTemplate, PageTemplateId) {
+
+  bool existsDefault(TenantId tenantId);
+  PageTemplate findDefault(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
+
+  size_t countPublic();
   PageTemplate[] findPublic();
-  void save(PageTemplate template_);
-  void update(PageTemplate template_);
-  void remove(PageTemplateId tenantId, id tenantId);
+  void removePublic();
+
 }

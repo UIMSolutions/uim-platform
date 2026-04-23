@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.tasks;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;
 
-interface TaskRepository {
-  Task[] findByAssignee(UserId assigneetenantId, id tenantId);
-  Task* findById(TaskId tenantId, id tenantId);
-  Task[] findByStatus(TaskStatus status, UserId assigneetenantId, id tenantId);
-  Task[] findByTenant(TenantId tenantId);
-  void save(Task task);
-  void update(Task task);
-  void remove(TaskId tenantId, id tenantId);
+interface TaskRepository : ITenantRepository!(Task, TaskId) {
+
+  size_t countByAssignee(TenantId tenantId, UserId assignee);
+  Task[] findByAssignee(TenantId tenantId, UserId assignee);
+  void removeByAssignee(TenantId tenantId, UserId assignee);
+
+  size_t countByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
+  Task[] findByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
+  void removeByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
+
 }

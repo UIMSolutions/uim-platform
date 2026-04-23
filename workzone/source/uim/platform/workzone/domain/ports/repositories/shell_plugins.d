@@ -8,12 +8,14 @@ module uim.platform.workzone.domain.ports.repositories.shell_plugins;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.shell_plugin;
 
-interface ShellPluginRepository {
-  ShellPlugin[] findByTenant(TenantId tenantId);
-  ShellPlugin* findById(ShellPluginId tenantId, id tenantId);
-  ShellPlugin[] findBySite(SiteId sitetenantId, id tenantId);
-  ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId);
-  void save(ShellPlugin plugin);
-  void update(ShellPlugin plugin);
-  void remove(ShellPluginId tenantId, id tenantId);
+interface ShellPluginRepository : ITenantRepository!(ShellPlugin, ShellPluginId) {
+
+  size_t countBySite(TenantId tenantId, SiteId siteId);
+  ShellPlugin[] findBySite(TenantId tenantId, SiteId siteId);
+  void removeBySite(TenantId tenantId, SiteId siteId);
+
+  size_t countByStatus(TenantId tenantId, PluginStatus status);
+  ShellPlugin[] findByStatus(TenantId tenantId, PluginStatus status);
+  void removeByStatus(TenantId tenantId, PluginStatus status);
+
 }
