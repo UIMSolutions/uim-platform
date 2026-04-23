@@ -11,42 +11,34 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCommandRepository : CommandRepository {
-    private Command[] store;
+class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRepository {
 
-    bool existsById(CommandId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Command findById(CommandId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Command.init;
-    }
-
-    Command[] findAll() { return store; }
-
-    Command[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    // #region ByCatalog
+    size_t countByCatalog(CatalogId catalogId) {
+        return findByCatalog(catalogId).length;
     }
 
     Command[] findByCatalog(CatalogId catalogId) {
         return store.filter!(e => e.catalogId == catalogId).array;
     }
 
+    void removeByCatalog(CatalogId catalogId) {
+        return findByCatalog(catalogId).each!(e => remove(e));
+    }
+    // #endregion ByCatalog
+
+    // #region ByStatus
+    size_t countByStatus(CommandStatus status) {
+        return findByStatus(status).length;
+    }
+
     Command[] findByStatus(CommandStatus status) {
         return store.filter!(e => e.status == status).array;
     }
 
-    void save(Command command) { store ~= command; }
-
-    void update(Command command) {
-        foreach (ref e; store)
-            if (e.id == command.id) { e = command; return; }
+    void removeByStatus(CommandStatus status) {
+        return findByStatus(status).each!(e => remove(e));
     }
+    // #endregion ByStatus
 
-    void remove(CommandId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

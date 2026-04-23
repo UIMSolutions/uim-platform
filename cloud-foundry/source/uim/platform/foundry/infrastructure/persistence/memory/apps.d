@@ -15,51 +15,47 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAppRepository : AppRepository {
-  private Application[AppId] store;
+class MemoryAppRepository : TenantRepository!(Application, AppId), AppRepository {
 
-  Application[] findBySpace(SpaceId spaceId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
+  bool existsByName(SpaceId spaceId, id tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.spaceId == spaceId && e.name == name);
   }
 
-  Application* findById(AppId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Application findByName(TenantId tenantId, SpaceId spaceId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.spaceId == spaceId && e.name == name)
+        return e;
+    return Application.init;
   }
 
-  Application* findByName(SpaceId spaceId, id tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
-        return &e;
-    return null;
-  }
-
-  Application[] findByState(SpaceId spaceId, id tenantId, AppState state) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.spaceId == spaceId && e.state == state).array;
-  }
-
-  Application[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeByName(TenantId tenantId, SpaceId spaceId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.spaceId == spaceId && e.name == name)
+        return remove(e);
   }
 
   size_t countBySpace(SpaceId spaceId, id tenantId) {
-    return findBySpace(spaceId, id).length;
+    return findBySpace(spaceId, tenantId).length;
   }
 
-  void save(Application app) {
-    store[app.id] = app;
+  Application[] findBySpace(SpaceId spaceId, id tenantId) {
+    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId).array;
   }
 
-  void update(Application app) {
-    store[app.id] = app;
+  void removeBySpace(SpaceId spaceId, id tenantId) {
+    findBySpace(spaceId, tenantId).each!(e => remove(e));
   }
 
-  void remove(AppId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  size_t countByState(SpaceId spaceId, id tenantId, AppState state) {
+    return findByState(spaceId, tenantId, state).length;
   }
+
+  Application[] findByState(SpaceId spaceId, id tenantId, AppState state) {
+    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId && e.state == state).array;
+  }
+
+  void removeByState(SpaceId spaceId, id tenantId, AppState state) {
+    findByState(spaceId, tenantId, state).each!(e => remove(e));
+  }
+
 }

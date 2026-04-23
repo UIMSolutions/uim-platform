@@ -11,46 +11,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataConnectionRepository : DataConnectionRepository {
-    private DataConnection[] store;
+class MemoryDataConnectionRepository : TenantRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
 
-    bool existsById(DataConnectionId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    DataConnection findById(DataConnectionId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return DataConnection.init;
-    }
-
-    DataConnection[] findAll() { return store; }
-
-    DataConnection[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByApplication(ApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
 
     DataConnection[] findByApplication(ApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll.filter!(e => e.applicationId == applicationId).array;
+    }
+
+    void removeByApplication(ApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
+    }
+    
+    size_t countByType(ConnectionType type) {
+        return findByType(type).length;
     }
 
     DataConnection[] findByType(ConnectionType type) {
-        return store.filter!(e => e.connectionType == type).array;
+        return findAll.filter!(e => e.connectionType == type).array;
+    }
+
+    void removeByType(ConnectionType type) {
+        findByType(type).each!(e => remove(e));
+    }
+
+    size_t countByStatus(ConnectionStatus status) {
+        return findByStatus(status).length;
     }
 
     DataConnection[] findByStatus(ConnectionStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll.filter!(e => e.status == status).array;
     }
 
-    void save(DataConnection entity) { store ~= entity; }
-
-    void update(DataConnection entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(DataConnectionId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByStatus(ConnectionStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 }

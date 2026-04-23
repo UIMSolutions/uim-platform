@@ -11,38 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceAccountRepository : ServiceAccountRepository {
-    private ServiceAccount[] store;
+class MemoryServiceAccountRepository : TenantRepository!(ServiceAccount, ServiceAccountId), ServiceAccountRepository {
 
-    bool existsById(ServiceAccountId id) {
-        return store.any!(e => e.id == id);
+    size_t countByStatus(TenantId tenantId, ServiceAccountStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    ServiceAccount findById(ServiceAccountId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ServiceAccount.init;
+    ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status) {
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    ServiceAccount[] findAll() { return store; }
-
-    ServiceAccount[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    void removeByStatus(TenantId tenantId, ServiceAccountStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
-    ServiceAccount[] findByStatus(ServiceAccountStatus status) {
-        return store.filter!(e => e.status == status).array;
-    }
-
-    void save(ServiceAccount account) { store ~= account; }
-
-    void update(ServiceAccount account) {
-        foreach (ref e; store)
-            if (e.id == account.id) { e = account; return; }
-    }
-
-    void remove(ServiceAccountId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

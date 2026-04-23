@@ -11,38 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataEntityRepository : DataEntityRepository {
-    private DataEntity[] store;
+class MemoryDataEntityRepository : TenantRepository!(DataEntity, DataEntityId), DataEntityRepository {
 
-    bool existsById(DataEntityId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    DataEntity findById(DataEntityId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return DataEntity.init;
-    }
-
-    DataEntity[] findAll() { return store; }
-
-    DataEntity[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByApplication(ApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
 
     DataEntity[] findByApplication(ApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll.filter!(e => e.applicationId == applicationId).array;
     }
 
-    void save(DataEntity entity) { store ~= entity; }
-
-    void update(DataEntity entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByApplication(ApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
     }
 
-    void remove(DataEntityId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

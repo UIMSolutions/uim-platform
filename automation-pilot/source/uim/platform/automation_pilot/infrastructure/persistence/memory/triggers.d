@@ -11,42 +11,29 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTriggerRepository : TriggerRepository {
-    private Trigger[] store;
+class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
-    bool existsById(TriggerId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Trigger findById(TriggerId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Trigger.init;
-    }
-
-    Trigger[] findAll() { return store; }
-
-    Trigger[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByCommand(CommandId commandId) {
+        return findByCommand(commandId).length;
     }
 
     Trigger[] findByCommand(CommandId commandId) {
-        return store.filter!(e => e.commandId == commandId).array;
+        return findAll.filter!(e => e.commandId == commandId).array;
+    }
+
+    void removeByCommand(CommandId commandId) {
+        findByCommand(commandId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(TriggerStatus status) {
+        return findByStatus(status).length;
     }
 
     Trigger[] findByStatus(TriggerStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll.filter!(e => e.status == status).array;
     }
 
-    void save(Trigger trigger) { store ~= trigger; }
-
-    void update(Trigger trigger) {
-        foreach (ref e; store)
-            if (e.id == trigger.id) { e = trigger; return; }
-    }
-
-    void remove(TriggerId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByStatus(TriggerStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 }

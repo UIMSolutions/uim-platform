@@ -11,38 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCommandInputRepository : CommandInputRepository {
-    private CommandInput[] store;
+class MemoryCommandInputRepository : TenantREpository!(CommandInput, CommandInputId), CommandInputRepository {
 
-    bool existsById(CommandInputId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    CommandInput findById(CommandInputId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return CommandInput.init;
-    }
-
-    CommandInput[] findAll() { return store; }
-
-    CommandInput[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    size_t countByType(InputType inputType) {
+        return findByType(inputType).length;
     }
 
     CommandInput[] findByType(InputType inputType) {
         return store.filter!(e => e.inputType == inputType).array;
     }
 
-    void save(CommandInput input) { store ~= input; }
-
-    void update(CommandInput input) {
-        foreach (ref e; store)
-            if (e.id == input.id) { e = input; return; }
+    void removeByType(InputType inputType) {
+        return findByType(inputType).each!(e => remove(e));
     }
 
-    void remove(CommandInputId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

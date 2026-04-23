@@ -11,42 +11,34 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryExecutionRepository : ExecutionRepository {
-    private Execution[] store;
+class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId),  ExecutionRepository {
 
-    bool existsById(ExecutionId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Execution findById(ExecutionId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Execution.init;
-    }
-
-    Execution[] findAll() { return store; }
-
-    Execution[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    // #region ByCommand
+    size_t countByCommand(CommandId commandId) {
+        return findByCommand(commandId).length;
     }
 
     Execution[] findByCommand(CommandId commandId) {
         return store.filter!(e => e.commandId == commandId).array;
     }
 
+    void removeByCommand(CommandId commandId) {
+        return findByCommand(commandId).each!(e => remove(e));
+    }
+    // #endregion ByCommand
+
+    // #region ByStatus
+    size_t countByStatus(ExecutionStatus status) {
+        return findByStatus(status).length;
+    }
+
     Execution[] findByStatus(ExecutionStatus status) {
         return store.filter!(e => e.status == status).array;
     }
 
-    void save(Execution execution) { store ~= execution; }
-
-    void update(Execution execution) {
-        foreach (ref e; store)
-            if (e.id == execution.id) { e = execution; return; }
+    void removeByStatus(ExecutionStatus status) {
+        return findByStatus(status).each!(e => remove(e));
     }
+    // #endregion ByStatus
 
-    void remove(ExecutionId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }
