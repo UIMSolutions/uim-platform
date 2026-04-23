@@ -31,7 +31,7 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType) {
+  NotificationChannel[] findByType(TenantId tenantId, NotificationChannelType channelType) {
     return findByTenant(tenantId).filter!(e => e.channelType == channelType).array;
   }
 

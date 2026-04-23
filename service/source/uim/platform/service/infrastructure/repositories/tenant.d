@@ -35,6 +35,14 @@ class TenantRepository(TEntity, TId) {
     }
   }
 
+  size_t countAll() {
+    size_t count = 0;
+    foreach (tenantId, items; store) {
+      count += items.length;
+    }
+    return count;
+  }
+  
   TEntity[] findAll(uint offset = 0, uint limit = 0) {
     TEntity[] allItems;
     uint idx;

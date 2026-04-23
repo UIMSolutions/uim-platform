@@ -106,7 +106,7 @@ enum ThresholdOperator {
 }
 
 /// Type of notification channel.
-enum ChannelType {
+enum NotificationChannelType {
   email,
   webhook,
   onPremise,

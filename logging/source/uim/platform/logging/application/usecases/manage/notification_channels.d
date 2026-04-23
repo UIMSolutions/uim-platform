@@ -29,25 +29,25 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    NotificationChannel ch;
-    ch.id = randomUUID();
-    ch.tenantId = req.tenantId;
-    ch.name = req.name;
-    ch.description = req.description;
-    ch.channelType = parseChannelType(req.channelType);
-    ch.state = ChannelState.active;
-    ch.emailRecipients = cast(string[]) req.emailRecipients;
-    ch.emailSubjectPrefix = req.emailSubjectPrefix;
-    ch.webhookUrl = req.webhookUrl;
-    ch.webhookSecret = req.webhookSecret;
-    ch.webhookMethod = req.webhookMethod;
-    ch.slackWebhookUrl = req.slackWebhookUrl;
-    ch.slackChannel = req.slackChannel;
-    ch.createdBy = req.createdBy;
-    ch.createdAt = clockSeconds();
+    NotificationChannel channel;
+    channel.id = randomUUID();
+    channel.tenantId = req.tenantId;
+    channel.name = req.name;
+    channel.description = req.description;
+    channel.channelType = req.channelType.to!ChannelType;
+    channel.state = ChannelState.active;
+    channel.emailRecipients = cast(string[]) req.emailRecipients;
+    channel.emailSubjectPrefix = req.emailSubjectPrefix;
+    channel.webhookUrl = req.webhookUrl;
+    channel.webhookSecret = req.webhookSecret;
+    channel.webhookMethod = req.webhookMethod;
+    channel.slackWebhookUrl = req.slackWebhookUrl;
+    channel.slackChannel = req.slackChannel;
+    channel.createdBy = req.createdBy;
+    channel.createdAt = clockSeconds();
 
-    repo.save(ch);
-    return CommandResult(true, ch.id.value, "");
+    repo.save(channel);
+    return CommandResult(true, channel.id.value, "");
   }
 
   CommandResult update(string id, UpdateNotificationChannelRequest req) {
@@ -55,30 +55,13 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(NotificationChannelId id, UpdateNotificationChannelRequest req) {
-    auto ch = repo.findById(id);
-    if (ch.id.isEmpty)
+    auto channel = repo.findById(id);
+    if (channel.id.isEmpty)
       return CommandResult(false, "", "Notification channel not found");
 
-    if (req.description.length > 0)
-      ch.description = req.description;
-    if (req.state.length > 0)
-      ch.state = parseChannelState(req.state);
-    if (req.emailRecipients.length > 0)
-      ch.emailRecipients = cast(string[]) req.emailRecipients;
-    if (req.emailSubjectPrefix.length > 0)
-      ch.emailSubjectPrefix = req.emailSubjectPrefix;
-    if (req.webhookUrl.length > 0)
-      ch.webhookUrl = req.webhookUrl;
-    if (req.webhookSecret.length > 0)
-      ch.webhookSecret = req.webhookSecret;
-    if (req.slackWebhookUrl.length > 0)
-      ch.slackWebhookUrl = req.slackWebhookUrl;
-    if (req.slackChannel.length > 0)
-      ch.slackChannel = req.slackChannel;
-    ch.updatedAt = clockSeconds();
-
-    repo.update(ch);
-    return CommandResult(true, id.toString, "");
+    auto updated = channel.updateFromRequest(req);
+    repo.update(updated);
+    return CommandResult(true, updated.id.value, "");
   }
 
   NotificationChannel getById(string id) {
@@ -104,19 +87,6 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   CommandResult remove(NotificationChannelId id) {
     repo.remove(id);
     return CommandResult(true, id.toString, "");
-  }
-
-  private static ChannelType parseChannelType(string type) {
-    switch (type) {
-    case "email":
-      return ChannelType.email;
-    case "webhook":
-      return ChannelType.webhook;
-    case "slack":
-      return ChannelType.slack;
-    default:
-      return ChannelType.email;
-    }
   }
 
   private static ChannelState parseChannelState(string state) {

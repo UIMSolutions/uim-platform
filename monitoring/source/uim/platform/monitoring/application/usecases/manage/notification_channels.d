@@ -18,76 +18,34 @@ mixin(ShowModule!());
 @safe:
 /// Application service for notification channel CRUD (email, webhook, on-premise).
 class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
-  private NotificationChannelRepository repo;
+  private NotificationChannelRepository channels;
 
-  this(NotificationChannelRepository repo) {
-    this.repo = repo;
+  this(NotificationChannelRepository channels) {
+    this.channels = channels;
   }
 
-  CommandResult createChannel(CreateNotificationChannelRequest req) {
-    if (req.name.length == 0)
+  CommandResult createChannel(CreateNotificationChannelRequest request) {
+    if (request.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    NotificationChannel ch;
-    ch.id = randomUUID();
-    ch.tenantId = req.tenantId;
-    ch.name = req.name;
-    ch.description = req.description;
-    ch.channelType = parseChannelType(req.channelType);
-    ch.state = ChannelState.active;
+    NotificationChannel channel = NotificationChannel.createFromRequest(request);
+    channels.save(channel);
 
-    // Email fields
-    ch.emailRecipients = req.emailRecipients;
-    ch.emailSubjectPrefix = req.emailSubjectPrefix;
-
-    // Webhook fields
-    ch.webhookUrl = req.webhookUrl;
-    ch.webhookSecret = req.webhookSecret;
-    ch.webhookMethod = req.webhookMethod.length > 0 ? req.webhookMethod : "POST";
-
-    // On-premise fields
-    ch.onPremiseHost = req.onPremiseHost;
-    ch.onPremisePort = req.onPremisePort;
-    ch.onPremiseProtocol = req.onPremiseProtocol;
-
-    ch.createdBy = req.createdBy;
-    ch.createdAt = clockSeconds();
-    ch.updatedAt = ch.createdAt;
-
-    repo.save(ch);
-    return CommandResult(true, ch.id.toString, "");
+    return CommandResult(true, channel.id.toString, "");
   }
 
-  CommandResult updateChannel(string id, UpdateNotificationChannelRequest req) {
-    return updateChannel(NotificationChannelId(id), req);
+  CommandResult updateChannel(string id, UpdateNotificationChannelRequest request) {
+    return updateChannel(NotificationChannelId(id), request);
   }
 
-  CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest request) {
+    if (!channels.existsById(id))
       return CommandResult(false, "", "Notification channel not found");
 
-    auto ch = repo.findById(id);
-    if (req.description.length > 0)
-      ch.description = req.description;
-    if (req.state.length > 0)
-      ch.state = parseChannelState(req.state);
-    if (req.emailRecipients.length > 0)
-      ch.emailRecipients = req.emailRecipients;
-    if (req.emailSubjectPrefix.length > 0)
-      ch.emailSubjectPrefix = req.emailSubjectPrefix;
-    if (req.webhookUrl.length > 0)
-      ch.webhookUrl = req.webhookUrl;
-    if (req.webhookSecret.length > 0)
-      ch.webhookSecret = req.webhookSecret;
-    if (req.onPremiseHost.length > 0)
-      ch.onPremiseHost = req.onPremiseHost;
-    if (req.onPremisePort > 0)
-      ch.onPremisePort = req.onPremisePort;
-    if (req.onPremiseProtocol.length > 0)
-      ch.onPremiseProtocol = req.onPremiseProtocol;
-    ch.updatedAt = clockSeconds();
+    auto ch = channels.findById(id);
+    auto updated = ch.updateFromRequest(request);
+    channels.update(updated);
 
-    repo.update(ch);
     return CommandResult(true, id.toString, "");
   }
 
@@ -96,11 +54,11 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   bool existsChannel(NotificationChannelId id) {
-    return repo.existsById(id);
+    return channels.existsById(id);
   }
 
   NotificationChannel getChannel(NotificationChannelId id) {
-    return repo.findById(id);
+    return channels.findById(id);
   }
 
   NotificationChannel getChannel(string id) {
@@ -112,11 +70,11 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return channels.findByTenant(tenantId);
   }
 
   NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
-    return repo.findByType(tenantId, parseChannelType(typeStr));
+    return channels.findByType(tenantId, parseChannelType(typeStr));
   }
 
   NotificationChannel[] listByType(string tenantId, string typeStr) {
@@ -124,7 +82,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel[] listActive(TenantId tenantId) {
-    return repo.findActive(tenantId);
+    return channels.findActive(tenantId);
   }
 
   NotificationChannel[] listActive(string tenantId) {
@@ -136,23 +94,12 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteChannel(NotificationChannelId id) {
-    auto ch = repo.findById(id);
+    auto ch = channels.findById(id);
     if (ch.id.isEmpty)
       return CommandResult(false, "", "Notification channel not found");
 
-    repo.remove(id);
+    channels.remove(id);
     return CommandResult(true, id.toString, "");
-  }
-
-  private static ChannelType parseChannelType(string channelType) {
-    switch (channelType) {
-    case "webhook":
-      return ChannelType.webhook;
-    case "onPremise":
-      return ChannelType.onPremise;
-    default:
-      return ChannelType.email;
-    }
   }
 
   private static ChannelState parseChannelState(string state) {

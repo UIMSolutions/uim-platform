@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.apps;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.app_registration;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.app_registration;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 interface AppRepository : ITenantRepository!(AppRegistration, AppId) {
 
-  size_t countByStatus(AppStatus status, TenantId tenantId);
-  AppRegistration[] findByStatus(AppStatus status, TenantId tenantId);
-  void removeByStatus(AppStatus status, TenantId tenantId);
+  size_t countByStatus(TenantId tenantId, AppStatus status);
+  AppRegistration[] findByStatus(TenantId tenantId, AppStatus status);
+  void removeByStatus(TenantId tenantId, AppStatus status);
 
 }
