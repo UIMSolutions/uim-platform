@@ -26,11 +26,11 @@ class MemorySiteRepository : SiteRepository {
   }
 
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return store.byValue().ay!(s => s.tenantId == tenantId && s.alias_ == alias_);
+    return findAll() => s.tenantId == tenantId && s.alias_ == alias_);
   }
 
   Site findByAlias(TenantId tenantId, string alias_) {
-    foreach (s; store.byValue()) {
+    foreach (s; findAll()
       if (s.tenantId == tenantId && s.alias_ == alias_)
         return s;
     }
@@ -38,13 +38,13 @@ class MemorySiteRepository : SiteRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.byValue().filter!(s => s.tenantId == tenantId).count;
+    return findAll()r!(s => s.tenantId == tenantId).count;
   }
   
   Site[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Site[] result;
     uint idx;
-    foreach (s; store.byValue()) {
+    foreach (s; findAll()
       if (s.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= s;
@@ -57,7 +57,7 @@ class MemorySiteRepository : SiteRepository {
   Site[] findByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100) {
     Site[] result;
     uint idx;
-    foreach (s; store.byValue()) {
+    foreach (s; findAll()
       if (s.tenantId == tenantId && s.status == status) {
         if (idx >= offset && result.length < limit)
           result ~= s;

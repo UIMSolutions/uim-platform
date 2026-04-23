@@ -20,7 +20,7 @@ class MemoryWorkpageRepository : WorkpageRepository {
   private Workpage[WorkpageId] store;
 
   Workpage[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(p => p.tenantId == tenantId && p.workspaceId == workspaceId)
+    return findAll().filter!(p => p.tenantId == tenantId && p.workspaceId == workspaceId)
       .array;
   }
 

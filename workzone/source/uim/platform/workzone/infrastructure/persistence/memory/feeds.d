@@ -20,7 +20,7 @@ class MemoryFeedRepository : FeedRepository {
   private FeedEntry[FeedEntryId] store;
 
   FeedEntry[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId)
+    return findAll().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId)
       .array;
   }
 
@@ -32,7 +32,7 @@ class MemoryFeedRepository : FeedRepository {
   }
 
   FeedEntry[] findByActor(UserId actortenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.actorId == actorId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.actorId == actorId).array;
   }
 
   void save(FeedEntry entry) {

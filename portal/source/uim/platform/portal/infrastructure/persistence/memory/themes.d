@@ -26,11 +26,11 @@ class MemoryThemeRepository : ThemeRepository {
   }
 
   bool existsDefault(TenantId tenantId) {
-    return store.byValue().any!(t => t.tenantId == tenantId && t.isDefault);
+    return findAll()t => t.tenantId == tenantId && t.isDefault);
   }
 
   Theme findDefault(TenantId tenantId) {
-    foreach (t; store.byValue()) {
+    foreach (t; findAll()
       if (t.tenantId == tenantId && t.isDefault)
         return t;
     }
@@ -40,7 +40,7 @@ class MemoryThemeRepository : ThemeRepository {
   Theme[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Theme[] result;
     uint idx;
-    foreach (t; store.byValue()) {
+    foreach (t; findAll()
       if (t.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= t;

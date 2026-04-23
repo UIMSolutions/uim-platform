@@ -27,13 +27,13 @@ class MemoryTileRepository : TileRepository {
   }
 
   Tile[] findByCatalog(CatalogId catalogId) {
-    return store.byValue().filter!(t => t.catalogId == catalogId).array;
+    return findAll()r!(t => t.catalogId == catalogId).array;
   }
 
   Tile[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Tile[] result;
     uint idx;
-    foreach (t; store.byValue()) {
+    foreach (t; findAll()
       if (t.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= t;
@@ -47,7 +47,7 @@ class MemoryTileRepository : TileRepository {
     Tile[] result;
     auto lowerQuery = query.toLower();
     uint idx;
-    foreach (t; store.byValue()) {
+    foreach (t; findAll()
       if (t.tenantId != tenantId)
         continue;
 

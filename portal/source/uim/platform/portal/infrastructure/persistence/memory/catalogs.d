@@ -29,7 +29,7 @@ class MemoryCatalogRepository : CatalogRepository {
   Catalog[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Catalog[] result;
     uint idx;
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()
       if (c.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= c;
@@ -41,7 +41,7 @@ class MemoryCatalogRepository : CatalogRepository {
 
   Catalog[] findByProvider(ProviderId providerId) {
     Catalog[] result;
-    foreach (c; store.byValue()) {
+    foreach (c; findAll()
       if (c.providerId == providerId)
         result ~= c;
     }

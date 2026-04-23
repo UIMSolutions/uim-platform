@@ -26,17 +26,17 @@ class MemoryPageRepository : PageRepository {
   }
 
   bool existsByAlias(SiteId siteId, string alias_) {
-    return store.byValue().any!(p => p.siteId == siteId && p.alias_ == alias_);
+    return findAll()p => p.siteId == siteId && p.alias_ == alias_);
   }
 
   Page findByAlias(SiteId siteId, string alias_) {
-    return store.byValue().filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
+    return findAll()r!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
   Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100) {
     Page[] result;
     uint idx;
-    foreach (p; store.byValue()) {
+    foreach (p; findAll()
       if (p.siteId == siteId) {
         if (idx >= offset && result.length < limit)
           result ~= p;

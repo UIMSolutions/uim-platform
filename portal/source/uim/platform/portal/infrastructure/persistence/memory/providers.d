@@ -28,7 +28,7 @@ class MemoryProviderRepository : ProviderRepository {
   ContentProvider[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     ContentProvider[] result;
     uint idx;
-    foreach (cp; store.byValue()) {
+    foreach (cp; findAll()
       if (cp.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= cp;

@@ -20,7 +20,7 @@ class MemoryWidgetRepository : WidgetRepository {
   private Widget[WidgetId] store;
 
   Widget[] findByPage(WorkpageId pagetenantId, id tenantId) {
-    return store.byValue().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
+    return findAll().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
 
   Widget* findById(WidgetId tenantId, id tenantId) {

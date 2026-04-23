@@ -26,7 +26,7 @@ class MemoryTranslationRepository : TranslationRepository {
 
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;
-    foreach (t; store.byValue()) {
+    foreach (t; findAll()
       if (t.resourceType == resourceType && t.resourceId == resourceId) {
         if (language.length == 0 || t.language == language)
           result ~= t;
@@ -36,7 +36,7 @@ class MemoryTranslationRepository : TranslationRepository {
   }
 
   Translation[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(t => t.tenantId == tenantId).array;
+    return findAll()r!(t => t.tenantId == tenantId).array;
   }
 
   Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {
