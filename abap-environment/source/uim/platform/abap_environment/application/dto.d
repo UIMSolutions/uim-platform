@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application.dto;
 
-import uim.platform.abap_environment.domain.types;
-import uim.platform.abap_environment.domain.entities.communication_arrangement : CommunicationEndpoint;
-import uim.platform.abap_environment.domain.entities.service_binding : ExposedEndpoint;
-import uim.platform.abap_environment.domain.entities.business_user : RoleAssignment;
-import uim.platform.abap_environment.domain.entities.business_role : CatalogAssignment;
-import uim.platform.abap_environment.domain.entities.transport_request : TransportTask;
+// import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.entities.communication_arrangement : CommunicationEndpoint;
+// import uim.platform.abap_environment.domain.entities.service_binding : ExposedEndpoint;
+// import uim.platform.abap_environment.domain.entities.business_user : RoleAssignment;
+// import uim.platform.abap_environment.domain.entities.business_role : CatalogAssignment;
+// import uim.platform.abap_environment.domain.entities.transport_request : TransportTask;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 // ─── System Instance DTOs ───
 
 struct CreateSystemInstanceRequest {

@@ -25,12 +25,12 @@ class WorkflowEngine {
   }
 
   /// Check if all dependencies of a step are satisfied.
-  bool areDependenciesMet(WorkflowStep step, TenantId tenantId) {
+  bool areDependenciesMet(TenantId tenantId, WorkflowStep step) {
     if (step.dependencies.length == 0)
       return true;
 
     foreach (depId; step.dependencies) {
-      auto dep = stepRepo.findById(deptenantId, id);
+      auto dep = stepRepo.findById(tenantId, depId);
       if (dep is null || dep.status != StepStatus.completed)
         return false;
     }
@@ -38,12 +38,12 @@ class WorkflowEngine {
   }
 
   /// Advance the workflow to the next pending step if possible.
-  bool advanceWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    auto wf = workflowRepo.findById(workflowtenantId, id);
+  bool advanceWorkflow(TenantId tenantId, WorkflowId workflowId) {
+    auto wf = workflowRepo.findById(tenantId, workflowId);
     if (wf is null || wf.status != WorkflowStatus.inProgress)
       return false;
 
-    auto steps = stepRepo.findByWorkflow(workflowtenantId, id);
+    auto steps = stepRepo.findByWorkflow(tenantId, workflowId);
     if (steps.length == 0)
       return false;
 
@@ -71,7 +71,7 @@ class WorkflowEngine {
     sorted.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
 
     foreach (s; sorted) {
-      if (s.status == StepStatus.pending && areDependenciesMet(s, tenantId)) {
+      if (s.status == StepStatus.pending && areDependenciesMet(tenantId, s)) {
         wf.currentStepIndex = s.sequenceNumber;
         workflowRepo.update(*wf);
         return true;

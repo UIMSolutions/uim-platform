@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application.usecases.manage.transport_requests;
 
-import uim.platform.abap_environment.application.dto;
-import uim.platform.abap_environment.domain.entities.transport_request;
-import uim.platform.abap_environment.domain.ports.repositories.transport_request;
-import uim.platform.abap_environment.domain.services.transport_release_validator;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.application.dto;
+// import uim.platform.abap_environment.domain.entities.transport_request;
+// import uim.platform.abap_environment.domain.ports.repositories.transport_request;
+// import uim.platform.abap_environment.domain.services.transport_release_validator;
+// import uim.platform.abap_environment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for transport request management (CTS-like).
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private TransportRequestRepository repo;

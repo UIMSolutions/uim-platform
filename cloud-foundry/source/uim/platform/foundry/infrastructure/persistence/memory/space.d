@@ -14,19 +14,33 @@ import uim.platform.foundry.domain.ports.repositories.space;
 
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
 
-  size_t countByOrg(OrgId orgId, TenantId tenantId) {
-    return findByOrg(orgId, tenantId).length;
+  bool existsByName(TenantId tenantId, OrgId orgId, string name) {
+    return findByName(tenantId, orgId, name) !is null;
   }
 
-  Space findByName(OrgId orgId, TenantId tenantId, string name) {
+  Space findByName(TenantId tenantId, OrgId orgId, string name) {
     foreach (e; findByTenant)
       if (e.tenantId == tenantId && e.orgId == orgId && e.name == name)
         return e;
     return null;
   }
+  
+  void removeByName(TenantId tenantId, OrgId orgId, string name) {
+    auto e = findByName(tenantId, orgId, name);
+    if (e !is null)
+      remove(e);
+  }
 
-  Space[] findByOrg(OrgId orgId, TenantId tenantId) {
+  size_t countByOrg(TenantId tenantId, OrgId orgId) {
+    return findByOrg(tenantId, orgId).length;
+  }
+
+  Space[] findByOrg(TenantId tenantId, OrgId orgId) {
     return findAll.filter!(e => e.tenantId == tenantId && e.orgId == orgId).array;
+  }
+
+  void removeByOrg(TenantId tenantId, OrgId orgId) {
+    findByOrg(tenantId, orgId).each!(e => remove(e));
   }
 
 }

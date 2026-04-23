@@ -78,10 +78,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
     auto deps = deploymentRepo.findByTenant(tenantId);
-    DeploymentSummary[] result;
-    foreach (dep; deps)
-      result ~= buildDeploymentSummary(dep, tenantId);
-    return result;
+    return deps.map!(d => buildDeploymentSummary(tenantId, d)).array;
   }
 
   PipelineSummary getPipelineSummary(TenantId tenantId) {
@@ -113,7 +110,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     return s;
   }
 
-  private TrainingJobSummary buildJobSummary(TrainingJob job, TenantId tenantId) {
+  private TrainingJobSummary buildJobSummary(TenantId tenantId, TrainingJob job, TenantId tenantId) {
     TrainingJobSummary s;
     s.jobId = job.id;
     s.modelConfigId = job.modelConfigId;

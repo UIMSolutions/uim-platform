@@ -14,11 +14,11 @@ interface ProxySystemRepository : ITenantRepository!(ProxySystem, ProxySystemId)
   ProxySystem findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
-  size_t countBySource(SourceSystemId sourceSystemId, TenantId tenantId);
-  ProxySystem[] findBySource(SourceSystemId sourceSystemId, TenantId tenantId, uint offset = 0, uint limit = 100);
-  void removeBySource(SourceSystemId sourceSystemId, TenantId tenantId);
+  size_t countBySource(TenantId tenantId, SourceSystemId sourceSystemId);
+  ProxySystem[] findBySource(TenantId tenantId, SourceSystemId sourceSystemId, uint offset = 0, uint limit = 100);
+  void removeBySource(TenantId tenantId, SourceSystemId sourceSystemId);
 
-  size_t countByTarget(TargetSystemId targetSystemId, TenantId tenantId);
-  ProxySystem[] findByTarget(TargetSystemId targetSystemId, TenantId tenantId, uint offset = 0, uint limit = 100);
-  void removeByTarget(TargetSystemId targetSystemId, TenantId tenantId);
+  size_t countByTarget(TenantId tenantId, TargetSystemId targetSystemId);
+  ProxySystem[] findByTarget(TenantId tenantId, TargetSystemId targetSystemId, uint offset = 0, uint limit = 100);
+  void removeByTarget(TenantId tenantId, TargetSystemId targetSystemId);
 }
