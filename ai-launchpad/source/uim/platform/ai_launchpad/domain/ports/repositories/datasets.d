@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.ports.repositories.datasets;
 
-import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.domain.entities.dataset : Dataset;
+// import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.entities.dataset : Dataset;
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface IDatasetRepository {
   bool existsById(DatasetId id, ConnectionId connectionId);

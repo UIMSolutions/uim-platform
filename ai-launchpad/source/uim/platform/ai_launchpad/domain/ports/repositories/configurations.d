@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.ports.repositories.configurations;
 
-import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.domain.entities.configuration : Configuration;
+// import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.entities.configuration : Configuration;
+// import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface IConfigurationRepository {
   bool existsById(ConfigurationId id, ConnectionId connectionId);
