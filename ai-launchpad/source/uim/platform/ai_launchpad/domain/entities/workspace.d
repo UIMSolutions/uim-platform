@@ -5,7 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.entities.workspace;
 
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct Workspace {
   mixin TenantEntity!(WorkspaceId);

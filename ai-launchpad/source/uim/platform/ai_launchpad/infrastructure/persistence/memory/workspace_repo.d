@@ -9,31 +9,36 @@ import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
 import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 import uim.platform.ai_launchpad.domain.types;
 
-class MemoryWorkspaceRepository : IWorkspaceRepository {
-  private Workspace[string] store;
+class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
 
-  void save(Workspace w) {
-    store[w.id] = w;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(w => w.name == name);
   }
 
-  Workspace findById(WorkspaceId id) {
-    if (auto p = id in store) return *p;
+  Workspace findByName(TenantId tenantId, string name) {
+    foreach (w; findByTenant(tenantId))
+      if (w.name == name)
+        return w;
     return Workspace.init;
   }
 
-  Workspace[] findByTenant(TenantId tenantId) {
-    Workspace[] result;
-    foreach (w; store) {
-      if (w.tenantId == tenantId) result ~= w;
-    }
-    return result;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (w; findByTenant(tenantId))
+      if (w.name == name) {
+        remove(w);
+        return;
+      }
   }
 
-  Workspace[] findAll() {
-    return store.values;
+  size_t coundtByStatus(TenantId tenantId, WorkspaceStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  void remove(WorkspaceId id) {
-    store.remove(id);
+  Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status) {
+    return findByTenant(tenantId).filter!(w => w.status == status).array;
+  }
+
+  void removeByStatus(TenantId tenantId, WorkspaceStatus status) {
+    findByStatus(tenantId, status).each!(w => remove(w));
   }
 }

@@ -17,46 +17,32 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryBusinessUserRepository : BusinessUserRepository {
-  private BusinessUser[BusinessUserId] store;
+class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {
 
-  BusinessUser* findById(BusinessUserId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+  BusinessUser findByUsername(SystemInstanceId systemId, string username) {
+    foreach (e; findBySystem(systemId))
+      if (e.username == username)
+        return store[e.id];
+    return BusinessUser.init;
+  }
+
+  BusinessUser findByEmail(SystemInstanceId systemId, string email) {
+    foreach (e; findBySystem(systemId))
+      if (e.email == email)
+        return store[e.id];
+    return BusinessUser.init;
+  }
+
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
   }
 
   BusinessUser[] findBySystem(SystemInstanceId systemId) {
-    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll.filter!(e => e.systemInstanceId == systemId).array;
   }
 
-  BusinessUser[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e));
   }
 
-  BusinessUser* findByUsername(SystemInstanceId systemId, string username) {
-    foreach (e; store.byValue())
-      if (e.systemInstanceId == systemId && e.username == username)
-        return &store[e.id];
-    return null;
-  }
-
-  BusinessUser* findByEmail(SystemInstanceId systemId, string email) {
-    foreach (e; store.byValue())
-      if (e.systemInstanceId == systemId && e.email == email)
-        return &store[e.id];
-    return null;
-  }
-
-  void save(BusinessUser user) {
-    store[user.id] = user;
-  }
-
-  void update(BusinessUser user) {
-    store[user.id] = user;
-  }
-
-  void remove(BusinessUserId id) {
-    store.remove(id);
-  }
 }
