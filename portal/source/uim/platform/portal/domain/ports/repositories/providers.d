@@ -13,13 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — content provider persistence.
-interface ProviderRepository {
-  bool existsById(ProviderId id);
-  ContentProvider findById(ProviderId id);
+interface ProviderRepository : ITenantRepository!(ContentProvider, ProviderId) {
 
-  ContentProvider[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
-  
-  void save(ContentProvider provider);
-  void update(ContentProvider provider);
-  void remove(ProviderId id);
+  bool existsByName(string name);
+  ContentProvider findByName(string name);
+  void removeByName(string name);
+
+  size_t countByType(TenantId tenantId, ProviderType type);
+  ContentProvider[] findByType(TenantId tenantId, ProviderType type);
+  void removeByType(TenantId tenantId, ProviderType type);
+
 }

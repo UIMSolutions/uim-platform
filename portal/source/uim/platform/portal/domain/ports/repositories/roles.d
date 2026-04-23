@@ -14,17 +14,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — role persistence.
-interface RoleRepository {
-  bool existsById(RoleId id);
-  Role findById(RoleId id);
+interface RoleRepository : ITeanantRepository!(Role, RoleId) {
 
   bool existsByName(TenantId tenantId, string name);
   Role findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  Role[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  size_t countByUser(string userId);
   Role[] findByUser(string userId);
+  void removeByUser(string userId);
 
-  void save(Role role);
-  void update(Role role);
-  void remove(RoleId id);
 }

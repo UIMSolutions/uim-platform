@@ -13,18 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — site persistence.
-interface SiteRepository {
-  bool existsById(SiteId id);
-  Site findById(SiteId id);
-  
+interface SiteRepository : ITenantRepository!(Site, SiteId) {
+
   bool existsByAlias(TenantId tenantId, string alias_);
   Site findByAlias(TenantId tenantId, string alias_);
+  void removeByAlias(TenantId tenantId, string alias_);
 
-  Site[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  size_t countByStatus(TenantId tenantId, SiteStatus status);
   Site[] findByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100);
+  void removeByStatus(TenantId tenantId, SiteStatus status);
   
-  void save(Site site);
-  void update(Site site);
-  void remove(SiteId id);
-  size_t countByTenant(TenantId tenantId);
 }

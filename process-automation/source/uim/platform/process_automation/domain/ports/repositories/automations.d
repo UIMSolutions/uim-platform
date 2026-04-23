@@ -8,12 +8,10 @@ module uim.platform.process_automation.domain.ports.repositories.automations;
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.automation;
 
-interface AutomationRepository {
-    Automation findById(AutomationId id);
-    Automation[] findByTenant(TenantId tenantId);
+interface AutomationRepository : ITenantRepository!(Automation, AutomationId) {
+
+    size_t countByProject(ProjectId projectId);
     Automation[] findByProject(ProjectId projectId);
-    void save(Automation a);
-    void update(Automation a);
-    void remove(AutomationId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByProject(ProjectId projectId);
+
 }

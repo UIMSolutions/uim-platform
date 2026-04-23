@@ -13,14 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — catalog persistence.
-interface CatalogRepository {
-  bool existsById(CatalogId id);
-  Catalog findById(CatalogId id);
+interface CatalogRepository : IRepository!(Catalog, CatalogId) {
 
-  Catalog[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+  size_t countByProvider(ProviderId providerId);
   Catalog[] findByProvider(ProviderId providerId);
+  void removeByProvider(ProviderId providerId);
   
-  void save(Catalog catalog);
-  void update(Catalog catalog);
-  void remove(CatalogId id);
 }

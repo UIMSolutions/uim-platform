@@ -13,14 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - service binding persistence.
-interface ServiceBindingRepository {
-  bool existsById(ServiceBindingId id);
-  ServiceBinding findById(ServiceBindingId id);
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
+  size_t countByBucket(BucketId bucketId);
   ServiceBinding[] findByBucket(BucketId bucketId);
-  ServiceBinding[] findByTenant(TenantId tenantId);
-  
-  void save(ServiceBinding binding);
-  void update(ServiceBinding binding);
-  void remove(ServiceBindingId id);
+  void removeByBucket(BucketId bucketId);
+
 }

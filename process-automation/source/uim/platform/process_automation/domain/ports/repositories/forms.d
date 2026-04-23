@@ -8,12 +8,10 @@ module uim.platform.process_automation.domain.ports.repositories.forms;
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.form;
 
-interface FormRepository {
-    Form findById(FormId id);
-    Form[] findByTenant(TenantId tenantId);
+interface FormRepository : ITenantRepository!(Form, FormId) {
+
+    size_t countByProject(ProjectId projectId);
     Form[] findByProject(ProjectId projectId);
-    void save(Form f);
-    void update(Form f);
-    void remove(FormId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByProject(ProjectId projectId);
+
 }

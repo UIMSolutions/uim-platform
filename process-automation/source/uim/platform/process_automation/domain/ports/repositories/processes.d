@@ -8,13 +8,14 @@ module uim.platform.process_automation.domain.ports.repositories.processes;
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.process;
 
-interface ProcessRepository {
-    Process findById(ProcessId id);
-    Process[] findByTenant(TenantId tenantId);
+interface ProcessRepository : ITenantRepository!(Process, ProcessId) {
+
+    size_t countByProject(ProjectId projectId);
     Process[] findByProject(ProjectId projectId);
+    void removeByProject(ProjectId projectId);
+
+    size_t countByCategory(TenantId tenantId, ProcessCategory category);
     Process[] findByCategory(TenantId tenantId, ProcessCategory category);
-    void save(Process p);
-    void update(Process p);
-    void remove(ProcessId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByCategory(TenantId tenantId, ProcessCategory category);
+
 }
