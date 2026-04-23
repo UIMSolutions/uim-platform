@@ -11,12 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BrandingConfigRepository {
-    bool existsById(BrandingConfigId id);
-    BrandingConfig findById(BrandingConfigId id);
-    BrandingConfig[] findAll();
-    BrandingConfig[] findByTenant(TenantId tenantId);
-    void save(BrandingConfig entity);
-    void update(BrandingConfig entity);
-    void remove(BrandingConfigId id);
+interface BrandingConfigRepository : ITenantRepository!(BrandingConfig, BrandingConfigId) {
+
+    bool existsByName(TenantId tenantId, string name);
+    BrandingConfig findByName(TenantId tenantId, string name);
+    void removeByName(TenantId tenantId, string name);
+
 }

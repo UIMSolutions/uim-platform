@@ -11,11 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskActionRepository {
-    TaskAction findById(TaskActionId id);
-    TaskAction[] findByTenant(TenantId tenantId);
+interface TaskActionRepository : ITenantRepository!(TaskAction, TaskActionId) {
+
+    size_t countByTask(TaskId taskId);
     TaskAction[] findByTask(TaskId taskId);
+    void removeByTask(TaskId taskId);
+
+    size_t countByPerformer(string performedBy);
     TaskAction[] findByPerformer(string performedBy);
-    void save(TaskAction entity);
-    void remove(TaskActionId id);
+    void removeByPerformer(string performedBy);
+
 }

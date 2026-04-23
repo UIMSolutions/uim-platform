@@ -11,12 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UserTaskFilterRepository {
-    UserTaskFilter findById(UserTaskFilterId id);
-    UserTaskFilter[] findByTenant(TenantId tenantId);
-    UserTaskFilter[] findByUser(UserId userId);
+interface UserTaskFilterRepository : ITenantRepository!(UserTaskFilter, UserTaskFilterId) {
+
+    bool existsDefault(UserId userId);
     UserTaskFilter findDefault(UserId userId);
-    void save(UserTaskFilter entity);
-    void update(UserTaskFilter entity);
-    void remove(UserTaskFilterId id);
+    void removeDefault(UserId userId);
+
+    size_t countByUser(UserId userId);
+    UserTaskFilter[] findByUser(UserId userId);
+    void removeByUser(UserId userId);
+
 }

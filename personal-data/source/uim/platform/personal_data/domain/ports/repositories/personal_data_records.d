@@ -11,16 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PersonalDataRecordRepository {
-    bool existsById(PersonalDataRecordId id);
-    PersonalDataRecord findById(PersonalDataRecordId id);
+interface PersonalDataRecordRepository : ITenantRepository!(PersonalDataRecord, PersonalDataRecordId) {
 
-    PersonalDataRecord[] findByTenant(TenantId tenantId);
+    size_t countByDataSubject(DataSubjectId dataSubjectId);
     PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId);
+    void removeByDataSubject(DataSubjectId dataSubjectId);
+
+    size_t countByApplication(RegisteredApplicationId applicationId);
     PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId);
+    void removeByApplication(RegisteredApplicationId applicationId);
+
+    size_t countByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
     PersonalDataRecord[] findByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
+    void removeByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
     
-    void save(PersonalDataRecord entity);
-    void update(PersonalDataRecord entity);
-    void remove(PersonalDataRecordId id);
 }

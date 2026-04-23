@@ -8,12 +8,10 @@ module uim.platform.process_automation.domain.ports.repositories.actions;
 import uim.platform.process_automation.domain.types;
 import uim.platform.process_automation.domain.entities.action;
 
-interface ActionRepository {
-    Action findById(ActionId id);
-    Action[] findByTenant(TenantId tenantId);
+interface ActionRepository : ITenantRepository!(Action, ActionId) {
+
+    size_t countByProject(ProjectId projectId);
     Action[] findByProject(ProjectId projectId);
-    void save(Action a);
-    void update(Action a);
-    void remove(ActionId id);
-    size_t countByTenant(TenantId tenantId);
+    void removeByProject(ProjectId projectId);
+
 }

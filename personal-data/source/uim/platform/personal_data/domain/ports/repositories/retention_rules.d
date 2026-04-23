@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RetentionRuleRepository {
-    bool existsById(RetentionRuleId id);
-    RetentionRule findById(RetentionRuleId id);
+interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
 
-    RetentionRule[] findByTenant(TenantId tenantId);
+    size_t countByApplication(RegisteredApplicationId applicationId);
     RetentionRule[] findByApplication(RegisteredApplicationId applicationId);
+    void removeByApplication(RegisteredApplicationId applicationId);
+
+    size_t countByStatus(RetentionRuleStatus status);
     RetentionRule[] findByStatus(RetentionRuleStatus status);
-    void save(RetentionRule entity);
-    void update(RetentionRule entity);
-    void remove(RetentionRuleId id);
+    void removeByStatus(RetentionRuleStatus status);
+
 }

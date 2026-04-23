@@ -11,13 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SubstitutionRuleRepository {
-    SubstitutionRule findById(SubstitutionRuleId id);
-    SubstitutionRule[] findByTenant(TenantId tenantId);
+interface SubstitutionRuleRepository : ITenantRepository!(SubstitutionRule, SubstitutionRuleId) {
+
+    size_t countByUser(UserId userId);
     SubstitutionRule[] findByUser(UserId userId);
+    void removeByUser(UserId userId);
+
+    size_t countBySubstitute(UserId substituteId);
     SubstitutionRule[] findBySubstitute(UserId substituteId);
+    void removeBySubstitute(UserId substituteId);
+
+    size_t countByStatus(SubstitutionStatus status);
     SubstitutionRule[] findByStatus(SubstitutionStatus status);
-    void save(SubstitutionRule entity);
-    void update(SubstitutionRule entity);
-    void remove(SubstitutionRuleId id);
+    void removeByStatus(SubstitutionStatus status);
+
 }

@@ -11,13 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskDefinitionRepository {
-    TaskDefinition findById(TaskDefinitionId id);
-    TaskDefinition[] findByTenant(TenantId tenantId);
-    TaskDefinition[] findByProvider(TaskProviderId providerId);
-    TaskDefinition[] findByCategory(TaskCategory category);
+interface TaskDefinitionRepository : ITenantRepository!(TaskDefinition, TaskDefinitionId) {
+
+    bool existsByName(string name);
     TaskDefinition findByName(string name);
-    void save(TaskDefinition entity);
-    void update(TaskDefinition entity);
-    void remove(TaskDefinitionId id);
+    void removeByName(string name);
+
+    size_t countByProvider(TaskProviderId providerId);
+    TaskDefinition[] findByProvider(TaskProviderId providerId);
+    void removeByProvider(TaskProviderId providerId);
+
+    size_t countByCategory(TaskCategory category);
+    TaskDefinition[] findByCategory(TaskCategory category);
+    void removeByCategory(TaskCategory category);
+
 }
