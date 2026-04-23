@@ -29,7 +29,7 @@ class MemoryLabelRepository : LabelRepository {
   }
 
   Label[] findByResourceType(LabeledResourceType resourceType) {
-    return store.byValue().filter!(e => e.resourceType == resourceType).array;
+    return findAll()r!(e => e.resourceType == resourceType).array;
   }
 
   Label[] findByResource(LabeledResourceType resourceType, string resourceId) {

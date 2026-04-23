@@ -29,7 +29,7 @@ class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
   }
 
   EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    return findAll()r!(e => e.subaccountId == subaccountId).array;
   }
 
   EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType) {

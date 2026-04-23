@@ -29,19 +29,19 @@ class MemoryServicePlanRepository : ServicePlanRepository {
   }
 
   ServicePlan[] findByService(string serviceName) {
-    return store.byValue().filter!(e => e.serviceName == serviceName).array;
+    return findAll()r!(e => e.serviceName == serviceName).array;
   }
 
   ServicePlan[] findByCategory(ServicePlanCategory category) {
-    return store.byValue().filter!(e => e.category == category).array;
+    return findAll()r!(e => e.category == category).array;
   }
 
   ServicePlan[] findByRegion(string region) {
-    return store.byValue().filter!(e => e.availableRegions.canFind(region)).array;
+    return findAll()r!(e => e.availableRegions.canFind(region)).array;
   }
 
   ServicePlan[] findAll() {
-    return store.byValue().array;
+    return findAll();
   }
 
   void save(ServicePlan plan) {

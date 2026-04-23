@@ -29,15 +29,15 @@ class MemoryEntitlementRepository : EntitlementRepository {
   }
 
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
+    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
   }
 
   Entitlement[] findBySubaccount(SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    return findAll()r!(e => e.subaccountId == subaccountId).array;
   }
 
   Entitlement[] findByDirectory(DirectoryId directoryId) {
-    return store.byValue().filter!(e => e.directoryId == directoryId).array;
+    return findAll()r!(e => e.directoryId == directoryId).array;
   }
 
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {

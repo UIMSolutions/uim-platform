@@ -28,25 +28,25 @@ class MemoryPlatformEventRepository : PlatformEventRepository {
   }
 
   PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
+    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
   }
 
   PlatformEvent[] findBySubaccount(SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    return findAll()r!(e => e.subaccountId == subaccountId).array;
   }
 
   PlatformEvent[] findByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.category == category).array;
   }
 
   PlatformEvent[] findBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.severity == severity).array;
   }
 
   PlatformEvent[] findSince(GlobalAccountId globalAccountId, long sinceTimestamp) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.timestamp >= sinceTimestamp).array;
   }
 

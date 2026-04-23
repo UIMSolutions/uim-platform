@@ -28,15 +28,15 @@ class MemoryDirectoryRepository : DirectoryRepository {
   }
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
+    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
   }
 
   Directory[] findByParent(DirectoryId parentDirectoryId) {
-    return store.byValue().filter!(e => e.parentDirectoryId == parentDirectoryId).array;
+    return findAll()r!(e => e.parentDirectoryId == parentDirectoryId).array;
   }
 
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.status == status).array;
   }
 

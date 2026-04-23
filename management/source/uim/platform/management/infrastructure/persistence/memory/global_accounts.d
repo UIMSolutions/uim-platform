@@ -29,11 +29,11 @@ class MemoryGlobalAccountRepository : GlobalAccountRepository {
   }
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status) {
-    return store.byValue().filter!(e => e.status == status).array;
+    return findAll()r!(e => e.status == status).array;
   }
 
   GlobalAccount[] findAll() {
-    return store.byValue().array;
+    return findAll();
   }
 
   void save(GlobalAccount account) {

@@ -29,11 +29,11 @@ class MemorySubaccountRepository : SubaccountRepository {
   }
 
   bool existsBySubdomain(string subdomain) {
-    return store.byValue().any!(s => s.subdomain == subdomain);
+    return findAll()s => s.subdomain == subdomain);
   }
 
   Subaccount findBySubdomain(string subdomain) {
-    foreach (s; store.byValue()) {
+    foreach (s; findAll()
       if (s.subdomain == subdomain)
         return s;
     }
@@ -41,20 +41,20 @@ class MemorySubaccountRepository : SubaccountRepository {
   }
 
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
+    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
   }
 
   Subaccount[] findByDirectory(DirectoryId directoryId) {
-    return store.byValue().filter!(e => e.parentDirectoryId == directoryId).array;
+    return findAll()r!(e => e.parentDirectoryId == directoryId).array;
   }
 
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.region == region).array;
   }
 
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
+    return findAll()r!(e => e.globalAccountId == globalAccountId
         && e.status == status).array;
   }
 

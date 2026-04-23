@@ -29,7 +29,7 @@ class MemorySubscriptionRepository : SubscriptionRepository {
   }
 
   Subscription[] findBySubaccount(SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    return findAll()r!(e => e.subaccountId == subaccountId).array;
   }
 
   Subscription[] findByApp(SubaccountId subaccountId, string appName) {
