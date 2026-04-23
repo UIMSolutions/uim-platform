@@ -27,19 +27,19 @@ class MemoryEventApplicationRepository : EventApplicationRepository {
     EventApplication[] findAll() { return store; }
 
     EventApplication[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     EventApplication[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return store.filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
 
     EventApplication[] findByStatus(EventApplicationStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     EventApplication[] findByType(EventApplicationType appType) {
-        return store.filter!(e => e.applicationType == appType).array;
+        return findAll().filter!(e => e.applicationType == appType).array;
     }
 
     void save(EventApplication application) { store ~= application; }

@@ -28,7 +28,7 @@ class MemoryInstanceRepository : InstanceRepository {
   }
 
   DatabaseInstance[] findByTenant(TenantId tenantId) {
-    return store.filter!(i => i.tenantId == tenantId).array;
+    return findAll().filter!(i => i.tenantId == tenantId).array;
   }
 
   void save(DatabaseInstance i) {
@@ -45,10 +45,10 @@ class MemoryInstanceRepository : InstanceRepository {
   }
 
   void remove(InstanceId id) {
-    store = store.filter!(i => i.id != id).array;
+    store = findAll().filter!(i => i.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(i => i.tenantId == tenantId).array.length;
+    return findAll().filter!(i => i.tenantId == tenantId).array.length;
   }
 }

@@ -27,15 +27,15 @@ class MemoryBrokerServiceRepository : BrokerServiceRepository {
     BrokerService[] findAll() { return store; }
 
     BrokerService[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     BrokerService[] findByStatus(BrokerServiceStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     BrokerService[] findByCloudProvider(CloudProvider provider) {
-        return store.filter!(e => e.cloudProvider == provider).array;
+        return findAll().filter!(e => e.cloudProvider == provider).array;
     }
 
     void save(BrokerService service) { store ~= service; }

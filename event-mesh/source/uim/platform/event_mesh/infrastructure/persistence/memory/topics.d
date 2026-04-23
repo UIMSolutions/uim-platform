@@ -27,15 +27,15 @@ class MemoryTopicRepository : TopicRepository {
     Topic[] findAll() { return store; }
 
     Topic[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Topic[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return store.filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
 
     Topic[] findByStatus(TopicStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Topic topic) { store ~= topic; }

@@ -28,11 +28,11 @@ class MemoryBackupRepository : BackupRepository {
   }
 
   Backup[] findByTenant(TenantId tenantId) {
-    return store.filter!(b => b.tenantId == tenantId).array;
+    return findAll().filter!(b => b.tenantId == tenantId).array;
   }
 
   Backup[] findByInstance(InstanceId instanceId) {
-    return store.filter!(b => b.instanceId == instanceId).array;
+    return findAll().filter!(b => b.instanceId == instanceId).array;
   }
 
   void save(Backup b) {
@@ -49,10 +49,10 @@ class MemoryBackupRepository : BackupRepository {
   }
 
   void remove(BackupId id) {
-    store = store.filter!(b => b.id != id).array;
+    store = findAll().filter!(b => b.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(b => b.tenantId == tenantId).array.length;
+    return findAll().filter!(b => b.tenantId == tenantId).array.length;
   }
 }

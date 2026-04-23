@@ -29,11 +29,11 @@ class MemoryDataLakeRepository : DataLakeRepository {
   }
 
   DataLake[] findByTenant(TenantId tenantId) {
-    return store.filter!(d => d.tenantId == tenantId).array;
+    return findAll().filter!(d => d.tenantId == tenantId).array;
   }
 
   DataLake[] findByInstance(InstanceId instanceId) {
-    return store.filter!(d => d.instanceId == instanceId).array;
+    return findAll().filter!(d => d.instanceId == instanceId).array;
   }
 
   void save(DataLake d) {
@@ -50,10 +50,10 @@ class MemoryDataLakeRepository : DataLakeRepository {
   }
 
   void remove(DataLakeId id) {
-    store = store.filter!(d => d.id != id).array;
+    store = findAll().filter!(d => d.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(d => d.tenantId == tenantId).array.length;
+    return findAll().filter!(d => d.tenantId == tenantId).array.length;
   }
 }

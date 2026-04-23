@@ -28,11 +28,11 @@ class MemoryDatabaseUserRepository : DatabaseUserRepository {
   }
 
   DatabaseUser[] findByTenant(TenantId tenantId) {
-    return store.filter!(u => u.tenantId == tenantId).array;
+    return findAll().filter!(u => u.tenantId == tenantId).array;
   }
 
   DatabaseUser[] findByInstance(InstanceId instanceId) {
-    return store.filter!(u => u.instanceId == instanceId).array;
+    return findAll().filter!(u => u.instanceId == instanceId).array;
   }
 
   void save(DatabaseUser u) {
@@ -49,10 +49,10 @@ class MemoryDatabaseUserRepository : DatabaseUserRepository {
   }
 
   void remove(DatabaseUserId id) {
-    store = store.filter!(u => u.id != id).array;
+    store = findAll().filter!(u => u.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(u => u.tenantId == tenantId).array.length;
+    return findAll().filter!(u => u.tenantId == tenantId).array.length;
   }
 }

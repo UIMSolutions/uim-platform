@@ -28,11 +28,11 @@ class MemoryReplicationTaskRepository : ReplicationTaskRepository {
   }
 
   ReplicationTask[] findByTenant(TenantId tenantId) {
-    return store.filter!(t => t.tenantId == tenantId).array;
+    return findAll().filter!(t => t.tenantId == tenantId).array;
   }
 
   ReplicationTask[] findByInstance(InstanceId instanceId) {
-    return store.filter!(t => t.instanceId == instanceId).array;
+    return findAll().filter!(t => t.instanceId == instanceId).array;
   }
 
   void save(ReplicationTask t) {
@@ -49,10 +49,10 @@ class MemoryReplicationTaskRepository : ReplicationTaskRepository {
   }
 
   void remove(ReplicationTaskId id) {
-    store = store.filter!(t => t.id != id).array;
+    store = findAll().filter!(t => t.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(t => t.tenantId == tenantId).array.length;
+    return findAll().filter!(t => t.tenantId == tenantId).array.length;
   }
 }

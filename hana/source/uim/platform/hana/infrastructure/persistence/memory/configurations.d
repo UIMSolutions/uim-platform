@@ -29,15 +29,15 @@ class MemoryConfigurationRepository : ConfigurationRepository {
   }
 
   Configuration[] findByTenant(TenantId tenantId) {
-    return store.filter!(c => c.tenantId == tenantId).array;
+    return findAll().filter!(c => c.tenantId == tenantId).array;
   }
 
   Configuration[] findByInstance(InstanceId instanceId) {
-    return store.filter!(c => c.instanceId == instanceId).array;
+    return findAll().filter!(c => c.instanceId == instanceId).array;
   }
 
   Configuration[] findBySection(InstanceId instanceId, string section) {
-    return store.filter!(c => c.instanceId == instanceId && c.section == section).array;
+    return findAll().filter!(c => c.instanceId == instanceId && c.section == section).array;
   }
 
   void save(Configuration c) {
@@ -54,10 +54,10 @@ class MemoryConfigurationRepository : ConfigurationRepository {
   }
 
   void remove(ConfigurationId id) {
-    store = store.filter!(c => c.id != id).array;
+    store = findAll().filter!(c => c.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(c => c.tenantId == tenantId).array.length;
+    return findAll().filter!(c => c.tenantId == tenantId).array.length;
   }
 }

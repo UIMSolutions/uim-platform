@@ -28,11 +28,11 @@ class MemoryHDIContainerRepository : HDIContainerRepository {
   }
 
   HDIContainer[] findByTenant(TenantId tenantId) {
-    return store.filter!(c => c.tenantId == tenantId).array;
+    return findAll().filter!(c => c.tenantId == tenantId).array;
   }
 
   HDIContainer[] findByInstance(InstanceId instanceId) {
-    return store.filter!(c => c.instanceId == instanceId).array;
+    return findAll().filter!(c => c.instanceId == instanceId).array;
   }
 
   void save(HDIContainer c) {
@@ -49,10 +49,10 @@ class MemoryHDIContainerRepository : HDIContainerRepository {
   }
 
   void remove(HDIContainerId id) {
-    store = store.filter!(c => c.id != id).array;
+    store = findAll().filter!(c => c.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(c => c.tenantId == tenantId).array.length;
+    return findAll().filter!(c => c.tenantId == tenantId).array.length;
   }
 }

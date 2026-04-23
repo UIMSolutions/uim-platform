@@ -27,23 +27,23 @@ class MemoryEventMessageRepository : EventMessageRepository {
     EventMessage[] findAll() { return store; }
 
     EventMessage[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     EventMessage[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return store.filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
 
     EventMessage[] findByTopic(TopicId topicId) {
-        return store.filter!(e => e.topicId == topicId).array;
+        return findAll().filter!(e => e.topicId == topicId).array;
     }
 
     EventMessage[] findByQueue(QueueId queueId) {
-        return store.filter!(e => e.queueId == queueId).array;
+        return findAll().filter!(e => e.queueId == queueId).array;
     }
 
     EventMessage[] findByStatus(MessageStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(EventMessage message) { store ~= message; }

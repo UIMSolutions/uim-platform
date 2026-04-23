@@ -28,11 +28,11 @@ class MemorySchemaRepository : SchemaRepository {
   }
 
   Schema[] findByTenant(TenantId tenantId) {
-    return store.filter!(s => s.tenantId == tenantId).array;
+    return findAll().filter!(s => s.tenantId == tenantId).array;
   }
 
   Schema[] findByInstance(InstanceId instanceId) {
-    return store.filter!(s => s.instanceId == instanceId).array;
+    return findAll().filter!(s => s.instanceId == instanceId).array;
   }
 
   void save(Schema s) {
@@ -49,10 +49,10 @@ class MemorySchemaRepository : SchemaRepository {
   }
 
   void remove(SchemaId id) {
-    store = store.filter!(s => s.id != id).array;
+    store = findAll().filter!(s => s.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(s => s.tenantId == tenantId).array.length;
+    return findAll().filter!(s => s.tenantId == tenantId).array.length;
   }
 }

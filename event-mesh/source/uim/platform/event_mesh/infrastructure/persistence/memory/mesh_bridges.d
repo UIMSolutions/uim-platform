@@ -27,19 +27,19 @@ class MemoryMeshBridgeRepository : MeshBridgeRepository {
     MeshBridge[] findAll() { return store; }
 
     MeshBridge[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     MeshBridge[] findBySourceBroker(BrokerServiceId sourceBrokerId) {
-        return store.filter!(e => e.sourceBrokerId == sourceBrokerId).array;
+        return findAll().filter!(e => e.sourceBrokerId == sourceBrokerId).array;
     }
 
     MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId) {
-        return store.filter!(e => e.targetBrokerId == targetBrokerId).array;
+        return findAll().filter!(e => e.targetBrokerId == targetBrokerId).array;
     }
 
     MeshBridge[] findByStatus(BridgeStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(MeshBridge bridge) { store ~= bridge; }

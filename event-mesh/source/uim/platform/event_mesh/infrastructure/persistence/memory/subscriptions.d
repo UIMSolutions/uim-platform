@@ -27,23 +27,23 @@ class MemorySubscriptionRepository : SubscriptionRepository {
     EventSubscription[] findAll() { return store; }
 
     EventSubscription[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     EventSubscription[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return store.filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
 
     EventSubscription[] findByTopic(TopicId topicId) {
-        return store.filter!(e => e.topicId == topicId).array;
+        return findAll().filter!(e => e.topicId == topicId).array;
     }
 
     EventSubscription[] findByApplication(EventApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll().filter!(e => e.applicationId == applicationId).array;
     }
 
     EventSubscription[] findByStatus(SubscriptionStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(EventSubscription subscription) { store ~= subscription; }

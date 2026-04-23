@@ -27,15 +27,15 @@ class MemoryQueueRepository : QueueRepository {
     Queue[] findAll() { return store; }
 
     Queue[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Queue[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return store.filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
 
     Queue[] findByStatus(QueueStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Queue queue) { store ~= queue; }

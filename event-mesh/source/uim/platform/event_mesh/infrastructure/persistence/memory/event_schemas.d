@@ -27,15 +27,15 @@ class MemoryEventSchemaRepository : EventSchemaRepository {
     EventSchema[] findAll() { return store; }
 
     EventSchema[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     EventSchema[] findByFormat(SchemaFormat format) {
-        return store.filter!(e => e.format == format).array;
+        return findAll().filter!(e => e.format == format).array;
     }
 
     EventSchema[] findByStatus(SchemaStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(EventSchema schema) { store ~= schema; }

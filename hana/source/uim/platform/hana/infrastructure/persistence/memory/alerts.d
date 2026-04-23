@@ -30,7 +30,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
   }
 
   override Alert[] findByTenant(TenantId tenantId) {
-    return store.filter!(a => a.tenantId == tenantId).array;
+    return findAll().filter!(a => a.tenantId == tenantId).array;
   }
 
   Alert[] findByInstance(InstanceId instanceId) {
