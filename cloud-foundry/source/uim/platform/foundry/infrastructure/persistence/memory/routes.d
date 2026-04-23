@@ -20,7 +20,7 @@ class MemoryRouteRepository : RouteRepository {
   private Route[RouteId] store;
 
   Route[] findBySpace(SpaceId spacetenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
   Route* findById(RouteId tenantId, id tenantId) {
@@ -31,23 +31,23 @@ class MemoryRouteRepository : RouteRepository {
   }
 
   Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.host == host && e.domainId == domainId)
         return &e;
     return null;
   }
 
   Route[] findByDomain(DomainId domaintenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
   }
 
   Route[] findByApp(AppId apptenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.mappedAppIds.canFind(appId)).array;
   }
 
   Route[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   void save(Route route) {

@@ -18,7 +18,7 @@ class MemoryStepRepository : StepRepository {
   private WorkflowStep[StepId] store;
 
   WorkflowStep[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    auto result = store.byValue().filter!(e => e.workflowId == workflowId
+    auto result = findAll()r!(e => e.workflowId == workflowId
         && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
@@ -32,21 +32,21 @@ class MemoryStepRepository : StepRepository {
   }
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
   }
 
   WorkflowStep[] findByRole(TenantId tenantId, string assignedRole) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && e.assignedRole == assignedRole).array;
   }
 
   WorkflowStep[] findByStatus(WorkflowId workflowtenantId, id tenantId, StepStatus status) {
-    return store.byValue().filter!(e => e.workflowId == workflowId
+    return findAll()r!(e => e.workflowId == workflowId
         && e.tenantId == tenantId && e.status == status).array;
   }
 
   WorkflowStep* findBySequence(WorkflowId workflowtenantId, id tenantId, int sequenceNumber) {
-    foreach (s; store.byValue())
+    foreach (s; findAll()
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
     return null;

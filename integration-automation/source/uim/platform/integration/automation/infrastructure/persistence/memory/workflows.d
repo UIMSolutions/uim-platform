@@ -18,7 +18,7 @@ class MemoryWorkflowRepository : WorkflowRepository {
   private Workflow[WorkflowId] store;
 
   Workflow[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   Workflow* findById(WorkflowId tenantId, id tenantId) {
@@ -29,15 +29,15 @@ class MemoryWorkflowRepository : WorkflowRepository {
   }
 
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.scenarioId == scenarioId).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.scenarioId == scenarioId).array;
   }
 
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   Workflow[] findByCreator(TenantId tenantId, UserId createdBy) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.createdBy == createdBy).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.createdBy == createdBy).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
@@ -45,7 +45,7 @@ class MemoryWorkflowRepository : WorkflowRepository {
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;

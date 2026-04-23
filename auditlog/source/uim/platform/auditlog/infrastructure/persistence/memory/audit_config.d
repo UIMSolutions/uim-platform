@@ -20,7 +20,7 @@ mixin(ShowModule!());
 class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
   AuditConfig[] findAll() {
     AuditConfig[] result;
-    foreach (tenantConfigs; store.byValue())
+    foreach (tenantConfigs; findAll())
       result ~= tenantConfigs.byValue().array;
     return result;    
   }

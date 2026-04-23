@@ -20,7 +20,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 
   ServiceInstance[] findBySpace(SpaceId spacetenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
   ServiceInstance* findById(ServiceInstanceId tenantId, id tenantId) {
@@ -31,19 +31,19 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   }
 
   ServiceInstance* findByName(SpaceId spacetenantId, id tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
         return &e;
     return null;
   }
 
   ServiceInstance[] findByServiceName(SpaceId spacetenantId, id tenantId, string serviceName) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.spaceId == spaceId && e.serviceName == serviceName).array;
   }
 
   ServiceInstance[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   void save(ServiceInstance instance) {

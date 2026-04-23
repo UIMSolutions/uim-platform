@@ -23,7 +23,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding[] findByApp(TenantId tenantId, AppId appId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, AppId appId) {

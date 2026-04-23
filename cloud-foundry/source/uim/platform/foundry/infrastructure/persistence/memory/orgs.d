@@ -20,7 +20,7 @@ class MemoryOrgRepository : OrgRepository {
   private Organization[OrgId] store;
 
   Organization[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   Organization* findById(OrgId tenantId, id tenantId) {
@@ -31,7 +31,7 @@ class MemoryOrgRepository : OrgRepository {
   }
 
   Organization* findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;

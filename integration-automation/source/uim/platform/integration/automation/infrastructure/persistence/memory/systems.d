@@ -18,7 +18,7 @@ class MemorySystemRepository : SystemRepository {
   private SystemConnection[SystemConnectionId] store;
 
   SystemConnection[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   SystemConnection* findById(SystemConnectionId tenantId, id tenantId) {
@@ -29,11 +29,11 @@ class MemorySystemRepository : SystemRepository {
   }
 
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.systemType == systemType).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.systemType == systemType).array;
   }
 
   SystemConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   void save(SystemConnection system) {

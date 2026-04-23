@@ -18,7 +18,7 @@ class MemoryScenarioRepository : ScenarioRepository {
   private IntegrationScenario[ScenarioId] store;
 
   IntegrationScenario[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   IntegrationScenario* findById(ScenarioId tenantId, id tenantId) {
@@ -29,15 +29,15 @@ class MemoryScenarioRepository : ScenarioRepository {
   }
 
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   IntegrationScenario[] findByStatus(TenantId tenantId, ScenarioStatus status) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll()r!(e => e.tenantId == tenantId
         && (e.sourceSystemType == systemType || e.targetSystemType == systemType)).array;
   }
 

@@ -18,7 +18,7 @@ class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
   Destination[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
   Destination* findById(DestinationId tenantId, id tenantId) {
@@ -29,18 +29,18 @@ class MemoryDestinationRepository : DestinationRepository {
   }
 
   Destination[] findBySystem(TenantId tenantId, SystemConnectionId systemId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.systemId == systemId).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.systemId == systemId).array;
   }
 
   Destination* findByName(TenantId tenantId, string name) {
-    foreach (d; store.byValue())
+    foreach (d; findAll()
       if (d.tenantId == tenantId && d.name == name)
         return &d;
     return null;
   }
 
   Destination[] findEnabled(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.isEnabled).array;
+    return findAll()r!(e => e.tenantId == tenantId && e.isEnabled).array;
   }
 
   void save(Destination destination) {

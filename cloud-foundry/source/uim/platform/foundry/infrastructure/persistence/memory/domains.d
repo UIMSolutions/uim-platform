@@ -20,7 +20,7 @@ class MemoryDomainRepository : DomainRepository {
   private CfDomain[DomainId] store;
 
   CfDomain[] findByOrg(OrgId orgtenantId, id tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.ownerOrgId == orgId).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.ownerOrgId == orgId).array;
   }
 
   CfDomain* findById(DomainId tenantId, id tenantId) {
@@ -31,19 +31,19 @@ class MemoryDomainRepository : DomainRepository {
   }
 
   CfDomain* findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
   }
 
   CfDomain[] findShared(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.scope_ == DomainScope.shared_).array;
   }
 
   CfDomain[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
   void save(CfDomain d) {
