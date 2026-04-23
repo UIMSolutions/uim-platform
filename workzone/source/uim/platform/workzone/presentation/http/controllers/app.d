@@ -8,12 +8,16 @@ module uim.platform.workzone.presentation.http.controllers.app;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.apps;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.app_registration;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.workzone.application.usecases.manage.apps;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.app_registration;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class AppController : PlatformController {
   private ManageAppsUseCase useCase;
 

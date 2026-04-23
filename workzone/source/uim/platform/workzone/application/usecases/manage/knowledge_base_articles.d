@@ -46,20 +46,20 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  KnowledgeBaseArticle* getArticle(KBArticleId tenantId, id tenantId) {
+  KnowledgeBaseArticle* getArticle(TenantId tenantId, KBArticleId id) {
     return repo.findById(tenantId, id);
   }
 
-  KnowledgeBaseArticle[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return repo.findByWorkspace(workspacetenantId, id);
+  KnowledgeBaseArticle[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  KnowledgeBaseArticle[] listByCategory(string category, TenantId tenantId) {
-    return repo.findByCategory(category, tenantId);
+  KnowledgeBaseArticle[] listByCategory(TenantId tenantId, string category) {
+    return repo.findByCategory(tenantId, category);
   }
 
   CommandResult updateArticle(UpdateKBArticleRequest req) {
-    auto a = repo.findById(req.id, req.tenantId);
+    auto a = repo.findById(req.tenantId, req.id);
     if (a is null)
       return CommandResult(false, "", "Article not found");
 
@@ -79,7 +79,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  CommandResult deleteArticle(KBArticleId tenantId, id tenantId) {
+  CommandResult deleteArticle(TenantId tenantId, KBArticleId id) {
     auto a = repo.findById(tenantId, id);
     if (a is null)
       return CommandResult(false, "", "Article not found");

@@ -9,9 +9,13 @@ module uim.platform.workzone.domain.services.content_search;
 // import std.array : array;
 // import std.uni : toLower;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.content_item;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.content_item;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service — simple in-memory content search.
 struct ContentSearchService {
   /// Search content items by keyword in title, body, summary, or tags.

@@ -45,7 +45,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  AppRegistration* getApp(AppId tenantId, id tenantId) {
+  AppRegistration* getApp(TenantId tenantId, AppId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -53,12 +53,12 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  AppRegistration[] listByStatus(AppStatus status, TenantId tenantId) {
-    return repo.findByStatus(status, tenantId);
+  AppRegistration[] listByStatus(TenantId tenantId, AppStatus status) {
+    return repo.findByStatus(tenantId, status);
   }
 
   CommandResult updateApp(UpdateAppRequest req) {
-    auto app = repo.findById(req.id, req.tenantId);
+    auto app = repo.findById(req.tenantId, req.id);
     if (app is null)
       return CommandResult(false, "", "App not found");
 
@@ -78,7 +78,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  void deleteApp(AppId tenantId, id tenantId) {
+  void deleteApp(TenantId tenantId, AppId id) {
     repo.remove(tenantId, id);
   }
 }

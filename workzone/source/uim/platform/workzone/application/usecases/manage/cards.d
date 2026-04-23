@@ -39,10 +39,10 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(c.id, "");
+    return CommandResult(true, c.id, "");
   }
 
-  Card* getCard(CardId tenantId, id tenantId) {
+  Card* getCard(TenantId tenantId, CardId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -50,12 +50,12 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Card[] listByType(CardType cardType, TenantId tenantId) {
-    return repo.findByType(cardType, tenantId);
+  Card[] listByType(TenantId tenantId, CardType cardType) {
+    return repo.findByType(tenantId, cardType);
   }
 
   CommandResult updateCard(UpdateCardRequest req) {
-    auto c = repo.findById(req.id, req.tenantId);
+    auto c = repo.findById(req.tenantId, req.id);
     if (c is null)
       return CommandResult(false, "", "Card not found");
 
@@ -73,10 +73,10 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.updatedAt = Clock.currStdTime();
 
     repo.update(*c);
-    return CommandResult(c.id, "");
+    return CommandResult(true, c.id, "");
   }
 
-  void deleteCard(CardId tenantId, id tenantId) {
+  void deleteCard(TenantId tenantId, CardId id) {
     repo.remove(tenantId, id);
   }
 }

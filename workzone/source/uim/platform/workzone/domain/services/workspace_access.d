@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.services.workspace_access;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workspace;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.workspace;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service — evaluates workspace membership and access rules.
 struct WorkspaceAccessService {
   /// Check whether a user is a member of the given workspace.
