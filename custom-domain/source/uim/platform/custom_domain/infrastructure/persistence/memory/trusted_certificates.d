@@ -23,11 +23,11 @@ class MemoryTrustedCertificateRepository : TrustedCertificateRepository {
     }
 
     TrustedCertificate[] findByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array;
+        return findAll().filter!(c => c.tenantId == tenantId).array;
     }
 
     TrustedCertificate[] findByDomain(CustomDomainId domainId) {
-        return store.filter!(c => c.customDomainId == domainId).array;
+        return findAll().filter!(c => c.customDomainId == domainId).array;
     }
 
     void save(TrustedCertificate c) {
@@ -44,10 +44,10 @@ class MemoryTrustedCertificateRepository : TrustedCertificateRepository {
     }
 
     void remove(TrustedCertificateId id) {
-        store = store.filter!(c => c.id != id).array;
+        store = findAll().filter!(c => c.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array.length;
+        return findAll().filter!(c => c.tenantId == tenantId).array.length;
     }
 }

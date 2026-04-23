@@ -23,11 +23,11 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
     }
 
     DomainMapping[] findByTenant(TenantId tenantId) {
-        return store.filter!(m => m.tenantId == tenantId).array;
+        return findAll().filter!(m => m.tenantId == tenantId).array;
     }
 
     DomainMapping[] findByDomain(CustomDomainId domainId) {
-        return store.filter!(m => m.customDomainId == domainId).array;
+        return findAll().filter!(m => m.customDomainId == domainId).array;
     }
 
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
@@ -52,10 +52,10 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
     }
 
     void remove(DomainMappingId id) {
-        store = store.filter!(m => m.id != id).array;
+        store = findAll().filter!(m => m.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(m => m.tenantId == tenantId).array.length;
+        return findAll().filter!(m => m.tenantId == tenantId).array.length;
     }
 }

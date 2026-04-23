@@ -23,7 +23,7 @@ class MemoryTlsConfigurationRepository : TlsConfigurationRepository {
     }
 
     TlsConfiguration[] findByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array;
+        return findAll().filter!(c => c.tenantId == tenantId).array;
     }
 
     void save(TlsConfiguration c) {
@@ -40,10 +40,10 @@ class MemoryTlsConfigurationRepository : TlsConfigurationRepository {
     }
 
     void remove(TlsConfigurationId id) {
-        store = store.filter!(c => c.id != id).array;
+        store = findAll().filter!(c => c.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array.length;
+        return findAll().filter!(c => c.tenantId == tenantId).array.length;
     }
 }

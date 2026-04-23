@@ -44,6 +44,6 @@ class MemoryDomainDashboardRepository : DomainDashboardRepository {
     }
 
     void remove(DomainDashboardId id) {
-        store = store.filter!(d => d.id != id).array;
+        store = findAll().filter!(d => d.id != id).array;
     }
 }

@@ -27,15 +27,15 @@ class MemoryApplicationRepository : ApplicationRepository {
     Application[] findAll() { return store; }
 
     Application[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Application[] findByOwner(string owner) {
-        return store.filter!(e => e.owner == owner).array;
+        return findAll().filter!(e => e.owner == owner).array;
     }
 
     Application[] findByStatus(ApplicationStatus status) {
-        return store.filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void save(Application entity) { store ~= entity; }

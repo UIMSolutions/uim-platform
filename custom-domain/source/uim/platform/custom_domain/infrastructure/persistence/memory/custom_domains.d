@@ -31,11 +31,11 @@ class MemoryCustomDomainRepository : CustomDomainRepository {
     }
 
     CustomDomain[] findByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array;
+        return findAll().filter!(d => d.tenantId == tenantId).array;
     }
 
     CustomDomain[] findByOrganization(TenantId tenantId, string organizationId) {
-        return store.filter!(d => d.tenantId == tenantId && d.organizationId == organizationId).array;
+        return findAll().filter!(d => d.tenantId == tenantId && d.organizationId == organizationId).array;
     }
 
     void save(CustomDomain d) {
@@ -52,10 +52,10 @@ class MemoryCustomDomainRepository : CustomDomainRepository {
     }
 
     void remove(CustomDomainId id) {
-        store = store.filter!(d => d.id != id).array;
+        store = findAll().filter!(d => d.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(d => d.tenantId == tenantId).array.length;
+        return findAll().filter!(d => d.tenantId == tenantId).array.length;
     }
 }

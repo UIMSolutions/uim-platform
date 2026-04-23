@@ -23,11 +23,11 @@ class MemoryDnsRecordRepository : DnsRecordRepository {
     }
 
     DnsRecord[] findByTenant(TenantId tenantId) {
-        return store.filter!(r => r.tenantId == tenantId).array;
+        return findAll().filter!(r => r.tenantId == tenantId).array;
     }
 
     DnsRecord[] findByDomain(CustomDomainId domainId) {
-        return store.filter!(r => r.customDomainId == domainId).array;
+        return findAll().filter!(r => r.customDomainId == domainId).array;
     }
 
     void save(DnsRecord r) {
@@ -44,10 +44,10 @@ class MemoryDnsRecordRepository : DnsRecordRepository {
     }
 
     void remove(DnsRecordId id) {
-        store = store.filter!(r => r.id != id).array;
+        store = findAll().filter!(r => r.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(r => r.tenantId == tenantId).array.length;
+        return findAll().filter!(r => r.tenantId == tenantId).array.length;
     }
 }

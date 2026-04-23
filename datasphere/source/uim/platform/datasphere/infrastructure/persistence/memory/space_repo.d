@@ -24,7 +24,7 @@ class MemorySpaceRepository : SpaceRepository {
   }
 
   Space[] findByTenant(TenantId tenantId) {
-    return store.filter!(s => s.tenantId == tenantId).array;
+    return findAll().filter!(s => s.tenantId == tenantId).array;
   }
 
   void save(Space s) {
@@ -41,10 +41,10 @@ class MemorySpaceRepository : SpaceRepository {
   }
 
   void remove(SpaceId id) {
-    store = store.filter!(s => s.id != id).array;
+    store = findAll().filter!(s => s.id != id).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.filter!(s => s.tenantId == tenantId).array.length;
+    return findAll().filter!(s => s.tenantId == tenantId).array.length;
   }
 }

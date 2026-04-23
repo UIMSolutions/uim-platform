@@ -41,7 +41,7 @@ class MemoryKeyringVersionRepository : KeyringVersionRepository {
   }
 
   KeyringVersion[] findByKeyring(CredentialId keyringId) {
-    return store.filter!(v => v.keyringId == keyringId).array;
+    return findAll().filter!(v => v.keyringId == keyringId).array;
   }
 
   void save(KeyringVersion ver) {
@@ -56,14 +56,14 @@ class MemoryKeyringVersionRepository : KeyringVersionRepository {
   }
 
   void remove(KeyringVersionId id) {
-    store = store.filter!(v => v.id != id).array;
+    store = findAll().filter!(v => v.id != id).array;
   }
 
   void removeByKeyring(CredentialId keyringId) {
-    store = store.filter!(v => v.keyringId != keyringId).array;
+    store = findAll().filter!(v => v.keyringId != keyringId).array;
   }
 
   size_t countByKeyring(CredentialId keyringId) {
-    return store.filter!(v => v.keyringId == keyringId).array.length;
+    return findAll().filter!(v => v.keyringId == keyringId).array.length;
   }
 }

@@ -23,7 +23,7 @@ class MemoryPrivateKeyRepository : PrivateKeyRepository {
     }
 
     PrivateKey[] findByTenant(TenantId tenantId) {
-        return store.filter!(k => k.tenantId == tenantId).array;
+        return findAll().filter!(k => k.tenantId == tenantId).array;
     }
 
     void save(PrivateKey k) {
@@ -40,10 +40,10 @@ class MemoryPrivateKeyRepository : PrivateKeyRepository {
     }
 
     void remove(PrivateKeyId id) {
-        store = store.filter!(k => k.id != id).array;
+        store = findAll().filter!(k => k.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(k => k.tenantId == tenantId).array.length;
+        return findAll().filter!(k => k.tenantId == tenantId).array.length;
     }
 }

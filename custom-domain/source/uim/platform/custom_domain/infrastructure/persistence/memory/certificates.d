@@ -23,15 +23,15 @@ class MemoryCertificateRepository : CertificateRepository {
     }
 
     Certificate[] findByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array;
+        return findAll().filter!(c => c.tenantId == tenantId).array;
     }
 
     Certificate[] findByKey(PrivateKeyId keyId) {
-        return store.filter!(c => c.keyId == keyId).array;
+        return findAll().filter!(c => c.keyId == keyId).array;
     }
 
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
-        return store.filter!(c => c.tenantId == tenantId && c.validTo > 0 && c.validTo <= beforeTimestamp).array;
+        return findAll().filter!(c => c.tenantId == tenantId && c.validTo > 0 && c.validTo <= beforeTimestamp).array;
     }
 
     void save(Certificate c) {
@@ -48,10 +48,10 @@ class MemoryCertificateRepository : CertificateRepository {
     }
 
     void remove(CertificateId id) {
-        store = store.filter!(c => c.id != id).array;
+        store = findAll().filter!(c => c.id != id).array;
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return store.filter!(c => c.tenantId == tenantId).array.length;
+        return findAll().filter!(c => c.tenantId == tenantId).array.length;
     }
 }

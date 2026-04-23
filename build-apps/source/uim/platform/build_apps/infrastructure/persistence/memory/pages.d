@@ -27,11 +27,11 @@ class MemoryPageRepository : PageRepository {
     Page[] findAll() { return store; }
 
     Page[] findByTenant(TenantId tenantId) {
-        return store.filter!(e => e.tenantId == tenantId).array;
+        return findAll().filter!(e => e.tenantId == tenantId).array;
     }
 
     Page[] findByApplication(ApplicationId applicationId) {
-        return store.filter!(e => e.applicationId == applicationId).array;
+        return findAll().filter!(e => e.applicationId == applicationId).array;
     }
 
     void save(Page entity) { store ~= entity; }
