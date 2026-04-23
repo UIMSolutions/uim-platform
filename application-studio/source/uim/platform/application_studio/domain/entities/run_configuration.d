@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct RunConfiguration {
-    RunConfigurationId id;
-    TenantId tenantId;
+    mixin TenantEntity!(RunConfigurationId);
+
     ProjectId projectId;
     string name;
     string description;
@@ -25,15 +25,9 @@ struct RunConfiguration {
     string port;
     string debugPort;
     string lastRunAt;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json runConfigurationToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() {
+        return entityToJson
             .set("projectId", projectId)
             .set("name", name)
             .set("description", description)
@@ -44,10 +38,6 @@ struct RunConfiguration {
             .set("environmentVars", environmentVars)
             .set("port", port)
             .set("debugPort", debugPort)
-            .set("lastRunAt", lastRunAt)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("lastRunAt", lastRunAt);
     }
 }

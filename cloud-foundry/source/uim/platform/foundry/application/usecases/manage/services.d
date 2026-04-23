@@ -143,23 +143,23 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     binding.createdAt = Clock.currStdTime();
 
     bindingRepo.save(binding);
-    return CommandResult(binding.id, "");
+    return CommandResult(true, binding.id.toString, "");
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {
     return bindingRepo.findByTenant(tenantId);
   }
 
-  ServiceBinding[] listBindingsByApp(AppId appId, TenantId tenantId) {
-    return bindingRepo.findByApp(appId, tenantId);
+  ServiceBinding[] listBindingsByApp(TenantId tenantId, AppId appId) {
+    return bindingRepo.findByApp(tenantId, appId);
   }
 
-  CommandResult deleteBinding(ServiceBindingId bindingId, TenantId tenantId) {
-    auto existing = bindingRepo.findById(bindingId, tenantId);
+  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId bindingId) {
+    auto existing = bindingRepo.findById(tenantId, bindingId);
     if (existing is null)
       return CommandResult(false, "", "Service binding not found");
 
-    bindingRepo.remove(bindingId, tenantId);
+    bindingRepo.remove(tenantId, bindingId);
     return CommandResult(true, bindingId.toString, "");
   }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ProjectTemplate {
-    ProjectTemplateId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ProjectTemplateId);
+
     string name;
     string description;
     TemplateCategory category = TemplateCategory.general;
@@ -23,15 +23,9 @@ struct ProjectTemplate {
     string scaffoldConfig;
     string defaultFiles;
     string iconUrl;
-    string createdAt;
-    string modifiedAt;
-    string createdBy;
-    string modifiedBy;
 
-    Json projectTemplateToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("category", category.to!string)
@@ -40,10 +34,6 @@ struct ProjectTemplate {
             .set("requiredExtensions", requiredExtensions)
             .set("scaffoldConfig", scaffoldConfig)
             .set("defaultFiles", defaultFiles)
-            .set("iconUrl", iconUrl)
-            .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
-            .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("iconUrl", iconUrl);
     }
 }

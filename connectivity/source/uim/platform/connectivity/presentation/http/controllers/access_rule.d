@@ -37,10 +37,12 @@ class AccessRuleController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       auto r = CreateAccessRuleRequest();
       r.connectorId = j.getString("connectorId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.protocol = j.getString("protocol");
       r.virtualHost = j.getString("virtualHost");

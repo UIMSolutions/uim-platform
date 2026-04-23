@@ -26,4 +26,38 @@ struct AccessRule {
   bool principalPropagation; // allow user context forwarding
   long createdAt;
   long updatedAt;
+
+  AccessRule createFromRequest(CreateAccessRuleRequest req) {
+    AccessRule rule;
+    rule.id = randomUUID();
+    rule.connectorId = req.connectorId;
+    rule.tenantId = req.tenantId;
+    rule.description = req.description;
+    rule.protocol = parseAccessProtocol(req.protocol);
+    rule.virtualHost = req.virtualHost;
+    rule.virtualPort = req.virtualPort;
+    rule.urlPathPrefix = req.urlPathPrefix;
+    rule.policy = req.policy.toLower().to!AccessPolicy;
+    rule.principalPropagation = req.principalPropagation;
+    return rule;
+  }
+
+  AccessRule updateFromRequest(UpdateAccessRuleRequest req) {
+    AccessRule updated = this;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.protocol.length > 0)
+      updated.protocol = parseAccessProtocol(req.protocol);
+    if (req.virtualHost.length > 0)
+      updated.virtualHost = req.virtualHost;
+    if (req.virtualPort != 0)
+      updated.virtualPort = req.virtualPort;
+    if (req.urlPathPrefix.length > 0)
+      updated.urlPathPrefix = req.urlPathPrefix;
+    if (req.policy.length > 0)
+      updated.policy = req.policy.toLower().to!AccessPolicy;
+    updated.principalPropagation = req.principalPropagation;
+
+    return updated;
+  }
 }

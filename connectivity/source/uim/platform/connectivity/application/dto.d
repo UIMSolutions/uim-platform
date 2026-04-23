@@ -97,6 +97,7 @@ struct CreateAccessRuleRequest {
   string urlPathPrefix;
   string policy; // "allow", "deny"
   bool principalPropagation;
+
 }
 
 struct UpdateAccessRuleRequest {

@@ -19,13 +19,13 @@ mixin(ShowModule!());
 @safe:
 /// Application service for service channel lifecycle.
 class ManageChannelsUseCase { // TODO: UIMUseCase {
-  private ChannelRepository channelRepo;
+  private ChannelRepository channels;
   private ConnectorRepository connectorRepo;
   private ConnectivityLogRepository logRepo;
 
-  this(ChannelRepository channelRepo, ConnectorRepository connectorRepo,
+  this(ChannelRepository channels, ConnectorRepository connectorRepo,
       ConnectivityLogRepository logRepo) {
-    this.channelRepo = channelRepo;
+    this.channels = channels;
     this.connectorRepo = connectorRepo;
     this.logRepo = logRepo;
   }
@@ -50,31 +50,31 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.connectorId = req.connectorId;
     ch.tenantId = req.tenantId;
     ch.name = req.name;
-    ch.channelType = parseChannelType(req.channelType);
+    ch.channelType = req.channelType.to!ChannelType;
     ch.status = ChannelStatus.closed;
     ch.virtualHost = req.virtualHost;
     ch.virtualPort = req.virtualPort;
     ch.backendHost = req.backendHost;
     ch.backendPort = req.backendPort;
 
-    channelRepo.save(ch);
-    return CommandResult(true, id.toString, "");
+    channels.save(ch);
+    return CommandResult(true, ch.id.toString, "");
   }
 
   CommandResult openChannel(ChannelId id) {
-    auto ch = channelRepo.findById(id);
-    if (ch.id.isEmpty)
+    auto ch = channels.findById(id);
+    if (ch.isNull)
       return CommandResult(false, "", "Channel not found");
 
     // Verify connector is connected
     auto cc = connectorRepo.findById(ch.connectorId);
-    if (cc.id.isEmpty)
+    if (cc.isNull)
       return CommandResult(false, "", "Associated connector not found");
     if (cc.status != ConnectorStatus.connected)
       return CommandResult(false, "", "Connector is not connected");
 
     ch.status = ChannelStatus.open;
-    channelRepo.update(ch);
+    channels.update(ch);
 
     recordLog(ch.tenantId, ConnectivityEventType.channelOpened, id,
         "ServiceChannel", "Channel opened: " ~ ch.name);
@@ -83,43 +83,42 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult closeChannel(ChannelId id) {
-    auto ch = channelRepo.findById(id);
-    if (ch.id.isEmpty)
+    auto channel = channels.findById(id);
+    if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
-    ch.status = ChannelStatus.closed;
-    channelRepo.update(ch);
+    channel.status = ChannelStatus.closed;
+    channels.update(channel);
 
-    recordLog(ch.tenantId, ConnectivityEventType.channelClosed, id,
-        "ServiceChannel", "Channel closed: " ~ ch.name);
+    recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id,
+        "ServiceChannel", "Channel closed: " ~ channel.name);
 
     return CommandResult(true, id.toString, "");
   }
 
   ServiceChannel getChannel(ChannelId id) {
-    return channelRepo.findById(id);
+    return channels.findById(id);
   }
 
   ServiceChannel[] listByConnector(ConnectorId connectorId) {
-    return channelRepo.findByConnector(connectorId);
+    return channels.findByConnector(connectorId);
   }
 
   ServiceChannel[] listByTenant(TenantId tenantId) {
-    return channelRepo.findByTenant(tenantId);
+    return channels.findByTenant(tenantId);
   }
 
   CommandResult deleteChannel(ChannelId id) {
-    auto ch = channelRepo.findById(id);
-    if (ch.id.isEmpty)
+    auto channel = channels.findById(id);
+    if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
-    channelRepo.remove(id);
+    channels.remove(id);
     return CommandResult(true, id.toString, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
       string sourceId, string sourceType, string message) {
-    // import std.uuid : randomUUID;
 
     ConnectivityLog entry;
     entry.id = randomUUID();
@@ -133,15 +132,3 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 }
 
-private ChannelType parseChannelType(string s) {
-  switch (s) {
-  case "http":
-    return ChannelType.http;
-  case "rfc":
-    return ChannelType.rfc;
-  case "tcp":
-    return ChannelType.tcp;
-  default:
-    return ChannelType.http;
-  }
-}
