@@ -59,7 +59,7 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
 
   void remove(BusinessSubprocessId tenantId, id tenantId) {
     BusinessSubprocess[] kept;
-    foreach (s; store)
+    foreach (s; findAll)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;
