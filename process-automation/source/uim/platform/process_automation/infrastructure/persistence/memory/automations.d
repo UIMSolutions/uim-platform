@@ -14,7 +14,7 @@ class MemoryAutomationRepository : AutomationRepository {
     private Automation[] store;
 
     Automation findById(AutomationId id) {
-        foreach (a; store) {
+        foreach (a; findAll) {
             if (a.id == id)
                 return a;
         }
@@ -34,7 +34,7 @@ class MemoryAutomationRepository : AutomationRepository {
     }
 
     void update(Automation a) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == a.id) {
                 existing = a;
                 return;

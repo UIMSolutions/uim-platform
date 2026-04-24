@@ -14,7 +14,7 @@ class MemoryFormRepository : FormRepository {
     private Form[] store;
 
     Form findById(FormId id) {
-        foreach (f; store) {
+        foreach (f; findAll) {
             if (f.id == id)
                 return f;
         }
@@ -34,7 +34,7 @@ class MemoryFormRepository : FormRepository {
     }
 
     void update(Form f) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == f.id) {
                 existing = f;
                 return;

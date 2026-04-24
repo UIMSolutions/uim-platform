@@ -14,7 +14,7 @@ class MemoryTriggerRepository : TriggerRepository {
     private Trigger[] store;
 
     Trigger findById(TriggerId id) {
-        foreach (t; store) {
+        foreach (t; findAll) {
             if (t.id == id)
                 return t;
         }
@@ -34,7 +34,7 @@ class MemoryTriggerRepository : TriggerRepository {
     }
 
     void update(Trigger t) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == t.id) {
                 existing = t;
                 return;

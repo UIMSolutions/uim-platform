@@ -14,7 +14,7 @@ class MemoryVisibilityRepository : VisibilityRepository {
     private Visibility[] store;
 
     Visibility findById(VisibilityId id) {
-        foreach (v; store) {
+        foreach (v; findAll) {
             if (v.id == id)
                 return v;
         }
@@ -30,7 +30,7 @@ class MemoryVisibilityRepository : VisibilityRepository {
     }
 
     void update(Visibility v) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == v.id) {
                 existing = v;
                 return;

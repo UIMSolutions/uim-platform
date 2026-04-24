@@ -14,7 +14,7 @@ class MemoryProcessRepository : ProcessRepository {
     private Process[] store;
 
     Process findById(ProcessId id) {
-        foreach (p; store) {
+        foreach (p; findAll) {
             if (p.id == id)
                 return p;
         }
@@ -38,7 +38,7 @@ class MemoryProcessRepository : ProcessRepository {
     }
 
     void update(Process p) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == p.id) {
                 existing = p;
                 return;
