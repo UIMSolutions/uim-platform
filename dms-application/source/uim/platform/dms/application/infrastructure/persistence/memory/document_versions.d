@@ -28,7 +28,7 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
   }
 
   DocumentVersion findLatest(TenantId tenantId, DocumentId documentId) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.documentId == documentId && e.status == VersionStatus.current)
         return e;
     return null;

@@ -34,7 +34,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
   }
 
   ProxySystem* findByName(TenantId tenantId, string name) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
@@ -42,7 +42,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
 
   ProxySystem[] findByTenant(TenantId tenantId) {
     ProxySystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
 
   ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProxySystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -58,7 +58,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
 
   ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProxySystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
         result ~= e;
     return result;

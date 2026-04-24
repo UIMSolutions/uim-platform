@@ -24,7 +24,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   void removeByJob(ProvisioningJobId jobtenantId, id tenantId) {
     string[] toRemove;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.jobId == jobId && e.tenantId == tenantId)
         toRemove ~= e.id;
     foreach (id; toRemove)
@@ -40,7 +40,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   ProvisioningLog[] findByTenant(TenantId tenantId) {
     ProvisioningLog[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -48,7 +48,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   ProvisioningLog[] findByJob(ProvisioningJobId jobtenantId, id tenantId) {
     ProvisioningLog[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.jobId == jobId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -56,7 +56,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   ProvisioningLog[] findByEntity(string entitytenantId, id tenantId) {
     ProvisioningLog[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.entityId == entityId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -64,7 +64,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status) {
     ProvisioningLog[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
@@ -72,7 +72,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   size_t countByJob(ProvisioningJobId jobtenantId, id tenantId) {
     size_t count;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.jobId == jobId && e.tenantId == tenantId)
         count++;
     return count;
@@ -80,7 +80,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   size_t countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status) {
     size_t count;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.jobId == jobId && e.tenantId == tenantId && e.status == status)
         count++;
     return count;

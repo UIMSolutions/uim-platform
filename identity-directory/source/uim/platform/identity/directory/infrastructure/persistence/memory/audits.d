@@ -43,7 +43,7 @@ class MemoryAuditRepository : AuditRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId)
         count++;
     }
@@ -53,7 +53,7 @@ class MemoryAuditRepository : AuditRepository {
   private AuditEvent[] filterPaged(bool delegate(AuditEvent) pred, uint offset, uint limit) {
     AuditEvent[] result;
     uint idx;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (pred(e)) {
         if (idx >= offset && result.length < limit)
           result ~= e;

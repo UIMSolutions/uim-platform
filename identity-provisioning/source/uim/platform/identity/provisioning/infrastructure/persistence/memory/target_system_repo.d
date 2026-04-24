@@ -34,7 +34,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
   }
 
   TargetSystem* findByName(TenantId tenantId, string name) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
@@ -42,7 +42,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
 
   TargetSystem[] findByTenant(TenantId tenantId) {
     TargetSystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
 
   TargetSystem[] findByType(TenantId tenantId, SystemType systemType) {
     TargetSystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.systemType == systemType)
         result ~= e;
     return result;
@@ -58,7 +58,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
 
   TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
     TargetSystem[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

@@ -34,7 +34,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
   }
 
   ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return &e;
     return null;
@@ -42,7 +42,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findByTenant(TenantId tenantId) {
     ProvisionedEntity[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProvisionedEntity[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -58,7 +58,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProvisionedEntity[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -66,7 +66,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status) {
     ProvisionedEntity[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
@@ -74,7 +74,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType) {
     ProvisionedEntity[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.entityType == entityType)
         result ~= e;
     return result;
@@ -82,7 +82,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   size_t countByTarget(TargetSystemId targettenantId, id tenantId) {
     size_t count;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
         count++;
     return count;

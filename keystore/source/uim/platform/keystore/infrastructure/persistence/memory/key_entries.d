@@ -30,7 +30,7 @@ class MemoryKeyEntryRepository : KeyEntryRepository {
   }
 
   KeyEntry findByAlias(KeystoreId keystoreId, string alias_) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.keystoreId == keystoreId && e.alias_ == alias_)
         return e;
     }

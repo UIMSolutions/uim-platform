@@ -35,7 +35,7 @@ class MemoryTransformationRepository : TransformationRepository {
 
   Transformation[] findByTenant(TenantId tenantId) {
     Transformation[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -43,7 +43,7 @@ class MemoryTransformationRepository : TransformationRepository {
 
   Transformation[] findBySystem(string systemtenantId, id tenantId) {
     Transformation[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.systemId == systemId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -51,7 +51,7 @@ class MemoryTransformationRepository : TransformationRepository {
 
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role) {
     Transformation[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.systemRole == role)
         result ~= e;
     return result;
