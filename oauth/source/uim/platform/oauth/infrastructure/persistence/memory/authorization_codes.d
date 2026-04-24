@@ -47,7 +47,7 @@ class MemoryAuthorizationCodeRepository : AuthorizationCodeRepository {
     void save(AuthorizationCode entity) { store ~= entity; }
 
     void update(AuthorizationCode entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 

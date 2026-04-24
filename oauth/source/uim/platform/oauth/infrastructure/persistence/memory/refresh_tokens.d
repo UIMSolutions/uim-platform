@@ -47,7 +47,7 @@ class MemoryRefreshTokenRepository : RefreshTokenRepository {
     void save(RefreshToken entity) { store ~= entity; }
 
     void update(RefreshToken entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 

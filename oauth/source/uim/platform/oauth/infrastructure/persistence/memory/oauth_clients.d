@@ -43,7 +43,7 @@ class MemoryOAuthClientRepository : OAuthClientRepository {
     void save(OAuthClient entity) { store ~= entity; }
 
     void update(OAuthClient entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 

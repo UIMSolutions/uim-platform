@@ -28,7 +28,7 @@ class MemoryDeviceRegistrationRepository : DeviceRegistrationRepository {
   }
 
   DeviceRegistration findByDeviceToken(string deviceToken) {
-    foreach (r; store) {
+    foreach (r; findAll) {
       if (r.deviceToken == deviceToken)
         return r;
     }

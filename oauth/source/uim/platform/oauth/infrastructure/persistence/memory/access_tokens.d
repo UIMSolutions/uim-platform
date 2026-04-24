@@ -51,7 +51,7 @@ class MemoryAccessTokenRepository : AccessTokenRepository {
     void save(AccessToken entity) { store ~= entity; }
 
     void update(AccessToken entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 

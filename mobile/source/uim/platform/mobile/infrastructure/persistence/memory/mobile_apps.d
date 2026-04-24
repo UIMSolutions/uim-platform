@@ -24,7 +24,7 @@ class MemoryMobileAppRepository : MobileAppRepository {
   }
 
   MobileApp findByBundleId(string bundleId) {
-    foreach (a; store) {
+    foreach (a; findAll) {
       if (a.bundleId == bundleId)
         return a;
     }

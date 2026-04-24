@@ -37,7 +37,7 @@ class TenantRepository(TEntity, TId) {
 
   size_t countAll() {
     size_t count = 0;
-    foreach (tenantId, items; store) {
+    foreach (tenantId, items; findAll) {
       count += items.length;
     }
     return count;
@@ -46,7 +46,7 @@ class TenantRepository(TEntity, TId) {
   TEntity[] findAll(uint offset = 0, uint limit = 0) {
     TEntity[] allItems;
     uint idx;
-    foreach (tenantId, items; store) {
+    foreach (tenantId, items; findAll) {
       foreach (item; items.values.array) {
         if (idx >= offset && (limit == 0 || allItems.length < limit))
           allItems ~= item;

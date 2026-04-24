@@ -22,7 +22,7 @@ class MemoryPushRegistrationRepository : PushRegistrationRepository {
   }
 
   PushRegistration findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId) {
-    foreach (r; store) {
+    foreach (r; findAll) {
       if (r.deviceId == deviceId && r.appId == appId)
         return r;
     }
@@ -35,7 +35,7 @@ class MemoryPushRegistrationRepository : PushRegistrationRepository {
 
   PushRegistration[] findByTopic(MobileAppId appId, string topic) {
     PushRegistration[] result;
-    foreach (r; store) {
+    foreach (r; findAll) {
       if (r.appId == appId && r.topics.canFind(topic))
         result ~= r;
     }

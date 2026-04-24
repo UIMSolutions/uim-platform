@@ -33,7 +33,7 @@ class MemoryBrandingConfigRepository : BrandingConfigRepository {
     void save(BrandingConfig entity) { store ~= entity; }
 
     void update(BrandingConfig entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 
