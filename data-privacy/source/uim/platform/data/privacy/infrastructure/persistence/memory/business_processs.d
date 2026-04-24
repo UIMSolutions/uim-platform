@@ -33,8 +33,8 @@ class MemoryBusinessProcessRepository : BusinessProcessRepository {
 
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId) {
     BusinessProcess[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.controllerId == controllerId)
+    foreach (s; findByTenant(tenantId))
+      if (s.controllerId == controllerId)
         result ~= s;
     return result;
   }

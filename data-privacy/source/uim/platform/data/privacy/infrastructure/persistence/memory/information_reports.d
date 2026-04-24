@@ -33,16 +33,16 @@ class MemoryInformationReportRepository : InformationReportRepository {
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     InformationReport[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
+    foreach (s; findByTenant(tenantId))
+      if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
   }
 
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status) {
     InformationReport[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }

@@ -33,24 +33,24 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     PurposeRecord[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
+    foreach (s; findByTenant(tenantId))
+      if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
   }
 
   PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status) {
     PurposeRecord[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }
 
   PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     PurposeRecord[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.businessContextId == contextId)
+    foreach (s; findByTenant(tenantId))
+      if (s.businessContextId == contextId)
         result ~= s;
     return result;
   }

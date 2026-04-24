@@ -33,8 +33,8 @@ class MemoryDataControllerRepository : DataControllerRepository {
 
   DataController[] findByCountry(TenantId tenantId, string country) {
     DataController[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.country == country)
+    foreach (s; findByTenant(tenantId))
+      if (s.country == country)
         result ~= s;
     return result;
   }

@@ -40,16 +40,16 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType) {
     DataSubject[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.subjectType == subjectType)
+    foreach (s; findByTenant(tenantId))
+      if (s.subjectType == subjectType)
         result ~= s;
     return result;
   }
 
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     DataSubject[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.sourceSystem == sourceSystem)
+    foreach (s; findByTenant(tenantId))
+      if (s.sourceSystem == sourceSystem)
         result ~= s;
     return result;
   }

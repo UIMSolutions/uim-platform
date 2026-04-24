@@ -33,16 +33,16 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
 
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status) {
     BusinessContext[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }
 
   BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
     BusinessContext[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.controllerGroupId == groupId)
+    foreach (s; findByTenant(tenantId))
+      if (s.controllerGroupId == groupId)
         result ~= s;
     return result;
   }

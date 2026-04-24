@@ -33,16 +33,16 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
 
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     DestructionRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
+    foreach (s; findByTenant(tenantId))
+      if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
   }
 
   DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status) {
     DestructionRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }

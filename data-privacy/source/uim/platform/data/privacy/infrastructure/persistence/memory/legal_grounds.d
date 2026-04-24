@@ -33,32 +33,32 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
-    foreach (g; findAll)
-      if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId)
+    foreach (g; findByTenant(tenantId))
+      if (g.dataSubjectId == dataSubjectId)
         result ~= g;
     return result;
   }
 
   LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis) {
     LegalGround[] result;
-    foreach (g; findAll)
-      if (g.tenantId == tenantId && g.basis == basis)
+    foreach (g; findByTenant(tenantId))
+      if (g.basis == basis)
         result ~= g;
     return result;
   }
 
   LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     LegalGround[] result;
-    foreach (g; findAll)
-      if (g.tenantId == tenantId && g.purpose == purpose)
+    foreach (g; findByTenant(tenantId))
+      if (g.purpose == purpose)
         result ~= g;
     return result;
   }
 
   LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
-    foreach (g; findAll)
-      if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId && g.isActive)
+    foreach (g; findByTenant(tenantId))
+      if (g.dataSubjectId == dataSubjectId && g.isActive)
         result ~= g;
     return result;
   }

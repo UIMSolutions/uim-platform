@@ -20,8 +20,8 @@ class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, Archive
   }
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     ArchiveRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
+    foreach (s; findByTenant(tenantId))
+      if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
   }
@@ -34,8 +34,8 @@ class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, Archive
   }
   ArchiveRequest[] findByStatus(TenantId tenantId, ArchiveStatus status) {
     ArchiveRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }

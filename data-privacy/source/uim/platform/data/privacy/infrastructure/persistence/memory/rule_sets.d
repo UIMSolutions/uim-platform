@@ -33,16 +33,16 @@ class MemoryRuleSetRepository : RuleSetRepository {
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     RuleSet[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.businessContextId == contextId)
+    foreach (s; findByTenant(tenantId))
+      if (s.businessContextId == contextId)
         result ~= s;
     return result;
   }
 
   RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status) {
     RuleSet[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }
