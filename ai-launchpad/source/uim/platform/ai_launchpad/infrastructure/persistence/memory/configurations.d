@@ -13,7 +13,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
   private Configuration[] store;
 
   void save(Configuration c) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == c.id && existing.connectionId == c.connectionId) {
         existing = c;
         return;
@@ -23,7 +23,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
   }
 
   Configuration findById(ConfigurationId id, ConnectionId connectionId) {
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.id == id && c.connectionId == connectionId) return c;
     }
     return Configuration.init;
@@ -31,7 +31,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
 
   Configuration[] findByConnection(ConnectionId connectionId) {
     Configuration[] result;
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.connectionId == connectionId) result ~= c;
     }
     return result;
@@ -39,7 +39,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
 
   Configuration[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     Configuration[] result;
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.scenarioId == scenarioId && c.connectionId == connectionId) result ~= c;
     }
     return result;
@@ -51,7 +51,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
 
   void remove(ConfigurationId id, ConnectionId connectionId) {
     Configuration[] filtered;
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (!(c.id == id && c.connectionId == connectionId)) filtered ~= c;
     }
     store = filtered;

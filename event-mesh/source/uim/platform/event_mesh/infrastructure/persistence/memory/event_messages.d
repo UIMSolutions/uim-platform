@@ -19,7 +19,7 @@ class MemoryEventMessageRepository : EventMessageRepository {
     }
 
     EventMessage findById(EventMessageId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return EventMessage.init;
     }

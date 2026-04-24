@@ -19,7 +19,7 @@ class MemoryEventSchemaRepository : EventSchemaRepository {
     }
 
     EventSchema findById(EventSchemaId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return EventSchema.init;
     }

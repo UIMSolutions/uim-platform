@@ -19,7 +19,7 @@ class MemoryQueueRepository : QueueRepository {
     }
 
     Queue findById(QueueId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Queue.init;
     }

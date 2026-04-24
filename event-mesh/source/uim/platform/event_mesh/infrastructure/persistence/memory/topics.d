@@ -19,7 +19,7 @@ class MemoryTopicRepository : TopicRepository {
     }
 
     Topic findById(TopicId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Topic.init;
     }

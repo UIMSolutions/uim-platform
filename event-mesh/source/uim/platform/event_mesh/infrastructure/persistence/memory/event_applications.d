@@ -19,7 +19,7 @@ class MemoryEventApplicationRepository : EventApplicationRepository {
     }
 
     EventApplication findById(EventApplicationId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return EventApplication.init;
     }

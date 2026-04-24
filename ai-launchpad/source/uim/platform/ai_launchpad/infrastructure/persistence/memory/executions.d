@@ -23,7 +23,7 @@ class MemoryExecutionRepository : IExecutionRepository {
   }
 
   Execution findById(ExecutionId id, ConnectionId connectionId) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id && e.connectionId == connectionId) return e;
     }
     return Execution.init;
@@ -31,7 +31,7 @@ class MemoryExecutionRepository : IExecutionRepository {
 
   Execution[] findByConnection(ConnectionId connectionId) {
     Execution[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.connectionId == connectionId) result ~= e;
     }
     return result;
@@ -39,7 +39,7 @@ class MemoryExecutionRepository : IExecutionRepository {
 
   Execution[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     Execution[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.scenarioId == scenarioId && e.connectionId == connectionId) result ~= e;
     }
     return result;
@@ -47,7 +47,7 @@ class MemoryExecutionRepository : IExecutionRepository {
 
   Execution[] findByStatus(ExecutionStatus status, ConnectionId connectionId) {
     Execution[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.status == status && e.connectionId == connectionId) result ~= e;
     }
     return result;
@@ -59,7 +59,7 @@ class MemoryExecutionRepository : IExecutionRepository {
 
   void remove(ExecutionId id, ConnectionId connectionId) {
     Execution[] filtered;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (!(e.id == id && e.connectionId == connectionId)) filtered ~= e;
     }
     store = filtered;

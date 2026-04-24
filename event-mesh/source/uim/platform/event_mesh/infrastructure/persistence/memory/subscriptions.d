@@ -19,7 +19,7 @@ class MemorySubscriptionRepository : SubscriptionRepository {
     }
 
     EventSubscription findById(SubscriptionId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return EventSubscription.init;
     }
