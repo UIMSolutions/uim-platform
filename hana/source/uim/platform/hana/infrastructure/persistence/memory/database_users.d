@@ -20,7 +20,7 @@ class MemoryDatabaseUserRepository : DatabaseUserRepository {
   private DatabaseUser[] store;
 
   DatabaseUser findById(DatabaseUserId id) {
-    foreach (u; store) {
+    foreach (u; findAll) {
       if (u.id == id)
         return u;
     }
@@ -40,7 +40,7 @@ class MemoryDatabaseUserRepository : DatabaseUserRepository {
   }
 
   void update(DatabaseUser u) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == u.id) {
         existing = u;
         return;

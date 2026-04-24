@@ -21,7 +21,7 @@ class MemoryDataLakeRepository : DataLakeRepository {
   private DataLake[] store;
 
   DataLake findById(DataLakeId id) {
-    foreach (d; store) {
+    foreach (d; findAll) {
       if (d.id == id)
         return d;
     }
@@ -41,7 +41,7 @@ class MemoryDataLakeRepository : DataLakeRepository {
   }
 
   void update(DataLake d) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == d.id) {
         existing = d;
         return;

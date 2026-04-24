@@ -20,7 +20,7 @@ class MemoryHDIContainerRepository : HDIContainerRepository {
   private HDIContainer[] store;
 
   HDIContainer findById(HDIContainerId id) {
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.id == id)
         return c;
     }
@@ -40,7 +40,7 @@ class MemoryHDIContainerRepository : HDIContainerRepository {
   }
 
   void update(HDIContainer c) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == c.id) {
         existing = c;
         return;

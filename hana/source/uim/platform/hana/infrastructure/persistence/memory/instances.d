@@ -20,7 +20,7 @@ class MemoryInstanceRepository : InstanceRepository {
   private DatabaseInstance[] store;
 
   DatabaseInstance findById(InstanceId id) {
-    foreach (i; store) {
+    foreach (i; findAll) {
       if (i.id == id)
         return i;
     }
@@ -36,7 +36,7 @@ class MemoryInstanceRepository : InstanceRepository {
   }
 
   void update(DatabaseInstance i) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == i.id) {
         existing = i;
         return;

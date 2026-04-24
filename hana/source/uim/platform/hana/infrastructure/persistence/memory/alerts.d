@@ -22,7 +22,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
   }
 
   Alert findById(AlertId id) {
-    foreach (tenentId, alerts; store) {
+    foreach (tenentId, alerts; findAll) {
       if (id in alerts)
         return alerts[id];
     }
@@ -54,7 +54,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
   }
 
   void remove(AlertId id) {
-    foreach (tenantId, alerts; store) {
+    foreach (tenantId, alerts; findAll) {
       if (id in alerts) {
         store[tenantId].remove(id);
 
