@@ -15,7 +15,7 @@ class MemoryTrustedCertificateRepository : TrustedCertificateRepository {
     private TrustedCertificate[] store;
 
     TrustedCertificate findById(TrustedCertificateId id) {
-        foreach (c; store) {
+        foreach (c; findAll) {
             if (c.id == id)
                 return c;
         }
@@ -35,7 +35,7 @@ class MemoryTrustedCertificateRepository : TrustedCertificateRepository {
     }
 
     void update(TrustedCertificate c) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == c.id) {
                 existing = c;
                 return;

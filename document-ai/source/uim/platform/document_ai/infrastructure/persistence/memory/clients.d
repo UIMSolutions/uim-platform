@@ -20,7 +20,7 @@ class MemoryClientRepository : ClientRepository {
   private Client[] store;
 
   Client findById(ClientId id) {
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.id == id)
         return c;
     }
@@ -36,7 +36,7 @@ class MemoryClientRepository : ClientRepository {
   }
 
   void update(Client c) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == c.id) {
         existing = c;
         return;

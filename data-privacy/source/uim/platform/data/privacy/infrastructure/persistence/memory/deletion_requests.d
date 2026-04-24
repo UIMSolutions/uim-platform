@@ -18,14 +18,14 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
 
   DeletionRequest[] findByTenant(TenantId tenantId) {
     DeletionRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId)
         result ~= r;
     return result;
   }
 
   DeletionRequest* findById(DeletionRequestId tenantId, id tenantId) {
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
@@ -33,7 +33,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
 
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     DeletionRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
         result ~= r;
     return result;
@@ -41,7 +41,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
 
   DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status) {
     DeletionRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId && r.status == status)
         result ~= r;
     return result;
@@ -52,7 +52,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
   }
 
   void update(DeletionRequest request) {
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.id == request.id && r.tenantId == request.tenantId) {
         r = request;
         return;

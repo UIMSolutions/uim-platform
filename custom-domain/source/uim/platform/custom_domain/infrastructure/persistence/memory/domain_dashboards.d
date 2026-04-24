@@ -15,7 +15,7 @@ class MemoryDomainDashboardRepository : DomainDashboardRepository {
     private DomainDashboard[] store;
 
     DomainDashboard findById(DomainDashboardId id) {
-        foreach (d; store) {
+        foreach (d; findAll) {
             if (d.id == id)
                 return d;
         }
@@ -23,7 +23,7 @@ class MemoryDomainDashboardRepository : DomainDashboardRepository {
     }
 
     DomainDashboard findByTenant(TenantId tenantId) {
-        foreach (d; store) {
+        foreach (d; findAll) {
             if (d.tenantId == tenantId)
                 return d;
         }
@@ -35,7 +35,7 @@ class MemoryDomainDashboardRepository : DomainDashboardRepository {
     }
 
     void update(DomainDashboard d) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == d.id) {
                 existing = d;
                 return;

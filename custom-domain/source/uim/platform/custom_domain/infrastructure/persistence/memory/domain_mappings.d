@@ -15,7 +15,7 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
     private DomainMapping[] store;
 
     DomainMapping findById(DomainMappingId id) {
-        foreach (m; store) {
+        foreach (m; findAll) {
             if (m.id == id)
                 return m;
         }
@@ -31,7 +31,7 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
     }
 
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; store) {
+        foreach (m; findAll) {
             if (m.tenantId == tenantId && m.customRoute == customRoute)
                 return m;
         }
@@ -43,7 +43,7 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
     }
 
     void update(DomainMapping m) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == m.id) {
                 existing = m;
                 return;

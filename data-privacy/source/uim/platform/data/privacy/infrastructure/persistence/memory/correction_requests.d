@@ -18,7 +18,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   CorrectionRequest[] findByTenant(TenantId tenantId) {
     CorrectionRequest[] result;
-    foreach (s; store)
+    foreach (s; findAll)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
