@@ -17,40 +17,48 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryTransportRequestRepository : TransportRequestRepository {
-  private TransportRequest[TransportRequestId] store;
+class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
 
-  TransportRequest* findById(TransportRequestId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+  // #region BySystem
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
   }
 
   TransportRequest[] findBySystem(SystemInstanceId systemId) {
     return findAll().filter!(e => e.sourceSystemId == systemId).array;
   }
 
-  TransportRequest[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e));
+  }
+  // #endregion BySystem
+
+  // #region ByStatus
+  size_t countByStatus(SystemInstanceId systemId, TransportStatus status) {
+    return findByStatus(systemId, status).length;
   }
 
   TransportRequest[] findByStatus(SystemInstanceId systemId, TransportStatus status) {
     return findAll().filter!(e => e.sourceSystemId == systemId && e.status == status).array;
   }
 
+  void removeByStatus(SystemInstanceId systemId, TransportStatus status) {
+    findByStatus(systemId, status).each!(e => remove(e));
+  }
+  // #endregion ByStatus
+
+  // #region ByOwner
+  size_t countByOwner(SystemInstanceId systemId, string owner) {
+    return findByOwner(systemId, owner).length;
+  }
+
   TransportRequest[] findByOwner(SystemInstanceId systemId, string owner) {
     return findAll().filter!(e => e.sourceSystemId == systemId && e.owner == owner).array;
   }
 
-  void save(TransportRequest request) {
-    store[request.id] = request;
+  void removeByOwner(SystemInstanceId systemId, string owner) {
+    findByOwner(systemId, owner).each!(e => remove(e));
   }
+  // #endregion ByOwner
 
-  void update(TransportRequest request) {
-    store[request.id] = request;
-  }
-
-  void remove(TransportRequestId id) {
-    store.remove(id);
-  }
 }

@@ -12,16 +12,7 @@ import uim.platform.credential_store.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[ServiceBindingId] store;
-
-  bool existsById(ServiceBindingId id) {
-    return (id in store) ? true : false;
-  }
-
-  ServiceBinding findById(ServiceBindingId id) {
-    return existsById(id) ? store[id] : ServiceBinding.init;
-  }
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   bool existsByClientId(string clientId) {
     foreach (b; store) {
@@ -39,23 +30,10 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
     return ServiceBinding.init;
   }
 
-  ServiceBinding[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(b => b.tenantId == tenantId).array;
+  void removeByClientId(string clientId) {
+    ServiceBinding b = findByClientId(clientId);
+    if (b.id.value != "")
+      remove(b.id);
   }
 
-  void save(ServiceBinding binding) {
-    store[binding.id] = binding;
-  }
-
-  void update(ServiceBinding binding) {
-    store[binding.id] = binding;
-  }
-
-  void remove(ServiceBindingId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(b => b.tenantId == tenantId).array.length;
-  }
 }

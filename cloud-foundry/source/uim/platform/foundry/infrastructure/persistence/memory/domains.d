@@ -16,47 +16,26 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDomainRepository : DomainRepository {
-  private CfDomain[DomainId] store;
+class MemoryDomainRepository : TenantRepository!(CfDomain, DomainId), DomainRepository {
 
-  CfDomain[] findByOrg(OrgId orgtenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.ownerOrgId == orgId).array;
+  size_t countByOrg(TenantId tenantId, OrgId orgId) {
+    return findByOrg(tenantId, orgId).length;
+  }
+  CfDomain[] findByOrg(TenantId tenantId, OrgId orgId) {
+    return findByTenant(tenantId).filter!(e => e.ownerOrgId == orgId).array;
+  }
+  void removeByOrg(TenantId tenantId, OrgId orgId) {
+    findByOrg(tenantId, orgId).each!(e => remove(e));
   }
 
-  CfDomain* findById(DomainId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  size_t countShared(TenantId tenantId) {
+    return findShared(tenantId).length;
   }
-
-  CfDomain* findByName(TenantId tenantId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.name == name)
-        return &e;
-    return null;
-  }
-
   CfDomain[] findShared(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.scope_ == DomainScope.shared_).array;
+    return findByTenant(tenantId).filter!(e => e.scope_ == DomainScope.shared_).array;
+  }
+  void removeShared(TenantId tenantId) {
+    findShared(tenantId).each!(e => remove(e.id));
   }
 
-  CfDomain[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
-  }
-
-  void save(CfDomain d) {
-    store[d.id] = d;
-  }
-
-  void update(CfDomain d) {
-    store[d.id] = d;
-  }
-
-  void remove(DomainId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

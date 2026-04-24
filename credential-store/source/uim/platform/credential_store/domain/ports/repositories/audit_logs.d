@@ -9,8 +9,17 @@ import uim.platform.credential_store.domain.entities.audit_log_entry;
 import uim.platform.credential_store.domain.types;
 
 interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogEntryId) {
+
+  size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId);
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId);
+  void removeByNamespace(TenantId tenantId, NamespaceId namespaceId);
+
+  size_t countByResourceType(TenantId tenantId, ResourceType resourceType);
   AuditLogEntry[] findByResourceType(TenantId tenantId, ResourceType resourceType);
+  void removeByResourceType(TenantId tenantId, ResourceType resourceType);
+  
+  size_t countByTimeRange(TenantId tenantId, long startTime, long endTime);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
-  size_t countByTenant(TenantId tenantId);
+  void removeByTimeRange(TenantId tenantId, long startTime, long endTime);
+
 }

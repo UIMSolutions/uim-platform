@@ -12,25 +12,11 @@ import uim.platform.credential_store.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryCredentialRepository : CredentialRepository {
-  private Credential[CredentialId] store;
-
-  bool existsById(CredentialId id) {
-    return (id in store) ? true : false;
-  }
-
-  Credential findById(CredentialId id) {
-    return existsById(id) ? store[id] : Credential.init;
-  }
-
+class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
+  
   bool existsByName(NamespaceId namespaceId, string name, CredentialType type) {
-    foreach (c; store) {
-      if (c.namespaceId == namespaceId && c.name == name && c.type == type)
-        return true;
-    }
-    return false;
+    return findByName(namespaceId, name, type).id.value != "";
   }
-
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
     foreach (c; store) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
@@ -38,36 +24,30 @@ class MemoryCredentialRepository : CredentialRepository {
     }
     return Credential.init;
   }
-
-  Credential[] findByNamespace(NamespaceId namespaceId) {
-    return store.values.filter!(c => c.namespaceId == namespaceId).array;
-  }
-
-  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    return findByNamespace(namespaceId).filter!(c => c.type == type).array;
-  }
-
-  Credential[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(c => c.tenantId == tenantId).array;
-  }
-
-  void save(Credential cred) {
-    store[cred.id] = cred;
-  }
-
-  void update(Credential cred) {
-    store[cred.id] = cred;
-  }
-
-  void remove(CredentialId id) {
-    store.remove(id);
+  void removeByName(NamespaceId namespaceId, string name, CredentialType type) {
+    Credential c = findByName(namespaceId, name, type);
+    if (c.id.value != "")
+      remove(c.id);
   }
 
   size_t countByNamespace(NamespaceId namespaceId) {
-    return store.values.filter!(c => c.namespaceId == namespaceId).array.length;
+    return findByNamespace(namespaceId).length;
+  }
+  Credential[] findByNamespace(NamespaceId namespaceId) {
+    return store.values.filter!(c => c.namespaceId == namespaceId).array;
+  }
+  void removeByNamespace(NamespaceId namespaceId) {
+    findByNamespace(namespaceId).each!(c => remove(c.id));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(c => c.tenantId == tenantId).array.length;
+  size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
+    return findByNamespaceAndType(namespaceId, type).length;
   }
+  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
+    return findByNamespace(namespaceId).filter!(c => c.type == type).array;
+  }
+  void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
+    findByNamespaceAndType(namespaceId, type).each!(c => remove(c.id));
+  }
+
 }

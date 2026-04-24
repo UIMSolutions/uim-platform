@@ -17,36 +17,30 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryApplicationJobRepository : MemoryTenantRepository!(ApplicationJob, ApplicationJobId), ApplicationJobRepository {
-  // private ApplicationJob[ApplicationJobId] store;
-// 
-  // ApplicationJob findById(ApplicationJobId id) {
-    // if (id in store)
-      // return store[id];
-    // return ApplicationJob.init;
-  // }
+class MemoryApplicationJobRepository : TenantRepository!(ApplicationJob, ApplicationJobId), ApplicationJobRepository {
 
+  // #region BySystem
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
+  }
   ApplicationJob[] findBySystem(SystemInstanceId systemId) {
     return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e));
+  }
+  // #endregion BySystem
 
-// /  ApplicationJob[] findByTenant(TenantId tenantId) {
-// /    return findAll().filter!(e => e.tenantId == tenantId).array;
-// /  }
-
+  // #region ByStatus
+  size_t countByStatus(SystemInstanceId systemId, JobStatus status) {
+    return findByStatus(systemId, status).length;
+  }
   ApplicationJob[] findByStatus(SystemInstanceId systemId, JobStatus status) {
     return findAll().filter!(e => e.systemInstanceId == systemId && e.status == status).array;
   }
+  void removeByStatus(SystemInstanceId systemId, JobStatus status) {
+    findByStatus(systemId, status).each!(e => remove(e));
+  }
+  // #endregion ByStatus
 
-  // void save(ApplicationJob job) {
-  //   store[job.id] = job;
-  // }
-
-  // void update(ApplicationJob job) {
-  //   store[job.id] = job;
-  // }
-
-  // void remove(ApplicationJobId id) {
-  //   store.remove(id);
-  // }
 }

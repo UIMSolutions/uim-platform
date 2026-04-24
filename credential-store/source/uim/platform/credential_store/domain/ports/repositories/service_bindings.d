@@ -11,13 +11,14 @@ import uim.platform.credential_store.domain.entities.service_binding;
 import uim.platform.credential_store.domain.types;
 
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
-    // BySystem
+    // ByClient
     size_t countByClient(string clientId);
     ServiceBinding[] findByClient(string clientId);
     void removeByClient(string clientId);
 
-    // ByType
+    // ByStatus
     size_t countByStatus(BindingStatus status);
     ServiceBinding[] findByStatus(BindingStatus status);
     void removeByStatus(BindingStatus status);
 }
+    
