@@ -20,7 +20,7 @@ class MemoryActivityRepository : ActivityRepository {
     }
 
     Activity findById(ActivityId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Activity.init; // or throw an exception
     }
@@ -46,7 +46,7 @@ class MemoryActivityRepository : ActivityRepository {
     void save(Activity activity) { store ~= activity; }
 
     void update(Activity activity) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == activity.id) { e = activity; return; }
     }
 

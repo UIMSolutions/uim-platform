@@ -19,7 +19,7 @@ class MemoryEquipmentRepository : EquipmentRepository {
     }
 
     Equipment findById(EquipmentId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return null;
     }
@@ -45,7 +45,7 @@ class MemoryEquipmentRepository : EquipmentRepository {
     void save(Equipment equipment) { store ~= equipment; }
 
     void update(Equipment equipment) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == equipment.id) { e = equipment; return; }
     }
 

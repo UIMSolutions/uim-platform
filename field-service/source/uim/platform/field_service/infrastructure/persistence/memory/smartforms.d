@@ -19,7 +19,7 @@ class MemorySmartformRepository : SmartformRepository {
     }
 
     Smartform findById(SmartformId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Smartform.init;
     }
@@ -45,7 +45,7 @@ class MemorySmartformRepository : SmartformRepository {
     void save(Smartform smartform) { store ~= smartform; }
 
     void update(Smartform smartform) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == smartform.id) { e = smartform; return; }
     }
 

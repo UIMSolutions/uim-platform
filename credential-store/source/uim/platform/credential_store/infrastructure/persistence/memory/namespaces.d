@@ -12,42 +12,18 @@ import uim.platform.credential_store.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryNamespaceRepository : NamespaceRepository {
-  private Namespace[NamespaceId] store;
+class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
 
-  bool existsById(NamespaceId id) {
-    return (id in store) ? true : false;
-  }
-
-  Namespace findById(NamespaceId id) {
-    return existsById(id) ? store[id] : Namespace.init;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).id.value != "";
   }
 
   Namespace findByName(TenantId tenantId, string name) {
-    foreach (ns; store) {
-      if (ns.tenantId == tenantId && ns.name == name)
+    foreach (ns; findByTenant(tenantId)) {
+      if (ns.name == name)
         return ns;
     }
     return Namespace.init;
   }
 
-  Namespace[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(ns => ns.tenantId == tenantId).array;
-  }
-
-  void save(Namespace ns) {
-    store[ns.id] = ns;
-  }
-
-  void update(Namespace ns) {
-    store[ns.id] = ns;
-  }
-
-  void remove(NamespaceId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(ns => ns.tenantId == tenantId).array.length;
-  }
 }

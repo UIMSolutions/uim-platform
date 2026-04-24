@@ -16,36 +16,30 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryImportJobRepository : ImportJobRepository {
-  private ImportJob[ImportJobId] store;
+class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), ImportJobRepository {
 
-  ImportJob findById(ImportJobId id) {
-    if (auto p = id in store)
-      return *p;
-    return ImportJob.init;
-  }
-
-  ImportJob[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  size_t countByPackage(ContentPackageId packageId) {
+    return findByPackage(packageId).length;
   }
 
   ImportJob[] findByPackage(ContentPackageId packageId) {
     return findAll().filter!(e => e.packageId == packageId).array;
   }
 
+  void removeByPackage(ContentPackageId packageId) {
+    findByPackage(packageId).each!(e => remove(e.id));
+  }
+
+  size_t countByStatus(TenantId tenantId, ImportStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
   ImportJob[] findByStatus(TenantId tenantId, ImportStatus status) {
     return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  void save(ImportJob job) {
-    store[job.id] = job;
+  void removeByStatus(TenantId tenantId, ImportStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e.id));
   }
 
-  void update(ImportJob job) {
-    store[job.id] = job;
-  }
-
-  void remove(ImportJobId id) {
-    store.remove(id);
-  }
 }

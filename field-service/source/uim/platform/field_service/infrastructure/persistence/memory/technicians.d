@@ -19,7 +19,7 @@ class MemoryTechnicianRepository : TechnicianRepository {
     }
 
     Technician findById(TechnicianId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Technician.init;
     }
@@ -41,7 +41,7 @@ class MemoryTechnicianRepository : TechnicianRepository {
     void save(Technician technician) { store ~= technician; }
 
     void update(Technician technician) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == technician.id) { e = technician; return; }
     }
 

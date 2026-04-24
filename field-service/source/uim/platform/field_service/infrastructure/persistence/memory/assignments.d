@@ -19,7 +19,7 @@ class MemoryAssignmentRepository : AssignmentRepository {
     }
 
     Assignment findById(AssignmentId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return Assignment.init; // or throw an exception
     }
@@ -45,7 +45,7 @@ class MemoryAssignmentRepository : AssignmentRepository {
     void save(Assignment assignment) { store ~= assignment; }
 
     void update(Assignment assignment) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == assignment.id) { e = assignment; return; }
     }
 

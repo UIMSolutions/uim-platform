@@ -16,47 +16,37 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceInstanceRepository : ServiceInstanceRepository {
-  private ServiceInstance[ServiceInstanceId] store;
+class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
 
-  ServiceInstance[] findBySpace(SpaceId spacetenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
+  bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
+    return findByName(tenantId, spaceId, name).id.value != "";
   }
 
-  ServiceInstance* findById(ServiceInstanceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  ServiceInstance* findByName(SpaceId spacetenantId, id tenantId, string name) {
+  ServiceInstance findByName(TenantId tenantId, SpaceId spaceId, string name) {
     foreach (e; findAll())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
-        return &e;
-    return null;
+        return e;
+    return ServiceInstance.init;
   }
 
-  ServiceInstance[] findByServiceName(SpaceId spacetenantId, id tenantId, string serviceName) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.spaceId == spaceId && e.serviceName == serviceName).array;
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findBySpace(tenantId, spaceId).length;
+  }
+  ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId).array;
+  }
+  void removeBySpace(TenantId tenantId, SpaceId spaceId) {
+    findBySpace(tenantId, spaceId).each!(e => remove(e.id));
   }
 
-  ServiceInstance[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  size_t countByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {
+    return findByServiceName(tenantId, spaceId, serviceName).length;
+  }
+  ServiceInstance[] findByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {
+    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId && e.serviceName == serviceName).array;
+  }
+  void removeByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {
+    findByServiceName(tenantId, spaceId, serviceName).each!(e => remove(e));
   }
 
-  void save(ServiceInstance instance) {
-    store[instance.id] = instance;
-  }
-
-  void update(ServiceInstance instance) {
-    store[instance.id] = instance;
-  }
-
-  void remove(ServiceInstanceId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

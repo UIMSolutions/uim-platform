@@ -35,7 +35,7 @@ class MemoryCustomerRepository : CustomerRepository {
     void save(Customer customer) { store ~= customer; }
 
     void update(Customer customer) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == customer.id) { e = customer; return; }
     }
 
