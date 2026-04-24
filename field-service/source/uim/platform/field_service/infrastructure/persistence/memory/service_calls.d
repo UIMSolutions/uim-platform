@@ -19,7 +19,7 @@ class MemoryServiceCallRepository : ServiceCallRepository {
     }
 
     ServiceCall findById(ServiceCallId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return ServiceCall.init; // or throw an exception
     }
@@ -45,7 +45,7 @@ class MemoryServiceCallRepository : ServiceCallRepository {
     void save(ServiceCall serviceCall) { store ~= serviceCall; }
 
     void update(ServiceCall serviceCall) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == serviceCall.id) { e = serviceCall; return; }
     }
 

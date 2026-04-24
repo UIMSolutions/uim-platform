@@ -21,28 +21,28 @@ class MemoryDataProcessingLogRepository : DataProcessingLogRepository {
 
     DataProcessingLog[] findByTenant(TenantId tenantId) {
         DataProcessingLog[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId) {
         DataProcessingLog[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
 
     DataProcessingLog[] findByRequest(DataSubjectRequestId requestId) {
         DataProcessingLog[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.requestId == requestId) result ~= v;
         return result;
     }
 
     DataProcessingLog[] findByApplication(string applicationId) {
         DataProcessingLog[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.applicationId == applicationId) result ~= v;
         return result;
     }

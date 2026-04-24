@@ -21,20 +21,20 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
     DataSubject[] findByTenant(TenantId tenantId) {
         DataSubject[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     DataSubject findByEmail(string email) {
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.email == email) return v;
         return DataSubject.init;
     }
 
     DataSubject[] findByName(string firstName, string lastName) {
         DataSubject[] result;
-        foreach (v; store) {
+        foreach (v; findAll) {
             bool match = true;
             if (firstName.length > 0 && v.firstName != firstName) match = false;
             if (lastName.length > 0 && v.lastName != lastName) match = false;
@@ -45,7 +45,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
     DataSubject[] findByOrganization(string organizationId) {
         DataSubject[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.organizationId == organizationId) result ~= v;
         return result;
     }

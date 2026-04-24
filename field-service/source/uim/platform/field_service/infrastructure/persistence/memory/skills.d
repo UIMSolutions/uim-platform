@@ -19,7 +19,7 @@ class MemorySkillRepository : SkillRepository {
     }
 
     Skill findById(SkillId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id)
                 return e;
         return Skill.init; // or throw an exception
@@ -46,7 +46,7 @@ class MemorySkillRepository : SkillRepository {
     }
 
     void update(Skill skill) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == skill.id) {
                 e = skill;
                 return;

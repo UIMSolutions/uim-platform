@@ -21,14 +21,14 @@ class MemoryProcessingPurposeRepository : ProcessingPurposeRepository {
 
     ProcessingPurpose[] findByTenant(TenantId tenantId) {
         ProcessingPurpose[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     ProcessingPurpose[] findByLegalBasis(LegalBasis basis) {
         ProcessingPurpose[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.legalBasis == basis) result ~= v;
         return result;
     }
@@ -36,7 +36,7 @@ class MemoryProcessingPurposeRepository : ProcessingPurposeRepository {
     ProcessingPurpose[] findByApplication(RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         ProcessingPurpose[] result;
-        foreach (v; store)
+        foreach (v; findAll)
             if (v.applicationIds.canFind(applicationId)) result ~= v;
         return result;
     }
