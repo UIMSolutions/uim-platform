@@ -51,8 +51,8 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status) {
     TrainingJob[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

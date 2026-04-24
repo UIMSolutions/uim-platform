@@ -28,15 +28,15 @@ class MemoryCertificateRepository : CertificateRepository {
   }
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.subaccountId == subaccountId && e.name == name)
         return true;
     return false;
   }
 
   Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.subaccountId == subaccountId && e.name == name)
         return e;
     return Certificate.init;
   }

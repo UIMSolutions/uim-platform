@@ -51,8 +51,8 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
     ModelDeployment[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

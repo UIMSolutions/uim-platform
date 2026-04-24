@@ -51,8 +51,8 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
 
   InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status) {
     InferenceRequest[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

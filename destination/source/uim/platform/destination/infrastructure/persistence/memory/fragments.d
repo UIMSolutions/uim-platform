@@ -34,8 +34,8 @@ class MemoryFragmentRepository : FragmentRepository {
   }
 
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.subaccountId == subaccountId && e.name == name)
         return e;
     return DestinationFragment.init;
   }
