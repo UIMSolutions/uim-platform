@@ -49,7 +49,7 @@ class MemorySubscriptionRepository : SubscriptionRepository {
     void save(EventSubscription subscription) { store ~= subscription; }
 
     void update(EventSubscription subscription) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == subscription.id) { e = subscription; return; }
     }
 

@@ -41,7 +41,7 @@ class MemoryEventSchemaRepository : EventSchemaRepository {
     void save(EventSchema schema) { store ~= schema; }
 
     void update(EventSchema schema) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == schema.id) { e = schema; return; }
     }
 

@@ -41,7 +41,7 @@ class MemoryTopicRepository : TopicRepository {
     void save(Topic topic) { store ~= topic; }
 
     void update(Topic topic) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == topic.id) { e = topic; return; }
     }
 

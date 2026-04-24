@@ -45,7 +45,7 @@ class MemoryMeshBridgeRepository : MeshBridgeRepository {
     void save(MeshBridge bridge) { store ~= bridge; }
 
     void update(MeshBridge bridge) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == bridge.id) { e = bridge; return; }
     }
 

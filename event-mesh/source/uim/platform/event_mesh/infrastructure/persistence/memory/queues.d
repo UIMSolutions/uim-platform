@@ -41,7 +41,7 @@ class MemoryQueueRepository : QueueRepository {
     void save(Queue queue) { store ~= queue; }
 
     void update(Queue queue) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == queue.id) { e = queue; return; }
     }
 

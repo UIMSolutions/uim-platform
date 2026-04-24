@@ -49,7 +49,7 @@ class MemoryEventMessageRepository : EventMessageRepository {
     void save(EventMessage message) { store ~= message; }
 
     void update(EventMessage message) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == message.id) { e = message; return; }
     }
 

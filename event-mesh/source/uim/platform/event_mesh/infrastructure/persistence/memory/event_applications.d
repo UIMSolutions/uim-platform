@@ -45,7 +45,7 @@ class MemoryEventApplicationRepository : EventApplicationRepository {
     void save(EventApplication application) { store ~= application; }
 
     void update(EventApplication application) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == application.id) { e = application; return; }
     }
 

@@ -41,7 +41,7 @@ class MemoryBrokerServiceRepository : BrokerServiceRepository {
     void save(BrokerService service) { store ~= service; }
 
     void update(BrokerService service) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == service.id) { e = service; return; }
     }
 

@@ -66,7 +66,7 @@ class AppFileMemoryRepository : AppFileRepository {
   }
 
   void update(AppFile file) {
-    foreach (i, e; store) {
+    foreach (i, e; findAll) {
       if (e.id == file.id) {
         store[i] = file;
         return;
