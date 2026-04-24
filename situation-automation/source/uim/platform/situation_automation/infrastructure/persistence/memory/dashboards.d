@@ -14,7 +14,7 @@ class MemoryDashboardRepository : DashboardRepository {
     private Dashboard[] store;
 
     Dashboard findById(DashboardId id) {
-        foreach (d; store) {
+        foreach (d; findAll) {
             if (d.id == id)
                 return d;
         }
@@ -34,7 +34,7 @@ class MemoryDashboardRepository : DashboardRepository {
     }
 
     void update(Dashboard d) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == d.id) {
                 existing = d;
                 return;

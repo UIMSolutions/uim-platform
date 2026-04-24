@@ -14,7 +14,7 @@ class MemoryDataContextRepository : DataContextRepository {
     private DataContext[] store;
 
     DataContext findById(DataContextId id) {
-        foreach (d; store) {
+        foreach (d; findAll) {
             if (d.id == id)
                 return d;
         }
@@ -38,7 +38,7 @@ class MemoryDataContextRepository : DataContextRepository {
     }
 
     void update(DataContext d) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == d.id) {
                 existing = d;
                 return;

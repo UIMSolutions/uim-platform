@@ -14,7 +14,7 @@ class MemoryEntityTypeRepository : EntityTypeRepository {
     private EntityType[] store;
 
     EntityType findById(EntityTypeId id) {
-        foreach (e; store) {
+        foreach (e; findAll) {
             if (e.id == id)
                 return e;
         }
@@ -34,7 +34,7 @@ class MemoryEntityTypeRepository : EntityTypeRepository {
     }
 
     void update(EntityType e) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == e.id) {
                 existing = e;
                 return;

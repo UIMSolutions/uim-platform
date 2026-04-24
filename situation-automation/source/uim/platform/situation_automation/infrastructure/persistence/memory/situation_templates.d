@@ -14,7 +14,7 @@ class MemorySituationTemplateRepository : SituationTemplateRepository {
     private SituationTemplate[] store;
 
     SituationTemplate findById(SituationTemplateId id) {
-        foreach (t; store) {
+        foreach (t; findAll) {
             if (t.id == id)
                 return t;
         }
@@ -38,7 +38,7 @@ class MemorySituationTemplateRepository : SituationTemplateRepository {
     }
 
     void update(SituationTemplate t) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == t.id) {
                 existing = t;
                 return;

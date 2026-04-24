@@ -14,7 +14,7 @@ class MemorySituationActionRepository : SituationActionRepository {
     private SituationAction[] store;
 
     SituationAction findById(SituationActionId id) {
-        foreach (a; store) {
+        foreach (a; findAll) {
             if (a.id == id)
                 return a;
         }
@@ -34,7 +34,7 @@ class MemorySituationActionRepository : SituationActionRepository {
     }
 
     void update(SituationAction a) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == a.id) {
                 existing = a;
                 return;
