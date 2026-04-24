@@ -32,7 +32,7 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   bool existsById(MetricId id) {
-    foreach (tenantId, metrics; store) {
+    foreach (tenantId, metrics; findAll) {
       if (id in metrics)
         return true;
     }
@@ -52,7 +52,7 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   Metric findById(MetricId id) {
-    foreach (tenantId, metrics; store) {
+    foreach (tenantId, metrics; findAll) {
       if (id in metrics)
         return metrics[id];
     }

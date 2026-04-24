@@ -30,7 +30,7 @@ class MemoryKeystoreRepository : KeystoreRepository {
   }
 
   KeystoreEntity findByName(string accountId, string applicationId, KeystoreLevel level, string name) {
-    foreach (ks; store) {
+    foreach (ks; findAll) {
       if (ks.accountId == accountId && ks.applicationId == applicationId &&
           ks.level == level && ks.name == name)
         return ks;

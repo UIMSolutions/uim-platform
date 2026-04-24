@@ -28,7 +28,7 @@ class MemoryClientResourceRepository : ClientResourceRepository {
   }
 
   ClientResource findByName(MobileAppId appId, string name) {
-      foreach (r; store) {
+      foreach (r; findAll) {
         if (r.appId == appId && r.name == name)
         return r;
     }

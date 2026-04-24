@@ -32,7 +32,7 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   }
 
   HealthCheckResult findById(HealthCheckResultId id) {
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.id == id)
         return r;
     return HealthCheckResult.init;

@@ -20,7 +20,7 @@ class MemoryRunLogRepository : RunLogRepository {
     private RunLog[] store;
 
     RunLog findById(RunLogId id) {
-        foreach (r; store) {
+        foreach (r; findAll) {
             if (r.id == id)
                 return r;
         }
@@ -46,7 +46,7 @@ class MemoryRunLogRepository : RunLogRepository {
     }
 
     void update(RunLog r) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == r.id) {
                 existing = r;
                 return;

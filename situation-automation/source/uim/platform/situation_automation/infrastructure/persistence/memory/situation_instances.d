@@ -14,7 +14,7 @@ class MemorySituationInstanceRepository : SituationInstanceRepository {
     private SituationInstance[] store;
 
     SituationInstance findById(SituationInstanceId id) {
-        foreach (i; store) {
+        foreach (i; findAll) {
             if (i.id == id)
                 return i;
         }
@@ -42,7 +42,7 @@ class MemorySituationInstanceRepository : SituationInstanceRepository {
     }
 
     void update(SituationInstance i) {
-        foreach (existing; store) {
+        foreach (existing; findAll) {
             if (existing.id == i.id) {
                 existing = i;
                 return;

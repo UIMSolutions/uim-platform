@@ -22,7 +22,7 @@ class MemoryKeyPasswordRepository : KeyPasswordRepository {
   }
 
   KeyPassword findByAlias(string accountId, string applicationId, string alias_) {
-    foreach (kp; store) {
+    foreach (kp; findAll) {
       if (kp.accountId == accountId && kp.applicationId == applicationId && kp.alias_ == alias_)
         return kp;
     }
