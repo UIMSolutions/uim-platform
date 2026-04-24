@@ -14,56 +14,41 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryBlockingRequestRepository : TenantRepository!(BlockingRequest, BlockingRequestId), BlockingRequestRepository {
-  private BlockingRequest[] store;
 
-  BlockingRequest[] findByTenant(TenantId tenantId) {
-    BlockingRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId)
-        result ~= r;
-    return result;
+  // #region ByDataSubject
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findByDataSubject(tenantId, dataSubjectId).length;
   }
 
-  BlockingRequest* findById(BlockingRequestId tenantId, id tenantId) {
-    foreach (r; findAll)
-      if (r.id == id && r.tenantId == tenantId)
-        return &r;
-    return null;
+  BlockingRequest[] filterByDataSubject(BlockingRequest[] requests, DataSubjectId dataSubjectId) {
+    return requests.filter!(r => r.dataSubjectId == dataSubjectId).array;
   }
 
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    BlockingRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
-        result ~= r;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity));
+  }
+  // #endregion ByDataSubject
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, BlockingStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  BlockingRequest[] filterByStatus(BlockingRequest[] requests, BlockingStatus status) {
+    return requests.filter!(r => r.status == status).array;
   }
 
   BlockingRequest[] findByStatus(TenantId tenantId, BlockingStatus status) {
-    BlockingRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.status == status)
-        result ~= r;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(BlockingRequest request) {
-    store ~= request;
+  void removeByStatus(TenantId tenantId, BlockingStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
-
-  void update(BlockingRequest request) {
-    foreach (r; findAll)
-      if (r.id == request.id && r.tenantId == request.tenantId) {
-        r = request;
-        return;
-      }
-  }
-
-  void remove(BlockingRequestId tenantId, id tenantId) {
-    BlockingRequest[] kept;
-    foreach (r; findAll)
-      if (!(r.id == id && r.tenantId == tenantId))
-        kept ~= r;
-    store = kept;
-  }
+  // #endregion ByStatus
+  
 }

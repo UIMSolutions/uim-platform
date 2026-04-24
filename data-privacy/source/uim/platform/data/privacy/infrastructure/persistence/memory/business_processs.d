@@ -13,49 +13,22 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBusinessProcessRepository : BusinessProcessRepository {
-  private BusinessProcess[] store;
+class MemoryBusinessProcessRepository : TenantRepository!(BusinessProcess, BusinessProcessId), BusinessProcessRepository {
 
-  BusinessProcess[] findByTenant(TenantId tenantId) {
-    BusinessProcess[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByController(TenantId tenantId, DataControllerId controllerId) {
+    return findByController(tenantId, controllerId).length;
   }
 
-  BusinessProcess* findById(BusinessProcessId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  BusinessProcess[] filterByController(BusinessProcess[] processes, DataControllerId controllerId) {
+    return processes.filter!(s => s.controllerId == controllerId).array;
   }
 
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId) {
-    BusinessProcess[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.controllerId == controllerId)
-        result ~= s;
-    return result;
+    return filterByController(findByTenant(tenantId), controllerId);
   }
 
-  void save(BusinessProcess entity) {
-    store ~= entity;
+  void removeByController(TenantId tenantId, DataControllerId controllerId) {
+    findByController(tenantId, controllerId).each!(entity => remove(entity.id));
   }
 
-  void update(BusinessProcess entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(BusinessProcessId tenantId, id tenantId) {
-    BusinessProcess[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

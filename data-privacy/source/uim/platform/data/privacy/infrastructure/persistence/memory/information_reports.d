@@ -14,56 +14,41 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryInformationReportRepository : TenantRepository!(InformationReport, InformationReportId), InformationReportRepository {
-  private InformationReport[] store;
 
-  InformationReport[] findByTenant(TenantId tenantId) {
-    InformationReport[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  // #region ByDataSubject
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
 
-  InformationReport* findById(InformationReportId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  InformationReport[] filterByDataSubject(InformationReport[] records, DataSubjectId subjectId) {
+    return records.filter!(s => s.dataSubjectId == subjectId).array;
   }
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    InformationReport[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.dataSubjectId == subjectId)
-        result ~= s;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), subjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
+  } 
+  // #endregion ByDataSubject
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, InformationReportStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  InformationReport[] filterByStatus(InformationReport[] records, InformationReportStatus status) {
+    return records.filter!(s => s.status == status).array;
   }
 
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status) {
-    InformationReport[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.status == status)
-        result ~= s;
+    return filterByStatus(findByTenant(tenantId), status);
     return result;
   }
 
-  void save(InformationReport entity) {
-    store ~= entity;
+  void removeByStatus(TenantId tenantId, InformationReportStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
-
-  void update(InformationReport entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(InformationReportId tenantId, id tenantId) {
-    InformationReport[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
+  // #endregion ByStatus
 }

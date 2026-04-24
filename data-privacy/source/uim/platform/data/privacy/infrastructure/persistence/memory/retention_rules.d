@@ -14,55 +14,45 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryRetentionRuleRepository : RetentionRuleRepository {
-  private RetentionRule[] store;
 
-  RetentionRule[] findByTenant(TenantId tenantId) {
-    RetentionRule[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId)
-        result ~= r;
-    return result;
+  // #region ByDefault 
+  bool existsDefault(TenantId tenantId) {
+    foreach (r; findByTenant(tenantId))
+      if (r.isDefault && r.status == RetentionRuleStatus.active)
+        return true;
+    return false;
   }
 
-  RetentionRule* findById(RetentionRuleId tenantId, id tenantId) {
-    foreach (r; findAll)
-      if (r.id == id && r.tenantId == tenantId)
-        return &r;
-    return null;
+  RetentionRule findDefault(TenantId tenantId) {
+    foreach (r; findByTenant(tenantId))
+      if (r.isDefault && r.status == RetentionRuleStatus.active)
+        return r;
+    return RetentionRule.init;
   }
 
-  RetentionRule* findDefault(TenantId tenantId) {
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.isDefault && r.status == RetentionRuleStatus.active)
-        return &r;
-    return null;
+  void removeDefault(TenantId tenantId) {
+    foreach (r; findByTenant(tenantId))
+      if (r.isDefault)
+        remove(r.id);
+  }
+  // #endregion ByDefault 
+
+  // #region ByPurpose
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    return findByPurpose(tenantId, purpose).length;
+  }
+
+  RetentionRule[] filterByPurpose(RetentionRule[] records, ProcessingPurpose purpose) {
+    return records.filter!(r => r.purpose == purpose).array;
   }
 
   RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    RetentionRule[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.purpose == purpose)
-        result ~= r;
-    return result;
+    return filterByPurpose(findByTenant(tenantId), purpose);
   }
 
-  void save(RetentionRule rule) {
-    store ~= rule;
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity.id));
   }
+  // #endregion ByPurpose
 
-  void update(RetentionRule rule) {
-    foreach (r; findAll)
-      if (r.id == rule.id && r.tenantId == rule.tenantId) {
-        r = rule;
-        return;
-      }
-  }
-
-  void remove(RetentionRuleId tenantId, id tenantId) {
-    RetentionRule[] kept;
-    foreach (r; findAll)
-      if (!(r.id == id && r.tenantId == tenantId))
-        kept ~= r;
-    store = kept;
-  }
 }

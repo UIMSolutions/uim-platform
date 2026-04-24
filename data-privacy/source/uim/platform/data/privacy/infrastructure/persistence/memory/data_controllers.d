@@ -13,49 +13,22 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataControllerRepository : DataControllerRepository {
-  private DataController[] store;
+class MemoryDataControllerRepository : TenantRepository!(DataController, DataControllerId), DataControllerRepository {
 
-  DataController[] findByTenant(TenantId tenantId) {
-    DataController[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByCountry(TenantId tenantId, string country) {
+    return findByCountry(tenantId, country).length;
   }
 
-  DataController* findById(DataControllerId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  DataController[] filterByCountry(DataController[] controllers, string country) {
+    return controllers.filter!(c => c.country == country).array;
   }
 
   DataController[] findByCountry(TenantId tenantId, string country) {
-    DataController[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.country == country)
-        result ~= s;
-    return result;
+    return filterByCountry(findByTenant(tenantId), country);
   }
 
-  void save(DataController entity) {
-    store ~= entity;
+  void removeByCountry(TenantId tenantId, string country) {
+    findByCountry(tenantId, country).each!(entity => remove(entity.id));
   }
 
-  void update(DataController entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(DataControllerId tenantId, id tenantId) {
-    DataController[] kept;
-    foreach (s; findByTenant(tenantId))
-      if (!(s.id == id))
-        kept ~= s;
-    store = kept;
-  }
 }

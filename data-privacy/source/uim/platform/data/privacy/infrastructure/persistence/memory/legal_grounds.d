@@ -13,73 +13,70 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryLegalGroundRepository : LegalGroundRepository {
-  private LegalGround[] store;
+class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
 
-  LegalGround[] findByTenant(TenantId tenantId) {
-    LegalGround[] result;
-    foreach (g; findAll)
-      if (g.tenantId == tenantId)
-        result ~= g;
-    return result;
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findByDataSubject(tenantId, dataSubjectId).length;
   }
 
-  LegalGround* findById(LegalGroundId tenantId, id tenantId) {
-    foreach (g; findAll)
-      if (g.id == id && g.tenantId == tenantId)
-        return &g;
-    return null;
-  }
+  LegalGround[] filterByDataSubject(LegalGround[] grounds, DataSubjectId dataSubjectId) {
+    return grounds.filter!(g => g.dataSubjectId == dataSubjectId).array;
+  } 
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    LegalGround[] result;
-    foreach (g; findByTenant(tenantId))
-      if (g.dataSubjectId == dataSubjectId)
-        result ~= g;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity.id));
+  }
+
+  size_t countByBasis(TenantId tenantId, LegalBasis basis) {
+    return findByBasis(tenantId, basis).length;
+  }
+
+  LegalGround[] filterByBasis(LegalGround[] grounds, LegalBasis basis) {
+    return grounds.filter!(g => g.basis == basis).array;
   }
 
   LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis) {
-    LegalGround[] result;
-    foreach (g; findByTenant(tenantId))
-      if (g.basis == basis)
-        result ~= g;
-    return result;
+    return filterByBasis(findByTenant(tenantId), basis);
+  }
+
+  void removeByBasis(TenantId tenantId, LegalBasis basis) {
+    findByBasis(tenantId, basis).each!(entity => remove(entity.id));
+  }
+
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    return findByPurpose(tenantId, purpose).length;
+  }
+
+  LegalGround[] filterByPurpose(LegalGround[] grounds, ProcessingPurpose purpose) {
+    return grounds.filter!(g => g.purpose == purpose).array;
   }
 
   LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    LegalGround[] result;
-    foreach (g; findByTenant(tenantId))
-      if (g.purpose == purpose)
-        result ~= g;
-    return result;
+    return filterByPurpose(findByTenant(tenantId), purpose);
   }
+
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity.id));
+  }
+
+  size_t countActive(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findActive(tenantId, dataSubjectId).length;
+  }
+
+  LegalGround[] filterActive(LegalGround[] grounds, DataSubjectId dataSubjectId) {
+    return grounds.filter!(g => g.dataSubjectId == dataSubjectId && g.isActive).array;
+  } 
 
   LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId) {
-    LegalGround[] result;
-    foreach (g; findByTenant(tenantId))
-      if (g.dataSubjectId == dataSubjectId && g.isActive)
-        result ~= g;
-    return result;
+    return filterActive(findByTenant(tenantId), dataSubjectId);
   }
 
-  void save(LegalGround ground) {
-    store ~= ground;
+  void removeActive(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findActive(tenantId, dataSubjectId).each!(entity => remove(entity.id));
   }
-
-  void update(LegalGround ground) {
-    foreach (g; findAll)
-      if (g.id == ground.id && g.tenantId == ground.tenantId) {
-        g = ground;
-        return;
-      }
-  }
-
-  void remove(LegalGroundId tenantId, id tenantId) {
-    LegalGround[] kept;
-    foreach (g; findAll)
-      if (!(g.id == id && g.tenantId == tenantId))
-        kept ~= g;
-    store = kept;
-  }
+  
 }

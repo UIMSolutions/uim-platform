@@ -13,72 +13,42 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConsentPurposeRepository : ConsentPurposeRepository {
-  private ConsentPurpose[ConsentPurposeId][TenantId] store;
+class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, ConsentPurposeId), ConsentPurposeRepository {
 
-  bool existsByTenant(TenantId tenantId) {
-    return tenantId in store;
+  // #region ByController
+  size_t countByController(TenantId tenantId, DataControllerId controllerId) {
+    return findByController(tenantId, controllerId).length;
   }
 
-  ConsentPurpose[] findByTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    return store[tenantId].byValue.array;
-  }
-
-  bool existsById(ConsentPurposeId tenantId, id tenantId) {
-    return (existsByTenant(tenantId) && (id in store[tenantId]));
-  }
-
-  ConsentPurpose findById(ConsentPurposeId tenantId, id tenantId) {
-    return existsById(tenantId, id) ? store[tenantId][id] : ConsentPurpose.init;
+  ConsentPurpose[] filterByController(ConsentPurpose[] purposes, DataControllerId controllerId) {
+    return purposes.filter!(s => s.controllerId == controllerId).array;
   }
 
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId) {
-    if (!existsByTenant(tenantId))
-      return null;
+    return filterByController(findByTenant(tenantId), controllerId);
+  }
 
-    ConsentPurpose[] result;
-    foreach (s; store[tenantId].byValue)
-      if (s.controllerId == controllerId)
-        result ~= s;
-    return result;
+  void removeByController(TenantId tenantId, DataControllerId controllerId) {
+    findByController(tenantId, controllerId).each!(entity => remove(entity.id));
+  }
+  // #endregion ByController
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, ConsentPurposeStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  ConsentPurpose[] filterByStatus(ConsentPurpose[] purposes, ConsentPurposeStatus status) {
+    return purposes.filter!(s => s.status == status).array;
   }
 
   ConsentPurpose[] findByStatus(TenantId tenantId, ConsentPurposeStatus status) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    ConsentPurpose[] result;
-    foreach (s; store[tenantId].byValue)
-      if (s.status == status)
-        result ~= s;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(ConsentPurpose entity) {
-    if (!existsByTenant(entity.tenantId)) {
-      ConsentPurpose[ConsentPurposeId] purposes;
-      store[entity.tenantId] = purposes;
-    }
-    store[entity.tenantId][entity.id] = entity;
+  void removeByStatus(TenantId tenantId, ConsentPurposeStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
+  // #region ByStatus
 
-  void update(ConsentPurpose entity) {
-    if (!existsById(entity.id, entity.tenantId))
-      return;
-
-    store[entity.tenantId][entity.id] = entity;
-  }
-
-  void remove(ConsentPurposeId tenantId, id tenantId) {
-    if (!existsById(tenantId, id))
-      return;
-
-    store[tenantId].remove(id);
-    if (store[tenantId].empty) {
-      store.remove(tenantId);
-    }
-  }
 }

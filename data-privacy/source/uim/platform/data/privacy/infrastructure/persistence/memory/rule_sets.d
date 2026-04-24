@@ -13,57 +13,42 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRuleSetRepository : RuleSetRepository {
-  private RuleSet[] store;
+class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRepository {
 
-  RuleSet[] findByTenant(TenantId tenantId) {
-    RuleSet[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  // #region ByBusinessContext
+  size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
+    return findByBusinessContext(tenantId, contextId).length;
   }
 
-  RuleSet* findById(RuleSetId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  RuleSet[] filterByBusinessContext(RuleSet[] ruleSets, BusinessContextId contextId) {
+    return ruleSets.filter!(s => s.businessContextId == contextId).array;
   }
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
-    RuleSet[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.businessContextId == contextId)
-        result ~= s;
-    return result;
+    return filterByBusinessContext(findByTenant(tenantId), contextId);
+  }
+
+  void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
+    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity.id));
+  }
+  // #region ByBusinessContext
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, RuleSetStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  RuleSet[] filterByStatus(RuleSet[] ruleSets, RuleSetStatus status) {
+    return ruleSets.filter!(s => s.status == status).array;
   }
 
   RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status) {
-    RuleSet[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.status == status)
-        result ~= s;
-    return result;
+    return findByTenant(tenantId).filter!(s => s.status == status).array;
   }
 
-  void save(RuleSet entity) {
-    store ~= entity;
+  void removeByStatus(TenantId tenantId, RuleSetStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
+  // #endregion ByStatus
 
-  void update(RuleSet entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(RuleSetId tenantId, id tenantId) {
-    RuleSet[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

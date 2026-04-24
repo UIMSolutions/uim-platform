@@ -13,64 +13,45 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataSubjectRepository : DataSubjectRepository {
-  private DataSubject[] store;
+class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
-  DataSubject[] findByTenant(TenantId tenantId) {
-    DataSubject[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
-  }
-
-  DataSubject* findById(DataSubjectId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
-  }
-
-  DataSubject* findByExternalId(string externaltenantId, id tenantId) {
+  DataSubject findByExternalId(string externaltenantId, id tenantId) {
     foreach (s; findAll)
       if (s.externalId == externalId && s.tenantId == tenantId)
-        return &s;
-    return null;
+        return s;
+    return DataSubject.init;
+  }
+
+  size_t countByType(TenantId tenantId, DataSubjectType subjectType) {
+    return findByType(tenantId, subjectType).length;
+  }
+
+  DataSubject[] filterByType(DataSubject[] subjects, DataSubjectType subjectType) {
+    return subjects.filter!(s => s.subjectType == subjectType).array;
   }
 
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType) {
-    DataSubject[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.subjectType == subjectType)
-        result ~= s;
-    return result;
+    return filterByType(findByTenant(tenantId), subjectType);
+  }
+  
+  void removeByType(TenantId tenantId, DataSubjectType subjectType) {
+    findByType(tenantId, subjectType).each!(entity => remove(entity.id));
+  }
+
+  size_t countBySourceSystem(TenantId tenantId, string sourceSystem) {
+    return findBySourceSystem(tenantId, sourceSystem).length;
+  }
+
+  DataSubject[] filterBySourceSystem(DataSubject[] subjects, string sourceSystem) {
+    return subjects.filter!(s => s.sourceSystem == sourceSystem).array;
   }
 
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    DataSubject[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.sourceSystem == sourceSystem)
-        result ~= s;
-    return result;
+    return filterBySourceSystem(findByTenant(tenantId), sourceSystem);
   }
 
-  void save(DataSubject subject) {
-    store ~= subject;
+  void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
+    findBySourceSystem(tenantId, sourceSystem).each!(entity => remove(entity.id));
   }
 
-  void update(DataSubject subject) {
-    foreach (s; findAll)
-      if (s.id == subject.id && s.tenantId == subject.tenantId) {
-        s = subject;
-        return;
-      }
-  }
-
-  void remove(DataSubjectId tenantId, id tenantId) {
-    DataSubject[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

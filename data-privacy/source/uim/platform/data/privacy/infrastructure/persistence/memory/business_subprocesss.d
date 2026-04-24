@@ -13,55 +13,22 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
-  private BusinessSubprocess[BusinessSubprocessId][TenantId] store;
+class MemoryBusinessSubprocessRepository : TenantRepository!(BusinessSubprocess, BusinessSubprocessId), BusinessSubprocessRepository {
 
-  BusinessSubprocess[] findByTenant(TenantId tenantId) {
-    if (!(tenantId in store))
-      return null;
-
-    return store[tenantId].byValue.filter!(s => s.tenantId == tenantId).array;
+  size_t countByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    return findByParentProcess(tenantId, parentId).length;
   }
 
-  bool existsById(BusinessSubprocessId tenantId, id tenantId) {
-    return (existsByTenant(tenantId) && (id in store[tenantId]));
-  }
-
-  BusinessSubprocess findById(BusinessSubprocessId tenantId, id tenantId) {
-    if (!(tenantId in store) || !(id in store[tenantId]))
-      return BusinessSubprocess.init;
-
-    return store[tenantId][id];
+  BusinessSubprocess[] filterByParentProcess(BusinessSubprocess[] subprocesses, BusinessProcessId parentId) {
+    return subprocesses.filter!(s => s.parentProcessId == parentId).array;
   }
 
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    return store[tenantId].byValue.filter!(s => s.parentProcessId == parentId).array;
+    return filterByParentProcess(findByTenant(tenantId), parentId);
   }
 
-  void save(BusinessSubprocess entity) {
-    if (!existsByTenant(entity.tenantId)) {
-      BusinessSubprocess[BusinessSubprocessId] subprocesses;
-      store[entity.tenantId] = subprocesses;
-    }
-    store[entity.tenantId][entity.id] = entity;
+  void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    findByParentProcess(tenantId, parentId).each!(entity => remove(entity.id));
   }
 
-  void update(BusinessSubprocess entity) {
-    if (!existsById(entity.id, entity.tenantId)) {
-      return;
-    }
-
-    store[entity.tenantId][entity.id] = entity;
-  }
-
-  void remove(BusinessSubprocessId tenantId, id tenantId) {
-    BusinessSubprocess[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }
