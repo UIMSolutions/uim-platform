@@ -18,14 +18,14 @@ class MemoryDataControllerGroupRepository : DataControllerGroupRepository {
 
   DataControllerGroup[] findByTenant(TenantId tenantId) {
     DataControllerGroup[] result;
-    foreach (s; store)
+    foreach (s; findAll)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   DataControllerGroup* findById(DataControllerGroupId tenantId, id tenantId) {
-    foreach (s; store)
+    foreach (s; findAll)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -36,7 +36,7 @@ class MemoryDataControllerGroupRepository : DataControllerGroupRepository {
   }
 
   void update(DataControllerGroup entity) {
-    foreach (s; store)
+    foreach (s; findAll)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;

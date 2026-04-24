@@ -30,7 +30,7 @@ class MemoryIngestionTokenRepository : IngestionTokenRepository {
   }
 
   IngestionToken findByHash(string tokenHash) {
-    foreach (t; store)
+    foreach (t; findAll)
       if (t.tokenHash == tokenHash)
         return t;
     return IngestionToken.init;

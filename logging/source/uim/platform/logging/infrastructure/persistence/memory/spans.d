@@ -25,7 +25,7 @@ class MemorySpanRepository : SpanRepository {
   }
 
   Span findById(SpanId id) {
-    foreach (s; store)
+    foreach (s; findAll)
       if (s.id == id)
         return s;
     return Span.init;

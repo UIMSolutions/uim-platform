@@ -18,7 +18,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
     return findByName(namespaceId, name, type).id.value != "";
   }
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
-    foreach (c; store) {
+    foreach (c; findAll) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
         return c;
     }

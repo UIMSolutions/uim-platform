@@ -20,21 +20,21 @@ class MemoryKeyringVersionRepository : KeyringVersionRepository {
   }
 
   KeyringVersion findById(KeyringVersionId id) {
-    foreach (v; store)
+    foreach (v; findAll)
       if (v.id == id)
         return v;
     return KeyringVersion.init;
   }
 
   KeyringVersion findActiveVersion(CredentialId keyringId) {
-    foreach (v; store)
+    foreach (v; findAll)
       if (v.keyringId == keyringId && v.isActive)
         return v;
     return KeyringVersion.init;
   }
 
   KeyringVersion findByVersion(CredentialId keyringId, long versionNumber) {
-    foreach (v; store)
+    foreach (v; findAll)
       if (v.keyringId == keyringId && v.versionNumber == versionNumber)
         return v;
     return KeyringVersion.init;
@@ -49,7 +49,7 @@ class MemoryKeyringVersionRepository : KeyringVersionRepository {
   }
 
   void deactivateAll(CredentialId keyringId) {
-    foreach (v; store) {
+    foreach (v; findAll) {
       if (v.keyringId == keyringId)
         v.isActive = false;
     }

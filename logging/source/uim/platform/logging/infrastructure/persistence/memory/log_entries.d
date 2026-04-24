@@ -25,7 +25,7 @@ class MemoryLogEntryRepository : LogEntryRepository {
   }
 
   LogEntry findById(LogEntryId id) {
-    foreach(entry; store) {
+    foreach(entry; findAll) {
       if (entry.id == id) {
         return entry;
       }

@@ -18,14 +18,14 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
 
   DataRetrievalRequest[] findByTenant(TenantId tenantId) {
     DataRetrievalRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId)
         result ~= r;
     return result;
   }
 
   DataRetrievalRequest* findById(DataRetrievalRequestId tenantId, id tenantId) {
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
@@ -33,7 +33,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
 
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     DataRetrievalRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
         result ~= r;
     return result;
@@ -41,7 +41,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
 
   DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status) {
     DataRetrievalRequest[] result;
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.tenantId == tenantId && r.status == status)
         result ~= r;
     return result;
@@ -52,7 +52,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
   }
 
   void update(DataRetrievalRequest request) {
-    foreach (r; store)
+    foreach (r; findAll)
       if (r.id == request.id && r.tenantId == request.tenantId) {
         r = request;
         return;

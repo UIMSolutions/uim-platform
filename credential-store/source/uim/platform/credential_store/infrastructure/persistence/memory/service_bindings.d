@@ -15,7 +15,7 @@ import std.array : array;
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   bool existsByClientId(string clientId) {
-    foreach (b; store) {
+    foreach (b; findAll) {
       if (b.clientId == clientId)
         return true;
     }
@@ -23,7 +23,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   }
 
   ServiceBinding findByClientId(string clientId) {
-    foreach (b; store) {
+    foreach (b; findAll) {
       if (b.clientId == clientId)
         return b;
     }

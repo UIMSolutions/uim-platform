@@ -47,7 +47,7 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (ch; store)
+    foreach (ch; findAll)
       if (ch.tenantId == tenantId)
         count++;
     return count;
