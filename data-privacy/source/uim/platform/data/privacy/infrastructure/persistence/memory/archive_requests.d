@@ -13,32 +13,11 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryArchiveRequestRepository : ArchiveRequestRepository {
-  private ArchiveRequest[TypeInfo_Array] store;
-    bool existsByTenant(TenantId tenantId) {
-      return tenantId in store;
-    }
-  ArchiveRequest[] findByTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId))
-      return null;
+class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, ArchiveRequestId), ArchiveRequestRepository {
 
-    ArchiveRequest[] result;
-    foreach (s; store[tenantId].byValue)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
-
-  ArchiveRequest* findById(ArchiveRequestId tenantId, id tenantId) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    foreach (s; store[tenantId].byValue)
-      if (s.id == id)
-        return &s;
-    return null;
-  }
-
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     ArchiveRequest[] result;
     foreach (s; store)
@@ -46,7 +25,13 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
         result ~= s;
     return result;
   }
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity.id));
+  }
 
+  size_t countByStatus(TenantId tenantId, ArchiveStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
   ArchiveRequest[] findByStatus(TenantId tenantId, ArchiveStatus status) {
     ArchiveRequest[] result;
     foreach (s; store)
@@ -54,24 +39,8 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
         result ~= s;
     return result;
   }
-
-  void save(ArchiveRequest entity) {
-    store ~= entity;
+  void removeByStatus(TenantId tenantId, ArchiveStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
 
-  void update(ArchiveRequest entity) {
-    foreach (s; store)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(ArchiveRequestId tenantId, id tenantId) {
-    ArchiveRequest[] kept;
-    foreach (s; store)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

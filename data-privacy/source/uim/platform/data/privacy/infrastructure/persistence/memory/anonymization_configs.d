@@ -14,51 +14,17 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
-  private AnonymizationConfig[AnonymizationConfigId][TenantId] store;
 
-  bool existsByTenant(TenantId tenantId) {
-    return tenantId in store;
-  }
-
-  AnonymizationConfig[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(s => s.tenantId == tenantId).array;
-  }
-
-  bool existsById(AnonymizationConfigId tenantId, id tenantId) {
-    return (existsByTenant(tenantId) && (id in store[tenantId]));
-  }
-
-  AnonymizationConfig findById(AnonymizationConfigId tenantId, id tenantId) {
-    if (!existsById(tenantId, id))
-      return AnonymizationConfig.init;
-
-    return store[tenantId][id];
+  size_t countByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
     return findByTenant(tenantId).filter!(config => config.status == status).array;
   }
 
-  void save(AnonymizationConfig entity) {
-    if (!existsByTenant(entity.tenantId)) {
-      AnonymizationConfig[AnonymizationConfigId] configs;
-      store[entity.tenantId] = configs;
-    }
-    store[entity.tenantId][entity.id] = entity;
+  void removeByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
 
-  void update(AnonymizationConfig entity) {
-    if (existsById(entity.id, entity.tenantId)) {
-      store[entity.tenantId][entity.id] = entity;
-    }
-  }
-
-  void remove(AnonymizationConfigId tenantId, id tenantId) {
-    if (existsById(tenantId, id)) {
-      store[tenantId].remove(id);
-      if (store[tenantId].empty) {
-        store.remove(tenantId);
-      }
-    }
-  }
 }

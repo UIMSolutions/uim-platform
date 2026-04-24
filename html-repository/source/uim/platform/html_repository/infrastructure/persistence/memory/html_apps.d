@@ -13,14 +13,14 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
   private HtmlApp[] store;
 
   HtmlApp findById(HtmlAppId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return HtmlApp.init;
   }
 
   HtmlApp findByName(TenantId tenantId, string name) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.name == name) return e;
     }
     return HtmlApp.init;
@@ -28,7 +28,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   HtmlApp[] findByTenant(TenantId tenantId) {
     HtmlApp[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -36,7 +36,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   HtmlApp[] findBySpace(SpaceId spaceId) {
     HtmlApp[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.spaceId == spaceId) result ~= e;
     }
     return result;
@@ -44,7 +44,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
     HtmlApp[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.serviceInstanceId == instanceId) result ~= e;
     }
     return result;
@@ -52,7 +52,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   HtmlApp[] findPublic(TenantId tenantId) {
     HtmlApp[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.visibility == AppVisibility.public_) result ~= e;
     }
     return result;
@@ -73,7 +73,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   void remove(HtmlAppId id) {
     HtmlApp[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -81,7 +81,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;
@@ -89,7 +89,7 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
 
   size_t countByServiceInstance(ServiceInstanceId instanceId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.serviceInstanceId == instanceId) count++;
     }
     return count;

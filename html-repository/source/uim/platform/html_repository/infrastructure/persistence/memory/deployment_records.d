@@ -13,7 +13,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
   private DeploymentRecord[] store;
 
   DeploymentRecord findById(DeploymentRecordId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return DeploymentRecord.init;
@@ -21,7 +21,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   DeploymentRecord[] findByApp(HtmlAppId appId) {
     DeploymentRecord[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) result ~= e;
     }
     return result;
@@ -29,7 +29,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   DeploymentRecord[] findByVersion(AppVersionId versionId) {
     DeploymentRecord[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.versionId == versionId) result ~= e;
     }
     return result;
@@ -37,7 +37,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   DeploymentRecord[] findByTenant(TenantId tenantId) {
     DeploymentRecord[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -45,7 +45,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status) {
     DeploymentRecord[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.status == status) result ~= e;
     }
     return result;
@@ -66,7 +66,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   void remove(DeploymentRecordId id) {
     DeploymentRecord[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -74,7 +74,7 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;

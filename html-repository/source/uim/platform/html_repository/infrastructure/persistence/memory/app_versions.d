@@ -13,7 +13,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
   private AppVersion[] store;
 
   AppVersion findById(AppVersionId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return AppVersion.init;
@@ -22,7 +22,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
   AppVersion findLatest(HtmlAppId appId) {
     AppVersion latest = AppVersion.init;
     bool found = false;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) {
         if (!found || e.createdAt > latest.createdAt) {
           latest = e;
@@ -35,7 +35,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   AppVersion[] findByApp(HtmlAppId appId) {
     AppVersion[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) result ~= e;
     }
     return result;
@@ -43,7 +43,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status) {
     AppVersion[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId && e.status == status) result ~= e;
     }
     return result;
@@ -51,7 +51,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   AppVersion[] findByTenant(TenantId tenantId) {
     AppVersion[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -72,7 +72,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   void remove(AppVersionId id) {
     AppVersion[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -80,7 +80,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   size_t countByApp(HtmlAppId appId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) count++;
     }
     return count;
@@ -88,7 +88,7 @@ class AppVersionMemoryRepository : AppVersionRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;

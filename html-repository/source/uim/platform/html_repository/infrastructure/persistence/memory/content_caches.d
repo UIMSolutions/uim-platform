@@ -13,14 +13,14 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
   private ContentCache[] store;
 
   ContentCache findById(ContentCacheId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return ContentCache.init;
   }
 
   ContentCache findByFileId(AppFileId fileId) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.fileId == fileId) return e;
     }
     return ContentCache.init;
@@ -28,7 +28,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   ContentCache[] findByTenant(TenantId tenantId) {
     ContentCache[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -36,7 +36,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   ContentCache[] findByStatus(CacheStatus status) {
     ContentCache[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.status == status) result ~= e;
     }
     return result;
@@ -44,7 +44,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   ContentCache[] findExpired(long currentTime) {
     ContentCache[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.expiresAt < currentTime) result ~= e;
     }
     return result;
@@ -65,7 +65,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   void remove(ContentCacheId id) {
     ContentCache[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -73,7 +73,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   void removeExpired(long currentTime) {
     ContentCache[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.expiresAt >= currentTime) result ~= e;
     }
     store = result;
@@ -81,7 +81,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;
@@ -89,7 +89,7 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
 
   long totalSizeByTenant(TenantId tenantId) {
     long total = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) total += e.sizeBytes;
     }
     return total;

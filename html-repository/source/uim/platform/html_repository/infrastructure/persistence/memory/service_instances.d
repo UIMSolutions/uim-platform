@@ -13,14 +13,14 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
   private ServiceInstance[] store;
 
   ServiceInstance findById(ServiceInstanceId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return ServiceInstance.init;
   }
 
   ServiceInstance findByName(TenantId tenantId, string name) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.name == name) return e;
     }
     return ServiceInstance.init;
@@ -28,7 +28,7 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
 
   ServiceInstance[] findByTenant(TenantId tenantId) {
     ServiceInstance[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -36,7 +36,7 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
 
   ServiceInstance[] findBySpace(SpaceId spaceId) {
     ServiceInstance[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.spaceId == spaceId) result ~= e;
     }
     return result;
@@ -44,7 +44,7 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
 
   ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan) {
     ServiceInstance[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.plan == plan) result ~= e;
     }
     return result;
@@ -65,7 +65,7 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
 
   void remove(ServiceInstanceId id) {
     ServiceInstance[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -73,7 +73,7 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;

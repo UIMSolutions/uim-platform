@@ -15,14 +15,14 @@ mixin(ShowModule!());
 @safe:
 class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
   AppRoute findById(AppRouteId id) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id == id) return e;
     }
     return AppRoute.init;
   }
 
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix) {
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId && e.pathPrefix == pathPrefix) return e;
     }
     return AppRoute.init;
@@ -30,7 +30,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
 
   AppRoute[] findByApp(HtmlAppId appId) {
     AppRoute[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) result ~= e;
     }
     return result;
@@ -38,7 +38,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
 
   AppRoute[] findByTenant(TenantId tenantId) {
     AppRoute[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) result ~= e;
     }
     return result;
@@ -59,7 +59,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
 
   void remove(AppRouteId id) {
     AppRoute[] result;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.id != id) result ~= e;
     }
     store = result;
@@ -67,7 +67,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
 
   size_t countByApp(HtmlAppId appId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.appId == appId) count++;
     }
     return count;
@@ -75,7 +75,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
 
   size_t countByTenant(TenantId tenantId) {
     size_t count = 0;
-    foreach (e; store) {
+    foreach (e; findAll) {
       if (e.tenantId == tenantId) count++;
     }
     return count;
