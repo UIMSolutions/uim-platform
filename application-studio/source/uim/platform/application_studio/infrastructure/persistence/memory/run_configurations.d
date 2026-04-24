@@ -19,7 +19,7 @@ class MemoryRunConfigurationRepository : RunConfigurationRepository {
     }
 
     RunConfiguration findById(RunConfigurationId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return RunConfiguration.init;
     }

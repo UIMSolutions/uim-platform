@@ -34,7 +34,7 @@ class MemoryModelConfigRepository : ModelConfigRepository {
   }
 
   ModelConfiguration* findByName(TenantId tenantId, string name) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
@@ -42,7 +42,7 @@ class MemoryModelConfigRepository : ModelConfigRepository {
 
   ModelConfiguration[] findByTenant(TenantId tenantId) {
     ModelConfiguration[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryModelConfigRepository : ModelConfigRepository {
 
   ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId) {
     ModelConfiguration[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -58,7 +58,7 @@ class MemoryModelConfigRepository : ModelConfigRepository {
 
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status) {
     ModelConfiguration[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

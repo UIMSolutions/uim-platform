@@ -34,7 +34,7 @@ class MemoryDatasetRepository : DatasetRepository {
   }
 
   Dataset* findByName(TenantId tenantId, string name) {
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
@@ -42,7 +42,7 @@ class MemoryDatasetRepository : DatasetRepository {
 
   Dataset[] findByTenant(TenantId tenantId) {
     Dataset[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryDatasetRepository : DatasetRepository {
 
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status) {
     Dataset[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
@@ -58,7 +58,7 @@ class MemoryDatasetRepository : DatasetRepository {
 
   Dataset[] findByDataType(TenantId tenantId, DataType dataType) {
     Dataset[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.dataType == dataType)
         result ~= e;
     return result;

@@ -35,7 +35,7 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
 
   InferenceRequest[] findByTenant(TenantId tenantId) {
     InferenceRequest[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -43,7 +43,7 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
 
   InferenceRequest[] findByDeployment(DeploymentId deploymenttenantId, id tenantId) {
     InferenceRequest[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.deploymentId == deploymentId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -51,7 +51,7 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
 
   InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status) {
     InferenceRequest[] result;
-    foreach (e; store)
+    foreach (e; findAll)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
