@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryInformationReportRepository : InformationReportRepository {
+class MemoryInformationReportRepository : TenantRepository!(InformationReport, InformationReportId), InformationReportRepository {
   private InformationReport[] store;
 
   InformationReport[] findByTenant(TenantId tenantId) {

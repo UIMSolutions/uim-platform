@@ -9,51 +9,42 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
 
-class MemoryTransformationRepository : TransformationRepository {
-  private Transformation[string] store;
+class MemoryTransformationRepository : TenantRepository!(Transformation, TransformationId), TransformationRepository {
 
-  void save(Transformation entity) {
-    store[entity.id] = entity;
+  // #region BySystem
+  size_t countBySystem(TenantId tenantId, string systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
-  void update(Transformation entity) {
-    store[entity.id] = entity;
+  Transformation[] filterBySystem(Transformation[] items, string systemId) {
+    return items.filter!(e => e.systemId == systemId).array;
   }
 
-  void remove(TransformationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  Transformation[] findBySystem(TenantId tenantId, string systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
-  Transformation* findById(TransformationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  void removeBySystem(TenantId tenantId, string systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e.id));
+  }
+  // #endregion BySystem
+
+  // #region BySystemRole
+  size_t countBySystemRole(TenantId tenantId, SystemRole role) {
+    return findBySystemRole(tenantId, role).length;
   }
 
-  Transformation[] findByTenant(TenantId tenantId) {
-    Transformation[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
-  }
-
-  Transformation[] findBySystem(string systemtenantId, id tenantId) {
-    Transformation[] result;
-    foreach (e; findAll)
-      if (e.systemId == systemId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  Transformation[] filterBySystemRole(Transformation[] items, SystemRole role) {
+    return items.filter!(e => e.systemRole == role).array;
   }
 
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role) {
-    Transformation[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.systemRole == role)
-        result ~= e;
-    return result;
+    return filterBySystemRole(findByTenant(tenantId), role);
   }
+
+  void removeBySystemRole(TenantId tenantId, SystemRole role) {
+    findBySystemRole(tenantId, role).each!(e => remove(e.id));
+  }
+  // #endregion BySystemRole
+
 }

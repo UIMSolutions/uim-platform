@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDeletionRequestRepository : DeletionRequestRepository {
+class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
   private DeletionRequest[] store;
 
   DeletionRequest[] findByTenant(TenantId tenantId) {

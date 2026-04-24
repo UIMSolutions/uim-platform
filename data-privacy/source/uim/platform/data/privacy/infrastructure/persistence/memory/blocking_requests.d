@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBlockingRequestRepository : BlockingRequestRepository {
+class MemoryBlockingRequestRepository : TenantRepository!(BlockingRequest, BlockingRequestId), BlockingRequestRepository {
   private BlockingRequest[] store;
 
   BlockingRequest[] findByTenant(TenantId tenantId) {

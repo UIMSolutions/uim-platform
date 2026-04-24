@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
+class MemoryDataRetrievalRequestRepository : TenantRepository!(DataRetrievalRequest, DataRetrievalRequestId), DataRetrievalRequestRepository {
   private DataRetrievalRequest[] store;
 
   DataRetrievalRequest[] findByTenant(TenantId tenantId) {

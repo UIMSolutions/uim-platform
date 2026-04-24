@@ -13,30 +13,26 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPurposeRecordRepository : PurposeRecordRepository {
-  private PurposeRecord[] store;
+class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRecordId), PurposeRecordRepository {
 
-  PurposeRecord[] findByTenant(TenantId tenantId) {
-    PurposeRecord[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
 
-  PurposeRecord* findById(PurposeRecordId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  PurposeRecord[] filterByDataSubject(PurposeRecord[] records, DataSubjectId subjectId) {
+    return records.filter!(s => s.dataSubjectId == subjectId).array;
   }
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    PurposeRecord[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.dataSubjectId == subjectId)
-        result ~= s;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), subjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
+  }
+
+  size_t countByStatus(TenantId tenantId, PurposeRecordStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status) {
@@ -47,6 +43,14 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
     return result;
   }
 
+  void removeByStatus(TenantId tenantId, PurposeRecordStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+  }
+
+  size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
+    return findByBusinessContext(tenantId, contextId).length;
+  }
+
   PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     PurposeRecord[] result;
     foreach (s; findByTenant(tenantId))
@@ -55,23 +59,8 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
     return result;
   }
 
-  void save(PurposeRecord entity) {
-    store ~= entity;
+  void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
+    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity.id));
   }
 
-  void update(PurposeRecord entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(PurposeRecordId tenantId, id tenantId) {
-    PurposeRecord[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

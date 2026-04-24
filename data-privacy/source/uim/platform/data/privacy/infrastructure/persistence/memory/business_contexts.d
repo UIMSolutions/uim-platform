@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBusinessContextRepository : BusinessContextRepository {
+class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, BusinessContextId), BusinessContextRepository {
   private BusinessContext[] store;
 
   BusinessContext[] findByTenant(TenantId tenantId) {
@@ -24,7 +24,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
     return result;
   }
 
-  BusinessContext* findById(BusinessContextId tenantId, id tenantId) {
+  BusinessContext* findById(BusinessContextId id, TenantId tenantId) {
     foreach (s; findAll)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -59,7 +59,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
       }
   }
 
-  void remove(BusinessContextId tenantId, id tenantId) {
+  void remove(BusinessContextId id, TenantId tenantId) {
     BusinessContext[] kept;
     foreach (s; findAll)
       if (!(s.id == id && s.tenantId == tenantId))

@@ -33,32 +33,32 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category) {
     PersonalDataModel[] result;
-    foreach (m; findAll)
-      if (m.tenantId == tenantId && m.category == category)
+    foreach (m; findByTenant(tenantId))
+      if (m.category == category)
         result ~= m;
     return result;
   }
 
   PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     PersonalDataModel[] result;
-    foreach (m; findAll)
-      if (m.tenantId == tenantId && m.sourceSystem == sourceSystem)
+    foreach (m; findByTenant(tenantId))
+      if (m.sourceSystem == sourceSystem)
         result ~= m;
     return result;
   }
 
   PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
     PersonalDataModel[] result;
-    foreach (m; findAll)
-      if (m.tenantId == tenantId && m.subjectType == subjectType)
+    foreach (m; findByTenant(tenantId))
+      if (m.subjectType == subjectType)
         result ~= m;
     return result;
   }
 
   PersonalDataModel[] findSpecialCategories(TenantId tenantId) {
     PersonalDataModel[] result;
-    foreach (m; findAll)
-      if (m.tenantId == tenantId && m.isSpecialCategory)
+    foreach (m; findByTenant(tenantId))
+      if (m.isSpecialCategory)
         result ~= m;
     return result;
   }

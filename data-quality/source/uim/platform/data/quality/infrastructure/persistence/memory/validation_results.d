@@ -12,7 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.validation_results;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryValidationResultRepository : ValidationResultRepository {
+class MemoryValidationResultRepository : TenantRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {
   private ValidationResult[RecordId] store;
 
   ValidationResult[] findByTenant(TenantId tenantId) {
