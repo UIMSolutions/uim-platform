@@ -19,13 +19,13 @@ class MemoryRefreshTokenRepository : RefreshTokenRepository {
     }
 
     RefreshToken findById(RefreshTokenId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return RefreshToken.init;
     }
 
     RefreshToken findByTokenValue(string tokenValue) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.tokenValue == tokenValue) return e;
         return RefreshToken.init;
     }

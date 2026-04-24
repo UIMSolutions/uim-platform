@@ -19,13 +19,13 @@ class MemoryAuthorizationCodeRepository : AuthorizationCodeRepository {
     }
 
     AuthorizationCode findById(AuthorizationCodeId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return AuthorizationCode.init;
     }
 
     AuthorizationCode findByCode(string code) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.code == code) return e;
         return AuthorizationCode.init;
     }

@@ -19,7 +19,7 @@ class MemoryOAuthScopeRepository : OAuthScopeRepository {
     }
 
     OAuthScope findById(OAuthScopeId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return OAuthScope.init;
     }

@@ -11,43 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDnsRecordRepository : DnsRecordRepository {
-    private DnsRecord[] store;
+class MemoryDnsRecordRepository : TenantRepository!(DnsRecord, DnsRecordId), DnsRecordRepository {
 
-    DnsRecord findById(DnsRecordId id) {
-        foreach (r; store) {
-            if (r.id == id)
-                return r;
-        }
-        return DnsRecord.init;
-    }
-
-    DnsRecord[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(r => r.tenantId == tenantId).array;
+    size_t countByDomain(CustomDomainId domainId) {
+        return findByDomain(domainId).length;
     }
 
     DnsRecord[] findByDomain(CustomDomainId domainId) {
         return findAll().filter!(r => r.customDomainId == domainId).array;
     }
 
-    void save(DnsRecord r) {
-        store ~= r;
+    void removeByDomain(CustomDomainId domainId) {
+        findByDomain(domainId).each!(r => remove(r));
     }
 
-    void update(DnsRecord r) {
-        foreach (existing; store) {
-            if (existing.id == r.id) {
-                existing = r;
-                return;
-            }
-        }
-    }
-
-    void remove(DnsRecordId id) {
-        store = findAll().filter!(r => r.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(r => r.tenantId == tenantId).array.length;
-    }
 }

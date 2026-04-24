@@ -19,13 +19,13 @@ class MemoryOAuthClientRepository : OAuthClientRepository {
     }
 
     OAuthClient findById(OAuthClientId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return OAuthClient.init;
     }
 
     OAuthClient findByClientId(string clientId) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.clientId == clientId) return e;
         return OAuthClient.init;
     }

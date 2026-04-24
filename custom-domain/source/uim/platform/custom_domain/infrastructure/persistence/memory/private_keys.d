@@ -11,39 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrivateKeyRepository : PrivateKeyRepository {
-    private PrivateKey[] store;
+class MemoryPrivateKeyRepository : TenantRepository!(PrivateKey, PrivateKeyId), PrivateKeyRepository {
 
-    PrivateKey findById(PrivateKeyId id) {
-        foreach (k; store) {
-            if (k.id == id)
-                return k;
-        }
-        return PrivateKey.init;
-    }
-
-    PrivateKey[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(k => k.tenantId == tenantId).array;
-    }
-
-    void save(PrivateKey k) {
-        store ~= k;
-    }
-
-    void update(PrivateKey k) {
-        foreach (existing; store) {
-            if (existing.id == k.id) {
-                existing = k;
-                return;
-            }
-        }
-    }
-
-    void remove(PrivateKeyId id) {
-        store = findAll().filter!(k => k.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(k => k.tenantId == tenantId).array.length;
-    }
+    // TODO:
+    
 }

@@ -19,13 +19,13 @@ class MemoryAccessTokenRepository : AccessTokenRepository {
     }
 
     AccessToken findById(AccessTokenId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return AccessToken.init;
     }
 
     AccessToken findByTokenValue(string tokenValue) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.tokenValue == tokenValue) return e;
         return AccessToken.init;
     }

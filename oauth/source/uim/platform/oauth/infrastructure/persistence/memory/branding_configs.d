@@ -19,7 +19,7 @@ class MemoryBrandingConfigRepository : BrandingConfigRepository {
     }
 
     BrandingConfig findById(BrandingConfigId id) {
-        foreach (e; store)
+        foreach (e; findAll)
             if (e.id == id) return e;
         return BrandingConfig.init;
     }

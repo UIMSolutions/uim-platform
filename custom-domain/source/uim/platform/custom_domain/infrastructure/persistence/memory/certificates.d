@@ -11,47 +11,35 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCertificateRepository : CertificateRepository {
-    private Certificate[] store;
+class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
-    Certificate findById(CertificateId id) {
-        foreach (c; store) {
-            if (c.id == id)
-                return c;
-        }
-        return Certificate.init;
-    }
-
-    Certificate[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(c => c.tenantId == tenantId).array;
+    // #region ByKey
+    size_t countByKey(PrivateKeyId keyId) {
+        return findByKey(keyId).length;
     }
 
     Certificate[] findByKey(PrivateKeyId keyId) {
         return findAll().filter!(c => c.keyId == keyId).array;
     }
 
+    void removeByKey(PrivateKeyId keyId) {
+        findByKey(keyId).each!(c => remove(c.id));
+    }
+    // #endregion ByKey
+
+    // #region Expiring
+    size_t countExpiring(TenantId tenantId, long beforeTimestamp) {
+        return findExpiring(tenantId, beforeTimestamp).length;
+    }
+
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
-        return findAll().filter!(c => c.tenantId == tenantId && c.validTo > 0 && c.validTo <= beforeTimestamp).array;
+        return findByTenant(tenantId).filter!(c => c.validTo > 0 && c.validTo <= beforeTimestamp)
+            .array;
     }
 
-    void save(Certificate c) {
-        store ~= c;
+    void removeExpiring(TenantId tenantId, long beforeTimestamp) {
+        findExpiring(tenantId, beforeTimestamp).each!(c => remove(c.id));
     }
+    // #endregion Expiring
 
-    void update(Certificate c) {
-        foreach (existing; store) {
-            if (existing.id == c.id) {
-                existing = c;
-                return;
-            }
-        }
-    }
-
-    void remove(CertificateId id) {
-        store = findAll().filter!(c => c.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(c => c.tenantId == tenantId).array.length;
-    }
 }
