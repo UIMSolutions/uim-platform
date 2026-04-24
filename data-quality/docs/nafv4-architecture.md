@@ -243,7 +243,7 @@ DQM Service Offerings
 │  ┌──────────────────┐       ┌──────────────────────┐            │
 │  │  DataProfile      │──1:N──│  ColumnProfile       │            │
 │  ├──────────────────┤       ├──────────────────────┤            │
-│  │ id: ProfileId     │       │ columnName            │            │
+│  │ id: DataProfileId     │       │ columnName            │            │
 │  │ tenantId          │       │ dataType: enum        │            │
 │  │ datasetId         │       │ totalCount, nullCount │            │
 │  │ totalRecords      │       │ uniqueCount           │            │

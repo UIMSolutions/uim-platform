@@ -73,7 +73,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
   }
 
   /// Get profile by ID.
-  DataProfile* getById(ProfileId tenantId, id tenantId) {
+  DataProfile* getById(DataProfileId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

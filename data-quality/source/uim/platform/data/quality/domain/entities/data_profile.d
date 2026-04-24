@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// Profile analysis result for a dataset.
 struct DataProfile {
-  ProfileId profileId;
+  DataProfileId DataProfileId;
   TenantId tenantId;
   DatasetId datasetId;
   string datasetName;

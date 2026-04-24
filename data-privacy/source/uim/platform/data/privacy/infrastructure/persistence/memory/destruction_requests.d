@@ -13,57 +13,38 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDestructionRequestRepository : DestructionRequestRepository {
-  private DestructionRequest[] store;
+class MemoryDestructionRequestRepository : TenantRepository!(DestructionRequest, DestructionRequestId), DestructionRequestRepository {
 
-  DestructionRequest[] findByTenant(TenantId tenantId) {
-    DestructionRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  // #region ByDataSubject
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
 
-  DestructionRequest* findById(DestructionRequestId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  DestructionRequest[] filterByDataSubject(DestructionRequest[] records, DataSubjectId subjectId) {
+    return records.filter!(s => s.dataSubjectId == subjectId).array;
   }
 
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    DestructionRequest[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.dataSubjectId == subjectId)
-        result ~= s;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), subjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
+  }
+  // #endregion ByDataSubject
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, DestructionStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  DestructionRequest[] filterByStatus(DestructionRequest[] records, DestructionStatus status) {
+    return records.filter!(s => s.status == status).array;
   }
 
   DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status) {
-    DestructionRequest[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.status == status)
-        result ~= s;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
+  // #endregion ByStatus
 
-  void save(DestructionRequest entity) {
-    store ~= entity;
-  }
-
-  void update(DestructionRequest entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(DestructionRequestId tenantId, id tenantId) {
-    DestructionRequest[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

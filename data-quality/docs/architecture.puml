@@ -97,7 +97,7 @@ package "Domain Layer  «core»" as DOM <<Rectangle>> {
     }
 
     class DataProfile << (E,#66BB6A) >> {
-      id : ProfileId
+      id : DataProfileId
       tenantId : TenantId
       datasetId : DatasetId
       columns : ColumnProfile[]

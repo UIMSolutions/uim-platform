@@ -14,56 +14,41 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, BusinessContextId), BusinessContextRepository {
-  private BusinessContext[] store;
 
-  BusinessContext[] findByTenant(TenantId tenantId) {
-    BusinessContext[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, BusinessContextStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  BusinessContext* findById(BusinessContextId id, TenantId tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  BusinessContext[] filterByStatus(BusinessContext[] contexts, BusinessContextStatus status) { 
+    return contexts.filter!(c => c.status == status).array;
   }
 
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status) {
-    BusinessContext[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.status == status)
-        result ~= s;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, BusinessContextStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+  }
+  // #endregion ByStatus
+
+  // #region ByControllerGroup
+  size_t countByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
+    return findByControllerGroup(tenantId, groupId).length;
+  }
+
+  BusinessContext[] filterByControllerGroup(BusinessContext[] contexts, DataControllerGroupId groupId) {
+    return contexts.filter!(c => c.controllerGroupId == groupId).array;
   }
 
   BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
-    BusinessContext[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.controllerGroupId == groupId)
-        result ~= s;
-    return result;
+    return filterByControllerGroup(findByTenant(tenantId), groupId);
   }
 
-  void save(BusinessContext entity) {
-    store ~= entity;
+  void removeByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
+    findByControllerGroup(tenantId, groupId).each!(entity => remove(entity.id));
   }
+  // #endregion ByControllerGroup
 
-  void update(BusinessContext entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(BusinessContextId id, TenantId tenantId) {
-    BusinessContext[] kept;
-    foreach (s; findAll)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
-  }
 }

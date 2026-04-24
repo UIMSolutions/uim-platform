@@ -12,33 +12,42 @@ import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCleansingJobRepository : CleansingJobRepository {
-  private CleansingJob[CleansingJobId] store;
+class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJobId), CleansingJobRepository {
 
-  CleansingJob[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(j => j.tenantId == tenantId).array;
+  // #region ByDataset
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
   }
 
-  CleansingJob findById(CleansingJobId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  CleansingJob[] filterByDataset(CleansingJob[] jobs, DatasetId datasetId) {
+    return jobs.filter!(j => j.datasetId == datasetId).array;
   }
 
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findAll().filter!(j => j.tenantId == tenantId && j.datasetId == datasetId).array;
+    return filterByDataset(findByTenant(tenantId), datasetId);
+  }
+
+  void removeByDataset(TenantId tenantId, DatasetId datasetId) {
+    findByDataset(tenantId, datasetId).each!(entity => remove(entity.id));
+  }
+  // #endregion ByDataset
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, JobStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  CleansingJob[] filterByStatus(CleansingJob[] jobs, JobStatus status) {
+    return jobs.filter!(j => j.status == status).array;
   }
 
   CleansingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return findAll().filter!(j => j.tenantId == tenantId && j.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(CleansingJob job) {
-    store[job.id] = job;
+  void removeByStatus(TenantId tenantId, JobStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
-
-  void update(CleansingJob job) {
-    store[job.id] = job;
-  }
+  // #endregion ByStatus
+  
 }

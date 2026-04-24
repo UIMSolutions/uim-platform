@@ -14,56 +14,41 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
-  private DeletionRequest[] store;
 
-  DeletionRequest[] findByTenant(TenantId tenantId) {
-    DeletionRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId)
-        result ~= r;
-    return result;
+  // #region ByDataSubject
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
 
-  DeletionRequest* findById(DeletionRequestId tenantId, id tenantId) {
-    foreach (r; findAll)
-      if (r.id == id && r.tenantId == tenantId)
-        return &r;
-    return null;
+  DeletionRequest[] filterByDataSubject(DeletionRequest[] records, DataSubjectId subjectId) {
+    return records.filter!(s => s.dataSubjectId == subjectId).array;
   }
 
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    DeletionRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
-        result ~= r;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
+  }
+  // #endregion ByDataSubject
+
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, DeletionStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  DeletionRequest[] filterByStatus(DeletionRequest[] records, DeletionStatus status) {
+    return records.filter!(s => s.status == status).array;
   }
 
   DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status) {
-    DeletionRequest[] result;
-    foreach (r; findAll)
-      if (r.tenantId == tenantId && r.status == status)
-        result ~= r;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(DeletionRequest request) {
-    store ~= request;
+  void removeByStatus(TenantId tenantId, DeletionStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
+  // #endregion ByStatus
 
-  void update(DeletionRequest request) {
-    foreach (r; findAll)
-      if (r.id == request.id && r.tenantId == request.tenantId) {
-        r = request;
-        return;
-      }
-  }
-
-  void remove(DeletionRequestId tenantId, id tenantId) {
-    DeletionRequest[] kept;
-    foreach (r; findByTenant(tenantId))
-      if (!(r.id == id))
-        kept ~= r;
-    store = kept;
-  }
 }

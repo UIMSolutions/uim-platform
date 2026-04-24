@@ -27,7 +27,7 @@ struct RuleId {
   mixin DomainId;
 }
 
-struct ProfileId {
+struct DataProfileId {
   string value;
 
   this(string value) {
