@@ -11,38 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPageRepository : PageRepository {
-    private Page[] store;
+class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
 
-    bool existsById(PageId id) {
-        return store.any!(e => e.id == id);
+    size_t countByApplication(ApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
-
-    Page findById(PageId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Page.init;
-    }
-
-    Page[] findAll() { return store; }
-
-    Page[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     Page[] findByApplication(ApplicationId applicationId) {
         return findAll().filter!(e => e.applicationId == applicationId).array;
     }
-
-    void save(Page entity) { store ~= entity; }
-
-    void update(Page entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByApplication(ApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
     }
 
-    void remove(PageId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

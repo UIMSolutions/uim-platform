@@ -16,37 +16,31 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-class MemoryServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[ServiceBindingId] store;
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-  ServiceBinding* findById(ServiceBindingId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+  // #region BySystem
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
   }
-
   ServiceBinding[] findBySystem(SystemInstanceId systemId) {
     return findAll().filter!(e => e.systemInstanceId == systemId).array;
   }
-
-  ServiceBinding[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e));
   }
+  // #endregion BySystem
 
+  // #region ByType
+  size_t countByType(SystemInstanceId systemId, BindingType bindingType) {
+    return findByType(systemId, bindingType).length;
+  }
   ServiceBinding[] findByType(SystemInstanceId systemId, BindingType bindingType) {
     return findAll().filter!(e => e.systemInstanceId == systemId
         && e.bindingType == bindingType).array;
   }
-
-  void save(ServiceBinding binding) {
-    store[binding.id] = binding;
+  void removeByType(SystemInstanceId systemId, BindingType bindingType) {
+    findByType(systemId, bindingType).each!(e => remove(e));
   }
-
-  void update(ServiceBinding binding) {
-    store[binding.id] = binding;
-  }
-
-  void remove(ServiceBindingId id) {
-    store.remove(id);
-  }
+  // #endregion ByType
+  
 }
