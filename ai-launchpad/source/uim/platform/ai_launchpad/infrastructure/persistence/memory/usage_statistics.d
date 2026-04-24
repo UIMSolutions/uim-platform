@@ -18,7 +18,7 @@ class MemoryUsageStatisticRepository : IUsageStatisticRepository {
 
   UsageStatistic[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     UsageStatistic[] result;
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (s.scenarioId == scenarioId && s.connectionId == connectionId) result ~= s;
     }
     return result;
@@ -26,7 +26,7 @@ class MemoryUsageStatisticRepository : IUsageStatisticRepository {
 
   UsageStatistic[] findByConnection(ConnectionId connectionId) {
     UsageStatistic[] result;
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (s.connectionId == connectionId) result ~= s;
     }
     return result;
@@ -34,7 +34,7 @@ class MemoryUsageStatisticRepository : IUsageStatisticRepository {
 
   UsageStatistic[] findByPeriod(StatisticsPeriod period) {
     UsageStatistic[] result;
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (s.period == period) result ~= s;
     }
     return result;

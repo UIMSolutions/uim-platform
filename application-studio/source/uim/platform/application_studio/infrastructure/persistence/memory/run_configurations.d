@@ -37,7 +37,7 @@ class MemoryRunConfigurationRepository : RunConfigurationRepository {
     void save(RunConfiguration entity) { store ~= entity; }
 
     void update(RunConfiguration entity) {
-        foreach (ref e; store)
+        foreach (ref e; findAll)
             if (e.id == entity.id) { e = entity; return; }
     }
 

@@ -13,7 +13,7 @@ class MemoryDatasetRepository : IDatasetRepository {
   private Dataset[] store;
 
   void save(Dataset d) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == d.id && existing.connectionId == d.connectionId) {
         existing = d;
         return;
@@ -23,7 +23,7 @@ class MemoryDatasetRepository : IDatasetRepository {
   }
 
   Dataset findById(DatasetId id, ConnectionId connectionId) {
-    foreach (d; store) {
+    foreach (d; findAll) {
       if (d.id == id && d.connectionId == connectionId) return d;
     }
     return Dataset.init;
@@ -31,7 +31,7 @@ class MemoryDatasetRepository : IDatasetRepository {
 
   Dataset[] findByConnection(ConnectionId connectionId) {
     Dataset[] result;
-    foreach (d; store) {
+    foreach (d; findAll) {
       if (d.connectionId == connectionId) result ~= d;
     }
     return result;
@@ -39,7 +39,7 @@ class MemoryDatasetRepository : IDatasetRepository {
 
   Dataset[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     Dataset[] result;
-    foreach (d; store) {
+    foreach (d; findAll) {
       if (d.scenarioId == scenarioId && d.connectionId == connectionId) result ~= d;
     }
     return result;
@@ -51,7 +51,7 @@ class MemoryDatasetRepository : IDatasetRepository {
 
   void remove(DatasetId id, ConnectionId connectionId) {
     Dataset[] filtered;
-    foreach (d; store) {
+    foreach (d; findAll) {
       if (!(d.id == id && d.connectionId == connectionId)) filtered ~= d;
     }
     store = filtered;

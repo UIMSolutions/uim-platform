@@ -13,7 +13,7 @@ class MemoryExecutionRepository : IExecutionRepository {
   private Execution[] store;
 
   void save(Execution e) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == e.id && existing.connectionId == e.connectionId) {
         existing = e;
         return;

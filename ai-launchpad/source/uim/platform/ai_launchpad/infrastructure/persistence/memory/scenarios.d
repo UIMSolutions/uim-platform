@@ -13,7 +13,7 @@ class MemoryScenarioRepository : IScenarioRepository {
   private Scenario[] store;
 
   void save(Scenario s) {
-    foreach (existing; store) {
+    foreach (existing; findAll) {
       if (existing.id == s.id && existing.connectionId == s.connectionId) {
         existing = s;
         return;
@@ -23,7 +23,7 @@ class MemoryScenarioRepository : IScenarioRepository {
   }
 
   Scenario findById(ScenarioId id, ConnectionId connectionId) {
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (s.id == id && s.connectionId == connectionId) return s;
     }
     return Scenario.init;
@@ -31,7 +31,7 @@ class MemoryScenarioRepository : IScenarioRepository {
 
   Scenario[] findByConnection(ConnectionId connectionId) {
     Scenario[] result;
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (s.connectionId == connectionId) result ~= s;
     }
     return result;
@@ -43,7 +43,7 @@ class MemoryScenarioRepository : IScenarioRepository {
 
   void remove(ScenarioId id, ConnectionId connectionId) {
     Scenario[] filtered;
-    foreach (s; store) {
+    foreach (s; findAll) {
       if (!(s.id == id && s.connectionId == connectionId)) filtered ~= s;
     }
     store = filtered;
