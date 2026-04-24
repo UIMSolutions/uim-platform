@@ -66,16 +66,16 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
 
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status) {
     ProvisionedEntity[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }
 
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType) {
     ProvisionedEntity[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.entityType == entityType)
+    foreach (e; findByTenant(tenantId))
+      if (e.entityType == entityType)
         result ~= e;
     return result;
   }

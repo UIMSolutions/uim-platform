@@ -64,8 +64,8 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
 
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status) {
     ProvisioningLog[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

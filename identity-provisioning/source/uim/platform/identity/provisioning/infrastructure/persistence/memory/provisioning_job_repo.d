@@ -59,8 +59,8 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
 
   ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
     ProvisioningJob[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

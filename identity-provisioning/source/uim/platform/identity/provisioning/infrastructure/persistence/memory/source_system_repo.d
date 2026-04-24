@@ -34,8 +34,8 @@ class MemorySourceSystemRepository : SourceSystemRepository {
   }
 
   SourceSystem* findByName(TenantId tenantId, string name) {
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return &e;
     return null;
   }
@@ -50,16 +50,16 @@ class MemorySourceSystemRepository : SourceSystemRepository {
 
   SourceSystem[] findByType(TenantId tenantId, SystemType systemType) {
     SourceSystem[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.systemType == systemType)
+    foreach (e; findByTenant(tenantId))
+      if (e.systemType == systemType)
         result ~= e;
     return result;
   }
 
   SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
     SourceSystem[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.status == status)
         result ~= e;
     return result;
   }

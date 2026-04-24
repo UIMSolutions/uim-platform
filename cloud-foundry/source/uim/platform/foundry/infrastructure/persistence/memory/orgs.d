@@ -31,8 +31,8 @@ class MemoryOrgRepository : OrgRepository {
   }
 
   Organization* findByName(TenantId tenantId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return &e;
     return null;
   }

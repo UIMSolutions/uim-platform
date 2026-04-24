@@ -23,8 +23,8 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
   ServiceInstance findByName(TenantId tenantId, SpaceId spaceId, string name) {
-    foreach (e; findAll())
-      if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.spaceId == spaceId && e.name == name)
         return e;
     return ServiceInstance.init;
   }

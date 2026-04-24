@@ -51,8 +51,8 @@ class MemoryTransformationRepository : TransformationRepository {
 
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role) {
     Transformation[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId && e.systemRole == role)
+    foreach (e; findByTenant(tenantId))
+      if (e.systemRole == role)
         result ~= e;
     return result;
   }
