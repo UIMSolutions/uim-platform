@@ -13,57 +13,38 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
-  private CorrectionRequest[] store;
+class MemoryCorrectionRequestRepository : TenantRepository!(CorrectionRequest, CorrectionRequestId), CorrectionRequestRepository {
 
-  CorrectionRequest[] findByTenant(TenantId tenantId) {
-    CorrectionRequest[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return findByDataSubject(tenantId, subjectId).length;
   }
 
-  CorrectionRequest* findById(CorrectionRequestId tenantId, id tenantId) {
-    foreach (s; findByTenant(tenantId))
-      if (s.id == id)
-        return &s;
-    return null;
+  CorrectionRequest[] filterByDataSubject(CorrectionRequest[] requests, DataSubjectId subjectId) {
+    return requests.filter!(r => r.dataSubjectId == subjectId).array;
   }
 
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    CorrectionRequest[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.dataSubjectId == subjectId)
-        result ~= s;
-    return result;
+    return filterByDataSubject(findByTenant(tenantId), subjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
+  }
+
+  size_t countByStatus(TenantId tenantId, CorrectionStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  CorrectionRequest[] filterByStatus(CorrectionRequest[] requests, CorrectionStatus status) {
+    return requests.filter!(r => r.status == status).array;
   }
 
   CorrectionRequest[] findByStatus(TenantId tenantId, CorrectionStatus status) {
-    CorrectionRequest[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.status == status)
-        result ~= s;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(CorrectionRequest entity) {
-    store ~= entity;
+  void removeByStatus(TenantId tenantId, CorrectionStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
-  void update(CorrectionRequest entity) {
-    foreach (s; findByTenant(entity.tenantId))
-      if (s.id == entity.id) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(CorrectionRequestId tenantId, id tenantId) {
-    CorrectionRequest[] kept;
-    foreach (s; findByTenant(tenantId))
-      if (!(s.id == id))
-        kept ~= s;
-    store = kept;
-  }
 }

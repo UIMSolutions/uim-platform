@@ -11,51 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCustomDomainRepository : CustomDomainRepository {
-    private CustomDomain[] store;
-
-    CustomDomain findById(CustomDomainId id) {
-        foreach (d; findAll) {
-            if (d.id == id)
-                return d;
-        }
-        return CustomDomain.init;
-    }
+class MemoryCustomDomainRepository : TenantRepository!(CustomDomain, CustomDomainId), CustomDomainRepository {
 
     CustomDomain findByDomainName(TenantId tenantId, string domainName) {
-        foreach (d; findAll) {
-            if (d.tenantId == tenantId && d.domainName == domainName)
+        foreach (d; findByTenant(tenantId)) {
+            if (d.domainName == domainName)
                 return d;
         }
         return CustomDomain.init;
     }
 
-    CustomDomain[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array;
+    // #region ByOrganization
+    size_t countByOrganization(TenantId tenantId, string organizationId) {
+        return findByOrganization(tenantId, organizationId).length;
+    }
+
+    CustomDomain[] filterByOrganization(CustomDomain[] domains, string organizationId) {
+        return domains.filter!(d => d.organizationId == organizationId).array;
     }
 
     CustomDomain[] findByOrganization(TenantId tenantId, string organizationId) {
-        return findAll().filter!(d => d.tenantId == tenantId && d.organizationId == organizationId).array;
+        return filterByOrganization(findByTenant(tenantId), organizationId);
     }
 
-    void save(CustomDomain d) {
-        store ~= d;
+    void removeByOrganization(TenantId tenantId, string organizationId) {
+        findByOrganization(tenantId, organizationId).each!(d => remove(d));
     }
+    // #endregion ByOrganization
 
-    void update(CustomDomain d) {
-        foreach (existing; findAll) {
-            if (existing.id == d.id) {
-                existing = d;
-                return;
-            }
-        }
-    }
-
-    void remove(CustomDomainId id) {
-        store = findAll().filter!(d => d.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array.length;
-    }
 }

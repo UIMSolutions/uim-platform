@@ -16,51 +16,49 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRouteRepository : RouteRepository {
-  private Route[RouteId] store;
+class MemoryRouteRepository : TenantRepository!(Route, RouteId), RouteRepository {
 
-  Route[] findBySpace(SpaceId spacetenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
-  }
-
-  Route* findById(RouteId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
+  Route findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
     foreach (e; findByTenant(tenantId))
       if (e.host == host && e.domainId == domainId)
-        return &e;
-    return null;
+        return e;
+    return Route.init;
   }
 
-  Route[] findByDomain(DomainId domaintenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
+  // #region ByDomain
+  size_t countByDomain(TenantId tenantId, DomainId domainId) {
+    return findByDomain(tenantId, domainId).length;
   }
 
-  Route[] findByApp(AppId apptenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.mappedAppIds.canFind(appId)).array;
+  Route[] filterByDomain(TenantId tenantId, DomainId domainId) {
+    return findByDomain(tenantId, domainId);
   }
 
-  Route[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  Route[] findByDomain(TenantId tenantId, DomainId domainId) {
+    return findByDomain(findByTenant(tenantId), domainId);
   }
 
-  void save(Route route) {
-    store[route.id] = route;
+  void removeByDomain(TenantId tenantId, DomainId domainId) {
+    findByDomain(tenantId, domainId).each!(e => remove(e.id));
+  }
+  // #endregion ByDomain
+
+  // #region ByApp
+  size_t countByApp(TenantId tenantId, AppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  void update(Route route) {
-    store[route.id] = route;
+  Route[] filterByApp(TenantId tenantId, AppId appId) {
+    return findByApp(tenantId, appId);
   }
 
-  void remove(RouteId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  Route[] findByApp(TenantId tenantId, AppId appId) {
+    return findByTenant(tenantId).filter!(e => e.mappedAppIds.canFind(appId)).array;
   }
+
+  void removeByApp(TenantId tenantId, AppId appId) {
+    findByApp(tenantId, appId).each!(e => remove(e));
+  }
+  // #endregion ByApp
+
 }

@@ -15,7 +15,7 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-class MemorySystemInstanceRepository : SystemInstanceRepository {
+class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
   private SystemInstance[SystemInstanceId] store;
 
   SystemInstance findById(SystemInstanceId id) {
@@ -25,7 +25,7 @@ class MemorySystemInstanceRepository : SystemInstanceRepository {
   }
 
   SystemInstance[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+    return filterByTenant(findAll(), tenantId);
   }
 
   SystemInstance findByName(TenantId tenantId, string name) {

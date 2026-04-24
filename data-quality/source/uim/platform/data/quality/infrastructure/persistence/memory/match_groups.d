@@ -13,38 +13,41 @@ import uim.platform.data.quality.domain.ports.repositories.match_groups;
 // import std.array : array;
 
 class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
-  private MatchGroup[MatchGroupId] store;
 
-  MatchGroup[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(g => g.tenantId == tenantId).array;
+  // #region ByDataset
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
   }
 
-  MatchGroup* findById(MatchGroupId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  MatchGroup[] filterByDataset(MatchGroup[] groups, DatasetId datasetId) {
+    return groups.filter!(g => g.datasetId == datasetId).array;
   }
 
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findAll().filter!(g => g.tenantId == tenantId && g.datasetId == datasetId).array;
+    return filterByDataset(findByTenant(tenantId), datasetId);
+  }
+
+  void removeByDataset(TenantId tenantId, DatasetId datasetId) {
+    findByDataset(tenantId, datasetId).each!(entity => remove(entity.id));
+  }
+  // #endregion ByDataset
+
+  // #region Unresolved
+  size_t countUnresolved(TenantId tenantId) {
+    return findUnresolved(tenantId).length;
+  }
+
+  MatchGroup[] filterUnresolved(MatchGroup[] groups, TenantId tenantId) {
+    return groups.filter!(g => g.tenantId == tenantId && !g.resolved).array;
   }
 
   MatchGroup[] findUnresolved(TenantId tenantId) {
-    return findAll().filter!(g => g.tenantId == tenantId && !g.resolved).array;
+    return filterUnresolved(findByTenant(tenantId), tenantId);
   }
 
-  void save(MatchGroup group) {
-    store[group.id] = group;
+  void removeUnresolved(TenantId tenantId) {
+    findUnresolved(tenantId).each!(entity => remove(entity.id));
   }
+  // #endregion Unresolved
 
-  void update(MatchGroup group) {
-    store[group.id] = group;
-  }
-
-  void remove(MatchGroupId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

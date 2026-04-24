@@ -16,38 +16,13 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryOrgRepository : OrgRepository {
-  private Organization[OrgId] store;
-
-  Organization[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
-  }
-
-  Organization* findById(OrgId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Organization* findByName(TenantId tenantId, string name) {
+class MemoryOrgRepository : TenantRepository!(Organization, OrgId), OrgRepository {
+  
+  Organization findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
-        return &e;
-    return null;
+        return e;
+    return Organization.init;
   }
 
-  void save(Organization org) {
-    store[org.id] = org;
-  }
-
-  void update(Organization org) {
-    store[org.id] = org;
-  }
-
-  void remove(OrgId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

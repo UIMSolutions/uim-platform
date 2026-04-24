@@ -12,44 +12,38 @@ import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCleansingRuleRepository : CleansingRuleRepository {
-  private CleansingRule[RuleId] store;
+class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, RuleId), CleansingRuleRepository {
 
-  CleansingRule[] findAll() {
-    return findAll().array;
+  size_t countByDataset(TenantId tenantId, string datasetPattern) {
+    return findByDataset(tenantId, datasetPattern).length;
   }
 
-  CleansingRule[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
-  }
-
-  CleansingRule* findById(RuleId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+  CleansingRule[] filterByDataset(CleansingRule[] rules, string datasetPattern) {
+    return rules.filter!(r => r.datasetPattern == datasetPattern).array;
   }
 
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return findAll().filter!(r => r.tenantId == tenantId
-        && r.datasetPattern == datasetPattern).array;
+    return filterByDataset(findByTenant(tenantId), datasetPattern);
+  }
+
+  void removeByDataset(TenantId tenantId, string datasetPattern) {
+    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity.id));
+  }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+
+  CleansingRule[] filterActive(CleansingRule[] rules, TenantId tenantId) {
+    return rules.filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active).array;
   }
 
   CleansingRule[] findActive(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
-      .array;
+    return filterActive(findByTenant(tenantId), tenantId);
   }
 
-  void save(CleansingRule rule) {
-    store[rule.id] = rule;
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(entity => remove(entity.id));
   }
 
-  void update(CleansingRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void remove(RuleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

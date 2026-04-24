@@ -11,43 +11,22 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTrustedCertificateRepository : TrustedCertificateRepository {
-    private TrustedCertificate[] store;
+class MemoryTrustedCertificateRepository : TenantRepository!(TrustedCertificate, TrustedCertificateId), TrustedCertificateRepository {
 
-    TrustedCertificate findById(TrustedCertificateId id) {
-        foreach (c; findAll) {
-            if (c.id == id)
-                return c;
-        }
-        return TrustedCertificate.init;
+    size_t countByDomain(CustomDomainId domainId) {
+        return findByDomain(domainId).length;
     }
 
-    TrustedCertificate[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(c => c.tenantId == tenantId).array;
+    TrustedCertificate[] filterByDomain(TrustedCertificate[] certs, CustomDomainId domainId) {
+        return certs.filter!(c => c.customDomainId == domainId).array;
     }
 
     TrustedCertificate[] findByDomain(CustomDomainId domainId) {
-        return findAll().filter!(c => c.customDomainId == domainId).array;
+        return filterByDomain(findAll(), domainId);
     }
 
-    void save(TrustedCertificate c) {
-        store ~= c;
+    void removeByDomain(CustomDomainId domainId) {
+        findByDomain(domainId).each!(c => remove(c));
     }
 
-    void update(TrustedCertificate c) {
-        foreach (existing; findAll) {
-            if (existing.id == c.id) {
-                existing = c;
-                return;
-            }
-        }
-    }
-
-    void remove(TrustedCertificateId id) {
-        store = findAll().filter!(c => c.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(c => c.tenantId == tenantId).array.length;
-    }
 }

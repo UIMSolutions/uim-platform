@@ -11,38 +11,21 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRunConfigurationRepository : RunConfigurationRepository {
-    private RunConfiguration[] store;
+class MemoryRunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
 
-    bool existsById(RunConfigurationId id) {
-        return store.any!(e => e.id == id);
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
     }
 
-    RunConfiguration findById(RunConfigurationId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return RunConfiguration.init;
-    }
-
-    RunConfiguration[] findAll() { return store; }
-
-    RunConfiguration[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    RunConfiguration[] filterByProject(RunConfiguration[] configs, ProjectId projectId) {
+        return configs.filter!(c => c.projectId == projectId).array;
     }
 
     RunConfiguration[] findByProject(ProjectId projectId) {
-        return findAll().filter!(e => e.projectId == projectId).array;
+        return filterByProject(findAll(), projectId);
     }
 
-    void save(RunConfiguration entity) { store ~= entity; }
-
-    void update(RunConfiguration entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(RunConfigurationId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(c => remove(c));
     }
 }

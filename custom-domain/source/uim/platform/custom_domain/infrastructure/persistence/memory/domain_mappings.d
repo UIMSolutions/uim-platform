@@ -11,51 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDomainMappingRepository : DomainMappingRepository {
-    private DomainMapping[] store;
+class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMappingId), DomainMappingRepository {
 
-    DomainMapping findById(DomainMappingId id) {
-        foreach (m; findAll) {
-            if (m.id == id)
-                return m;
-        }
-        return DomainMapping.init;
+    // #region ByDomain
+    size_t countByDomain(TenantId tenantId, CustomDomainId domainId) {
+        return findByDomain(domainId).length;
     }
 
-    DomainMapping[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(m => m.tenantId == tenantId).array;
+    DomainMapping[] filterByDomain(DomainMapping[] mappings, CustomDomainId domainId) {
+        return mappings.filter!(m => m.customDomainId == domainId).array;
     }
 
     DomainMapping[] findByDomain(CustomDomainId domainId) {
-        return findAll().filter!(m => m.customDomainId == domainId).array;
+        return filterByDomain(findAll(), domainId);
     }
 
+    void removeByDomain(CustomDomainId domainId) {
+        findByDomain(domainId).each!(m => remove(m.id));
+    }
+    // #endregion ByDomain
+
+    // #region ByCustomRoute
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; findAll) {
-            if (m.tenantId == tenantId && m.customRoute == customRoute)
+        foreach (m; findByTenant(tenantId)) {
+            if (m.customRoute == customRoute)
                 return m;
         }
         return DomainMapping.init;
-    }
-
-    void save(DomainMapping m) {
-        store ~= m;
-    }
-
-    void update(DomainMapping m) {
-        foreach (existing; findAll) {
-            if (existing.id == m.id) {
-                existing = m;
-                return;
-            }
-        }
-    }
-
-    void remove(DomainMappingId id) {
-        store = findAll().filter!(m => m.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(m => m.tenantId == tenantId).array.length;
     }
 }
