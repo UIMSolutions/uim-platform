@@ -11,38 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDevSpaceTypeRepository : DevSpaceTypeRepository {
-    private DevSpaceType[] store;
+class MemoryDevSpaceTypeRepository : TenantRepository!(DevSpaceType, DevSpaceTypeId), DevSpaceTypeRepository {
 
-    bool existsById(DevSpaceTypeId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    DevSpaceType findById(DevSpaceTypeId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return DevSpaceType.init;
-    }
-
-    DevSpaceType[] findAll() { return store; }
-
-    DevSpaceType[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByCategory(DevSpaceTypeCategory category) {
+        return findByCategory(category).length;
     }
 
     DevSpaceType[] findByCategory(DevSpaceTypeCategory category) {
         return findAll().filter!(e => e.category == category).array;
     }
 
-    void save(DevSpaceType entity) { store ~= entity; }
-
-    void update(DevSpaceType entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByCategory(DevSpaceTypeCategory category) {
+        findByCategory(category).each!(e => remove(e));
     }
 
-    void remove(DevSpaceTypeId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

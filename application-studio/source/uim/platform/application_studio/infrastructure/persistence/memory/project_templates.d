@@ -11,38 +11,17 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProjectTemplateRepository : ProjectTemplateRepository {
-    private ProjectTemplate[] store;
+class MemoryProjectTemplateRepository : TenantRepository!(ProjectTemplate, ProjectTemplateId), ProjectTemplateRepository {
 
-    bool existsById(ProjectTemplateId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ProjectTemplate findById(ProjectTemplateId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return ProjectTemplate.init;
-    }
-
-    ProjectTemplate[] findAll() { return store; }
-
-    ProjectTemplate[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByCategory(TemplateCategory category) {
+        return findByCategory(category).length;
     }
 
     ProjectTemplate[] findByCategory(TemplateCategory category) {
         return findAll().filter!(e => e.category == category).array;
     }
 
-    void save(ProjectTemplate entity) { store ~= entity; }
-
-    void update(ProjectTemplate entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(ProjectTemplateId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByCategory(TemplateCategory category) {
+        findByCategory(category).each!(e => remove(e));
     }
 }

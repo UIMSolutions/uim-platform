@@ -11,42 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProjectRepository : ProjectRepository {
-    private Project[] store;
+class MemoryProjectRepository : TenantRepository!(Project, ProjectId), ProjectRepository {
 
-    bool existsById(ProjectId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Project findById(ProjectId id) {
-        foreach (e; store)
-            if (e.id == id) return e;
-        return Project.init;
-    }
-
-    Project[] findAll() { return store; }
-
-    Project[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByDevSpace(DevSpaceId devSpaceId) {
+        return findByDevSpace(devSpaceId).length;
     }
 
     Project[] findByDevSpace(DevSpaceId devSpaceId) {
         return findAll().filter!(e => e.devSpaceId == devSpaceId).array;
     }
 
-    Project[] findByType(ProjectType projectType) {
-        return findAll().filter!(e => e.projectType == projectType).array;
+    void removeByDevSpace(DevSpaceId devSpaceId) {
+        findByDevSpace(devSpaceId).each!(e => remove(e));
     }
 
-    void save(Project entity) { store ~= entity; }
-
-    void update(Project entity) {
-        foreach (ref e; store)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(ProjectId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

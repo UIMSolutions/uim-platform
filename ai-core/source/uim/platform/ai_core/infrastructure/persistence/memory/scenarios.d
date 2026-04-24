@@ -12,17 +12,11 @@ import uim.platform.ai_core.domain.ports.repositories.scenarios;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryScenarioRepository : ScenarioRepository {
-  private Scenario[][string] store; // key: rgId
+class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), ScenarioRepository {
 
-  Scenario findById(ScenarioId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      foreach (s; *rg) {
-        if (s.id == id)
-          return s;
-      }
-    }
-    return Scenario.init;
+  // TODO: Implement methods for finding and removing scenarios by tenant, if needed. 
+  size_t countByResourceGroup(ResourceGroupId rgId) {
+    return findByResourceGroup(rgId).length;
   }
 
   Scenario[] findByResourceGroup(ResourceGroupId rgId) {
@@ -31,41 +25,9 @@ class MemoryScenarioRepository : ScenarioRepository {
     return [];
   }
 
-  Scenario[] findByTenant(TenantId tenantId) {
-    Scenario[] result;
-    foreach (rg; store.byValue) {
-      foreach (s; rg) {
-        if (s.tenantId == tenantId)
-          result ~= s;
-      }
-    }
-    return result;
-  }
-
-  void save(Scenario s) {
-    store[s.resourceGroupId] ~= s;
-  }
-
-  void update(Scenario s) {
-    if (auto rg = s.resourceGroupId in store) {
-      foreach (existing; *rg) {
-        if (existing.id == s.id) {
-          existing = s;
-          return;
-        }
-      }
-    }
-  }
-
-  void remove(ScenarioId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(s => s.id != id).array;
-    }
-  }
-
-  size_t countByResourceGroup(ResourceGroupId rgId) {
+  void removeByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).length;
-    return 0;
+      (*rg).each!(e => remove(e));
   }
+
 }

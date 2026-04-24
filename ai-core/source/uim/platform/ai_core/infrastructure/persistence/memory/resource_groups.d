@@ -12,32 +12,7 @@ import uim.platform.ai_core.domain.ports.repositories.resource_groups;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryResourceGroupRepository : ResourceGroupRepository {
-  private ResourceGroup[ResourceGroupId] store;
+class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceGroupId), ResourceGroupRepository {
 
-  ResourceGroup findById(ResourceGroupId id) {
-    if (auto p = id in store)
-      return *p;
-    return ResourceGroup.init;
-  }
-
-  ResourceGroup[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(rg => rg.tenantId == tenantId).array;
-  }
-
-  void save(ResourceGroup rg) {
-    store[rg.id] = rg;
-  }
-
-  void update(ResourceGroup rg) {
-    store[rg.id] = rg;
-  }
-
-  void remove(ResourceGroupId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(rg => rg.tenantId == tenantId).array.length;
-  }
+  // TODO: Implement methods for finding and removing resource groups by tenant, if needed.
 }
