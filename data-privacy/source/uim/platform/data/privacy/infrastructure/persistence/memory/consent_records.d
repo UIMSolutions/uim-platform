@@ -13,26 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConsentRecordRepository : ConsentRecordRepository {
-  private ConsentRecord[ConsentRecordId][TenantId] store;
-
-  bool existsByTenant(TenantId tenantId) {
-    return tenantId in store;
-  }
-
-  ConsentRecord[] findByTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    return store[tenantId].byValue.array;
-  }
-
-  ConsentRecord* findById(ConsentRecordId tenantId, id tenantId) {
-    if (!existsById(tenantId, id))
-      return null;
-
-    return &store[tenantId][id];
-  }
+class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     if (!existsByTenant(tenantId))
@@ -78,28 +59,4 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  void save(ConsentRecord record) {
-    if (!existsByTenant(record.tenantId)) {
-      ConsentRecord[ConsentRecordId] records;
-      store[record.tenantId] = records;
-    }
-    store[record.tenantId][record.id] = record;
-  }
-
-  void update(ConsentRecord record) {
-    if (!existsById(record.id, record.tenantId))
-      return;
-
-    store[record.tenantId][record.id] = record;
-  }
-
-  void remove(ConsentRecordId tenantId, id tenantId) {
-    if (!existsById(tenantId, id))
-      return;
-
-    store[tenantId].remove(id);
-    if (store[tenantId].empty) {
-      store.remove(tenantId);
-    }
-  }
 }

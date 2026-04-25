@@ -5,34 +5,42 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryArchivingJobRepository : ArchivingJobRepository {
-    private ArchivingJob[ArchivingJobId] store;
+class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJobId), ArchivingJobRepository {
 
-    size_t countAll() { return store.length; }
-    ArchivingJob[] findAll() { return store.byValue.array; }
+    // #region ByApplicationGroup
+    size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        return findByApplicationGroup(tenantId, groupId).length;
+    }
 
-    bool existsById(ArchivingJobId id) { return (id in store) ? true : false; }
-    ArchivingJob findById(ArchivingJobId id) { return existsById(id) ? store[id] : ArchivingJob.init; }
+    ArchivingJob[] filterByApplicationGroup(ArchivingJob[] jobs, ApplicationGroupId groupId) {
+        return jobs.filter!(a => a.applicationGroupId == groupId).array;
+    }
 
-    bool existsById(TenantId tenantId, ArchivingJobId id) { return (id in store) ? true : false; }
-    ArchivingJob findById(TenantId tenantId, ArchivingJobId id) { return existsById(id) ? store[id] : ArchivingJob.init; }
-
-    bool existsByTenant(TenantId tenantId) { return store.byValue.any!(a => a.tenantId == tenantId); }
-    size_t countByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array.length; }
-    ArchivingJob[] findByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array; }
-
-    ArchivingJob[] findAll(TenantId tenantId) { return findByTenant(tenantId); }
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
-    }
-    ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
+        return filterByApplicationGroup(findByTenant(tenantId), groupId);
     }
 
-    void save(ArchivingJob a) { store[a.id] = a; }
-    void save(TenantId tenantId, ArchivingJob a) { store[a.id] = a; }
-    void update(ArchivingJob a) { store[a.id] = a; }
-    void update(TenantId tenantId, ArchivingJob a) { store[a.id] = a; }
-    void remove(ArchivingJobId id) { store.remove(id); }
-    void remove(TenantId tenantId, ArchivingJobId id) { store.remove(id); }
+    void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity.id));
+    }
+    // #endregion ByApplicationGroup
+
+    // #region ByStatus
+    size_t countByStatus(TenantId tenantId, ArchivingJobStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    ArchivingJob[] filterByStatus(ArchivingJob[] jobs, ArchivingJobStatus status) {
+        return jobs.filter!(a => a.status == status).array;
+    }
+
+    ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ArchivingJobStatus status) {
+        findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    }
+    // #endregion ByStatus
+
 }

@@ -16,38 +16,17 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
-  private SystemInstance[SystemInstanceId] store;
 
-  SystemInstance findById(SystemInstanceId id) {
-    if (id in store)
-      return store[id];
-    return SystemInstance.init;
-  }
-
-  SystemInstance[] findByTenant(TenantId tenantId) {
-    return filterByTenant(findAll(), tenantId);
-  }
-
-  SystemInstance findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
-      if (e.name == name)
-        return e;
-    return SystemInstance.init;
+  size_t countByStatus(TenantId tenantId, SystemStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {
     return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  void save(SystemInstance instance) {
-    store[instance.id] = instance;
+  void removeByStatus(TenantId tenantId, SystemStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity.id));
   }
 
-  void update(SystemInstance instance) {
-    store[instance.id] = instance;
-  }
-
-  void remove(SystemInstanceId id) {
-    store.remove(id);
-  }
 }

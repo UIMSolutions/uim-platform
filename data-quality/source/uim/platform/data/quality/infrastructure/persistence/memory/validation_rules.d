@@ -12,48 +12,41 @@ import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryValidationRuleRepository : ValidationRuleRepository {
-  private ValidationRule[RuleId] store;
+class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, RuleId), ValidationRuleRepository {
 
-  ValidationRule[] findAll() {
-    return findAll().array;
-  }
-
-  ValidationRule[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
-  }
-
-  ValidationRule* findById(RuleId id) {
-    if (auto p = id in store)
-      return p;
-    return null;
+  size_t countByDataset(TenantId tenantId, string datasetPattern) {
+    return findByDataset(tenantId, datasetPattern).length;
   }
 
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return findAll().filter!(r => r.tenantId == tenantId
-        && r.datasetPattern == datasetPattern).array;
+    return findByTenant(tenantId).filter!(r => r.datasetPattern == datasetPattern).array;
   }
 
+  void removeByDataset(TenantId tenantId, string datasetPattern) {
+    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity.id));
+  } 
+
+  size_t countByField(TenantId tenantId, string fieldName) {
+    return findByField(tenantId, fieldName).length;
+  } 
+
   ValidationRule[] findByField(TenantId tenantId, string fieldName) {
-    return findAll().filter!(r => r.tenantId == tenantId && r.fieldName == fieldName).array;
+    return findByTenant(tenantId).filter!(r => r.fieldName == fieldName).array;
+  }
+
+  void removeByField(TenantId tenantId, string fieldName) {
+    findByField(tenantId, fieldName).each!(entity => remove(entity.id));
+  }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
   }
 
   ValidationRule[] findActive(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
-      .array;
+    return findByTenant(tenantId).filter!(r => r.status == RuleStatus.active).array;
   }
 
-  void save(ValidationRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void update(ValidationRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void remove(RuleId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(entity => remove(entity.id));
   }
 }
