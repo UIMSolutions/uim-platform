@@ -20,12 +20,12 @@ interface IDomainRepository : ITenantRepository!(CfDomain, CfDomainId) {
   void removeByName(TenantId tenantId, string name);
   
   size_t countByOrg(TenantId tenantId, OrgId orgId);
-  CfDomain[] filterByOrg(TenantId tenantId, OrgId orgId);
+  CfDomain[] filterByOrg(CfDomain[] domains, OrgId orgId);
   CfDomain[] findByOrg(TenantId tenantId, OrgId orgId);
   void removeByOrg(TenantId tenantId, OrgId orgId);
   
   size_t countShared(TenantId tenantId);
-  CfDomain[] filterShared(TenantId tenantId);
+  CfDomain[] filterShared(CfDomain[] domains);
   CfDomain[] findShared(TenantId tenantId);
   void removeShared(TenantId tenantId);
   

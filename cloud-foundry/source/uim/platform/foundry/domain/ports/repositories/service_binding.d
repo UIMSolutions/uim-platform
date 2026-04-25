@@ -16,10 +16,12 @@ mixin(ShowModule!());
 interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
   size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
+  ServiceBinding[] filterByServiceInstance(ServiceBinding[] bindings, ServiceInstanceId instanceId);
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
 
   size_t countByApp(TenantId tenantId, AppId appId);
+  ServiceBinding[] filterByApp(ServiceBinding[] bindings, AppId appId);
   ServiceBinding[] findByApp(TenantId tenantId, AppId appId);
   void removeByApp(TenantId tenantId, AppId appId);
 

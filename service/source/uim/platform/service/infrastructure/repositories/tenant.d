@@ -34,6 +34,10 @@ class TenantRepository(TEntity, TId) {
     return existsByTenant(tenantId) && (id in store[tenantId]);
   }
 
+  bool existsAllById(TenantId tenantId, TId[] ids) {
+    return ids.all!(id => existsById(tenantId, id));
+  }
+
   TEntity findById(TenantId tenantId, TId id) {
     return existsById(tenantId, id) ? store[tenantId][id] : TEntity.init;
   }
@@ -80,6 +84,14 @@ class TenantRepository(TEntity, TId) {
 
   bool existsByTenant(TenantId tenantId) {
     return tenantId in store ? true : false;
+  }
+
+  size_t countByTenant(TEntity[] items, TenantId tenantId) {
+    return filterByTenant(items, tenantId).length;
+  }
+
+  size_t countByTenant(TenantId tenantId) {
+    return findByTenant(tenantId).length;
   }
 
   TEntity[] filterByTenant(TEntity[] items, TenantId tenantId) {

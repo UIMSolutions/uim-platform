@@ -20,12 +20,12 @@ interface IServiceInstanceRepository : ITenantRepository!(ServiceInstance, Servi
   void removeByName(TenantId tenantId, SpaceId spaceId, string name);
   
   size_t countBySpace(TenantId tenantId, SpaceId spaceId);
-  ServiceInstance[] filterBySpace(TenantId tenantId, SpaceId spaceId);
+  ServiceInstance[] filterBySpace(ServiceInstance[] instances, SpaceId spaceId);
   ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId);
   void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
   size_t countByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName);
-  ServiceInstance[] filterByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName);
+  ServiceInstance[] filterByServiceName(ServiceInstance[] instances, string serviceName);
   ServiceInstance[] findByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName);
   void removeByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName);
 

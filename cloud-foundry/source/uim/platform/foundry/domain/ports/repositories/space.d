@@ -19,7 +19,7 @@ interface ISpaceRepository : ITenantRepository!(Space, SpaceId) {
   void removeByName(TenantId tenantId, OrgId orgId, string name);
   
   size_t countByOrg(TenantId tenantId, OrgId orgId);
-  Space[] filterByOrg(TenantId tenantId, OrgId orgId);
+  Space[] filterByOrg(Space[] spaces, OrgId orgId);
   Space[] findByOrg(TenantId tenantId, OrgId orgId);
   void removeByOrg(TenantId tenantId, OrgId orgId);
 }

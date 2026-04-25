@@ -20,12 +20,12 @@ interface IAppRepository : ITenantRepository!(Application, AppId) {
   void removeByName(TenantId tenantId, SpaceId spaceId, string name);
 
   size_t countBySpace(TenantId tenantId, SpaceId spaceId);
-  Application[] filterBySpace(TenantId tenantId, SpaceId spaceId);
+  Application[] filterBySpace(Application[] apps, SpaceId spaceId);
   Application[] findBySpace(TenantId tenantId, SpaceId spaceId);
   void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
   size_t countByState(TenantId tenantId, SpaceId spaceId, AppState state);
-  Application[] filterByState(TenantId tenantId, SpaceId spaceId, AppState state);
+  Application[] filterByState(Application[] apps, SpaceId spaceId, AppState state);
   Application[] findByState(TenantId tenantId, SpaceId spaceId, AppState state);
   void removeByState(TenantId tenantId, SpaceId spaceId, AppState state);
   
