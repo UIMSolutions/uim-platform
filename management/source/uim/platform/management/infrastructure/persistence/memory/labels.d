@@ -17,8 +17,8 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryLabelRepository : IdRepository!(Label, LabelId), ILabelRepository {
-  mixin IdRepositoryTemplate!(MemoryLabelRepository, Label, LabelId);
+class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
+  // TODO: mixin IdRepositoryTemplate!(MemoryLabelRepository, Label, LabelId);
 
   // #region ByResourceType
   size_t countByResourceType(LabeledResourceType resourceType) {

@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId), SubscriptionRepository {
-  mixin IdRepositoryTemplate!(MemorySubscriptionRepository, Subscription, SubscriptionId);
+  // TODO: mixin IdRepositoryTemplate!(MemorySubscriptionRepository, Subscription, SubscriptionId);
 
   size_t countBySubaccount(SubaccountId subaccountId) {
     return findBySubaccount(subaccountId).length;
@@ -67,5 +67,5 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   void removeByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
     findByStatus(subaccountId, status).each!(e => remove(e.id));
   }
-  
+
 }

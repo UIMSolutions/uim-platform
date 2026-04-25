@@ -111,7 +111,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     auto plan = repo.findById(id);
     if (plan.id.isEmpty)
       return CommandResult(false, "", "Service plan not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

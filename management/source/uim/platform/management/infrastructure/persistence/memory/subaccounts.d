@@ -17,18 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubaccountRepository : SubaccountRepository {
-  private Subaccount[SubaccountId] store;
-
-  // #region ById
-  bool existsById(SubaccountId id) {
-    return (id in store) ? true : false;
-  }
-  
-  Subaccount findById(SubaccountId id) {
-    return existsById(id) ? store[id] : Subaccount.init;
-  }
-  // #endregion ById
+class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), SubaccountRepository {
 
   // #region BySubdomain
   bool existsBySubdomain(string subdomain) {
@@ -115,15 +104,4 @@ class MemorySubaccountRepository : SubaccountRepository {
   }
   // #endregion ByStatus
   
-  void save(Subaccount sub) {
-    store[sub.id] = sub;
-  }
-
-  void update(Subaccount sub) {
-    store[sub.id] = sub;
-  }
-
-  void remove(SubaccountId id) {
-    store.remove(id);
-  }
 }

@@ -16,9 +16,10 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEventId), IPlatformEventRepository {
-  mixin IdRepositoryTemplate!(MemoryPlatformEventRepository, PlatformEvent, PlatformEventId);
+class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEventId), PlatformEventRepository {
+  // TODO: mixin IdRepositoryTemplate!(MemoryPlatformEventRepository, PlatformEvent, PlatformEventId);
 
+  // #region ByGlobalAccount
   size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
     return findByGlobalAccount(globalAccountId).length;
   }
@@ -34,7 +35,9 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
     findByGlobalAccount(globalAccountId).each!(e => remove(e.id));
   }
+  // #endregion ByGlobalAccount
 
+  // #region BySubaccount
   size_t countBySubaccount(SubaccountId subaccountId) {
     return findBySubaccount(subaccountId).length;
   }
@@ -50,7 +53,9 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   void removeBySubaccount(SubaccountId subaccountId) {
     findBySubaccount(subaccountId).each!(e => remove(e.id));
   }
+  // #endregion BySubaccount
 
+  // #region ByCategory
   size_t countByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category) {
     return findByCategory(globalAccountId, category).length;
   }
@@ -68,7 +73,9 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   void removeByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category) {
     findByCategory(globalAccountId, category).each!(e => remove(e.id));
   }
+  // #endregion ByCategory
 
+  // #region BySeverity
   size_t countBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
     return findBySeverity(globalAccountId, severity).length;
   }
@@ -86,7 +93,9 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   void removeBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
     findBySeverity(globalAccountId, severity).each!(e => remove(e.id));
   }
+  // #endregion BySeverity
 
+  // #region Since
   size_t countSince(GlobalAccountId globalAccountId, long sinceTimestamp) {
     return findSince(globalAccountId, sinceTimestamp).length;
   }
@@ -104,5 +113,6 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   void removeSince(GlobalAccountId globalAccountId, long sinceTimestamp) {
     findSince(globalAccountId, sinceTimestamp).each!(e => remove(e.id));
   }
+  // #endregion Since
 
 }

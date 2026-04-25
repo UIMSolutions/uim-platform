@@ -106,22 +106,12 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Directory not found");
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, directory.id.toString, "");
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {
-    return features.map!(f => parseFeature(f)).array;
+    return features.map!(f => f.to!DirectoryFeature).array;
   }
 
-  private DirectoryFeature parseFeature(string feature) {
-    switch (feature) {
-    case "entitlements":
-      return DirectoryFeature.entitlements;
-    case "authorizations":
-      return DirectoryFeature.authorizations;
-    default:
-    return DirectoryFeature.default_;
-    }
-  }
 }

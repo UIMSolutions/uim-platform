@@ -16,18 +16,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDirectoryRepository : DirectoryRepository {
-  private Directory[DirectoryId] store;
-
-  // #region ById
-  bool existsById(DirectoryId id) {
-    return (id in store) ? true : false;
-  }
-
-  Directory findById(DirectoryId id) {
-    return existsById(id) ? store[id] : Directory.init;
-  }
-  // #endregion ById
+class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), DirectoryRepository {
 
   // #region ByGlobalAccount
   size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -72,15 +61,4 @@ class MemoryDirectoryRepository : DirectoryRepository {
   }
   // #endregion ByStatus
 
-  void save(Directory dir) {
-    store[dir.id] = dir;
-  }
-
-  void update(Directory dir) {
-    store[dir.id] = dir;
-  }
-
-  void remove(DirectoryId id) {
-    store.remove(id);
-  }
 }
