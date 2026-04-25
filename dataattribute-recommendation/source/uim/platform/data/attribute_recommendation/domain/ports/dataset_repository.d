@@ -8,13 +8,20 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 
-interface DatasetRepository {
-  Dataset[] findByTenant(TenantId tenantId);
-  Dataset* findById(DatasetId tenantId, id tenantId);
-  Dataset* findByName(TenantId tenantId, string name);
+interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
+
+  bool existsByName(TenantId tenantId, string name);
+  Dataset findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
+  size_t countByStatus(TenantId tenantId, DatasetStatus status);
+  Dataset[] filterByStatus(Dataset[] datasets, DatasetStatus status);
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status);
+  void removeByStatus(TenantId tenantId, DatasetStatus status);
+
+  size_t countByDataType(TenantId tenantId, DataType dataType);
+  Dataset[] filterByDataType(Dataset[] datasets, DataType dataType);
   Dataset[] findByDataType(TenantId tenantId, DataType dataType);
-  void save(Dataset dataset);
-  void update(Dataset dataset);
-  void remove(DatasetId tenantId, id tenantId);
+  void removeByDataType(TenantId tenantId, DataType dataType);
+
 }

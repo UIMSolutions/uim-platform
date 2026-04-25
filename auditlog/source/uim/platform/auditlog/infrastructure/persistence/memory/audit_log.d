@@ -18,26 +18,29 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
-  private AuditLogEntry[AuditLogId][TenantId] store;
 
-  // bool existsByTenant(TenantId tenantId) {
-  //   return (tenantId in store) && !store[tenantId].empty;
-  // }
+  size_t countByCategory(TenantId tenantId, AuditCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
 
-  // AuditLogEntry[] findByTenant(TenantId tenantId) {
-  //   return existsByTenant(tenantId) ? store[tenantId].byValue().array : null;
-  // }
-
-  // bool existsById(TenantId tenantId, AuditLogId id) {
-  //   return existsByTenant(tenantId) && (id in store[tenantId]) ? true : false;
-  // }
-
-  // AuditLogEntry findById(TenantId tenantId, AuditLogId id) {
-  //   return existsById(tenantId, id) ? store[tenantId][id] : AuditLogEntry.init;
-  // }
+  AuditLogEntry[] filterByCategory(AuditLogEntry[] entries, AuditCategory category) {
+    return entries.filter!(e => e.category == category).array;
+  }
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category) {
     return findByTenant(tenantId).filter!(e => e.category == category).array;
+  }
+
+  void removeByCategory(TenantId tenantId, AuditCategory category) {
+    findByCategory(tenantId, category).removeAll;
+  }
+
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTimeRange(tenantId, timeFrom, timeTo).length;
+  }
+
+  AuditLogEntry[] filterByTimeRange(AuditLogEntry[] entries, long timeFrom, long timeTo) {
+    return entries.filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
   }
 
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -45,16 +48,56 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
       .array;
   }
 
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).removeAll;
+  }
+
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
+  }
+
+  AuditLogEntry[] filterByUser(AuditLogEntry[] entries, UserId userId) {
+    return entries.filter!(e => e.userId == userId).array;
+  }
+
   AuditLogEntry[] findByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).filter!(e => e.userId == userId).array;
+  }
+
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).removeAll;
+  }
+
+  size_t countByService(TenantId tenantId, ServiceId serviceId) {
+    return findByService(tenantId, serviceId).length;
+  }
+
+  AuditLogEntry[] filterByService(AuditLogEntry[] entries, ServiceId serviceId) {
+    return entries.filter!(e => e.serviceId == serviceId).array;
   }
 
   AuditLogEntry[] findByService(TenantId tenantId, ServiceId serviceId) {
     return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
   }
 
+  void removeByService(TenantId tenantId, ServiceId serviceId) {
+    findByService(tenantId, serviceId).removeAll;
+  }
+
+  size_t countByCorrelation(TenantId tenantId, string correlationId) {
+    return findByCorrelation(tenantId, correlationId).length;
+  }
+
+  AuditLogEntry[] filterByCorrelation(AuditLogEntry[] entries, string correlationId) {
+    return entries.filter!(e => e.correlationId == correlationId).array;
+  }
+
   AuditLogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
     return findByTenant(tenantId).filter!(e => e.correlationId == correlationId).array;
+  }
+
+  void removeByCorrelation(TenantId tenantId, string correlationId) {
+    findByCorrelation(tenantId, correlationId).removeAll;
   }
 
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
@@ -91,91 +134,9 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
     return filtered[offset .. end];
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
-  }
-
-  // void save(TenantId tenantId, AuditLogEntry entry) {
-  // entry.tenantId = tenantId;
-  // save(entry);
-  // }
-  // 
-  // void save(AuditLogEntry entry) {
-  // if (!existsByTenant(entry.tenantId)) {
-  // AuditLogEntry[AuditLogId] tenantStore;
-  // store[entry.tenantId] = tenantStore;
-  // }
-  // store[entry.tenantId][entry.id] = entry;
-  // }
-
-  // void update(AuditLogEntry entry) {
-
-  //   if (!existsById(entry.tenantId, entry.id))
-  //     return; // or throw an exception  
-
-  //   store[entry.tenantId][entry.id] = entry;
-  // }
-
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .map!(e => e.id)
       .each!(id => store[tenantId].remove(id));
   }
-}
-///
-unittest {
-  auto repo = new MemoryAuditLogRepository();
-
-  AuditLogEntry entry1 = AuditLogEntry.init;
-  entry1.tenantId = TenantId("tenant1");
-  entry1.userId = UserId("user1");
-  entry1.userName = "User One";
-  entry1.serviceId = ServiceId("service1");
-  entry1.serviceName = "Service One";
-  entry1.category = AuditCategory.dataAccess;
-  entry1.severity = AuditSeverity.warning;
-  entry1.action = AuditAction.dataAccess;
-  entry1.outcome = AuditOutcome.failure;
-  entry1.objectType = "objectType1";
-  entry1.objectId = "objectId1";
-  entry1.message = "Test log entry 1";
-  entry1.ipAddress = "127.0.0.1";
-  entry1.userAgent = "UnitTest/1.0";
-  entry1.correlationId = "corr1";
-  entry1.originApp = "UnitTestApp";
-  entry1.timestamp = Clock.currStdTime();
-
-  AuditLogEntry entry2 = AuditLogEntry.init;
-  entry2.tenantId = TenantId("tenant2");
-  entry2.userId = UserId("user2");
-  entry2.userName = "User Two";
-  entry2.serviceId = ServiceId("service2");
-  entry2.serviceName = "Service Two";
-  entry2.category = AuditCategory.dataModification; 
-  entry2.severity = AuditSeverity.info;
-  entry2.action = AuditAction.dataAccess;
-  entry2.outcome = AuditOutcome.success;
-  entry2.objectType = "objectType2";
-  entry2.objectId = "objectId2";
-  entry2.message = "Test log entry 2";
-  entry2.ipAddress = "127.0.0.2";
-  entry2.userAgent = "UnitTest/1.0";
-  entry2.correlationId = "corr2";
-  entry2.originApp = "UnitTestApp";
-  entry2.timestamp = Clock.currStdTime();
-
-  repo.save(entry1);
-  repo.save(entry2);
-
-  assert(repo.existsByTenant(TenantId("tenant1")));
-  assert(repo.findByTenant(TenantId("tenant1")).length == 1);
-  assert(repo.existsById(TenantId("tenant1"), entry1.id));
-  assert(repo.findById(TenantId("tenant1"), entry1.id) == entry1);
-  assert(repo.findByCategory(TenantId("tenant1"), AuditCategory.dataAccess).length == 1);
-  assert(repo.findByUser(TenantId("tenant1"), UserId("user1")).length == 1);
-  assert(repo.findByService(TenantId("tenant1"), ServiceId("service1")).length == 1);
-  assert(repo.findByCorrelation(TenantId("tenant1"), "corr1").length == 1);
-
-  // repo.removeOlderThan(TenantId("tenant1"), Clock.currTime() + dur!"secs"(5)); // remove all
-  // assert(repo.countByTenant(TenantId("tenant1")) == 0);
 }

@@ -5,37 +5,54 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeletionRequestRepository : DeletionRequestRepository {
-    private DeletionRequest[DeletionRequestId] store;
+class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
 
-    size_t countAll() { return store.length; }
-    DeletionRequest[] findAll() { return store.byValue.array; }
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+        return findByDataSubject(tenantId, subjectId).length;
+    }
 
-    bool existsById(DeletionRequestId id) { return (id in store) ? true : false; }
-    DeletionRequest findById(DeletionRequestId id) { return existsById(id) ? store[id] : DeletionRequest.init; }
+    DeletionRequest[] filterByDataSubject(DeletionRequest[] requests, DataSubjectId subjectId) {
+        return requests.filter!(r => r.dataSubjectId == subjectId).array;
+    }
 
-    bool existsById(TenantId tenantId, DeletionRequestId id) { return (id in store) ? true : false; }
-    DeletionRequest findById(TenantId tenantId, DeletionRequestId id) { return existsById(id) ? store[id] : DeletionRequest.init; }
-
-    bool existsByTenant(TenantId tenantId) { return store.byValue.any!(a => a.tenantId == tenantId); }
-    size_t countByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array.length; }
-    DeletionRequest[] findByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array; }
-
-    DeletionRequest[] findAll(TenantId tenantId) { return findByTenant(tenantId); }
     DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-        return findByTenant(tenantId).filter!(a => a.dataSubjectId == subjectId).array;
-    }
-    DeletionRequest[] findByStatus(TenantId tenantId, DeletionRequestStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
-    }
-    DeletionRequest[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
+        return filterByDataSubject(findByTenant(tenantId), subjectId);
     }
 
-    void save(DeletionRequest a) { store[a.id] = a; }
-    void save(TenantId tenantId, DeletionRequest a) { store[a.id] = a; }
-    void update(DeletionRequest a) { store[a.id] = a; }
-    void update(TenantId tenantId, DeletionRequest a) { store[a.id] = a; }
-    void remove(DeletionRequestId id) { store.remove(id); }
-    void remove(TenantId tenantId, DeletionRequestId id) { store.remove(id); }
+    void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+        findByDataSubject(tenantId, subjectId).removeAll;
+    }
+
+    size_t countByStatus(TenantId tenantId, DeletionRequestStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    DeletionRequest[] filterByStatus(DeletionRequest[] requests, DeletionRequestStatus status) {
+        return requests.filter!(r => r.status == status).array;
+    }
+
+    DeletionRequest[] findByStatus(TenantId tenantId, DeletionRequestStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, DeletionRequestStatus status) {
+        findByStatus(tenantId, status).removeAll;
+    }
+
+    size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        return findByApplicationGroup(tenantId, groupId).length;
+    }
+
+    DeletionRequest[] filterByApplicationGroup(DeletionRequest[] requests, ApplicationGroupId groupId) {
+        return requests.filter!(r => r.applicationGroupId == groupId).array;
+    }
+
+    DeletionRequest[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        return filterByApplicationGroup(findByTenant(tenantId), groupId);
+    }
+
+    void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        findByApplicationGroup(tenantId, groupId).removeAll;
+    }
+
 }

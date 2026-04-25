@@ -8,13 +8,20 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.mode
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
 
-interface ModelConfigRepository {
-  ModelConfiguration[] findByTenant(TenantId tenantId);
-  ModelConfiguration* findById(ModelConfigId tenantId, id tenantId);
-  ModelConfiguration* findByName(TenantId tenantId, string name);
+interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigId) {
+
+  bool existsByName(TenantId tenantId, string name);
+  ModelConfiguration findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId);
+  ModelConfiguration[] filterByDataset(ModelConfiguration[] configs, DatasetId datasetId);
   ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId);
+  void removeByDataset(TenantId tenantId, DatasetId datasetId);
+
+  size_t countByStatus(TenantId tenantId, ModelConfigStatus status);
+  ModelConfiguration[] filterByStatus(ModelConfiguration[] configs, ModelConfigStatus status);
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status);
-  void save(ModelConfiguration config);
-  void update(ModelConfiguration config);
-  void remove(ModelConfigId tenantId, id tenantId);
+  void removeByStatus(TenantId tenantId, ModelConfigStatus status);
+
 }

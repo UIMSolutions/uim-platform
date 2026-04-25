@@ -21,11 +21,10 @@ struct DataControllerGroup {
   bool isActive = true;
  
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("controllerIds", controllerIds.map!(id => id.value).array);
 
-    return j;
   }
 }

@@ -47,7 +47,7 @@ class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, Consent
   }
 
   void removeByStatus(TenantId tenantId, ConsentPurposeStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity));
+    findByStatus(tenantId, status).removeAll;
   }
   // #region ByStatus
 

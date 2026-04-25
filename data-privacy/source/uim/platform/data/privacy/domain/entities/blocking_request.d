@@ -26,7 +26,7 @@ struct BlockingRequest {
   long releasedAt;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("dataSubjectId", dataSubjectId)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string)
@@ -37,6 +37,5 @@ struct BlockingRequest {
       .set("activatedAt", activatedAt)
       .set("releasedAt", releasedAt);
 
-    return j;
   }
 }

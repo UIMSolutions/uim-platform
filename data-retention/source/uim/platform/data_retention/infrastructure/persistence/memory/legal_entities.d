@@ -5,31 +5,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLegalEntityRepository : LegalEntityRepository {
-    private LegalEntity[LegalEntityId] store;
+class MemoryLegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId), LegalEntityRepository {
 
-    size_t countAll() { return store.length; }
-    LegalEntity[] findAll() { return store.byValue.array; }
+        size_t countByActive(TenantId tenantId) {
+            return findActive(tenantId).length;
+        }
 
-    bool existsById(LegalEntityId id) { return (id in store) ? true : false; }
-    LegalEntity findById(LegalEntityId id) { return existsById(id) ? store[id] : LegalEntity.init; }
-
-    bool existsById(TenantId tenantId, LegalEntityId id) { return (id in store) ? true : false; }
-    LegalEntity findById(TenantId tenantId, LegalEntityId id) { return existsById(id) ? store[id] : LegalEntity.init; }
-
-    bool existsByTenant(TenantId tenantId) { return store.byValue.any!(a => a.tenantId == tenantId); }
-    size_t countByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array.length; }
-    LegalEntity[] findByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array; }
-
-    LegalEntity[] findAll(TenantId tenantId) { return findByTenant(tenantId); }
     LegalEntity[] findActive(TenantId tenantId) {
         return findByTenant(tenantId).filter!(a => a.isActive).array;
     }
 
-    void save(LegalEntity a) { store[a.id] = a; }
-    void save(TenantId tenantId, LegalEntity a) { store[a.id] = a; }
-    void update(LegalEntity a) { store[a.id] = a; }
-    void update(TenantId tenantId, LegalEntity a) { store[a.id] = a; }
-    void remove(LegalEntityId id) { store.remove(id); }
-    void remove(TenantId tenantId, LegalEntityId id) { store.remove(id); }
+    void removeActive(TenantId tenantId) {
+        findActive(tenantId).each!(entity => remove(entity.id));
+    }
+
 }

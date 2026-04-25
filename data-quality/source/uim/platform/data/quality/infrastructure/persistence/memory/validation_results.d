@@ -13,33 +13,21 @@ import uim.platform.data.quality.domain.ports.repositories.validation_results;
 // import std.array : array;
 
 class MemoryValidationResultRepository : TenantRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {
-  private ValidationResult[RecordId] store;
 
-  ValidationResult[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
   }
 
-  ValidationResult* findByRecord(RecordId recordtenantId, id tenantId) {
-    if (auto p = recordId in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  ValidationResult[] filterByDataset(ValidationResult[] results, DatasetId datasetId) {
+    return results.filter!(r => r.datasetId == datasetId).array;
   }
 
   ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findAll().filter!(r => r.tenantId == tenantId && r.datasetId == datasetId).array;
-  }
-
-  void save(ValidationResult result) {
-    store[result.recordId] = result;
+    return filterByDataset(findByTenant(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    RecordId[] toRemove;
-    foreach (r; findAll())
-      if (r.tenantId == tenantId && r.datasetId == datasetId)
-        toRemove ~= r.recordId;
-    foreach (id; toRemove)
-      store.remove(id);
+    findByDataset(tenantId, datasetId).removeAll;
   }
+
 }

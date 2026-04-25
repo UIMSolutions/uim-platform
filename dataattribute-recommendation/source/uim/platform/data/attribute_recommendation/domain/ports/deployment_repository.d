@@ -8,13 +8,20 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.depl
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 
-interface DeploymentRepository {
-  ModelDeployment[] findByTenant(TenantId tenantId);
-  ModelDeployment* findById(DeploymentId tenantId, id tenantId);
-  ModelDeployment[] findByModelConfig(ModelConfigId configtenantId, id tenantId);
+interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {
+
+  bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId);
+  ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId);
+  void removeByTrainingJob(TenantId tenantId, TrainingJobId jobId);
+
+  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);
+  ModelDeployment[] filterByModelConfig(ModelDeployment[] deployments, ModelConfigId configId);
+  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigId configId);
+  void removeByModelConfig(TenantId tenantId, ModelConfigId configId);
+
+  size_t countByStatus(TenantId tenantId, DeploymentStatus status);
+  ModelDeployment[] filterByStatus(ModelDeployment[] deployments, DeploymentStatus status);
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status);
-  ModelDeployment* findByTrainingJob(TrainingJobId jobtenantId, id tenantId);
-  void save(ModelDeployment deployment);
-  void update(ModelDeployment deployment);
-  void remove(DeploymentId tenantId, id tenantId);
+  void removeByStatus(TenantId tenantId, DeploymentStatus status);
+
 }
