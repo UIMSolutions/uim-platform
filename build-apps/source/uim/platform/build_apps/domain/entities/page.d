@@ -26,7 +26,7 @@ struct Page {
     int sortOrder;
     bool isStartPage;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
     string createdBy;
     string modifiedBy;
 
@@ -46,7 +46,7 @@ struct Page {
             .set("sortOrder", sortOrder)
             .set("isStartPage", isStartPage)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
+            .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy);
     }

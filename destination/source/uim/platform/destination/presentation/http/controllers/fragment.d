@@ -171,6 +171,6 @@ class FragmentController : PlatformController {
       .set("properties", propsJson)
       .set("createdBy", f.createdBy)
       .set("createdAt", f.createdAt)
-      .set("modifiedAt", f.modifiedAt);
+      .set("updatedAt", f.updatedAt);
   }
 }

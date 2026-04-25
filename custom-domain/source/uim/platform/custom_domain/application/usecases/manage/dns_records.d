@@ -43,7 +43,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         rec.createdAt = now;
-        rec.modifiedAt = now;
+        rec.updatedAt = now;
 
         repo.save(rec);
         return CommandResult(true, rec.id, "");
@@ -72,7 +72,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
             existing.ttl = r.ttl;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

@@ -133,7 +133,7 @@ class CatalogAssetController : PlatformController {
       resp["glossaryTerms"] = stringsToJsonArray(ca.glossaryTerms);
       resp["accessCount"] = Json(ca.accessCount);
       resp["createdAt"] = Json(ca.createdAt);
-      resp["modifiedAt"] = Json(ca.modifiedAt);
+      resp["updatedAt"] = Json(ca.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -49,7 +49,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         m.createdAt = now;
-        m.modifiedAt = now;
+        m.updatedAt = now;
 
         repo.save(m);
         return CommandResult(true, m.id, "");

@@ -28,7 +28,7 @@ struct DataConnection {
     string responseMapping;
     string destinationName;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
     string createdBy;
     string modifiedBy;
 
@@ -50,7 +50,7 @@ struct DataConnection {
             .set("responseMapping", responseMapping)
             .set("destinationName", destinationName)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
+            .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy);
     }

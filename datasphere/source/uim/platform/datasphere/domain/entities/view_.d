@@ -37,5 +37,5 @@ struct View {
   bool isPersisted;
   long rowCount;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

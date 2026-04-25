@@ -34,5 +34,5 @@ struct Certificate {
   // Metadata
   string uploadedBy;
   long uploadedAt;
-  long modifiedAt;
+  long updatedAt;
 }

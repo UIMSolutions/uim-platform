@@ -80,7 +80,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       d.fragmentIds ~= FragmentId(s);
     d.createdBy = req.createdBy;
     d.createdAt = clockSeconds();
-    d.modifiedAt = d.createdAt;
+    d.updatedAt = d.createdAt;
 
     repo.save(d);
     return CommandResult(true, d.id.toString, "");
@@ -136,7 +136,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       foreach (s; req.fragmentIds)
         d.fragmentIds ~= FragmentId(s);
     }
-    d.modifiedAt = clockSeconds();
+    d.updatedAt = clockSeconds();
 
     repo.update(d);
     return CommandResult(true, id.value, "");

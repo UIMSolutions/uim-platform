@@ -44,7 +44,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     c.createdAt = now;
-    c.modifiedAt = now;
+    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id, "");
@@ -71,7 +71,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     existing.user = r.user;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

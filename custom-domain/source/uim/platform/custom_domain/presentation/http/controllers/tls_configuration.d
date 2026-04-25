@@ -110,7 +110,7 @@ class TlsConfigurationController : PlatformController {
             .set("createdBy", c.createdBy)
             .set("modifiedBy", c.modifiedBy)
             .set("createdAt", c.createdAt)
-            .set("modifiedAt", c.modifiedAt);
+            .set("updatedAt", c.updatedAt);
 
             res.writeJsonBody(response, 200);
         } catch (Exception e) {

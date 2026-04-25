@@ -46,7 +46,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     t.createdAt = now;
-    t.modifiedAt = now;
+    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id, "");
@@ -66,7 +66,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Task not found");
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

@@ -103,7 +103,7 @@ class RemoteTableController : PlatformController {
       resp["rowCount"] = Json(rt.rowCount);
       resp["lastReplicatedAt"] = Json(rt.lastReplicatedAt);
       resp["createdAt"] = Json(rt.createdAt);
-      resp["modifiedAt"] = Json(rt.modifiedAt);
+      resp["updatedAt"] = Json(rt.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

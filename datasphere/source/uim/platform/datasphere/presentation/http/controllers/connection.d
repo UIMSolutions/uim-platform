@@ -69,7 +69,7 @@ class ConnectionController : PlatformController {
         .set("isValid", c.isValid)
         .set("statusMessage", c.statusMessage)
         .set("createdAt", c.createdAt)
-        .set("modifiedAt", c.modifiedAt);
+        .set("updatedAt", c.updatedAt);
       }
 
       auto resp = Json.emptyObject;
@@ -103,7 +103,7 @@ class ConnectionController : PlatformController {
       resp["isValid"] = Json(c.isValid);
       resp["statusMessage"] = Json(c.statusMessage);
       resp["createdAt"] = Json(c.createdAt);
-      resp["modifiedAt"] = Json(c.modifiedAt);
+      resp["updatedAt"] = Json(c.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

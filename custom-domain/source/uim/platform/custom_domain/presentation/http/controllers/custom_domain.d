@@ -117,7 +117,7 @@ class CustomDomainController : PlatformController {
                 .set("createdBy", d.createdBy)
                 .set("modifiedBy", d.modifiedBy)
                 .set("createdAt", d.createdAt)
-                .set("modifiedAt", d.modifiedAt);
+                .set("updatedAt", d.updatedAt);
 
             res.writeJsonBody(response, 200);
         } catch (Exception e) {

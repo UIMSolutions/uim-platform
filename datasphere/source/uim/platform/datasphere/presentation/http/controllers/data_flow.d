@@ -99,7 +99,7 @@ class DataFlowController : PlatformController {
       resp["lastRunDurationMs"] = Json(df.lastRunDurationMs);
       resp["lastRunMessage"] = Json(df.lastRunMessage);
       resp["createdAt"] = Json(df.createdAt);
-      resp["modifiedAt"] = Json(df.modifiedAt);
+      resp["updatedAt"] = Json(df.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

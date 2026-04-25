@@ -97,7 +97,7 @@ class DataAccessControlController : PlatformController {
       resp["targetViewIds"] = stringsToJsonArray(dac.targetViewIds);
       resp["assignedUserIds"] = stringsToJsonArray(dac.assignedUserIds);
       resp["createdAt"] = Json(dac.createdAt);
-      resp["modifiedAt"] = Json(dac.modifiedAt);
+      resp["updatedAt"] = Json(dac.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -27,5 +27,5 @@ struct CatalogAsset {
   string owner;
   long accessCount;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

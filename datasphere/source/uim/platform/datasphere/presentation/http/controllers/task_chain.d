@@ -98,7 +98,7 @@ class TaskChainController : PlatformController {
       resp["lastRunDurationMs"] = Json(tc.lastRunDurationMs);
       resp["lastRunMessage"] = Json(tc.lastRunMessage);
       resp["createdAt"] = Json(tc.createdAt);
-      resp["modifiedAt"] = Json(tc.modifiedAt);
+      resp["updatedAt"] = Json(tc.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

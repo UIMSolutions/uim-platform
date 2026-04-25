@@ -44,7 +44,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     ca.createdAt = now;
-    ca.modifiedAt = now;
+    ca.updatedAt = now;
 
     repo.save(ca);
     return CommandResult(true, ca.id, "");
@@ -74,7 +74,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     existing.glossaryTerms = r.glossaryTerms;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

@@ -39,7 +39,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     dac.createdAt = now;
-    dac.modifiedAt = now;
+    dac.updatedAt = now;
 
     repo.save(dac);
     return CommandResult(true, dac.id, "");
@@ -65,7 +65,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     existing.isEnabled = r.isEnabled;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

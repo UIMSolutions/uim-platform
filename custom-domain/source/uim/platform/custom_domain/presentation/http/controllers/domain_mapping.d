@@ -107,7 +107,7 @@ class DomainMappingController : PlatformController {
             resp["spaceId"] = Json(m.spaceId);
             resp["createdBy"] = Json(m.createdBy);
             resp["createdAt"] = Json(m.createdAt);
-            resp["modifiedAt"] = Json(m.modifiedAt);
+            resp["updatedAt"] = Json(m.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

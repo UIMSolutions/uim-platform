@@ -104,7 +104,7 @@ class ViewController : PlatformController {
       resp["isPersisted"] = Json(v.isPersisted);
       resp["rowCount"] = Json(v.rowCount);
       resp["createdAt"] = Json(v.createdAt);
-      resp["modifiedAt"] = Json(v.modifiedAt);
+      resp["updatedAt"] = Json(v.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

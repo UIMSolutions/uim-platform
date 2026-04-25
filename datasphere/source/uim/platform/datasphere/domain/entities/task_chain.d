@@ -28,5 +28,5 @@ struct TaskChain {
   long lastRunDurationMs;
   string lastRunMessage;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

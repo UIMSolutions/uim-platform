@@ -66,7 +66,7 @@ class SpaceController : PlatformController {
           .set("businessName", s.businessName)
           .set("priority", s.priority)
           .set("createdAt", s.createdAt)
-          .set("modifiedAt", s.modifiedAt);
+          .set("updatedAt", s.updatedAt);
       }
 
       auto resp = Json.emptyObject;
@@ -96,7 +96,7 @@ class SpaceController : PlatformController {
       resp["priority"] = Json(s.priority);
       resp["enableAuditLog"] = Json(s.enableAuditLog);
       resp["createdAt"] = Json(s.createdAt);
-      resp["modifiedAt"] = Json(s.modifiedAt);
+      resp["updatedAt"] = Json(s.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

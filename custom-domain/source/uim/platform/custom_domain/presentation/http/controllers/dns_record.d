@@ -104,7 +104,7 @@ class DnsRecordController : PlatformController {
             resp["lastValidatedAt"] = Json(r.lastValidatedAt);
             resp["createdBy"] = Json(r.createdBy);
             resp["createdAt"] = Json(r.createdAt);
-            resp["modifiedAt"] = Json(r.modifiedAt);
+            resp["updatedAt"] = Json(r.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

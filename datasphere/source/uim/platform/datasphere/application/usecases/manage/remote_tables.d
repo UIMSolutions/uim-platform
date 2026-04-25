@@ -45,7 +45,7 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     rt.createdAt = now;
-    rt.modifiedAt = now;
+    rt.updatedAt = now;
 
     repo.save(rt);
     return CommandResult(true, rt.id, "");

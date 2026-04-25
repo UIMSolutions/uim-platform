@@ -41,7 +41,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     s.createdAt = now;
-    s.modifiedAt = now;
+    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id, "");
@@ -66,7 +66,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     existing.priority = r.priority;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

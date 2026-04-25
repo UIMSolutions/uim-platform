@@ -106,7 +106,7 @@ class TaskController : PlatformController {
       .set("retryCount", t.retryCount)
       .set("maxRetries", t.maxRetries)
       .set("createdAt", t.createdAt)
-      .set("modifiedAt", t.modifiedAt);
+      .set("updatedAt", t.updatedAt);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

@@ -27,5 +27,5 @@ struct Connection {
   bool isValid;
   string statusMessage;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

@@ -24,7 +24,7 @@ struct ProjectMember {
     string invitedAt;
     string joinedAt;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
     string createdBy;
     string modifiedBy;
 
@@ -42,7 +42,7 @@ struct ProjectMember {
             .set("invitedAt", invitedAt)
             .set("joinedAt", joinedAt)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
+            .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy);
     }

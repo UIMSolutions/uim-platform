@@ -25,5 +25,5 @@ struct DataAccessControl {
   string[] assignedUserIds;
   bool isEnabled;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

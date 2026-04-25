@@ -53,7 +53,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     certificate.validTo = req.validTo;
     certificate.uploadedBy = req.uploadedBy;
     certificate.uploadedAt = clockSeconds();
-    certificate.modifiedAt = certificate.uploadedAt;
+    certificate.updatedAt = certificate.uploadedAt;
 
     // Validate and set status
     auto validation = CertificateValidator.validate(certificate);
@@ -78,7 +78,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       c.validFrom = req.validFrom;
     if (req.validTo > 0)
       c.validTo = req.validTo;
-    c.modifiedAt = clockSeconds();
+    c.updatedAt = clockSeconds();
 
     auto validation = CertificateValidator.validate(c);
     c.status = validation.status;

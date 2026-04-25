@@ -37,5 +37,5 @@ struct DestinationFragment {
   // Metadata
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

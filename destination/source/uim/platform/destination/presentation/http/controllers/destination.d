@@ -212,6 +212,6 @@ class DestinationController : PlatformController {
       .set("fragmentIds", fragArr)
       .set("createdBy", Json(d.createdBy))
       .set("createdAt", Json(d.createdAt))
-      .set("modifiedAt", Json(d.modifiedAt));
+      .set("updatedAt", Json(d.updatedAt));
   }
 }

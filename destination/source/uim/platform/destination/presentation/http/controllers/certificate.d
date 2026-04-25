@@ -217,6 +217,6 @@ class CertificateController : PlatformController {
     .set("validTo", c.validTo)
     .set("uploadedBy", c.uploadedBy)
     .set("uploadedAt", c.uploadedAt)
-    .set("modifiedAt", c.modifiedAt);
+    .set("updatedAt", c.updatedAt);
   }
 }

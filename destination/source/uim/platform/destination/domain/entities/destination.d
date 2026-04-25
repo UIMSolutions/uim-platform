@@ -63,5 +63,5 @@ struct Destination {
   // Metadata
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

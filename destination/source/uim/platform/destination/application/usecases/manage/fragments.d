@@ -53,7 +53,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     f.properties = req.properties;
     f.createdBy = req.createdBy;
     f.createdAt = clockSeconds();
-    f.modifiedAt = f.createdAt;
+    f.updatedAt = f.createdAt;
 
     repo.save(f);
     return CommandResult(true, f.id.toString, "");
@@ -90,7 +90,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
       fragment.truststoreId = req.truststoreId;
     if (req.properties.length > 0)
       fragment.properties = req.properties;
-    fragment.modifiedAt = clockSeconds();
+    fragment.updatedAt = clockSeconds();
 
     repo.update(fragment);
     return CommandResult(true, fragment.id.toString, "");

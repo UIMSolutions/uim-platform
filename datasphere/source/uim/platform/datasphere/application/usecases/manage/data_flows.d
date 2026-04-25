@@ -42,7 +42,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     df.createdAt = now;
-    df.modifiedAt = now;
+    df.updatedAt = now;
 
     repo.save(df);
     return CommandResult(true, df.id, "");
@@ -62,7 +62,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data flow not found");
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

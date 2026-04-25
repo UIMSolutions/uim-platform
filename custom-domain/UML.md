@@ -20,7 +20,7 @@ classDiagram
         +string createdBy
         +string modifiedBy
         +string createdAt
-        +string modifiedAt
+        +string updatedAt
     }
 
     class PrivateKey {
@@ -72,7 +72,7 @@ classDiagram
         +string createdBy
         +string modifiedBy
         +string createdAt
-        +string modifiedAt
+        +string updatedAt
     }
 
     class DomainMapping {
@@ -88,7 +88,7 @@ classDiagram
         +string spaceId
         +string createdBy
         +string createdAt
-        +string modifiedAt
+        +string updatedAt
     }
 
     class TrustedCertificate {
@@ -120,7 +120,7 @@ classDiagram
         +string lastValidatedAt
         +string createdBy
         +string createdAt
-        +string modifiedAt
+        +string updatedAt
     }
 
     class DomainDashboard {
