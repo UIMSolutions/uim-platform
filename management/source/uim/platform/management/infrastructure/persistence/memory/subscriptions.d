@@ -17,38 +17,55 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubscriptionRepository : SubscriptionRepository {
-  private Subscription[SubscriptionId] store;
+class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId), SubscriptionRepository {
+  mixin IdRepositoryTemplate!(MemorySubscriptionRepository, Subscription, SubscriptionId);
 
-  bool existsById(SubscriptionId id) {
-    return (id in store) ? true : false;
+  size_t countBySubaccount(SubaccountId subaccountId) {
+    return findBySubaccount(subaccountId).length;
   }
 
-  Subscription findById(SubscriptionId id) {
-    return existsById(id) ? store[id] : Subscription.init;
+  Subscription[] filterBySubaccount(Subscription[] items, SubaccountId subaccountId) {
+    return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
   Subscription[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll()r!(e => e.subaccountId == subaccountId).array;
+    return findAll().filterBySubaccount(subaccountId);
+  }
+
+  void removeBySubaccount(SubaccountId subaccountId) {
+    findBySubaccount(subaccountId).each!(e => remove(e.id));
+  }
+
+  size_t countByApp(SubaccountId subaccountId, string appName) {
+    return findByApp(subaccountId, appName).length;
+  }
+
+  Subscription[] filterByApp(Subscription[] items, SubaccountId subaccountId, string appName) {
+    return items.filter!(e => e.subaccountId == subaccountId && e.appName == appName).array;
   }
 
   Subscription[] findByApp(SubaccountId subaccountId, string appName) {
-    return findBySubaccount(subaccountId).filter!(e => e.appName == appName).array;
+    return findBySubaccount(subaccountId).filterByApp(subaccountId, appName);
+  }
+
+  void removeByApp(SubaccountId subaccountId, string appName) {
+    findByApp(subaccountId, appName).each!(e => remove(e.id));
+  }
+
+  size_t countByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
+    return findByStatus(subaccountId, status).length;
+  }
+
+  Subscription[] filterByStatus(Subscription[] items, SubaccountId subaccountId, SubscriptionStatus status) {
+    return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
   Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
     return findBySubaccount(subaccountId).filter!(e => e.status == status).array;
   }
 
-  void save(Subscription sub) {
-    store[sub.id] = sub;
+  void removeByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
+    findByStatus(subaccountId, status).each!(e => remove(e.id));
   }
-
-  void update(Subscription sub) {
-    store[sub.id] = sub;
-  }
-
-  void remove(SubscriptionId id) {
-    store.remove(id);
-  }
+  
 }

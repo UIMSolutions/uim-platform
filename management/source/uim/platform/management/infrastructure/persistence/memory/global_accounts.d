@@ -17,34 +17,23 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryGlobalAccountRepository : GlobalAccountRepository {
-  private GlobalAccount[GlobalAccountId] store;
+class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {
+  mixin IdRepositoryTemplate!(MemoryGlobalAccountRepository, GlobalAccount, GlobalAccountId);
 
-  bool existsById(GlobalAccountId id) {
-    return (id in store) ? true : false;
+  size_t countByStatus(GlobalAccountStatus status) {
+    return findByStatus(status).length;
   }
 
-  GlobalAccount findById(GlobalAccountId id) {
-    return existsById(id) ? store[id] : GlobalAccount.init;
+  GlobalAccount[] filterByStatus(GlobalAccount[] items, GlobalAccountStatus status) {
+    return items.filter!(e => e.status == status).array;
   }
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status) {
-    return findAll()r!(e => e.status == status).array;
+    return findAll().filterByStatus(status);
   }
 
-  GlobalAccount[] findAll() {
-    return findAll();
+  void removeByStatus(GlobalAccountStatus status, bool deleteTenantIfEmpty = false) {
+    findByStatus(status).removeAll(deleteTenantIfEmpty);
   }
 
-  void save(GlobalAccount account) {
-    store[account.globalAccountId] = account;
-  }
-
-  void update(GlobalAccount account) {
-    store[account.globalAccountId] = account;
-  }
-
-  void remove(GlobalAccountId id) {
-    store.remove(id);
-  }
 }

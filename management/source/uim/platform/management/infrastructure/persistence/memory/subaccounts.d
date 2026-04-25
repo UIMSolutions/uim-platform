@@ -20,6 +20,7 @@ mixin(ShowModule!());
 class MemorySubaccountRepository : SubaccountRepository {
   private Subaccount[SubaccountId] store;
 
+  // #region ById
   bool existsById(SubaccountId id) {
     return (id in store) ? true : false;
   }
@@ -27,37 +28,93 @@ class MemorySubaccountRepository : SubaccountRepository {
   Subaccount findById(SubaccountId id) {
     return existsById(id) ? store[id] : Subaccount.init;
   }
+  // #endregion ById
 
+  // #region BySubdomain
   bool existsBySubdomain(string subdomain) {
-    return findAll()s => s.subdomain == subdomain);
+    return findAll.any!(s => s.subdomain == subdomain);
   }
 
   Subaccount findBySubdomain(string subdomain) {
-    foreach (s; findAll()
+    foreach (s; findAll()) {
       if (s.subdomain == subdomain)
         return s;
     }
     return Subaccount.init;
   }
+  // #endregion BySubdomain
 
-  Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
+  // #region ByGlobalAccount
+  size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
+    return findByGlobalAccount(globalAccountId).length;
   }
 
+  Subaccount[] filterByGlobalAccount(Subaccount[] subs, GlobalAccountId globalAccountId) {
+    return subs.filter!(s => s.globalAccountId == globalAccountId).array;
+  }
+
+  Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
+    return findAll.filterByGlobalAccount(globalAccountId);
+  }
+
+  void removeByGlobalAccount(GlobalAccountId globalAccountId) {
+    findByGlobalAccount(globalAccountId).removeAll;
+  }
+  // #endregion ByGlobalAccount
+
+  // #region ByDirectory
+  size_t countByDirectory(DirectoryId directoryId) {
+    return findByDirectory(directoryId).length;
+  }
+
+  Subaccount[] filterByDirectory(Subaccount[] subs, DirectoryId directoryId) {
+    return subs.filter!(s => s.directoryId == directoryId).array;
+  } 
+  
   Subaccount[] findByDirectory(DirectoryId directoryId) {
-    return findAll()r!(e => e.parentDirectoryId == directoryId).array;
+    return findAll.filterByDirectory(directoryId);
+  }
+
+  void removeByDirectory(DirectoryId directoryId) {
+    findByDirectory(directoryId).removeAll;
+  }
+  // #endregion ByDirectory
+
+  // #region ByRegion
+  size_t countByRegion(GlobalAccountId globalAccountId, string region) {
+    return findByRegion(globalAccountId, region).length;
+  }
+  Subaccount[] filterByRegion(Subaccount[] subs, GlobalAccountId globalAccountId, string region) {
+    return subs.filter!(s => s.globalAccountId == globalAccountId && s.region == region).array;
   }
 
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId
-        && e.region == region).array;
+    return findAll.filterByRegion(globalAccountId, region);
+  }
+
+  void removeByRegion(GlobalAccountId globalAccountId, string region) {
+    findByRegion(globalAccountId, region).removeAll;
+  }
+  // #endregion ByRegion
+
+  // #region ByStatus
+  size_t countByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
+    return findByStatus(globalAccountId, status).length;
+  }
+
+  Subaccount[] filterByStatus(Subaccount[] subs, GlobalAccountId globalAccountId, SubaccountStatus status) {
+    return subs.filter!(s => s.globalAccountId == globalAccountId && s.status == status).array;
   }
 
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId
-        && e.status == status).array;
+    return findAll.filterByStatus(globalAccountId, status).array;
   }
 
+  void removeByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
+    findByStatus(globalAccountId, status).removeAll;
+  }
+  // #endregion ByStatus
+  
   void save(Subaccount sub) {
     store[sub.id] = sub;
   }

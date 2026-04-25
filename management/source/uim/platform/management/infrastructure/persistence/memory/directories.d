@@ -19,6 +19,7 @@ mixin(ShowModule!());
 class MemoryDirectoryRepository : DirectoryRepository {
   private Directory[DirectoryId] store;
 
+  // #region ById
   bool existsById(DirectoryId id) {
     return (id in store) ? true : false;
   }
@@ -26,19 +27,50 @@ class MemoryDirectoryRepository : DirectoryRepository {
   Directory findById(DirectoryId id) {
     return existsById(id) ? store[id] : Directory.init;
   }
+  // #endregion ById
+
+  // #region ByGlobalAccount
+  size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
+    return findByGlobalAccount(globalAccountId).length;
+  }
+
+  Directory[] filterByGlobalAccount(Directory[] dirs, GlobalAccountId globalAccountId) {
+    return dirs.filter!(d => d.globalAccountId == globalAccountId).array;
+  }
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
+    return findAll.filterByGlobalAccount(globalAccountId);
+  }
+
+  void removeByGlobalAccount(GlobalAccountId globalAccountId) {
+    findByGlobalAccount(globalAccountId).removeAll;
+  }
+  // #endregion ByGlobalAccount
+
+  // #region ByParent
+  size_t countByParent(DirectoryId parentDirectoryId) {
+    return findByParent(parentDirectoryId).length;
+  }
+
+  Directory[] filterByParent(Directory[] dirs, DirectoryId parentDirectoryId) {
+    return dirs.filter!(d => d.parentDirectoryId == parentDirectoryId).array;
   }
 
   Directory[] findByParent(DirectoryId parentDirectoryId) {
-    return findAll()r!(e => e.parentDirectoryId == parentDirectoryId).array;
+    return findAll.filterByParent(parentDirectoryId);
   }
 
-  Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId
-        && e.status == status).array;
+  void removeByParent(DirectoryId parentDirectoryId) {
+    findByParent(parentDirectoryId).removeAll;
   }
+  
+  // #endregion ByParent
+
+  // #region ByStatus
+  Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
+    return findAll.filterByStatus(globalAccountId, status).array;
+  }
+  // #endregion ByStatus
 
   void save(Directory dir) {
     store[dir.id] = dir;

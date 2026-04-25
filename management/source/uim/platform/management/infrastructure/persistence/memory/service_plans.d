@@ -17,17 +17,12 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryServicePlanRepository : ServicePlanRepository {
-  private ServicePlan[ServicePlanId] store;
+class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
+  mixin TenantRepositoryTemplate!(MemoryServicePlanRepository, ServicePlan, ServicePlanId);
 
-  bool existsById(ServicePlanId id) {
-    return (id in store) ? true : false;
+  size_t countByService(string serviceName) {
+    return findByService(serviceName).length;
   }
-
-  ServicePlan findById(ServicePlanId id) {
-    return existsById(id) ? store[id] : ServicePlan.init;
-  }
-
   ServicePlan[] findByService(string serviceName) {
     return findAll()r!(e => e.serviceName == serviceName).array;
   }

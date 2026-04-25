@@ -17,38 +17,55 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
-  private EnvironmentInstance[EnvironmentInstanceId] store;
+class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, EnvironmentInstanceId), IEnvironmentInstanceRepository {
+  mixin IdRepositoryTemplate!(MemoryEnvironmentInstanceRepository, EnvironmentInstance, EnvironmentInstanceId);
 
-  bool existsById(EnvironmentInstanceId id) {
-    return (id in store) ? true : false;
+  size_t countBySubaccount(SubaccountId subaccountId) {
+    return findBySubaccount(subaccountId).length;
   }
 
-  EnvironmentInstance findById(EnvironmentInstanceId id) {
-    return existsById(id) ? store[id] : EnvironmentInstance.init;
+  EnvironmentInstance[] filterBySubaccount(EnvironmentInstance[] items, SubaccountId subaccountId) {
+    return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
   EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll()r!(e => e.subaccountId == subaccountId).array;
+    return findAll().filterBySubaccount(subaccountId);
   }
 
+  void removeBySubaccount(SubaccountId subaccountId, bool deleteTenantIfEmpty = false) {
+    findBySubaccount(subaccountId).removeAll(deleteTenantIfEmpty);
+  }
+
+  size_t countByType(SubaccountId subaccountId, EnvironmentType envType) {
+    return findByType(subaccountId, envType).length;
+  }
+
+  EnvironmentInstance[] filterByType(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentType envType) {
+    return items.filter!(e => e.subaccountId == subaccountId && e.environmentType == envType).array;
+  }
+  
   EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType) {
-    return findBySubaccount(subaccountId).filter!(e => e.environmentType == envType).array;
+    return findBySubaccount(subaccountId).filterByType(subaccountId, envType);
+  }
+
+  void removeByType(SubaccountId subaccountId, EnvironmentType envType, bool deleteTenantIfEmpty = false) {
+    findByType(subaccountId, envType).removeAll(deleteTenantIfEmpty);
+  }
+
+  size_t countByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
+    return findByStatus(subaccountId, status).length;
+  }
+
+  EnvironmentInstance[] filterByStatus(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentStatus status) {
+    return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
   EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
-    return findBySubaccount(subaccountId).filter!(e => e.status == status).array;
+    return findBySubaccount(subaccountId).filterByStatus(subaccountId, status);
   }
 
-  void save(EnvironmentInstance inst) {
-    store[inst.id] = inst;
+  void removeByStatus(SubaccountId subaccountId, EnvironmentStatus status, bool deleteTenantIfEmpty = false) {
+    findByStatus(subaccountId, status).removeAll(deleteTenantIfEmpty);
   }
 
-  void update(EnvironmentInstance inst) {
-    store[inst.id] = inst;
-  }
-
-  void remove(EnvironmentInstanceId id) {
-    store.remove(id);
-  }
 }

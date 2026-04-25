@@ -17,42 +17,70 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEntitlementRepository : EntitlementRepository {
-  private Entitlement[EntitlementId] store;
+class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), EntitlementRepository {
+  mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
 
-  bool existsById(EntitlementId id) {
-    return (id in store) ? true : false;
+  size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
+    return findByGlobalAccount(globalAccountId).length;
   }
 
-  Entitlement findById(EntitlementId id) {
-    return existsById(id) ? store[id] : Entitlement.init;
+  Entitlement[] filterByGlobalAccount(Entitlement[] items, GlobalAccountId globalAccountId) {
+    return items.filter!(e => e.globalAccountId == globalAccountId).array;
   }
 
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll()r!(e => e.globalAccountId == globalAccountId).array;
+    return findAll().filterByGlobalAccount(globalAccountId);
+  }
+
+  void removeByGlobalAccount(GlobalAccountId globalAccountId, bool deleteTenantIfEmpty = false) {
+    findByGlobalAccount(globalAccountId).removeAll(deleteTenantIfEmpty);
+  }
+
+  size_t countBySubaccount(SubaccountId subaccountId) {
+    return findBySubaccount(subaccountId).length;
+  }
+
+  Entitlement[] filterBySubaccount(Entitlement[] items, SubaccountId subaccountId) {
+    return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
   Entitlement[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll()r!(e => e.subaccountId == subaccountId).array;
+    return findAll().filterBySubaccount(subaccountId);
+  }
+
+  void removeBySubaccount(SubaccountId subaccountId, bool deleteTenantIfEmpty = false) {
+    findBySubaccount(subaccountId).removeAll(deleteTenantIfEmpty);
+  }
+
+  size_t countByDirectory(DirectoryId directoryId) {
+    return findByDirectory(directoryId).length;
+  } 
+
+Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
+    return items.filter!(e => e.directoryId == directoryId).array;
   }
 
   Entitlement[] findByDirectory(DirectoryId directoryId) {
-    return findAll()r!(e => e.directoryId == directoryId).array;
+    return findAll().filterByDirectory(directoryId);
+  }
+
+  void removeByDirectory(DirectoryId directoryId, bool deleteTenantIfEmpty = false) {
+    findByDirectory(directoryId).removeAll(deleteTenantIfEmpty);
+  }
+
+  size_t countByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
+    return findByServicePlan(globalAccountId, planId).length;
+  }
+
+  Entitlement[] filterByServicePlan(Entitlement[] items, ServicePlanId planId) {
+    return items.filter!(e => e.servicePlanId == planId).array;
   }
 
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return findByGlobalAccount(globalAccountId).filter!(e => e.servicePlanId == planId).array;
+    return findByGlobalAccount(globalAccountId).filterByServicePlan(planId);
   }
 
-  void save(Entitlement ent) {
-    store[ent.id] = ent;
-  }
-
-  void update(Entitlement ent) {
-    store[ent.id] = ent;
-  }
-
-  void remove(EntitlementId id) {
-    store.remove(id);
+  void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId, bool deleteTenantIfEmpty = false) {
+    findByServicePlan(globalAccountId, planId).removeAll(deleteTenantIfEmpty);
   }
 }
