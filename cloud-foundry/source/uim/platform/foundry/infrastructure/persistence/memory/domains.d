@@ -18,24 +18,59 @@ mixin(ShowModule!());
 @safe:
 class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {
 
+  // #region ByName
+  bool existsByName(TenantId tenantId, string name) {
+    return !findByName(tenantId, name).isNull;
+  }
+
+  CfDomain findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return e;
+    return CfDomain.init;
+  }
+
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return remove(e);
+  }
+  // #endregion ByName
+
+  // #region ByOrg
   size_t countByOrg(TenantId tenantId, OrgId orgId) {
     return findByOrg(tenantId, orgId).length;
   }
-  CfDomain[] findByOrg(TenantId tenantId, OrgId orgId) {
-    return findByTenant(tenantId).filter!(e => e.ownerOrgId == orgId).array;
+
+  CfDomain[] filterByOrg(CfDomain[] domains, OrgId orgId) {
+    return domains.filter!(e => e.ownerOrgId == orgId).array;
   }
+
+  CfDomain[] findByOrg(TenantId tenantId, OrgId orgId) {
+    return filterByOrg(findByTenant(tenantId), orgId);
+  }
+
   void removeByOrg(TenantId tenantId, OrgId orgId) {
     findByOrg(tenantId, orgId).each!(e => remove(e));
   }
+  // #endregion ByOrg
 
+  // #region Shared
   size_t countShared(TenantId tenantId) {
     return findShared(tenantId).length;
   }
-  CfDomain[] findShared(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(e => e.scope_ == DomainScope.shared_).array;
-  }
-  void removeShared(TenantId tenantId) {
-    findShared(tenantId).each!(e => remove(e.id));
+
+  CfDomain[] filterShared(CfDomain[] domains) {
+    return domains.filter!(e => e.scope_ == DomainScope.shared_).array;
   }
 
+  CfDomain[] findShared(TenantId tenantId) {
+    return filterShared(findByTenant(tenantId));
+  }
+
+  void removeShared(TenantId tenantId) {
+    findShared(tenantId).each!(e => remove(e));
+  }
+  // #endregion Shared
+  
 }

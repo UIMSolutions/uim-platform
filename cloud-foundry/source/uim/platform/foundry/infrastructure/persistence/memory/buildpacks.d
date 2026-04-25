@@ -38,38 +38,41 @@ class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBu
         return remove(e);
   }
 
-  // #region 
+  // #region Enabled 
   // Buildpacks can be enabled/disabled globally, but also filtered by stack. So we need to be able to find them by these criteria.
   size_t countEnabled(TenantId tenantId) {
     return findEnabled(tenantId).length;
   }
 
+  Buildpack[] filterEnabled(Buildpack[] buildpacks) {
+    return buildpacks.filter!(e => e.enabled).array;
+  }
+
   Buildpack[] findEnabled(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(e => e.enabled).array;
+    return filterEnabled(findByTenant(tenantId));
   }
 
   void removeEnabled(TenantId tenantId) {
     findEnabled(tenantId).each!(e => remove(e));
   }
+  // #endregion Enabled
 
+  // #region ByStack
   size_t countByStack(TenantId tenantId, string stack) {
     return findByStack(tenantId, stack).length;
   }
 
-  void removeByStack(TenantId tenantId, string stack) {
-    findByStack(tenantId, stack).each!(e => remove(e));
-  }
-
-  size_t countByStack(TenantId tenantId, string stack) {
-    return findByStack(tenantId, stack).length;
+  Buildpack[] filterByStack(Buildpack[] buildpacks, string stack) {
+    return buildpacks.filter!(e => e.stack == stack).array;
   }
 
   Buildpack[] findByStack(TenantId tenantId, string stack) {
-    return findByTenant(tenantId).filter!(e => e.stack == stack).array;
+    return filterByStack(findByTenant(tenantId), stack);
   }
 
   void removeByStack(TenantId tenantId, string stack) {
     findByStack(tenantId, stack).each!(e => remove(e));
   }
+  // #endregion ByStack
 
 }

@@ -18,11 +18,21 @@ mixin(ShowModule!());
 @safe:
 class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepository {
 
-  Route findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
+  bool existsByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
+    return !findByHostAndDomain(tenantId, host, domainId).isNull;
+  }
+
+  Route findByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
     foreach (e; findByTenant(tenantId))
       if (e.host == host && e.domainId == domainId)
         return e;
     return Route.init;
+  }
+
+  void removeByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.host == host && e.domainId == domainId)
+        return remove(e);
   }
 
   // #region ByDomain
@@ -30,12 +40,12 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
     return findByDomain(tenantId, domainId).length;
   }
 
-  Route[] filterByDomain(TenantId tenantId, CfDomainId domainId) {
-    return findByDomain(tenantId, domainId);
+  Route[] filterByDomain(Route[] routes, CfDomainId domainId) {
+    return routes.filter!(e => e.domainId == domainId).array;
   }
 
   Route[] findByDomain(TenantId tenantId, CfDomainId domainId) {
-    return findByDomain(findByTenant(tenantId), domainId);
+    return filterByDomain(findByTenant(tenantId), domainId);
   }
 
   void removeByDomain(TenantId tenantId, CfDomainId domainId) {
@@ -48,12 +58,12 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
     return findByApp(tenantId, appId).length;
   }
 
-  Route[] filterByApp(TenantId tenantId, AppId appId) {
-    return findByApp(tenantId, appId);
+  Route[] filterByApp(Route[] routes, AppId appId) {
+    return routes.filter!(e => e.mappedAppIds.canFind(appId)).array;
   }
 
   Route[] findByApp(TenantId tenantId, AppId appId) {
-    return findByTenant(tenantId).filter!(e => e.mappedAppIds.canFind(appId)).array;
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, AppId appId) {
@@ -61,4 +71,22 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
   // #endregion ByApp
 
+
+  // #region BySpace
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findBySpace(tenantId, spaceId).length;
+  }
+
+  Route[] filterBySpace(Route[] routes, SpaceId spaceId) {
+    return routes.filter!(e => e.mappedSpaceIds.canFind(spaceId)).array;
+  }
+
+  Route[] findBySpace(TenantId tenantId, SpaceId spaceId) {
+    return filterBySpace(findByTenant(tenantId), spaceId);
+  }
+
+  void removeBySpace(TenantId tenantId, SpaceId spaceId) {
+    findBySpace(tenantId, spaceId).each!(e => remove(e));
+  }
+  // #endregion BySpace
 }

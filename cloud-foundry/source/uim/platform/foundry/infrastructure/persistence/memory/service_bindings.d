@@ -22,8 +22,12 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     return findByApp(tenantId, appId).length;
   }
 
+  ServiceBinding[] filterByApp(ServiceBinding[] bindings, AppId appId) {
+    return bindings.filter!(e => e.appId == appId).array;
+  }
+
   ServiceBinding[] findByApp(TenantId tenantId, AppId appId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, AppId appId) {
@@ -34,8 +38,12 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     return findByServiceInstance(tenantId, instanceId).length;
   }
 
+  ServiceBinding[] filterByServiceInstance(ServiceBinding[] bindings, ServiceInstanceId instanceId) {
+    return bindings.filter!(e => e.serviceInstanceId == instanceId).array;
+  }
+
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;
+    return filterByServiceInstance(findByTenant(tenantId), instanceId);
   }
 
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

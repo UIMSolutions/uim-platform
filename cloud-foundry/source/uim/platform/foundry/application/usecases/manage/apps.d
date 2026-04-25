@@ -38,7 +38,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application name is required");
 
     // Unique name within space
-    auto existing = apps.findByName(req.spaceId, req.tenantId, req.name);
+    auto existing = apps.findByName(req.tenantId, req.spaceId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Application with this name already exists in space");
 
@@ -65,11 +65,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.updatedAt = now;
 
     apps.save(app);
-    return CommandResult(app.id, "");
-  }
-
-  Application getApp(TenantId tenantId, AppId id) {
-    return apps.findById(tenantId, id);
+    return CommandResult(true, app.id.toString, "");
   }
 
   Application getApp(TenantId tenantId, AppId id) {
@@ -121,7 +117,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     apps.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.toString, "");
   }
 
   /// Start an application (stage then start).
@@ -157,13 +153,13 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
     if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))
       return CommandResult(false, "", "Cannot scale application — check quota limits");
-    return CommandResult(req.id, "");
+    return CommandResult(true, req.id.toString, "");
   }
 
   /// Get environment variables for an application.
   string getEnvironment(TenantId tenantId, AppId id) {
     auto app = apps.findById(tenantId, id);
-    if (app is null)
+    if (app.isNull)
       return "{}";
     return app.environmentVariables.length > 0 ? app.environmentVariables : "{}";
   }

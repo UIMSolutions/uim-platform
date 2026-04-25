@@ -18,6 +18,10 @@ mixin(ShowModule!());
 @safe:
 class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {
   
+  bool existsByName(TenantId tenantId, string name) {
+    return !findByName(tenantId, name).isNull;
+  }
+
   Organization findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
@@ -25,4 +29,10 @@ class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgReposito
     return Organization.init;
   }
 
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+         return remove(e);
+  }
+  
 }

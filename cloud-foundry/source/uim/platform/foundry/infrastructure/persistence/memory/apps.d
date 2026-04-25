@@ -34,28 +34,40 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepositor
         return remove(e);
   }
 
+  // #region BySpace
   size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
     return findBySpace(tenantId, spaceId).length;
   }
 
+  Application[] filterBySpace(Application[] apps, SpaceId spaceId) {
+    return apps.filter!(e => e.spaceId == spaceId).array;
+  }
+
   Application[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId).array;
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
 
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(e => remove(e));
   }
+  // #endregion BySpace
 
+  // #region ByState
   size_t countByState(TenantId tenantId, SpaceId spaceId, AppState state) {
     return findByState(tenantId, spaceId, state).length;
   }
 
+  Application[] filterByState(Application[] apps, SpaceId spaceId, AppState state) {
+    return apps.filter!(e => e.spaceId == spaceId && e.state == state).array;
+  }
+
   Application[] findByState(TenantId tenantId, SpaceId spaceId, AppState state) {
-    return findByTenant(tenantId).filter!(e => e.spaceId == spaceId && e.state == state).array;
+    return filterByState(findByTenant(tenantId), spaceId, state);
   }
 
   void removeByState(TenantId tenantId, SpaceId spaceId, AppState state) {
     findByState(tenantId, spaceId, state).each!(e => remove(e));
   }
-
+  // #endregion ByState
+  
 }

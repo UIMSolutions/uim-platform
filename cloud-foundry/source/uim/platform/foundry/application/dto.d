@@ -25,7 +25,7 @@ struct CreateOrgRequest {
 }
 
 struct UpdateOrgRequest {
-  OrgId orgId;
+  OrgId id;
   TenantId tenantId;
   string name;
   OrgStatus status;
@@ -47,7 +47,7 @@ struct CreateSpaceRequest {
 }
 
 struct UpdateSpaceRequest {
-  SpaceId spaceId;
+  SpaceId id;
   TenantId tenantId;
   string name;
   SpaceStatus status;
@@ -75,7 +75,7 @@ struct CreateAppRequest {
 }
 
 struct UpdateAppRequest {
-  AppId appId;
+  AppId id;
   TenantId tenantId;
   string name;
   int instances;
@@ -92,7 +92,7 @@ struct UpdateAppRequest {
 }
 
 struct ScaleAppRequest {
-  AppId appId;
+  AppId id;
   TenantId tenantId;
   int instances;
   int memoryMb;
@@ -113,7 +113,7 @@ struct CreateServiceInstanceRequest {
 }
 
 struct UpdateServiceInstanceRequest {
-  ServiceInstanceId instanceId;
+  ServiceInstanceId id;
   TenantId tenantId;
   string name;
   string servicePlanName;
@@ -146,7 +146,7 @@ struct CreateRouteRequest {
 }
 
 struct MapRouteRequest {
-  RouteId routeId;
+  RouteId id;
   AppId appId;
   TenantId tenantId;
 }
@@ -175,7 +175,7 @@ struct CreateBuildpackRequest {
 }
 
 struct UpdateBuildpackRequest {
-  BuildpackId buildpackId;
+  BuildpackId id;
   TenantId tenantId;
   string name;
   int position;

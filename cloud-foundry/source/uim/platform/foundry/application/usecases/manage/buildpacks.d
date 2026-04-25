@@ -33,7 +33,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Buildpack name is required");
 
     auto existing = buildpacks.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Buildpack with this name already exists");
 
     auto now = Clock.currStdTime();
@@ -55,7 +55,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     return CommandResult(bp.id, "");
   }
 
-  Buildpack* getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
+  Buildpack getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
     return buildpacks.findById(tenantId, buildpackId);
   }
 

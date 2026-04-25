@@ -39,8 +39,12 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepositor
     return findByOrg(tenantId, orgId).length;
   }
 
+  Space[] filterByOrg(Space[] spaces, OrgId orgId) {
+    return spaces.filter!(e => e.orgId == orgId).array;
+  }
+
   Space[] findByOrg(TenantId tenantId, OrgId orgId) {
-    return findAll.filter!(e => e.tenantId == tenantId && e.orgId == orgId).array;
+    return filterByOrg(findByTenant(tenantId), orgId);
   }
 
   void removeByOrg(TenantId tenantId, OrgId orgId) {
