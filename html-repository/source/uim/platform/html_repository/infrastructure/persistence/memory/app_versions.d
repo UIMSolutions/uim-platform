@@ -9,15 +9,7 @@ import uim.platform.html_repository.domain.ports.repositories.app_versions;
 import uim.platform.html_repository.domain.entities.app_version;
 import uim.platform.html_repository.domain.types;
 
-class AppVersionMemoryRepository : AppVersionRepository {
-  private AppVersion[] store;
-
-  AppVersion findById(AppVersionId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return e;
-    }
-    return AppVersion.init;
-  }
+class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
   AppVersion findLatest(HtmlAppId appId) {
     AppVersion latest = AppVersion.init;

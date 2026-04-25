@@ -16,18 +16,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for authorization policy persistence.
-class MemoryPolicyRepository : PolicyRepository {
-  private AuthorizationPolicy[PolicyId] store;
-
-  bool existsById(PolicyId id) {
-    return (id in store) ? true : false;
-  }
-
-  AuthorizationPolicy findById(PolicyId id) {
-    if (id in store)
-      return store[id];
-    return AuthorizationPolicy.init;
-  }
+class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {
 
   AuthorizationPolicy[] findByTenant(TenantId tenantId) {
     return findAll().filter!(p => p.tenantId == tenantId).array;
@@ -37,15 +26,4 @@ class MemoryPolicyRepository : PolicyRepository {
     return findAll().filter!(p => p.applicationIds.canFind(appId)).array;
   }
 
-  void save(AuthorizationPolicy policy) {
-    store[policy.id] = policy;
-  }
-
-  void update(AuthorizationPolicy policy) {
-    store[policy.id] = policy;
-  }
-
-  void remove(PolicyId id) {
-    store.remove(id);
-  }
 }

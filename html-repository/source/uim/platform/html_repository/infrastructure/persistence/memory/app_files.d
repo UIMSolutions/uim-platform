@@ -13,22 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class AppFileMemoryRepository : AppFileRepository {
-  private AppFile[] store;
-
-  bool existsById(AppFileId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return true;
-    }
-    return false;
-  }
-
-  AppFile findById(AppFileId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return e;
-    }
-    return AppFile.init;
-  }
+class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRepository {
 
   AppFile findByPath(AppVersionId versionId, string filePath) {
     foreach (e; findAll) {

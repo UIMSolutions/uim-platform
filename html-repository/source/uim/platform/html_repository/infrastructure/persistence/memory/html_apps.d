@@ -9,22 +9,8 @@ import uim.platform.html_repository.domain.ports.repositories.html_apps;
 import uim.platform.html_repository.domain.entities.html_app;
 import uim.platform.html_repository.domain.types;
 
-class HtmlAppMemoryRepository : HtmlAppRepository {
-  private HtmlApp[] store;
+class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRepository {
 
-  HtmlApp findById(HtmlAppId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return e;
-    }
-    return HtmlApp.init;
-  }
-
-  HtmlApp findByName(TenantId tenantId, string name) {
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId && e.name == name) return e;
-    }
-    return HtmlApp.init;
-  }
 
   HtmlApp[] findByTenant(TenantId tenantId) {
     HtmlApp[] result;
@@ -58,34 +44,6 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
     return result;
   }
 
-  void save(HtmlApp app) {
-    store ~= app;
-  }
-
-  void update(HtmlApp app) {
-    foreach (i, e; store) {
-      if (e.id == app.id) {
-        store[i] = app;
-        return;
-      }
-    }
-  }
-
-  void remove(HtmlAppId id) {
-    HtmlApp[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
-  }
 
   size_t countByServiceInstance(ServiceInstanceId instanceId) {
     size_t count = 0;

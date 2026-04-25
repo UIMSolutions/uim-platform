@@ -12,16 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryPushNotificationRepository : PushNotificationRepository {
-  private PushNotification[PushNotificationId] store;
+class MemoryPushNotificationRepository : TenantRepository!(PushNotification, PushNotificationId), PushNotificationRepository {
 
-  bool existsById(PushNotificationId id) {
-    return id in store ? true : false;
-  }
-
-  PushNotification findById(PushNotificationId id) {
-    return existsById(id) ? store[id] : PushNotification.init;
-  }
 
   PushNotification[] findByApp(MobileAppId appId) {
     return store.values.filter!(n => n.appId == appId).array;

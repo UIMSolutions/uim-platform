@@ -12,16 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryMobileAppRepository : MobileAppRepository {
-  private MobileApp[MobileAppId] store;
+class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
-  bool existsById(MobileAppId id) {
-    return id in store ? true : false;
-  }
-
-  MobileApp findById(MobileAppId id) {
-    return existsById(id) ? store[id] : MobileApp.init;
-  }
 
   MobileApp findByBundleId(string bundleId) {
     foreach (a; findAll) {

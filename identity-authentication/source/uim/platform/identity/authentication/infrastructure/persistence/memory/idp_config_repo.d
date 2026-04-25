@@ -16,14 +16,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for external IdP configuration persistence.
-class MemoryIdpConfigRepository : IdpConfigRepository {
-  private IdpConfig[string] store;
-
-  IdpConfig findById(string id) {
-    if (auto p = id in store)
-      return *p;
-    return IdpConfig.init;
-  }
+class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfigRepository {
 
   IdpConfig findDefaultForTenant(TenantId tenantId) {
     foreach (c; findAll()) {
