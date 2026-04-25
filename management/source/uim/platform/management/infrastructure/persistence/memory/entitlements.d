@@ -33,8 +33,8 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
     return findAll().filterByGlobalAccount(globalAccountId);
   }
 
-  void removeByGlobalAccount(GlobalAccountId globalAccountId, bool deleteTenantIfEmpty = false) {
-    findByGlobalAccount(globalAccountId).removeAll(deleteTenantIfEmpty);
+  void removeByGlobalAccount(GlobalAccountId globalAccountId) {
+    findByGlobalAccount(globalAccountId).removeAll();
   }
   // #endregion ByGlobalAccount
 
@@ -51,8 +51,8 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
     return findAll().filterBySubaccount(subaccountId);
   }
 
-  void removeBySubaccount(SubaccountId subaccountId, bool deleteTenantIfEmpty = false) {
-    findBySubaccount(subaccountId).removeAll(deleteTenantIfEmpty);
+  void removeBySubaccount(SubaccountId subaccountId) {
+    findBySubaccount(subaccountId).each!(e => remove(e));
   }
   // #endregion BySubaccount
 
@@ -69,8 +69,8 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
     return findAll().filterByDirectory(directoryId);
   }
 
-  void removeByDirectory(DirectoryId directoryId, bool deleteTenantIfEmpty = false) {
-    findByDirectory(directoryId).removeAll(deleteTenantIfEmpty);
+  void removeByDirectory(DirectoryId directoryId) {
+    findByDirectory(directoryId).each!(e => remove(e));
   }
   // #endregion ByDirectory
 
@@ -87,8 +87,8 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
     return findByGlobalAccount(globalAccountId).filterByServicePlan(planId);
   }
 
-  void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId, bool deleteTenantIfEmpty = false) {
-    findByServicePlan(globalAccountId, planId).removeAll(deleteTenantIfEmpty);
+  void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
+    findByServicePlan(globalAccountId, planId).each!(e => remove(e));
   }
   // #region ByServicePlan
 

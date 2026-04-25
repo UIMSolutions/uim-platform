@@ -48,10 +48,10 @@ struct Subscription {
           .set("appUrl", appUrl)
           .set("isSubscriptionDone", isSubscriptionDone)
           .set("errorDescription", errorDescription)
-          .set("dependentServices", dependentServices.array)
+          .set("dependentServices", dependentServices.toJson)
           .set("subscribedAt", subscribedAt)
           .set("subscribedBy", subscribedBy)
-          .set("parameters", parameters)
-          .set("labels", labels);
+          .set("parameters", parameters.toJson)
+          .set("labels", labels.toJson);
   }
 }

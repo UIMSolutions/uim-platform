@@ -32,8 +32,8 @@ class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccount
     return findAll().filterByStatus(status);
   }
 
-  void removeByStatus(GlobalAccountStatus status, bool deleteTenantIfEmpty = false) {
-    findByStatus(status).removeAll(deleteTenantIfEmpty);
+  void removeByStatus(GlobalAccountStatus status) {
+    findByStatus(status).each!(e => remove(e));
   }
 
 }

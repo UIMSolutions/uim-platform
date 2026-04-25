@@ -44,7 +44,7 @@ struct Subaccount {
           .set("betaEnabled", betaEnabled)
           .set("usedForProduction", usedForProduction)
           .set("technicalName", technicalName)
-          .set("labels", labels)
-          .set("customProperties", customProperties);
+          .set("labels", labels.toJson)
+          .set("customProperties", customProperties.toJson);
   }
 }

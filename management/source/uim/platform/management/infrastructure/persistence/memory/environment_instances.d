@@ -32,8 +32,8 @@ class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, E
     return findAll().filterBySubaccount(subaccountId);
   }
 
-  void removeBySubaccount(SubaccountId subaccountId, bool deleteTenantIfEmpty = false) {
-    findBySubaccount(subaccountId).removeAll(deleteTenantIfEmpty);
+  void removeBySubaccount(SubaccountId subaccountId) {
+    findBySubaccount(subaccountId).each!(e => remove(e));
   }
 
   size_t countByType(SubaccountId subaccountId, EnvironmentType envType) {
@@ -48,8 +48,8 @@ class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, E
     return findBySubaccount(subaccountId).filterByType(subaccountId, envType);
   }
 
-  void removeByType(SubaccountId subaccountId, EnvironmentType envType, bool deleteTenantIfEmpty = false) {
-    findByType(subaccountId, envType).removeAll(deleteTenantIfEmpty);
+  void removeByType(SubaccountId subaccountId, EnvironmentType envType) {
+    findByType(subaccountId, envType).each!(e => remove(e));
   }
 
   size_t countByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
@@ -64,8 +64,8 @@ class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, E
     return findBySubaccount(subaccountId).filterByStatus(subaccountId, status);
   }
 
-  void removeByStatus(SubaccountId subaccountId, EnvironmentStatus status, bool deleteTenantIfEmpty = false) {
-    findByStatus(subaccountId, status).removeAll(deleteTenantIfEmpty);
+  void removeByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
+    findByStatus(subaccountId, status).each!(e => remove(e));
   }
 
 }

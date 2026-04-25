@@ -197,7 +197,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(id);
-    repository.remove(id);
+    repository.removeById(id);
     emitEvent(subaccount.globalAccountId.toString, id.toString, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, "system");
     return CommandResult(true, id.toString, "");
@@ -205,7 +205,6 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
       string eventType, string desc, string initiatedBy) {
-    // import std.uuid : randomUUID;
 
     PlatformEvent event;
     event.id = randomUUID();

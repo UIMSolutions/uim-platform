@@ -32,7 +32,7 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).removeAll;
+    findByGlobalAccount(globalAccountId).each!(d => remove(d));
   }
   // #endregion ByGlobalAccount
 
@@ -50,14 +50,26 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   void removeByParent(DirectoryId parentDirectoryId) {
-    findByParent(parentDirectoryId).removeAll;
+    findByParent(parentDirectoryId).each!(d => remove(d));
   }
-  
+
   // #endregion ByParent
 
   // #region ByStatus
+  size_t countByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
+    return findByStatus(globalAccountId, status).length;
+  }
+
+  Directory[] filterByStatus(Directory[] dirs, GlobalAccountId globalAccountId, DirectoryStatus status) {
+    return dirs.filter!(d => d.globalAccountId == globalAccountId && d.status == status).array;
+  }
+
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
     return findAll.filterByStatus(globalAccountId, status).array;
+  }
+
+  void removeByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
+    findByStatus(globalAccountId, status).each!(d => remove(d));
   }
   // #endregion ByStatus
 

@@ -33,8 +33,8 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
     return findAll().filterByResourceType(resourceType);
   }
 
-  void removeByResourceType(LabeledResourceType resourceType, bool deleteTenantIfEmpty = false) {
-    findByResourceType(resourceType).removeAll(deleteTenantIfEmpty);
+  void removeByResourceType(LabeledResourceType resourceType) {
+    findByResourceType(resourceType).each!(e => remove(e));
   }
   // #endregion ByResourceType
 
@@ -51,8 +51,8 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
     return findAll().filterByResource(items, resourceType, resourceId);
   }
 
-  void removeByResource(LabeledResourceType resourceType, string resourceId, bool deleteTenantIfEmpty = false) {
-    findByResource(resourceType, resourceId).removeAll(deleteTenantIfEmpty);
+  void removeByResource(LabeledResourceType resourceType, string resourceId) {
+    findByResource(resourceType, resourceId).removeAll;
   }
   // #endregion ByResource
 
@@ -69,8 +69,8 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
     return findByResourceType(resourceType).filter!(e => e.key == key).array;
   }
 
-  void removeByKey(LabeledResourceType resourceType, string key, bool deleteTenantIfEmpty = false) {
-    findByKey(resourceType, key).removeAll(deleteTenantIfEmpty);
+  void removeByKey(LabeledResourceType resourceType, string key) {
+    findByKey(resourceType, key).removeAll;
   } 
   // #endregion ByKey
 
@@ -87,8 +87,8 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
     return findByResourceType(resourceType).filterByKeyValue(key, value);
   }
 
-  void removeByKeyValue(LabeledResourceType resourceType, string key, string value, bool deleteTenantIfEmpty = false) {
-    findByKeyValue(resourceType, key, value).removeAll(deleteTenantIfEmpty);
+  void removeByKeyValue(LabeledResourceType resourceType, string key, string value) {
+    findByKeyValue(resourceType, key, value).removeAll;
   }
   // #endregion ByKeyValue
 
