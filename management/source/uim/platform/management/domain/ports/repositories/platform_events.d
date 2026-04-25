@@ -13,16 +13,12 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — platform event persistence.
-interface PlatformEventRepository {
-  bool existsById(PlatformEventId id);
-  PlatformEvent findById(PlatformEventId id);
-  
+interface PlatformEventRepository : IIdRepository!(PlatformEvent, PlatformEventId) {
+
   PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId);
   PlatformEvent[] findBySubaccount(SubaccountId subaccountId);
   PlatformEvent[] findByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category);
   PlatformEvent[] findBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity);
   PlatformEvent[] findSince(GlobalAccountId globalAccountId, long sinceTimestamp);
   
-  void save(PlatformEvent event);
-  void remove(PlatformEventId id);
 }

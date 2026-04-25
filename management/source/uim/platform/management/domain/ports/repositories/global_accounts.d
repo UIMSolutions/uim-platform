@@ -13,14 +13,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — global account persistence.
-interface GlobalAccountRepository {
-  bool existsById(GlobalAccountId id);
-  GlobalAccount findById(GlobalAccountId id);
+interface GlobalAccountRepository : IIdRepository!(GlobalAccount, GlobalAccountId) {
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status);
-  GlobalAccount[] findAll();
   
-  void save(GlobalAccount account);
-  void update(GlobalAccount account);
-  void remove(GlobalAccountId id);
 }

@@ -13,15 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subscription persistence.
-interface SubscriptionRepository {
-  bool existsById(SubscriptionId id);
-  Subscription findById(SubscriptionId id);
+interface SubscriptionRepository : IIdRepository!(Subscription, SubscriptionId) {
 
   Subscription[] findBySubaccount(SubaccountId subaccountId);
   Subscription[] findByApp(SubaccountId subaccountId, string appName);
   Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status);
   
-  void save(Subscription sub);
-  void update(Subscription sub);
-  void remove(SubscriptionId id);
 }

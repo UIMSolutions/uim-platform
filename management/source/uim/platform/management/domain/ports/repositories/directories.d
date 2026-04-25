@@ -13,15 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — directory persistence.
-interface DirectoryRepository {
-  bool existsById(DirectoryId id);
-  Directory findById(DirectoryId id);
-  
+interface DirectoryRepository : IIdRepository!(Directory, DirectoryId) {
+
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Directory[] findByParent(DirectoryId parentDirectoryId);
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status);
 
-  void save(Directory dir);
-  void update(Directory dir);
-  void remove(DirectoryId id);
 }

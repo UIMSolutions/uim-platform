@@ -13,15 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — environment instance persistence.
-interface EnvironmentInstanceRepository {
-  bool existsById(EnvironmentInstanceId id);
-  EnvironmentInstance findById(EnvironmentInstanceId id);
+interface EnvironmentInstanceRepository : IIdRepository!(EnvironmentInstance, EnvironmentInstanceId) {
 
   EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId);
   EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType);
   EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status);
-  
-  void save(EnvironmentInstance inst);
-  void update(EnvironmentInstance inst);
-  void remove(EnvironmentInstanceId id);
+
 }

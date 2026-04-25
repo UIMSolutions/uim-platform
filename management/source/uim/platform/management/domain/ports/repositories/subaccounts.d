@@ -13,9 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subaccount persistence.
-interface SubaccountRepository {
-  bool existsById(SubaccountId id);
-  Subaccount findById(SubaccountId id);
+interface SubaccountRepository : IIdRepository!(Subaccount, SubaccountId) {
 
   bool existsBySubdomain(string subdomain);
   Subaccount findBySubdomain(string subdomain);
@@ -25,7 +23,4 @@ interface SubaccountRepository {
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region);
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status);
   
-  void save(Subaccount sub);
-  void update(Subaccount sub);
-  void remove(SubaccountId id);
 }

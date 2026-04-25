@@ -13,16 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service plan catalog persistence.
-interface ServicePlanRepository {
-  bool existsById(ServicePlanId id);
-  ServicePlan findById(ServicePlanId id);
+interface ServicePlanRepository : IIdRepository!(ServicePlan, ServicePlanId) {
 
   ServicePlan[] findByService(string serviceName);
   ServicePlan[] findByCategory(ServicePlanCategory category);
   ServicePlan[] findByRegion(string region);
-  ServicePlan[] findAll();
   
-  void save(ServicePlan plan);
-  void update(ServicePlan plan);
-  void remove(ServicePlanId id);
 }
