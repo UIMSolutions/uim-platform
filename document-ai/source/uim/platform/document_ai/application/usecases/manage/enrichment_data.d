@@ -49,7 +49,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     ed.createdAt = now;
-    ed.modifiedAt = now;
+    ed.updatedAt = now;
 
     repo.save(ed);
     return CommandResult(true, ed.id, "");
@@ -80,7 +80,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

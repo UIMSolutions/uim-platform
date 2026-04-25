@@ -151,7 +151,7 @@ class SchemaController : PlatformController {
       .set("description", s.description)
       .set("status", s.status.to!string)
       .set("createdAt", s.createdAt)
-      .set("modifiedAt", s.modifiedAt);
+      .set("updatedAt", s.updatedAt);
 
     auto hArr = Json.emptyArray;
     foreach (f; s.headerFields) {

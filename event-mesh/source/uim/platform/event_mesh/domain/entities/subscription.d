@@ -32,7 +32,7 @@ struct EventSubscription {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json subscriptionToJson() {
         return Json.emptyObject
@@ -56,6 +56,6 @@ struct EventSubscription {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

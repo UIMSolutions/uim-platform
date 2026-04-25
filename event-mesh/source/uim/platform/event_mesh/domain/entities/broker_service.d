@@ -41,7 +41,7 @@ struct BrokerService {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json brokerServiceToJson() {
         return Json.emptyObject
@@ -74,6 +74,6 @@ struct BrokerService {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

@@ -87,7 +87,7 @@ class InstanceController : PlatformController {
           .set("vcpus", i.resources.vcpus)
           .set("storageGB", i.resources.storageGB)
           .set("createdAt", i.createdAt)
-          .set("modifiedAt", i.modifiedAt);
+          .set("updatedAt", i.updatedAt);
       }
 
       auto resp = Json.emptyObject;
@@ -128,7 +128,7 @@ class InstanceController : PlatformController {
       resp["allowAllIpAccess"] = Json(i.allowAllIpAccess);
       resp["whitelistedIps"] = stringsToJsonArray(i.whitelistedIps);
       resp["createdAt"] = Json(i.createdAt);
-      resp["modifiedAt"] = Json(i.modifiedAt);
+      resp["updatedAt"] = Json(i.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

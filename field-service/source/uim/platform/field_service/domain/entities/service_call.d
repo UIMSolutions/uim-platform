@@ -36,7 +36,7 @@ struct ServiceCall {
   string createdBy;
   string modifiedBy;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 
   Json serviceCallToJson() {
     return Json.emptyObject
@@ -64,6 +64,6 @@ struct ServiceCall {
       .set("createdBy", createdBy)
       .set("modifiedBy", modifiedBy)
       .set("createdAt", createdAt)
-      .set("modifiedAt", modifiedAt);
+      .set("updatedAt", updatedAt);
   }
 }

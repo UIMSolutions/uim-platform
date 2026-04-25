@@ -24,6 +24,6 @@ struct Configuration {
   string description;
   bool isReadOnly;
   bool requiresRestart;
-  long modifiedAt;
+  long updatedAt;
   string modifiedBy;
 }

@@ -45,7 +45,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     t.createdAt = now;
-    t.modifiedAt = now;
+    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id, "");
@@ -69,7 +69,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     existing.scheduleExpression = r.scheduleExpression;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

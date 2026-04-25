@@ -42,7 +42,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     c.description = r.description;
 
     import core.time : MonoTime;
-    c.modifiedAt = MonoTime.currTime.ticks;
+    c.updatedAt = MonoTime.currTime.ticks;
 
     repo.save(c);
     return CommandResult(true, c.id, "");
@@ -71,7 +71,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     existing.value = r.value;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

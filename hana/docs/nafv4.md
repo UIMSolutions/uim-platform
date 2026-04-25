@@ -427,7 +427,7 @@ F-HC-10: Connection Management
 2. InstanceController extracts action type and tenant
 3. ManageInstancesUseCase retrieves instance from repository
 4. State transition validated (e.g., stopped → starting is valid)
-5. Instance status updated, modifiedAt timestamp set
+5. Instance status updated, updatedAt timestamp set
 6. Instance persisted via repository
 7. 200 OK returned with confirmation
 ```
@@ -570,7 +570,7 @@ cancelled → [*]
 │    allowAllIpAccess: bool     │
 │    whitelistedIps: string[]   │
 │    createdAt: long            │
-│    modifiedAt: long           │
+│    updatedAt: long           │
 └──────────┬───────────────────┘
            │ 1
            │

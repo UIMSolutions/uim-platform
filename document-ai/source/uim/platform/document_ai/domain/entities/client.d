@@ -31,5 +31,5 @@ struct Client {
   bool dataFeedbackEnabled;
   ClientLabel[] labels;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

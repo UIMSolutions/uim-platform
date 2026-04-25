@@ -39,5 +39,5 @@ struct DatabaseUser {
   long passwordExpiresAt;
   long lastLoginAt;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

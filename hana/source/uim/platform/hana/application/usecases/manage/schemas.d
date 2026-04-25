@@ -42,7 +42,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     s.createdAt = now;
-    s.modifiedAt = now;
+    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id, "");
@@ -64,7 +64,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     existing.owner = r.owner;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

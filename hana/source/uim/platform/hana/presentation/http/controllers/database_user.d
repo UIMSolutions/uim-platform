@@ -106,7 +106,7 @@ class DatabaseUserController : PlatformController {
       resp["failedLoginAttempts"] = Json(u.failedLoginAttempts);
       resp["lastLoginAt"] = Json(u.lastLoginAt);
       resp["createdAt"] = Json(u.createdAt);
-      resp["modifiedAt"] = Json(u.modifiedAt);
+      resp["updatedAt"] = Json(u.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

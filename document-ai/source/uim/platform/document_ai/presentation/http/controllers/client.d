@@ -142,6 +142,6 @@ class ClientController : PlatformController {
       .set("description", Json(c.description))
       .set("isActive", Json(c.isActive))
       .set("createdAt", Json(c.createdAt))
-      .set("modifiedAt", Json(c.modifiedAt));
+      .set("updatedAt", Json(c.updatedAt));
   }
 }

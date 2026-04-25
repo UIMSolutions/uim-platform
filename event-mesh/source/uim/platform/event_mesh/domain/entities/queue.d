@@ -36,7 +36,7 @@ struct Queue {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json queueToJson() {
         return Json.emptyObject
@@ -64,6 +64,6 @@ struct Queue {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

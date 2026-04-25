@@ -30,7 +30,7 @@ struct BrokerServiceDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct QueueDTO {
@@ -55,7 +55,7 @@ struct QueueDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct TopicDTO {
@@ -72,7 +72,7 @@ struct TopicDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct SubscriptionDTO {
@@ -94,7 +94,7 @@ struct SubscriptionDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct EventMessageDTO {
@@ -131,7 +131,7 @@ struct EventSchemaDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct EventApplicationDTO {
@@ -155,7 +155,7 @@ struct EventApplicationDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }
 
 struct MeshBridgeDTO {
@@ -179,5 +179,5 @@ struct MeshBridgeDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 }

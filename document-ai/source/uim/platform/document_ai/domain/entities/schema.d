@@ -41,5 +41,5 @@ struct Schema {
   LineItemField[] lineItemFields;
   string[] supportedLanguages;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

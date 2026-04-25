@@ -32,5 +32,5 @@ struct HDIContainer {
   long sizeBytes;
   string[] grantedSchemas;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

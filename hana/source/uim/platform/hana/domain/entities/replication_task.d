@@ -35,5 +35,5 @@ struct ReplicationTask {
   long rowsReplicated;
   long errorCount;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

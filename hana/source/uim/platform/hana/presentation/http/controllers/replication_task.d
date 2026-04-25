@@ -114,7 +114,7 @@ class ReplicationTaskController : PlatformController {
       resp["lastRunAt"] = Json(t.lastRunAt);
       resp["nextRunAt"] = Json(t.nextRunAt);
       resp["createdAt"] = Json(t.createdAt);
-      resp["modifiedAt"] = Json(t.modifiedAt);
+      resp["updatedAt"] = Json(t.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

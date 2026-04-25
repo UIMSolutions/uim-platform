@@ -40,7 +40,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     dt.createdAt = now;
-    dt.modifiedAt = now;
+    dt.updatedAt = now;
 
     repo.save(dt);
     return CommandResult(true, dt.id, "");
@@ -60,7 +60,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     if (r.category.length > 0) existing.category = parseCategory(r.category);
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

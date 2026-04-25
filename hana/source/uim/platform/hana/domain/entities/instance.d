@@ -64,5 +64,5 @@ struct DatabaseInstance {
   bool allowAllIpAccess;
   string[] whitelistedIps;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

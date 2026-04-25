@@ -34,7 +34,7 @@ struct Activity {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json activityToJson() {
         return Json.emptyObject
@@ -60,6 +60,6 @@ struct Activity {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

@@ -128,7 +128,7 @@ classDiagram
         +long uploadedAt
         +long processedAt
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class DocumentLabel {
@@ -148,7 +148,7 @@ classDiagram
         +LineItemField[] lineItemFields
         +string[] supportedLanguages
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class SchemaField {
@@ -181,7 +181,7 @@ classDiagram
         +TemplateRegion[] regions
         +string[] sampleDocumentIds
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class TemplateRegion {
@@ -203,7 +203,7 @@ classDiagram
         +SchemaId defaultSchemaId
         +string[] supportedFileTypes
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class ExtractionResult {
@@ -246,7 +246,7 @@ classDiagram
         +string subtype
         +EnrichmentField[] fields
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class EnrichmentField {
@@ -271,7 +271,7 @@ classDiagram
         +long startedAt
         +long completedAt
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class TrainingMetric {
@@ -290,7 +290,7 @@ classDiagram
         +bool dataFeedbackEnabled
         +ClientLabel[] labels
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class ClientLabel {

@@ -115,7 +115,7 @@ class DatabaseConnectionController : PlatformController {
       resp["user"] = Json(c.user);
       resp["useTls"] = Json(c.useTls);
       resp["createdAt"] = Json(c.createdAt);
-      resp["modifiedAt"] = Json(c.modifiedAt);
+      resp["updatedAt"] = Json(c.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

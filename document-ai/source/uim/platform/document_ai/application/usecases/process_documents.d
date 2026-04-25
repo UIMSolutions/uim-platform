@@ -66,7 +66,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     auto now = MonoTime.currTime.ticks;
     doc.uploadedAt = now;
     doc.createdAt = now;
-    doc.modifiedAt = now;
+    doc.updatedAt = now;
 
     docRepo.save(doc);
 
@@ -89,7 +89,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     doc.status = DocumentStatus.confirmed;
 
     import core.time : MonoTime;
-    doc.modifiedAt = MonoTime.currTime.ticks;
+    doc.updatedAt = MonoTime.currTime.ticks;
 
     docRepo.update(doc);
     return CommandResult(true, doc.id, "");
@@ -151,7 +151,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     // Update document status
     doc.status = DocumentStatus.completed;
     doc.processedAt = now;
-    doc.modifiedAt = now;
+    doc.updatedAt = now;
     docRepo.update(doc);
   }
 }

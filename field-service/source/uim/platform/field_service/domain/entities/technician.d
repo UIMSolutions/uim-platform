@@ -31,7 +31,7 @@ struct Technician {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json technicianToJson() {
         return Json.emptyObject
@@ -54,6 +54,6 @@ struct Technician {
         .set("createdBy", createdBy)
         .set("modifiedBy", modifiedBy)
         .set("createdAt", createdAt)
-        .set("modifiedAt", modifiedAt);
+        .set("updatedAt", updatedAt);
     }
 }

@@ -52,7 +52,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     tj.createdAt = now;
-    tj.modifiedAt = now;
+    tj.updatedAt = now;
 
     jobRepo.save(tj);
     return CommandResult(true, tj.id, "");
@@ -86,7 +86,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     jobRepo.update(existing);
     return CommandResult(true, existing.id, "");

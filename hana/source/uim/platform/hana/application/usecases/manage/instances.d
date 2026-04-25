@@ -55,7 +55,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     i.createdAt = now;
-    i.modifiedAt = now;
+    i.updatedAt = now;
 
     repo.save(i);
     return CommandResult(true, i.id, "");
@@ -85,7 +85,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     existing.whitelistedIps = r.whitelistedIps;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");
@@ -111,7 +111,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

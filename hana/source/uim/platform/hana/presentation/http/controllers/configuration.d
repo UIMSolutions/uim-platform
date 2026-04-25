@@ -106,7 +106,7 @@ class ConfigurationController : PlatformController {
       resp["description"] = Json(c.description);
       resp["isReadOnly"] = Json(c.isReadOnly);
       resp["requiresRestart"] = Json(c.requiresRestart);
-      resp["modifiedAt"] = Json(c.modifiedAt);
+      resp["updatedAt"] = Json(c.updatedAt);
       resp["modifiedBy"] = Json(c.modifiedBy);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -220,7 +220,7 @@ class DocumentController : PlatformController {
       .set("uploadedAt", d.uploadedAt)
       .set("processedAt", d.processedAt)
       .set("createdAt", d.createdAt)
-      .set("modifiedAt", d.modifiedAt);
+      .set("updatedAt", d.updatedAt);
 
     auto lArr = Json.emptyArray;
     foreach (lbl; d.labels) {

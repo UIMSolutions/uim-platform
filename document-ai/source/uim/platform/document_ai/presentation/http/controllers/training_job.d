@@ -161,7 +161,7 @@ class TrainingJobController : PlatformController {
       .set("startedAt", tj.startedAt)
       .set("completedAt", tj.completedAt)
       .set("createdAt", tj.createdAt)
-      .set("modifiedAt", tj.modifiedAt)
+      .set("updatedAt", tj.updatedAt)
       .set("metrics", mArr);
   }
 }

@@ -31,7 +31,7 @@ struct Smartform {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json smartformToJson() {
         return Json.emptyObject
@@ -54,6 +54,6 @@ struct Smartform {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

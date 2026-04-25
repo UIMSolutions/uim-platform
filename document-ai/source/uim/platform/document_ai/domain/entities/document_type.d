@@ -21,5 +21,5 @@ struct DocumentType {
   SchemaId defaultSchemaId;
   string[] supportedFileTypes;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

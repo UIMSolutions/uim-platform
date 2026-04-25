@@ -36,7 +36,7 @@ struct ServiceCallDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -64,7 +64,7 @@ struct ServiceCallDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -91,7 +91,7 @@ struct ActivityDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -117,7 +117,7 @@ struct ActivityDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -138,7 +138,7 @@ struct AssignmentDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -158,7 +158,7 @@ struct AssignmentDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -184,7 +184,7 @@ struct EquipmentDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -209,7 +209,7 @@ struct EquipmentDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -233,7 +233,7 @@ struct TechnicianDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -256,7 +256,7 @@ struct TechnicianDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -279,7 +279,7 @@ struct CustomerDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -301,7 +301,7 @@ struct CustomerDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -320,7 +320,7 @@ struct SkillDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -338,7 +338,7 @@ struct SkillDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }
 
@@ -362,7 +362,7 @@ struct SmartformDTO {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json toJson() const {
         return Json.emptyObject
@@ -385,6 +385,6 @@ struct SmartformDTO {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

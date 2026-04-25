@@ -27,7 +27,7 @@ struct EventSchema {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json eventSchemaToJson() {
         return Json.emptyObject
@@ -46,6 +46,6 @@ struct EventSchema {
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt);
+            .set("updatedAt", updatedAt);
     }
 }

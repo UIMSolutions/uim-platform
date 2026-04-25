@@ -72,7 +72,7 @@ class DataLakeController : PlatformController {
         .set("status", d.status.to!string)
         .set("computeNodes", d.computeNodes)
         .set("createdAt", d.createdAt)
-        .set("modifiedAt", d.modifiedAt);
+        .set("updatedAt", d.updatedAt);
       }
 
       auto resp = Json.emptyObject
@@ -104,7 +104,7 @@ class DataLakeController : PlatformController {
       .set("status", d.status.to!string)
       .set("computeNodes", d.computeNodes)
       .set("createdAt", d.createdAt)
-      .set("modifiedAt", d.modifiedAt);
+      .set("updatedAt", d.updatedAt);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

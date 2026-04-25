@@ -144,7 +144,7 @@ classDiagram
         +bool allowAllIpAccess
         +string[] whitelistedIps
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class InstanceEndpoint {
@@ -172,7 +172,7 @@ classDiagram
         +FileFormat[] supportedFormats
         +int computeNodes
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class DataLakeStorage {
@@ -194,7 +194,7 @@ classDiagram
         +long procedureCount
         +long sizeBytes
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class DatabaseUser {
@@ -213,7 +213,7 @@ classDiagram
         +long passwordExpiresAt
         +long lastLoginAt
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class UserPrivilege {
@@ -288,7 +288,7 @@ classDiagram
         +long sizeBytes
         +string[] grantedSchemas
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class ReplicationTask {
@@ -308,7 +308,7 @@ classDiagram
         +long rowsReplicated
         +long errorCount
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class ReplicationMapping {
@@ -331,7 +331,7 @@ classDiagram
         +string description
         +bool isReadOnly
         +bool requiresRestart
-        +long modifiedAt
+        +long updatedAt
         +string modifiedBy
     }
 
@@ -352,7 +352,7 @@ classDiagram
         +ConnectionPoolConfig poolConfig
         +string[][] properties
         +long createdAt
-        +long modifiedAt
+        +long updatedAt
     }
 
     class ConnectionPoolConfig {

@@ -36,5 +36,5 @@ struct Document {
   long uploadedAt;
   long processedAt;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

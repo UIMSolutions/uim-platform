@@ -104,7 +104,7 @@ class SchemaController : PlatformController {
       resp["procedureCount"] = Json(s.procedureCount);
       resp["sizeBytes"] = Json(s.sizeBytes);
       resp["createdAt"] = Json(s.createdAt);
-      resp["modifiedAt"] = Json(s.modifiedAt);
+      resp["updatedAt"] = Json(s.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

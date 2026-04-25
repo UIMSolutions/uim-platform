@@ -35,5 +35,5 @@ struct DatabaseConnection {
   ConnectionPoolConfig poolConfig;
   string[][] properties;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

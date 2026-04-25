@@ -150,6 +150,6 @@ class DocumentTypeController : PlatformController {
       .set("defaultSchemaId", dt.defaultSchemaId)
       .set("supportedFileTypes", toJsonArray(dt.supportedFileTypes))
       .set("createdAt", dt.createdAt)
-      .set("modifiedAt", dt.modifiedAt);
+      .set("updatedAt", dt.updatedAt);
   }
 }

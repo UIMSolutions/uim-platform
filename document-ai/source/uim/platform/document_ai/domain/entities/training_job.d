@@ -34,5 +34,5 @@ struct TrainingJob {
   long startedAt;
   long completedAt;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

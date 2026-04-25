@@ -44,7 +44,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     u.createdAt = now;
-    u.modifiedAt = now;
+    u.updatedAt = now;
 
     repo.save(u);
     return CommandResult(true, u.id, "");
@@ -68,7 +68,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     existing.forcePasswordChange = r.forcePasswordChange;
 
     import core.time : MonoTime;
-    existing.modifiedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
     return CommandResult(true, existing.id, "");

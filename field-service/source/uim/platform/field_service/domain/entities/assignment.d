@@ -28,7 +28,7 @@ struct Assignment {
   string createdBy;
   string modifiedBy;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 
   Json toJson() {
     return Json.emptyObject
@@ -48,7 +48,7 @@ struct Assignment {
       .set("createdBy", createdBy)
       .set("modifiedBy", modifiedBy)
       .set("createdAt", createdAt)
-      .set("modifiedAt", modifiedAt);
+      .set("updatedAt", updatedAt);
   }
 }
 ///
@@ -70,7 +70,7 @@ unittest {
     createdBy: "user1",
     modifiedBy: "user2",
     createdAt: "2024-01-01T09:00:00Z",
-    modifiedAt: "2024-01-01T14:00:00Z"
+    updatedAt: "2024-01-01T14:00:00Z"
   );
 
   assert(assignment.id == "a1");
@@ -89,7 +89,7 @@ unittest {
   assert(assignment.createdBy == "user1");
   assert(assignment.modifiedBy == "user2");
   assert(assignment.createdAt == "2024-01-01T09:00:00Z");
-  assert(assignment.modifiedAt == "2024-01-01T14:00:00Z");
+  assert(assignment.updatedAt == "2024-01-01T14:00:00Z");
 
   auto json = assignment.toJson();
   assert(json["id"] == "a1");
@@ -108,5 +108,5 @@ unittest {
   assert(json["createdBy"] == "user1");
   assert(json["modifiedBy"] == "user2");
   assert(json["createdAt"] == "2024-01-01T09:00:00Z");
-  assert(json["modifiedAt"] == "2024-01-01T14:00:00Z");
+  assert(json["updatedAt"] == "2024-01-01T14:00:00Z");
 }

@@ -160,7 +160,7 @@ class TemplateController : PlatformController {
       .set("description", t.description)
       .set("status", t.status.to!string)
       .set("createdAt", t.createdAt)
-      .set("modifiedAt", t.modifiedAt)
+      .set("updatedAt", t.updatedAt)
       .set("regions", rArr);
   }
 }

@@ -105,7 +105,7 @@ class HDIContainerController : PlatformController {
       resp["sizeBytes"] = Json(c.sizeBytes);
       resp["grantedSchemas"] = stringsToJsonArray(c.grantedSchemas);
       resp["createdAt"] = Json(c.createdAt);
-      resp["modifiedAt"] = Json(c.modifiedAt);
+      resp["updatedAt"] = Json(c.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

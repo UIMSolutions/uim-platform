@@ -26,7 +26,7 @@ struct Skill {
     string createdBy;
     string modifiedBy;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
 
     Json skillToJson() {
   return Json.emptyObject
@@ -44,7 +44,7 @@ struct Skill {
     .set("createdBy", createdBy)
     .set("modifiedBy", modifiedBy)
     .set("createdAt", createdAt)
-    .set("modifiedAt", modifiedAt);
+    .set("updatedAt", updatedAt);
 }
 
 }
