@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// A Cloud Foundry application — represents a deployed unit with scaling,
 /// health checks, and environment configuration.
 struct Application {
-  AppId id;
+  mixin TenantEntity!AppId;
+
   SpaceId spaceId;
-  TenantId tenantId;
   string name;
   AppState state = AppState.stopped;
   int instances = 1;
@@ -33,8 +33,5 @@ struct Application {
   string dockerImage;
   string dockerCredentials;
   int runningInstances; // actual running instance count
-  string createdBy;
-  long createdAt;
-  long updatedAt;
   long stagedAt;
 }

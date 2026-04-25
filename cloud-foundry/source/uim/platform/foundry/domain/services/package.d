@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.services;
+
+public {
+  import uim.platform.foundry.domain.services.route_resolver;
+
+}

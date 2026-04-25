@@ -13,12 +13,13 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying spaces.
-interface SpaceRepository : ITenantRepository!(Space, SpaceId) {
+interface ISpaceRepository : ITenantRepository!(Space, SpaceId) {
   bool existsByName(TenantId tenantId, OrgId orgId, string name);
   Space findByName(TenantId tenantId, OrgId orgId, string name);
   void removeByName(TenantId tenantId, OrgId orgId, string name);
   
   size_t countByOrg(TenantId tenantId, OrgId orgId);
+  Space[] filterByOrg(TenantId tenantId, OrgId orgId);
   Space[] findByOrg(TenantId tenantId, OrgId orgId);
   void removeByOrg(TenantId tenantId, OrgId orgId);
 }

@@ -20,10 +20,12 @@ interface IBuildpackRepository : ITenantRepository!(Buildpack, BuildpackId) {
   void removeByName(TenantId tenantId, string name);
   
   size_t countEnabled(TenantId tenantId);
+  Buildpack[] filterEnabled(TenantId tenantId);
   Buildpack[] findEnabled(TenantId tenantId);
   void removeEnabled(TenantId tenantId);
 
   size_t countEnabled(TenantId tenantId);
+  Buildpack[] filterEnabled(TenantId tenantId);
   Buildpack[] findEnabled(TenantId tenantId);
   void removeEnabled(TenantId tenantId);
   
