@@ -15,48 +15,68 @@ mixin(ShowModule!());
 @safe:
 class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
-  ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    if (!existsByTenant(tenantId))
-      return null;
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findByDataSubject(tenantId, dataSubjectId).length;
+  }
 
-    ConsentRecord[] result;
-    foreach (c; store[tenantId].byValue)
-      if (c.dataSubjectId == dataSubjectId)
-        result ~= c;
-    return result;
+  ConsentRecord[] filterByDataSubject(ConsentRecord[] records, DataSubjectId dataSubjectId) {
+    return records.filter!(r => r.dataSubjectId == dataSubjectId).array;
+  }
+
+  ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findByTenant(tenantId).filterByDataSubject(dataSubjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findByDataSubject(tenantId, dataSubjectId).removeAll;
+  }
+
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    return findByPurpose(tenantId, purpose).length;
+  }
+
+  ConsentRecord[] filterByPurpose(ConsentRecord[] records, ProcessingPurpose purpose) {
+    return records.filter!(r => r.purpose == purpose).array;
   }
 
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    if (!existsByTenant(tenantId))
-      return null;
+    return findByTenant(tenantId).filterByPurpose(purpose);
+  }
 
-    ConsentRecord[] result;
-    foreach (c; store[tenantId].byValue)
-      if (c.purpose == purpose)
-        result ~= c;
-    return result;
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    findByPurpose(tenantId, purpose).removeAll;
+  }
+
+  size_t countByStatus(TenantId tenantId, ConsentStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  ConsentRecord[] filterByStatus(ConsentRecord[] records, ConsentStatus status) {
+    return records.filter!(r => r.status == status).array;
   }
 
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
-    if (!existsByTenant(tenantId))
-      return null;
+    return findByTenant(tenantId).filterByStatus(status);
+  }
 
-    ConsentRecord[] result;
-    foreach (c; store[tenantId].byValue)
-      if (c.status == status)
-        result ~= c;
-    return result;
+  void removeByStatus(TenantId tenantId, ConsentStatus status) {
+    findByStatus(tenantId, status).removeAll;
+  }
+
+  size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findActiveConsents(tenantId, dataSubjectId).length;
+  }
+
+  ConsentRecord[] filterActiveConsents(ConsentRecord[] records, DataSubjectId dataSubjectId) {
+    return records.filter!(r => r.dataSubjectId == dataSubjectId && r.status == ConsentStatus.granted).array;
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
-    if (!existsByTenant(tenantId))
-      return null;
+    return findByTenant(tenantId).filterActiveConsents(dataSubjectId);
+  }
 
-    ConsentRecord[] result;
-    foreach (c; store[tenantId].byValue)
-      if (c.dataSubjectId == dataSubjectId && c.status == ConsentStatus.granted)
-        result ~= c;
-    return result;
+  void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findActiveConsents(tenantId, dataSubjectId).removeAll;
   }
 
 }

@@ -13,41 +13,18 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataControllerGroupRepository : DataControllerGroupRepository {
-  private DataControllerGroup[] store;
+class MemoryDataControllerGroupRepository : TenantRepository!(DataControllerGroup, DataControllerGroupId), DataControllerGroupRepository {
 
-  DataControllerGroup[] findByTenant(TenantId tenantId) {
-    DataControllerGroup[] result;
-    foreach (s; findAll)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  size_t countByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).length;
   }
 
-  DataControllerGroup* findById(DataControllerGroupId tenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  DataControllerGroup[] findByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).filter!(g => g.name == name).array;
   }
 
-  void save(DataControllerGroup entity) {
-    store ~= entity;
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(entity => remove(entity.id));
   }
-
-  void update(DataControllerGroup entity) {
-    foreach (s; findAll)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
-  }
-
-  void remove(DataControllerGroupId tenantId, id tenantId) {
-    DataControllerGroup[] kept;
-    foreach (s; findByTenant(tenantId))
-      if (!(s.id == id))
-        kept ~= s;
-    store = kept;
-  }
+  
 }

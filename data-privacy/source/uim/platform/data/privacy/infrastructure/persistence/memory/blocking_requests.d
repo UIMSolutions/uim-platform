@@ -29,7 +29,7 @@ class MemoryBlockingRequestRepository : TenantRepository!(BlockingRequest, Block
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity));
+    findByDataSubject(tenantId, dataSubjectId).removeAll;
   }
   // #endregion ByDataSubject
 
@@ -47,7 +47,7 @@ class MemoryBlockingRequestRepository : TenantRepository!(BlockingRequest, Block
   }
 
   void removeByStatus(TenantId tenantId, BlockingStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity));
+    findByStatus(tenantId, status).removeAll;
   }
   // #endregion ByStatus
   

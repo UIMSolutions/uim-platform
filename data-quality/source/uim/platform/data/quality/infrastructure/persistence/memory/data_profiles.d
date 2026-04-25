@@ -40,7 +40,7 @@ class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    findByDataset(tenantId, datasetId).each!(entity => remove(entity));
+    findByDataset(tenantId, datasetId).removeAll;
   }
   // #endregion ByDataset
 
