@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.spaces;
 
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.space;
-import uim.platform.foundry.domain.ports.repositories.space;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.space;
+// import uim.platform.foundry.domain.ports.repositories.space;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.foundry;
 
-class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
+mixin(ShowModule!());
+
+@safe:
+class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
 
   bool existsByName(TenantId tenantId, OrgId orgId, string name) {
     return findByName(tenantId, orgId, name) !is null;

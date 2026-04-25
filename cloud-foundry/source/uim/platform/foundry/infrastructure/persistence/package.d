@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence;
+
+public {
+  import uim.platform.foundry.infrastructure.persistence.memory;
+  import uim.platform.foundry.infrastructure.persistence.files;
+  import uim.platform.foundry.infrastructure.persistence.mongo;
+}

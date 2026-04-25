@@ -16,7 +16,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRouteRepository : TenantRepository!(Route, RouteId), RouteRepository {
+class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepository {
 
   Route findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
     foreach (e; findByTenant(tenantId))

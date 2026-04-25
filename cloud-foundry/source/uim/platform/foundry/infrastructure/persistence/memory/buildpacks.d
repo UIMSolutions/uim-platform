@@ -16,7 +16,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), BuildpackRepository {
+class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))

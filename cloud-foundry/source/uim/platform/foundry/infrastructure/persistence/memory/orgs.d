@@ -16,7 +16,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryOrgRepository : TenantRepository!(Organization, OrgId), OrgRepository {
+class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {
   
   Organization findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))

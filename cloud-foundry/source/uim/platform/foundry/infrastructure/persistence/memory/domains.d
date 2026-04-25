@@ -16,7 +16,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDomainRepository : TenantRepository!(CfDomain, DomainId), DomainRepository {
+class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {
 
   size_t countByOrg(TenantId tenantId, OrgId orgId) {
     return findByOrg(tenantId, orgId).length;

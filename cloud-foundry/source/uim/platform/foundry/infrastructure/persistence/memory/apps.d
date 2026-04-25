@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAppRepository : TenantRepository!(Application, AppId), AppRepository {
+class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepository {
 
-  bool existsByName(SpaceId spaceId, id tenantId, string name) {
+  bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
     return findByTenant(tenantId).any!(e => e.spaceId == spaceId && e.name == name);
   }
 
@@ -34,28 +34,28 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), AppRepository
         return remove(e);
   }
 
-  size_t countBySpace(SpaceId spaceId, id tenantId) {
-    return findBySpace(spaceId, tenantId).length;
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findBySpace(tenantId, spaceId).length;
   }
 
-  Application[] findBySpace(SpaceId spaceId, id tenantId) {
+  Application[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return findByTenant(tenantId).filter!(e => e.spaceId == spaceId).array;
   }
 
-  void removeBySpace(SpaceId spaceId, id tenantId) {
-    findBySpace(spaceId, tenantId).each!(e => remove(e));
+  void removeBySpace(TenantId tenantId, SpaceId spaceId) {
+    findBySpace(tenantId, spaceId).each!(e => remove(e));
   }
 
-  size_t countByState(SpaceId spaceId, id tenantId, AppState state) {
-    return findByState(spaceId, tenantId, state).length;
+  size_t countByState(TenantId tenantId, SpaceId spaceId, AppState state) {
+    return findByState(tenantId, spaceId, state).length;
   }
 
-  Application[] findByState(SpaceId spaceId, id tenantId, AppState state) {
+  Application[] findByState(TenantId tenantId, SpaceId spaceId, AppState state) {
     return findByTenant(tenantId).filter!(e => e.spaceId == spaceId && e.state == state).array;
   }
 
-  void removeByState(SpaceId spaceId, id tenantId, AppState state) {
-    findByState(spaceId, tenantId, state).each!(e => remove(e));
+  void removeByState(TenantId tenantId, SpaceId spaceId, AppState state) {
+    findByState(tenantId, spaceId, state).each!(e => remove(e));
   }
 
 }
