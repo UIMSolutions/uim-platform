@@ -130,9 +130,9 @@ enum PlatformEventSeverity {
 
 /// Type of labeled resource.
 enum LabeledResourceType {
+  subaccount,
   globalAccount,
   directory,
-  subaccount,
   environmentInstance,
-  subscription,
+  subscription
 }

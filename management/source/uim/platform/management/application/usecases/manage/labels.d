@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage labels (tags) on BTP resources.
 class ManageLabelsUseCase { // TODO: UIMUseCase {
-  private LabelRepository repo;
+  private LabelRepository labels;
 
-  this(LabelRepository repo) {
-    this.repo = repo;
+  this(LabelRepository labels) {
+    this.labels = labels;
   }
 
   CommandResult create(CreateLabelRequest req) {
@@ -32,7 +32,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
 
     Label label;
     label.id = randomUUID();
-    label.resourceType = parseResourceType(req.resourceType);
+    label.resourceType = req.resourceType.to!LabeledResourceType;
     label.resourceId = req.resourceId;
     label.key = req.key;
     label.values = req.values;
@@ -40,7 +40,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     label.createdAt = clockSeconds();
     label.modifiedAt = label.createdAt;
 
-    repo.save(label);
+    labels.save(label);
     return CommandResult(true, label.id.toString, "");
   }
 
@@ -49,13 +49,13 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(LabelId id, UpdateLabelRequest req) {
-    if (!repo.existsById(id))
+    if (!labels.existsById(id))
       return CommandResult(false, "", "Label not found");
 
-    Label label = repo.findById(id);
+    Label label = labels.findById(id);
     label.values = req.values;
     label.modifiedAt = clockSeconds();
-    repo.update(label);
+    labels.update(label);
     return CommandResult(true, label.id.toString, "");
   }
 
@@ -64,15 +64,15 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
   }
 
   Label getById(LabelId id) {
-    return repo.findById(id);
+    return labels.findById(id);
   }
 
   Label[] listByResource(string resourceType, string resourceId) {
-    return repo.findByResource(parseResourceType(resourceType), resourceId);
+    return labels.findByResource(resourceType.to!LabeledResourceType, resourceId);
   }
 
   Label[] listByKey(string resourceType, string key) {
-    return repo.findByKey(parseResourceType(resourceType), key);
+    return labels.findByKey(resourceType.to!LabeledResourceType, key);
   }
 
   CommandResult remove(string id) {
@@ -80,32 +80,16 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(LabelId id) {
-    if (!repo.existsById(id))
+    if (!labels.existsById(id))
       return CommandResult(false, "", "Label not found");
 
-    repo.removeById(id);
+    labels.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult removeByResource(string resourceType, string resourceId) {
-    repo.removeByResource(parseResourceType(resourceType), resourceId);
+    labels.removeByResource(resourceType.to!LabeledResourceType, resourceId);
     return CommandResult(true, "", "");
   }
 
-  private LabeledResourceType parseResourceType(string resourceType) {
-    switch (resourceType) {
-    case "globalAccount":
-      return LabeledResourceType.globalAccount;
-    case "directory":
-      return LabeledResourceType.directory;
-    case "subaccount":
-      return LabeledResourceType.subaccount;
-    case "environmentInstance":
-      return LabeledResourceType.environmentInstance;
-    case "subscription":
-      return LabeledResourceType.subscription;
-    default:
-      return LabeledResourceType.subaccount;
-    }
-  }
 }

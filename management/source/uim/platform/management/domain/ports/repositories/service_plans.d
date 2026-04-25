@@ -15,8 +15,19 @@ mixin(ShowModule!());
 /// Port: outgoing — service plan catalog persistence.
 interface ServicePlanRepository : IIdRepository!(ServicePlan, ServicePlanId) {
 
+  size_t countByService(string serviceName);
+  ServicePlan[] filterByService(ServicePlan[] items, string serviceName);
   ServicePlan[] findByService(string serviceName);
+  void removeByService(string serviceName);
+
+  size_t countByCategory(ServicePlanCategory category);
+  ServicePlan[] filterByCategory(ServicePlan[] items, ServicePlanCategory category);  
   ServicePlan[] findByCategory(ServicePlanCategory category);
+  void removeByCategory(ServicePlanCategory category);
+
+  size_t countByRegion(string region);
+  ServicePlan[] filterByRegion(ServicePlan[] items, string region);
   ServicePlan[] findByRegion(string region);
+  void removeByRegion(string region);
   
 }

@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage the service plan catalog.
 class ManageServicePlansUseCase { // TODO: UIMUseCase {
-  private ServicePlanRepository repo;
+  private ServicePlanRepository servicePlans;
 
-  this(ServicePlanRepository repo) {
-    this.repo = repo;
+  this(ServicePlanRepository servicePlans) {
+    this.servicePlans = servicePlans;
   }
 
   CommandResult create(CreateServicePlanRequest req) {
@@ -48,7 +48,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.modifiedAt = plan.createdAt;
     plan.metadata = req.metadata;
 
-    repo.save(plan);
+    servicePlans.save(plan);
     return CommandResult(true, plan.id.toString, "");
   }
 
@@ -57,7 +57,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
-    auto plan = repo.findById(id);
+    auto plan = servicePlans.findById(id);
     if (plan.id.isEmpty)
       return CommandResult(false, "", "Service plan not found");
 
@@ -75,7 +75,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
       plan.metadata = req.metadata;
     plan.modifiedAt = clockSeconds();
 
-    repo.update(plan);
+    servicePlans.update(plan);
     return CommandResult(true, id.toString, "");
   }
 
@@ -84,23 +84,23 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   ServicePlan getById(ServicePlanId id) {
-    return repo.findById(id);
+    return servicePlans.findById(id);
   }
 
   ServicePlan[] listAll() {
-    return repo.findAll();
+    return servicePlans.findAll();
   }
 
   ServicePlan[] listByService(string serviceName) {
-    return repo.findByService(serviceName);
+    return servicePlans.findByService(serviceName);
   }
 
   ServicePlan[] listByCategory(string category) {
-    return repo.findByCategory(parseCategory(category));
+    return servicePlans.findByCategory(parseCategory(category));
   }
 
   ServicePlan[] listByRegion(string region) {
-    return repo.findByRegion(region);
+    return servicePlans.findByRegion(region);
   }
 
   CommandResult remove(string id) {
@@ -108,10 +108,10 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(ServicePlanId id) {
-    auto plan = repo.findById(id);
+    auto plan = servicePlans.findById(id);
     if (plan.id.isEmpty)
       return CommandResult(false, "", "Service plan not found");
-    repo.removeById(id);
+    servicePlans.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

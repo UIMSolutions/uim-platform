@@ -7,6 +7,8 @@ mixin(ShowModule!());
 @safe:
 
 interface IIdRepository(TEntity, TId) {
+  TEntity[] findAll();  
+
   bool existsById(TId id);
   bool existsAllById(TId[] ids);
   

@@ -33,8 +33,8 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
     return findAll().filterByService(serviceName).array;
   }
 
-  void removeByService(string serviceName, bool deleteTenantIfEmpty = false) {
-    findByService(serviceName).removeAll(deleteTenantIfEmpty);
+  void removeByService(string serviceName) {
+    findByService(serviceName).removeAll();
   }
   // #endregion ByService
 
@@ -51,8 +51,8 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
     return findAll().filterByCategory(category).array;
   }
 
-  void removeByCategory(ServicePlanCategory category, bool deleteTenantIfEmpty = false) {
-    findByCategory(category).removeAll(deleteTenantIfEmpty);
+  void removeByCategory(ServicePlanCategory category) {
+    findByCategory(category).removeAll();
   }
   // #endregion ByCategory
 
@@ -69,8 +69,8 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
     return findAll().filterByRegion(region).array;
   }
 
-  void removeByRegion(string region, bool deleteTenantIfEmpty = false) {
-    findByRegion(region).removeAll(deleteTenantIfEmpty);
+  void removeByRegion(string region) {
+    findByRegion(region).removeAll();
   }
   // #endregion ByRegion
 

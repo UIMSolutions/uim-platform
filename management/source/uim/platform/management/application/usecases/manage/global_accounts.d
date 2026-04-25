@@ -37,7 +37,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.displayName = req.displayName;
     globalAccount.description = req.description;
     globalAccount.contractNumber = req.contractNumber;
-    globalAccount.licenseType = parseLicenseType(req.licenseType);
+    globalAccount.licenseType = req.licenseType.to!LicenseType;
     globalAccount.region = req.region;
     globalAccount.costCenter = req.costCenter;
     globalAccount.companyName = req.companyName;
@@ -141,7 +141,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
   GlobalAccount[] listByStatus(string status) {
-    return repo.findByStatus(parseGlobalAccountStatus(status));
+    return repo.findByStatus(status.to!GlobalAccountStatus);
   }
 
   CommandResult remove(string id) {
@@ -152,58 +152,9 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
-    repo.remove(accountId);
+    repo.removeById(accountId);
     return CommandResult(true, accountId.toString, "");
   }
 
-
-
-
-
-  private GlobalAccountStatus parseGlobalAccountStatus(string s) {
-    switch (s) {
-    case "active":
-      return GlobalAccountStatus.active;
-    case "suspended":
-      return GlobalAccountStatus.suspended;
-    case "terminated":
-      return GlobalAccountStatus.terminated;
-    case "migrating":
-      return GlobalAccountStatus.migrating;
-    default:
-      return GlobalAccountStatus.active;
-    }
-  }
-
-  private LicenseType parseLicenseType(string s) {
-    switch (s) {
-    case "enterprise":
-      return LicenseType.enterprise;
-    case "trial":
-      return LicenseType.trial;
-    case "partner":
-      return LicenseType.partner;
-    case "internal":
-      return LicenseType.internal;
-    default:
-      return LicenseType.enterprise;
-    }
-  }
 }
 
-
-
-private LicenseType parseLicenseType(string s) {
-  switch (s) {
-  case "enterprise":
-    return LicenseType.enterprise;
-  case "trial":
-    return LicenseType.trial;
-  case "partner":
-    return LicenseType.partner;
-  case "internal":
-    return LicenseType.internal;
-  default:
-    return LicenseType.enterprise;
-  }
-}
