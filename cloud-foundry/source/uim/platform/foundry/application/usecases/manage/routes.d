@@ -151,7 +151,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     return domains.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(TenantId tenantId, DomainId id) {
+  CommandResult deleteDomain(TenantId tenantId, CfDomainId id) {
     auto existing = domains.findById(tenantId, id);
     if (existing is null)
       return CommandResult(false, "", "Domain not found");

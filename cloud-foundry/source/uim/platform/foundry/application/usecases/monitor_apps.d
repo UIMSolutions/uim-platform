@@ -44,38 +44,31 @@ struct SpaceUsageSummary {
 }
 
 class MonitorAppsUseCase { // TODO: UIMUseCase {
-  private AppRepository appRepo;
-  private ServiceInstanceRepository siRepo;
-  private RouteRepository routeRepo;
+  private IAppRepository apps;
+  private IServiceInstanceRepository instances;
+  private IRouteRepository routes;
 
-  this(AppRepository appRepo, ServiceInstanceRepository siRepo, RouteRepository routeRepo) {
-    this.appRepo = appRepo;
-    this.siRepo = siRepo;
-    this.routeRepo = routeRepo;
+  this(IAppRepository apps, IServiceInstanceRepository instances, IRouteRepository routes) {
+    this.apps = apps;
+    this.instances = instances;
+    this.routes = routes;
   }
 
   /// Get health summary for all apps belonging to the tenant.
   AppHealthSummary[] listAppHealth(TenantId tenantId) {
-    auto apps = appRepo.findByTenant(tenantId);
-    AppHealthSummary[] result;
-    foreach (app; apps)
-      result ~= buildHealthSummary(app);
-    return result;
+    return apps.findByTenant(tenantId).map!(app => buildHealthSummary(app)).array;
   }
 
   /// Get health summary for a single application.
   AppHealthSummary getAppHealth(TenantId tenantId, AppId appId) {
-    auto app = appRepo.findById(tenantId, appId);
-    if (app is null)
-      return AppHealthSummary.init;
-    return buildHealthSummary(*app);
+    return apps.findById(tenantId, appId) ? buildHealthSummary(apps.findById(tenantId, appId)) : AppHealthSummary.init;
   }
 
   /// Get resource usage summary for a space.
   SpaceUsageSummary getSpaceUsage(TenantId tenantId, SpaceId spaceId) {
-    auto apps = appRepo.findBySpace(tenantId, spaceId);
-    auto instances = siRepo.findBySpace(tenantId, spaceId);
-    auto routes = routeRepo.findBySpace(tenantId, spaceId);
+    auto apps = apps.findBySpace(tenantId, spaceId);
+    auto instances = instances.findBySpace(tenantId, spaceId);
+    auto routes = routes.findBySpace(tenantId, spaceId);
 
     SpaceUsageSummary s;
     s.spaceId = spaceId;

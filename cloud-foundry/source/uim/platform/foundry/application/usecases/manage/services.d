@@ -22,10 +22,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageServicesUseCase { // TODO: UIMUseCase {
-  private ServiceInstanceRepository instances;
-  private ServiceBindingRepository bindings;
+  private IServiceInstanceRepository instances;
+  private IServiceBindingRepository bindings;
 
-  this(ServiceInstanceRepository instances, ServiceBindingRepository bindings) {
+  this(IServiceInstanceRepository instances, IServiceBindingRepository bindings) {
     this.instances = instances;
     this.bindings = bindings;
   }
@@ -67,7 +67,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     return CommandResult(si.id, "");
   }
 
-  ServiceInstance* getInstance(ServiceInstanceId tenantId, id tenantId) {
+  ServiceInstance* getInstance(TenantId tenantId, ServiceInstanceId id) {
     return instances.findById(tenantId, id);
   }
 
@@ -75,8 +75,8 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     return instances.findByTenant(tenantId);
   }
 
-  ServiceInstance[] listBySpace(SpaceId spacetenantId, id tenantId) {
-    return instances.findBySpace(spacetenantId, id);
+  ServiceInstance[] listBySpace(TenantId tenantId, SpaceId spaceId) {
+    return instances.findBySpace(tenantId, spaceId);
   }
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
@@ -85,7 +85,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = instances.findById(req.id, req.tenantId);
+    auto existing = instances.findById(req.tenantId, req.id);
     if (existing is null)
       return CommandResult(false, "", "Service instance not found");
 
@@ -107,8 +107,8 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance not found");
 
     // Remove all bindings for this instance
-    auto bindings = bindings.findByServiceInstance(tenantId, id);
-    foreach (b; bindings)
+    auto instanceBindings = bindings.findByServiceInstance(tenantId, id);
+    foreach (b; instanceBindings)
       bindings.remove(tenantId, b.id);
 
     instances.remove(tenantId, id);
@@ -126,7 +126,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance ID is required");
 
     // Verify instance exists
-    auto instance = instances.findById(request.serviceInstanceId, request.tenantId);
+    auto instance = instances.findById(request.tenantId, request.serviceInstanceId);
     if (instance is null)
       return CommandResult(false, "", "Service instance not found");
 

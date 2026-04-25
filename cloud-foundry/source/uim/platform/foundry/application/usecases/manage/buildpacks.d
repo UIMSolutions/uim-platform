@@ -20,9 +20,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBuildpacksUseCase { // TODO: UIMUseCase {
-  private BuildpackRepository buildpacks;
+  private IBuildpackRepository buildpacks;
 
-  this(BuildpackRepository buildpacks) {
+  this(IBuildpackRepository buildpacks) {
     this.buildpacks = buildpacks;
   }
 
@@ -73,7 +73,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = buildpacks.findById(req.id, req.tenantId);
+    auto existing = buildpacks.findById(req.tenantId, req.id);
     if (existing is null)
       return CommandResult(false, "", "Buildpack not found");
 

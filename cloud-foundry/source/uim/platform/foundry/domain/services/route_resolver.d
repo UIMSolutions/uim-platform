@@ -20,23 +20,23 @@ mixin(ShowModule!());
 /// Domain service that handles route resolution —
 /// validates host/domain uniqueness and manages app-to-route mappings.
 class RouteResolver {
-  private RouteRepository routeRepo;
-  private DomainRepository domainRepo;
+  private IRouteRepository routes;
+  private IDomainRepository domains;
 
-  this(RouteRepository routeRepo, DomainRepository domainRepo) {
-    this.routeRepo = routeRepo;
-    this.domainRepo = domainRepo;
+  this(IRouteRepository routes, IDomainRepository domains) {
+    this.routes = routes;
+    this.domains = domains;
   }
 
   /// Check if a host+domain combination is already taken.
-  bool isRouteAvailable(TenantId tenantId, string host, DomainId domainId) {
-    auto existing = routeRepo.findByHostAndDomain(tenantId, host, domainId);
+  bool isRouteAvailable(TenantId tenantId, string host, CfDomainId domainId) {
+    auto existing = routes.findByHostAndDomain(tenantId, host, domainId);
     return existing is null;
   }
 
   /// Validate that a domain is accessible for the given org.
-  bool isDomainAccessible(DomainId domainId, OrgId orgtenantId, id tenantId) {
-    auto dom = domainRepo.findById(domaintenantId, id);
+  bool isDomainAccessible(TenantId tenantId, CfDomainId domainId, OrgId orgId) {
+    auto dom = domains.findById(tenantId, domainId);
     if (dom is null)
       return false;
 
@@ -49,8 +49,8 @@ class RouteResolver {
   }
 
   /// Map an application to a route.
-  bool mapApp(RouteId routeId, AppId apptenantId, id tenantId) {
-    auto route = routeRepo.findById(routetenantId, id);
+  bool mapApp(TenantId tenantId, RouteId routeId, AppId appId) {
+    auto route = routes.findById(tenantId, routeId);
     if (route is null)
       return false;
 
@@ -59,13 +59,13 @@ class RouteResolver {
       return true;
 
     route.mappedAppIds ~= appId;
-    routeRepo.update(*route);
+    routes.update(*route);
     return true;
   }
 
   /// Unmap an application from a route.
-  bool unmapApp(RouteId routeId, AppId apptenantId, id tenantId) {
-    auto route = routeRepo.findById(routetenantId, id);
+  bool unmapApp(TenantId tenantId, RouteId routeId, AppId appId) {
+    auto route = routes.findById(tenantId, routeId);
     if (route is null)
       return false;
 
@@ -78,7 +78,7 @@ class RouteResolver {
       return false; // app was not mapped
 
     route.mappedAppIds = updated;
-    routeRepo.update(*route);
+    routes.update(*route);
     return true;
   }
 }

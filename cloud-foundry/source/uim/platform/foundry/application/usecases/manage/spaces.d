@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSpacesUseCase { // TODO: UIMUseCase {
-  private SpaceRepository repo;
-  private OrgRepository orgRepo;
+  private ISpaceRepository repo;
+  private IOrgRepository orgRepo;
 
-  this(SpaceRepository repo, OrgRepository orgRepo) {
+  this(ISpaceRepository repo, IOrgRepository orgRepo) {
     this.repo = repo;
     this.orgRepo = orgRepo;
   }

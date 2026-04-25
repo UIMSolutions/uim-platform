@@ -6,6 +6,7 @@
 module uim.platform.foundry.domain.services;
 
 public {
+  import uim.platform.foundry.domain.services.app_lifecycle_manager;
   import uim.platform.foundry.domain.services.route_resolver;
 
 }

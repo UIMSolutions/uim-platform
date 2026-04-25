@@ -10,6 +10,7 @@ public {
 
     import uim.platform.foundry.application;
     import uim.platform.foundry.domain;
+    import uim.platform.foundry.helpers;
     import uim.platform.foundry.infrastructure;
     import uim.platform.foundry.presentation;
 }

@@ -26,19 +26,19 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   // #region ByDomain
-  size_t countByDomain(TenantId tenantId, DomainId domainId) {
+  size_t countByDomain(TenantId tenantId, CfDomainId domainId) {
     return findByDomain(tenantId, domainId).length;
   }
 
-  Route[] filterByDomain(TenantId tenantId, DomainId domainId) {
+  Route[] filterByDomain(TenantId tenantId, CfDomainId domainId) {
     return findByDomain(tenantId, domainId);
   }
 
-  Route[] findByDomain(TenantId tenantId, DomainId domainId) {
+  Route[] findByDomain(TenantId tenantId, CfDomainId domainId) {
     return findByDomain(findByTenant(tenantId), domainId);
   }
 
-  void removeByDomain(TenantId tenantId, DomainId domainId) {
+  void removeByDomain(TenantId tenantId, CfDomainId domainId) {
     findByDomain(tenantId, domainId).each!(e => remove(e.id));
   }
   // #endregion ByDomain
