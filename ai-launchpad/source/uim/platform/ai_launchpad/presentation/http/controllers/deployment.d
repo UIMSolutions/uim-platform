@@ -191,6 +191,6 @@ class DeploymentController : PlatformController {
       .set("stoppedAt", d.stoppedAt)
       .set("statusMessage", d.statusMessage)
       .set("createdAt", d.createdAt)
-      .set("modifiedAt", d.modifiedAt);
+      .set("updatedAt", d.updatedAt);
   }
 }

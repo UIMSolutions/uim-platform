@@ -36,7 +36,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     m.status = ModelStatus.available;
     m.labels = r.labels;
     m.createdAt = "now";
-    m.modifiedAt = "now";
+    m.updatedAt = "now";
     repo.save(m);
     return CommandResult(true, m.id, "");
   }
@@ -59,7 +59,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (r.description.length > 0) m.description = r.description;
     if (r.status == "archived") m.status = ModelStatus.archived;
     else if (r.status == "deprecated") m.status = ModelStatus.deprecated_;
-    m.modifiedAt = "now";
+    m.updatedAt = "now";
     repo.save(m);
     return CommandResult(true, m.id, "");
   }

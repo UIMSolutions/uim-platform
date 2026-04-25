@@ -69,7 +69,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     a.createdAt = now;
-    a.modifiedAt = now;
+    a.updatedAt = now;
 
     repo.save(a);
     return CommandResult(true, a.id, "");

@@ -62,7 +62,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Prompt must have at least one user message");
 
     p.createdAt = "now";
-    p.modifiedAt = "now";
+    p.updatedAt = "now";
     repo.save(p);
     return CommandResult(true, p.id, "");
   }
@@ -108,7 +108,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    p.modifiedAt = "now";
+    p.updatedAt = "now";
     repo.save(p);
     return CommandResult(true, p.id, "");
   }

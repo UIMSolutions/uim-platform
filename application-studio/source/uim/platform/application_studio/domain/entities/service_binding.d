@@ -25,7 +25,7 @@ struct ServiceBinding {
     string credentials;
     string systemAlias;
     string createdAt;
-    string modifiedAt;
+    string updatedAt;
     string createdBy;
     string modifiedBy;
 
@@ -44,7 +44,7 @@ struct ServiceBinding {
             .set("credentials", credentials)
             .set("systemAlias", systemAlias)
             .set("createdAt", createdAt)
-            .set("modifiedAt", modifiedAt)
+            .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
             .set("modifiedBy", modifiedBy);
     }

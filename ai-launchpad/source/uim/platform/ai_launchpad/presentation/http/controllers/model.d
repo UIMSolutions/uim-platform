@@ -163,6 +163,6 @@ class ModelController : PlatformController {
       .set("status", m.status.to!string)
       .set("labels", m.labels)
       .set("createdAt", m.createdAt)
-      .set("modifiedAt", m.modifiedAt);
+      .set("updatedAt", m.updatedAt);
   }
 }

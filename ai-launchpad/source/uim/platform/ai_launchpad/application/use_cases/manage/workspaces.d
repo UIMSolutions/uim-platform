@@ -32,7 +32,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     w.status = WorkspaceStatus.active;
     w.connectionCount = 0;
     w.createdAt = "now";
-    w.modifiedAt = "now";
+    w.updatedAt = "now";
     repo.save(w);
     return CommandResult(true, w.id, "");
   }
@@ -57,7 +57,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       w.name = r.name;
     if (r.description.length > 0)
       w.description = r.description;
-    w.modifiedAt = "now";
+    w.updatedAt = "now";
     repo.save(w);
     return CommandResult(true, w.id, "");
   }

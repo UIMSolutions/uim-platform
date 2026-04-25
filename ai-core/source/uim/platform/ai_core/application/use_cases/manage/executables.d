@@ -48,7 +48,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
 
         auto now = MonoTime.currTime.ticks;
         e.createdAt = now;
-        e.modifiedAt = now;
+        e.updatedAt = now;
 
         repo.save(e);
         return CommandResult(true, e.id, "");

@@ -143,7 +143,7 @@ class ExecutionController : PlatformController {
     .set("status", ex.status.to!string)
     .set("statusMessage", ex.statusMessage)
     .set("createdAt", ex.createdAt)
-    .set("modifiedAt", ex.modifiedAt)
+    .set("updatedAt", ex.updatedAt)
     .set("startedAt", ex.startedAt)
     .set("completedAt", ex.completedAt);
   }

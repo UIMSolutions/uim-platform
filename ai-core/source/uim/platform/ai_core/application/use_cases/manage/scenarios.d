@@ -43,7 +43,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     s.createdAt = now;
-    s.modifiedAt = now;
+    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id, "");

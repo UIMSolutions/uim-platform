@@ -158,6 +158,6 @@ class PromptController : PlatformController {
       .set("status", Json(p.status.to!string))
       .set("createdBy", Json(p.createdBy))
       .set("createdAt", Json(p.createdAt))
-      .set("modifiedAt", Json(p.modifiedAt));
+      .set("updatedAt", Json(p.updatedAt));
   }
 }

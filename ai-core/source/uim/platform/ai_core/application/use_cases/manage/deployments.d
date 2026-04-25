@@ -48,7 +48,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     d.createdAt = now;
-    d.modifiedAt = now;
+    d.updatedAt = now;
 
     deplRepo.save(d);
     return CommandResult(true, d.id, "");
@@ -90,7 +90,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       d.ttl = request.ttl;
 
     import core.time : MonoTime;
-    d.modifiedAt = MonoTime.currTime.ticks;
+    d.updatedAt = MonoTime.currTime.ticks;
 
     deplRepo.update(d);
     return CommandResult(true, d.id, "");

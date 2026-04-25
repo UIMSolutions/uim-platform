@@ -20,5 +20,5 @@ struct PromptCollection {
   WorkspaceId workspaceId;
   int promptCount;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

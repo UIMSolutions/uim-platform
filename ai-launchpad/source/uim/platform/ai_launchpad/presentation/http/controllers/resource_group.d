@@ -151,6 +151,6 @@ class ResourceGroupController : PlatformController {
       .set("labels", labels)
       .set("status", g.status)
       .set("createdAt", g.createdAt)
-      .set("modifiedAt", g.modifiedAt);
+      .set("updatedAt", g.updatedAt);
   }
 }

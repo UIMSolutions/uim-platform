@@ -155,6 +155,6 @@ class ConnectionController : PlatformController {
     .set("defaultResourceGroupId", c.defaultResourceGroupId)
     .set("description", c.description)
     .set("createdAt", c.createdAt)
-    .set("modifiedAt", c.modifiedAt);
+    .set("updatedAt", c.updatedAt);
   }
 }

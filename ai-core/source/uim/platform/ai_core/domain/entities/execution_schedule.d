@@ -18,5 +18,5 @@ struct ExecutionSchedule {
   long start;
   long end;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

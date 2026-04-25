@@ -27,5 +27,5 @@ struct Deployment {
   string stoppedAt;
   string statusMessage;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

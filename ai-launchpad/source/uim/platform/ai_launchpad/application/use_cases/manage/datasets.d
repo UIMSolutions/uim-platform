@@ -35,7 +35,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     d.status = DatasetStatus.available;
     d.labels = r.labels;
     d.createdAt = "now";
-    d.modifiedAt = "now";
+    d.updatedAt = "now";
     repo.save(d);
     return CommandResult(true, d.id, "");
   }
@@ -60,7 +60,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
       d.description = r.description;
     if (r.status == "archived")
       d.status = DatasetStatus.archived;
-    d.modifiedAt = "now";
+    d.updatedAt = "now";
     repo.save(d);
     return CommandResult(true, d.id, "");
   }

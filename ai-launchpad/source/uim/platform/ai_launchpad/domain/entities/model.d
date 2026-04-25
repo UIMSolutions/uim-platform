@@ -25,5 +25,5 @@ struct Model {
   ModelStatus status;
   string[] labels;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

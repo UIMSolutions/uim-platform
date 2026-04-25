@@ -28,7 +28,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.resourceGroupId = r.resourceGroupId;
     e.status = ExecutionStatus.pending;
     e.createdAt = "now";
-    e.modifiedAt = "now";
+    e.updatedAt = "now";
     repo.save(e);
     return CommandResult(true, e.id, "");
   }
@@ -51,7 +51,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped") e.status = ExecutionStatus.stopped;
     else if (r.targetStatus == "deleted") e.status = ExecutionStatus.dead;
-    e.modifiedAt = "now";
+    e.updatedAt = "now";
     repo.save(e);
     return CommandResult(true, e.id, "");
   }

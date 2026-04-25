@@ -120,6 +120,6 @@ class ScenarioController : PlatformController {
       .set("executionCount", s.executionCount)
       .set("deploymentCount", s.deploymentCount)
       .set("createdAt", s.createdAt)
-      .set("modifiedAt", s.modifiedAt);
+      .set("updatedAt", s.updatedAt);
   }
 }

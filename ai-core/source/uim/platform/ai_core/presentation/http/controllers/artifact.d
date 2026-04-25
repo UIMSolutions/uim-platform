@@ -134,7 +134,7 @@ class ArtifactController : PlatformController {
       .set("kind", a.kind.to!string)
       .set("url", a.url)
       .set("createdAt", a.createdAt)
-      .set("modifiedAt", a.modifiedAt)
+      .set("updatedAt", a.updatedAt)
       .set("labels", lArr);
   }
 }

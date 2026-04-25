@@ -148,7 +148,7 @@ class DeploymentController : PlatformController {
       .set("deploymentUrl", d.deploymentUrl)
       .set("ttl", d.ttl)
       .set("createdAt", d.createdAt)
-      .set("modifiedAt", d.modifiedAt)
+      .set("updatedAt", d.updatedAt)
       .set("startedAt", d.startedAt)
       .set("completedAt", d.completedAt);
   }

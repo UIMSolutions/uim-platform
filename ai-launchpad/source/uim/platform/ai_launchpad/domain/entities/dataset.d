@@ -23,5 +23,5 @@ struct Dataset {
   DatasetStatus status;
   string[] labels;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

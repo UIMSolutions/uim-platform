@@ -47,7 +47,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     auto now = MonoTime.currTime.ticks;
     e.createdAt = now;
-    e.modifiedAt = now;
+    e.updatedAt = now;
 
     execRepo.save(e);
     return CommandResult(true, e.id, "");
@@ -77,7 +77,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    e.modifiedAt = MonoTime.currTime.ticks;
+    e.updatedAt = MonoTime.currTime.ticks;
 
     execRepo.update(e);
     return CommandResult(true, e.id, "");

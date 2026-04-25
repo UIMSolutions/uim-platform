@@ -23,5 +23,5 @@ struct ResourceGroup {
   LabelPair[] labels;
   string status;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

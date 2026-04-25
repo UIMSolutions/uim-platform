@@ -44,7 +44,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
     c.status = ConnectionStatus.active;
     c.createdAt = "now";
-    c.modifiedAt = "now";
+    c.updatedAt = "now";
     repo.save(c);
     return CommandResult(true, c.id, "");
   }
@@ -67,7 +67,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     if (r.name.length > 0) c.name = r.name;
     if (r.description.length > 0) c.description = r.description;
     if (r.defaultResourceGroupId.length > 0) c.defaultResourceGroupId = r.defaultResourceGroupId;
-    c.modifiedAt = "now";
+    c.updatedAt = "now";
     repo.save(c);
     return CommandResult(true, c.id, "");
   }

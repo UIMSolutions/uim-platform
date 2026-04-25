@@ -32,7 +32,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     pc.workspaceId = r.workspaceId;
     pc.promptCount = 0;
     pc.createdAt = "now";
-    pc.modifiedAt = "now";
+    pc.updatedAt = "now";
     collectionRepository.save(pc);
     return CommandResult(true, pc.id, "");
   }
@@ -58,7 +58,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
       pc.name = r.name;
     if (r.description.length > 0)
       pc.description = r.description;
-    pc.modifiedAt = "now";
+    pc.updatedAt = "now";
     collectionRepository.save(pc);
     return CommandResult(true, pc.id, "");
   }

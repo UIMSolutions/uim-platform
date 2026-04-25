@@ -21,5 +21,5 @@ struct Scenario {
   int executionCount;
   int deploymentCount;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

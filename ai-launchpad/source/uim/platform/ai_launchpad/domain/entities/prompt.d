@@ -53,7 +53,7 @@ struct Prompt {
   PromptStatus status;
   string createdBy;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 
   Json toJson() const {
     return Json.entityToJson

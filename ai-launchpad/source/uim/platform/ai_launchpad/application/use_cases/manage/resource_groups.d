@@ -32,7 +32,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     }
 
     rg.createdAt = "now";
-    rg.modifiedAt = "now";
+    rg.updatedAt = "now";
     repo.save(rg);
     return CommandResult(true, rg.id, "");
   }
@@ -62,7 +62,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    rg.modifiedAt = "now";
+    rg.updatedAt = "now";
     repo.save(rg);
     return CommandResult(true, rg.id, "");
   }

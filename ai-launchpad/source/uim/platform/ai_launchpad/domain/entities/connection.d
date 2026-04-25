@@ -26,5 +26,5 @@ struct Connection {
   string defaultResourceGroupId;
   string description;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

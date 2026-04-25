@@ -197,6 +197,6 @@ class ExecutionController : PlatformController {
       .set("logsUrl", ex.logsUrl)
       .set("statusMessage", ex.statusMessage)
       .set("createdAt", ex.createdAt)
-      .set("modifiedAt", ex.modifiedAt);
+      .set("updatedAt", ex.updatedAt);
   }
 }

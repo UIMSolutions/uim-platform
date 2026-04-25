@@ -25,7 +25,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     s.description = r.description;
     s.labels = r.labels;
     s.createdAt = "now";
-    s.modifiedAt = "now";
+    s.updatedAt = "now";
     repo.save(s);
     return CommandResult(true, s.id, "");
   }

@@ -139,6 +139,6 @@ class WorkspaceController : PlatformController {
       .set("status", w.status.to!string)
       .set("connectionCount", w.connectionCount)
       .set("createdAt", w.createdAt)
-      .set("modifiedAt", w.modifiedAt);
+      .set("updatedAt", w.updatedAt);
   }
 }

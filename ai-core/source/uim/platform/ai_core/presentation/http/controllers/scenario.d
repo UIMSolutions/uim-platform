@@ -64,7 +64,7 @@ class ScenarioController : PlatformController {
         .set("description", s.description)
         .set("labels", s.labels)
         .set("createdAt", s.createdAt)
-        .set("modifiedAt", s.modifiedAt);
+        .set("updatedAt", s.updatedAt);
       }
 
       auto resp = Json.emptyObject;
@@ -95,7 +95,7 @@ class ScenarioController : PlatformController {
       resp["description"] = Json(s.description);
       resp["labels"] = toJsonArray(s.labels);
       resp["createdAt"] = Json(s.createdAt);
-      resp["modifiedAt"] = Json(s.modifiedAt);
+      resp["updatedAt"] = Json(s.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

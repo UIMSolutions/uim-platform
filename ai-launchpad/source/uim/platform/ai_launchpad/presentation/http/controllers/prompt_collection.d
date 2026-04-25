@@ -140,6 +140,6 @@ class PromptCollectionController : PlatformController {
       .set("workspaceId", Json(c.workspaceId))
       .set("promptCount", Json(c.promptCount))
       .set("createdAt", Json(c.createdAt))
-      .set("modifiedAt", Json(c.modifiedAt));
+      .set("updatedAt", Json(c.updatedAt));
   }
 }

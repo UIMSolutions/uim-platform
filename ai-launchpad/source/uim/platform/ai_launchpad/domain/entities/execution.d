@@ -33,5 +33,5 @@ struct Execution {
   string logsUrl;
   string statusMessage;
   string createdAt;
-  string modifiedAt;
+  string updatedAt;
 }

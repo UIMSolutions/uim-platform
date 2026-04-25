@@ -76,7 +76,7 @@ class ExecutableController : PlatformController {
         .set("versionId", e.versionId)
         .set("deployable", e.deployable)
         .set("createdAt", e.createdAt)
-        .set("modifiedAt", e.modifiedAt);
+        .set("updatedAt", e.updatedAt);
       }
 
       auto resp = Json.emptyObject;
@@ -110,7 +110,7 @@ class ExecutableController : PlatformController {
       resp["versionId"] = Json(e.versionId);
       resp["deployable"] = Json(e.deployable);
       resp["createdAt"] = Json(e.createdAt);
-      resp["modifiedAt"] = Json(e.modifiedAt);
+      resp["updatedAt"] = Json(e.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

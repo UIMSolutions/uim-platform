@@ -29,7 +29,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.ttl = r.ttl;
     d.status = DeploymentStatus.pending;
     d.createdAt = "now";
-    d.modifiedAt = "now";
+    d.updatedAt = "now";
     repo.save(d);
     return CommandResult(true, d.id, "");
   }
@@ -54,7 +54,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     else if (r.targetStatus == "deleted") d.status = DeploymentStatus.dead;
     if (r.configurationId.length > 0) d.configurationId = r.configurationId;
     if (r.ttl > 0) d.ttl = r.ttl;
-    d.modifiedAt = "now";
+    d.updatedAt = "now";
     repo.save(d);
     return CommandResult(true, d.id, "");
   }

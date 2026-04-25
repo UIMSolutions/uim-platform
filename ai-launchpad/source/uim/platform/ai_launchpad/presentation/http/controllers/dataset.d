@@ -152,6 +152,6 @@ class DatasetController : PlatformController {
       .set("status", d.status.to!string)
       .set("labels", toJsonArray(d.labels))
       .set("createdAt", d.createdAt)
-      .set("modifiedAt", d.modifiedAt);
+      .set("updatedAt", d.updatedAt);
   }
 }
