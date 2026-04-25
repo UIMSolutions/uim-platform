@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {
-  mixin IdRepositoryTemplate!(MemoryGlobalAccountRepository, GlobalAccount, GlobalAccountId);
+  // TODO: mixin IdRepositoryTemplate!(MemoryGlobalAccountRepository, GlobalAccount, GlobalAccountId);
 
   size_t countByStatus(GlobalAccountStatus status) {
     return findByStatus(status).length;

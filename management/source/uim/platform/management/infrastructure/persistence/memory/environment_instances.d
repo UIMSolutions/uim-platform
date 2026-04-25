@@ -17,8 +17,8 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, EnvironmentInstanceId), IEnvironmentInstanceRepository {
-  mixin IdRepositoryTemplate!(MemoryEnvironmentInstanceRepository, EnvironmentInstance, EnvironmentInstanceId);
+class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, EnvironmentInstanceId), EnvironmentInstanceRepository {
+  // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentInstanceRepository, EnvironmentInstance, EnvironmentInstanceId);
 
   size_t countBySubaccount(SubaccountId subaccountId) {
     return findBySubaccount(subaccountId).length;

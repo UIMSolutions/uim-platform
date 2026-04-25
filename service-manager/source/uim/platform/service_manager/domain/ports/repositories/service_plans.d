@@ -6,11 +6,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServicePlanRepository {
-    ServicePlan[] findByTenant(TenantId tenantId);
-    ServicePlan* findById(TenantId tenantId, ServicePlanId id);
-    void save(ServicePlan entity);
-    void update(ServicePlan entity);
-    void remove(TenantId tenantId, ServicePlanId id);
-    ulong countByTenant(TenantId tenantId);
+interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+    
+    size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing);
+    ServicePlan[] filterByPricing(ServicePlan[] plans, ServicePlanPricing pricing);
+    ServicePlan[] findByPricing(TenantId tenantId, ServicePlanPricing pricing);
+    void removeByPricing(TenantId tenantId, ServicePlanPricing pricing);
 }

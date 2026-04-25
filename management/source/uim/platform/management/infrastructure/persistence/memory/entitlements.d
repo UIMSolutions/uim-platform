@@ -18,8 +18,9 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), EntitlementRepository {
-  mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
+  // TODO: mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
 
+  // #region ByGlobalAccount
   size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
     return findByGlobalAccount(globalAccountId).length;
   }
@@ -35,7 +36,9 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   void removeByGlobalAccount(GlobalAccountId globalAccountId, bool deleteTenantIfEmpty = false) {
     findByGlobalAccount(globalAccountId).removeAll(deleteTenantIfEmpty);
   }
+  // #endregion ByGlobalAccount
 
+  // #region BySubaccount
   size_t countBySubaccount(SubaccountId subaccountId) {
     return findBySubaccount(subaccountId).length;
   }
@@ -51,7 +54,9 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   void removeBySubaccount(SubaccountId subaccountId, bool deleteTenantIfEmpty = false) {
     findBySubaccount(subaccountId).removeAll(deleteTenantIfEmpty);
   }
+  // #endregion BySubaccount
 
+  // #region ByDirectory
   size_t countByDirectory(DirectoryId directoryId) {
     return findByDirectory(directoryId).length;
   } 
@@ -67,7 +72,9 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   void removeByDirectory(DirectoryId directoryId, bool deleteTenantIfEmpty = false) {
     findByDirectory(directoryId).removeAll(deleteTenantIfEmpty);
   }
+  // #endregion ByDirectory
 
+  // #region ByServicePlan
   size_t countByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
     return findByServicePlan(globalAccountId, planId).length;
   }
@@ -83,4 +90,6 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId, bool deleteTenantIfEmpty = false) {
     findByServicePlan(globalAccountId, planId).removeAll(deleteTenantIfEmpty);
   }
+  // #region ByServicePlan
+
 }

@@ -6,7 +6,21 @@ mixin(ShowModule!());
 
 @safe:
 
-template TenantRepositoryTemplate(TEntity, TId) {
+template IdRepositoryTemplate(alias Repository, TEntity, TId) {
+	this() {
+		super();
+	}
+
+	override bool initialize(Json initData = Json(null)) {
+		if (!super.initialize(initData)) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+template TenantRepositoryTemplate(alias Repository, TEntity, TId) {
 	this() {
 		super();
 	}

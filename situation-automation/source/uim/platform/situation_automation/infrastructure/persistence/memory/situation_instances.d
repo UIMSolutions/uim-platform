@@ -10,55 +10,54 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemorySituationInstanceRepository : SituationInstanceRepository {
-    private SituationInstance[] store;
+class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId) {
 
-    SituationInstance findById(SituationInstanceId id) {
-        foreach (i; findAll) {
-            if (i.id == id)
-                return i;
-        }
-        return SituationInstance.init;
+    size_t countByTemplate(SituationTemplateId templateId) {
+        return findByTemplate(templateId).length;
     }
 
-    SituationInstance[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(i => i.tenantId == tenantId).array;
+    SituationInstance[] filterByTemplate(SituationInstance[] instances, SituationTemplateId templateId) {
+        return instances.filter!(i => i.templateId == templateId).array;
     }
 
     SituationInstance[] findByTemplate(SituationTemplateId templateId) {
         return findAll().filter!(i => i.templateId == templateId).array;
     }
 
+    void removeByTemplate(SituationTemplateId templateId) {
+        findByTemplate(templateId).removeAll;
+    }
+
+    size_t countByStatus(TenantId tenantId, InstanceStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    SituationInstance[] filterByStatus(SituationInstance[] instances, InstanceStatus status) {
+        return instances.filter!(i => i.status == status).array;
+    }
+
     SituationInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
         return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
+    }
+
+    void removeByStatus(TenantId tenantId, InstanceStatus status) {
+        findByStatus(tenantId, status).removeAll;
+    }
+
+    size_t countByEntity(TenantId tenantId, string entityId) {
+        return findByEntity(tenantId, entityId).length;
+    }
+
+    SituationInstance[] filterByEntity(SituationInstance[] instances, TenantId tenantId, string entityId) {
+        return instances.filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
     }
 
     SituationInstance[] findByEntity(TenantId tenantId, string entityId) {
         return findAll().filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
     }
 
-    void save(SituationInstance i) {
-        store ~= i;
+    void removeByEntity(TenantId tenantId, string entityId) {
+        findByEntity(tenantId, entityId).removeAll;
     }
 
-    void update(SituationInstance i) {
-        foreach (existing; findAll) {
-            if (existing.id == i.id) {
-                existing = i;
-                return;
-            }
-        }
-    }
-
-    void remove(SituationInstanceId id) {
-        store = findAll().filter!(i => i.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(i => i.tenantId == tenantId).array.length;
-    }
-
-    size_t countByStatus(TenantId tenantId, InstanceStatus status) {
-        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array.length;
-    }
 }

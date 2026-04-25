@@ -45,9 +45,8 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   }
 
   void update(TEntity entity) {
-    auto existing = entity.id in store;
-    if (existing !is null) {
-      *existing = entity;
+    if (existsById(entity.id)) {
+      store[entity.id] = entity;
     }
   }
 

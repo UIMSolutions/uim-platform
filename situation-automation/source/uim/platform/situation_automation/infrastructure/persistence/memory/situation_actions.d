@@ -10,43 +10,23 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemorySituationActionRepository : SituationActionRepository {
-    private SituationAction[] store;
 
-    SituationAction findById(SituationActionId id) {
-        foreach (a; findAll) {
-            if (a.id == id)
-                return a;
-        }
-        return SituationAction.init;
+class MemorySituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
+
+    size_t countByType(TenantId tenantId, ActionType type) {
+        return findByType(tenantId, type).length;
     }
 
-    SituationAction[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array;
+    SituationAction[] filterByType(SituationAction[] actions, TenantId tenantId, ActionType type) {
+        return actions.filter!(a => a.tenantId == tenantId && a.type == type).array;
     }
 
     SituationAction[] findByType(TenantId tenantId, ActionType type) {
         return findAll().filter!(a => a.tenantId == tenantId && a.type == type).array;
     }
 
-    void save(SituationAction a) {
-        store ~= a;
+    void removeByType(TenantId tenantId, ActionType type) {
+        findByType(tenantId, type).removeAll;
     }
-
-    void update(SituationAction a) {
-        foreach (existing; findAll) {
-            if (existing.id == a.id) {
-                existing = a;
-                return;
-            }
-        }
-    }
-
-    void remove(SituationActionId id) {
-        store = findAll().filter!(a => a.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array.length;
-    }
+    
 }
