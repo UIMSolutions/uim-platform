@@ -9,51 +9,37 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.training_job;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
 
-class MemoryTrainingJobRepository : TrainingJobRepository {
-  private TrainingJob[string] store;
-
-  void save(TrainingJob entity) {
-    store[entity.id] = entity;
+class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), TrainingJobRepository {
+  
+  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    return findByModelConfig(tenantId, configId).length;
   }
 
-  void update(TrainingJob entity) {
-    store[entity.id] = entity;
+  TrainingJob[] filterByModelConfig(TrainingJob[] jobs, ModelConfigId configId) {
+    return jobs.filter!(e => e.modelConfigId == configId).array;
   }
 
-  void remove(TrainingJobId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    return findByTenant(tenantId).filterByModelConfig!(configId);
   }
 
-  TrainingJob* findById(TrainingJobId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    findByModelConfig(tenantId, configId).removeAll;
   }
 
-  TrainingJob[] findByTenant(TenantId tenantId) {
-    TrainingJob[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  size_t countByStatus(TenantId tenantId, JobStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  TrainingJob[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
-    TrainingJob[] result;
-    foreach (e; findAll)
-      if (e.modelConfigId == configId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  TrainingJob[] filterByStatus(TrainingJob[] jobs, JobStatus status) {
+    return jobs.filter!(e => e.status == status).array;
   }
-
+  
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    TrainingJob[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.status == status)
-        result ~= e;
-    return result;
+    return findByTenant(tenantId).filterByStatus!(status);
+  }
+  
+  void removeByStatus(TenantId tenantId, JobStatus status) {
+    findByStatus(tenantId, status).removeAll;
   }
 }

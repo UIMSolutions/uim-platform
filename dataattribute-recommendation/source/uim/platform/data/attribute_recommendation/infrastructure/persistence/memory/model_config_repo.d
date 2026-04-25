@@ -9,58 +9,40 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 
-class MemoryModelConfigRepository : ModelConfigRepository {
-  private ModelConfiguration[string] store;
-
-  void save(ModelConfiguration entity) {
-    store[entity.id] = entity;
+class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigId), ModelConfigRepository {
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
-
-  void update(ModelConfiguration entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ModelConfigId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  ModelConfiguration* findById(ModelConfigId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  ModelConfiguration* findByName(TenantId tenantId, string name) {
+  ModelConfiguration findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
-        return &e;
-    return null;
+        return e;
+    return ModelConfiguration.init;
   }
 
-  ModelConfiguration[] findByTenant(TenantId tenantId) {
-    ModelConfiguration[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
+  }
+  ModelConfiguration[] filterByDataset(ModelConfiguration[] configs, DatasetId datasetId) {
+    return configs.filter!(e => e.datasetId == datasetId).array;
+  }
+  ModelConfiguration[] findByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByTenant(tenantId).filterByDataset(datasetId);
+  }
+  void removeByDataset(TenantId tenantId, DatasetId datasetId) {
+    findByDataset(tenantId, datasetId).removeAll;
   }
 
-  ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId) {
-    ModelConfiguration[] result;
-    foreach (e; findAll)
-      if (e.datasetId == datasetId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  size_t countByStatus(TenantId tenantId, ModelConfigStatus status) {
+    return findByStatus(tenantId, status).length;
   }
-
+  ModelConfiguration[] filterByStatus(ModelConfiguration[] configs, ModelConfigStatus status) {
+    return configs.filter!(e => e.status == status).array;
+  }
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status) {
-    ModelConfiguration[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.status == status)
-        result ~= e;
-    return result;
+    return findByTenant(tenantId).filterByStatus(status);
+  }
+  void removeByStatus(TenantId tenantId, ModelConfigStatus status) {
+    findByStatus(tenantId, status).removeAll;
   }
 }

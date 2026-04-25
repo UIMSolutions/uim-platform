@@ -8,12 +8,16 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
 
-interface InferenceRequestRepository {
-  InferenceRequest[] findByTenant(TenantId tenantId);
-  InferenceRequest* findById(InferenceRequestId tenantId, id tenantId);
+interface InferenceRequestRepository : ITenantRepository!(InferenceRequest, InferenceRequestId) {
+
+  size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId);
+  InferenceRequest[] filterByDeployment(InferenceRequest[] requests, DeploymentId deploymentId);
   InferenceRequest[] findByDeployment(DeploymentId deploymenttenantId, id tenantId);
+  void removeByDeployment(TenantId tenantId, DeploymentId deploymentId);
+
+  size_t countByStatus(TenantId tenantId, InferenceStatus status);
+  InferenceRequest[] filterByStatus(InferenceRequest[] requests, InferenceStatus status);
   InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status);
-  void save(InferenceRequest request);
-  void update(InferenceRequest request);
-  void remove(InferenceRequestId tenantId, id tenantId);
+  void removeByStatus(TenantId tenantId, InferenceStatus status);
+
 }

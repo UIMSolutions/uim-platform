@@ -9,58 +9,49 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
 
-class MemoryDeploymentRepository : DeploymentRepository {
-  private ModelDeployment[string] store;
+class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
 
-  void save(ModelDeployment entity) {
-    store[entity.id] = entity;
+  bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
+    return findByTenant(tenantId).any!(e => e.trainingJobId == jobId);
   }
 
-  void update(ModelDeployment entity) {
-    store[entity.id] = entity;
+  ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.trainingJobId == jobId)
+        return e;
+    return ModelDeployment.init;
   }
 
-  void remove(DeploymentId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
+  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    return findByModelConfig(tenantId, configId).length;
   }
 
-  ModelDeployment* findById(DeploymentId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  ModelDeployment[] filterByModelConfig(ModelDeployment[] deployments, ModelConfigId configId) {
+    return deployments.filter!(e => e.modelConfigId == configId).array;
   }
 
-  ModelDeployment[] findByTenant(TenantId tenantId) {
-    ModelDeployment[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    return findByTenant(tenantId).filterByModelConfig!(configId);
   }
 
-  ModelDeployment[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
-    ModelDeployment[] result;
-    foreach (e; findAll)
-      if (e.modelConfigId == configId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
+    findByModelConfig(tenantId, configId).removeAll;
+  }
+
+  size_t countByStatus(TenantId tenantId, DeploymentStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  ModelDeployment[] filterByStatus(ModelDeployment[] deployments, DeploymentStatus status) {
+    return deployments.filter!(e => e.status == status).array;
   }
 
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-    ModelDeployment[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.status == status)
-        result ~= e;
-    return result;
+    return findByTenant(tenantId).filterByStatus!(status);
   }
 
-  ModelDeployment* findByTrainingJob(TrainingJobId jobtenantId, id tenantId) {
-    foreach (e; findAll)
-      if (e.trainingJobId == jobId && e.tenantId == tenantId)
-        return &e;
-    return null;
+  void removeByStatus(TenantId tenantId, DeploymentStatus status) {
+    findByStatus(tenantId, status).removeAll;
   }
+
 }

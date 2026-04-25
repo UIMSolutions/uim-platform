@@ -8,12 +8,16 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.trai
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.training_job;
 
-interface TrainingJobRepository {
-  TrainingJob[] findByTenant(TenantId tenantId);
-  TrainingJob* findById(TrainingJobId tenantId, id tenantId);
-  TrainingJob[] findByModelConfig(ModelConfigId configtenantId, id tenantId);
+interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
+
+  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);
+  TrainingJob[] filterByModelConfig(TrainingJob[] jobs, ModelConfigId configId);
+  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId);
+  void removeByModelConfig(TenantId tenantId, ModelConfigId configId);
+  
+  size_t countByStatus(TenantId tenantId, JobStatus status);
+  TrainingJob[] filterByStatus(TrainingJob[] jobs, JobStatus status);
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status);
-  void save(TrainingJob job);
-  void update(TrainingJob job);
-  void remove(TrainingJobId tenantId, id tenantId);
+  void removeByStatus(TenantId tenantId, JobStatus status);
+
 }

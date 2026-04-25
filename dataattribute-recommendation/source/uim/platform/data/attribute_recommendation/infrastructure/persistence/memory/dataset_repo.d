@@ -9,58 +9,52 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
 
-class MemoryDatasetRepository : DatasetRepository {
-  private Dataset[string] store;
+class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRepository {
 
-  void save(Dataset entity) {
-    store[entity.id] = entity;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
 
-  void update(Dataset entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(DatasetId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  Dataset* findById(DatasetId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  Dataset* findByName(TenantId tenantId, string name) {
+  Dataset findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
-        return &e;
-    return null;
+        return e;
+    return Dataset.init;
   }
 
-  Dataset[] findByTenant(TenantId tenantId) {
-    Dataset[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).remove;
+  }
+
+  size_t countByStatus(TenantId tenantId, DatasetStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  Dataset[] filterByStatus(Dataset[] datasets, DatasetStatus status) {
+    return datasets.filter!(e => e.status == status).array;
   }
 
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status) {
-    Dataset[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.status == status)
-        result ~= e;
-    return result;
+    return findByTenant(tenantId).filter!(e => e.status == status);
+  }
+
+  void removeByStatus(TenantId tenantId, DatasetStatus status) {
+    findByStatus(tenantId, status).removeAll;
+  }
+
+  size_t countByDataType(TenantId tenantId, DataType dataType) {
+    return findByDataType(tenantId, dataType).length;
+  }
+
+  Dataset[] filterByDataType(Dataset[] datasets, DataType dataType) {
+    return datasets.filter!(e => e.dataType == dataType).array;
   }
 
   Dataset[] findByDataType(TenantId tenantId, DataType dataType) {
-    Dataset[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.dataType == dataType)
-        result ~= e;
-    return result;
+    return findByTenant(tenantId).filterByDataType(dataType);
+  }
+
+  void removeByDataType(TenantId tenantId, DataType dataType) {
+    findByDataType(tenantId, dataType).removeAll;
   }
 }

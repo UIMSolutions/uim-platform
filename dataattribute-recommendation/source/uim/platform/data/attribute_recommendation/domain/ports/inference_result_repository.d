@@ -8,10 +8,11 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 
-interface InferenceResultRepository {
-  InferenceResult* findById(InferenceResultId tenantId, id tenantId);
-  InferenceResult* findByRequest(InferenceRequestId requesttenantId, id tenantId);
-  InferenceResult[] findByTenant(TenantId tenantId);
-  void save(InferenceResult result);
-  void remove(InferenceResultId tenantId, id tenantId);
+interface InferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {
+
+  size_t countByPredictions(TenantId tenantId, string predictions);
+  InferenceResult[] filterByPredictions(InferenceResult[] results, string predictions);
+  InferenceResult[] findByPredictions(TenantId tenantId, string predictions);
+  void removeByPredictions(TenantId tenantId, string predictions);
+
 }

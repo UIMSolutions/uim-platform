@@ -10,42 +10,24 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
 
-class MemoryInferenceResultRepository : InferenceResultRepository {
-  private InferenceResult[string] store;
+class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), InferenceResultRepository {
 
-  void save(InferenceResult entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(InferenceResult entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(InferenceResultId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  InferenceResult* findById(InferenceResultId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  InferenceResult* findByRequest(InferenceRequestId requesttenantId, id tenantId) {
+  bool existsByRequest(TenantId tenantId, InferenceRequestId requestId) {
     foreach (e; findAll)
       if (e.requestId == requestId && e.tenantId == tenantId)
-        return &e;
-    return null;
+        return true;
+    return false;
   }
 
-  InferenceResult[] findByTenant(TenantId tenantId) {
-    InferenceResult[] result;
+  InferenceResult findByRequest(TenantId tenantId, InferenceRequestId requestId) {
     foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+      if (e.requestId == requestId && e.tenantId == tenantId)
+        return e;
+    return InferenceResult.init;
   }
+
+  void removeByRequest(TenantId tenantId, InferenceRequestId requestId) {
+    findByRequest(tenantId, requestId).remove;
+  }
+  
 }
