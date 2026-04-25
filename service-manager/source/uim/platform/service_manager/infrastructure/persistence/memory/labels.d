@@ -1,4 +1,4 @@
-module uim.platform.service_manager.infrastructure.persistence.memory.memory_service_broker_repo;
+module uim.platform.service_manager.infrastructure.persistence.memory.labels;
 
 import uim.platform.service_manager;
 
@@ -6,14 +6,14 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBrokerRepository : ServiceBrokerRepository {
-    private ServiceBroker[][string] store;
+class MemoryLabelRepository : LabelRepository {
+    private Label[][string] store;
 
-    ServiceBroker[] findByTenant(TenantId tenantId) {
+    Label[] findByTenant(TenantId tenantId) {
         return store.get(tenantId.value, []);
     }
 
-    ServiceBroker* findById(TenantId tenantId, ServiceBrokerId id) @trusted {
+    Label* findById(TenantId tenantId, LabelId id) @trusted {
         if (auto items = tenantId.value in store) {
             foreach (ref e; *items)
                 if (e.id == id) return &e;
@@ -21,18 +21,29 @@ class MemoryServiceBrokerRepository : ServiceBrokerRepository {
         return null;
     }
 
-    void save(ServiceBroker entity) {
+    Label[] findByResource(TenantId tenantId, string resourceType, string resourceId) {
+        if (auto items = tenantId.value in store) {
+            Label[] result;
+            foreach (ref e; *items)
+                if (e.resourceType == resourceType && e.resourceId == resourceId)
+                    result ~= e;
+            return result;
+        }
+        return null;
+    }
+
+    void save(Label entity) {
         store[entity.tenantId.value] ~= entity;
     }
 
-    void update(ServiceBroker entity) {
+    void update(Label entity) {
         if (auto items = entity.tenantId.value in store) {
             foreach (ref e; *items)
                 if (e.id == entity.id) { e = entity; return; }
         }
     }
 
-    void remove(TenantId tenantId, ServiceBrokerId id) {
+    void remove(TenantId tenantId, LabelId id) {
         if (auto items = tenantId.value in store) {
             import std.algorithm : remove;
             *items = (*items).remove!(e => e.id == id);

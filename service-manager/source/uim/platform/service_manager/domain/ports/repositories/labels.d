@@ -6,12 +6,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LabelRepository {
-    Label[] findByTenant(TenantId tenantId);
-    Label* findById(TenantId tenantId, LabelId id);
+interface LabelRepository : ITenantRepository!(Label, LabelId) {
+
+    size_t countByResource(TenantId tenantId, string resourceType, string resourceId);
+    Label[] filterByResource(Label[] labels, string resourceType, string resourceId);
     Label[] findByResource(TenantId tenantId, string resourceType, string resourceId);
-    void save(Label entity);
-    void update(Label entity);
-    void remove(TenantId tenantId, LabelId id);
-    ulong countByTenant(TenantId tenantId);
+    void removeByResource(TenantId tenantId, string resourceType, string resourceId);
 }

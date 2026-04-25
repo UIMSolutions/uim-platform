@@ -16,16 +16,8 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository : AlertRepository {
-  private Alert[AlertId] store;
+class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository {
 
-  bool existsById(AlertId id) {
-    return (id in store) ? true : false;
-  }
-
-  Alert findById(AlertId id) {
-    return existsById(id) ? store[id] : Alert.init;
-  }
 
   Alert[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
