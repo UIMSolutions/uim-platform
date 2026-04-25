@@ -12,29 +12,55 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   bool existsById(TId id) {
     return (id in store) !is null;
   }
+  bool existsAllById(TId[] ids) {
+    return ids.all!(id => existsById(id));
+  }
 
   TEntity findById(TId id) {
     auto entity = id in store;
     return entity is null ? TEntity.init : *entity;
   }
+  TEntity[] findAllById(TId[] ids) {
+    return ids.map!(id => findById(id)).array;
+  }
+
+  void removeById(TId id) {
+    store.remove(id);
+  }
+  void removeAllById(TId[] ids) {
+    ids.each!(id => removeById(id));
+  }
+
 
   TEntity[] findAll() {
     return store.byValue.array;
   }
 
-  void save(TEntity item) {
-    store[item.id] = item;
+  void save(TEntity entity) {
+    store[entity.id] = entity;
   }
 
-  void update(TEntity item) {
-    auto existing = item.id in store;
+  void saveAll(TEntity[] entities) {
+    entities.each!(entity => save(entity));
+  }
+
+  void update(TEntity entity) {
+    auto existing = entity.id in store;
     if (existing !is null) {
-      *existing = item;
+      *existing = entity;
     }
   }
 
-  void remove(TId id) {
-    store.remove(id);
+  void updateAll(TEntity[] entities) {
+    entities.each!(entity => update(entity));
+  }
+  
+  void remove(TEntity entity) {
+    store.remove(entity.id);
+  }
+
+  void removeAll(TEntity[] entities) {
+    entities.each!(entity => remove(entity));
   }
 }
 
@@ -69,8 +95,8 @@ unittest {
   assert(all.length == 1);
   assert(all[0].id == "item-123");
 
-  repo.remove("item-123");
+  repo.remove(SampleEntity("item-123", "Test Item"));
   assert(!repo.existsById("item-123"));
 
-  repo.remove("item-123");
+  repo.remove(SampleEntity("item-123", "Test Item"));
 }

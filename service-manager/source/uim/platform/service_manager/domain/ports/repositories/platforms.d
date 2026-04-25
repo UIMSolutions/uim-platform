@@ -6,11 +6,16 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PlatformRepository {
-    Platform[] findByTenant(TenantId tenantId);
-    Platform* findById(TenantId tenantId, PlatformId id);
-    void save(Platform entity);
-    void update(Platform entity);
-    void remove(TenantId tenantId, PlatformId id);
-    ulong countByTenant(TenantId tenantId);
+interface PlatformRepository : ITenantRepository!(Platform, PlatformId) {
+
+    size_t countByType(TenantId tenantId, PlatformType type);
+    Platform[] filterByType(Platform[] platforms, PlatformType type);
+    Platform[] findByType(TenantId tenantId, PlatformType type);
+    void removeByType(TenantId tenantId, PlatformType type);
+
+    size_t countByStatus(TenantId tenantId, PlatformStatus status);
+    Platform[] filterByStatus(Platform[] platforms, PlatformStatus status);
+    Platform[] findByStatus(TenantId tenantId, PlatformStatus status);
+    void removeByStatus(TenantId tenantId, PlatformStatus status);
+    
 }

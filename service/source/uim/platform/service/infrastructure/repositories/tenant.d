@@ -9,6 +9,19 @@ mixin(ShowModule!());
 class TenantRepository(TEntity, TId) {
   protected TEntity[TId][TenantId] store;
 
+  this() {
+    initialize();
+  }
+
+  bool initialize(Json initData = Json(null)) {
+    if (!super.initialize(initData)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  // #region ById
   bool existsById(TId id) {
     return findAll().any!(e => e.id == id);
   }
@@ -25,6 +38,10 @@ class TenantRepository(TEntity, TId) {
     return existsById(tenantId, id) ? store[tenantId][id] : TEntity.init;
   }
 
+  TEntity[] findAllById(TenantId tenantId, TId[] ids) {
+    return ids.map!(id => findById(tenantId, id)).array;
+  }
+
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
     if (existsById(tenantId, id)) {
       store[tenantId].remove(id);
@@ -35,6 +52,11 @@ class TenantRepository(TEntity, TId) {
     }
   }
 
+  void removeAllById(TenantId tenantId, TId[] ids, bool deleteTenantIfEmpty = false) {
+    ids.each!(id => removeById(tenantId, id, deleteTenantIfEmpty));
+  }
+  // #endregion ById
+
   size_t countAll() {
     size_t count = 0;
     foreach (tenantId, items; findAll) {
@@ -42,7 +64,7 @@ class TenantRepository(TEntity, TId) {
     }
     return count;
   }
-  
+
   TEntity[] findAll(uint offset = 0, uint limit = 0) {
     TEntity[] allItems;
     uint idx;
@@ -60,10 +82,15 @@ class TenantRepository(TEntity, TId) {
     return tenantId in store ? true : false;
   }
 
+  TEntity[] filterByTenant(TEntity[] items, TenantId tenantId) {
+    return items.filter!(e => e.tenantId == tenantId).array;
+  }
+
   TEntity[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 0) {
     if (!existsByTenant(tenantId)) {
       return null;
     }
+
     TEntity[] allItems;
     uint idx;
     foreach (item; store[tenantId].values.array) {
@@ -86,7 +113,7 @@ class TenantRepository(TEntity, TId) {
     store[item.tenantId][item.id] = item;
   }
 
-  void save(TEntity[] items) {
+  void saveAll(TEntity[] items) {
     items.each!(item => save(item));
   }
 
@@ -96,7 +123,7 @@ class TenantRepository(TEntity, TId) {
     }
   }
 
-  void update(TEntity[] items) {
+  void updateAll(TEntity[] items) {
     items.each!(item => update(item));
   }
 
@@ -104,7 +131,7 @@ class TenantRepository(TEntity, TId) {
     removeById(item.tenantId, item.id, deleteTenantIfEmpty);
   }
 
-  void remove(TEntity[] items, bool deleteTenantIfEmpty = false) {
+  void removeAll(TEntity[] items, bool deleteTenantIfEmpty = false) {
     items.each!(item => remove(item, deleteTenantIfEmpty));
   }
 }

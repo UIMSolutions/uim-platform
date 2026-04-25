@@ -6,11 +6,11 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceOfferingRepository {
-    ServiceOffering[] findByTenant(TenantId tenantId);
-    ServiceOffering* findById(TenantId tenantId, ServiceOfferingId id);
-    void save(ServiceOffering entity);
-    void update(ServiceOffering entity);
-    void remove(TenantId tenantId, ServiceOfferingId id);
-    ulong countByTenant(TenantId tenantId);
+interface ServiceOfferingRepository : ITenantRepository!(ServiceOffering, ServiceOfferingId) {
+    
+    size_t countByStatus(TenantId tenantId, ServiceOfferingStatus status);
+    ServiceOffering[] filterByStatus(ServiceOffering[] offerings, ServiceOfferingStatus status);
+    ServiceOffering[] findByStatus(TenantId tenantId, ServiceOfferingStatus status);
+    void removeByStatus(TenantId tenantId, ServiceOfferingStatus status);
+    
 }

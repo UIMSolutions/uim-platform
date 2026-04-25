@@ -6,11 +6,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBindingRepository {
-    ServiceBinding[] findByTenant(TenantId tenantId);
-    ServiceBinding* findById(TenantId tenantId, ServiceBindingId id);
-    void save(ServiceBinding entity);
-    void update(ServiceBinding entity);
-    void remove(TenantId tenantId, ServiceBindingId id);
-    ulong countByTenant(TenantId tenantId);
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+
+    size_t countByStatus(TenantId tenantId, ServiceBindingStatus status);
+    ServiceBinding[] filterByStatus(ServiceBinding[] bindings, ServiceBindingStatus status);
+    ServiceBinding[] findByStatus(TenantId tenantId, ServiceBindingStatus status);
+    void removeByStatus(TenantId tenantId, ServiceBindingStatus status);
 }

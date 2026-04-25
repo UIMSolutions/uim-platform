@@ -6,11 +6,11 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceInstanceRepository {
-    ServiceInstance[] findByTenant(TenantId tenantId);
-    ServiceInstance* findById(TenantId tenantId, ServiceInstanceId id);
-    void save(ServiceInstance entity);
-    void update(ServiceInstance entity);
-    void remove(TenantId tenantId, ServiceInstanceId id);
-    ulong countByTenant(TenantId tenantId);
+interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
+
+    size_t countByStatus(TenantId tenantId, ServiceInstanceStatus status);
+    ServiceInstance[] filterByStatus(ServiceInstance[] instances, ServiceInstanceStatus status);
+    ServiceInstance[] findByStatus(TenantId tenantId, ServiceInstanceStatus status);
+    void removeByStatus(TenantId tenantId, ServiceInstanceStatus status);
+    
 }
