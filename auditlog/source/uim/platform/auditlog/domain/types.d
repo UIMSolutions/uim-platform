@@ -41,6 +41,16 @@ struct AuditConfigId {
   mixin DomainId;
 }
 
+struct ConfigChangeLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
 struct ExportJobId {
   string value;
 

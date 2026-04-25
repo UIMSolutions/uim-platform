@@ -17,6 +17,7 @@ mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
 interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {
+  
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   void findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);

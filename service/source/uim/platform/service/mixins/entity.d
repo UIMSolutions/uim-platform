@@ -18,7 +18,7 @@ mixin template IdEntity(TId) {
     }
 
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
-    void createEntity() {
+    void create() {
         id = randomUUID();
         createdAt = Clock.currStdTime();
         updatedAt = createdAt;

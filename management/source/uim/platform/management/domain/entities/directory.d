@@ -29,6 +29,26 @@ struct Directory {
   string[string] labels;
   string[string] customProperties;
 
+  static Directory createFromRequest(CreateDirectoryRequest req) {
+    Directory directory;
+    directory.create();
+
+    directory.globalAccountId = req.globalAccountId;
+    directory.parentDirectoryId = req.parentDirectoryId;
+    directory.displayName = req.displayName;
+    directory.description = req.description;
+    directory.features = req.features.map!(f => f.to!DirectoryFeature).array;
+    directory.manageEntitlements = req.manageEntitlements;
+    directory.manageAuthorizations = req.manageAuthorizations;
+    directory.createdBy = req.createdBy;
+    directory.createdAt = clockSeconds();
+    directory.updatedAt = directory.createdAt;
+    directory.labels = req.labels;
+    directory.customProperties = req.customProperties;
+    
+    return directory;
+  }
+
   Json toJson() const {
     auto jLabels = Json.emptyObject;
     foreach (key, value; labels) {

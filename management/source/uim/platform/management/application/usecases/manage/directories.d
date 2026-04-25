@@ -18,66 +18,52 @@ mixin(ShowModule!());
 
 /// Use case: manage directory hierarchy within global accounts.
 class ManageDirectoriesUseCase { // TODO: UIMUseCase {
-  private DirectoryRepository repo;
+  private DirectoryRepository directories;
 
-  this(DirectoryRepository repo) {
-    this.repo = repo;
+  this(DirectoryRepository directories) {
+    this.directories = directories;
   }
 
-  CommandResult create(CreateDirectoryRequest req) {
-    if (req.globalAccountId.isEmpty)
+  CommandResult create(CreateDirectoryRequest request) {
+    if (request.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
-    if (req.displayName.length == 0)
+    if (request.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    Directory directory;
-    directory.id = randomUUID();
-    directory.globalAccountId = req.globalAccountId;
-    directory.parentDirectoryId = req.parentDirectoryId;
-    directory.displayName = req.displayName;
-    directory.description = req.description;
-    directory.features = parseFeatures(req.features);
-    directory.manageEntitlements = req.manageEntitlements;
-    directory.manageAuthorizations = req.manageAuthorizations;
-    directory.createdBy = req.createdBy;
-    directory.createdAt = clockSeconds();
-    directory.updatedAt = directory.createdAt;
-    directory.labels = req.labels;
-    directory.customProperties = req.customProperties;
-
-    repo.save(directory);
+    Directory directory = Directory.createFromRequest(request);
+    directories.save(directory);
     return CommandResult(true, directory.id.toString, "");
   }
 
-  CommandResult update(string id, UpdateDirectoryRequest req) {
-    return update(DirectoryId(id), req);
+  CommandResult update(string id, UpdateDirectoryRequest request) {
+    return update(DirectoryId(id), request);
   }
 
-  CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
-    auto directory = repo.findById(id);
+  CommandResult update(DirectoryId id, UpdateDirectoryRequest request) {
+    auto directory = directories.findById(id);
     if (directory.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
 
-    if (req.displayName.length > 0)
-      directory.displayName = req.displayName;
-    if (req.description.length > 0)
-      directory.description = req.description;
-    if (req.labels.length > 0)
-      directory.labels = req.labels;
-    if (req.customProperties.length > 0)
-      directory.customProperties = req.customProperties;
+    if (request.displayName.length > 0)
+      directory.displayName = request.displayName;
+    if (request.description.length > 0)
+      directory.description = request.description;
+    if (request.labels.length > 0)
+      directory.labels = request.labels;
+    if (request.customProperties.length > 0)
+      directory.customProperties = request.customProperties;
     directory.updatedAt = clockSeconds();
 
-    repo.update(directory);
+    directories.update(directory);
     return CommandResult(true, directory.id.toString, "");
   }
 
   Directory getById(string id) {
-    return repo.findById(DirectoryId(id));
+    return directories.findById(DirectoryId(id));
   }
 
   Directory getById(DirectoryId id) {
-    return repo.findById(id);
+    return directories.findById(id);
   }
 
   Directory[] listByGlobalAccount(string gaId) {
@@ -85,15 +71,15 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   Directory[] listByGlobalAccount(GlobalAccountId gaId) {
-    return repo.findByGlobalAccount(gaId);
+    return directories.findByGlobalAccount(gaId);
   }
 
   Directory[] listByParent(string parentId) {
-    return repo.findByParent(DirectoryId(parentId));
+    return directories.findByParent(DirectoryId(parentId));
   }
 
   Directory[] listByParent(DirectoryId parentId) {
-    return repo.findByParent(parentId);
+    return directories.findByParent(parentId);
   }
 
   CommandResult remove(string id) {
@@ -101,12 +87,12 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(DirectoryId id) {
-    auto directory = repo.findById(id);
+    auto directory = directories.findById(id);
     if (directory.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
-    repo.removeById(id);
+    directories.removeById(id);
     return CommandResult(true, directory.id.toString, "");
   }
 
