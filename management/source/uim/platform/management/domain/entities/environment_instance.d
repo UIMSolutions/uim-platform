@@ -32,7 +32,7 @@ struct EnvironmentInstance {
   int serviceQuota = 0;
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
   string[string] parameters; // provisioning parameters
   string[string] labels;
 }

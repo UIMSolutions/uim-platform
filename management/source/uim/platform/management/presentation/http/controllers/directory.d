@@ -139,7 +139,7 @@ private Json serializeDirectory(Directory directory) {
     .set("manageAuthorizations", directory.manageAuthorizations)
     .set("createdBy", directory.createdBy)
     .set("createdAt", directory.createdAt)
-    .set("modifiedAt", directory.modifiedAt)
+    .set("updatedAt", directory.updatedAt)
     .set("labels", directory.labels)
     .set("customProperties", directory.customProperties.toJson)
     .set("subaccounts", directory.subaccounts.toJson)

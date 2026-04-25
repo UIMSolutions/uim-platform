@@ -150,7 +150,7 @@ private Json serializeEnvironment(EnvironmentInstance inst) {
     .set("serviceQuota", inst.serviceQuota)
     .set("createdBy", inst.createdBy)
     .set("createdAt", inst.createdAt)
-    .set("modifiedAt", inst.modifiedAt)
+    .set("updatedAt", inst.updatedAt)
     .set("parameters", inst.parameters)
     .set("labels", inst.labels);
 }

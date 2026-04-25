@@ -14,7 +14,8 @@ mixin(ShowModule!());
 /// An entitlement represents the assignment of a service plan's quota
 /// to a global account, directory, or subaccount.
 struct Entitlement {
-  EntitlementId id;
+  mixin(IdEntity!EntitlementId);
+
   GlobalAccountId globalAccountId;
   DirectoryId directoryId; // optional — directory-level entitlement
   SubaccountId subaccountId; // optional — subaccount-level assignment
@@ -30,6 +31,5 @@ struct Entitlement {
   bool unlimited = false;
   bool autoAssign = false; // auto-assign to new subaccounts
   long assignedAt;
-  long modifiedAt;
   string assignedBy;
 }

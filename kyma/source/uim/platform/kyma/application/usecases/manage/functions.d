@@ -59,7 +59,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     serverlessFunction.status = FunctionStatus.building;
     serverlessFunction.createdBy = request.createdBy;
     serverlessFunction.createdAt = clockSeconds();
-    serverlessFunction.modifiedAt = serverlessFunction.createdAt;     
+    serverlessFunction.updatedAt = serverlessFunction.createdAt;     
 
     auto validationErr = validator.validate(serverlessFunction);
     if (validationErr.length > 0)
@@ -107,7 +107,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     if (req.timeoutSeconds > 0)
       fn.timeoutSeconds = req.timeoutSeconds;
     fn.status = FunctionStatus.building;
-    fn.modifiedAt = clockSeconds();
+    fn.updatedAt = clockSeconds();
 
     auto validationErr = validator.validate(fn);
     if (validationErr.length > 0)

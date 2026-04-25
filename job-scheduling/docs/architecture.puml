@@ -202,7 +202,7 @@ package "Domain Entities" {
         +startTime: long
         +endTime: long
         +createdAt: long
-        +modifiedAt: long
+        +updatedAt: long
     }
 
     class Schedule {
@@ -223,7 +223,7 @@ package "Domain Entities" {
         +endTime: long
         +nextRunAt: long
         +createdAt: long
-        +modifiedAt: long
+        +updatedAt: long
     }
 
     class RunLog {
@@ -250,7 +250,7 @@ package "Domain Entities" {
         +enableAsyncMode: bool
         +enableAlertNotifications: bool
         +createdAt: long
-        +modifiedAt: long
+        +updatedAt: long
     }
 }
 

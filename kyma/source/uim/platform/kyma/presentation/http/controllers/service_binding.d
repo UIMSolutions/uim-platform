@@ -160,6 +160,6 @@ class ServiceBindingController : PlatformController {
     .set("labels", b.labels)
     .set("createdBy", b.createdBy)
     .set("createdAt", b.createdAt)
-    .set("modifiedAt", b.modifiedAt);
+    .set("updatedAt", b.updatedAt);
   }
 }

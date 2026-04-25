@@ -46,7 +46,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       labels = req.labels;
       createdBy = req.createdBy;
       createdAt = clockSeconds();
-      modifiedAt = app.createdAt;
+      updatedAt = app.createdAt;
     }
 
     // Convert API entries
@@ -125,7 +125,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       app.events = events;
     }
 
-    app.modifiedAt = clockSeconds();
+    app.updatedAt = clockSeconds();
     appRepository.update(app);
     return CommandResult(true, app.id.toString(), "");
   }
@@ -140,7 +140,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
 
     auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.connected;
-    app.modifiedAt = clockSeconds();
+    app.updatedAt = clockSeconds();
     appRepository.update(app);
     return CommandResult(true, app.id.toString(), "");
   }
@@ -155,7 +155,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
 
     auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.disconnected;
-    app.modifiedAt = clockSeconds();
+    app.updatedAt = clockSeconds();
     appRepository.update(app);
     return CommandResult(true, appId.toString(), "");
   }

@@ -168,6 +168,6 @@ class EnvironmentController : PlatformController {
       .set("administrators", e.administrators.toJson)
       .set("createdBy", e.createdBy)
       .set("createdAt", e.createdAt)
-      .set("modifiedAt", e.modifiedAt);
+      .set("updatedAt", e.updatedAt);
   }
 }

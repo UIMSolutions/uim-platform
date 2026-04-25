@@ -51,7 +51,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       status = ModuleStatus.installing;
       enabledBy = request.enabledBy;
       enabledAt = clockSeconds();
-      modifiedAt = enabledAt;
+      updatedAt = enabledAt;
     }
     // Set known dependencies
     mod.requiredModules = getKnownDependencies(mod.moduleType);
@@ -93,7 +93,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     }
 
     mod.status = ModuleStatus.uninstalling;
-    mod.modifiedAt = clockSeconds();
+    mod.updatedAt = clockSeconds();
     moduleRepository.update(mod);
     return CommandResult(true, moduleId.toString, "");
   }
@@ -115,7 +115,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       mod.customResourcePolicy = request.customResourcePolicy;
     if (request.configurationJson.length > 0)
       mod.configurationJson = request.configurationJson;
-    mod.modifiedAt = clockSeconds();
+    mod.updatedAt = clockSeconds();
 
     moduleRepository.update(mod);
     return CommandResult(true, moduleId.toString, "");

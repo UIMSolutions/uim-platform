@@ -195,7 +195,7 @@ private Json serializeSubaccount(Subaccount subaccount) {
     .set("usedForProduction", subaccount.usedForProduction)
     .set("tenantId", subaccount.tenantId)
     .set("createdAt", subaccount.createdAt)
-    .set("modifiedAt", subaccount.modifiedAt)
+    .set("updatedAt", subaccount.updatedAt)
     .set("createdBy", subaccount.createdBy)
     .set("labels", subaccount.labels)
     .set("customProperties", subaccount.customProperties);

@@ -29,7 +29,7 @@ struct Schedule {
     long endTime;
     long nextRunAt;
     long createdAt;
-    long modifiedAt;
+    long updatedAt;
 
     static Schedule createFromRequest(CreateScheduleRequest request) {
         Schedule schedule;
@@ -49,7 +49,7 @@ struct Schedule {
         schedule.startTime = request.startTime;
         schedule.endTime = request.endTime;
         schedule.createdAt = now;
-        schedule.modifiedAt = now;
+        schedule.updatedAt = now;
 
         return schedule;
     }

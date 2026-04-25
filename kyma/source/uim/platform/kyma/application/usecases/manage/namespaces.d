@@ -51,7 +51,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       annotations = req.annotations;
       createdBy = req.createdBy;
       createdAt = clockSeconds();
-      modifiedAt = ns.createdAt;
+      updatedAt = ns.createdAt;
     }
 
     namespaceRepository.save(ns);
@@ -82,7 +82,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       ns.labels = req.labels;
     if (req.annotations !is null)
       ns.annotations = req.annotations;
-    ns.modifiedAt = clockSeconds();
+    ns.updatedAt = clockSeconds();
 
     namespaceRepository.update(ns);
     return CommandResult(true, id.toString, "");

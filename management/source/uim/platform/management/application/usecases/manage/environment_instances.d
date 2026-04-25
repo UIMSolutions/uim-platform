@@ -63,7 +63,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     inst.serviceQuota = req.serviceQuota;
     inst.createdBy = req.createdBy;
     inst.createdAt = clockSeconds();
-    inst.modifiedAt = inst.createdAt;
+    inst.updatedAt = inst.createdAt;
     inst.parameters = req.parameters;
     inst.labels = req.labels;
 
@@ -99,7 +99,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
       instance.parameters = req.parameters;
     if (req.labels.length > 0)
       instance.labels = req.labels;
-    instance.modifiedAt = clockSeconds();
+    instance.updatedAt = clockSeconds();
 
     repo.update(instance);
     return CommandResult(true, instance.id.toString, "");
@@ -118,7 +118,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Environment cannot be deleted in current status");
 
     instance.status = EnvironmentStatus.deleting;
-    instance.modifiedAt = clockSeconds();
+    instance.updatedAt = clockSeconds();
     repo.update(instance);
 
     // Complete deletion

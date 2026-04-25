@@ -161,6 +161,6 @@ private Json serializeEntitlement(Entitlement e) {
     .set("unlimited", e.unlimited)
     .set("autoAssign", e.autoAssign)
     .set("assignedAt", e.assignedAt)
-    .set("modifiedAt", e.modifiedAt)
+    .set("updatedAt", e.updatedAt)
     .set("assignedBy", e.assignedBy);
 }

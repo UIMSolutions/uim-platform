@@ -173,7 +173,7 @@ private Json serializeGlobalAccount(GlobalAccount ga) {
     .set("maxDirectories", ga.maxDirectories)
     .set("currentDirectories", ga.currentDirectories)
     .set("createdAt", ga.createdAt)
-    .set("modifiedAt", ga.modifiedAt)
+    .set("updatedAt", ga.updatedAt)
     .set("createdBy", ga.createdBy)
     .set("customProperties", ga.customProperties.toJson);
 }

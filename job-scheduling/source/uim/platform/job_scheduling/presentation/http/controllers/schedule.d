@@ -275,6 +275,6 @@ class ScheduleController : PlatformController {
             .set("endTime", s.endTime)
             .set("nextRunAt", s.nextRunAt)
             .set("createdAt", s.createdAt)
-            .set("modifiedAt", s.modifiedAt);
+            .set("updatedAt", s.updatedAt);
     }
 }

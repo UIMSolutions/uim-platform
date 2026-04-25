@@ -35,5 +35,5 @@ struct KymaModule {
   // Metadata
   string enabledBy;
   long enabledAt;
-  long modifiedAt;
+  long updatedAt;
 }

@@ -181,7 +181,7 @@ class ApiRuleController : PlatformController {
     .set("labels", serializeStrMap(rule.labels))
     .set("createdBy", rule.createdBy)
     .set("createdAt", rule.createdAt)
-    .set("modifiedAt", rule.modifiedAt);
+    .set("updatedAt", rule.updatedAt);
 
     auto rulesArr = Json.emptyArray;
     foreach (entry; rule.rules) {

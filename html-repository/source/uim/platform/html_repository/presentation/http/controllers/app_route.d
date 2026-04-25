@@ -109,7 +109,7 @@ class AppRouteController : PlatformController {
         .set("createdBy", entry.createdBy)
         .set("createdAt", entry.createdAt)
         .set("modifiedBy", entry.modifiedBy)
-        .set("modifiedAt", entry.modifiedAt);
+        .set("updatedAt", entry.updatedAt);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e)

@@ -46,7 +46,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.labels = req.labels;
     binding.createdBy = req.createdBy;
     binding.createdAt = clockSeconds();
-    binding.modifiedAt = binding.createdAt;
+    binding.updatedAt = binding.createdAt;
 
     repo.save(binding);
     return CommandResult(true, binding.id.toString, "");
@@ -65,7 +65,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
       binding.parametersJson = req.parametersJson;
     if (req.labels !is null)
       binding.labels = req.labels;
-    binding.modifiedAt = clockSeconds();
+    binding.updatedAt = clockSeconds();
 
     repo.update(binding);
     return CommandResult(true, id.toString, "");

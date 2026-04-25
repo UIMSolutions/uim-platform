@@ -53,7 +53,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     ent.autoAssign = request.autoAssign;
     ent.status = EntitlementStatus.active;
     ent.assignedAt = clockSeconds();
-    ent.modifiedAt = ent.assignedAt;
+    ent.updatedAt = ent.assignedAt;
     ent.assignedBy = request.assignedBy;
 
     repo.save(ent);
@@ -72,7 +72,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     ent.quotaAssigned = request.quotaAssigned;
     ent.unlimited = request.unlimited;
     ent.quotaRemaining = evaluator.calculateRemaining(request.quotaAssigned, ent.quotaUsed);
-    ent.modifiedAt = clockSeconds();
+    ent.updatedAt = clockSeconds();
     repo.update(ent);
     return CommandResult(true, ent.id.toString, "");
   }
@@ -87,7 +87,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
 
     auto ent = repo.findById(id);
     ent.status = EntitlementStatus.revoked;
-    ent.modifiedAt = clockSeconds();
+    ent.updatedAt = clockSeconds();
     repo.update(ent);
     return CommandResult(true, ent.id.toString, "");
   }

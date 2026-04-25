@@ -33,6 +33,6 @@ struct ServicePlan {
   string catalogUrl;
   bool provisionable = true;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
   string[string] metadata;
 }

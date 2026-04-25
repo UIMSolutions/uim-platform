@@ -159,6 +159,6 @@ class NamespaceController : PlatformController {
       .set("annotations", serializeStrMap(ns.annotations))
       .set("createdBy", ns.createdBy)
       .set("createdAt", ns.createdAt)
-      .set("modifiedAt", ns.modifiedAt);
+      .set("updatedAt", ns.updatedAt);
   }
 }

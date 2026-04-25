@@ -329,12 +329,12 @@ F-JS-04: Configuration Management
 │     startTime: long      │    │    │     humanReadable: string    │
 │     endTime: long        │    │    │     repeatInterval: long     │
 │     createdAt: long      │    0..* │     repeatAt: string         │
-│     modifiedAt: long     │         │     time: string             │
+│     updatedAt: long     │         │     time: string             │
 └──────────────────────────┘         │     startTime: long          │
                                      │     endTime: long            │
                                      │     nextRunAt: long          │
                                      │     createdAt: long          │
-                                     │     modifiedAt: long         │
+                                     │     updatedAt: long         │
                                      └──────────┬───────────────────┘
                                            1    │
                                                 │    0..*
@@ -366,7 +366,7 @@ F-JS-04: Configuration Management
 │     enableAsyncMode: bool    │
 │     enableAlertNotifications │
 │     createdAt: long          │
-│     modifiedAt: long         │
+│     updatedAt: long         │
 └──────────────────────────────┘
 ```
 

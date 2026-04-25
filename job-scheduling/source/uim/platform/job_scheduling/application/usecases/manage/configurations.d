@@ -57,7 +57,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
             c.enableAsyncMode = request.enableAsyncMode;
             c.enableAlertNotifications = request.enableAlertNotifications;
             c.createdAt = now;
-            c.modifiedAt = now;
+            c.updatedAt = now;
             repo.save(c);
             return CommandResult(true, c.id, "");
         }
@@ -68,7 +68,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
         existing.maxRunDurationMs = request.maxRunDurationMs;
         existing.enableAsyncMode = request.enableAsyncMode;
         existing.enableAlertNotifications = request.enableAlertNotifications;
-        existing.modifiedAt = now;
+        existing.updatedAt = now;
 
         repo.update(existing);
         return CommandResult(true, existing.id.toString, "");

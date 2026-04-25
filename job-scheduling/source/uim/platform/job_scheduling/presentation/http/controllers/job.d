@@ -237,7 +237,7 @@ class JobController : PlatformController {
             .set("startTime", job.startTime)
             .set("endTime", job.endTime)
             .set("createdAt", job.createdAt)
-            .set("modifiedAt", job.modifiedAt);
+            .set("updatedAt", job.updatedAt);
     }
 
     private static string httpMethodStr(uim.platform.job_scheduling.domain.types.HttpMethod m) {

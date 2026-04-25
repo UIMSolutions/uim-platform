@@ -41,7 +41,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     directory.manageAuthorizations = req.manageAuthorizations;
     directory.createdBy = req.createdBy;
     directory.createdAt = clockSeconds();
-    directory.modifiedAt = directory.createdAt;
+    directory.updatedAt = directory.createdAt;
     directory.labels = req.labels;
     directory.customProperties = req.customProperties;
 
@@ -66,7 +66,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
       directory.labels = req.labels;
     if (req.customProperties.length > 0)
       directory.customProperties = req.customProperties;
-    directory.modifiedAt = clockSeconds();
+    directory.updatedAt = clockSeconds();
 
     repo.update(directory);
     return CommandResult(true, directory.id.toString, "");

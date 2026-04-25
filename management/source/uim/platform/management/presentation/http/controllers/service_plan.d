@@ -161,7 +161,7 @@ private Json serializeServicePlan(ServicePlan plan) {
     .set("providerDisplayName", plan.providerDisplayName)
     .set("provisionable", plan.provisionable)
     .set("createdAt", plan.createdAt)
-    .set("modifiedAt", plan.modifiedAt)
+    .set("updatedAt", plan.updatedAt)
     .set("metadata", plan.metadata);
 }
 

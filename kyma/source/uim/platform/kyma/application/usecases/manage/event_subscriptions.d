@@ -53,7 +53,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.labels = req.labels;
     sub.createdBy = req.createdBy;
     sub.createdAt = clockSeconds();
-    sub.modifiedAt = sub.createdAt;
+    sub.updatedAt = sub.createdAt;
 
     subscriptionRepository.save(sub);
     return CommandResult(true, sub.id.toString, "");
@@ -85,7 +85,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
       sub.filterAttributes = request.filterAttributes;
     if (request.labels !is null)
       sub.labels = request.labels;
-    sub.modifiedAt = clockSeconds();
+    sub.updatedAt = clockSeconds();
 
     subscriptionRepository.update(sub);
     return CommandResult(true, subscriptionId.toString(), "");
@@ -101,7 +101,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     
     auto sub = subscriptionRepository.findById(subscriptionId);
     sub.status = SubscriptionStatus.paused;
-    sub.modifiedAt = clockSeconds();
+    sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
     return CommandResult(true, subscriptionId.toString(), "");
   }
@@ -116,7 +116,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     
     auto sub = subscriptionRepository.findById(subscriptionId);
     sub.status = SubscriptionStatus.active;
-    sub.modifiedAt = clockSeconds();
+    sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
     return CommandResult(true, subscriptionId.toString(), "");
   }

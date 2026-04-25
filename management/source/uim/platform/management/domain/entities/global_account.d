@@ -31,7 +31,7 @@ struct GlobalAccount {
   string[] enabledServices; // list of entitled service names
   long renewalDate;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
   string createdBy;
   string[string] customProperties;
 }

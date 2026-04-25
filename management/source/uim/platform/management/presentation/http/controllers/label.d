@@ -137,5 +137,5 @@ private Json serializeLabel(Label label) {
   .set("values", label.values.toJson)
   .set("createdBy", label.createdBy)
   .set("createdAt", label.createdAt)
-  .set("modifiedAt", label.modifiedAt);
+  .set("updatedAt", label.updatedAt);
 }

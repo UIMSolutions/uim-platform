@@ -164,6 +164,6 @@ class ServiceInstanceController : PlatformController {
      .set("bindingCount", inst.bindingCount)
      .set("createdBy", inst.createdBy)
      .set("createdAt", inst.createdAt)
-     .set("modifiedAt", inst.modifiedAt);
+     .set("updatedAt", inst.updatedAt);
   }
 }

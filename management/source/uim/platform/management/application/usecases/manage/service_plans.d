@@ -45,7 +45,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.supportedPlatforms = req.supportedPlatforms;
     plan.providerDisplayName = req.providerDisplayName;
     plan.createdAt = clockSeconds();
-    plan.modifiedAt = plan.createdAt;
+    plan.updatedAt = plan.createdAt;
     plan.metadata = req.metadata;
 
     servicePlans.save(plan);
@@ -73,7 +73,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.provisionable = req.provisionable;
     if (req.metadata.length > 0)
       plan.metadata = req.metadata;
-    plan.modifiedAt = clockSeconds();
+    plan.updatedAt = clockSeconds();
 
     servicePlans.update(plan);
     return CommandResult(true, id.toString, "");

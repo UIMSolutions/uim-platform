@@ -53,7 +53,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.usedForProduction = req.usedForProduction;
     subaccount.status = SubaccountStatus.creating;
     subaccount.createdAt = clockSeconds();
-    subaccount.modifiedAt = subaccount.createdAt;
+    subaccount.updatedAt = subaccount.createdAt;
     subaccount.createdBy = req.createdBy;
     subaccount.labels = req.labels;
     subaccount.customProperties = req.customProperties;
@@ -91,7 +91,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       subaccount.labels = req.labels;
     if (req.customProperties.length > 0)
       subaccount.customProperties = req.customProperties;
-    subaccount.modifiedAt = clockSeconds();
+    subaccount.updatedAt = clockSeconds();
 
     repository.update(subaccount);
     return CommandResult(true, id.toString, "");
@@ -111,7 +111,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
 
     subaccount.status = SubaccountStatus.moveInProgress;
     subaccount.parentDirectoryId = req.targetDirectoryId;
-    subaccount.modifiedAt = clockSeconds();
+    subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
 
     // Complete move
@@ -133,7 +133,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Only active subaccounts can be suspended");
 
     subaccount.status = SubaccountStatus.suspended;
-    subaccount.modifiedAt = clockSeconds();
+    subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }
@@ -151,7 +151,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
 
     subaccount.status = SubaccountStatus.active;
-    subaccount.modifiedAt = clockSeconds();
+    subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }

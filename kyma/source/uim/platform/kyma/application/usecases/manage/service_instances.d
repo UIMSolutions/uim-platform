@@ -49,7 +49,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     inst.labels = req.labels;
     inst.createdBy = req.createdBy;
     inst.createdAt = clockSeconds();
-    inst.modifiedAt = inst.createdAt;
+    inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
     return CommandResult(true, inst.id.toString, "");
@@ -71,7 +71,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     if (req.labels !is null)
       inst.labels = req.labels;
     inst.status = ServiceInstanceStatus.updating;
-    inst.modifiedAt = clockSeconds();
+    inst.updatedAt = clockSeconds();
 
     repo.update(inst);
     return CommandResult(true, id.toString, "");

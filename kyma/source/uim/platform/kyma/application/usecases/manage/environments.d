@@ -51,7 +51,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     env.administrators = req.administrators;
     env.createdBy = req.createdBy;
     env.createdAt = clockSeconds();
-    env.modifiedAt = env.createdAt;
+    env.updatedAt = env.createdAt;
 
     repo.save(env);
     return CommandResult(true, env.id.toString, "");
@@ -82,7 +82,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
       env.oidcClientId = req.oidcClientId;
     if (req.administrators.length > 0)
       env.administrators = req.administrators;
-    env.modifiedAt = clockSeconds();
+    env.updatedAt = clockSeconds();
 
     repo.update(env);
     return CommandResult(true, env.id.toString, "");

@@ -202,7 +202,7 @@ class ApplicationController : PlatformController {
       .set("labels", serializeStrMap(app.labels))
       .set("createdBy", app.createdBy)
       .set("createdAt", app.createdAt)
-      .set("modifiedAt", app.modifiedAt);
+      .set("updatedAt", app.updatedAt);
 
     auto apisArr = Json.emptyArray;
     foreach (a; app.apis) {

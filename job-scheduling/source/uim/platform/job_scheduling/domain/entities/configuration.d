@@ -20,5 +20,5 @@ struct Configuration {
     bool enableAsyncMode;
     bool enableAlertNotifications;
     long createdAt;
-    long modifiedAt;
+    long updatedAt;
 }

@@ -208,6 +208,6 @@ class EventSubscriptionController : PlatformController {
     .set("labels", sub.labels.toJson)  
     .set("createdBy", sub.createdBy)
     .set("createdAt", sub.createdAt)
-    .set("modifiedAt", sub.modifiedAt);
+    .set("updatedAt", sub.updatedAt);
   }
 }

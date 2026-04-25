@@ -21,5 +21,5 @@ struct Label {
   string[] values; // one or more values for this key
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }

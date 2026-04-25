@@ -47,7 +47,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.planName = request.planName;
     subscription.status = SubscriptionStatus.subscribing;
     subscription.subscribedAt = clockSeconds();
-    subscription.modifiedAt = subscription.subscribedAt;
+    subscription.updatedAt = subscription.subscribedAt;
     subscription.subscribedBy = request.subscribedBy;
     subscription.parameters = request.parameters;
     subscription.labels = request.labels;
@@ -79,7 +79,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subscription must be in subscribed status");
 
     subscription.status = SubscriptionStatus.unsubscribing;
-    subscription.modifiedAt = clockSeconds();
+    subscription.updatedAt = clockSeconds();
     repo.update(subscription);
 
     // Complete unsubscription
@@ -105,7 +105,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
       subscription.planName = req.planName;
     if (req.parameters.length > 0)
       subscription.parameters = req.parameters;
-    subscription.modifiedAt = clockSeconds();
+    subscription.updatedAt = clockSeconds();
 
     repo.update(subscription);
     return CommandResult(true, subscription.id.toString, "");

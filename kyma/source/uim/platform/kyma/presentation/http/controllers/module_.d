@@ -167,6 +167,6 @@ class ModuleController : PlatformController {
      .set("requiredModules", serializeStrArray(m.requiredModules))
      .set("enabledBy", m.enabledBy)
      .set("enabledAt", m.enabledAt)
-     .set("modifiedAt", m.modifiedAt);
+     .set("updatedAt", m.updatedAt);
   }
 }

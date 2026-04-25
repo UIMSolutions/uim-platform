@@ -134,7 +134,7 @@ private Json serializeSubscription(Subscription s) {
     .set("tenantId", s.tenantId)
     .set("isSubscriptionDone", s.isSubscriptionDone)
     .set("subscribedAt", s.subscribedAt)
-    .set("modifiedAt", s.modifiedAt)
+    .set("updatedAt", s.updatedAt)
     .set("subscribedBy", s.subscribedBy)
     .set("parameters", s.parameters)
     .set("labels", s.labels);

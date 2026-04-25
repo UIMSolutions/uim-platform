@@ -186,6 +186,6 @@ class FunctionController : PlatformController {
      .set("timeoutSeconds", fn.timeoutSeconds)
      .set("createdBy", fn.createdBy)
      .set("createdAt", fn.createdAt)
-     .set("modifiedAt", fn.modifiedAt);
+     .set("updatedAt", fn.updatedAt);
   }
 }

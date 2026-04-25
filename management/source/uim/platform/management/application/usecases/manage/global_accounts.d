@@ -45,7 +45,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.maxSubaccounts = req.maxSubaccounts > 0 ? req.maxSubaccounts : 100;
     globalAccount.maxDirectories = req.maxDirectories > 0 ? req.maxDirectories : 20;
     globalAccount.createdAt = clockSeconds();
-    globalAccount.modifiedAt = globalAccount.createdAt;
+    globalAccount.updatedAt = globalAccount.createdAt;
     globalAccount.createdBy = req.createdBy;
     globalAccount.customProperties = req.customProperties;
 
@@ -75,7 +75,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       globalAccount.contactEmail = req.contactEmail;
     if (req.customProperties.length > 0)
       globalAccount.customProperties = req.customProperties;
-    globalAccount.modifiedAt = clockSeconds();
+    globalAccount.updatedAt = clockSeconds();
 
     repo.update(globalAccount);
     return CommandResult(true, id.toString, "");
@@ -94,7 +94,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Only active accounts can be suspended");
 
     globalAccount.status = GlobalAccountStatus.suspended;
-    globalAccount.modifiedAt = clockSeconds();
+    globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
 
     emitEvent(eventRepo, accountId.toString, "", PlatformEventCategory.globalAccountChange,
@@ -115,7 +115,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Only suspended accounts can be reactivated");
 
     globalAccount.status = GlobalAccountStatus.active;
-    globalAccount.modifiedAt = clockSeconds();
+    globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
     return CommandResult(true, accountId.toString, "");
   }

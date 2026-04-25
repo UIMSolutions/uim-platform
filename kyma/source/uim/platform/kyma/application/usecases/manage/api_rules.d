@@ -55,7 +55,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       labels = req.labels;
       createdBy = req.createdBy;
       createdAt = clockSeconds();
-      modifiedAt = createdAt;
+      updatedAt = createdAt;
     }
 
     // Convert rule entry DTOs
@@ -124,7 +124,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       }
       rule.rules = entries;
     }
-    rule.modifiedAt = clockSeconds();
+    rule.updatedAt = clockSeconds();
 
     ruleRepository.update(rule);
     return CommandResult(true, id.toString, "");

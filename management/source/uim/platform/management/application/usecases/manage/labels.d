@@ -38,7 +38,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     label.values = req.values;
     label.createdBy = req.createdBy;
     label.createdAt = clockSeconds();
-    label.modifiedAt = label.createdAt;
+    label.updatedAt = label.createdAt;
 
     labels.save(label);
     return CommandResult(true, label.id.toString, "");
@@ -54,7 +54,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
 
     Label label = labels.findById(id);
     label.values = req.values;
-    label.modifiedAt = clockSeconds();
+    label.updatedAt = clockSeconds();
     labels.update(label);
     return CommandResult(true, label.id.toString, "");
   }
