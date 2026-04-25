@@ -40,7 +40,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.cronSchedule = req.cronSchedule;
     model.createdBy = req.createdBy;
     model.createdAt = clockSeconds();
-    model.modifiedAt = model.createdAt;
+    model.updatedAt = model.createdAt;
 
     repo.save(model);
     return CommandResult(true, id.toString, "");
@@ -68,7 +68,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.autoReplicate = req.autoReplicate;
     if (req.cronSchedule.length > 0)
       model.cronSchedule = req.cronSchedule;
-    model.modifiedAt = clockSeconds();
+    model.updatedAt = clockSeconds();
 
     repo.update(model);
     return CommandResult(true, id.toString, "");
@@ -79,7 +79,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.active;
-    model.modifiedAt = clockSeconds();
+    model.updatedAt = clockSeconds();
     repo.update(model);
     return CommandResult(true, id.toString, "");
   }
@@ -89,7 +89,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.inactive;
-    model.modifiedAt = clockSeconds();
+    model.updatedAt = clockSeconds();
     repo.update(model);
     return CommandResult(true, id.toString, "");
   }

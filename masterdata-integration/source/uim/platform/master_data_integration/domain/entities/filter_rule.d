@@ -26,7 +26,7 @@ struct FilterRule {
   bool isActive;
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
 }
 
 /// A single filter condition.

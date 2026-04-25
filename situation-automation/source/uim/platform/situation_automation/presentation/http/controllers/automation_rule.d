@@ -110,7 +110,7 @@ class AutomationRuleController : PlatformController {
             resp["createdBy"] = Json(r.createdBy);
             resp["modifiedBy"] = Json(r.modifiedBy);
             resp["createdAt"] = Json(r.createdAt);
-            resp["modifiedAt"] = Json(r.modifiedAt);
+            resp["updatedAt"] = Json(r.updatedAt);
             resp["lastTriggeredAt"] = Json(r.lastTriggeredAt);
             resp["triggerCount"] = Json(r.triggerCount);
             resp["successCount"] = Json(r.successCount);

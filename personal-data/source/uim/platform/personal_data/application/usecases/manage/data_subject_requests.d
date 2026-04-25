@@ -84,7 +84,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         }
 
         existing.modifiedBy = r.modifiedBy;
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

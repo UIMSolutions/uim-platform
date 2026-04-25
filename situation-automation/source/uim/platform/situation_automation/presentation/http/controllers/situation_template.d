@@ -80,7 +80,7 @@ class SituationTemplateController : PlatformController {
                     .set("sourceSystem", t.sourceSystem)
                     .set("createdBy", t.createdBy)
                     .set("createdAt", t.createdAt)
-                    .set("modifiedAt", t.modifiedAt);
+                    .set("updatedAt", t.updatedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -119,7 +119,7 @@ class SituationTemplateController : PlatformController {
             resp["createdBy"] = Json(t.createdBy);
             resp["modifiedBy"] = Json(t.modifiedBy);
             resp["createdAt"] = Json(t.createdAt);
-            resp["modifiedAt"] = Json(t.modifiedAt);
+            resp["updatedAt"] = Json(t.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

@@ -41,7 +41,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.certificateRef = req.certificateRef;
     client.createdBy = req.createdBy;
     client.createdAt = clockSeconds();
-    client.modifiedAt = client.createdAt;
+    client.updatedAt = client.createdAt;
 
     repo.save(client);
     return CommandResult(true, id.toString, "");
@@ -72,7 +72,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       client.clientIdRef = req.clientIdRef;
     if (req.certificateRef.length > 0)
       client.certificateRef = req.certificateRef;
-    client.modifiedAt = clockSeconds();
+    client.updatedAt = clockSeconds();
 
     repo.update(client);
     return CommandResult(true, id.toString, "");
@@ -84,7 +84,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client not found");
     client.status = ClientStatus.connected;
     client.lastSyncAt = clockSeconds();
-    client.modifiedAt = client.lastSyncAt;
+    client.updatedAt = client.lastSyncAt;
     repo.update(client);
     return CommandResult(true, id.toString, "");
   }
@@ -94,7 +94,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (client.id.isEmpty)
       return CommandResult(false, "", "Client not found");
     client.status = ClientStatus.disconnected;
-    client.modifiedAt = clockSeconds();
+    client.updatedAt = clockSeconds();
     repo.update(client);
     return CommandResult(true, id.toString, "");
   }

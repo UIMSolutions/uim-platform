@@ -193,7 +193,7 @@ class ClientController : PlatformController {
       .set("authType", Json(c.authType))
       .set("createdBy", Json(c.createdBy))
       .set("createdAt", Json(c.createdAt))
-      .set("modifiedAt", Json(c.modifiedAt))
+      .set("updatedAt", Json(c.updatedAt))
       .set("lastSyncAt", Json(c.lastSyncAt));
   }
 }

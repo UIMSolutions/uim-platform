@@ -46,7 +46,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     obj.versionNumber = 1;
     obj.createdBy = req.createdBy;
     obj.createdAt = clockSeconds();
-    obj.modifiedAt = obj.createdAt;
+    obj.updatedAt = obj.createdAt;
     obj.modifiedBy = req.createdBy;
 
     repo.save(obj);
@@ -91,7 +91,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
     // import std.uuid : randomUUID;
     obj.currentVersion = randomUUID();
-    obj.modifiedAt = clockSeconds();
+    obj.updatedAt = clockSeconds();
     obj.modifiedBy = req.modifiedBy;
 
     repo.update(obj);

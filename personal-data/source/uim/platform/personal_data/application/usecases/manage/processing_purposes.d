@@ -66,7 +66,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.dataProtectionOfficer.length > 0) existing.dataProtectionOfficer = r.dataProtectionOfficer;
         existing.requiresConsent = r.requiresConsent;
         existing.modifiedBy = r.modifiedBy;
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

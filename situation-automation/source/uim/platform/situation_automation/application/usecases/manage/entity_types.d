@@ -37,7 +37,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         e.createdAt = now;
-        e.modifiedAt = now;
+        e.updatedAt = now;
 
         repo.save(e);
         return CommandResult(true, e.id, "");
@@ -61,7 +61,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

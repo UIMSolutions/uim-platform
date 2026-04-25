@@ -38,7 +38,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     model.isActive = true;
     model.createdBy = req.createdBy;
     model.createdAt = clockSeconds();
-    model.modifiedAt = model.createdAt;
+    model.updatedAt = model.createdAt;
 
     repo.save(model);
     return CommandResult(true, id.toString, "");
@@ -59,7 +59,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
       model.keyFields = req.keyFields;
     if (req.requiredFields.length > 0)
       model.requiredFields = req.requiredFields;
-    model.modifiedAt = clockSeconds();
+    model.updatedAt = clockSeconds();
 
     repo.update(model);
     return CommandResult(true, id.toString, "");

@@ -108,7 +108,7 @@ class TriggerController : PlatformController {
             resp["filterExpression"] = Json(t.filterExpression);
             resp["createdBy"] = Json(t.createdBy);
             resp["createdAt"] = Json(t.createdAt);
-            resp["modifiedAt"] = Json(t.modifiedAt);
+            resp["updatedAt"] = Json(t.updatedAt);
             resp["lastFiredAt"] = Json(t.lastFiredAt);
             resp["fireCount"] = Json(t.fireCount);
             res.writeJsonBody(resp, 200);

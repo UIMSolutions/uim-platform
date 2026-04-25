@@ -37,7 +37,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.isActive = true;
     rule.createdBy = req.createdBy;
     rule.createdAt = clockSeconds();
-    rule.modifiedAt = rule.createdAt;
+    rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
     return CommandResult(true, id.toString, "");
@@ -57,7 +57,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     if (req.logicOperator.length > 0)
       rule.logicOperator = req.logicOperator;
     rule.isActive = req.isActive;
-    rule.modifiedAt = clockSeconds();
+    rule.updatedAt = clockSeconds();
 
     repo.update(rule);
     return CommandResult(true, id.toString, "");

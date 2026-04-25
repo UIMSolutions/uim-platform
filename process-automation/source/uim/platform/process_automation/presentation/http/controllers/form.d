@@ -76,7 +76,7 @@ class FormController : PlatformController {
 
                 
 
-                .set("modifiedAt", f.modifiedAt);
+                .set("updatedAt", f.updatedAt);
             }
 
             auto resp = Json.emptyObject
@@ -110,7 +110,7 @@ class FormController : PlatformController {
                 .set("createdBy", f.createdBy)
                 .set("modifiedBy", f.modifiedBy)
                 .set("createdAt", f.createdAt)
-                .set("modifiedAt", f.modifiedAt);
+                .set("updatedAt", f.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

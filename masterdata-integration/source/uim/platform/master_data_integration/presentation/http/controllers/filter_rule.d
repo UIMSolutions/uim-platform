@@ -177,6 +177,6 @@ class FilterRuleController : PlatformController {
     .set("conditions", condsArr)
     .set("createdBy", r.createdBy)
     .set("createdAt", r.createdAt)
-    .set("modifiedAt", r.modifiedAt);
+    .set("updatedAt", r.updatedAt);
   }
 }

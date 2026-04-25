@@ -35,7 +35,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     mapping.objectType = req.objectType;
     mapping.entries = toEntries(req.entries);
     mapping.createdAt = clockSeconds();
-    mapping.modifiedAt = mapping.createdAt;
+    mapping.updatedAt = mapping.createdAt;
 
     if (!resolver.isValid(mapping))
       return CommandResult(false, "",
@@ -52,7 +52,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
 
     if (req.entries.length > 0)
       mapping.entries = toEntries(req.entries);
-    mapping.modifiedAt = clockSeconds();
+    mapping.updatedAt = clockSeconds();
 
     if (!resolver.isValid(mapping))
       return CommandResult(false, "", "Invalid key mapping: must have exactly one primary entry");

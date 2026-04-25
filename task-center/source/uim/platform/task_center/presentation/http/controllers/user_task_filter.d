@@ -179,6 +179,6 @@ class UserTaskFilterController : PlatformController {
             .set("description", f.description)
             .set("isDefault", f.isDefault)
             .set("createdAt", f.createdAt)
-            .set("modifiedAt", f.modifiedAt);
+            .set("updatedAt", f.updatedAt);
     }
 }

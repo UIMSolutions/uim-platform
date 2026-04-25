@@ -40,7 +40,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         rule.createdAt = now;
-        rule.modifiedAt = now;
+        rule.updatedAt = now;
 
         repo.save(rule);
         return CommandResult(true, rule.id, "");
@@ -74,7 +74,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

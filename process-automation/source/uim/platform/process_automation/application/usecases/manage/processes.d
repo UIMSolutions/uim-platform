@@ -39,7 +39,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         p.createdAt = now;
-        p.modifiedAt = now;
+        p.updatedAt = now;
 
         repo.save(p);
         return CommandResult(true, p.id, "");
@@ -68,7 +68,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");
@@ -91,7 +91,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         }
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

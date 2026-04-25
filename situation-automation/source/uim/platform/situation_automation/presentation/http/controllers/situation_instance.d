@@ -79,7 +79,7 @@ class SituationInstanceController : PlatformController {
                 .set("assignedTo", i.assignedTo)
                 .set("detectedAt", i.detectedAt)
                 .set("dueAt", i.dueAt)
-                .set("modifiedAt", i.modifiedAt);
+                .set("updatedAt", i.updatedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -116,7 +116,7 @@ class SituationInstanceController : PlatformController {
             resp["retryCount"] = Json(i.retryCount);
             resp["detectedAt"] = Json(i.detectedAt);
             resp["dueAt"] = Json(i.dueAt);
-            resp["modifiedAt"] = Json(i.modifiedAt);
+            resp["updatedAt"] = Json(i.updatedAt);
 
             auto resInfo = Json.emptyObject;
             resInfo["type"] = Json(i.resolution.type.to!string);

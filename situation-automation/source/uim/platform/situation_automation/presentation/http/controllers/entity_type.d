@@ -101,7 +101,7 @@ class EntityTypeController : PlatformController {
             resp["createdBy"] = Json(et.createdBy);
             resp["modifiedBy"] = Json(et.modifiedBy);
             resp["createdAt"] = Json(et.createdAt);
-            resp["modifiedAt"] = Json(et.modifiedAt);
+            resp["updatedAt"] = Json(et.updatedAt);
             resp["relatedTemplateIds"] = stringsToJsonArray(et.relatedTemplateIds);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

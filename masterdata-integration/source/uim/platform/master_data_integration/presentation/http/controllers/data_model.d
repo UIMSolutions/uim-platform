@@ -194,6 +194,6 @@ class DataModelController : PlatformController {
     .set("fields", fieldsArr)
     .set("createdBy", Json(m.createdBy))
     .set("createdAt", Json(m.createdAt))
-    .set("modifiedAt", Json(m.modifiedAt));
+    .set("updatedAt", Json(m.updatedAt));
   }
 } 

@@ -40,7 +40,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         d.createdAt = now;
-        d.modifiedAt = now;
+        d.updatedAt = now;
 
         repo.save(d);
         return CommandResult(true, d.id, "");
@@ -65,7 +65,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

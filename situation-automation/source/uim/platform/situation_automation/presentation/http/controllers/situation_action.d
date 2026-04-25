@@ -112,7 +112,7 @@ class SituationActionController : PlatformController {
             resp["createdBy"] = Json(a.createdBy);
             resp["modifiedBy"] = Json(a.modifiedBy);
             resp["createdAt"] = Json(a.createdAt);
-            resp["modifiedAt"] = Json(a.modifiedAt);
+            resp["updatedAt"] = Json(a.updatedAt);
             resp["lastExecutedAt"] = Json(a.lastExecutedAt);
             resp["executionCount"] = Json(a.executionCount);
 

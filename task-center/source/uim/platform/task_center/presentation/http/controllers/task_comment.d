@@ -145,6 +145,6 @@ class TaskCommentController : PlatformController {
             .set("author", c.author)
             .set("content", c.content)
             .set("createdAt", c.createdAt)
-            .set("modifiedAt", c.modifiedAt);
+            .set("updatedAt", c.updatedAt);
     }
 }

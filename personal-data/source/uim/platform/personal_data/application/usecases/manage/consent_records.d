@@ -85,7 +85,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
 
         existing.status = ConsentStatus.withdrawn;
         existing.withdrawnAt = clockTime();
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

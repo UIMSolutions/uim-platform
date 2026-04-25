@@ -167,6 +167,6 @@ class DataSubjectRequestController : PlatformController {
         .set("rejectionReason", r.rejectionReason)
         .set("createdBy", r.createdBy)
         .set("createdAt", r.createdAt)
-        .set("modifiedAt", r.modifiedAt);
+        .set("updatedAt", r.updatedAt);
     }
 }

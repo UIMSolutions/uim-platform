@@ -73,7 +73,7 @@ class AutomationController : PlatformController {
                     .set("targetApplication", a.targetApplication)
                     .set("version", a.version_)
                     .set("createdAt", a.createdAt)
-                    .set("modifiedAt", a.modifiedAt);
+                    .set("updatedAt", a.updatedAt);
             }
 
             auto resp = Json.emptyObject
@@ -109,7 +109,7 @@ class AutomationController : PlatformController {
                 .set("createdBy", a.createdBy)
                 .set("modifiedBy", a.modifiedBy)
                 .set("createdAt", a.createdAt)
-                .set("modifiedAt", a.modifiedAt);
+                .set("updatedAt", a.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

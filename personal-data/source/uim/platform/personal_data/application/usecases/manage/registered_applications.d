@@ -61,7 +61,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         if (r.contactEmail.length > 0) existing.contactEmail = r.contactEmail;
         if (r.contactName.length > 0) existing.contactName = r.contactName;
         existing.modifiedBy = r.modifiedBy;
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");
@@ -72,7 +72,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
         repo.update(existing);
         return CommandResult(true, existing.id, "");
     }
@@ -82,7 +82,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.suspended;
-        existing.modifiedAt = clockTime();
+        existing.updatedAt = clockTime();
         repo.update(existing);
         return CommandResult(true, existing.id, "");
     }

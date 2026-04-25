@@ -174,7 +174,7 @@ class MasterDataController : PlatformController {
       .set("sourceClient", Json(o.sourceClient))
       .set("createdBy", Json(o.createdBy))
       .set("createdAt", Json(o.createdAt))
-      .set("modifiedAt", Json(o.modifiedAt))
+      .set("updatedAt", Json(o.updatedAt))
       .set("modifiedBy", Json(o.modifiedBy));
   }
 }

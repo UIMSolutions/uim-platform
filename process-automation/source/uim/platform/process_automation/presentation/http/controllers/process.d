@@ -72,7 +72,7 @@ class ProcessController : PlatformController {
                 .set("version", p.version_)
                 .set("createdBy", p.createdBy)
                 .set("createdAt", p.createdAt)
-                .set("modifiedAt", p.modifiedAt);
+                .set("updatedAt", p.updatedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -106,7 +106,7 @@ class ProcessController : PlatformController {
             resp["createdBy"] = Json(p.createdBy);
             resp["modifiedBy"] = Json(p.modifiedBy);
             resp["createdAt"] = Json(p.createdAt);
-            resp["modifiedAt"] = Json(p.modifiedAt);
+            resp["updatedAt"] = Json(p.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

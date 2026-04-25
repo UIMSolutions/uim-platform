@@ -9,6 +9,10 @@ mixin(ShowModule!());
 class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   protected TEntity[TId] store;
 
+  TEntity[] findAll() {
+    return store.byValue.array;
+  }
+
   bool existsById(TId id) {
     return (id in store) !is null;
   }
@@ -29,11 +33,6 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   }
   void removeAllById(TId[] ids) {
     ids.each!(id => removeById(id));
-  }
-
-
-  TEntity[] findAll() {
-    return store.byValue.array;
   }
 
   void save(TEntity entity) {

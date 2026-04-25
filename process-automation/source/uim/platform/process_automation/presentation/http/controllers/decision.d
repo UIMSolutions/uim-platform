@@ -75,7 +75,7 @@ class DecisionController : PlatformController {
                     .set("type", d.type.to!string)
                     .set("version", d.version_)
                     .set("createdAt", d.createdAt)
-                    .set("modifiedAt", d.modifiedAt);
+                    .set("updatedAt", d.updatedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -110,7 +110,7 @@ class DecisionController : PlatformController {
             resp["createdBy"] = Json(d.createdBy);
             resp["modifiedBy"] = Json(d.modifiedBy);
             resp["createdAt"] = Json(d.createdAt);
-            resp["modifiedAt"] = Json(d.modifiedAt);
+            resp["updatedAt"] = Json(d.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

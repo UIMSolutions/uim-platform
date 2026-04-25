@@ -39,7 +39,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         v.createdAt = now;
-        v.modifiedAt = now;
+        v.updatedAt = now;
 
         repo.save(v);
         return CommandResult(true, v.id, "");
@@ -64,7 +64,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

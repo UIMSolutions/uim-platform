@@ -192,6 +192,6 @@ class KeyMappingController : PlatformController {
       .set("objectType", m.objectType)
       .set("entries", entriesArr)
       .set("createdAt", Json(m.createdAt))
-      .set("modifiedAt", Json(m.modifiedAt));
+      .set("updatedAt", Json(m.updatedAt));
   }
 }

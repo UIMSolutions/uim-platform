@@ -187,6 +187,6 @@ class DistributionController : PlatformController {
       .set("cronSchedule", m.cronSchedule)
       .set("createdBy", m.createdBy)
       .set("createdAt", m.createdAt)
-      .set("modifiedAt", m.modifiedAt);
+      .set("updatedAt", m.updatedAt);
   }
 }

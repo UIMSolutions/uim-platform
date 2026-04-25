@@ -40,7 +40,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
         f.createdAt = now;
-        f.modifiedAt = now;
+        f.updatedAt = now;
 
         repo.save(f);
         return CommandResult(true, f.id, "");
@@ -65,7 +65,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         existing.modifiedBy = r.modifiedBy;
 
         import core.time : MonoTime;
-        existing.modifiedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
         return CommandResult(true, existing.id, "");

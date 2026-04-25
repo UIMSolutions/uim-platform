@@ -35,6 +35,6 @@ struct Client {
   // Metadata
   string createdBy;
   long createdAt;
-  long modifiedAt;
+  long updatedAt;
   long lastSyncAt;
 }

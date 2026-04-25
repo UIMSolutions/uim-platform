@@ -68,7 +68,7 @@ class VisibilityController : PlatformController {
                 .set("status", v.status.to!string)
                 .set("dashboardType", v.dashboardType.to!string)
                 .set("createdAt", v.createdAt)
-                .set("modifiedAt", v.modifiedAt);
+                .set("updatedAt", v.updatedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -102,7 +102,7 @@ class VisibilityController : PlatformController {
             resp["createdBy"] = Json(v.createdBy);
             resp["modifiedBy"] = Json(v.modifiedBy);
             resp["createdAt"] = Json(v.createdAt);
-            resp["modifiedAt"] = Json(v.modifiedAt);
+            resp["updatedAt"] = Json(v.updatedAt);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
