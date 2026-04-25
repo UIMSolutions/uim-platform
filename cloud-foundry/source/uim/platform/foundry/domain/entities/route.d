@@ -18,7 +18,7 @@ struct Route {
   mixin TenantEntity!(RouteId);
 
   SpaceId spaceId; // the space this route belongs to
-  DomainId domainId; // the domain this route is associated with
+  CfDomainId domainId; // the domain this route is associated with
   string host; // subdomain portion (e.g. "myapp")
   string path; // URL path prefix (e.g. "/api")
   int port; // port number for TCP routes

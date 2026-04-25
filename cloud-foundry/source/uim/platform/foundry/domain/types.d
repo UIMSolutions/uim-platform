@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.types;
+
 import uim.platform.foundry;
 
 mixin(ShowModule!());
@@ -70,7 +71,7 @@ struct RouteId {
   mixin DomainId;
 }
 
-struct DomainId {
+struct CfDomainId {
   string value;
 
   this(string value) {
@@ -133,7 +134,7 @@ enum AppState {
 }
 
 AppState parseAppState(string state) {
-  switch (state ) {
+  switch (state) {
   case "stopped":
     return AppState.stopped;
   case "started":
@@ -187,7 +188,6 @@ RouteProtocol parseRouteProtocol(string s) {
     return RouteProtocol.http;
   }
 }
-
 
 /// Domain ownership scope.
 enum DomainScope {

@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// A service instance — a provisioned instance of a marketplace service
 /// (e.g. XSUAA, HANA, Destination Service) within a space.
 struct ServiceInstance {
-  ServiceInstanceId id;
+  mixin TenantEntity!ServiceInstanceId;
+
   SpaceId spaceId;
-  TenantId tenantId;
   string name;
   string serviceName; // e.g. "xsuaa", "hana", "destination"
   string servicePlanName; // e.g. "lite", "standard", "application"
@@ -24,7 +24,4 @@ struct ServiceInstance {
   string parameters; // JSON string of creation parameters
   string dashboardUrl;
   string tags; // comma-separated tags
-  string createdBy;
-  long createdAt;
-  long updatedAt;
 }

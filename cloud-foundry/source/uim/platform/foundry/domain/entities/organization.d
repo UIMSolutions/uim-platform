@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.organization;
 
-import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.types;
+import uim.platform.foundry;
 
+mixin(ShowModule!());
+
+@safe:
 /// An organization — the top-level grouping for spaces, users, and quotas
 /// within a Cloud Foundry environment.
 struct Organization {
-  OrgId id;
-  TenantId tenantId;
+  mixin TenantEntity!OrgId;
+
   string name;
   OrgStatus status = OrgStatus.active;
   int memoryQuotaMb = 10_240; // 10 GB default org quota
@@ -19,7 +23,5 @@ struct Organization {
   int totalRoutes = 1000;
   int totalServices = 100;
   int totalAppInstances = -1; // -1 = unlimited
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+
 }
