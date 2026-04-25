@@ -23,13 +23,13 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRoutesUseCase { // TODO: UIMUseCase {
-  private RouteRepository routeRepo;
-  private DomainRepository domainRepo;
+  private IRouteRepository routes;
+  private IDomainRepository domains;
   private RouteResolver resolver;
 
-  this(RouteRepository routeRepo, DomainRepository domainRepo, RouteResolver resolver) {
-    this.routeRepo = routeRepo;
-    this.domainRepo = domainRepo;
+  this(IRouteRepository routes, IDomainRepository domains, RouteResolver resolver) {
+    this.routes = routes;
+    this.domains = domains;
     this.resolver = resolver;
   }
 
@@ -46,7 +46,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Host is required");
 
     // Verify domain exists
-    auto dom = domainRepo.findById(req.domainId, req.tenantId);
+    auto dom = domains.findById(req.domainId, req.tenantId);
     if (dom is null)
       return CommandResult(false, "", "Domain not found");
 
@@ -68,28 +68,28 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     r.createdAt = now;
     r.updatedAt = now;
 
-    routeRepo.save(r);
+    routes.save(r);
     return CommandResult(r.id, "");
   }
 
-  Route* getRoute(RouteId tenantId, id tenantId) {
-    return routeRepo.findById(tenantId, id);
+  Route* getRoute(TenantId tenantId, RouteId id) {
+    return routes.findById(tenantId, id);
   }
 
   Route[] listRoutes(TenantId tenantId) {
-    return routeRepo.findByTenant(tenantId);
+    return routes.findByTenant(tenantId);
   }
 
-  Route[] listBySpace(SpaceId spacetenantId, id tenantId) {
-    return routeRepo.findBySpace(spacetenantId, id);
+  Route[] listBySpace(TenantId tenantId, SpaceId spaceId) {
+    return routes.findBySpace(spaceId, tenantId);
   }
 
-  CommandResult deleteRoute(RouteId tenantId, id tenantId) {
-    auto existing = routeRepo.findById(tenantId, id);
+  CommandResult deleteRoute(TenantId tenantId, RouteId id) {
+    auto existing = routes.findById(tenantId, id);
     if (existing is null)
       return CommandResult(false, "", "Route not found");
 
-    routeRepo.remove(tenantId, id);
+    routes.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
@@ -127,7 +127,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Domain name is required");
 
-    auto existing = domainRepo.findByName(req.tenantId, req.name);
+    auto existing = domains.findByName(req.tenantId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Domain with this name already exists");
 
@@ -143,25 +143,25 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     d.createdAt = now;
     d.updatedAt = now;
 
-    domainRepo.save(d);
+    domains.save(d);
     return CommandResult(d.id, "");
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
-    return domainRepo.findByTenant(tenantId);
+    return domains.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(DomainId tenantId, id tenantId) {
-    auto existing = domainRepo.findById(tenantId, id);
+  CommandResult deleteDomain(TenantId tenantId, DomainId id) {
+    auto existing = domains.findById(tenantId, id);
     if (existing is null)
       return CommandResult(false, "", "Domain not found");
 
     // Remove all routes on this domain
-    auto routes = routeRepo.findByDomain(tenantId, id);
-    foreach (r; routes)
-      routeRepo.remove(r.tenantId, id);
+    auto routesOnDomain = routes.findByDomain(tenantId, id);
+    foreach (r; routesOnDomain)
+      routes.remove(r.tenantId, r.id);
 
-    domainRepo.remove(tenantId, id);
+    domains.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

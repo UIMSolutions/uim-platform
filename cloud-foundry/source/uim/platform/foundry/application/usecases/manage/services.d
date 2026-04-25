@@ -22,12 +22,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageServicesUseCase { // TODO: UIMUseCase {
-  private ServiceInstanceRepository instanceRepo;
-  private ServiceBindingRepository bindingRepo;
+  private ServiceInstanceRepository instances;
+  private ServiceBindingRepository bindings;
 
-  this(ServiceInstanceRepository instanceRepo, ServiceBindingRepository bindingRepo) {
-    this.instanceRepo = instanceRepo;
-    this.bindingRepo = bindingRepo;
+  this(ServiceInstanceRepository instances, ServiceBindingRepository bindings) {
+    this.instances = instances;
+    this.bindings = bindings;
   }
 
   // --- Service Instances ---
@@ -44,7 +44,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (req.servicePlanName.length == 0)
       return CommandResult(false, "", "Service plan name is required");
 
-    auto existing = instanceRepo.findByName(req.spaceId, req.tenantId, req.name);
+    auto existing = instances.findByName(req.spaceId, req.tenantId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Service instance with this name already exists in space");
 
@@ -63,20 +63,20 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     si.createdAt = now;
     si.updatedAt = now;
 
-    instanceRepo.save(si);
+    instances.save(si);
     return CommandResult(si.id, "");
   }
 
   ServiceInstance* getInstance(ServiceInstanceId tenantId, id tenantId) {
-    return instanceRepo.findById(tenantId, id);
+    return instances.findById(tenantId, id);
   }
 
   ServiceInstance[] listInstances(TenantId tenantId) {
-    return instanceRepo.findByTenant(tenantId);
+    return instances.findByTenant(tenantId);
   }
 
   ServiceInstance[] listBySpace(SpaceId spacetenantId, id tenantId) {
-    return instanceRepo.findBySpace(spacetenantId, id);
+    return instances.findBySpace(spacetenantId, id);
   }
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
@@ -85,7 +85,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = instanceRepo.findById(req.id, req.tenantId);
+    auto existing = instances.findById(req.id, req.tenantId);
     if (existing is null)
       return CommandResult(false, "", "Service instance not found");
 
@@ -98,20 +98,20 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       updated.tags = req.tags;
     updated.updatedAt = Clock.currStdTime();
 
-    instanceRepo.update(updated);
+    instances.update(updated);
     return CommandResult(updated.id, "");
   }
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
-    if (!instanceRepo.existsById(tenantId, id))
+    if (!instances.existsById(tenantId, id))
       return CommandResult(false, "", "Service instance not found");
 
     // Remove all bindings for this instance
-    auto bindings = bindingRepo.findByServiceInstance(tenantId, id);
+    auto bindings = bindings.findByServiceInstance(tenantId, id);
     foreach (b; bindings)
-      bindingRepo.remove(tenantId, b.id);
+      bindings.remove(tenantId, b.id);
 
-    instanceRepo.remove(tenantId, id);
+    instances.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
@@ -126,7 +126,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance ID is required");
 
     // Verify instance exists
-    auto instance = instanceRepo.findById(request.serviceInstanceId, request.tenantId);
+    auto instance = instances.findById(request.serviceInstanceId, request.tenantId);
     if (instance is null)
       return CommandResult(false, "", "Service instance not found");
 
@@ -142,24 +142,24 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     binding.createdBy = request.createdBy;
     binding.createdAt = Clock.currStdTime();
 
-    bindingRepo.save(binding);
+    bindings.save(binding);
     return CommandResult(true, binding.id.toString, "");
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {
-    return bindingRepo.findByTenant(tenantId);
+    return bindings.findByTenant(tenantId);
   }
 
   ServiceBinding[] listBindingsByApp(TenantId tenantId, AppId appId) {
-    return bindingRepo.findByApp(tenantId, appId);
+    return bindings.findByApp(tenantId, appId);
   }
 
   CommandResult deleteBinding(TenantId tenantId, ServiceBindingId bindingId) {
-    auto existing = bindingRepo.findById(tenantId, bindingId);
+    auto existing = bindings.findById(tenantId, bindingId);
     if (existing is null)
       return CommandResult(false, "", "Service binding not found");
 
-    bindingRepo.remove(tenantId, bindingId);
+    bindings.remove(tenantId, bindingId);
     return CommandResult(true, bindingId.toString, "");
   }
 }

@@ -136,7 +136,7 @@ struct CreateServiceBindingRequest {
 
 struct CreateRouteRequest {
   SpaceId spaceId;
-  DomainId domainId;
+  CfDomainId domainId;
   TenantId tenantId;
   string host;
   string path;

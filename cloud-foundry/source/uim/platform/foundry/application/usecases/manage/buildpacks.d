@@ -55,8 +55,8 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     return CommandResult(bp.id, "");
   }
 
-  Buildpack* getBuildpack(BuildpackId tenantId, id tenantId) {
-    return buildpacks.findById(tenantId, id);
+  Buildpack* getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
+    return buildpacks.findById(tenantId, buildpackId);
   }
 
   Buildpack[] listBuildpacks(TenantId tenantId) {
@@ -94,15 +94,15 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteBuildpack(BuildpackId tenantId, id tenantId) {
-    auto existing = buildpacks.findById(tenantId, id);
+  CommandResult deleteBuildpack(TenantId tenantId, BuildpackId buildpackId) {
+    auto existing = buildpacks.findById(tenantId, buildpackId);
     if (existing is null)
       return CommandResult(false, "", "Buildpack not found");
 
     if (existing.locked)
       return CommandResult(false, "", "Cannot delete a locked buildpack");
 
-    buildpacks.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    buildpacks.remove(tenantId, buildpackId);
+    return CommandResult(true, buildpackId.toString, "");
   }
 }

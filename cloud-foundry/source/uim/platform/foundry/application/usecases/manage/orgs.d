@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageOrgsUseCase { // TODO: UIMUseCase {
-  private OrgRepository orgs;
-  private SpaceRepository spaces;
+  private IOrgRepository orgs;
+  private ISpaceRepository spaces;
 
-  this(OrgRepository orgs, SpaceRepository spaces) {
+  this(IOrgRepository orgs, ISpaceRepository spaces) {
     this.orgs = orgs;
     this.spaces = spaces;
   }
@@ -59,7 +59,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(org.id, "");
   }
 
-  Organization* getOrg(OrgId tenantId, id tenantId) {
+  Organization* getOrg(TenantId tenantId, OrgId id) {
     return orgs.findById(tenantId, id);
   }
 
@@ -96,7 +96,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult suspendOrg(OrgId tenantId, id tenantId) {
+  CommandResult suspendOrg(TenantId tenantId, OrgId id) {
     auto org = orgs.findById(tenantId, id);
     if (org is null)
       return CommandResult(false, "", "Organization not found");
@@ -109,7 +109,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult activateOrg(OrgId tenantId, id tenantId) {
+  CommandResult activateOrg(TenantId tenantId, OrgId id) {
     auto org = orgs.findById(tenantId, id);
     if (org is null)
       return CommandResult(false, "", "Organization not found");
@@ -122,7 +122,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteOrg(OrgId tenantId, id tenantId) {
+  CommandResult deleteOrg(TenantId tenantId, OrgId id) {
     auto existing = orgs.findById(tenantId, id);
     if (existing is null)
       return CommandResult(false, "", "Organization not found");

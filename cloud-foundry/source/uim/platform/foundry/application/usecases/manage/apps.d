@@ -21,11 +21,11 @@ mixin(ShowModule!());
 
 @safe:
 class ManageAppsUseCase { // TODO: UIMUseCase {
-  private AppRepository repo;
+  private IAppRepository apps;
   private AppLifecycleManager lifecycle;
 
-  this(AppRepository repo, AppLifecycleManager lifecycle) {
-    this.repo = repo;
+  this(IAppRepository apps, AppLifecycleManager lifecycle) {
+    this.apps = apps;
     this.lifecycle = lifecycle;
   }
 
@@ -38,7 +38,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application name is required");
 
     // Unique name within space
-    auto existing = repo.findByName(req.spaceId, req.tenantId, req.name);
+    auto existing = apps.findByName(req.spaceId, req.tenantId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Application with this name already exists in space");
 
@@ -64,24 +64,24 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.createdAt = now;
     app.updatedAt = now;
 
-    repo.save(app);
+    apps.save(app);
     return CommandResult(app.id, "");
   }
 
   Application getApp(TenantId tenantId, AppId id) {
-    return repo.findById(tenantId, id);
+    return apps.findById(tenantId, id);
   }
 
   Application getApp(TenantId tenantId, AppId id) {
-    return repo.findById(tenantId, id);
+    return apps.findById(tenantId, id);
   }
 
   Application[] listApps(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return apps.findByTenant(tenantId);
   }
 
   Application[] listBySpace(TenantId tenantId, SpaceId spaceId) {
-    return repo.findBySpace(tenantId, spaceId);
+    return apps.findBySpace(tenantId, spaceId);
   }
 
   CommandResult updateApp(UpdateAppRequest req) {
@@ -90,7 +90,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = apps.findById(req.tenantId, req.id);
     if (existing is null)
       return CommandResult(false, "", "Application not found");
 
@@ -120,13 +120,13 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       updated.dockerImage = req.dockerImage;
     updated.updatedAt = Clock.currStdTime();
 
-    repo.update(updated);
+    apps.update(updated);
     return CommandResult(updated.id, "");
   }
 
   /// Start an application (stage then start).
   CommandResult startApp(TenantId tenantId, AppId id) {
-    auto app = repo.findById(tenantId, id);
+    auto app = apps.findById(tenantId, id);
     if (app is null)
       return CommandResult(false, "", "Application not found");
     if (app.state == AppState.started)
@@ -155,14 +155,14 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.id.isEmpty)
       return CommandResult(false, "", "Application ID is required");
 
-    if (!lifecycle.scaleApp(req.id, req.tenantId, req.instances, req.memoryMb, req.diskMb))
+    if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))
       return CommandResult(false, "", "Cannot scale application — check quota limits");
     return CommandResult(req.id, "");
   }
 
   /// Get environment variables for an application.
   string getEnvironment(TenantId tenantId, AppId id) {
-    auto app = repo.findById(tenantId, id);
+    auto app = apps.findById(tenantId, id);
     if (app is null)
       return "{}";
     return app.environmentVariables.length > 0 ? app.environmentVariables : "{}";
@@ -170,21 +170,21 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
   /// Set environment variables for an application.
   CommandResult setEnvironment(TenantId tenantId, AppId id, string envJson) {
-    if (!repo.existsById(tenantId, id))
+    if (!apps.existsById(tenantId, id))
       return CommandResult(false, "", "Application not found");
 
-    auto app = repo.findById(tenantId, id);
+    auto app = apps.findById(tenantId, id);
     app.environmentVariables = envJson;
     app.updatedAt = Clock.currStdTime();
-    repo.update(app);
+    apps.update(app);
     return CommandResult(true, app.id.toString, "");
   }
 
   CommandResult deleteApp(TenantId tenantId, AppId appId) {
-    if (!repo.existsById(tenantId, appId))
+    if (!apps.existsById(tenantId, appId))
       return CommandResult(false, "", "Application not found");
 
-    repo.remove(tenantId, appId);
+    apps.remove(tenantId, appId);
     return CommandResult(true, appId.toString, "");
   }
 }
