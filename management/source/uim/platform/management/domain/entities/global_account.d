@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// A global account is the top-level entity in the SAP BTP account model.
 /// It represents a contract with SAP and contains directories and subaccounts.
 struct GlobalAccount {
-  GlobalAccountId globalAccountId;
+  mixin IdEntity!GlobalAccountId;
   string displayName;
   string description;
   string contractNumber;
@@ -30,8 +30,30 @@ struct GlobalAccount {
   int currentDirectories = 0;
   string[] enabledServices; // list of entitled service names
   long renewalDate;
-  long createdAt;
-  long updatedAt;
-  string createdBy;
   string[string] customProperties;
+
+  Json toJson() const {
+    auto jCustomProps = Json.emptyObject;
+    foreach (key, value; customProperties) {
+      jCustomProps.set(key, value);
+    }
+
+    return entityToJson()
+      .set("displayName", displayName)
+      .set("description", description)
+      .set("contractNumber", contractNumber)
+      .set("licenseType", licenseType.to!string)
+      .set("status", status.to!string)
+      .set("region", region)
+      .set("costCenter", costCenter)
+      .set("companyName", companyName)
+      .set("contactEmail", contactEmail)
+      .set("maxSubaccounts", maxSubaccounts)
+      .set("currentSubaccounts", currentSubaccounts)
+      .set("maxDirectories", maxDirectories)
+      .set("currentDirectories", currentDirectories)
+      .set("enabledServices", enabledServices.toJson)
+      .set("renewalDate", renewalDate)
+      .set("customProperties", jCustomProps);
+  }
 }

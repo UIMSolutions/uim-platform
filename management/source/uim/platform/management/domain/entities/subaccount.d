@@ -32,19 +32,29 @@ struct Subaccount {
   string[string] customProperties;
 
   Json toJson() const {
-      return entityToJson
-          .set("globalAccountId", globalAccountId.value)
-          .set("parentDirectoryId", parentDirectoryId.value)
-          .set("displayName", displayName)
-          .set("description", description)
-          .set("subdomain", subdomain)
-          .set("region", region)
-          .set("status", status.to!string)
-          .set("usage", usage.to!string)
-          .set("betaEnabled", betaEnabled)
-          .set("usedForProduction", usedForProduction)
-          .set("technicalName", technicalName)
-          .set("labels", labels.toJson)
-          .set("customProperties", customProperties.toJson);
+    auto jLabels = Json.emptyObject;
+    foreach (key, value; labels) {
+      jLabels.set(key, value);
+    }
+
+    auto jCustomProps = Json.emptyObject;
+    foreach (key, value; customProperties) {
+      jCustomProps.set(key, value);
+    }
+
+    return entityToJson
+      .set("globalAccountId", globalAccountId.value)
+      .set("parentDirectoryId", parentDirectoryId.value)
+      .set("displayName", displayName)
+      .set("description", description)
+      .set("subdomain", subdomain)
+      .set("region", region)
+      .set("status", status.to!string)
+      .set("usage", usage.to!string)
+      .set("betaEnabled", betaEnabled)
+      .set("usedForProduction", usedForProduction)
+      .set("technicalName", technicalName)
+      .set("labels", jLabels)
+      .set("customProperties", jCustomProps);
   }
 }

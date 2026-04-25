@@ -18,14 +18,14 @@ mixin template IdEntity(TId) {
     }
 
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
-    void createEntity(TenantId tenantId) {
+    void createEntity() {
         id = randomUUID();
         createdAt = Clock.currStdTime();
         updatedAt = createdAt;
     }
 
     // Call this method when updating an existing entity to update timestamps
-    void updateEntity(TenantId newTenantId, TId newId) {
+    void updateEntity(TId newId) {
         id = newId;
         updatedAt = Clock.currStdTime();
     }

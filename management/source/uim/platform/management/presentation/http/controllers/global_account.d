@@ -158,7 +158,7 @@ class GlobalAccountController : PlatformController {
 
 private Json serializeGlobalAccount(GlobalAccount ga) {
   return Json.emptyObject
-    .set("id", ga.globalAccountId)
+    .set("id", ga.id)
     .set("displayName", ga.displayName)
     .set("description", ga.description)
     .set("contractNumber", ga.contractNumber)

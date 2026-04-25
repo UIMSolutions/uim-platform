@@ -30,6 +30,16 @@ struct Directory {
   string[string] customProperties;
 
   Json toJson() const {
+    auto jLabels = Json.emptyObject;
+    foreach (key, value; labels) {
+      jLabels.set(key, value);
+    }
+
+    auto jCustomProps = Json.emptyObject;
+    foreach (key, value; customProperties) {
+      jCustomProps.set(key, value);
+    }
+
     return entityToJson()
       .set("globalAccountId", globalAccountId.value)
       .set("parentDirectoryId", parentDirectoryId.value)
@@ -41,7 +51,7 @@ struct Directory {
       .set("subaccounts", subaccounts.toJson)
       .set("manageEntitlements", manageEntitlements)
       .set("manageAuthorizations", manageAuthorizations)
-      .set("labels", labels.toJson)
-      .set("customProperties", customProperties.toJson);
+      .set("labels", jLabels)
+      .set("customProperties", jCustomProps);
   }
 }

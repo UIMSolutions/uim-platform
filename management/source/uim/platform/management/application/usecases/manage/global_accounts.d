@@ -33,7 +33,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     GlobalAccount globalAccount;
-    globalAccount.globalAccountId = randomUUID();
+    globalAccount.id = randomUUID();
     globalAccount.displayName = req.displayName;
     globalAccount.description = req.description;
     globalAccount.contractNumber = req.contractNumber;
@@ -50,10 +50,10 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.customProperties = req.customProperties;
 
     repo.save(globalAccount);
-    emitEvent(eventRepo, globalAccount.globalAccountId.toString, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, globalAccount.id.toString, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, globalAccount.globalAccountId.toString, "");
+    return CommandResult(true, globalAccount.id.toString, "");
   }
 
   CommandResult update(string id, UpdateGlobalAccountRequest req) {
