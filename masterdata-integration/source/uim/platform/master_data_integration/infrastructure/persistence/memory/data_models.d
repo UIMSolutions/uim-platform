@@ -12,14 +12,8 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDataModelRepository : DataModelRepository {
-  private DataModel[DataModelId] store;
+class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 
-  DataModel findById(DataModelId id) {
-    if (auto p = id in store)
-      return *p;
-    return DataModel.init;
-  }
 
   DataModel[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;

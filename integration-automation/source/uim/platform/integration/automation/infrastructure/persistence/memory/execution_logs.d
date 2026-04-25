@@ -14,8 +14,8 @@ import uim.platform.integration.automation.domain.ports;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryExecutionLogRepository : ExecutionLogRepository {
-  private ExecutionLog[] store;
+class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), ExecutionLogRepository {
+
 
   ExecutionLog[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     return findAll().filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).array;

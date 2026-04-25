@@ -14,8 +14,8 @@ import uim.platform.integration.automation.domain.ports;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemorySystemRepository : SystemRepository {
-  private SystemConnection[SystemConnectionId] store;
+class MemorySystemRepository : TenantRepository!(SystemConnection, SystemConnectionId), SystemRepository {
+
 
   SystemConnection[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;

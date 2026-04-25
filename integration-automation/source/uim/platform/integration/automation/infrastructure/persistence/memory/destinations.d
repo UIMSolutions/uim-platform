@@ -14,19 +14,13 @@ import uim.platform.integration.automation.domain.ports;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDestinationRepository : DestinationRepository {
-  private Destination[DestinationId] store;
+class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
+
 
   Destination[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
-  Destination* findById(DestinationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
 
   Destination[] findBySystem(TenantId tenantId, SystemConnectionId systemId) {
     return findAll()r!(e => e.tenantId == tenantId && e.systemId == systemId).array;

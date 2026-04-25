@@ -12,14 +12,8 @@ import uim.platform.master_data_integration.domain.ports.repositories.key_mappin
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryKeyMappingRepository : KeyMappingRepository {
-  private KeyMapping[KeyMappingId] store;
+class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), KeyMappingRepository {
 
-  KeyMapping findById(KeyMappingId id) {
-    if (auto p = id in store)
-      return *p;
-    return KeyMapping.init;
-  }
 
   KeyMapping[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;

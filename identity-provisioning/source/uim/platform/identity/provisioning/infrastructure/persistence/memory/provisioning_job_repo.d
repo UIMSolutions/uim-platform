@@ -9,29 +9,8 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
 
-class MemoryProvisioningJobRepository : ProvisioningJobRepository {
-  private ProvisioningJob[string] store;
+class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
 
-  void save(ProvisioningJob entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(ProvisioningJob entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ProvisioningJobId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  ProvisioningJob* findById(ProvisioningJobId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
 
   ProvisioningJob[] findByTenant(TenantId tenantId) {
     ProvisioningJob[] result;

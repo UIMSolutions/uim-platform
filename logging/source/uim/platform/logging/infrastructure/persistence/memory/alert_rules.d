@@ -13,16 +13,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRuleRepository : AlertRuleRepository {
-  private AlertRule[AlertRuleId] store;
+class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), AlertRuleRepository {
 
-  bool existsById(AlertRuleId id) {
-    return (id in store) ? true : false;
-  }
-
-  AlertRule findById(AlertRuleId id) {
-    return (existsById(id)) ? store[id] : AlertRule.init;
-  }
 
   AlertRule[] findByTenant(TenantId tenantId) {
     return store.byValue.filter!(r => r.tenantId == tenantId).array;
@@ -32,15 +24,4 @@ class MemoryAlertRuleRepository : AlertRuleRepository {
     return findByTenant(tenantId).filter!(r => r.isEnabled).array;
   }
 
-  void save(AlertRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void update(AlertRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void remove(AlertRuleId id) {
-    store.remove(id);
-  }
 }

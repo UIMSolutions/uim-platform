@@ -9,29 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
 
-class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
-  private ProvisionedEntity[string] store;
-
-  void save(ProvisionedEntity entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(ProvisionedEntity entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ProvisionedEntityId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  ProvisionedEntity* findById(ProvisionedEntityId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
+class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
 
   ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {
     foreach (e; findAll)

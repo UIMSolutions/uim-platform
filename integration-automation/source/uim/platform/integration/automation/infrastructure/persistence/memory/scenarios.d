@@ -14,8 +14,8 @@ import uim.platform.integration.automation.domain.ports;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryScenarioRepository : ScenarioRepository {
-  private IntegrationScenario[ScenarioId] store;
+class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), ScenarioRepository {
+
 
   IntegrationScenario[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;

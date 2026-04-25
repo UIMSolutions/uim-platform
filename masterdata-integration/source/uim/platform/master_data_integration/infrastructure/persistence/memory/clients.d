@@ -12,14 +12,8 @@ import uim.platform.master_data_integration.domain.ports.repositories.clients;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryClientRepository : ClientRepository {
-  private Client[ClientId] store;
+class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
 
-  Client findById(ClientId id) {
-    if (auto p = id in store)
-      return *p;
-    return Client.init;
-  }
 
   Client[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
