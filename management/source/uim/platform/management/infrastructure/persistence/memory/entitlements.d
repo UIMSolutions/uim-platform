@@ -30,11 +30,11 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   }
 
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll().filterByGlobalAccount(globalAccountId);
+    return filterByGlobalAccount(findAll(), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).removeAll();
+    findByGlobalAccount(globalAccountId).each!(e => remove(e));
   }
   // #endregion ByGlobalAccount
 
@@ -48,7 +48,7 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   }
 
   Entitlement[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll().filterBySubaccount(subaccountId);
+    return filterBySubaccount(findAll(), subaccountId);
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
@@ -66,7 +66,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   }
 
   Entitlement[] findByDirectory(DirectoryId directoryId) {
-    return findAll().filterByDirectory(directoryId);
+    return filterByDirectory(findAll(), directoryId);
   }
 
   void removeByDirectory(DirectoryId directoryId) {
@@ -79,12 +79,12 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
     return findByServicePlan(globalAccountId, planId).length;
   }
 
-  Entitlement[] filterByServicePlan(Entitlement[] items, ServicePlanId planId) {
-    return items.filter!(e => e.servicePlanId == planId).array;
+  Entitlement[] filterByServicePlan(Entitlement[] items, GlobalAccountId globalAccountId, ServicePlanId planId) {
+    return items.filter!(e => e.globalAccountId == globalAccountId && e.servicePlanId == planId).array;
   }
 
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return findByGlobalAccount(globalAccountId).filterByServicePlan(planId);
+    return filterByServicePlan(findAll(), globalAccountId, planId);
   }
 
   void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {

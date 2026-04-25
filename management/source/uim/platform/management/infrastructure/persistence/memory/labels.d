@@ -30,7 +30,7 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
   }
 
   Label[] findByResourceType(LabeledResourceType resourceType) {
-    return findAll().filterByResourceType(resourceType);
+    return filterByResourceType(findAll(), resourceType);
   }
 
   void removeByResourceType(LabeledResourceType resourceType) {
@@ -44,15 +44,15 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
   }
 
   Label[] filterByResource(Label[] items, LabeledResourceType resourceType, string resourceId) {
-    return items.filterByResourceType(resourceType).filter!(e => e.resourceId == resourceId).array;
+    return filterByResourceType(items, resourceType).filter!(e => e.resourceId == resourceId).array;
   }
 
   Label[] findByResource(LabeledResourceType resourceType, string resourceId) {
-    return findAll().filterByResource(items, resourceType, resourceId);
+    return filterByResource(findAll(), resourceType, resourceId);
   }
 
   void removeByResource(LabeledResourceType resourceType, string resourceId) {
-    findByResource(resourceType, resourceId).removeAll;
+    findByResource(resourceType, resourceId).each!(e => remove(e));
   }
   // #endregion ByResource
 
@@ -62,15 +62,15 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
   }
 
   Label[] filterByKey(Label[] items, LabeledResourceType resourceType, string key) {
-    return items.filterByResourceType(resourceType).filter!(e => e.key == key).array;
+    return filterByResourceType(items, resourceType).filter!(e => e.key == key).array;
   }
 
   Label[] findByKey(LabeledResourceType resourceType, string key) {
-    return findByResourceType(resourceType).filter!(e => e.key == key).array;
+    return filterByResourceType(findAll(), resourceType).filter!(e => e.key == key).array;
   }
 
   void removeByKey(LabeledResourceType resourceType, string key) {
-    findByKey(resourceType, key).removeAll;
+    findByKey(resourceType, key).each!(e => remove(e));
   } 
   // #endregion ByKey
 
@@ -80,15 +80,15 @@ class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
   }
 
   Label[] filterByKeyValue(Label[] items, LabeledResourceType resourceType, string key, string value) {
-    return items.filterByResourceType(resourceType).filter!(e => e.key == key && e.values.canFind(value)).array;
+    return filterByResourceType(items, resourceType).filter!(e => e.key == key && e.values.canFind(value)).array;
   }
   
   Label[] findByKeyValue(LabeledResourceType resourceType, string key, string value) {
-    return findByResourceType(resourceType).filterByKeyValue(key, value);
+    return filterByKeyValue(findAll(), resourceType, key, value);
   }
 
   void removeByKeyValue(LabeledResourceType resourceType, string key, string value) {
-    findByKeyValue(resourceType, key, value).removeAll;
+    findByKeyValue(resourceType, key, value).each!(e => remove(e));
   }
   // #endregion ByKeyValue
 

@@ -28,7 +28,7 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll.filterByGlobalAccount(globalAccountId);
+    return filterByGlobalAccount(findAll(), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -46,7 +46,7 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   Directory[] findByParent(DirectoryId parentDirectoryId) {
-    return findAll.filterByParent(parentDirectoryId);
+    return filterByParent(findAll(), parentDirectoryId);
   }
 
   void removeByParent(DirectoryId parentDirectoryId) {
@@ -65,7 +65,7 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return findAll.filterByStatus(globalAccountId, status).array;
+    return filterByStatus(findAll(), globalAccountId, status);
   }
 
   void removeByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {

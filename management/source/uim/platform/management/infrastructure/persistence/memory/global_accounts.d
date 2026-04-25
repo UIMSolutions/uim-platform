@@ -29,7 +29,7 @@ class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccount
   }
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status) {
-    return findAll().filterByStatus(status);
+    return filterByStatus(findAll(), status);
   }
 
   void removeByStatus(GlobalAccountStatus status) {

@@ -30,11 +30,11 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByService(string serviceName) {
-    return findAll().filterByService(serviceName).array;
+    return filterByService(findAll(), serviceName);
   }
 
   void removeByService(string serviceName) {
-    findByService(serviceName).removeAll();
+    findByService(serviceName).each!(e => remove(e));
   }
   // #endregion ByService
 
@@ -48,11 +48,11 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByCategory(ServicePlanCategory category) {
-    return findAll().filterByCategory(category).array;
+    return filterByCategory(findAll(), category);
   }
 
   void removeByCategory(ServicePlanCategory category) {
-    findByCategory(category).removeAll();
+    findByCategory(category).each!(e => remove(e));
   }
   // #endregion ByCategory
 
@@ -66,11 +66,11 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByRegion(string region) {
-    return findAll().filterByRegion(region).array;
+    return filterByRegion(findAll(), region);
   }
 
   void removeByRegion(string region) {
-    findByRegion(region).removeAll();
+    findByRegion(region).each!(e => remove(e));
   }
   // #endregion ByRegion
 

@@ -43,11 +43,11 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll.filterByGlobalAccount(globalAccountId);
+    return filterByGlobalAccount(findAll(), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).removeAll;
+    findByGlobalAccount(globalAccountId).each!(e => remove(e));
   }
   // #endregion ByGlobalAccount
 
@@ -57,15 +57,15 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] filterByDirectory(Subaccount[] subs, DirectoryId directoryId) {
-    return subs.filter!(s => s.directoryId == directoryId).array;
+    return subs.filter!(s => s.parentDirectoryId == directoryId).array;
   } 
   
   Subaccount[] findByDirectory(DirectoryId directoryId) {
-    return findAll.filterByDirectory(directoryId);
+    return filterByDirectory(findAll(), directoryId);
   }
 
   void removeByDirectory(DirectoryId directoryId) {
-    findByDirectory(directoryId).removeAll;
+    findByDirectory(directoryId).each!(e => remove(e));
   }
   // #endregion ByDirectory
 
@@ -78,11 +78,11 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region) {
-    return findAll.filterByRegion(globalAccountId, region);
+    return filterByRegion(findAll(), globalAccountId, region);
   }
 
   void removeByRegion(GlobalAccountId globalAccountId, string region) {
-    findByRegion(globalAccountId, region).removeAll;
+    findByRegion(globalAccountId, region).each!(e => remove(e));
   }
   // #endregion ByRegion
 
@@ -96,11 +96,11 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
-    return findAll.filterByStatus(globalAccountId, status).array;
+    return filterByStatus(findAll(), globalAccountId, status);
   }
 
   void removeByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
-    findByStatus(globalAccountId, status).removeAll;
+    findByStatus(globalAccountId, status).each!(e => remove(e));
   }
   // #endregion ByStatus
   

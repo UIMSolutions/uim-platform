@@ -29,11 +29,11 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll().filterBySubaccount(subaccountId);
+    return filterBySubaccount(findAll(), subaccountId);
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e.id));
+    findBySubaccount(subaccountId).each!(e => remove(e));
   }
 
   size_t countByApp(SubaccountId subaccountId, string appName) {
@@ -45,11 +45,11 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findByApp(SubaccountId subaccountId, string appName) {
-    return findBySubaccount(subaccountId).filterByApp(subaccountId, appName);
+    return filterByApp(findAll(), subaccountId, appName);
   }
 
   void removeByApp(SubaccountId subaccountId, string appName) {
-    findByApp(subaccountId, appName).each!(e => remove(e.id));
+    findByApp(subaccountId, appName).each!(e => remove(e));
   }
 
   size_t countByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
@@ -61,11 +61,11 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    return findBySubaccount(subaccountId).filter!(e => e.status == status).array;
+    return filterByStatus(findAll(), subaccountId, status);
   }
 
   void removeByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    findByStatus(subaccountId, status).each!(e => remove(e.id));
+    findByStatus(subaccountId, status).each!(e => remove(e));
   }
 
 }

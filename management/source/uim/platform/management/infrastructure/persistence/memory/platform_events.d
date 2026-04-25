@@ -29,11 +29,11 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findAll().filter!(e => e.globalAccountId == globalAccountId).array;
+    return filterByGlobalAccount(findAll(), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).each!(e => remove(e.id));
+    findByGlobalAccount(globalAccountId).each!(e => remove(e));
   }
   // #endregion ByGlobalAccount
 
@@ -51,7 +51,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e.id));
+    findBySubaccount(subaccountId).each!(e => remove(e));
   }
   // #endregion BySubaccount
 
@@ -71,7 +71,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   void removeByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category) {
-    findByCategory(globalAccountId, category).each!(e => remove(e.id));
+    findByCategory(globalAccountId, category).each!(e => remove(e));
   }
   // #endregion ByCategory
 
@@ -91,7 +91,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
   
   void removeBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
-    findBySeverity(globalAccountId, severity).each!(e => remove(e.id));
+    findBySeverity(globalAccountId, severity).each!(e => remove(e));
   }
   // #endregion BySeverity
 
@@ -111,7 +111,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   void removeSince(GlobalAccountId globalAccountId, long sinceTimestamp) {
-    findSince(globalAccountId, sinceTimestamp).each!(e => remove(e.id));
+    findSince(globalAccountId, sinceTimestamp).each!(e => remove(e));
   }
   // #endregion Since
 
