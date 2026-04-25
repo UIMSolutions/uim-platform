@@ -12,39 +12,19 @@ import uim.platform.datasphere.domain.ports.repositories.spaces;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemorySpaceRepository : SpaceRepository {
-  private Space[] store;
+class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
+  }
 
-  Space findById(SpaceId id) {
-    foreach (s; findAll) {
-      if (s.id == id)
-        return s;
-    }
+  Space findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return e;
     return Space.init;
   }
 
-  Space[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array;
-  }
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).remove;
 
-  void save(Space s) {
-    store ~= s;
-  }
-
-  void update(Space s) {
-    foreach (existing; findAll) {
-      if (existing.id == s.id) {
-        existing = s;
-        return;
-      }
-    }
-  }
-
-  void remove(SpaceId id) {
-    store = findAll().filter!(s => s.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array.length;
-  }
 }

@@ -11,42 +11,35 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBrokerServiceRepository : BrokerServiceRepository {
-    private BrokerService[] store;
+class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId), BrokerServiceRepository {
 
-    bool existsById(BrokerServiceId id) {
-        return store.any!(e => e.id == id);
+    size_t countByStatus(BrokerServiceStatus status) {
+        return findByStatus(status).length;
     }
-
-    BrokerService findById(BrokerServiceId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return BrokerService.init;
-    }
-
-    BrokerService[] findAll() { return store; }
-
-    BrokerService[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
+    BrokerService[] filterByStatus(BrokerService[] services, BrokerServiceStatus status) {
+        return services.filter!(e => e.status == status).array;
+    }    
     BrokerService[] findByStatus(BrokerServiceStatus status) {
         return findAll().filter!(e => e.status == status).array;
+    }
+    void removeByStatus(BrokerServiceStatus status) {
+        findByStatus(status).removeAll;
+    }
+
+    size_t countByCloudProvider(CloudProvider provider) {
+        return findByCloudProvider(provider).length;
+    }
+
+    BrokerService[] filterByCloudProvider(BrokerService[] services, CloudProvider provider) {
+        return services.filter!(e => e.cloudProvider == provider).array;
     }
 
     BrokerService[] findByCloudProvider(CloudProvider provider) {
         return findAll().filter!(e => e.cloudProvider == provider).array;
     }
 
-    void save(BrokerService service) { store ~= service; }
-
-    void update(BrokerService service) {
-        foreach (ref e; findAll)
-            if (e.id == service.id) { e = service; return; }
+    void removeByCloudProvider(CloudProvider provider) {
+        findByCloudProvider(provider).removeAll;
     }
 
-    void remove(BrokerServiceId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

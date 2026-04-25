@@ -11,23 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySkillRepository : SkillRepository {
-    private Skill[] store;
+class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository {
 
-    bool existsById(SkillId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Skill findById(SkillId id) {
-        foreach (e; findAll)
-            if (e.id == id)
-                return e;
-        return Skill.init; // or throw an exception
-    }
-
-    Skill[] findAll() {
-        return store;
-    }
 
     Skill[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -41,21 +26,4 @@ class MemorySkillRepository : SkillRepository {
         return findAll().filter!(e => e.category == category).array;
     }
 
-    void save(Skill skill) {
-        store ~= skill;
-    }
-
-    void update(Skill skill) {
-        foreach (e; findAll)
-            if (e.id == skill.id) {
-                e = skill;
-                return;
-            }
-    }
-
-    void remove(SkillId id) {
-        import std.algorithm : remove;
-
-        store = store.remove!(e => e.id == id);
-    }
 }

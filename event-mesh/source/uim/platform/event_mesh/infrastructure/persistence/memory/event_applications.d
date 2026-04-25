@@ -11,20 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventApplicationRepository : EventApplicationRepository {
-    private EventApplication[] store;
-
-    bool existsById(EventApplicationId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    EventApplication findById(EventApplicationId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return EventApplication.init;
-    }
-
-    EventApplication[] findAll() { return store; }
+class MemoryEventApplicationRepository : TenantRepository!(EventApplication, EventApplicationId), EventApplicationRepository {
 
     EventApplication[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -42,15 +29,4 @@ class MemoryEventApplicationRepository : EventApplicationRepository {
         return findAll().filter!(e => e.applicationType == appType).array;
     }
 
-    void save(EventApplication application) { store ~= application; }
-
-    void update(EventApplication application) {
-        foreach (ref e; findAll)
-            if (e.id == application.id) { e = application; return; }
-    }
-
-    void remove(EventApplicationId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

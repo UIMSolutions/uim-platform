@@ -11,21 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryActivityRepository : ActivityRepository {
-    private Activity[] store;
-
-
-    bool existsById(ActivityId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Activity findById(ActivityId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Activity.init; // or throw an exception
-    }
-
-    Activity[] findAll() { return store; }
+class MemoryActivityRepository : TenantRepository!(Activity, ActivityId), ActivityRepository {
 
     Activity[] findByTenant(TenantId tenantId) {
         return findAll.filter!(e => e.tenantId == tenantId).array;
@@ -43,15 +29,4 @@ class MemoryActivityRepository : ActivityRepository {
         return findAll.filter!(e => e.status == status).array;
     }
 
-    void save(Activity activity) { store ~= activity; }
-
-    void update(Activity activity) {
-        foreach (e; findAll)
-            if (e.id == activity.id) { e = activity; return; }
-    }
-
-    void remove(ActivityId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

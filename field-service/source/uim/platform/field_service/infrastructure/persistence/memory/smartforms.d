@@ -11,20 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySmartformRepository : SmartformRepository {
-    private Smartform[] store;
+class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), SmartformRepository {
 
-    bool existsById(SmartformId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Smartform findById(SmartformId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Smartform.init;
-    }
-
-    Smartform[] findAll() { return store; }
 
     Smartform[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -42,15 +30,4 @@ class MemorySmartformRepository : SmartformRepository {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(Smartform smartform) { store ~= smartform; }
-
-    void update(Smartform smartform) {
-        foreach (e; findAll)
-            if (e.id == smartform.id) { e = smartform; return; }
-    }
-
-    void remove(SmartformId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

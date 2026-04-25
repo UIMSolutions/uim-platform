@@ -16,43 +16,11 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
-  private DatabaseConnection[] store;
+class MemoryDatabaseConnectionRepository : TenantRepository!(DatabaseConnection, DatabaseConnectionId), DatabaseConnectionRepository {
 
-  DatabaseConnection findById(DatabaseConnectionId id) {
-    foreach (c; findAll) {
-      if (c.id == id)
-        return c;
-    }
-    return DatabaseConnection.init;
-  }
-
-  DatabaseConnection[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array;
-  }
 
   DatabaseConnection[] findByInstance(InstanceId instanceId) {
     return findAll().filter!(c => c.instanceId == instanceId).array;
   }
 
-  void save(DatabaseConnection c) {
-    store ~= c;
-  }
-
-  void update(DatabaseConnection c) {
-    foreach (existing; findAll) {
-      if (existing.id == c.id) {
-        existing = c;
-        return;
-      }
-    }
-  }
-
-  void remove(DatabaseConnectionId id) {
-    store = findAll().filter!(c => c.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array.length;
-  }
 }

@@ -11,50 +11,63 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventMessageRepository : EventMessageRepository {
-    private EventMessage[] store;
+class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessageId), EventMessageRepository {
 
-    bool existsById(EventMessageId id) {
-        return store.any!(e => e.id == id);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
+        return findByBrokerService(brokerServiceId).length;
     }
-
-    EventMessage findById(EventMessageId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return EventMessage.init;
-    }
-
-    EventMessage[] findAll() { return store; }
-
-    EventMessage[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
+    EventMessage[] filterByBrokerService(EventMessage[] messages, BrokerServiceId brokerServiceId) {
+        return messages.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    }   
     EventMessage[] findByBrokerService(BrokerServiceId brokerServiceId) {
         return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
+    }
+    void removeByBrokerService(BrokerServiceId brokerServiceId) {
+        findByBrokerService(brokerServiceId).removeAll;
+    }
+
+    size_t countByTopic(TopicId topicId) {
+        return findByTopic(topicId).length;
+    }
+
+    EventMessage[] filterByTopic(EventMessage[] messages, TopicId topicId) {
+        return messages.filter!(e => e.topicId == topicId).array;
     }
 
     EventMessage[] findByTopic(TopicId topicId) {
         return findAll().filter!(e => e.topicId == topicId).array;
     }
+    void removeByTopic(TopicId topicId) {
+        findByTopic(topicId).removeAll;
+    }
 
+
+    size_t countByQueue(QueueId queueId) {
+        return findByQueue(queueId).length;
+    }
+        EventMessage[] filterByQueue(EventMessage[] messages, QueueId queueId) {
+            return messages.filter!(e => e.queueId == queueId).array;
+        }
     EventMessage[] findByQueue(QueueId queueId) {
         return findAll().filter!(e => e.queueId == queueId).array;
     }
+    void removeByQueue(QueueId queueId) {
+        findByQueue(queueId).removeAll;
+    }
+
+     size_t countByStatus(MessageStatus status) {
+        return findByStatus(status).length;
+    }
+
+        EventMessage[] filterByStatus(EventMessage[] messages, MessageStatus status) {
+            return messages.filter!(e => e.status == status).array;
+        }
 
     EventMessage[] findByStatus(MessageStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(EventMessage message) { store ~= message; }
-
-    void update(EventMessage message) {
-        foreach (ref e; findAll)
-            if (e.id == message.id) { e = message; return; }
-    }
-
-    void remove(EventMessageId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
+    void removeByStatus(MessageStatus status) {
+        findByStatus(status).removeAll;
     }
 }

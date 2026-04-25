@@ -16,29 +16,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class MemoryFragmentRepository : FragmentRepository {
-  private DestinationFragment[FragmentId] store;
-
-  bool existsById(FragmentId id) {
-    return (id in store) ? true : false;
-  }
-
-  DestinationFragment findById(FragmentId id) {
-    if (auto p = id in store)
-      return *p;
-    return DestinationFragment.init;
-  }
-
-  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
-  }
-
-  DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findByTenant(tenantId))
-      if (e.subaccountId == subaccountId && e.name == name)
-        return e;
-    return DestinationFragment.init;
-  }
+class MemoryFragmentRepository : TenantRepository!(DestinationFragment, FragmentId), FragmentRepository {
 
   DestinationFragment[] findByTenant(TenantId tenantId) {
     return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -49,15 +27,4 @@ class MemoryFragmentRepository : FragmentRepository {
         && e.subaccountId == subaccountId).array;
   }
 
-  void save(DestinationFragment fragment) {
-    store[fragment.id] = fragment;
-  }
-
-  void update(DestinationFragment fragment) {
-    store[fragment.id] = fragment;
-  }
-
-  void remove(FragmentId id) {
-    store.remove(id);
-  }
 }

@@ -11,20 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceCallRepository : ServiceCallRepository {
-    private ServiceCall[] store;
-
-    bool existsById(ServiceCallId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    ServiceCall findById(ServiceCallId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return ServiceCall.init; // or throw an exception
-    }
-
-    ServiceCall[] findAll() { return store; }
+class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId), ServiceCallRepository {
 
     ServiceCall[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -42,15 +29,4 @@ class MemoryServiceCallRepository : ServiceCallRepository {
         return findAll().filter!(e => e.customerId == customerId).array;
     }
 
-    void save(ServiceCall serviceCall) { store ~= serviceCall; }
-
-    void update(ServiceCall serviceCall) {
-        foreach (e; findAll)
-            if (e.id == serviceCall.id) { e = serviceCall; return; }
-    }
-
-    void remove(ServiceCallId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }
