@@ -17,47 +17,32 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : ConfigurationRepository {
-  private Configuration[] store;
+class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
 
-  Configuration findById(ConfigurationId id) {
-    foreach (c; findAll) {
-      if (c.id == id)
-        return c;
-    }
-    return Configuration.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
-
-  Configuration[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array;
+  Configuration[] filterByInstance(Configuration[] configurations, InstanceId instanceId) {
+    return configurations.filter!(c => c.instanceId == instanceId).array;
   }
-
   Configuration[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(c => c.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
+  }
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(c => remove(c.id));
   }
 
+  size_t countBySection(InstanceId instanceId, string section) {
+    return findBySection(instanceId, section).length;
+  }
+  Configuration[] filterBySection(Configuration[] configurations, InstanceId instanceId, string section) {
+    return configurations.filter!(c => c.instanceId == instanceId && c.section == section).array;
+  }
   Configuration[] findBySection(InstanceId instanceId, string section) {
-    return findAll().filter!(c => c.instanceId == instanceId && c.section == section).array;
+    return filterBySection(findAll(), instanceId, section);
+  }
+  void removeBySection(InstanceId instanceId, string section) {
+    findBySection(instanceId, section).each!(c => remove(c.id));
   }
 
-  void save(Configuration c) {
-    store ~= c;
-  }
-
-  void update(Configuration c) {
-    foreach (existing; findAll) {
-      if (existing.id == c.id) {
-        existing = c;
-        return;
-      }
-    }
-  }
-
-  void remove(ConfigurationId id) {
-    store = findAll().filter!(c => c.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array.length;
-  }
 }

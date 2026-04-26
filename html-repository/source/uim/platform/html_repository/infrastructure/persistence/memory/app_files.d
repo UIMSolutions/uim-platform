@@ -15,6 +15,13 @@ mixin(ShowModule!());
 @safe:
 class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRepository {
 
+  bool existsByPath(AppVersionId versionId, string filePath) {
+    foreach (e; findAll) {
+      if (e.versionId == versionId && e.filePath == filePath) return true;
+    }
+    return false;
+  }
+
   AppFile findByPath(AppVersionId versionId, string filePath) {
     foreach (e; findAll) {
       if (e.versionId == versionId && e.filePath == filePath) return e;
@@ -22,12 +29,30 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
     return AppFile.init;
   }
 
+
+  size_t countByVersion(AppVersionId versionId) {
+    size_t count = 0;
+    foreach (e; findAll) {
+      if (e.versionId == versionId) count++;
+    }
+    return count;
+  }
+  AppFile[] filterByVersion(AppFile[] files, AppVersionId versionId) {
+    return files.filter!(f => f.versionId == versionId).array;
+  }
   AppFile[] findByVersion(AppVersionId versionId) {
     AppFile[] result;
     foreach (e; findAll) {
       if (e.versionId == versionId) result ~= e;
     }
     return result;
+  }
+  void removeByVersion(AppVersionId versionId) {
+    AppFile[] result;
+    foreach (e; findAll) {
+      if (e.versionId != versionId) result ~= e;
+    }
+    store = result;
   }
 
   AppFile[] findByCategory(AppVersionId versionId, FileCategory category) {

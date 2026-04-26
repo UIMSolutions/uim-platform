@@ -16,43 +16,19 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemorySchemaRepository : SchemaRepository {
-  private Schema[] store;
+class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
-  Schema findById(SchemaId id) {
-    foreach (s; findAll) {
-      if (s.id == id)
-        return s;
-    }
-    return Schema.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
-
-  Schema[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array;
+  Schema[] filterByInstance(Schema[] schemas, InstanceId instanceId) {
+    return schemas.filter!(s => s.instanceId == instanceId).array;
   }
-
   Schema[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(s => s.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
+  }
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(s => remove(s.id));
   }
 
-  void save(Schema s) {
-    store ~= s;
-  }
-
-  void update(Schema s) {
-    foreach (existing; findAll) {
-      if (existing.id == s.id) {
-        existing = s;
-        return;
-      }
-    }
-  }
-
-  void remove(SchemaId id) {
-    store = findAll().filter!(s => s.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array.length;
-  }
 }

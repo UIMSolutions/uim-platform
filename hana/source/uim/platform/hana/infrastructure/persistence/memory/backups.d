@@ -16,43 +16,19 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBackupRepository : BackupRepository {
-  private Backup[] store;
+class MemoryBackupRepository : TenantRepository!(Backup, BackupId), BackupRepository {
 
-  Backup findById(BackupId id) {
-    foreach (b; findAll) {
-      if (b.id == id)
-        return b;
-    }
-    return Backup.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
-
-  Backup[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(b => b.tenantId == tenantId).array;
+  Backup[] filterByInstance(Backup[] backups, InstanceId instanceId) {
+    return backups.filter!(b => b.instanceId == instanceId).array;
   }
-
   Backup[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(b => b.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
+  }
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(b => remove(b.id));
   }
 
-  void save(Backup b) {
-    store ~= b;
-  }
-
-  void update(Backup b) {
-    foreach (existing; findAll) {
-      if (existing.id == b.id) {
-        existing = b;
-        return;
-      }
-    }
-  }
-
-  void remove(BackupId id) {
-    store = findAll().filter!(b => b.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(b => b.tenantId == tenantId).array.length;
-  }
 }

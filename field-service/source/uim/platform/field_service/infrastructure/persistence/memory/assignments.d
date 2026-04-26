@@ -11,46 +11,49 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAssignmentRepository : AssignmentRepository {
-    private Assignment[] store;
-
-    bool existsById(AssignmentId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    Assignment findById(AssignmentId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Assignment.init; // or throw an exception
-    }
-
-    Assignment[] findAll() { return store; }
+class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), AssignmentRepository {
 
     Assignment[] findByTenant(TenantId tenantId) {
         return findAll.filter!(e => e.tenantId == tenantId).array;
     }
 
+    size_t countByActivity(ActivityId activityId) {
+        return findByActivity(activityId).length;
+    }
+    Assignment[] filterByActivity(Assignment[] assignments, ActivityId activityId) {
+        return assignments.filter!(e => e.activityId == activityId).array;
+    }
     Assignment[] findByActivity(ActivityId activityId) {
-        return findAll.filter!(e => e.activityId == activityId).array;
+        return filterByActivity(findAll(), activityId);
+    }
+    void removeByActivity(ActivityId activityId) {
+        findByActivity(activityId).each!(e => remove(e));
     }
 
+    size_t countByTechnician(TechnicianId technicianId) {
+        return findByTechnician(technicianId).length;
+    }
+    Assignment[] filterByTechnician(Assignment[] assignments, TechnicianId technicianId) {
+        return assignments.filter!(e => e.technicianId == technicianId).array;
+    }
     Assignment[] findByTechnician(TechnicianId technicianId) {
-        return findAll.filter!(e => e.technicianId == technicianId).array;
+        return filterByTechnician(findAll(), technicianId);
+    }
+    void removeByTechnician(TechnicianId technicianId) {
+        findByTechnician(technicianId).each!(e => remove(e));
     }
 
+    size_t countByStatus(AssignmentStatus status) {
+        return findByStatus(status).length;
+    }
+    Assignment[] filterByStatus(Assignment[] assignments, AssignmentStatus status) {
+        return assignments.filter!(e => e.status == status).array;
+    }
     Assignment[] findByStatus(AssignmentStatus status) {
-        return findAll.filter!(e => e.status == status).array;
+        return filterByStatus(findAll(), status);
+    }
+    void removeByStatus(AssignmentStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void save(Assignment assignment) { store ~= assignment; }
-
-    void update(Assignment assignment) {
-        foreach (e; findAll)
-            if (e.id == assignment.id) { e = assignment; return; }
-    }
-
-    void remove(AssignmentId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

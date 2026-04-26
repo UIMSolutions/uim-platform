@@ -16,39 +16,8 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryInstanceRepository : InstanceRepository {
-  private DatabaseInstance[] store;
+class MemoryInstanceRepository : TenantRepository!(Instance, InstanceId), InstanceRepository {
 
-  DatabaseInstance findById(InstanceId id) {
-    foreach (i; findAll) {
-      if (i.id == id)
-        return i;
-    }
-    return DatabaseInstance.init;
-  }
-
-  DatabaseInstance[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(i => i.tenantId == tenantId).array;
-  }
-
-  void save(DatabaseInstance i) {
-    store ~= i;
-  }
-
-  void update(DatabaseInstance i) {
-    foreach (existing; findAll) {
-      if (existing.id == i.id) {
-        existing = i;
-        return;
-      }
-    }
-  }
-
-  void remove(InstanceId id) {
-    store = findAll().filter!(i => i.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(i => i.tenantId == tenantId).array.length;
-  }
+  // TODO
+  
 }

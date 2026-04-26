@@ -11,50 +11,58 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySubscriptionRepository : SubscriptionRepository {
-    private EventSubscription[] store;
+class MemorySubscriptionRepository : TenantRepository!(EventSubscription, SubscriptionId), SubscriptionRepository {
 
-    bool existsById(SubscriptionId id) {
-        return store.any!(e => e.id == id);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
+        return findByBrokerService(brokerServiceId).length;
     }
-
-    EventSubscription findById(SubscriptionId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return EventSubscription.init;
-    }
-
-    EventSubscription[] findAll() { return store; }
-
-    EventSubscription[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
+    EventSubscription[] filterByBrokerService(EventSubscription[] subscriptions, BrokerServiceId brokerServiceId) { 
+        return subscriptions.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    }   
     EventSubscription[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return filterByBrokerService(findAll(), brokerServiceId);
+    }
+    void removeByBrokerService(BrokerServiceId brokerServiceId) {
+        findByBrokerService(brokerServiceId).each!(e => remove(e));
     }
 
+    size_t countByTopic(TopicId topicId) {
+        return findByTopic(topicId).length;
+    }
+    EventSubscription[] filterByTopic(EventSubscription[] subscriptions, TopicId topicId) {
+        return subscriptions.filter!(e => e.topicId == topicId).array;
+    }
     EventSubscription[] findByTopic(TopicId topicId) {
-        return findAll().filter!(e => e.topicId == topicId).array;
+        return filterByTopic(findAll(), topicId);
+    }
+    void removeByTopic(TopicId topicId) {
+        findByTopic(topicId).each!(e => remove(e));
     }
 
+    size_t countByApplication(EventApplicationId applicationId) {
+        return findByApplication(applicationId).length;
+    }
+    EventSubscription[] filterByApplication(EventSubscription[] subscriptions, EventApplicationId applicationId) {
+        return subscriptions.filter!(e => e.applicationId == applicationId).array;
+    }
     EventSubscription[] findByApplication(EventApplicationId applicationId) {
-        return findAll().filter!(e => e.applicationId == applicationId).array;
+        return filterByApplication(findAll(), applicationId);
+    }
+    void removeByApplication(EventApplicationId applicationId) {
+        findByApplication(applicationId).each!(e => remove(e));
     }
 
+    size_t countByStatus(SubscriptionStatus status) {
+        return findByStatus(status).length;
+    }
+    EventSubscription[] filterByStatus(EventSubscription[] subscriptions, SubscriptionStatus status) {
+        return subscriptions.filter!(e => e.status == status).array;
+    } 
     EventSubscription[] findByStatus(SubscriptionStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(EventSubscription subscription) { store ~= subscription; }
-
-    void update(EventSubscription subscription) {
-        foreach (ref e; findAll)
-            if (e.id == subscription.id) { e = subscription; return; }
+    void removeByStatus(SubscriptionStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(SubscriptionId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

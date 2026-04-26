@@ -11,36 +11,38 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCustomerRepository : CustomerRepository {
-    private Customer[] store;
+class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), CustomerRepository {
 
-    bool existsById(CustomerId id) {
-        return store.any!(e => e.id == id);
+    size_t countByType(CustomerType customerType) {
+        return findByType(customerType).length;
     }
 
-    Customer[] findAll() { return store; }
-
-    Customer[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    Customer[] filterByType(Customer[] customers, CustomerType customerType) {
+        return customers.filter!(e => e.customerType == customerType).array;
     }
 
     Customer[] findByType(CustomerType customerType) {
-        return findAll().filter!(e => e.customerType == customerType).array;
+        return filterByType(findAll(), customerType);
+    }
+
+    void removeByType(CustomerType customerType) {
+        findByType(customerType).each!(e => remove(e));
+    }
+
+    size_t countByStatus(CustomerStatus status) {
+        return findByStatus(status).length;
+    }
+
+    Customer[] filterByStatus(Customer[] customers, CustomerStatus status) {
+        return customers.filter!(e => e.status == status).array;
     }
 
     Customer[] findByStatus(CustomerStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+        return filterByStatus(findAll(), status);
     }
 
-    void save(Customer customer) { store ~= customer; }
-
-    void update(Customer customer) {
-        foreach (e; findAll)
-            if (e.id == customer.id) { e = customer; return; }
+    void removeByStatus(CustomerStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(CustomerId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

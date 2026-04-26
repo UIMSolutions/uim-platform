@@ -17,50 +17,31 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
-  bool existsById(AlertId id) {
-    return findAll().any!(tenantId => (id in store[tenantId]) ? true : false);
-  }
 
-  Alert findById(AlertId id) {
-    foreach (tenentId, alerts; findAll) {
-      if (id in alerts)
-        return alerts[id];
-    }
-    return Alert.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
+  } 
+  Alert[] filterByInstance(Alert[] alerts, InstanceId instanceId) {
+    return alerts.filter!(a => a.instanceId == instanceId).array;
   }
-
-  override Alert[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(a => a.tenantId == tenantId).array;
-  }
-
   Alert[] findByInstance(InstanceId instanceId) {
     return findAll().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
   }
-
-  Alert[] findByInstance(TenantId tenantId, InstanceId instanceId) {
-    return findByTenant(tenantId).filter!(a => a.instanceId == instanceId).array;
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(a => remove(a.id));
   }
 
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+  Alert[] filterActive(Alert[] alerts) {
+    return alerts.filter!(a => a.status == AlertStatus.active).array;
+  }
   Alert[] findActive(TenantId tenantId) {
     return findByTenant(tenantId).filter!(a => a.status == AlertStatus.active).array;
   }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(a => remove(a.id));
   }
 
-  size_t countAll() {
-    return findAll().map!(alerts => alerts.length).sum;
-  }
-
-  void remove(AlertId id) {
-    foreach (tenantId, alerts; findAll) {
-      if (id in alerts) {
-        store[tenantId].remove(id);
-
-        if (store[tenantId].isEmpty) store.remove(tenantId);
-        return;
-      }
-    }
-  }
 }

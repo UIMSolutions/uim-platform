@@ -11,46 +11,48 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEquipmentRepository : EquipmentRepository {
-    private Equipment[] store;
+class MemoryEquipmentRepository : TenantRepository!(Equipment, EquipmentId), EquipmentRepository {
 
-    bool existsById(EquipmentId id) {
-        return store.any!(e => e.id == id);
+    size_t countByCustomer(CustomerId customerId) {
+        return findByCustomer(customerId).length;
     }
-
-    Equipment findById(EquipmentId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return null;
-    }
-
-    Equipment[] findAll() { return store; }
-
-    Equipment[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    Equipment[] filterByCustomer(Equipment[] equipment, CustomerId customerId) {
+        return equipment.filter!(e => e.customerId == customerId).array;
     }
 
     Equipment[] findByCustomer(CustomerId customerId) {
-        return findAll().filter!(e => e.customerId == customerId).array;
+        return filterByCustomer(findAll(), customerId);
     }
+    void removeByCustomer(CustomerId customerId) {
+        findByCustomer(customerId).each!(e => remove(e));
+    }
+
+        size_t countByType(EquipmentType equipmentType) {
+            return findByType(equipmentType).length;
+        }
+
+        Equipment[] filterByType(Equipment[] equipment, EquipmentType equipmentType) {
+            return equipment.filter!(e => e.equipmentType == equipmentType).array;
+        }
 
     Equipment[] findByType(EquipmentType equipmentType) {
-        return findAll().filter!(e => e.equipmentType == equipmentType).array;
+        return filterByType(findAll(), equipmentType);
+    }
+    void removeByType(EquipmentType equipmentType) {
+        findByType(equipmentType).each!(e => remove(e));
     }
 
+    size_t countByStatus(EquipmentStatus status) {
+        return findByStatus(status).length;
+    }
+    Equipment[] filterByStatus(Equipment[] equipment, EquipmentStatus status) {
+        return equipment.filter!(e => e.status == status).array;
+    }
     Equipment[] findByStatus(EquipmentStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+        return filterByStatus(findAll(), status);
+    }
+    void removeByStatus(EquipmentStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void save(Equipment equipment) { store ~= equipment; }
-
-    void update(Equipment equipment) {
-        foreach (e; findAll)
-            if (e.id == equipment.id) { e = equipment; return; }
-    }
-
-    void remove(EquipmentId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

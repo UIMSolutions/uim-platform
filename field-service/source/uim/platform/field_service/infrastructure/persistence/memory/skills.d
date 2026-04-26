@@ -14,16 +14,30 @@ mixin(ShowModule!());
 class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository {
 
 
-    Skill[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByTechnician(TechnicianId technicianId) {
+        return findByTechnician(technicianId).length;
     }
-
+    Skill[] filterByTechnician(Skill[] skills, TechnicianId technicianId) {
+        return skills.filter!(e => e.technicianId == technicianId).array;
+    }
     Skill[] findByTechnician(TechnicianId technicianId) {
-        return findAll().filter!(e => e.technicianId == technicianId).array;
+        return filterByTechnician(findAll(), technicianId);
+    }
+    void removeByTechnician(TechnicianId technicianId) {
+        findByTechnician(technicianId).each!(e => remove(e));
     }
 
+    size_t countByCategory(SkillCategory category) {
+        return findByCategory(category).length;
+    }
+    Skill[] filterByCategory(Skill[] skills, SkillCategory category) {
+        return skills.filter!(e => e.category == category).array;
+    }
     Skill[] findByCategory(SkillCategory category) {
-        return findAll().filter!(e => e.category == category).array;
+        return filterByCategory(findAll(), category);
+    }
+    void removeByCategory(SkillCategory category) {
+        findByCategory(category).each!(e => remove(e));
     }
 
 }
