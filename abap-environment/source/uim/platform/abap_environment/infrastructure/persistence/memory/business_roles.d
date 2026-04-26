@@ -17,22 +17,14 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryBusinessRoleRepository : MemoryTenantRepository!(BusinessRole, BusinessRoleId), BusinessRoleRepository {
-  // private BusinessRole[BusinessRoleId] store;
-// 
-  // BusinessRole findById(BusinessRoleId id) {
-    // if (id in store)
-      // return store[id];
-    // return BusinessRole.init;
-  // }
+class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRoleId), BusinessRoleRepository {
 
-  BusinessRole[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+bool existsByName(SystemInstanceId systemId, string name) {
+    foreach (e; findAll())
+      if (e.systemInstanceId == systemId && e.name == name)
+        return true;
+    return false;
   }
-
-//  BusinessRole[] findByTenant(TenantId tenantId) {
-//    return findAll().filter!(e => e.tenantId == tenantId).array;
-//  }
 
   BusinessRole findByName(SystemInstanceId systemId, string name) {
     foreach (e; findAll())
@@ -41,15 +33,22 @@ class MemoryBusinessRoleRepository : MemoryTenantRepository!(BusinessRole, Busin
     return BusinessRole.init;
   }
 
-//  void save(BusinessRole role) {
-//    store[role.id] = role;
-//  }
-//
-//  void update(BusinessRole role) {
-//    store[role.id] = role;
-//  }
-//
-//  void remove(BusinessRoleId id) {
-//    store.remove(id);
-//  }
+  size_t countBySystem(SystemInstanceId systemId) {
+    return findBySystem(systemId).length;
+  }
+
+  BusinessRole[] filterBySystem(BusinessRole[] roles, SystemInstanceId systemId) {
+    return roles.filter!(e => e.systemInstanceId == systemId).array;
+  }
+
+  BusinessRole[] findBySystem(SystemInstanceId systemId) {
+    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+  }
+
+  void removeBySystem(SystemInstanceId systemId) {
+    findBySystem(systemId).each!(e => remove(e));
+  }
+
+  
+
 }

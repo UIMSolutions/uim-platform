@@ -13,20 +13,43 @@ mixin(ShowModule!());
 
 class MemoryEventApplicationRepository : TenantRepository!(EventApplication, EventApplicationId), EventApplicationRepository {
 
-    EventApplication[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
+        return findByBrokerService(brokerServiceId).length;
     }
-
+    EventApplication[] filterByBrokerService(EventApplication[] apps, BrokerServiceId brokerServiceId) {
+        return apps.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    }
     EventApplication[] findByBrokerService(BrokerServiceId brokerServiceId) {
         return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
+    void removeByBrokerService(BrokerServiceId brokerServiceId) {
+        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    }
 
+    size_t countByStatus(EventApplicationStatus status) {
+        return findByStatus(status).length;
+    }
+    EventApplication[] filterByStatus(EventApplication[] apps, EventApplicationStatus status) {
+        return apps.filter!(e => e.status == status).array;
+    }
     EventApplication[] findByStatus(EventApplicationStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
+    void removeByStatus(EventApplicationStatus status) {
+        findByStatus(status).each!(e => remove(e));
+    }
 
+    size_t countByType(EventApplicationType appType) {
+        return findByType(appType).length;
+    }
+    EventApplication[] filterByType(EventApplication[] apps, EventApplicationType appType) {
+        return apps.filter!(e => e.applicationType == appType).array;
+    }
     EventApplication[] findByType(EventApplicationType appType) {
         return findAll().filter!(e => e.applicationType == appType).array;
+    }
+    void removeByType(EventApplicationType appType) {
+        findByType(appType).each!(e => remove(e));
     }
 
 }

@@ -11,42 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryQueueRepository : QueueRepository {
-    private Queue[] store;
+class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository {
 
-    bool existsById(QueueId id) {
-        return store.any!(e => e.id == id);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
+        return findByBrokerService(brokerServiceId).length;
     }
-
-    Queue findById(QueueId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Queue.init;
+    Queue[] filterByBrokerService(Queue[] queues, BrokerServiceId brokerServiceId) {
+        return queues.filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
-
-    Queue[] findAll() { return store; }
-
-    Queue[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     Queue[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
+        return filterByBrokerService(findAll(), brokerServiceId);
+    }
+    void removeByBrokerService(BrokerServiceId brokerServiceId) {
+        findByBrokerService(brokerServiceId).each!(e => remove(e));
     }
 
+    size_t countByStatus(QueueStatus status) {
+        return findByStatus(status).length;
+    }
+    Queue[] filterByStatus(Queue[] queues, QueueStatus status) {
+        return queues.filter!(e => e.status == status).array;
+    }
     Queue[] findByStatus(QueueStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+        return filterByStatus(findAll(), status);
+    }
+    void removeByStatus(QueueStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void save(Queue queue) { store ~= queue; }
-
-    void update(Queue queue) {
-        foreach (ref e; findAll)
-            if (e.id == queue.id) { e = queue; return; }
-    }
-
-    void remove(QueueId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

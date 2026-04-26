@@ -11,42 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTopicRepository : TopicRepository {
-    private Topic[] store;
+class MemoryTopicRepository : TenantRepository!(Topic, TopicId), TopicRepository {
 
-    bool existsById(TopicId id) {
-        return store.any!(e => e.id == id);
+    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
+        return findByBrokerService(brokerServiceId).length;
     }
-
-    Topic findById(TopicId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Topic.init;
+    Topic[] filterByBrokerService(Topic[] topics, BrokerServiceId brokerServiceId) {
+        return topics.filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
-
-    Topic[] findAll() { return store; }
-
-    Topic[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     Topic[] findByBrokerService(BrokerServiceId brokerServiceId) {
         return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
+    void removeByBrokerService(BrokerServiceId brokerServiceId) {
+        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    }
 
+    size_t countByStatus(TopicStatus status) {
+        return findByStatus(status).length;
+    }
+    Topic[] filterByStatus(Topic[] topics, TopicStatus status) {
+        return topics.filter!(e => e.status == status).array;
+    }
     Topic[] findByStatus(TopicStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(Topic topic) { store ~= topic; }
-
-    void update(Topic topic) {
-        foreach (ref e; findAll)
-            if (e.id == topic.id) { e = topic; return; }
+    void removeByStatus(TopicStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(TopicId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

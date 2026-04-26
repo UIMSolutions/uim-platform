@@ -11,46 +11,45 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMeshBridgeRepository : MeshBridgeRepository {
-    private MeshBridge[] store;
+class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), MeshBridgeRepository {
 
-    bool existsById(MeshBridgeId id) {
-        return store.any!(e => e.id == id);
+    size_t countBySourceBroker(BrokerServiceId sourceBrokerId) {
+        return findBySourceBroker(sourceBrokerId).length;
     }
-
-    MeshBridge findById(MeshBridgeId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return MeshBridge.init;
+    MeshBridge[] filterBySourceBroker(MeshBridge[] bridges, BrokerServiceId sourceBrokerId) {
+        return bridges.filter!(e => e.sourceBrokerId == sourceBrokerId).array;
     }
-
-    MeshBridge[] findAll() { return store; }
-
-    MeshBridge[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     MeshBridge[] findBySourceBroker(BrokerServiceId sourceBrokerId) {
         return findAll().filter!(e => e.sourceBrokerId == sourceBrokerId).array;
     }
+    void removeBySourceBroker(BrokerServiceId sourceBrokerId) {
+        findBySourceBroker(sourceBrokerId).each!(e => remove(e));
+    }
 
+    size_t countByTargetBroker(BrokerServiceId targetBrokerId) {
+        return findByTargetBroker(targetBrokerId).length;
+    }
+    MeshBridge[] filterByTargetBroker(MeshBridge[] bridges, BrokerServiceId targetBrokerId) {
+        return bridges.filter!(e => e.targetBrokerId == targetBrokerId).array;
+    }
     MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId) {
         return findAll().filter!(e => e.targetBrokerId == targetBrokerId).array;
     }
+    void removeByTargetBroker(BrokerServiceId targetBrokerId) {
+        findByTargetBroker(targetBrokerId).each!(e => remove(e));
+    }
 
+    size_t countByStatus(BridgeStatus status) {
+        return findByStatus(status).length;
+    }
+    MeshBridge[] filterByStatus(MeshBridge[] bridges, BridgeStatus status) {
+        return bridges.filter!(e => e.status == status).array;
+    }
     MeshBridge[] findByStatus(BridgeStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(MeshBridge bridge) { store ~= bridge; }
-
-    void update(MeshBridge bridge) {
-        foreach (ref e; findAll)
-            if (e.id == bridge.id) { e = bridge; return; }
+    void removeByStatus(BridgeStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(MeshBridgeId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

@@ -16,39 +16,8 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryClientRepository : ClientRepository {
-  private Client[] store;
+class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
 
-  Client findById(ClientId id) {
-    foreach (c; findAll) {
-      if (c.id == id)
-        return c;
-    }
-    return Client.init;
-  }
+  // TODO
 
-  Client[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array;
-  }
-
-  void save(Client c) {
-    store ~= c;
-  }
-
-  void update(Client c) {
-    foreach (existing; findAll) {
-      if (existing.id == c.id) {
-        existing = c;
-        return;
-      }
-    }
-  }
-
-  void remove(ClientId id) {
-    store = findAll().filter!(c => c.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array.length;
-  }
 }

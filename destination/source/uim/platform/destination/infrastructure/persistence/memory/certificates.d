@@ -16,16 +16,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : CertificateRepository {
-  private Certificate[CertificateId] store;
-
-  bool existsById(CertificateId id) {
-    return (id in store) ? true : false;
-  }
-
-  Certificate findById(CertificateId id) {
-    return existsById(id) ? store[id] : Certificate.init;
-  }
+class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (e; findByTenant(tenantId))
@@ -41,31 +32,45 @@ class MemoryCertificateRepository : CertificateRepository {
     return Certificate.init;
   }
 
-  Certificate[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
   }
-
+  Certificate[] filterBySubaccount(Certificate[] certs, SubaccountId subaccountId) {
+    return certs.filter!(e => e.subaccountId == subaccountId).array;
+  }
   Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
+  }
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
 
+  size_t countByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type) {
+    return findByType(tenantId, subaccountId, type).length;
+  }
+  Certificate[] filterByType(Certificate[] certs, CertificateType type) {
+    return certs.filter!(e => e.certificateType == type).array;
+  }
   Certificate[] findByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type) {
-    return findBySubaccount(tenantId, subaccountId).filter!(e => e.certificateType == type).array;
+    return filterByType(findBySubaccount(tenantId, subaccountId), type);
+  }
+  void removeByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type) {
+    findByType(tenantId, subaccountId, type).each!(e => remove(e));
+  }
+
+  size_t countExpiring(TenantId tenantId, long beforeTimestamp) {
+    return findExpiring(tenantId, beforeTimestamp).length;
+  }
+  Certificate[] filterExpiring(Certificate[] certs, long beforeTimestamp) {
+    return certs.filter!(e => e.validTo > 0 && e.validTo <= beforeTimestamp).array;
   }
 
   Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
     return findByTenant(tenantId).filter!(e => e.validTo > 0 && e.validTo <= beforeTimestamp).array;
   }
-
-  void save(Certificate cert) {
-    store[cert.id] = cert;
+  void removeExpiring(TenantId tenantId, long beforeTimestamp) {
+    findExpiring(tenantId, beforeTimestamp).each!(e => remove(e));
   }
 
-  void update(Certificate cert) {
-    store[cert.id] = cert;
-  }
-
-  void remove(CertificateId id) {
-    store.remove(id);
-  }
+  
 }

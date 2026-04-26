@@ -11,42 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventSchemaRepository : EventSchemaRepository {
-    private EventSchema[] store;
+class MemoryEventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId), EventSchemaRepository {
 
-    bool existsById(EventSchemaId id) {
-        return store.any!(e => e.id == id);
+    size_t countByFormat(SchemaFormat format) {
+        return findByFormat(format).length;
     }
-
-    EventSchema findById(EventSchemaId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return EventSchema.init;
+    EventSchema[] filterByFormat(EventSchema[] schemas, SchemaFormat format) {
+        return schemas.filter!(e => e.format == format).array;
     }
-
-    EventSchema[] findAll() { return store; }
-
-    EventSchema[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     EventSchema[] findByFormat(SchemaFormat format) {
         return findAll().filter!(e => e.format == format).array;
     }
+    void removeByFormat(SchemaFormat format) {
+        findByFormat(format).each!(e => remove(e));
+    }
 
+    size_t countByStatus(SchemaStatus status) {
+        return findByStatus(status).length;
+    }
+    EventSchema[] filterByStatus(EventSchema[] schemas, SchemaStatus status) {
+        return schemas.filter!(e => e.status == status).array;
+    }
     EventSchema[] findByStatus(SchemaStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(EventSchema schema) { store ~= schema; }
-
-    void update(EventSchema schema) {
-        foreach (ref e; findAll)
-            if (e.id == schema.id) { e = schema; return; }
+    void removeByStatus(SchemaStatus status) {
+        findByStatus(status).each!(e => remove(e));
     }
 
-    void remove(EventSchemaId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }
