@@ -14,12 +14,6 @@ mixin(ShowModule!());
 
 @safe:
 class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
-  AppRoute findById(AppRouteId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return e;
-    }
-    return AppRoute.init;
-  }
 
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix) {
     foreach (e; findAll) {
@@ -28,56 +22,17 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
     return AppRoute.init;
   }
 
-  AppRoute[] findByApp(HtmlAppId appId) {
-    AppRoute[] result;
-    foreach (e; findAll) {
-      if (e.appId == appId) result ~= e;
-    }
-    return result;
-  }
-
-  AppRoute[] findByTenant(TenantId tenantId) {
-    AppRoute[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
-  }
-
-  void save(AppRoute route) {
-    store ~= route;
-  }
-
-  void update(AppRoute route) {
-    foreach (i, e; store) {
-      if (e.id == route.id) {
-        store[i] = route;
-        return;
-      }
-    }
-  }
-
-  void remove(AppRouteId id) {
-    AppRoute[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
   size_t countByApp(HtmlAppId appId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.appId == appId) count++;
-    }
-    return count;
+    return findByApp(appId).length;
+  }
+  AppRoute[] filterByApp(AppRoute[] routes, HtmlAppId appId) {
+    return routes.filter!(r => r.appId == appId).array;
+  }
+  AppRoute[] findByApp(HtmlAppId appId) {
+    return filterByApp(findAll(), appId);
+  }
+  void removeByApp(HtmlAppId appId) {
+    findByApp(appId).each!(r => remove(r.id));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
-  }
 }

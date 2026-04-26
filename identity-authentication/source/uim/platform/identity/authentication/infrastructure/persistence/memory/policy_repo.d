@@ -18,12 +18,17 @@ mixin(ShowModule!());
 /// In-memory adapter for authorization policy persistence.
 class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {
 
-  AuthorizationPolicy[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(p => p.tenantId == tenantId).array;
+  size_t countByApplication(ApplicationId appId) {
+    return findByApplication(appId).length;
   }
-
+  AuthorizationPolicy[] filterByApplication(AuthorizationPolicy[] policies, ApplicationId appId) {
+    return policies.filter!(p => p.applicationIds.canFind(appId)).array;
+  }
   AuthorizationPolicy[] findByApplication(ApplicationId appId) {
     return findAll().filter!(p => p.applicationIds.canFind(appId)).array;
+  }
+  void removeByApplication(ApplicationId appId) {
+    findByApplication(appId).each!(p => remove(p.id));
   }
 
 }

@@ -15,12 +15,13 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for application/service provider persistence.
 class MemoryApplicationRepository : ApplicationRepository {
-  private Application[ApplicationId] store;
-
-  Application findById(ApplicationId id) {
-    if (auto p = id in store)
-      return *p;
-    return Application.init;
+  
+  bool existsByClientId(string clientId) {
+    foreach (a; findAll()) {
+      if (a.clientId == clientId)
+        return true;
+    }
+    return false;
   }
 
   Application findByClientId(string clientId) {
@@ -31,28 +32,4 @@ class MemoryApplicationRepository : ApplicationRepository {
     return Application.init;
   }
 
-  Application[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Application[] result;
-    uint idx;
-    foreach (a; findAll()) {
-      if (a.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= a;
-        idx++;
-      }
-    }
-    return result;
-  }
-
-  void save(Application app) {
-    store[app.id] = app;
-  }
-
-  void update(Application app) {
-    store[app.id] = app;
-  }
-
-  void remove(ApplicationId id) {
-    store.remove(id);
-  }
 }

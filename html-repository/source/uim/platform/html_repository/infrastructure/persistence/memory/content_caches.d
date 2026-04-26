@@ -9,16 +9,14 @@ import uim.platform.html_repository.domain.ports.repositories.content_caches;
 import uim.platform.html_repository.domain.entities.content_cache;
 import uim.platform.html_repository.domain.types;
 
-class ContentCacheMemoryRepository : ContentCacheRepository {
-  private ContentCache[] store;
+class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), ContentCacheRepository {
 
-  ContentCache findById(ContentCacheId id) {
+  bool existsByFileId(AppFileId fileId) {
     foreach (e; findAll) {
-      if (e.id == id) return e;
+      if (e.fileId == fileId) return true;
     }
-    return ContentCache.init;
+    return false;
   }
-
   ContentCache findByFileId(AppFileId fileId) {
     foreach (e; findAll) {
       if (e.fileId == fileId) return e;
@@ -26,65 +24,30 @@ class ContentCacheMemoryRepository : ContentCacheRepository {
     return ContentCache.init;
   }
 
-  ContentCache[] findByTenant(TenantId tenantId) {
-    ContentCache[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
+  size_t countByStatus(CacheStatus status) {
+    return findByStatus(status).length;
   }
-
+  ContentCache[] filterByStatus(ContentCache[] caches, CacheStatus status) {
+    return caches.filter!(c => c.status == status).array;
+  }
   ContentCache[] findByStatus(CacheStatus status) {
-    ContentCache[] result;
-    foreach (e; findAll) {
-      if (e.status == status) result ~= e;
-    }
-    return result;
+    return filterByStatus(findAll(), status);
+  }
+  void removeByStatus(CacheStatus status) {
+    findByStatus(status).each!(c => remove(c.id));
   }
 
+  size_t countByExpiration(long currentTime) {
+    return findExpired(currentTime).length;
+  }
+  ContentCache[] filterByExpiration(ContentCache[] caches, long currentTime) {
+    return caches.filter!(c => c.expiresAt < currentTime).array;
+  }
   ContentCache[] findExpired(long currentTime) {
-    ContentCache[] result;
-    foreach (e; findAll) {
-      if (e.expiresAt < currentTime) result ~= e;
-    }
-    return result;
+    return filterByExpiration(findAll(), currentTime);
   }
-
-  void save(ContentCache cache) {
-    store ~= cache;
-  }
-
-  void update(ContentCache cache) {
-    foreach (i, e; store) {
-      if (e.id == cache.id) {
-        store[i] = cache;
-        return;
-      }
-    }
-  }
-
-  void remove(ContentCacheId id) {
-    ContentCache[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
-  void removeExpired(long currentTime) {
-    ContentCache[] result;
-    foreach (e; findAll) {
-      if (e.expiresAt >= currentTime) result ~= e;
-    }
-    store = result;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
+  void removeByExpiration(long currentTime) {
+    findExpired(currentTime).each!(c => remove(c.id));
   }
 
   long totalSizeByTenant(TenantId tenantId) {

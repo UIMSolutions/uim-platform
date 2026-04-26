@@ -14,19 +14,15 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for user persistence (swap for DB adapter in production).
-class MemoryUserRepository : UserRepository {
-  private User[UserId] store;
+class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
 
-  bool existsById(UserId id) {
-    return (id in store) ? true : false;
+  bool existsByEmail(TenantId tenantId, string email) {
+    foreach (u; findAll()) {
+      if (u.tenantId == tenantId && u.email == email)
+        return true;
+    }
+    return false;
   }
-
-  User findById(UserId id) {
-    if (existsById(id))
-      return store[id];
-    return User.init;
-  }
-
   User findByEmail(TenantId tenantId, string email) {
     foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.email == email)
@@ -35,6 +31,13 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
+  bool existsByUserName(TenantId tenantId, string userName) {
+    foreach (u; findAll()) {
+      if (u.tenantId == tenantId && u.userName == userName)
+        return true;
+    }
+    return false;
+  }
   User findByUserName(TenantId tenantId, string userName) {
     foreach (u; findAll()) {
       if (u.tenantId == tenantId && u.userName == userName)
@@ -43,36 +46,18 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    User[] result;
-    uint idx;
-    foreach (u; findAll()) {
-      if (u.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= u;
-        idx++;
-      }
-    }
-    return result;
-  }
 
+  size_t countByGroupId(GroupId groupId) {
+    return findByGroupId(groupId).length;
+  }
+  User[] filterByGroupId(User[] users, GroupId groupId) {
+    return users.filter!(u => u.groupIds.canFind(groupId)).array;
+  }
   User[] findByGroupId(GroupId groupId) {
     return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
   }
-
-  void save(User user) {
-    store[user.id] = user;
+  void removeByGroupId(GroupId groupId) {
+    findByGroupId(groupId).each!(u => remove(u.id));
   }
 
-  void update(User user) {
-    store[user.id] = user;
-  }
-
-  void remove(UserId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().count!(u => u.tenantId == tenantId);
-  }
 }

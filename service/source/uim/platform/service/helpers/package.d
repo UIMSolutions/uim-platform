@@ -8,6 +8,7 @@ module uim.platform.service.helpers;
 public {
   import uim.platform.service.helpers.contains;
   import uim.platform.service.helpers.convert;
+  import uim.platform.service.helpers.filter;
   import uim.platform.service.helpers.helper;
   import uim.platform.service.helpers.get;
   import uim.platform.service.helpers.network;

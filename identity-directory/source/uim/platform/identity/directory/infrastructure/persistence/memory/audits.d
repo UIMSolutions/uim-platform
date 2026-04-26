@@ -14,56 +14,64 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for audit event persistence (append-only).
-class MemoryAuditRepository : AuditRepository {
-  private AuditEvent[] store;
+class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), AuditRepository {
 
   AuditEvent[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return filterPaged((AuditEvent e) => e.tenantId == tenantId, offset, limit);
   }
 
-  AuditEvent[] findByActor(string actorId, uint offset = 0, uint limit = 100) {
-    return filterPaged((AuditEvent e) => e.actorId == actorId, offset, limit);
+  size_t countByActor(string actorId) {
+    return findByActor(actorId).length;
+  }
+  AuditEvent[] filterByActor(AuditEvent[] events, string actorId) {
+    return events.filter!(e => e.actorId == actorId).array;
+  }
+  AuditEvent[] findByActor(string actorId) {
+    return filterByActor(findAll(), actorId);
+  }
+  void removeByActor(string actorId) {
+    findByActor(actorId).each!(e => remove(e));
   }
 
-  AuditEvent[] findByTarget(string targetId, uint offset = 0, uint limit = 100) {
-    return filterPaged((AuditEvent e) => e.targetId == targetId, offset, limit);
+  size_t countByTarget(string targetId) {
+    return findByTarget(targetId).length;
+  }
+  AuditEvent[] filterByTarget(AuditEvent[] events, string targetId) {
+    return events.filter!(e => e.targetId == targetId).array;
+  }
+  AuditEvent[] findByTarget(string targetId) {
+    return filterByTarget(findAll(), targetId);
+  }
+  void removeByTarget(string targetId) {
+    findByTarget(targetId).each!(e => remove(e));
   }
 
-  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType,
-    uint offset = 0, uint limit = 100) {
-    return filterPaged((AuditEvent e) => e.tenantId == tenantId
-        && e.eventType == eventType, offset, limit);
+  size_t countByType(TenantId tenantId, AuditEventType eventType) {
+    return findByType(tenantId, eventType).length;
+  }
+  AuditEvent[] filterByType(AuditEvent[] events, TenantId tenantId, AuditEventType eventType) {
+    return events.filter!(e => e.tenantId == tenantId && e.eventType == eventType).array;
+  }
+  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType) {
+    return filterByType(findAll(), tenantId, eventType);
+  }
+  void removeByType(TenantId tenantId, AuditEventType eventType) {
+    findByType(tenantId, eventType).each!(e => remove(e));
   }
 
-  AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to,
-    uint offset = 0, uint limit = 100) {
-    return filterPaged((AuditEvent e) => e.tenantId == tenantId
-        && e.timestamp >= from && e.timestamp <= to, offset, limit);
+  size_t countByTimeRange(TenantId tenantId, long from, long to) {
+    return findByTimeRange(tenantId, from, to).length;
+  }
+  AuditEvent[] filterByTimeRange(AuditEvent[] events, long from, long to) {
+    return events.filter!(e => e.timestamp >= from && e.timestamp <= to).array;
+  }
+  AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to) {
+    return filterByTimeRange(findByTenant(tenantId), from, to);
+  }
+  void removeByTimeRange(TenantId tenantId, long from, long to) {
+    findByTimeRange(tenantId, from, to).each!(e => remove(e));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    size_t count;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId)
-        count++;
-    }
-    return count;
-  }
 
-  private AuditEvent[] filterPaged(bool delegate(AuditEvent) pred, uint offset, uint limit) {
-    AuditEvent[] result;
-    uint idx;
-    foreach (e; findAll) {
-      if (pred(e)) {
-        if (idx >= offset && result.length < limit)
-          result ~= e;
-        idx++;
-      }
-    }
-    return result;
-  }
-
-  void save(AuditEvent event) {
-    store ~= event;
-  }
+  
 }

@@ -16,43 +16,22 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDatabaseUserRepository : DatabaseUserRepository {
-  private DatabaseUser[] store;
+class MemoryDatabaseUserRepository : TenantRepository!(DatabaseUser, DatabaseUserId), DatabaseUserRepository {
 
-  DatabaseUser findById(DatabaseUserId id) {
-    foreach (u; findAll) {
-      if (u.id == id)
-        return u;
-    }
-    return DatabaseUser.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
 
-  DatabaseUser[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(u => u.tenantId == tenantId).array;
+  DatabaseUser[] filterByInstance(DatabaseUser[] users, InstanceId instanceId) {
+    return users.filter!(u => u.instanceId == instanceId).array;
   }
 
   DatabaseUser[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(u => u.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
   }
 
-  void save(DatabaseUser u) {
-    store ~= u;
-  }
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(u => remove(u));
 
-  void update(DatabaseUser u) {
-    foreach (existing; findAll) {
-      if (existing.id == u.id) {
-        existing = u;
-        return;
-      }
-    }
-  }
-
-  void remove(DatabaseUserId id) {
-    store = findAll().filter!(u => u.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(u => u.tenantId == tenantId).array.length;
   }
 }

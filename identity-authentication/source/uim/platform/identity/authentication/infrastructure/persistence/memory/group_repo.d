@@ -14,37 +14,9 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : GroupRepository {
-  private IdaGroup[GroupId] store;
+class MemoryGroupRepository : TenantRepository!(IdaGroup, GroupId), GroupRepository {
 
-  IdaGroup findById(GroupId id) {
-    if (auto p = id in store)
-      return *p;
-    return IdaGroup.init;
-  }
 
-  IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    IdaGroup[] result;
-    uint idx;
-    foreach (g; findAll()) {
-      if (g.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= g;
-        idx++;
-      }
-    }
-    return result;
-  }
+// TODO
 
-  void save(IdaGroup group) {
-    store[group.id] = group;
-  }
-
-  void update(IdaGroup group) {
-    store[group.id] = group;
-  }
-
-  void remove(GroupId id) {
-    store.remove(id);
-  }
 }

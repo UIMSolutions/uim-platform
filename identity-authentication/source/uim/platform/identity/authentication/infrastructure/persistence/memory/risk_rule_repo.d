@@ -14,32 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for risk rule persistence.
-class MemoryRiskRuleRepository : RiskRuleRepository {
-  private RiskRule[string] store;
+class MemoryRiskRuleRepository : TenantRepository!(RiskRule, string), RiskRuleRepository {
 
-  bool existsById(string id) {
-    return (id in store) ? true : false;
-  }
-
-  RiskRule findById(string id) {
-    if (existsById(id))
-      return store[id];
-    return RiskRule.init;
-  }
-
-  RiskRule[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
-  }
-
-  void save(RiskRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void update(RiskRule rule) {
-    store[rule.id] = rule;
-  }
-
-  void remove(string id) {
-    store.remove(id);
-  }
+  // TODO
 }

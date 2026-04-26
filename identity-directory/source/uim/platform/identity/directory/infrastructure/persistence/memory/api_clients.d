@@ -14,17 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for API client persistence.
-class MemoryApiClientRepository : ApiClientRepository {
-  private ApiClient[ApiClientId] store;
-
-  bool existsById(ApiClientId id) {
-    return (id in store) ? true : false;
-  }
-
-  ApiClient findById(ApiClientId id) {
-    return existsById(id) ? store[id] : ApiClient.init;
-  }
-
+class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), ApiClientRepository {
   bool existsByClientId(string clientId) {
     return findAll().any!(c => c.clientId == clientId);{
   }
@@ -35,30 +25,5 @@ class MemoryApiClientRepository : ApiClientRepository {
         return c;
     }
     return ApiClient.init;
-  }
-
-  ApiClient[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    ApiClient[] result;
-    uint idx;
-    foreach (c; findAll()) {
-      if (c.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= c;
-        idx++;
-      }
-    }
-    return result;
-  }
-
-  void save(ApiClient client) {
-    store[client.id] = client;
-  }
-
-  void update(ApiClient client) {
-    store[client.id] = client;
-  }
-
-  void remove(ApiClientId id) {
-    store.remove(id);
   }
 }
