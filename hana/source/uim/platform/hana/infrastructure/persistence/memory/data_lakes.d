@@ -20,10 +20,6 @@ mixin(ShowModule!());
 class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLakeRepository {
 
 
-  DataLake[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(d => d.tenantId == tenantId).array;
-  }
-
   size_t countByInstance(InstanceId instanceId) {
     return findByInstance(instanceId).length;
   }

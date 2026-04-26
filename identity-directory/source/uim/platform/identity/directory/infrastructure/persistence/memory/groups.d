@@ -14,16 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : GroupRepository {
-  private Group[GroupId] store;
-
-  bool existsById(GroupId id) {
-    return (id in store) ? true : false;
-  }
-
-  Group findById(GroupId id) {
-    return (id in store) ? store[id] : Group.init;
-  }
+class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
     return findAll().any!(g => g.tenantId == tenantId && g.displayName == displayName);
@@ -37,43 +28,20 @@ class MemoryGroupRepository : GroupRepository {
     return Group.init;
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    size_t count;
-    foreach (g; findAll()) {
-      if (g.tenantId == tenantId)
-        count++;
-    }
-    return count;
+  size_t countByMember(string memberId) {
+    return findByMember(memberId).length;
   }
-
-  Group[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(g => g.tenantId == tenantId).array;
+  Group[] filterByMember(Group[] groups, string memberId) {
+    return groups.filter!(g => g.hasMember(memberId)).array;
   }
-
-  Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Group[] result;
-    uint idx;
-    foreach (g; findByTenant(tenantId)) {
-      if (idx >= offset && result.length < limit)
-        result ~= g;
-      idx++;
-    }
-    return result;
-  }
-
   Group[] findByMember(string memberId) {
     return findAll().filter!(g => g.hasMember(memberId)).array;
   }
 
-  void save(Group group) {
-    store[group.id] = group;
-  }
-
-  void update(Group group) {
-    store[group.id] = group;
-  }
-
-  void remove(GroupId id) {
-    store.remove(id);
+  void removeByMember(string memberId) {
+    findByMember(memberId).each!(g => {
+      g.removeMember(memberId);
+      store[g.id] = g; // Update the group in the store after modification
+    });
   }
 }

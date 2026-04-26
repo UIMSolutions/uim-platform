@@ -7,7 +7,6 @@ mixin(ShowModule!());
 
 class MemoryResidenceRuleRepository : TenantRepository!(ResidenceRule, ResidenceRuleId), ResidenceRuleRepository {
 
-    ResidenceRule[] findByTenant(TenantId tenantId) { return store.byValue.filter!(a => a.tenantId == tenantId).array; }
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return findByBusinessPurpose(tenantId, purposeId).length;

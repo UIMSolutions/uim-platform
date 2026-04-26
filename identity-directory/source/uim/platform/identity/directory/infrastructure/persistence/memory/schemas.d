@@ -14,15 +14,11 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for custom schema persistence.
-class MemorySchemaRepository : SchemaRepository {
-  private Schema[SchemaId] store;
+class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
-  Schema findById(SchemaId id) {
-    if (auto p = id in store)
-      return *p;
-    return Schema.init;
+  bool existsByName(TenantId tenantId, string name) {
+    return findAll().any!(s => s.tenantId == tenantId && s.name == name);
   }
-
   Schema findByName(TenantId tenantId, string name) {
     foreach (s; findAll()) {
       if (s.tenantId == tenantId && s.name == name)
@@ -31,28 +27,4 @@ class MemorySchemaRepository : SchemaRepository {
     return Schema.init;
   }
 
-  Schema[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Schema[] result;
-    uint idx;
-    foreach (s; findAll()) {
-      if (s.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= s;
-        idx++;
-      }
-    }
-    return result;
-  }
-
-  void save(Schema schema) {
-    store[schema.id] = schema;
-  }
-
-  void update(Schema schema) {
-    store[schema.id] = schema;
-  }
-
-  void remove(SchemaId id) {
-    store.remove(id);
-  }
 }

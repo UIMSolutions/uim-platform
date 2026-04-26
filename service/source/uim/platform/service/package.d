@@ -18,4 +18,5 @@ public {
   import uim.platform.service.domain;
   import uim.platform.service.infrastructure;
   import uim.platform.service.presentation;
+  import uim.platform.service.udas;
 }

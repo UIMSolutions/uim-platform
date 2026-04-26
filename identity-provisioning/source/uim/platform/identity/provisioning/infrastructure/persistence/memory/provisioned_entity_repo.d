@@ -25,23 +25,18 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
     return ProvisionedEntity.init;
   }
 
-  ProvisionedEntity[] findByTenant(TenantId tenantId) {
-    ProvisionedEntity[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
-  }
-
   size_t countBySource(TenantId tenantId, SourceSystemId sourceId) {
     return findBySource(tenantId, sourceId).length;
   }
-ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId sourceId) {
+
+  ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId sourceId) {
     return entities.filter!(e => e.tenantId == tenantId && e.sourceSystemId == sourceId).array;
   }
+
   ProvisionedEntity[] findBySource(TenantId tenantId, SourceSystemId sourceId) {
     return filterBySource(findByTenant(tenantId), sourceId);
   }
+
   void removeBySource(TenantId tenantId, SourceSystemId sourceId) {
     findBySource(tenantId, sourceId).each!(e => remove(e));
   }
@@ -49,12 +44,15 @@ ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId 
   size_t countByTarget(TenantId tenantId, TargetSystemId targetId) {
     return findByTarget(tenantId, targetId).length;
   }
+
   ProvisionedEntity[] filterByTarget(ProvisionedEntity[] entities, TargetSystemId targetId) {
     return entities.filter!(e => e.tenantId == tenantId && e.targetSystemId == targetId).array;
   }
+
   ProvisionedEntity[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
     return filterByTarget(findByTenant(tenantId), targetId);
   }
+
   void removeByTarget(TenantId tenantId, TargetSystemId targetId) {
     findByTarget(tenantId, targetId).each!(e => remove(e));
   }
@@ -62,12 +60,15 @@ ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId 
   size_t countByStatus(TenantId tenantId, EntityStatus status) {
     return findByStatus(tenantId, status).length;
   }
-  ProvisionedEntity[] filterByStatus(ProvisionedEntity[] entities, EntityStatus status) { 
+
+  ProvisionedEntity[] filterByStatus(ProvisionedEntity[] entities, EntityStatus status) {
     return entities.filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
+
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
   }
+
   void removeByStatus(TenantId tenantId, EntityStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));
   }
@@ -75,12 +76,15 @@ ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId 
   size_t countByType(TenantId tenantId, EntityType entityType) {
     return findByType(tenantId, entityType).length;
   }
+
   ProvisionedEntity[] filterByType(ProvisionedEntity[] entities, EntityType entityType) {
     return entities.filter!(e => e.tenantId == tenantId && e.entityType == entityType).array;
   }
+
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType) {
     return filterByType(findByTenant(tenantId), entityType);
   }
+
   void removeByType(TenantId tenantId, EntityType entityType) {
     findByType(tenantId, entityType).each!(e => remove(e));
   }
