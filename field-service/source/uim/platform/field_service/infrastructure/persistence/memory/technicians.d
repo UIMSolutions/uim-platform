@@ -11,42 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTechnicianRepository : TechnicianRepository {
-    private Technician[] store;
+class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), TechnicianRepository {
 
-    bool existsById(TechnicianId id) {
-        return store.any!(e => e.id == id);
+    size_t countByStatus(TechnicianStatus status) {
+        return findByStatus(status).length;
     }
-
-    Technician findById(TechnicianId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return Technician.init;
+    Technician[] filterByStatus(Technician[] technicians, TechnicianStatus status) {
+        return technicians.filter!(e => e.status == status).array;
     }
-
-    Technician[] findAll() { return store; }
-
-    Technician[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     Technician[] findByStatus(TechnicianStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
+    void removeByStatus(TechnicianStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
+    }
 
+    size_t countByRegion(string region) {
+        return findByRegion(region).length;
+    }
+    Technician[] filterByRegion(Technician[] technicians, string region) {
+        return technicians.filter!(e => e.region == region).array;
+    }
     Technician[] findByRegion(string region) {
         return findAll().filter!(e => e.region == region).array;
     }
-
-    void save(Technician technician) { store ~= technician; }
-
-    void update(Technician technician) {
-        foreach (e; findAll)
-            if (e.id == technician.id) { e = technician; return; }
+    void removeByRegion(string region) {
+        findByRegion(region).each!(e => remove(e.id));
     }
 
-    void remove(TechnicianId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

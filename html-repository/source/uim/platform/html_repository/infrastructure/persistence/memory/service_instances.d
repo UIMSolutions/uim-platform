@@ -9,14 +9,13 @@ import uim.platform.html_repository.domain.ports.repositories.service_instances;
 import uim.platform.html_repository.domain.entities.service_instance;
 import uim.platform.html_repository.domain.types;
 
-class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
-  private ServiceInstance[] store;
+class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
 
-  ServiceInstance findById(ServiceInstanceId id) {
+  bool existsByName(TenantId tenantId, string name) {
     foreach (e; findAll) {
-      if (e.id == id) return e;
+      if (e.tenantId == tenantId && e.name == name) return true;
     }
-    return ServiceInstance.init;
+    return false;
   }
 
   ServiceInstance findByName(TenantId tenantId, string name) {
@@ -26,56 +25,31 @@ class ServiceInstanceMemoryRepository : ServiceInstanceRepository {
     return ServiceInstance.init;
   }
 
-  ServiceInstance[] findByTenant(TenantId tenantId) {
-    ServiceInstance[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
-  }
 
+  size_t countBySpace(SpaceId spaceId) {
+    return findBySpace(spaceId).length;
+  }
+  ServiceInstance[] filterBySpace(ServiceInstance[] instances, SpaceId spaceId) {
+    return instances.filter!(i => i.spaceId == spaceId).array;
+  }
   ServiceInstance[] findBySpace(SpaceId spaceId) {
-    ServiceInstance[] result;
-    foreach (e; findAll) {
-      if (e.spaceId == spaceId) result ~= e;
-    }
-    return result;
+    return filterBySpace(findAll(), spaceId);
+  }
+  void removeBySpace(SpaceId spaceId) {
+    findBySpace(spaceId).each!(i => remove(i.id));
   }
 
+  size_t countByPlan(TenantId tenantId, ServicePlan plan) {
+    return findByPlan(tenantId, plan).length;
+  }
+  ServiceInstance[] filterByPlan(ServiceInstance[] instances, TenantId tenantId, ServicePlan plan) {
+    return instances.filter!(i => i.tenantId == tenantId && i.plan == plan).array;
+  }
   ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan) {
-    ServiceInstance[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId && e.plan == plan) result ~= e;
-    }
-    return result;
+    return filterByPlan(findAll(), tenantId, plan);
+  }
+  void removeByPlan(TenantId tenantId, ServicePlan plan) {
+    findByPlan(tenantId, plan).each!(i => remove(i.id));
   }
 
-  void save(ServiceInstance instance) {
-    store ~= instance;
-  }
-
-  void update(ServiceInstance instance) {
-    foreach (i, e; store) {
-      if (e.id == instance.id) {
-        store[i] = instance;
-        return;
-      }
-    }
-  }
-
-  void remove(ServiceInstanceId id) {
-    ServiceInstance[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
-  }
 }

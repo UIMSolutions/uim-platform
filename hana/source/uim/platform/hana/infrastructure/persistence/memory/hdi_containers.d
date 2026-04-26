@@ -16,43 +16,22 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryHDIContainerRepository : HDIContainerRepository {
-  private HDIContainer[] store;
+class MemoryHDIContainerRepository : TenantRepository!(HDIContainer, HDIContainerId), HDIContainerRepository {
 
-  HDIContainer findById(HDIContainerId id) {
-    foreach (c; findAll) {
-      if (c.id == id)
-        return c;
-    }
-    return HDIContainer.init;
+
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
 
-  HDIContainer[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array;
+  HDIContainer[] filterByInstance(HDIContainer[] containers, InstanceId instanceId) {
+    return containers.filter!(c => c.instanceId == instanceId).array;
   }
 
   HDIContainer[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(c => c.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
   }
 
-  void save(HDIContainer c) {
-    store ~= c;
-  }
-
-  void update(HDIContainer c) {
-    foreach (existing; findAll) {
-      if (existing.id == c.id) {
-        existing = c;
-        return;
-      }
-    }
-  }
-
-  void remove(HDIContainerId id) {
-    store = findAll().filter!(c => c.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(c => c.tenantId == tenantId).array.length;
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(c => remove(c.id));
   }
 }

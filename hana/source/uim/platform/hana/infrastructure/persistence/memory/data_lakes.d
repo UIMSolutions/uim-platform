@@ -17,43 +17,24 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataLakeRepository : DataLakeRepository {
-  private DataLake[] store;
+class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLakeRepository {
 
-  DataLake findById(DataLakeId id) {
-    foreach (d; findAll) {
-      if (d.id == id)
-        return d;
-    }
-    return DataLake.init;
-  }
 
   DataLake[] findByTenant(TenantId tenantId) {
     return findAll().filter!(d => d.tenantId == tenantId).array;
   }
 
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
+  }
+  DataLake[] filterByInstance(DataLake[] dataLakes, InstanceId instanceId) {
+    return dataLakes.filter!(d => d.instanceId == instanceId).array;
+  }
   DataLake[] findByInstance(InstanceId instanceId) {
-    return findAll().filter!(d => d.instanceId == instanceId).array;
+    return filterByInstance(findAll(), instanceId);
+  }
+  void removeByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(d => remove(d.id));
   }
 
-  void save(DataLake d) {
-    store ~= d;
-  }
-
-  void update(DataLake d) {
-    foreach (existing; findAll) {
-      if (existing.id == d.id) {
-        existing = d;
-        return;
-      }
-    }
-  }
-
-  void remove(DataLakeId id) {
-    store = findAll().filter!(d => d.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(d => d.tenantId == tenantId).array.length;
-  }
 }

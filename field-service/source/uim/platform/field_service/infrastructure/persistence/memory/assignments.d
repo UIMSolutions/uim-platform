@@ -13,10 +13,6 @@ mixin(ShowModule!());
 
 class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), AssignmentRepository {
 
-    Assignment[] findByTenant(TenantId tenantId) {
-        return findAll.filter!(e => e.tenantId == tenantId).array;
-    }
-
     size_t countByActivity(ActivityId activityId) {
         return findByActivity(activityId).length;
     }

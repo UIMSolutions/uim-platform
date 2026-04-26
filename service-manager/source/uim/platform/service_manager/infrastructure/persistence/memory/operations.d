@@ -8,6 +8,5 @@ mixin(ShowModule!());
 
 class MemoryOperationRepository : TenantRepository!(Operation, OperationId), OperationRepository {
 
-    // TODO: Implement methods for filtering by status and resour
-    ce
+    // TODO: Implement methods for filtering by status and resource
 }

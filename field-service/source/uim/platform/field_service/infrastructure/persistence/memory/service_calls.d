@@ -13,20 +13,43 @@ mixin(ShowModule!());
 
 class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId), ServiceCallRepository {
 
-    ServiceCall[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    size_t countByStatus(ServiceCallStatus status) {
+        return findByStatus(status).length;
     }
-
+    ServiceCall[] filterByStatus(ServiceCall[] serviceCalls, ServiceCallStatus status) {
+        return serviceCalls.filter!(e => e.status == status).array;
+    }
     ServiceCall[] findByStatus(ServiceCallStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+        return filterByStatus(findAll(), status);
+    }
+    void removeByStatus(ServiceCallStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
     }
 
+    size_t countByPriority(ServiceCallPriority priority) {
+        return findByPriority(priority).length;
+    }
+    ServiceCall[] filterByPriority(ServiceCall[] serviceCalls, ServiceCallPriority priority) {
+        return serviceCalls.filter!(e => e.priority == priority).array;
+    }
     ServiceCall[] findByPriority(ServiceCallPriority priority) {
-        return findAll().filter!(e => e.priority == priority).array;
+        return filterByPriority(findAll(), priority);
+    }
+    void removeByPriority(ServiceCallPriority priority) {
+        findByPriority(priority).each!(e => remove(e.id));
     }
 
+    size_t countByCustomer(CustomerId customerId) {
+        return findByCustomer(customerId).length;
+    }
+    ServiceCall[] filterByCustomer(ServiceCall[] serviceCalls, CustomerId customerId) {
+        return serviceCalls.filter!(e => e.customerId == customerId).array;
+    }
     ServiceCall[] findByCustomer(CustomerId customerId) {
-        return findAll().filter!(e => e.customerId == customerId).array;
+        return filterByCustomer(findAll(), customerId);
+    }
+    void removeByCustomer(CustomerId customerId) {
+        findByCustomer(customerId).each!(e => remove(e.id));
     }
 
 }

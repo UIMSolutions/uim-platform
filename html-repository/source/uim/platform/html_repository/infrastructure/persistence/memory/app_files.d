@@ -55,6 +55,16 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
     store = result;
   }
 
+  size_t countByCategory(AppVersionId versionId, FileCategory category) {
+    size_t count = 0;
+    foreach (e; findAll) {
+      if (e.versionId == versionId && e.category == category) count++;
+    }
+    return count;
+  }
+  AppFile[] filterByCategory(AppFile[] files, AppVersionId versionId, FileCategory category) {
+    return files.filter!(f => f.versionId == versionId && f.category == category).array;
+  }
   AppFile[] findByCategory(AppVersionId versionId, FileCategory category) {
     AppFile[] result;
     foreach (e; findAll) {
@@ -62,50 +72,12 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
     }
     return result;
   }
-
-  AppFile[] findByTenant(TenantId tenantId) {
+  void removeByCategory(AppVersionId versionId, FileCategory category) {
     AppFile[] result;
     foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
-  }
-
-  void save(AppFile file) {
-    store ~= file;
-  }
-
-  void update(AppFile file) {
-    foreach (i, e; findAll) {
-      if (e.id == file.id) {
-        store[i] = file;
-        return;
-      }
-    }
-  }
-
-  void remove(AppFileId id) {
-    AppFile[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
+      if (e.versionId != versionId || e.category != category) result ~= e;
     }
     store = result;
-  }
-
-  void removeByVersion(AppVersionId versionId) {
-    AppFile[] result;
-    foreach (e; findAll) {
-      if (e.versionId != versionId) result ~= e;
-    }
-    store = result;
-  }
-
-  size_t countByVersion(AppVersionId versionId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.versionId == versionId) count++;
-    }
-    return count;
   }
 
   long totalSizeByVersion(AppVersionId versionId) {
@@ -116,11 +88,4 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
     return total;
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
-  }
 }

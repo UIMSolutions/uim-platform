@@ -9,74 +9,53 @@ import uim.platform.html_repository.domain.ports.repositories.deployment_records
 import uim.platform.html_repository.domain.entities.deployment_record;
 import uim.platform.html_repository.domain.types;
 
-class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
-  private DeploymentRecord[] store;
+class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, DeploymentRecordId), DeploymentRecordRepository {
 
-  DeploymentRecord findById(DeploymentRecordId id) {
-    foreach (e; findAll) {
-      if (e.id == id) return e;
-    }
-    return DeploymentRecord.init;
+  size_t countByApp(HtmlAppId appId) {
+    return findByApp(appId).length;
+  }
+
+  DeploymentRecord[] filterByApp(DeploymentRecord[] records, HtmlAppId appId) {
+    return records.filter!(r => r.appId == appId).array;
   }
 
   DeploymentRecord[] findByApp(HtmlAppId appId) {
-    DeploymentRecord[] result;
-    foreach (e; findAll) {
-      if (e.appId == appId) result ~= e;
-    }
-    return result;
+    return filterByApp(findAll(), appId);
+  }
+
+  void removeByApp(HtmlAppId appId) {
+    findByApp(appId).each!(r => remove(r.id));
+  }
+
+  size_t countByVersion(AppVersionId versionId) {
+    return findByVersion(versionId).length;
+  }
+
+  DeploymentRecord[] filterByVersion(DeploymentRecord[] records, AppVersionId versionId) {
+    return records.filter!(r => r.versionId == versionId).array;
   }
 
   DeploymentRecord[] findByVersion(AppVersionId versionId) {
-    DeploymentRecord[] result;
-    foreach (e; findAll) {
-      if (e.versionId == versionId) result ~= e;
-    }
-    return result;
+    return filterByVersion(findAll(), versionId);
   }
 
-  DeploymentRecord[] findByTenant(TenantId tenantId) {
-    DeploymentRecord[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
+  void removeByVersion(AppVersionId versionId) {
+    findByVersion(versionId).each!(r => remove(r.id));
+  }
+
+  size_t countByStatus(TenantId tenantId, DeploymentStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  DeploymentRecord[] filterByStatus(DeploymentRecord[] records, DeploymentStatus status) {
+    return records.filter!(r => r.status == status).array;
   }
 
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-    DeploymentRecord[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId && e.status == status) result ~= e;
-    }
-    return result;
+    return filterByStatus(findAll().filter!(r => r.tenantId == tenantId).array, status);
   }
 
-  void save(DeploymentRecord record) {
-    store ~= record;
-  }
-
-  void update(DeploymentRecord record) {
-    foreach (i, e; store) {
-      if (e.id == record.id) {
-        store[i] = record;
-        return;
-      }
-    }
-  }
-
-  void remove(DeploymentRecordId id) {
-    DeploymentRecord[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
-    }
-    return count;
+  void removeByStatus(TenantId tenantId, DeploymentStatus status) {
+    findByStatus(tenantId, status).each!(r => remove(r.id));
   }
 }
