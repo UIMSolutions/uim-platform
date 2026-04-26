@@ -1,4 +1,4 @@
-module uim.platform.service_manager.domain.ports.repositories.service_broker_repo;
+module uim.platform.service_manager.domain.ports.repositories.service_brokers;
 
 import uim.platform.service_manager;
 

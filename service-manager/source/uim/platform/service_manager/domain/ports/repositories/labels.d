@@ -1,4 +1,4 @@
-module uim.platform.service_manager.domain.ports.repositories.label_repo;
+module uim.platform.service_manager.domain.ports.repositories.labels;
 
 import uim.platform.service_manager;
 
