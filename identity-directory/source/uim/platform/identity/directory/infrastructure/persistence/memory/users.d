@@ -18,15 +18,6 @@ mixin(ShowModule!());
 
 /// In-memory adapter for user persistence.
 class MemoryUserRepository : UserRepository {
-  private User[UserId] store;
-
-  bool existsById(UserId id) {
-    return id in store ? true : false;
-  }
-
-  User findById(UserId id) {
-    return existsById(id) ? store[id] : User.init;
-  }
 
   bool existsByUserName(TenantId tenantId, string userName) {
     return findAll().any!(u => u.tenantId == tenantId && u.userName == userName);
@@ -52,62 +43,60 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User[] findByEmail(TenantId tenantId, string email) {
-    User[] result;
-    foreach (u; findAll()) {
-      if (u.tenantId == tenantId) {
-        foreach (e; u.emails)
-        {
-          if (e.value == email)
-          {
-            result ~= u;
-            break;
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
+  size_t countByUserName(TenantId tenantId, string userName) {
     size_t count;
     foreach (u; findAll()) {
-      if (u.tenantId == tenantId)
+      if (u.tenantId == tenantId && u.userName == userName)
         count++;
     }
     return count;
   }
 
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    User[] result;
-    uint idx;
-    foreach (u; findAll()) {
-      if (u.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= u;
-        idx++;
-      }
-    }
-    return result;
+  User[] filterByUserName(User[] users, string userName) {
+    return users.filter!(u => u.userName == userName).array;
+  }
+
+  User[] findByUserName(TenantId tenantId, string userName) {
+    return filterByUserName(findByTenant(tenantId), userName);
+  }
+
+  void removeByUserName(TenantId tenantId, string userName) {
+    findByUserName(tenantId, userName).each!(u => remove(u));
+  }
+
+  size_t countByEmail(TenantId tenantId, string email) {
+    return findByEmail(tenantId, email).length;
+  }
+
+  User[] filterByEmail(User[] users, string email) {
+    return users.filter!(u => u.emails.canFind!(e => e.value == email)).array;
+  }
+
+  User[] findByEmail(TenantId tenantId, string email) {
+    return filterByEmail(findByTenant(tenantId), email);
+  }
+
+  void removeByEmail(TenantId tenantId, string email) {
+    findByEmail(tenantId, email).each!(u => remove(u));
+  }
+
+  size_t countByGroupId(TenantId tenantId, GroupId groupId) {
+    return findByGroupId(groupId).length;
+  }
+
+  User[] filterByGroupId(User[] users, GroupId groupId) {
+    return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
   User[] findByGroupId(GroupId groupId) {
-    User[] result;
-    foreach (u; findAll()) {
-      if (u.groupIds.canFind(groupId))
-        result ~= u;
-    }
-    return result;
+    return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
   User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100) {
     User[] result;
     auto lowerFilter = filter.toLower();
     uint idx;
-    foreach (u; findAll()) {
-      if (u.tenantId != tenantId)
-        continue;
-
+    foreach (u; findByTenant(tenantId)) {
       // Simple filter: match against userName, displayName, emails
       bool matches = false;
       if (u.userName.toLower().indexOf(lowerFilter) >= 0)
@@ -118,12 +107,9 @@ class MemoryUserRepository : UserRepository {
         matches = true;
       else if (u.name.familyName.toLower().indexOf(lowerFilter) >= 0)
         matches = true;
-      else
-      {
-        foreach (e; u.emails)
-        {
-          if (e.value.toLower().indexOf(lowerFilter) >= 0)
-          {
+      else {
+        foreach (e; u.emails) {
+          if (e.value.toLower().indexOf(lowerFilter) >= 0) {
             matches = true;
             break;
           }
@@ -139,15 +125,4 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  void save(User user) {
-    store[user.id] = user;
-  }
-
-  void update(User user) {
-    store[user.id] = user;
-  }
-
-  void remove(UserId id) {
-    store.remove(id);
-  }
 }

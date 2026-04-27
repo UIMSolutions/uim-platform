@@ -16,43 +16,18 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryReplicationTaskRepository : ReplicationTaskRepository {
-  private ReplicationTask[] store;
+class MemoryReplicationTaskRepository : TenantRepository!(ReplicationTask, ReplicationTaskId), ReplicationTaskRepository {
 
-  ReplicationTask findById(ReplicationTaskId id) {
-    foreach (t; findAll) {
-      if (t.id == id)
-        return t;
-    }
-    return ReplicationTask.init;
+  size_t countByInstance(InstanceId instanceId) {
+    return findByInstance(instanceId).length;
   }
-
-  ReplicationTask[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(t => t.tenantId == tenantId).array;
+  ReplicationTask[] filterByInstance(RReplicationTask[] tasks, InstanceId instanceId) {
+    return tasks.filter!(t => t.instanceId == instanceId).array;
   }
-
   ReplicationTask[] findByInstance(InstanceId instanceId) {
     return findAll().filter!(t => t.instanceId == instanceId).array;
   }
-
-  void save(ReplicationTask t) {
-    store ~= t;
-  }
-
-  void update(ReplicationTask t) {
-    foreach (existing; findAll) {
-      if (existing.id == t.id) {
-        existing = t;
-        return;
-      }
-    }
-  }
-
-  void remove(ReplicationTaskId id) {
-    store = findAll().filter!(t => t.id != id).array;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(t => t.tenantId == tenantId).array.length;
+  void deleteByInstance(InstanceId instanceId) {
+    findByInstance(instanceId).each!(t => remove(t));
   }
 }

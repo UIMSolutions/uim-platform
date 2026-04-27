@@ -25,51 +25,6 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
     return latest;
   }
 
-  AppVersion[] findByApp(HtmlAppId appId) {
-    AppVersion[] result;
-    foreach (e; findAll) {
-      if (e.appId == appId) result ~= e;
-    }
-    return result;
-  }
-
-  AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status) {
-    AppVersion[] result;
-    foreach (e; findAll) {
-      if (e.appId == appId && e.status == status) result ~= e;
-    }
-    return result;
-  }
-
-  AppVersion[] findByTenant(TenantId tenantId) {
-    AppVersion[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
-  }
-
-  void save(AppVersion ver) {
-    store ~= ver;
-  }
-
-  void update(AppVersion ver) {
-    foreach (i, e; store) {
-      if (e.id == ver.id) {
-        store[i] = ver;
-        return;
-      }
-    }
-  }
-
-  void remove(AppVersionId id) {
-    AppVersion[] result;
-    foreach (e; findAll) {
-      if (e.id != id) result ~= e;
-    }
-    store = result;
-  }
-
   size_t countByApp(HtmlAppId appId) {
     size_t count = 0;
     foreach (e; findAll) {
@@ -77,12 +32,31 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
     }
     return count;
   }
+  AppVersion[] filterByApp(AppVersion[] versions, HtmlAppId appId) {
+    return versions.filter!(v => v.appId == appId).array;
+  }
+  AppVersion[] findByApp(HtmlAppId appId) {
+    return filterByApp(findAll, appId);
+  }
+  void removeByApp(HtmlAppId appId) {
+    findByApp(appId).each!(v => remove(v.id));
+  }
 
-  size_t countByTenant(TenantId tenantId) {
+  size_t countByStatus(HtmlAppId appId, VersionStatus status) {
     size_t count = 0;
     foreach (e; findAll) {
-      if (e.tenantId == tenantId) count++;
+      if (e.appId == appId && e.status == status) count++;
     }
     return count;
   }
+  AppVersion[] filterByStatus(AppVersion[] versions, HtmlAppId appId, VersionStatus status) {
+    return versions.filter!(v => v.appId == appId && v.status == status).array;
+  } 
+  AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status) {
+    return filterByStatus(findAll, appId, status);
+  }
+  void removeByStatus(HtmlAppId appId, VersionStatus status) {
+    findByStatus(appId, status).each!(v => remove(v.id));
+  }
+
 }

@@ -16,38 +16,40 @@ import uim.platform.integration.automation.domain.ports;
 
 class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
-
-  Destination[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countBySystem(TenantId tenantId, SystemConnectionId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
-
-
+  Destination[] filterBySystem(Destination[] destinations, SystemConnectionId systemId) {
+    return destinations.filter!(d => d.systemId == systemId).array;
+  }
   Destination[] findBySystem(TenantId tenantId, SystemConnectionId systemId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.systemId == systemId).array;
+    return filterBySystem(findByTenant(tenantId), systemId);
+  }
+  void removeBySystem(TenantId tenantId, SystemConnectionId systemId) {
+    findBySystem(tenantId, systemId).each!(d => remove(d));
   }
 
-  Destination* findByName(TenantId tenantId, string name) {
-    foreach (d; findAll()
-      if (d.tenantId == tenantId && d.name == name)
-        return &d;
-    return null;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(d => d.name == name);
+  }
+  Destination findByName(TenantId tenantId, string name) {
+    foreach (d; findByTenant(tenantId))
+      if (d.name == name)
+        return d;
+    return Destination.init;
   }
 
+  size_t countByEnabled(TenantId tenantId) {
+    return findEnabled(tenantId).length;
+  }
+  Destination[] filterByEnabled(Destination[] destinations) {
+    return destinations.filter!(d => d.isEnabled).array;
+  }
   Destination[] findEnabled(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.isEnabled).array;
+    return findByTenant(tenantId).filter!(d => d.isEnabled).array;
+  }
+  void removeByEnabled(TenantId tenantId) {
+    findEnabled(tenantId).each!(d => remove(d));
   }
 
-  void save(Destination destination) {
-    store[destination.id] = destination;
-  }
-
-  void update(Destination destination) {
-    store[destination.id] = destination;
-  }
-
-  void remove(DestinationId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

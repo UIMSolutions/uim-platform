@@ -14,39 +14,18 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for password policy persistence.
-class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
-  private PasswordPolicy[PasswordPolicyId] store;
+class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolicyId), PasswordPolicyRepository {
 
-  PasswordPolicy findById(PasswordPolicyId id) {
-    return id in store ? store[id] : PasswordPolicy.init;
+  bool existsActiveForTenant(TenantId tenantId) {
+    return findByTenant(tenantId).any!(p => p.active);
   }
 
   PasswordPolicy findActiveForTenant(TenantId tenantId) {
-    foreach (p; findAll()) {
-      if (p.tenantId == tenantId && p.active)
+    foreach (p; findByTenant(tenantId)) {
+      if (p.active)
         return p;
     }
     return PasswordPolicy.init;
   }
 
-  PasswordPolicy[] findByTenant(TenantId tenantId) {
-    PasswordPolicy[] result;
-    foreach (p; findAll()) {
-      if (p.tenantId == tenantId)
-        result ~= p;
-    }
-    return result;
-  }
-
-  void save(PasswordPolicy policy) {
-    store[policy.id] = policy;
-  }
-
-  void update(PasswordPolicy policy) {
-    store[policy.id] = policy;
-  }
-
-  void remove(string id) {
-    store.remove(id);
-  }
 }

@@ -10,57 +10,40 @@ import uim.platform.identity.provisioning.domain.entities.target_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 
 class MemoryTargetSystemRepository : TargetSystemRepository {
-  private TargetSystem[string] store;
 
-  void save(TargetSystem entity) {
-    store[entity.id] = entity;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
-
-  void update(TargetSystem entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(TargetSystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  TargetSystem* findById(TargetSystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
-
-  TargetSystem* findByName(TenantId tenantId, string name) {
+  TargetSystem findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
-        return &e;
-    return null;
+        return e;
+    return TargetSystem.init;
   }
 
-  TargetSystem[] findByTenant(TenantId tenantId) {
-    TargetSystem[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  size_t countByType(TenantId tenantId, SystemType systemType) {
+    return findByType(tenantId, systemType).length;
   }
-
+  TargetSystem[] filterByType(TargetSystem[] systems, SystemType systemType) {
+    return systems.filter!(s => s.systemType == systemType).array;
+  }
   TargetSystem[] findByType(TenantId tenantId, SystemType systemType) {
-    TargetSystem[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.systemType == systemType)
-        result ~= e;
-    return result;
+    return filterByType(findByTenant(tenantId), systemType);
   }
-
+  
+  void removeByType(TenantId tenantId, SystemType systemType) {
+    findByType(tenantId, systemType).each!(e => remove(e));
+  }
+  size_t countByStatus(TenantId tenantId, SystemStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  TargetSystem[] filterByStatus(TargetSystem[] systems, SystemStatus status) {
+    return systems.filter!(s => s.status == status).array;
+  }
   TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
-    TargetSystem[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.status == status)
-        result ~= e;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+  void removeByStatus(TenantId tenantId, SystemStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 }

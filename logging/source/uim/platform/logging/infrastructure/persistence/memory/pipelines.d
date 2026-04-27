@@ -13,7 +13,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPipelineRepository : PipelineRepository {
+class MemoryPipelineRepository :TenantRRepository!(Pipeline, PipelineId), PipelineRepository {
   private Pipeline[PipelineId] store;
 
   size_t countAll() {

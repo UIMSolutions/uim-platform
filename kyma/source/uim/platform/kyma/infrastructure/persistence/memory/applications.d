@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryApplicationRepository : ApplicationRepository {
+class MemoryApplicationRepository : TenantRRepository!(Application, ApplicationId), ApplicationRepository {
   private Application[ApplicationId] store;
 
   bool existsById(ApplicationId id) {
