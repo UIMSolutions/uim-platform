@@ -21,27 +21,43 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
-  Workflow* findById(WorkflowId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, scenarioId).length;
   }
-
+  Workflow[] filterByScenario(Workflow[] workflows, ScenarioId scenarioId) {
+    return workflows.filter!(e => e.scenarioId == scenarioId).array;
+  }
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.scenarioId == scenarioId).array;
+    return filterByScenario(findByTenant(tenantId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId) {
+    findByScenario(tenantId, scenarioId).each!(e => remove(e.id));
   }
 
+  size_t countByStatus(TenantId tenantId, WorkflowStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  Workflow[] filterByStatus(Workflow[] workflows, TenantId tenantId, WorkflowStatus status) {
+    return workflows.filter!(e => e.tenantId == tenantId && e.status == status).array;
+  }
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), tenantId, status);
+  }
+  void removeByStatus(TenantId tenantId, WorkflowStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e.id));
   }
 
+  size_t countByCreator(TenantId tenantId, UserId createdBy) {
+    return findByCreator(tenantId, createdBy).length;
+  }
+  Workflow[] filterByCreator(Workflow[] workflows, UserId createdBy) {
+    return workflows.filter!(e => e.createdBy == createdBy).array;
+  }
   Workflow[] findByCreator(TenantId tenantId, UserId createdBy) {
-    return findAll()r!(e => e.tenantId == tenantId && e.createdBy == createdBy).array;
+    return filterByCreator(findByTenant(tenantId), createdBy);
   }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+  void removeByCreator(TenantId tenantId, UserId createdBy) {
+    findByCreator(tenantId, createdBy).each!(e => remove(e.id));
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
@@ -51,17 +67,4 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
       .array.length;
   }
 
-  void save(Workflow workflow) {
-    store[workflow.id] = workflow;
-  }
-
-  void update(Workflow workflow) {
-    store[workflow.id] = workflow;
-  }
-
-  void remove(WorkflowId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }

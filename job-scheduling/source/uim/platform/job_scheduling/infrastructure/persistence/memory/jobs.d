@@ -18,25 +18,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
-    private Job[][TenantId] store; // keyed by tenantId
-
-    Job[] findByTenant(TenantId tenantId) {
-        if (!existsByTenant(tenantId)) {
-            return null;
-        }
-        return store[tenantId];
-    }
-
-    bool existsByName(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(j => j.name == name);
-    }
-    Job findByName(TenantId tenantId, string name) {
-        foreach (job; findByTenant(tenantId)) {
-            if (job.name == name)
-                return job;
-        }
-        return Job.init;
-    }
 
     size_t countByStatus(TenantId tenantId, JobStatus status) {
         return findByStatus(tenantId, status).length;

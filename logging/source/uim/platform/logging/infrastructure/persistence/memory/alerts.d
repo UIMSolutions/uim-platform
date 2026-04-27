@@ -13,21 +13,20 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository :TenantRepository!(Alert, AlertId), AlertRepository {
-
-  Alert[] findByTenant(TenantId tenantId) {
-        return store.byValue.filter!(a => a.tenantId == tenantId).array;
-  }
+class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository {
 
   size_t countByState(TenantId tenantId, AlertState state) {
     return findByState(tenantId, state).length;
   }
+
   Alert[] filterByState(Alert[] alerts, AlertState state) {
     return alerts.filter!(a => a.state == state).array;
   }
+
   Alert[] findByState(TenantId tenantId, AlertState state) {
     return filterByState(findByTenant(tenantId), state);
   }
+
   void removeByState(TenantId tenantId, AlertState state) {
     findByState(tenantId, state).each!(a => remove(a));
   }
@@ -35,12 +34,15 @@ class MemoryAlertRepository :TenantRepository!(Alert, AlertId), AlertRepository 
   size_t countBySeverity(TenantId tenantId, AlertSeverity severity) {
     return findBySeverity(tenantId, severity).length;
   }
+
   Alert[] filterBySeverity(Alert[] alerts, AlertSeverity severity) {
     return alerts.filter!(a => a.severity == severity).array;
   }
+
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
     return findByTenant(tenantId).filter!(a => a.severity == severity).array;
   }
+
   void removeBySeverity(TenantId tenantId, AlertSeverity severity) {
     findBySeverity(tenantId, severity).each!(a => remove(a));
   }
@@ -48,27 +50,16 @@ class MemoryAlertRepository :TenantRepository!(Alert, AlertId), AlertRepository 
   size_t countByRule(TenantId tenantId, AlertRuleId ruleId) {
     return findByRule(tenantId, ruleId).length;
   }
+
+  Alert[] filterByRule(Alert[] alerts, AlertRuleId ruleId) {
+    return alerts.filter!(a => a.ruleId == ruleId).array;
+  }
+
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    return findByTenant(tenantId).filter!(a => a.ruleId == ruleId).array;
+    return filterByRule(findByTenant(tenantId), ruleId);
   }
 
-  void save(Alert a) {
-    store[a.id] = a;
-  }
-
-  void update(Alert a) {
-    store[a.id] = a;
-  }
-
-  void remove(AlertId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
-  }
-
-  size_t countByState(TenantId tenantId, AlertState state) {
-    return findByState(tenantId, state).length;
+  void removeByRule(TenantId tenantId, AlertRuleId ruleId) {
+    findByRule(tenantId, ruleId).each!(a => remove(a));
   }
 }

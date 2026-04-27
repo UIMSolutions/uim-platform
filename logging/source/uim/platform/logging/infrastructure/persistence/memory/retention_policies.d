@@ -14,21 +14,15 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
-  private RetentionPolicy[RetentionPolicyId] store;
-
-  bool existsById(RetentionPolicyId id) {
-    return (  id in store) ? true : false;
-  }
-
-  RetentionPolicy findById(RetentionPolicyId id) {
-    return (existsById(id)) ? store[id] : RetentionPolicy.init;
-  }
+class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
 
   RetentionPolicy[] findByTenant(TenantId tenantId) {
     return store.byValue.filter!(p => p.tenantId == tenantId).array;
   }
 
+  bool existsDefault(TenantId tenantId) {
+    return findByTenant(tenantId).any!(p => p.isDefault);
+  }
   RetentionPolicy findDefault(TenantId tenantId) {
     foreach (p; findByTenant(tenantId))
       if (p.isDefault)
@@ -36,19 +30,17 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
     return RetentionPolicy.init;
   }
 
+  size_t countByDataType(TenantId tenantId, DataType dt) {
+    return findByDataType(tenantId, dt).length;
+  }
+  RetentionPolicy[] filterByDataType(RetentionPolicy[] policies, TenantId tenantId, DataType dt) {
+    return policies.filter!(p => p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all)).array;
+  }
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt) {
     return store.byValue.filter!(p => p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all)).array;
   }
-
-  void save(RetentionPolicy p) {
-    store[p.id] = p;
+  void removeByDataType(TenantId tenantId, DataType dt) {
+    findByDataType(tenantId, dt).each!(p => remove(p.id));
   }
 
-  void update(RetentionPolicy p) {
-    store[p.id] = p;
-  }
-
-  void remove(RetentionPolicyId id) {
-    store.remove(id);
-  }
 }

@@ -17,40 +17,35 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryEnvironmentRepository :TenantRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
-  private KymaEnvironment[KymaEnvironmentId] store;
-
-  bool existsById(KymaEnvironmentId id) {
-    return (id in store) ? true : false;
-  }
-
-  KymaEnvironment findById(KymaEnvironmentId id) {
-    if (existsById(id))
-      return store[id];
-    return KymaEnvironment.init;
-  }
 
   KymaEnvironment[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
+  }
+  KymaEnvironment[] filterBySubaccount(KymaEnvironment[] envs, SubaccountId subaccountId) {
+    return envs.filter!(e => e.subaccountId == subaccountId).array;
+  }
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return findAll()r!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId).array;
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
+  }
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
 
+  size_t countByStatus(TenantId tenantId, EnvironmentStatus status) {
+    return findByStatus(status).length;
+  }
+  KymaEnvironment[] filterByStatus(KymaEnvironment[] envs, EnvironmentStatus status) {
+    return envs.filter!(e => e.status == status).array;
+  }
   KymaEnvironment[] findByStatus(EnvironmentStatus status) {
-    return findAll()r!(e => e.status == status).array;
+    return filterByStatus(findAll(), status);
+  }
+  void removeByStatus(EnvironmentStatus status) {
+    findByStatus(status).each!(e => remove(e));
   }
 
-  void save(KymaEnvironment env) {
-    store[env.id] = env;
-  }
-
-  void update(KymaEnvironment env) {
-    store[env.id] = env;
-  }
-
-  void remove(KymaEnvironmentId id) {
-    store.remove(id);
-  }
 }
