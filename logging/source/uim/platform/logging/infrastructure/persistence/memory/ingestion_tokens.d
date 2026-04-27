@@ -14,16 +14,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
-  private IngestionToken[IngestionTokenId] store;
-
-  bool existsById(IngestionTokenId id) {
-    return (id in store) ? true : false;
-  }
-
-
-  IngestionToken findById(IngestionTokenId id) {
-    return (existsById(id)) ? store[id] : IngestionToken.init;
-  }
 
   bool existsByHash(string tokenHash) {
     return store.byValue.any!(t => t.tokenHash == tokenHash);
@@ -36,21 +26,4 @@ class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, Ingesti
     return IngestionToken.init;
   }
 
-  IngestionToken[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(t => t.tenantId == tenantId).array;
-  }
-
-
-
-  void save(IngestionToken t) {
-    store[t.id] = t;
-  }
-
-  void update(IngestionToken t) {
-    store[t.id] = t;
-  }
-
-  void remove(IngestionTokenId id) {
-    store.remove(id);
-  }
 }

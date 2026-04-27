@@ -17,17 +17,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
-  private Namespace[NamespaceId] store;
-
-  bool existsById(NamespaceId id) {
-    return (id in store) ? true : false;
-  }
-
-  Namespace findById(NamespaceId id) {
-    if (existsById(id))
-      return store[id];
-    return Namespace.init;
-  }
 
   bool existsByName(KymaEnvironmentId envId, string name) {
     return findByEnvironment(envId).any!(e => e.name == name);
@@ -40,23 +29,17 @@ class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), Nam
     return Namespace.init;
   }
 
+  size_t countByEnvironment(KymaEnvironmentId envId) {
+    return findByEnvironment(envId).length;
+  }
+  Namespace[] filterByEnvironment(Namespace[] namespaces, KymaEnvironmentId envId) {
+    return namespaces.filter!(e => e.environmentId == envId).array;
+  }
   Namespace[] findByEnvironment(KymaEnvironmentId envId) {
     return findAll()r!(e => e.environmentId == envId).array;
   }
-
-  Namespace[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  void removeByEnvironment(KymaEnvironmentId envId) {
+    findByEnvironment(envId).each!(e => remove(e));
   }
 
-  void save(Namespace ns) {
-    store[ns.id] = ns;
-  }
-
-  void update(Namespace ns) {
-    store[ns.id] = ns;
-  }
-
-  void remove(NamespaceId id) {
-    store.remove(id);
-  }
 }

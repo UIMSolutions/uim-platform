@@ -13,21 +13,11 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDashboardRepository : DashboardRepository {
-  private Dashboard[DashboardId] store;
+class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
 
-  bool existsById(DashboardId id) {
-    return (id in store) ? true : false;
+  bool existsDefault(TenantId tenantId) {
+    return findByTenant(tenantId).any!(d => d.isDefault);
   }
-
-  Dashboard findById(DashboardId id) {
-    return (existsById(id)) ? store[id] : Dashboard.init;
-  }
-
-  Dashboard[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(d => d.tenantId == tenantId).array;
-  }
-
   Dashboard findDefault(TenantId tenantId) {
     foreach (d; findByTenant(tenantId))
       if (d.isDefault)
@@ -35,19 +25,4 @@ class MemoryDashboardRepository : DashboardRepository {
     return Dashboard.init;
   }
 
-  void save(Dashboard d) {
-    store[d.id] = d;
-  }
-
-  void update(Dashboard d) {
-    store[d.id] = d;
-  }
-
-  void remove(DashboardId id) {
-    store.remove(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
-  }
 }

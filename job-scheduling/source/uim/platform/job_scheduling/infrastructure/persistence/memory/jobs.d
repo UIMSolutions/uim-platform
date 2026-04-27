@@ -20,10 +20,6 @@ mixin(ShowModule!());
 class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
     private Job[][TenantId] store; // keyed by tenantId
 
-    bool existsByTenant(TenantId tenantId) {
-        return (tenantId in store) ? true : false;
-    }
-
     Job[] findByTenant(TenantId tenantId) {
         if (!existsByTenant(tenantId)) {
             return null;
@@ -31,23 +27,10 @@ class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
         return store[tenantId];
     }
 
-    Job findById(TenantId tenantId, JobId jobId) {
-        if (!existsByTenant(tenantId)) {
-            return Job.init;
-        }
-
-        foreach (job; findByTenant(tenantId)) {
-            if (job.id == jobId)
-                return job;
-        }
-        return Job.init;
+    bool existsByName(TenantId tenantId, string name) {
+        return findByTenant(tenantId).any!(j => j.name == name);
     }
-
     Job findByName(TenantId tenantId, string name) {
-        if (!existsByTenant(tenantId)) {
-            return Job.init;
-        }
-
         foreach (job; findByTenant(tenantId)) {
             if (job.name == name)
                 return job;
@@ -55,11 +38,17 @@ class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
         return Job.init;
     }
 
+    size_t countByStatus(TenantId tenantId, JobStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+    Job[] filterByStatus(Job[] jobs, JobStatus status) {
+        return jobs.filter!(j => j.status == status).array;
+    }
     Job[] findByStatus(TenantId tenantId, JobStatus status) {
-        if (!existsByTenant(tenantId)) {
-            return null;
-        }
-        return findByTenant(tenantId).filter!(j => j.status == status).array;
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, JobStatus status) {
+        findByStatus(tenantId, status).each!(j => remove(tenantId, j.id));
     }
 
     Job[] search(TenantId tenantId, string query) {
@@ -71,42 +60,11 @@ class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
             .array;
     }
 
-    void save(Job j) {
-        store[j.tenantId] ~= j;
-    }
-
-    void update(Job j) {
-        if (auto t = j.tenantId in store) {
-            foreach (existing; *t) {
-                if (existing.id == j.id) {
-                    existing = j;
-                    return;
-                }
-            }
-        }
-    }
-
-    void remove(TenantId tenantId, JobId id) {
-        if (auto t = tenantId in store) {
-            *t = (*t).filter!(j => j.id != id).array;
-        }
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        if (auto t = tenantId in store)
-            return (*t).length;
-        return 0;
-    }
-
     size_t countActiveByTenant(TenantId tenantId) {
-        if (auto t = tenantId in store)
-            return (*t).filter!(j => j.active).array.length;
-        return 0;
+        return findByTenant(tenantId).filter!(j => j.active).array.length;
     }
 
     size_t countInactiveByTenant(TenantId tenantId) {
-        if (auto t = tenantId in store)
-            return (*t).filter!(j => !j.active).array.length;
-        return 0;
+        return findByTenant(tenantId).filter!(j => !j.active).array.length;
     }
 }

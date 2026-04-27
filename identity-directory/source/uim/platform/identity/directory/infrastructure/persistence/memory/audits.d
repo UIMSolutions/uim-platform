@@ -16,10 +16,6 @@ mixin(ShowModule!());
 /// In-memory adapter for audit event persistence (append-only).
 class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), AuditRepository {
 
-  AuditEvent[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    return filterPaged((AuditEvent e) => e.tenantId == tenantId, offset, limit);
-  }
-
   size_t countByActor(string actorId) {
     return findByActor(actorId).length;
   }

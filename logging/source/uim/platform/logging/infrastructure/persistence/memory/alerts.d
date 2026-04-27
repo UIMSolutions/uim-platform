@@ -14,28 +14,40 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAlertRepository :TenantRepository!(Alert, AlertId), AlertRepository {
-  private Alert[AlertId] store;
-
-  bool existsById(AlertId id) {
-    return (id in store) ? true : false;
-  }
-
-  Alert findById(AlertId id) {
-    return (existsById(id)) ? store[id] : Alert.init;
-  }
 
   Alert[] findByTenant(TenantId tenantId) {
         return store.byValue.filter!(a => a.tenantId == tenantId).array;
   }
 
+  size_t countByState(TenantId tenantId, AlertState state) {
+    return findByState(tenantId, state).length;
+  }
+  Alert[] filterByState(Alert[] alerts, AlertState state) {
+    return alerts.filter!(a => a.state == state).array;
+  }
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    return findByTenant(tenantId).filter!(a => a.state == state).array;
+    return filterByState(findByTenant(tenantId), state);
+  }
+  void removeByState(TenantId tenantId, AlertState state) {
+    findByState(tenantId, state).each!(a => remove(a));
   }
 
+  size_t countBySeverity(TenantId tenantId, AlertSeverity severity) {
+    return findBySeverity(tenantId, severity).length;
+  }
+  Alert[] filterBySeverity(Alert[] alerts, AlertSeverity severity) {
+    return alerts.filter!(a => a.severity == severity).array;
+  }
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
     return findByTenant(tenantId).filter!(a => a.severity == severity).array;
   }
+  void removeBySeverity(TenantId tenantId, AlertSeverity severity) {
+    findBySeverity(tenantId, severity).each!(a => remove(a));
+  }
 
+  size_t countByRule(TenantId tenantId, AlertRuleId ruleId) {
+    return findByRule(tenantId, ruleId).length;
+  }
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
     return findByTenant(tenantId).filter!(a => a.ruleId == ruleId).array;
   }

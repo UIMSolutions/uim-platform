@@ -12,44 +12,43 @@ import uim.platform.html_repository.domain.types;
 class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRepository {
 
 
-  HtmlApp[] findByTenant(TenantId tenantId) {
-    HtmlApp[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId) result ~= e;
-    }
-    return result;
+  size_t countBySpace(SpaceId spaceId) {
+    return findBySpace(spaceId).length;
   }
-
+  HtmlApp[] filterBySpace(HtmlApp[] apps, SpaceId spaceId) {
+    return apps.filter!(a => a.spaceId == spaceId).array;
+  }
   HtmlApp[] findBySpace(SpaceId spaceId) {
-    HtmlApp[] result;
-    foreach (e; findAll) {
-      if (e.spaceId == spaceId) result ~= e;
-    }
-    return result;
+    return filterBySpace(findAll(), spaceId);
   }
-
-  HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
-    HtmlApp[] result;
-    foreach (e; findAll) {
-      if (e.serviceInstanceId == instanceId) result ~= e;
-    }
-    return result;
+  void removeBySpace(SpaceId spaceId) {
+    findBySpace(spaceId).each!(a => remove(a));
   }
-
-  HtmlApp[] findPublic(TenantId tenantId) {
-    HtmlApp[] result;
-    foreach (e; findAll) {
-      if (e.tenantId == tenantId && e.visibility == AppVisibility.public_) result ~= e;
-    }
-    return result;
-  }
-
 
   size_t countByServiceInstance(ServiceInstanceId instanceId) {
-    size_t count = 0;
-    foreach (e; findAll) {
-      if (e.serviceInstanceId == instanceId) count++;
-    }
-    return count;
+    return findByServiceInstance(instanceId).length;
   }
+  HtmlApp[] filterByServiceInstance(HtmlApp[] apps, ServiceInstanceId instanceId) {
+    return apps.filter!(a => a.serviceInstanceId == instanceId).array;
+  }
+  HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
+    return filterByServiceInstance(findAll(), instanceId);
+  }
+  void removeByServiceInstance(ServiceInstanceId instanceId) {
+    findByServiceInstance(instanceId).each!(a => remove(a));
+  }
+
+  size_t countPublicByTenant(TenantId tenantId) {
+    return findPublic(tenantId).length;
+  }
+  HtmlApp[] filterPublic(HtmlApp[] apps, TenantId tenantId) {
+    return apps.filter!(a => a.tenantId == tenantId && a.visibility == AppVisibility.public_).array;
+  }
+  HtmlApp[] findPublic(TenantId tenantId) {
+    return filterPublic(findAll(), tenantId);
+  }
+  void removePublic(TenantId tenantId) {
+    findPublic(tenantId).each!(a => remove(a));
+  }
+
 }

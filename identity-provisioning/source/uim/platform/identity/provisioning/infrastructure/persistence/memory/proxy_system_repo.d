@@ -11,35 +11,46 @@ import uim.platform.identity.provisioning.domain.ports.repositories.proxy_system
 
 class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
 
+  bool existsByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name) !is null;
+  }
 
-  ProxySystem* findByName(TenantId tenantId, string name) {
+  ProxySystem findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
-        return &e;
-    return null;
+        return e;
+    return ProxySystem.init; // null object pattern
   }
 
-  ProxySystem[] findByTenant(TenantId tenantId) {
-    ProxySystem[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  size_t countBySource(TenantId tenantId, SourceSystemId sourceId) {
+    return findBySource(tenantId, sourceId).length;
   }
 
-  ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
-    ProxySystem[] result;
-    foreach (e; findAll)
-      if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  ProxySystem[] filterBySource(ProxySystem[] systems, SourceSystemId sourceId) {
+    return systems.filter!(s => s.sourceSystemId == sourceId).array;
   }
 
-  ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId) {
-    ProxySystem[] result;
-    foreach (e; findAll)
-      if (e.targetSystemId == targetId && e.tenantId == tenantId)
-        result ~= e;
-    return result;
+  ProxySystem[] findBySource(TenantId tenantId, SourceSystemId sourceId) {
+    return filterBySource(findByTenant(tenantId), sourceId);
+  }
+
+  void removeBySource(TenantId tenantId, SourceSystemId sourceId) {
+    findBySource(tenantId, sourceId).each!(e => remove(e));
+  }
+
+  size_t countByTarget(TenantId tenantId, TargetSystemId targetId) {
+    return findByTarget(tenantId, targetId).length;
+  }
+
+  ProxySystem[] filterByTarget(ProxySystem[] systems, TargetSystemId targetId) {
+    return systems.filter!(s => s.targetSystemId == targetId).array;
+  }
+
+  ProxySystem[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
+    return filterByTarget(findByTenant(tenantId), targetId);
+  }
+
+  void removeByTarget(TenantId tenantId, TargetSystemId targetId) {
+    findByTarget(tenantId, targetId).each!(e => remove(e));
   }
 }

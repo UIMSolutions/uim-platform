@@ -15,16 +15,30 @@ mixin(ShowModule!());
 @safe:
 class MemoryPipelineRepository :TenantRepository!(Pipeline, PipelineId), PipelineRepository {
   
-  Pipeline[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(p => p.tenantId == tenantId).array;
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
   }
-
+  Pipeline[] filterActive(Pipeline[] pipelines) {
+    return pipelines.filter!(p => p.isActive).array;
+  }
   Pipeline[] findActive(TenantId tenantId) {
     return findByTenant(tenantId).filter!(p => p.isActive).array;
   }
+  void removeByActive(TenantId tenantId) {
+    findActive(tenantId).each!(p => remove(p));
+  }
 
+  size_t countBySource(TenantId tenantId, PipelineSourceType sourceType) {
+    return findBySource(tenantId, sourceType).length;
+  }
+  Pipeline[] filterBySource(Pipeline[] pipelines, PipelineSourceType sourceType) {
+    return pipelines.filter!(p => p.sourceType == sourceType).array;
+  }
   Pipeline[] findBySource(TenantId tenantId, PipelineSourceType sourceType) {
     return findByTenant(tenantId).filter!(p => p.sourceType == sourceType).array;
   }
-  
+  void removeBySource(TenantId tenantId, PipelineSourceType sourceType) {
+    findBySource(tenantId, sourceType).each!(p => remove(p));
+  }
+
 }

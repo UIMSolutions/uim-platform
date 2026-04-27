@@ -11,14 +11,6 @@ import uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 
 class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, ProvisioningLogId), ProvisioningLogRepository {
 
-  ProvisioningLog[] findByTenant(TenantId tenantId) {
-    ProvisioningLog[] result;
-    foreach (e; findAll)
-      if (e.tenantId == tenantId)
-        result ~= e;
-    return result;
-  }
-
   size_t countByJob(TenantId tenantId, ProvisioningJobId jobId) {
     return findByJob(tenantId, jobId).length;
   }
