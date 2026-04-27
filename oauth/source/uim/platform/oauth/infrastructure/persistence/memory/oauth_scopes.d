@@ -11,20 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthScopeRepository : OAuthScopeRepository {
-    private OAuthScope[] store;
-
-    bool existsById(OAuthScopeId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    OAuthScope findById(OAuthScopeId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return OAuthScope.init;
-    }
-
-    OAuthScope[] findAll() { return store; }
+class MemoryOAuthScopeRepository :TenantRepository!(OAuthScope, OAuthScopeId), OAuthScopeRepository {
 
     OAuthScope[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
@@ -38,15 +25,5 @@ class MemoryOAuthScopeRepository : OAuthScopeRepository {
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(OAuthScope entity) { store ~= entity; }
-
-    void update(OAuthScope entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(OAuthScopeId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
+ß
 }

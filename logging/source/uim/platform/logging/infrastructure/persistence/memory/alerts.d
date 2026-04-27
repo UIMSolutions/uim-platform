@@ -13,7 +13,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository :TenantRRepository!(Alert, AlertId), AlertRepository {
+class MemoryAlertRepository :TenantRepository!(Alert, AlertId), AlertRepository {
   private Alert[AlertId] store;
 
   bool existsById(AlertId id) {

@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNamespaceRepository : NamespaceRepository {
+class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
   private Namespace[NamespaceId] store;
 
   bool existsById(NamespaceId id) {

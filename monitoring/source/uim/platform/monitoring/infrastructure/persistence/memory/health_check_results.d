@@ -16,27 +16,8 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
-  private HealthCheckResult[] store;
+class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {
 
-  bool existsById(string id) {
-    return existsById(HealthCheckResultId(id));
-  }
-
-  bool existsById(HealthCheckResultId id) {
-    return store.any!(r => r.id == id);
-  }
-
-  HealthCheckResult findById(string id) {
-    return findById(HealthCheckResultId(id));
-  }
-
-  HealthCheckResult findById(HealthCheckResultId id) {
-    foreach (r; findAll)
-      if (r.id == id)
-        return r;
-    return HealthCheckResult.init;
-  }
 
   HealthCheckResult[] findByTenant(TenantId tenantId) {
     return findAll().filter!(r => r.tenantId == tenantId).array;

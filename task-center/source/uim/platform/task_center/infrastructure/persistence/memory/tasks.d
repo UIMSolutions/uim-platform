@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTaskRepository : TaskRepository {
+class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
     private Task[][string] store;
 
     Task findById(string tenantId, string id) {

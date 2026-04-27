@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTaskCommentRepository : TaskCommentRepository {
+class MemoryTaskCommentRepository :TenantRepository!(TaskComment, TaskCommentId), TaskCommentRepository {
     private TaskComment[][string] store;
 
     TaskComment findById(string tenantId, string id) {

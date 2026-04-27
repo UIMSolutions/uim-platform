@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
+class MemorySubstitutionRuleRepository :TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
     private SubstitutionRule[][string] store;
 
     SubstitutionRule findById(string tenantId, string id) {

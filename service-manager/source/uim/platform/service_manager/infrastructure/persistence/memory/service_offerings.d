@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceOfferingRepository : ServiceOfferingRepository {
+class MemoryServiceOfferingRepository :TenantRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
     private ServiceOffering[][string] store;
 
     ServiceOffering[] findByTenant(TenantId tenantId) {

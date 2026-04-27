@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRoleRepository : TenantRRepository!(Role, RoleId), RoleRepository {
+class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;

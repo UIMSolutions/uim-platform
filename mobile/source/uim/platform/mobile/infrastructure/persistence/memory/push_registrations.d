@@ -12,14 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : canFind, filter;
 import std.array : array;
 
-class MemoryPushRegistrationRepository : PushRegistrationRepository {
-  private PushRegistration[PushRegistrationId] store;
-
-  PushRegistration findById(PushRegistrationId id) {
-    if (auto p = id in store)
-      return *p;
-    return PushRegistration.init;
-  }
+class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, PushRegistrationId), PushRegistrationRepository {
+  
 
   PushRegistration findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId) {
     foreach (r; findAll) {

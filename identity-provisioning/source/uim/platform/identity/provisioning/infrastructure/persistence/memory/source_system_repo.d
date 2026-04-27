@@ -9,7 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.source_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
 
-class MemorySourceSystemRepository : SourceSystemRepository {
+class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
   private SourceSystem[string] store;
 
   void save(SourceSystem entity) {

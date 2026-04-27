@@ -11,17 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAccessTokenRepository : AccessTokenRepository {
-    private AccessToken[] store;
+class MemoryAccessTokenRepository :TenantRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
 
-    bool existsById(AccessTokenId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    AccessToken findById(AccessTokenId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return AccessToken.init;
     }
 
     AccessToken findByTokenValue(string tokenValue) {

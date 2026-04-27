@@ -14,7 +14,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemorySiteRepository : SiteRepository {
+class MemorySiteRepository :TenantRepository!(Site, SiteId), SiteRepository {
   private Site[SiteId] store;
 
   bool existsById(SiteId id) {

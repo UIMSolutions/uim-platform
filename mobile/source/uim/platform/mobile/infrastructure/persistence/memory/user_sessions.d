@@ -12,14 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryUserSessionRepository : UserSessionRepository {
-  private UserSession[UserSessionId] store;
-
-  UserSession findById(UserSessionId id) {
-    if (auto p = id in store)
-      return *p;
-    return UserSession.init;
-  }
+class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId), UserSessionRepository {
+  
 
   UserSession[] findByUser(string userId) {
     return store.values.filter!(s => s.userId == userId).array;

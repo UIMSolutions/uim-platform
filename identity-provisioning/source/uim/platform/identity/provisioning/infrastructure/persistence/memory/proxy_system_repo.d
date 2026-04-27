@@ -9,29 +9,8 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.proxy_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
 
-class MemoryProxySystemRepository : ProxySystemRepository {
-  private ProxySystem[string] store;
+class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
 
-  void save(ProxySystem entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(ProxySystem entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ProxySystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  ProxySystem* findById(ProxySystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
 
   ProxySystem* findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))

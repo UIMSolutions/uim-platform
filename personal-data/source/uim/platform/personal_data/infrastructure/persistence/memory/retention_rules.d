@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRetentionRuleRepository : RetentionRuleRepository {
+class MemoryRetentionRuleRepository :TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
     private RetentionRule[RetentionRuleId] store;
 
     RetentionRule findById(RetentionRuleId id) {

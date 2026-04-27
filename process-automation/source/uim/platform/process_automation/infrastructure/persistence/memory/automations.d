@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAutomationRepository : AutomationRepository {
+class MemoryAutomationRepository : TenantRepository!(Automation, AutomationId), AutomationRepository {
     private Automation[] store;
 
     Automation findById(AutomationId id) {
@@ -29,24 +29,5 @@ class MemoryAutomationRepository : AutomationRepository {
         return findAll().filter!(a => a.projectId == projectId).array;
     }
 
-    void save(Automation a) {
-        store ~= a;
-    }
 
-    void update(Automation a) {
-        foreach (existing; findAll) {
-            if (existing.id == a.id) {
-                existing = a;
-                return;
-            }
-        }
-    }
-
-    void remove(AutomationId id) {
-        store = findAll().filter!(a => a.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array.length;
-    }
 }

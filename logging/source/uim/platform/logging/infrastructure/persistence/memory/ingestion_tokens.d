@@ -13,7 +13,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryIngestionTokenRepository : IngestionTokenRepository {
+class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
   private IngestionToken[IngestionTokenId] store;
 
   bool existsById(IngestionTokenId id) {

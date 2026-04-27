@@ -14,7 +14,7 @@ import uim.platform.portal.application.usecases.manage;
 mixin(ShowModule!());
 
 @safe:
-class MemoryThemeRepository : ThemeRepository {
+class MemoryThemeRepository :TenantRepository!(Theme, ThemeId), ThemeRepository {
   private Theme[ThemeId] store;
 
   bool existsById(ThemeId id) {

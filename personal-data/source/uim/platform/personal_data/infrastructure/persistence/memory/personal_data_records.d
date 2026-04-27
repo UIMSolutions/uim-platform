@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPersonalDataRecordRepository : PersonalDataRecordRepository {
+class MemoryPersonalDataRecordRepository :TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
     private PersonalDataRecord[PersonalDataRecordId] store;
 
     PersonalDataRecord findById(PersonalDataRecordId id) {

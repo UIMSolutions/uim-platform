@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDecisionRepository : DecisionRepository {
+class MemoryDecisionRepository : TenantRepository!(Decision, DecisionId), DecisionRepository {
     private Decision[] store;
 
     Decision findById(DecisionId id) {
@@ -29,24 +29,5 @@ class MemoryDecisionRepository : DecisionRepository {
         return findAll().filter!(d => d.projectId == projectId).array;
     }
 
-    void save(Decision d) {
-        store ~= d;
-    }
 
-    void update(Decision d) {
-        foreach (existing; findAll) {
-            if (existing.id == d.id) {
-                existing = d;
-                return;
-            }
-        }
-    }
-
-    void remove(DecisionId id) {
-        store = findAll().filter!(d => d.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array.length;
-    }
 }

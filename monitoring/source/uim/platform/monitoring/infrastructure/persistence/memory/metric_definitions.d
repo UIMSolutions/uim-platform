@@ -16,27 +16,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
-  private MetricDefinition[MetricDefinitionId] store;
-
-  bool existsById(MetricDefinitionId id) {
-    return (id in store) ? true : false;
-  }
-
-  MetricDefinition findById(MetricDefinitionId id) {
-    return existsById(id) ? store[id] : MetricDefinition.init;
-  }
-
-  bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
-  }
-  
-  MetricDefinition findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
-      if (e.name == name)
-        return e;
-    return MetricDefinition.init;
-  }
+class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {
 
   MetricDefinition[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
@@ -46,15 +26,4 @@ class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
     return findByTenant(tenantId).filter!(e => e.category == category).array;
   }
 
-  void save(MetricDefinition def) {
-    store[def.id] = def;
-  }
-
-  void update(MetricDefinition def) {
-    store[def.id] = def;
-  }
-
-  void remove(MetricDefinitionId id) {
-    store.remove(id);
-  }
 }

@@ -12,17 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryOfflineStoreRepository : OfflineStoreRepository {
-  private OfflineStore[OfflineStoreId] store;
-
-  bool existsById(OfflineStoreId id) {
-    return id in store ? true : false;
-  }
-
-  OfflineStore findById(OfflineStoreId id) {
-    return existsById(id) ? store[id] : OfflineStore.init;
-  }
-
+class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStoreId), OfflineStoreRepository {
+ 
   bool existsByName(MobileAppId appId, string name) {
     return findByApp(appId).any!(s => s.name == name);
   }

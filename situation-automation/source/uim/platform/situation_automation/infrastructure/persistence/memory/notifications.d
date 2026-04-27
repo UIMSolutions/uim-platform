@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationRepository : NotificationRepository {
+class MemoryNotificationRepository :TenantRepository!(Notification, NotificationId), NotificationRepository {
     private Notification[] store;
 
     Notification findById(NotificationId id) {
@@ -37,24 +37,4 @@ class MemoryNotificationRepository : NotificationRepository {
         return findAll().filter!(n => n.tenantId == tenantId && n.status == status).array;
     }
 
-    void save(Notification n) {
-        store ~= n;
-    }
-
-    void update(Notification n) {
-        foreach (existing; findAll) {
-            if (existing.id == n.id) {
-                existing = n;
-                return;
-            }
-        }
-    }
-
-    void remove(NotificationId id) {
-        store = findAll().filter!(n => n.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(n => n.tenantId == tenantId).array.length;
-    }
 }

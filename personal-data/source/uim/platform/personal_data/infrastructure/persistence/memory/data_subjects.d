@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRepository : DataSubjectRepository {
+class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
     private DataSubject[DataSubjectId] store;
 
     DataSubject findById(DataSubjectId id) {

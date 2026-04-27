@@ -11,18 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuthorizationCodeRepository : AuthorizationCodeRepository {
-    private AuthorizationCode[] store;
-
-    bool existsById(AuthorizationCodeId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    AuthorizationCode findById(AuthorizationCodeId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return AuthorizationCode.init;
-    }
+class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
 
     AuthorizationCode findByCode(string code) {
         foreach (e; findAll)

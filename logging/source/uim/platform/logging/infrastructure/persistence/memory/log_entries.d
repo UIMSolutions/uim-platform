@@ -17,7 +17,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryLogEntryRepository :TenantRRepository!(LogEntry, LogEntryId), LogEntryRepository {
+class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEntryRepository {
   private LogEntry[] store;
 
   bool existsById(LogEntryId id) {

@@ -16,16 +16,8 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationChannelRepository : NotificationChannelRepository {
-  private NotificationChannel[NotificationChannelId] store;
+class MemoryNotificationChannelRepository :TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {
 
-  bool existsById(NotificationChannelId id) {
-    return (id in store) ? true : false;
-  }
-
-  NotificationChannel findById(NotificationChannelId id) {
-    return existsById(id) ? store[id] : NotificationChannel.init;
-  }
 
   NotificationChannel[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;

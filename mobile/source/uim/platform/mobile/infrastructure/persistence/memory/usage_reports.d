@@ -12,14 +12,9 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryUsageReportRepository : UsageReportRepository {
-  private UsageReport[UsageReportId] store;
-
-  UsageReport findById(UsageReportId id) {
-    if (auto p = id in store)
-      return *p;
-    return UsageReport.init;
-  }
+class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId), UsageReportRepository {
+  
+  
 
   UsageReport[] findByApp(MobileAppId appId) {
     return store.values.filter!(r => r.appId == appId).array;

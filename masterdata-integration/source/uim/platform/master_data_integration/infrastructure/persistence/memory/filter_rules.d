@@ -12,7 +12,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.filter_rul
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryFilterRuleRepository : FilterRuleRepository {
+class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), FilterRuleRepository {
   private FilterRule[FilterRuleId] store;
 
   FilterRule findById(FilterRuleId id) {

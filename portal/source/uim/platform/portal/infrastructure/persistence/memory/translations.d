@@ -13,16 +13,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTranslationRepository : TranslationRepository {
-  private Translation[TranslationId] store;
-
-  bool existsById(TranslationId id) {
-    return id in store ? true : false;
-  }
-
-  Translation findById(TranslationId id) {
-    return existsById(id) ? store[id] : Translation.init;
-  }
+class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId), TranslationRepository {
 
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;

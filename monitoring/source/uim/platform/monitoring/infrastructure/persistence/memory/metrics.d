@@ -16,7 +16,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMetricRepository : MetricRepository {
+class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricRepository {
   private Metric[MetricId][TenantId] store;
 
   bool existsByTenant(string tenantId) {
@@ -27,29 +27,7 @@ class MemoryMetricRepository : MetricRepository {
     return (tenantId in store) ? true : false;
   }
 
-  bool existsById(string id) {
-    return existsById(MetricId(id));
-  }
 
-  bool existsById(MetricId id) {
-    foreach (tenantId, metrics; findAll) {
-      if (id in metrics)
-        return true;
-    }
-    return false;
-  }
-
-  bool existsById(string tenantId, string id) {
-    return existsById(TenantId(tenantId), MetricId(id));
-  }
-
-  bool existsById(TenantId tenantId, MetricId id) {
-    return existsByTenant(tenantId) && id in store[tenantId];
-  }
-
-  Metric findById(string id) {
-    return findById(MetricId(id));
-  }
 
   Metric findById(MetricId id) {
     foreach (tenantId, metrics; findAll) {

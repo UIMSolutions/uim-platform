@@ -17,7 +17,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryJobRepository :TenantRRepository!(Job, JobId), JobRepository {
+class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
     private Job[][TenantId] store; // keyed by tenantId
 
     bool existsByTenant(TenantId tenantId) {

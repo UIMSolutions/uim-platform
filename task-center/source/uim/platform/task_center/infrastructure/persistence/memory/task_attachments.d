@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTaskAttachmentRepository : TaskAttachmentRepository {
+class MemoryTaskAttachmentRepository :TenantRepository!(TaskAttachment, TaskAttachmentId), TaskAttachmentRepository {
     private TaskAttachment[][string] store;
 
     TaskAttachment findById(string tenantId, string id) {

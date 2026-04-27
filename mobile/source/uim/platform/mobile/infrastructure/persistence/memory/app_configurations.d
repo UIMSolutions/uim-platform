@@ -12,7 +12,7 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryAppConfigurationRepository : AppConfigurationRepository {
+class MemoryAppConfigurationRepository : TenantRepository!(AppConfiguration, AppConfigurationId), AppConfigurationRepository {
   private AppConfiguration[AppConfigurationId] store;
 
   bool existsById(AppConfigurationId id) {

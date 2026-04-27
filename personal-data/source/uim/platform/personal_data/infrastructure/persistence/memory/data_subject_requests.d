@@ -11,14 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRequestRepository : DataSubjectRequestRepository {
-    private DataSubjectRequest[DataSubjectRequestId] store;
-
-    DataSubjectRequest findById(DataSubjectRequestId id) {
-        if (auto p = id in store) return *p;
-        return DataSubjectRequest.init;
-    }
-
+class MemoryDataSubjectRequestRepository :TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
+    
     DataSubjectRequest[] findByTenant(TenantId tenantId) {
         DataSubjectRequest[] result;
         foreach (v; findAll)

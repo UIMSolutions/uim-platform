@@ -11,18 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRefreshTokenRepository : RefreshTokenRepository {
-    private RefreshToken[] store;
-
-    bool existsById(RefreshTokenId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    RefreshToken findById(RefreshTokenId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return RefreshToken.init;
-    }
+class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), RefreshTokenRepository {
+    
 
     RefreshToken findByTokenValue(string tokenValue) {
         foreach (e; findAll)

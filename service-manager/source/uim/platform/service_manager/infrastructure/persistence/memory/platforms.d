@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPlatformRepository : PlatformRepository {
+class MemoryPlatformRepository :TenantRepository!(Platform, PlatformId), PlatformRepository {
     private Platform[][string] store;
 
     Platform[] findByTenant(TenantId tenantId) {

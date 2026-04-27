@@ -12,16 +12,8 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryClientResourceRepository : ClientResourceRepository {
-  private ClientResource[ClientResourceId] store;
-
-  bool existsById(ClientResourceId id) {
-    return id in store ? true : false;
-  }
-
-  ClientResource findById(ClientResourceId id) {
-    return existsById(id) ? store[id] : ClientResource.init;
-  }
+class MemoryClientResourceRepository : TenantRepository!( ClientResourceRepository {
+  
 
   bool existsByName(MobileAppId appId, string name) {
     return store.any!(r => r.appId == appId && r.name == name);

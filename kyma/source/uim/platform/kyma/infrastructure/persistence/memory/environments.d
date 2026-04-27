@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryEnvironmentRepository :TenantRRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
+class MemoryEnvironmentRepository :TenantRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
   private KymaEnvironment[KymaEnvironmentId] store;
 
   bool existsById(KymaEnvironmentId id) {

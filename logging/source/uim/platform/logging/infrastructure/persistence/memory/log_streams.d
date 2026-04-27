@@ -13,7 +13,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class MemoryLogStreamRepository : LogStreamRepository {
+class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), LogStreamRepository {
   private LogStream[LogStreamId] store;
 
   bool existsById(LogStreamId id) {

@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryProcessRepository : ProcessRepository {
+class MemoryProcessRepository :TenantRepository!(Process, ProcessId), ProcessRepository {
     private Process[] store;
 
     Process findById(ProcessId id) {
@@ -33,24 +33,5 @@ class MemoryProcessRepository : ProcessRepository {
         return findAll().filter!(p => p.tenantId == tenantId && p.category == category).array;
     }
 
-    void save(Process p) {
-        store ~= p;
-    }
 
-    void update(Process p) {
-        foreach (existing; findAll) {
-            if (existing.id == p.id) {
-                existing = p;
-                return;
-            }
-        }
-    }
-
-    void remove(ProcessId id) {
-        store = findAll().filter!(p => p.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(p => p.tenantId == tenantId).array.length;
-    }
 }

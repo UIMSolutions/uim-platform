@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataContextRepository : DataContextRepository {
+class MemoryDataContextRepository :TenantRepository!(DataContext, DataContextId), DataContextRepository {
     private DataContext[] store;
 
     DataContext findById(DataContextId id) {

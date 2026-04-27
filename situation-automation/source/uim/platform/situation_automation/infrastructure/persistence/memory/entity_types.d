@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryEntityTypeRepository : EntityTypeRepository {
+class MemoryEntityTypeRepository :TenantRepository!(EntityType, EntityTypeId), EntityTypeRepository {
     private EntityType[] store;
 
     EntityType findById(EntityTypeId id) {

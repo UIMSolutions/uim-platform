@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRegisteredApplicationRepository : RegisteredApplicationRepository {
+class MemoryRegisteredApplicationRepository :TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
     private RegisteredApplication[RegisteredApplicationId] store;
 
     RegisteredApplication findById(RegisteredApplicationId id) {

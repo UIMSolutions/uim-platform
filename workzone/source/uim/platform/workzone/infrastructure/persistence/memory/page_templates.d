@@ -16,7 +16,7 @@ mixin(ShowModule!());
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryPageTemplateRepository : TenantRRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
+class MemoryPageTemplateRepository : TenantRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(t => t.isDefault);

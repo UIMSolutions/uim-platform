@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCatalogRepository : CatalogRepository {
+class MemoryCatalogRepository :TenantRepository!(Catalog, CatalogId), CatalogRepository {
   private Catalog[CatalogId] store;
 
   bool existsById(CatalogId id) {
