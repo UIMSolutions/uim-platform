@@ -17,15 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAccessPolicyRepository : AccessPolicyRepository {
-  private AccessPolicy[AccessPolicyId] store;
 
-  bool existsById(AccessPolicyId id) {
-    return (id in store) ? true : false;
-  }
-
-  AccessPolicy findById(AccessPolicyId id) {
-    return existsById(id) ? store[id] : AccessPolicy.init;
-  }
 
   AccessPolicy[] findByBucket(BucketId bucketId) {
     return findAll()r!(e => e.bucketId == bucketId).array;
@@ -35,15 +27,4 @@ class MemoryAccessPolicyRepository : AccessPolicyRepository {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
-  void save(AccessPolicy entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(AccessPolicy entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(AccessPolicyId id) {
-    store.remove(id);
-  }
 }

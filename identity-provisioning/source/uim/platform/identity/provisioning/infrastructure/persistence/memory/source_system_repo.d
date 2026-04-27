@@ -10,28 +10,6 @@ import uim.platform.identity.provisioning.domain.entities.source_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
 
 class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
-  private SourceSystem[string] store;
-
-  void save(SourceSystem entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(SourceSystem entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(SourceSystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
-
-  SourceSystem* findById(SourceSystemId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
-  }
 
   SourceSystem* findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))

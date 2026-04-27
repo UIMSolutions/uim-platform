@@ -12,12 +12,6 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryProcessingPurposeRepository : ProcessingPurposeRepository {
-    private ProcessingPurpose[ProcessingPurposeId] store;
-
-    ProcessingPurpose findById(ProcessingPurposeId id) {
-        if (auto p = id in store) return *p;
-        return ProcessingPurpose.init;
-    }
 
     ProcessingPurpose[] findByTenant(TenantId tenantId) {
         ProcessingPurpose[] result;
@@ -41,7 +35,4 @@ class MemoryProcessingPurposeRepository : ProcessingPurposeRepository {
         return result;
     }
 
-    void save(ProcessingPurpose entity) { store[entity.id] = entity; }
-    void update(ProcessingPurpose entity) { store[entity.id] = entity; }
-    void remove(ProcessingPurposeId id) { store.remove(id); }
 }

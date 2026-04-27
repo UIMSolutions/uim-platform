@@ -34,18 +34,6 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
     return store.values.filter!(s => s.tenantId == tenantId).array;
   }
 
-  void save(OfflineStore s) {
-    store[s.id] = s;
-  }
-
-  void update(OfflineStore s) {
-    store[s.id] = s;
-  }
-
-  void remove(OfflineStoreId id) {
-    store.remove(id);
-  }
-
   size_t countByApp(MobileAppId appId) {
     return store.values.filter!(s => s.appId == appId).array.length;
   }

@@ -13,13 +13,6 @@ import uim.platform.master_data_integration.domain.ports.repositories.replicatio
 // import std.array : array;
 
 class MemoryReplicationJobRepository : ReplicationJobRepository {
-  private ReplicationJob[ReplicationJobId] store;
-
-  ReplicationJob findById(ReplicationJobId id) {
-    if (auto p = id in store)
-      return *p;
-    return ReplicationJob.init;
-  }
 
   ReplicationJob[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
@@ -34,15 +27,4 @@ class MemoryReplicationJobRepository : ReplicationJobRepository {
         && e.distributionModelId == modelId).array;
   }
 
-  void save(ReplicationJob job) {
-    store[job.id] = job;
-  }
-
-  void update(ReplicationJob job) {
-    store[job.id] = job;
-  }
-
-  void remove(ReplicationJobId id) {
-    store.remove(id);
-  }
 }

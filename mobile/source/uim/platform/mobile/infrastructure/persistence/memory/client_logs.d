@@ -12,14 +12,7 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryClientLogRepository : ClientLogRepository {
-  private ClientLogEntry[ClientLogEntryId] store;
-
-  ClientLogEntry findById(ClientLogEntryId id) {
-    if (auto p = id in store)
-      return *p;
-    return ClientLogEntry.init;
-  }
+class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEntryId), ClientLogRepository {
 
   ClientLogEntry[] findByApp(MobileAppId appId) {
     return store.values.filter!(e => e.appId == appId).array;
@@ -35,14 +28,6 @@ class MemoryClientLogRepository : ClientLogRepository {
 
   ClientLogEntry[] findByTenant(TenantId tenantId) {
     return store.values.filter!(e => e.tenantId == tenantId).array;
-  }
-
-  void save(ClientLogEntry entry) {
-    store[entry.id] = entry;
-  }
-
-  void remove(ClientLogEntryId id) {
-    store.remove(id);
   }
 
   size_t countByApp(MobileAppId appId) {

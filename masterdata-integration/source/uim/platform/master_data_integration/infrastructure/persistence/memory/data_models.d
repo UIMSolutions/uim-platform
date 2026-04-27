@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 
 class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 
-
   DataModel[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
@@ -31,15 +30,4 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     return DataModel.init;
   }
 
-  void save(DataModel model) {
-    store[model.id] = model;
-  }
-
-  void update(DataModel model) {
-    store[model.id] = model;
-  }
-
-  void remove(DataModelId id) {
-    store.remove(id);
-  }
 }

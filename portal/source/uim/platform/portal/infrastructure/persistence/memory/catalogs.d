@@ -16,47 +16,21 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryCatalogRepository :TenantRepository!(Catalog, CatalogId), CatalogRepository {
-  private Catalog[CatalogId] store;
 
-  bool existsById(CatalogId id) {
-    return (id in store) ? true : false;
+  size_t countByProvider(ProviderId providerId) {
+    return findByProvider(providerId).length;
   }
 
-  Catalog findById(CatalogId id) {
-    return existsById(id) ? store[id] : Catalog.init;
-  }
-
-  Catalog[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Catalog[] result;
-    uint idx;
-    foreach (c; findAll()
-      if (c.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= c;
-        idx++;
-      }
-    }
-    return result;
+  Catalog[] filterByProvider(Catalog[] catalogs, ProviderId providerId) {
+    return catalogs.filter!(c => c.providerId == providerId).array;
   }
 
   Catalog[] findByProvider(ProviderId providerId) {
-    Catalog[] result;
-    foreach (c; findAll()
-      if (c.providerId == providerId)
-        result ~= c;
-    }
-    return result;
+    return findAll().filter!(c => c.providerId == providerId).array;
   }
 
-  void save(Catalog catalog) {
-    store[catalog.id] = catalog;
+  void removeByProvider(ProviderId providerId) {
+    findByProvider(providerId).each!(c => remove(c.id));
   }
 
-  void update(Catalog catalog) {
-    store[catalog.id] = catalog;
-  }
-
-  void remove(CatalogId id) {
-    store.remove(id);
-  }
 }

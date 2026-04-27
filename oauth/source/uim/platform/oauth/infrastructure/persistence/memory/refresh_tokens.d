@@ -20,8 +20,6 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
         return RefreshToken.init;
     }
 
-    RefreshToken[] findAll() { return store; }
-
     RefreshToken[] findByTenant(TenantId tenantId) {
         return findAll().filter!(e => e.tenantId == tenantId).array;
     }
@@ -34,15 +32,4 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
         return findAll().filter!(e => e.status == status).array;
     }
 
-    void save(RefreshToken entity) { store ~= entity; }
-
-    void update(RefreshToken entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(RefreshTokenId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

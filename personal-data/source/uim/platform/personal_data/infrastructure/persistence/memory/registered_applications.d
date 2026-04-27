@@ -11,35 +11,31 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRegisteredApplicationRepository :TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
-    private RegisteredApplication[RegisteredApplicationId] store;
+class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
 
-    RegisteredApplication findById(RegisteredApplicationId id) {
-        if (auto p = id in store) return *p;
-        return RegisteredApplication.init;
+    bool existsByName(string name) {
+        return findAll().any!(v => v.name == name);
     }
-
-    RegisteredApplication[] findByTenant(TenantId tenantId) {
-        RegisteredApplication[] result;
-        foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
-    }
-
     RegisteredApplication findByName(string name) {
         foreach (v; findAll)
-            if (v.name == name) return v;
+            if (v.name == name)
+                return v;
         return RegisteredApplication.init;
     }
 
+    size_t countByStatus(ApplicationStatus status) {
+        return findAll().count!(v => v.status == status);
+    }
+    RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, uint offset = 0, uint limit = 0) {
+        return (limit == 0) 
+            ? applications.filter!(v => v.status == status).skip(offset).array
+            : applications.filter!(v => v.status == status).skip(offset).take(limit).array;
+    }
     RegisteredApplication[] findByStatus(ApplicationStatus status) {
-        RegisteredApplication[] result;
-        foreach (v; findAll)
-            if (v.status == status) result ~= v;
-        return result;
+        return filterByStatus(findAll(), status, 0, 0);
+    }
+    void removeByStatus(ApplicationStatus status) {
+        findByStatus(status).each!(v => remove(v.id));
     }
 
-    void save(RegisteredApplication entity) { store[entity.id] = entity; }
-    void update(RegisteredApplication entity) { store[entity.id] = entity; }
-    void remove(RegisteredApplicationId id) { store.remove(id); }
 }

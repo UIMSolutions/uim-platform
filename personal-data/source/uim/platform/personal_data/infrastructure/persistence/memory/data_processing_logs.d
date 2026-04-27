@@ -11,13 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataProcessingLogRepository : DataProcessingLogRepository {
-    private DataProcessingLog[DataProcessingLogId] store;
+class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, DataProcessingLogId), DataProcessingLogRepository {
 
-    DataProcessingLog findById(DataProcessingLogId id) {
-        if (auto p = id in store) return *p;
-        return DataProcessingLog.init;
-    }
 
     DataProcessingLog[] findByTenant(TenantId tenantId) {
         DataProcessingLog[] result;
@@ -47,6 +42,4 @@ class MemoryDataProcessingLogRepository : DataProcessingLogRepository {
         return result;
     }
 
-    void save(DataProcessingLog entity) { store[entity.id] = entity; }
-    void remove(DataProcessingLogId id) { store.remove(id); }
 }

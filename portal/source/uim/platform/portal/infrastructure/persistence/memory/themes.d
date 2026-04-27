@@ -14,51 +14,19 @@ import uim.platform.portal.application.usecases.manage;
 mixin(ShowModule!());
 
 @safe:
-class MemoryThemeRepository :TenantRepository!(Theme, ThemeId), ThemeRepository {
-  private Theme[ThemeId] store;
-
-  bool existsById(ThemeId id) {
-    return id in store ? true : false;
-  }
-
-  Theme findById(ThemeId id) {
-    return existsById(id) ? store[id] : Theme.init;
-  }
+class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return findAll()t => t.tenantId == tenantId && t.isDefault);
+    return findByTenant(tenantId).any!(t => t.isDefault);
   }
 
   Theme findDefault(TenantId tenantId) {
-    foreach (t; findAll()
+    foreach (t; findByTenant(tenantId)) {
       if (t.tenantId == tenantId && t.isDefault)
         return t;
     }
+
     return Theme.init;
   }
 
-  Theme[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Theme[] result;
-    uint idx;
-    foreach (t; findAll()
-      if (t.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= t;
-        idx++;
-      }
-    }
-    return result;
-  }
-
-  void save(Theme theme) {
-    store[theme.id] = theme;
-  }
-
-  void update(Theme theme) {
-    store[theme.id] = theme;
-  }
-
-  void remove(ThemeId id) {
-    store.remove(id);
-  }
 }

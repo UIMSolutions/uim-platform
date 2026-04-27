@@ -12,16 +12,7 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryDeviceRegistrationRepository : DeviceRegistrationRepository {
-  private DeviceRegistration[DeviceRegistrationId] store;
-
-  bool existsById(DeviceRegistrationId id) {
-    return id in store ? true : false;
-  }
-
-  DeviceRegistration findById(DeviceRegistrationId id) {
-    return existsById(id) ? store[id] : DeviceRegistration.init;
-  }
+class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration, DeviceRegistrationId), DeviceRegistrationRepository {
 
   bool existsByDeviceToken(string deviceToken) {
     return store.any!(r => r.deviceToken == deviceToken);
@@ -47,23 +38,8 @@ class MemoryDeviceRegistrationRepository : DeviceRegistrationRepository {
     return store.values.filter!(r => r.tenantId == tenantId).array;
   }
 
-  void save(DeviceRegistration reg) {
-    store[reg.id] = reg;
-  }
-
-  void update(DeviceRegistration reg) {
-    store[reg.id] = reg;
-  }
-
-  void remove(DeviceRegistrationId id) {
-    store.remove(id);
-  }
-
   size_t countByApp(MobileAppId appId) {
     return store.values.filter!(r => r.appId == appId).array.length;
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array.length;
-  }
 }

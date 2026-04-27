@@ -13,13 +13,6 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 // import std.array : array;
 
 class MemoryChangeLogRepository : ChangeLogRepository {
-  private ChangeLogEntry[ChangeLogEntryId] store;
-
-  ChangeLogEntry findById(ChangeLogEntryId id) {
-    if (auto p = id in store)
-      return *p;
-    return ChangeLogEntry.init;
-  }
 
   ChangeLogEntry[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId)
@@ -65,11 +58,4 @@ class MemoryChangeLogRepository : ChangeLogRepository {
       .array;
   }
 
-  void save(ChangeLogEntry entry) {
-    store[entry.id] = entry;
-  }
-
-  void remove(ChangeLogEntryId id) {
-    store.remove(id);
-  }
 }

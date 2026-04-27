@@ -14,13 +14,6 @@ import uim.platform.master_data_integration.domain.ports.repositories.master_dat
 // import std.array : array;
 
 class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
-  private MasterDataObject[MasterDataObjectId] store;
-
-  MasterDataObject findById(MasterDataObjectId id) {
-    if (auto p = id in store)
-      return *p;
-    return MasterDataObject.init;
-  }
 
   MasterDataObject[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
@@ -48,15 +41,4 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
     return MasterDataObject.init;
   }
 
-  void save(MasterDataObject obj) {
-    store[obj.id] = obj;
-  }
-
-  void update(MasterDataObject obj) {
-    store[obj.id] = obj;
-  }
-
-  void remove(MasterDataObjectId id) {
-    store.remove(id);
-  }
 }

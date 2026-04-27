@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.domain.ports.repositories.key_mappin
 
 class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), KeyMappingRepository {
 
-
   KeyMapping[] findByTenant(TenantId tenantId) {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
@@ -40,15 +39,4 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
     return KeyMapping.init;
   }
 
-  void save(KeyMapping mapping) {
-    store[mapping.id] = mapping;
-  }
-
-  void update(KeyMapping mapping) {
-    store[mapping.id] = mapping;
-  }
-
-  void remove(KeyMappingId id) {
-    store.remove(id);
-  }
 }

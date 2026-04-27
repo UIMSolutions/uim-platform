@@ -16,16 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[ServiceBindingId] store;
-
-  bool existsById(ServiceBindingId id) {
-    return (id in store) ? true : false;
-  }
-
-  ServiceBinding findById(ServiceBindingId id) {
-    return existsById(id) ? store[id] : ServiceBinding.init;
-  }
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   ServiceBinding[] findByBucket(BucketId bucketId) {
     return findAll()r!(e => e.bucketId == bucketId).array;
@@ -35,15 +26,4 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
     return findAll()r!(e => e.tenantId == tenantId).array;
   }
 
-  void save(ServiceBinding entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(ServiceBinding entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ServiceBindingId id) {
-    store.remove(id);
-  }
 }

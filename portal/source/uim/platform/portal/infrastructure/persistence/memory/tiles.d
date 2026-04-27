@@ -16,15 +16,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryTileRepository : TileRepository {
-  private Tile[TileId] store;
-
-  bool existsById(TileId id) {
-    return id in store ? true : false;
-  }
-
-  Tile findById(TileId id) {
-    return existsById(id) ? store[id] : Tile.init;
-  }
 
   Tile[] findByCatalog(CatalogId catalogId) {
     return findAll()r!(t => t.catalogId == catalogId).array;
@@ -72,15 +63,4 @@ class MemoryTileRepository : TileRepository {
     return result;
   }
 
-  void save(Tile tile) {
-    store[tile.id] = tile;
-  }
-
-  void update(Tile tile) {
-    store[tile.id] = tile;
-  }
-
-  void remove(TileId id) {
-    store.remove(id);
-  }
 }

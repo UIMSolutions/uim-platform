@@ -12,12 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryRetentionRuleRepository :TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
-    private RetentionRule[RetentionRuleId] store;
 
-    RetentionRule findById(RetentionRuleId id) {
-        if (auto p = id in store) return *p;
-        return RetentionRule.init;
-    }
 
     RetentionRule[] findByTenant(TenantId tenantId) {
         RetentionRule[] result;
@@ -41,7 +36,4 @@ class MemoryRetentionRuleRepository :TenantRepository!(RetentionRule, RetentionR
         return result;
     }
 
-    void save(RetentionRule entity) { store[entity.id] = entity; }
-    void update(RetentionRule entity) { store[entity.id] = entity; }
-    void remove(RetentionRuleId id) { store.remove(id); }
 }
