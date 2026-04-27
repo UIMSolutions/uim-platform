@@ -14,35 +14,46 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 
 class MemoryChangeLogRepository : ChangeLogRepository {
 
-  ChangeLogEntry[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId)
-      .array
-      .sort!((a, b) => a.timestamp < b.timestamp)
-      .array;
+  size_t countByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
+    return findByObjectId(tenantId, objectId).length;
+  }
+  ChangeLogEntry[] filterByObjectId(ChangeLogEntry[] entries, MasterDataObjectId objectId, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? entries.filter!(e => e.objectId == objectId).skip(offset).array
+        : entries.filter!(e => e.objectId == objectId).skip(offset).take(limit).array;
+  }
+  ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
+    return filterByObjectId(findByTenant(tenantId), objectId, 0, 0);
+  }
+  void removeByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
+    filterByObjectId(findByTenant(tenantId), objectId, 0, 0).each!(e => remove(e));
   }
 
-  ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.objectId == objectId)
-      .array
-      .sort!((a, b) => a.timestamp < b.timestamp)
-      .array;
+   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
+  ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries, MasterDataCategory category, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? entries.filter!(e => e.category == category).skip(offset).array
+        : entries.filter!(e => e.category == category).skip(offset).take(limit).array;
   }
 
   ChangeLogEntry[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return findAll()r!(e => e.tenantId == tenantId && e.category == category)
-      .array
-      .sort!((a, b) => a.timestamp < b.timestamp)
-      .array;
+    return filterByCategory(findByTenant(tenantId), category, 0, 0); 
   }
 
+  size_t countSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
+    return findSinceTimestamp(tenantId, sinceTimestamp).length;
+  }
+  ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries, long sinceTimestamp, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).array
+        : entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).take(limit).array;
+  }
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
     // Find the timestamp associated with the delta token
     long tokenTimestamp = 0;
-    foreach (entry; findAll()
-      if (entry.tenantId == tenantId && entry.deltaToken == deltaToken) {
-        tokenTimestamp = entry.timestamp;
-        break;
-      }
+    return filterSinceTimestamp(findByTenant(tenantId), 0, 0):
     }
     // Return all entries after that timestamp
     return findAll()r!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)

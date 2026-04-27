@@ -11,43 +11,72 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPersonalDataRecordRepository :TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
-    private PersonalDataRecord[PersonalDataRecordId] store;
-
-    PersonalDataRecord findById(PersonalDataRecordId id) {
-        if (auto p = id in store) return *p;
-        return PersonalDataRecord.init;
-    }
+class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
 
     PersonalDataRecord[] findByTenant(TenantId tenantId) {
         PersonalDataRecord[] result;
         foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
+            if (v.tenantId == tenantId)
+                result ~= v;
         return result;
+    }
+
+    size_t countByDataSubject(DataSubjectId dataSubjectId) {
+        return findByDataSubject(dataSubjectId).length;
+    }
+
+    PersonalDataRecord[] filterByDataSubject(PersonalDataRecord[] records, DataSubjectId dataSubjectId, uint offset = 0, uint limit = 0) {
+        return (limit == 0)
+            ? records.filter!(v => v.dataSubjectId == dataSubjectId).skip(offset)
+            .array : records.filter!(v => v.dataSubjectId == dataSubjectId)
+            .skip(offset).take(limit).array;
     }
 
     PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId) {
-        PersonalDataRecord[] result;
-        foreach (v; findAll)
-            if (v.dataSubjectId == dataSubjectId) result ~= v;
-        return result;
+        return filterByDataSubject(findAll(), dataSubjectId, 0, 0);
+    }
+
+    void removeByDataSubject(DataSubjectId dataSubjectId) {
+        findByDataSubject(dataSubjectId).each!(v => remove(v));
+    }
+
+    size_t countByApplication(RegisteredApplicationId applicationId) {
+        return findByApplication(applicationId).length;
+    }
+
+    PersonalDataRecord[] filterByApplication(PersonalDataRecord[] records, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+        return (limit == 0)
+            ? records.filter!(v => v.applicationId == applicationId).skip(offset)
+            .array : records.filter!(v => v.applicationId == applicationId)
+            .skip(offset).take(limit).array;
     }
 
     PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId) {
-        PersonalDataRecord[] result;
-        foreach (v; findAll)
-            if (v.applicationId == applicationId) result ~= v;
-        return result;
+        return filterByApplication(findAll(), applicationId, 0, 0);
+    }
+
+    void removeByApplication(RegisteredApplicationId applicationId) {
+        findByApplication(applicationId).each!(v => remove(v));
+    }
+
+    size_t countByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
+        return findByDataSubjectAndApplication(dataSubjectId, applicationId).length;
+    }
+
+    PersonalDataRecord[] filterByDataSubjectAndApplication(PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+        return (limit == 0)
+            ? records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
+            .array
+            : records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
+            .take(limit).array;
     }
 
     PersonalDataRecord[] findByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        PersonalDataRecord[] result;
-        foreach (v; findAll)
-            if (v.dataSubjectId == dataSubjectId && v.applicationId == applicationId) result ~= v;
-        return result;
+        return filterByDataSubjectAndApplication(findAll(), dataSubjectId, applicationId, 0, 0);
     }
 
-    void save(PersonalDataRecord entity) { store[entity.id] = entity; }
-    void update(PersonalDataRecord entity) { store[entity.id] = entity; }
-    void remove(PersonalDataRecordId id) { store.remove(id); }
+    void removeByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
+        findByDataSubjectAndApplication(dataSubjectId, applicationId).each!(v => remove(v));
+    }
+
 }

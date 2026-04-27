@@ -15,50 +15,30 @@ mixin(ShowModule!());
 
 @safe:
 class MemorySiteRepository :TenantRepository!(Site, SiteId), SiteRepository {
-  private Site[SiteId] store;
-
-  bool existsById(SiteId id) {
-    return id in store ? true : false;
-  }
-
-  Site findById(SiteId id) {
-    return existsById(id) ? store[id] : Site.init;
-  }
 
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return findAll() => s.tenantId == tenantId && s.alias_ == alias_);
+    return findByTenant(tenantId).any!(s => s.alias_ == alias_);
   }
 
   Site findByAlias(TenantId tenantId, string alias_) {
-    foreach (s; findAll()
-      if (s.tenantId == tenantId && s.alias_ == alias_)
+    foreach (s; findByTenant(tenantId)) {
+      if (s.alias_ == alias_)
         return s;
     }
     return Site.init;
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return findAll()r!(s => s.tenantId == tenantId).count;
+  size_t countByStatus(TenantId tenantId, SiteStatus status) {
+    return findByStatus(tenantId, status).length;
   }
-  
-  Site[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Site[] result;
-    uint idx;
-    foreach (s; findAll()
-      if (s.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= s;
-        idx++;
-      }
-    }
-    return result;
-  }
-
+  Site[] filterByStatus(Site[] sites, SiteStatus status) {
+    return sites.filter!(s => s.status == status).array;
+  }  
   Site[] findByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100) {
     Site[] result;
     uint idx;
-    foreach (s; findAll()
-      if (s.tenantId == tenantId && s.status == status) {
+    foreach (s; findByTenant(tenantId)) {
+      if (s.status == status) {
         if (idx >= offset && result.length < limit)
           result ~= s;
         idx++;
@@ -66,16 +46,8 @@ class MemorySiteRepository :TenantRepository!(Site, SiteId), SiteRepository {
     }
     return result;
   }
-
-  void save(Site site) {
-    store[site.id] = site;
+  void removeByStatus(TenantId tenantId, SiteStatus status) {
+    findByStatus(tenantId, status).each!(s => remove(s.id));
   }
-
-  void update(Site site) {
-    store[site.id] = site;
-  }
-
-  void remove(SiteId id) {
-    store.remove(id);
-  }
+  
 }

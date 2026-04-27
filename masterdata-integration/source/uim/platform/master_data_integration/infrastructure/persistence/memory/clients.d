@@ -14,28 +14,37 @@ import uim.platform.master_data_integration.domain.ports.repositories.clients;
 
 class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
 
-
-  Client[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByStatus(TenantId tenantId, ClientStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  Client[] filterByStatus(Client[] clients, ClientStatus status, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? clients.filter!(e => e.status == status).skip(offset).array
+        : clients.filter!(e => e.status == status).skip(offset).take(limit).array;
   }
 
   Client[] findByStatus(TenantId tenantId, ClientStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status, 0, 0);
+  }
+  void removeByStatus(TenantId tenantId, ClientStatus status) {
+    filterByStatus(findByTenant(tenantId), status, 0, 0).each!(e => remove(e));
+  }
+
+   size_t countByType(TenantId tenantId, ClientType clientType) {
+    return findByType(tenantId, clientType).length;
+  }
+  Client[] filterByType(Client[] clients, ClientType clientType, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? clients.filter!(e => e.clientType == clientType).skip(offset).array
+        : clients.filter!(e => e.clientType == clientType).skip(offset).take(limit).array;
   }
 
   Client[] findByType(TenantId tenantId, ClientType clientType) {
-    return findAll()r!(e => e.tenantId == tenantId && e.clientType == clientType).array;
+    return filterByType(findByTenant(tenantId), clientType, 0, 0);
   }
 
-  void save(Client client) {
-    store[client.id] = client;
+  void removeByType(TenantId tenantId, ClientType clientType) {
+    filterByType(findByTenant(tenantId), clientType, 0, 0).each!(e => remove(e));
   }
 
-  void update(Client client) {
-    store[client.id] = client;
-  }
-
-  void remove(ClientId id) {
-    store.remove(id);
-  }
 }

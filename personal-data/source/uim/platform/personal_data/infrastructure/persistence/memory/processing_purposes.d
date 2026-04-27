@@ -11,28 +11,36 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProcessingPurposeRepository : ProcessingPurposeRepository {
+class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, ProcessingPurposeId), ProcessingPurposeRepository {
 
-    ProcessingPurpose[] findByTenant(TenantId tenantId) {
-        ProcessingPurpose[] result;
-        foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+    size_t countByLegalBasis(LegalBasis basis) {
+        return findByLegalBasis(basis).length;
     }
-
+    ProcessingPurpose[] filterByLegalBasis(ProcessingPurpose[] purposes, LegalBasis basis, uint offset = 0, uint limit = 0) {
+        return (limit == 0)
+            ? purposes.filter!(v => v.legalBasis == basis).skip(offset).array
+            : purposes.filter!(v => v.legalBasis == basis).skip(offset).take(limit).array;
+    }
     ProcessingPurpose[] findByLegalBasis(LegalBasis basis) {
-        ProcessingPurpose[] result;
-        foreach (v; findAll)
-            if (v.legalBasis == basis) result ~= v;
-        return result;
+        return findAll.filter!(v => v.legalBasis == basis).array;
+    }
+    void removeByLegalBasis(LegalBasis basis) {
+        findByLegalBasis(basis).each!(v => remove(v.id));
     }
 
+    size_t countByApplication(RegisteredApplicationId applicationId) {
+        return findByApplication(applicationId).length;
+    }
+    ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+        return (limit == 0)
+            ? purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).array
+            : purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).take(limit).array;
+    }
     ProcessingPurpose[] findByApplication(RegisteredApplicationId applicationId) {
-        import std.algorithm : canFind;
-        ProcessingPurpose[] result;
-        foreach (v; findAll)
-            if (v.applicationIds.canFind(applicationId)) result ~= v;
-        return result;
+        return findAll.filter!(v => v.applicationIds.canFind(applicationId)).array;
+    }
+    void removeByApplication(RegisteredApplicationId applicationId) {
+        findByApplication(applicationId).each!(v => remove(v.id));
     }
 
 }

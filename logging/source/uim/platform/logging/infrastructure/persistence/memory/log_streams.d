@@ -14,12 +14,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), LogStreamRepository {
-  private LogStream[LogStreamId] store;
-
-  bool existsById(LogStreamId id) {
-    return (id in store) ? true : false;
-  }
-
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.name == name);
   }
@@ -31,25 +25,5 @@ class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), Log
     return LogStream.init;
   }
 
-  LogStream findById(LogStreamId id) {
-    return (existsById(id)) ? store[id] : LogStream.init;
-  }
 
-  LogStream[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(s => s.tenantId == tenantId).array;
-  }
-
-
-
-  void save(LogStream stream) {
-    store[stream.id] = stream;
-  }
-
-  void update(LogStream stream) {
-    store[stream.id] = stream;
-  }
-
-  void remove(LogStreamId id) {
-    store.remove(id);
-  }
 }

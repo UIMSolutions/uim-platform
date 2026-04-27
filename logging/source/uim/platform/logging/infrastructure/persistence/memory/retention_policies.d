@@ -16,10 +16,6 @@ mixin(ShowModule!());
 
 class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
 
-  RetentionPolicy[] findByTenant(TenantId tenantId) {
-    return store.byValue.filter!(p => p.tenantId == tenantId).array;
-  }
-
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault);
   }

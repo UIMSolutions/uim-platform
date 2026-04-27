@@ -16,42 +16,51 @@ import uim.platform.integration.automation.domain.ports;
 
 class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), ScenarioRepository {
 
-
-  IntegrationScenario[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByCategory(TenantId tenantId, ScenarioCategory category) {
+    return findByCategory(tenantId, category).length;
   }
-
-  IntegrationScenario* findById(ScenarioId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  IntegrationScenario[] filterByCategory(IntegrationScenario[] scenarios, ScenarioCategory category, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? scenarios.filter!(e => e.category == category).skip(offset).array
+        : scenarios.filter!(e => e.category == category).skip(offset).take(limit).array;
   }
-
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category) {
-    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
+    return findByTenant(tenantId).filter!(e => e.category == category).array;
+  }
+  void removeByCategory(TenantId tenantId, ScenarioCategory category) {
+    filterByCategory(findByTenant(tenantId), category).each!(e => remove(e));
+  }
+
+   size_t countByStatus(TenantId tenantId, ScenarioStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  IntegrationScenario[] filterByStatus(IntegrationScenario[] scenarios, ScenarioStatus status, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? scenarios.filter!(e => e.status == status).skip(offset).array
+        : scenarios.filter!(e => e.status == status).skip(offset).take(limit).array;
   }
 
   IntegrationScenario[] findByStatus(TenantId tenantId, ScenarioStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
+  void removeByStatus(TenantId tenantId, ScenarioStatus status) {
+    filterByStatus(findByTenant(tenantId), status).each!(e => remove(e));
+  }
+
+size_t countBySystemType(TenantId tenantId, SystemType systemType) {
+    return findBySystemType(tenantId, systemType).length;
+  }
+  IntegrationScenario[] filterBySystemType(IntegrationScenario[] scenarios, SystemType systemType, uint offset = 0, uint limit = 0) {
+    return (limit == 0)
+        ? scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).skip(offset).array
+        : scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).skip(offset).take(limit).array;
+  }
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType) {
-    return findAll()r!(e => e.tenantId == tenantId
-        && (e.sourceSystemType == systemType || e.targetSystemType == systemType)).array;
+    return filterBySystemType(findByTenant(tenantId), systemType);
+  }
+  void removeBySystemType(TenantId tenantId, SystemType systemType) {
+    filterBySystemType(findByTenant(tenantId), systemType).each!(e => remove(e));
   }
 
-  void save(IntegrationScenario scenario) {
-    store[scenario.id] = scenario;
-  }
-
-  void update(IntegrationScenario scenario) {
-    store[scenario.id] = scenario;
-  }
-
-  void remove(ScenarioId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }
