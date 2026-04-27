@@ -13,37 +13,32 @@ import uim.platform.master_data_integration.domain.ports.repositories.distributi
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDistributionModelRepository : DistributionModelRepository {
-  private DistributionModel[DistributionModelId] store;
+class MemoryDistributionModelRepository : TenantRepository!(DistributionModel, DistributionModelId), DistributionModelRepository {
 
-  DistributionModel findById(DistributionModelId id) {
-    if (auto p = id in store)
-      return *p;
-    return DistributionModel.init;
+  size_t countByStatus(TenantId tenantId, DistributionModelStatus status) {
+    return findByStatus(tenantId, status).length;
   }
-
-  DistributionModel[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  DistributionModel[] filterByStatus(DistributionModel[] models, DistributionModelStatus status) {
+    return models.filter!(e => e.status == status).array;
   }
-
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), tenantId, status);
+  }
+  void removeByStatus(TenantId tenantId, DistributionModelStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e.id));
   }
 
+   size_t countBySourceClient(TenantId tenantId, ClientId sourceClientId) {
+    return findBySourceClient(tenantId, sourceClientId).length;
+  } 
+  DistributionModel[] filterBySourceClient(DistributionModel[] models, ClientId sourceClientId) {
+    return models.filter!(e => e.sourceClientId == sourceClientId).array;
+  }
   DistributionModel[] findBySourceClient(TenantId tenantId, ClientId sourceClientId) {
-    return findAll()r!(e => e.tenantId == tenantId
-        && e.sourceClientId == sourceClientId).array;
+    return filterBySourceClient(findByTenant(tenantId), sourceClientId);
   }
-
-  void save(DistributionModel model) {
-    store[model.id] = model;
+  void removeBySourceClient(TenantId tenantId, ClientId sourceClientId) {
+    findBySourceClient(tenantId, sourceClientId).each!(e => remove(e.id));
   }
-
-  void update(DistributionModel model) {
-    store[model.id] = model;
-  }
-
-  void remove(DistributionModelId id) {
-    store.remove(id);
-  }
+  
 }

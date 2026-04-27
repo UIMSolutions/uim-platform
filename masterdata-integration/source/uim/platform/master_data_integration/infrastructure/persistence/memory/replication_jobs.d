@@ -12,19 +12,33 @@ import uim.platform.master_data_integration.domain.ports.repositories.replicatio
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryReplicationJobRepository : ReplicationJobRepository {
+class MemoryReplicationJobRepository : TenantRepository!(ReplicationJob, ReplicationJobId), ReplicationJobRepository {
 
-  ReplicationJob[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+
+  size_t countByStatus(TenantId tenantId, ReplicationJobStatus status) {
+    return findByStatus(tenantId, status).length;
   }
-
+  ReplicationJob[] filterByStatus(ReplicationJob[] jobs, ReplicationJobStatus status) {
+    return jobs.filter!(e => e.status == status).array;
+  }
   ReplicationJob[] findByStatus(TenantId tenantId, ReplicationJobStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+  void removeByStatus(TenantId tenantId, ReplicationJobStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
+  size_t countByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
+    return findByDistributionModel(tenantId, modelId).length;
+  }
+  ReplicationJob[] filterByDistributionModel(ReplicationJob[] jobs, DistributionModelId modelId) {
+    return jobs.filter!(e => e.distributionModelId == modelId).array;
+  }
   ReplicationJob[] findByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
-    return findAll()r!(e => e.tenantId == tenantId
-        && e.distributionModelId == modelId).array;
+    return filterByDistributionModel(findByTenant(tenantId), modelId);
+  }
+  void removeByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
+    findByDistributionModel(tenantId, modelId).each!(e => remove(e));
   }
 
 }

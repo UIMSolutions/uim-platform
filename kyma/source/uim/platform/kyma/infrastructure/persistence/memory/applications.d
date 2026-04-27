@@ -17,17 +17,6 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
-  private Application[ApplicationId] store;
-
-  bool existsById(ApplicationId id) {
-    return (id in store) ? true : false;
-  }
-
-  Application findById(ApplicationId id) {
-    if (existsById(id))
-      return store[id];
-    return Application.init;
-  }
 
   bool existsByName(KymaEnvironmentId envId, string name) {
     return findByEnvironment(envId).any!(e => e.name == name);
@@ -40,29 +29,30 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     return Application.init;
   }
 
+size_t countByEnvironment(KymaEnvironmentId envId) {
+    return findByEnvironment(envId).length;
+  }
+  Application[] filterByEnvironment(Application[] apps, KymaEnvironmentId envId) {
+    return apps.filter!(e => e.environmentId == envId).array;
+  }
   Application[] findByEnvironment(KymaEnvironmentId envId) {
-    return findAll()r!(e => e.environmentId == envId).array;
+    return filterByEnvironment(findAll().array, envId);
+  }
+  void removeByEnvironment(KymaEnvironmentId envId) {
+    findByEnvironment(envId).each!(e => remove(e.id));
   }
 
+  size_t countByStatus(AppConnectivityStatus status) {
+    return findByStatus(status).length;
+  }
+  Application[] filterByStatus(Application[] apps, AppConnectivityStatus status) {
+    return apps.filter!(e => e.status == status).array;
+  }
   Application[] findByStatus(AppConnectivityStatus status) {
-    return findAll()r!(e => e.status == status).array;
+    return filterByStatus(findAll().array, status);
+  }
+  void removeByStatus(AppConnectivityStatus status) {
+    findByStatus(status).each!(e => remove(e.id));
   }
 
-  Application[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
-  }
-
-  void save(Application app) {
-    store[app.id] = app;
-  }
-
-  void update(Application app) {
-    if (existsById(app.id))
-      store[app.id] = app;
-  }
-
-  void remove(ApplicationId id) {
-    if (existsById(id))
-      store.remove(id);
-  }
 }

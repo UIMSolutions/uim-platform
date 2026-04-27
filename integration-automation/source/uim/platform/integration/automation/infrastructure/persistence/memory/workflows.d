@@ -15,11 +15,6 @@ import uim.platform.integration.automation.domain.ports;
 // import std.array : array;
 
 class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), WorkflowRepository {
-  private Workflow[WorkflowId] store;
-
-  Workflow[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
-  }
 
   size_t countByScenario(TenantId tenantId, ScenarioId scenarioId) {
     return findByScenario(tenantId, scenarioId).length;

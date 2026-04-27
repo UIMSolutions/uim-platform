@@ -14,20 +14,28 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 
 class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 
-  DataModel[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!((e) => e.name == name);
   }
-
-  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
-  }
-
   DataModel findByName(TenantId tenantId, string name) {
-    foreach (m; findAll()
-      if (m.tenantId == tenantId && m.name == name)
+    foreach (m; findByTenant(tenantId)) {
+      if (m.name == name)
         return m;
     }
     return DataModel.init;
+  }
+
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
+  DataModel[] filterByCategory(DataModel[] models, MasterDataCategory category) {
+    return models.filter!(e => e.category == category).array;
+  }
+  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
+    return filterByCategory(findByTenant(tenantId), category);
+  }
+  void removeByCategory(TenantId tenantId, MasterDataCategory category) {
+    findByCategory(tenantId, category).each!(e => remove(e.id));
   }
 
 }

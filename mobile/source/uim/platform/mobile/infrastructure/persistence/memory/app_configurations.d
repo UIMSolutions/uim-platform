@@ -13,53 +13,45 @@ import std.algorithm : filter;
 import std.array : array;
 
 class MemoryAppConfigurationRepository : TenantRepository!(AppConfiguration, AppConfigurationId), AppConfigurationRepository {
-  private AppConfiguration[AppConfigurationId] store;
-
-  bool existsById(AppConfigurationId id) {
-    return id in store ? true : false;
-  }
-
-  AppConfiguration findById(AppConfigurationId id) {
-    return existsById(id) ? store[id] : AppConfiguration.init;
-  }
-
+  
   bool existsByKey(MobileAppId appId, string key) {
-    return store.any!(c => c.appId == appId && c.key == key);
+    return findByApp(appId).any!(c => c.key == key);
   }
 
   AppConfiguration findByKey(MobileAppId appId, string key) {
-    foreach (c; findAll) {
-      if (c.appId == appId && c.key == key)
+    foreach (c; findByApp(appId)) {
+      if (c.key == key)
         return c;
     }
     return AppConfiguration.init;
   }
 
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(c => c.appId == appId).array.length;
+    return findByApp(appId).length;
   }
 
+  AppConfiguration[] filterByApp(AppConfiguration[] configs, MobileAppId appId) {
+    return configs.filter!(c => c.appId == appId).array;
+  }
   AppConfiguration[] findByApp(MobileAppId appId) {
-    return store.values.filter!(c => c.appId == appId).array;
+    return filterByApp(store.values.array, appId);
   }
 
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(c => remove(c));
+  }
+
+  size_t countByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
+    return findByAppAndPlatform(appId, platform).length;
+  }
+  AppConfiguration[] filterByAppAndPlatform(AppConfiguration[] configs, MobileAppId appId, AppPlatform platform) {
+    return configs.filter!(c => c.appId == appId && c.platform == platform).array;
+  }
   AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
-    return findByApp(appId).filter!(c => c.platform == platform).array;
+    return filterByAppAndPlatform(findByApp(appId), appId, platform);
+  }
+  void removeByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
+    findByAppAndPlatform(appId, platform).each!(c => remove(c));
   }
 
-  AppConfiguration[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(c => c.tenantId == tenantId).array;
-  }
-
-  void save(AppConfiguration config) {
-    store[config.id] = config;
-  }
-
-  void update(AppConfiguration config) {
-    store[config.id] = config;
-  }
-
-  void remove(AppConfigurationId id) {
-    store.remove(id);
-  }
 }

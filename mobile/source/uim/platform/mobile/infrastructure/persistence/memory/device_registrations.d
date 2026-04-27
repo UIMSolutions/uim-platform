@@ -26,20 +26,30 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     return DeviceRegistration.init;
   }
 
+  size_t countByApp(MobileAppId appId) {
+    return findByApp(appId).length;
+  }
+  DeviceRegistration[] filterByApp(DeviceRegistration[] registrations, MobileAppId appId) {
+    return registrations.filter!(r => r.appId == appId).array;
+  }
   DeviceRegistration[] findByApp(MobileAppId appId) {
     return store.values.filter!(r => r.appId == appId).array;
   }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(r => remove(r));
+  }
 
+  size_t countByUser(string userId) {
+    return findByUser(userId).length;
+  }
+  DeviceRegistration[] filterByUser(DeviceRegistration[] registrations, string userId) {
+    return registrations.filter!(r => r.userId == userId).array;
+  }
   DeviceRegistration[] findByUser(string userId) {
     return store.values.filter!(r => r.userId == userId).array;
   }
-
-  DeviceRegistration[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array;
-  }
-
-  size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array.length;
+  void removeByUser(string userId) {
+    findByUser(userId).each!(r => remove(r));
   }
 
 }

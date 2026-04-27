@@ -14,27 +14,43 @@ import std.array : array;
 
 class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEntryId), ClientLogRepository {
 
-  ClientLogEntry[] findByApp(MobileAppId appId) {
-    return store.values.filter!(e => e.appId == appId).array;
-  }
-
-  ClientLogEntry[] findByDevice(DeviceRegistrationId deviceId) {
-    return store.values.filter!(e => e.deviceId == deviceId).array;
-  }
-
-  ClientLogEntry[] findByLevel(MobileAppId appId, LogLevel level) {
-    return store.values.filter!(e => e.appId == appId && e.level == level).array;
-  }
-
-  ClientLogEntry[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(e => e.tenantId == tenantId).array;
-  }
-
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(e => e.appId == appId).array.length;
+    return findByApp(appId).length;
+  }
+  ClientLogEntry[] filterByApp(ClientLogEntry[] entries, MobileAppId appId) {
+    return entries.filter!(e => e.appId == appId).array;
+  }
+  ClientLogEntry[] findByApp(MobileAppId appId) {
+    return filterByApp(findAll(), appId);
+  }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(e => remove(e));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(e => e.tenantId == tenantId).array.length;
+  size_t countByDevice(DeviceRegistrationId deviceId) {
+    return findByDevice(deviceId).length;
   }
+  ClientLogEntry[] filterByDevice(ClientLogEntry[] entries, DeviceRegistrationId deviceId) {
+    return entries.filter!(e => e.deviceId == deviceId).array;
+  }
+  ClientLogEntry[] findByDevice(DeviceRegistrationId deviceId) {
+    return filterByDevice(findAll(), deviceId);
+  }
+  void removeByDevice(DeviceRegistrationId deviceId) {
+    findByDevice(deviceId).each!(e => remove(e));
+  }
+
+  size_t countByLevel(MobileAppId appId, LogLevel level) {
+    return findByLevel(appId, level).length;
+  }
+  ClientLogEntry[] filterByLevel(ClientLogEntry[] entries, MobileAppId appId, LogLevel level) {
+    return entries.filter!(e => e.appId == appId && e.level == level).array;
+  }
+  ClientLogEntry[] findByLevel(MobileAppId appId, LogLevel level) {
+    return filterByLevel(findByApp(appId), appId, level);
+  }
+  void removeByLevel(MobileAppId appId, LogLevel level) {
+    findByLevel(appId, level).each!(e => remove(e));
+  }
+
 }

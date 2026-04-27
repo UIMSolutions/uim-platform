@@ -16,37 +16,36 @@ import uim.platform.integration.automation.domain.ports;
 
 class MemorySystemRepository : TenantRepository!(SystemConnection, SystemConnectionId), SystemRepository {
 
-
-  SystemConnection[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByType(TenantId tenantId, SystemType systemType) {
+    return findByType(tenantId, systemType).length;
   }
 
-  SystemConnection* findById(SystemConnectionId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  SystemConnection[] filterByType(SystemConnection[] systems, SystemType systemType) {
+    return systems.filter!(e => e.systemType == systemType).array;
   }
 
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType) {
-    return findAll()r!(e => e.tenantId == tenantId && e.systemType == systemType).array;
+    return filterByType(findByTenant(tenantId), systemType);
+  }
+
+  void removeByType(TenantId tenantId, SystemType systemType) {
+    findByType(tenantId, systemType).each!(e => remove(e));
+  }
+
+  size_t countByStatus(TenantId tenantId, ConnectionStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  SystemConnection[] filterByStatus(SystemConnection[] systems, ConnectionStatus status) {
+    return systems.filter!(e => e.status == status).array;
   }
 
   SystemConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
-    return findAll()r!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void save(SystemConnection system) {
-    store[system.id] = system;
+  void removeByStatus(TenantId tenantId, ConnectionStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
-  void update(SystemConnection system) {
-    store[system.id] = system;
-  }
-
-  void remove(SystemConnectionId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.remove(id);
-  }
 }
