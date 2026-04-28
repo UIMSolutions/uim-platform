@@ -36,21 +36,44 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
     }
   }
 
+  size_t countByUser(TenantId tenantId, UserId changedBy) {
+    return findByUser(tenantId, changedBy).length;
+  }
+  ConfigChangeLog[] filterByUser(ConfigChangeLog[] logs, UserId changedBy) {
+    return logs.filter!(e => e.changedBy == changedBy).array;
+  }
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy) {
     return findByTenant(tenantId).filter!(e => e.changedBy == changedBy).array;
   }
+  void removeByUser(TenantId tenantId, UserId changedBy) {
+    findByUser(tenantId, changedBy).each!(e => remove(e));
+  }
 
+  size_t countByConfigType(TenantId tenantId, string configType) {
+    return findByConfigType(tenantId, configType).length;
+  }
+  ConfigChangeLog[] filterByConfigType(ConfigChangeLog[] logs, string configType) {
+    return logs.filter!(e => e.configType == configType).array;
+  }
   ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType) {
     return findByTenant(tenantId).filter!(e => e.configType == configType).array;
   }
+  void removeByConfigType(TenantId tenantId, string configType) {
+    findByConfigType(tenantId, configType).each!(e => remove(e));
+  }
 
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTimeRange(tenantId, timeFrom, timeTo).length;
+  }
+  ConfigChangeLog[] filterByTimeRange(ConfigChangeLog[] logs, long timeFrom, long timeTo) {
+    return logs.filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
+  }
   ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
-
-  void save(ConfigChangeLog log) {
-    store ~= log;
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {

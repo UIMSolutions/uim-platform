@@ -37,8 +37,8 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
 
     // Create parent audit log entry
     auto entry = AuditLogEntry();
-    entry.id = randomUUID();
-    entry.tenantId = req.tenantId;
+    entry.initEntity(req.tenantId);
+
     entry.userId = req.userId;
     entry.userName = req.userName;
     entry.category = AuditCategory.securityEvents;
@@ -50,10 +50,12 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
     entry.ipAddress = req.ipAddress;
     entry.userAgent = req.userAgent;
     entry.timestamp = Clock.currStdTime();
+
     auditRepo.save(entry);
 
     // Create enriched security event
     auto secEvent = SecurityEvent();
+
     secEvent.auditLogId = entry.id;
     secEvent.tenantId = req.tenantId;
     secEvent.userId = req.userId;
@@ -68,6 +70,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
     secEvent.failureReason = req.failureReason;
     secEvent.riskLevel = req.riskLevel;
     secEvent.timestamp = entry.timestamp;
+
     secRepo.save(secEvent);
 
     return CommandResult(true, entry.id.toString(), "");

@@ -14,7 +14,9 @@ mixin(ShowModule!());
 /// Tracks read-access to sensitive / personal data.
 @safe:
 struct DataAccessLog {
-  mixin TenantEntity!(AuditLogId);
+  mixin TenantEntity!(DataAccessLogId);
+
+  AuditLogId auditLogId; // link to parent audit log entry
   UserId accessedBy;
   string dataSubject; // person whose data was accessed
   string dataObjectType; // e.g., "user_profile", "payment_info"

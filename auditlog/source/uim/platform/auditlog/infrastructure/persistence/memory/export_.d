@@ -18,4 +18,30 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
+
+  size_t countByPackage(ContentPackageId packageId) {
+    return findByPackage(packageId).length;
+  }
+  ExportJob[] filterByPackage(ExportJob[] logs, ContentPackageId packageId) {
+    return logs.filter!(e => e.packageId == packageId).array;
+  }
+  ExportJob[] findByPackage(ContentPackageId packageId) {
+    return findAll().filter!(e => e.packageId == packageId).array;
+  }
+  void removeByPackage(ContentPackageId packageId) {
+    findByPackage(packageId).each!(e => remove(e));
+  }
+
+  size_t countByPackage(ContentPackageId packageId) {
+    return findByPackage(packageId).length;
+  }
+  ExportJob[] filterByPackage(ExportJob[] logs, ContentPackageId packageId) {
+    return logs.filter!(e => e.packageId == packageId).array;
+  }
+  ExportJob[] findByPackage(ContentPackageId packageId) {
+    return findAll().filter!(e => e.packageId == packageId).array;
+  }
+  void removeByPackage(ContentPackageId packageId) {
+    findByPackage(packageId).each!(e => remove(e));
+  }
 }

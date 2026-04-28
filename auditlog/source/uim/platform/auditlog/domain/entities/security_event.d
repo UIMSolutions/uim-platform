@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// Enriched security event — login/logout, auth failures, privilege changes.
 @safe:
 struct SecurityEvent {
+  mixin TenantEntity!(SecurityEventId);
+
   AuditLogId auditLogId; // references the parent audit entry
-  TenantId tenantId;
   UserId userId;
   string userName;
   string eventType; // e.g., "login", "loginFailed", "mfaChallenge"
@@ -29,9 +30,8 @@ struct SecurityEvent {
   long timestamp;
 
   Json toJson() const {
-    return Json.emptyObject
+    return entityToJson()
       .set("auditLogId", auditLogId)
-      .set("tenantId", tenantId)
       .set("userId", userId)
       .set("userName", userName)
       .set("eventType", eventType)

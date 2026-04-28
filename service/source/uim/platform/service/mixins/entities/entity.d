@@ -55,6 +55,13 @@ mixin template TenantEntity(TId) {
         return id.isEmpty;
     }
 
+    void initEntity(TenantId tenantId) {
+        id = randomUUID();
+        this.tenantId = tenantId;
+        createdAt = Clock.currStdTime();
+        updatedAt = createdAt;
+    }
+    
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
     void createEntity(TenantId tenantId) {
         id = randomUUID();

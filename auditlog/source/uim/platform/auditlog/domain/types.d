@@ -21,6 +21,15 @@ struct AuditLogId {
   mixin DomainId;
 }
 
+struct DataAccessLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 struct RetentionPolicyId {
   string value;
 
@@ -62,7 +71,6 @@ struct ExportJobId {
 }
 
 
-
 struct ServiceId {
   string value;
 
@@ -73,3 +81,12 @@ struct ServiceId {
   mixin DomainId;
 }
 
+struct SecurityEventId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
