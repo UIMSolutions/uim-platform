@@ -30,25 +30,25 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
-    auto r = ArchiveRequest();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
-    r.dataSubjectId = req.dataSubjectId;
-    r.requestedBy = req.requestedBy;
-    r.status = ArchiveStatus.scheduled;
-    r.targetSystems = req.targetSystems;
-    r.categories = req.categories;
-    r.archiveLocation = req.archiveLocation;
-    r.reason = req.reason;
-    r.isTestMode = req.isTestMode;
-    r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
+    auto archiveRequest = ArchiveRequest();
+    archiveRequest.createEntity(req.tenantId);
 
-    repo.save(r);
-    return CommandResult(r.id, "");
+    archiveRequest.dataSubjectId = req.dataSubjectId;
+    archiveRequest.requestedBy = req.requestedBy;
+    archiveRequest.status = ArchiveStatus.scheduled;
+    archiveRequest.targetSystems = req.targetSystems;
+    archiveRequest.categories = req.categories;
+    archiveRequest.archiveLocation = req.archiveLocation;
+    archiveRequest.reason = req.reason;
+    archiveRequest.isTestMode = req.isTestMode;
+    archiveRequest.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
+
+    repo.save(archiveRequest);
+    return CommandResult(true, archiveRequest.id, "");
   }
 
-  ArchiveRequest* getRequest(ArchiveRequestId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  ArchiveRequest getRequest(TenantId tenantId, ArchiveRequestId requestId) {
+    return repo.findById(tenantId, requestId);
   }
 
   ArchiveRequest[] listRequests(TenantId tenantId) {
@@ -60,22 +60,22 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateArchiveStatusRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
-    if (r is null)
+    auto archiveRequest = repo.findById(req.tenantId, req.id);
+    if (archiveRequest is null)
       return CommandResult(false, "", "Archive request not found");
 
-    r.status = req.status;
+    archiveRequest.status = req.status;
     auto now = Clock.currStdTime();
     if (req.status == ArchiveStatus.inProgress)
-      r.startedAt = now;
+      archiveRequest.startedAt = now;
     if (req.status == ArchiveStatus.completed)
-      r.completedAt = now;
+      archiveRequest.completedAt = now;
 
-    repo.update(*r);
-    return CommandResult(r.id, "");
+    repo.update(archiveRequest);
+    return CommandResult(true, archiveRequest.id.toString, "");
   }
 
-  void deleteRequest(ArchiveRequestId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+  void deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {
+    repo.removeById(tenantId, requestId);
   }
 }

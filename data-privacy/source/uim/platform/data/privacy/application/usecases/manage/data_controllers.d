@@ -73,6 +73,6 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   }
 
   void deleteController(DataControllerId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

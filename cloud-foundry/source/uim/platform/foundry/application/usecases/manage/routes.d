@@ -47,7 +47,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
 
     // Verify domain exists
     auto dom = domains.findById(req.domainId, req.tenantId);
-    if (dom is null)
+    if (dom.isNull)
       return CommandResult(false, "", "Domain not found");
 
     // Check route availability
@@ -56,20 +56,16 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = Route();
-    r.id = randomUUID();
+    r.id = initEntity(req.tenantId, req.createdBy);
     r.spaceId = req.spaceId;
     r.domainId = req.domainId;
-    r.tenantId = req.tenantId;
     r.host = req.host;
     r.path = req.path;
     r.port = req.port;
     r.protocol = req.protocol;
-    r.createdBy = req.createdBy;
-    r.createdAt = now;
-    r.updatedAt = now;
 
     routes.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(r.id.toString, "");
   }
 
   Route* getRoute(TenantId tenantId, RouteId id) {
@@ -81,15 +77,15 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   Route[] listBySpace(TenantId tenantId, SpaceId spaceId) {
-    return routes.findBySpace(spaceId, tenantId);
+    return routes.findBySpace(tenantId, spaceId);
   }
 
   CommandResult deleteRoute(TenantId tenantId, RouteId id) {
-    auto existing = routes.findById(tenantId, id);
-    if (existing is null)
+    auto route = routes.findById(tenantId, id);
+    if (route.isNull)
       return CommandResult(false, "", "Route not found");
 
-    routes.remove(tenantId, id);
+    routes.remove(route);
     return CommandResult(true, id.toString, "");
   }
 
@@ -103,7 +99,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.mapApp(req.routeId, req.tenantId, req.appId))
       return CommandResult(false, "", "Cannot map application to route");
 
-    return CommandResult(req.routeId, "");
+    return CommandResult(req.routeId.toString, "");
   }
 
   /// Unmap an application from a route.
@@ -113,10 +109,10 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (req.appId.isEmpty)
       return CommandResult(false, "", "Application ID is required");
 
-    if (!resolver.unmapApp(req.routeId, req.tenantId, req.appId))
+    if (!resolver.unmapApp(req.tenantId, req.routeId, req.appId))
       return CommandResult(false, "", "Cannot unmap application from route");
 
-    return CommandResult(req.routeId, "");
+    return CommandResult(req.routeId.toString, "");
   }
 
   // --- Domains ---
@@ -133,35 +129,30 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto d = CfDomain();
-    d.id = randomUUID();
+    d.initEntity(req.tenantId, req.createdBy);
     d.ownerOrgId = req.ownerOrgId;
-    d.tenantId = req.tenantId;
     d.name = req.name;
     d.scope_ = req.scope_;
     d.isInternal = req.isInternal;
-    d.createdBy = req.createdBy;
-    d.createdAt = now;
-    d.updatedAt = now;
 
     domains.save(d);
-    return CommandResult(d.id, "");
+    return CommandResult(d.id.toString, "");
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
     return domains.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(TenantId tenantId, CfDomainId id) {
-    auto existing = domains.findById(tenantId, id);
-    if (existing is null)
+  CommandResult deleteDomain(TenantId tenantId, CfDomainId domainId) {
+    auto domain = domains.findById(tenantId, domainId);
+    if (domain.isNull)
       return CommandResult(false, "", "Domain not found");
 
     // Remove all routes on this domain
-    auto routesOnDomain = routes.findByDomain(tenantId, id);
-    foreach (r; routesOnDomain)
-      routes.remove(r.tenantId, r.id);
+    auto routesOnDomain = routes.findByDomain(tenantId, domainId);
+    routesOnDomain.each!(r => routes.remove(r));
 
-    domains.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    domains.remove(domain);
+    return CommandResult(true, domain.id.toString, "");
   }
 }

@@ -128,7 +128,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     if (!folders.existsById(tenantId, id))
       return CommandResult(false, "", "Folder not found");
 
-    folders.remove(tenantId, id);
+    folders.removeById(tenantId, id);
     return CommandResult(true, id.toString(), "");
   }
 }

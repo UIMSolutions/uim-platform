@@ -64,7 +64,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Platform not found");
 
-        repo.remove(tenantId, id);
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }
 }

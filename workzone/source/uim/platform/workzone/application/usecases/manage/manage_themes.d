@@ -75,7 +75,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (t is null)
       return CommandResult(false, "", "Theme not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

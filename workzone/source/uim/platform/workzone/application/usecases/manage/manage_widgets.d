@@ -69,6 +69,6 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteWidget(WidgetId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

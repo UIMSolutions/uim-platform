@@ -29,7 +29,7 @@ class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
         return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, JobStatus status) {
-        findByStatus(tenantId, status).each!(j => remove(tenantId, j.id));
+        findByStatus(tenantId, status).each!(j => removeById(tenantId, j.id));
     }
 
     Job[] search(TenantId tenantId, string query) {

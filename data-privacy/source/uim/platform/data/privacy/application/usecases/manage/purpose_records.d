@@ -75,6 +75,6 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRecord(PurposeRecordId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

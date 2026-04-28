@@ -18,7 +18,7 @@ mixin template IdEntity(TId) {
     }
 
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
-    void createEntity() {
+    void initEntity() {
         id = randomUUID();
         createdAt = Clock.currStdTime();
         updatedAt = createdAt;
@@ -56,12 +56,21 @@ mixin template TenantEntity(TId) {
     }
 
     void initEntity(TenantId tenantId) {
-        id = randomUUID();
+        this.id = randomUUID();
         this.tenantId = tenantId;
-        createdAt = Clock.currStdTime();
-        updatedAt = createdAt;
+        this.createdAt = Clock.currStdTime();
+        this.updatedAt = createdAt;
     }
-    
+
+    void initEntity(TenantId tenantId, UserId createdBy) {
+        this.id = randomUUID();
+        this.tenantId = tenantId;
+        this.createdAt = Clock.currStdTime();
+        this.createdBy = createdBy;
+        this.updatedAt = this.createdAt;
+        this.updatedBy = this.createdBy;
+    }
+
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
     void createEntity(TenantId tenantId) {
         id = randomUUID();

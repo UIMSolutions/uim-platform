@@ -64,7 +64,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Service offering not found");
 
-        repo.remove(tenantId, id);
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }
 }

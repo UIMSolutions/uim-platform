@@ -65,7 +65,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Service binding not found");
 
-        repo.remove(tenantId, id);
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }
 }

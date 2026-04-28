@@ -36,14 +36,12 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Organization name is required");
 
     // Unique name per tenant
-    auto existing = orgs.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (existing = orgs.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Organization with this name already exists");
 
-    auto now = Clock.currStdTime();
     auto org = Organization();
-    org.id = randomUUID();
-    org.tenantId = req.tenantId;
+    org.initEntity(req.tenantId, req.createdBy);
+
     org.name = req.name;
     org.status = OrgStatus.active;
     org.memoryQuotaMb = req.memoryQuotaMb > 0 ? req.memoryQuotaMb : 10_240;
@@ -51,15 +49,12 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     org.totalRoutes = req.totalRoutes > 0 ? req.totalRoutes : 1000;
     org.totalServices = req.totalServices > 0 ? req.totalServices : 100;
     org.totalAppInstances = req.totalAppInstances;
-    org.createdBy = req.createdBy;
-    org.createdAt = now;
-    org.updatedAt = now;
 
     orgs.save(org);
-    return CommandResult(org.id, "");
+    return CommandResult(org.id.toString, "");
   }
 
-  Organization* getOrg(TenantId tenantId, OrgId id) {
+  Organization getOrg(TenantId tenantId, OrgId id) {
     return orgs.findById(tenantId, id);
   }
 
@@ -74,10 +69,10 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = orgs.findById(req.tenantId, req.id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Organization not found");
 
-    auto updated = existing;
+    auto updated = xisting;
     if (req.name.length > 0)
       updated.name = req.name;
     updated.status = req.status;
@@ -93,7 +88,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     orgs.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(updated.id.toString, "");
   }
 
   CommandResult suspendOrg(TenantId tenantId, OrgId id) {
@@ -113,6 +108,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     auto org = orgs.findById(tenantId, id);
     if (org.isNull)
       return CommandResult(false, "", "Organization not found");
+
     if (org.status == OrgStatus.active)
       return CommandResult(false, "", "Organization is already active");
 
@@ -129,7 +125,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
 
     // Cascade: remove all spaces in this org
     spaces.removeByOrg(tenantId, id);
-    orgs.remove(tenantId, id);
+    orgs.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -141,7 +141,7 @@ class AppVersionController : PlatformController {
         writeError(res, 404, "Version not found");
         return;
       }
-      auto result = uc.remove(tenantId, id);
+      auto result = uc.removeById(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

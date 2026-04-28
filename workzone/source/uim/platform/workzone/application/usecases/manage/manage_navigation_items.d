@@ -77,7 +77,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     if (n is null)
       return CommandResult(false, "", "Navigation item not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

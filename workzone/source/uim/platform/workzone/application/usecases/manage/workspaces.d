@@ -125,6 +125,6 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   void deleteWorkspace(WorkspaceId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

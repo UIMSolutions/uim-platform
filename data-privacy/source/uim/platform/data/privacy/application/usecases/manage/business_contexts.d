@@ -88,6 +88,6 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteContext(BusinessContextId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

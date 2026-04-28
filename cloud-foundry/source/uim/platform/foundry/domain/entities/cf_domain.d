@@ -20,7 +20,12 @@ struct CfDomain {
   string name; // e.g. "apps.example.com"
   DomainScope scope_ = DomainScope.shared_;
   bool isInternal;
-  string createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("ownerOrgId", ownerOrgId)
+      .set("name", name)
+      .set("scope", scope_.to!string)
+      .set("isInternal", isInternal);
+  }
 }

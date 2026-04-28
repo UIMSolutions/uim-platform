@@ -112,7 +112,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (existing is null)
       return CommandResult(false, "", "Deployment not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

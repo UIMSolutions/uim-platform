@@ -77,7 +77,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteReport(InformationReportId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 
   private ExportFormat parseExportFormat(string s) {

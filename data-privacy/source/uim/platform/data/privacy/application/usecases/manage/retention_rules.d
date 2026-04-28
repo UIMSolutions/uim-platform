@@ -86,6 +86,6 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRule(RetentionRuleId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

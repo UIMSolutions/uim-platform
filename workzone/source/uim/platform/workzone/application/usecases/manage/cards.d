@@ -77,6 +77,6 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteCard(TenantId tenantId, CardId id) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

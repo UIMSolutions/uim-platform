@@ -77,6 +77,6 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteNotification(NotificationId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

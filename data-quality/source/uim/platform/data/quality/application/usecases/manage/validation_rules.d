@@ -98,7 +98,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     if (existing.tenantId != tenantId)
       return CommandResult(false, "", "Tenant mismatch");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 

@@ -92,7 +92,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
-        schedules.remove(tenantId, id, jobId);
+        schedules.removeById(tenantId, id, jobId);
         return CommandResult(true, id.toString, "");
     }
 

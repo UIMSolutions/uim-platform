@@ -144,7 +144,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (existing.status == ModelConfigStatus.training)
       return CommandResult(false, "", "Cannot delete a configuration that is currently training");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

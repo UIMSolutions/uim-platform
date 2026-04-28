@@ -75,6 +75,6 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteConfig(TenantId tenantId, AnonymizationConfigId id) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

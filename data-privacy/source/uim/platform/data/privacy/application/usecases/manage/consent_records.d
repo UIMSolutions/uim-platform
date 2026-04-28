@@ -94,6 +94,6 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteConsent(ConsentRecordId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

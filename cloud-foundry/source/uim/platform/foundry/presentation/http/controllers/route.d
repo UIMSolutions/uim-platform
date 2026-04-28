@@ -30,7 +30,7 @@ class RouteController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     // Routes
     router.post("/api/v1/routes", &handleCreateRoute);
     router.get("/api/v1/routes", &handleListRoutes);
@@ -64,11 +64,9 @@ class RouteController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -78,16 +76,13 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; items)
-        arr ~= serializeRoute(r);
+      auto arr = items.map!(r => r.toJson).array;
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -102,8 +97,7 @@ class RouteController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRoute(*r), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,37 +108,34 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto routeId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = MapRouteRequest();
-      r.routeId = routeId;
+      r.routeId = RouteId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.appId = j.getString("appId");
 
       auto result = useCase.mapRoute(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -160,14 +151,13 @@ class RouteController : PlatformController {
 
       auto result = useCase.unmapRoute(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -187,14 +177,13 @@ class RouteController : PlatformController {
 
       auto result = useCase.createDomain(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -204,16 +193,14 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; items)
-        arr ~= serializeDomain(d);
+      auto arr = items.map!(d => serializeDomain(d)).toArray;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -224,46 +211,15 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  // --- Serializers ---
-
-  private static Json serializeRoute(const Route r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("spaceId", r.spaceId)
-      .set("domainId", r.domainId)
-      .set("tenantId", r.tenantId)
-      .set("host", r.host)
-      .set("path", r.path)
-      .set("port", r.port)
-      .set("protocol", r.protocol.to!string)
-      .set("mappedAppIds", toJsonArray(r.mappedAppIds))
-      .set("createdBy", r.createdBy)
-      .set("createdAt", r.createdAt)
-      .set("updatedAt", r.updatedAt);
-  }
-
-  private static Json serializeDomain(const CfDomain d) {
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("ownerOrgId", d.ownerOrgId)
-      .set("tenantId", d.tenantId)
-      .set("name", d.name)
-      .set("scope", d.scope_.to!string)
-      .set("isInternal", d.isInternal)
-      .set("createdBy", d.createdBy)
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt);
-  }
+ 
 }

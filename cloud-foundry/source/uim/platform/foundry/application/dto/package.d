@@ -9,6 +9,7 @@ public {
     import uim.platform.foundry.application.dto.app;
     import uim.platform.foundry.application.dto.buildpack;
     import uim.platform.foundry.application.dto.domain;
+    import uim.platform.foundry.application.dto.organization;
     import uim.platform.foundry.application.dto.route;
     import uim.platform.foundry.application.dto.service_binding;
     import uim.platform.foundry.application.dto.service_instance;

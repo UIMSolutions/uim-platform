@@ -184,7 +184,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workflow not found");
 
     stepRepo.removeByWorkflow(tenantId, id);
-    workflowRepo.remove(tenantId, id);
+    workflowRepo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

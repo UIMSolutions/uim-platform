@@ -65,7 +65,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Service plan not found");
 
-        repo.remove(tenantId, id);
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }
 }

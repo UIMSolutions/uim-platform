@@ -92,6 +92,6 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteGround(LegalGroundId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

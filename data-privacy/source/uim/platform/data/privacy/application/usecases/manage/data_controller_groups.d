@@ -61,6 +61,6 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteGroup(DataControllerGroupId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

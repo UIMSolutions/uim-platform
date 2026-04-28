@@ -93,6 +93,6 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteModel(PersonalDataModelId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

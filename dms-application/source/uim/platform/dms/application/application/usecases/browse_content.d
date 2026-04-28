@@ -102,7 +102,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     if (!favorites.existsById(tenantId, favoriteId))
       return CommandResult(false, "", "Favorite not found");
 
-    favorites.remove(tenantId, favoriteId);
+    favorites.removeById(tenantId, favoriteId);
     return CommandResult(true, favoriteId.toString(), "");
   }
 }

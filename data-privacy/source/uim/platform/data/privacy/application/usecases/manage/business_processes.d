@@ -66,6 +66,6 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   void deleteProcess(BusinessProcessId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

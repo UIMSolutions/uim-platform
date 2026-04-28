@@ -82,7 +82,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     if (e is null)
       return CommandResult(false, "", "Event not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

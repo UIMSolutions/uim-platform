@@ -102,7 +102,7 @@ class TaskAttachmentController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(tenantId, id);
+            auto result = uc.removeById(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);

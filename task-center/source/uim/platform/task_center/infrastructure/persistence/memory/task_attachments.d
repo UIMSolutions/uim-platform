@@ -11,39 +11,19 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTaskAttachmentRepository :TenantRepository!(TaskAttachment, TaskAttachmentId), TaskAttachmentRepository {
-    private TaskAttachment[][string] store;
+class MemoryTaskAttachmentRepository : TenantRepository!(TaskAttachment, TaskAttachmentId), TaskAttachmentRepository {
 
-    TaskAttachment findById(string tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (a; *arr)
-                if (a.id == id) return a;
-        return TaskAttachment.init;
+    size_t countByTask(TenantId tenantId, TaskId taskId) {
+        return findByTask(tenantId, taskId).length;
+    }
+    TaskAttachment[] filterByTask(TaskAttachment[] attachments, TaskId taskId) {
+        return attachments.filter!(a => a.taskId == taskId).array;
+    }
+    TaskAttachment[] findByTask(TenantId tenantId, TaskId taskId) {
+        return filterByTask(findByTenant(tenantId), taskId);
+    }
+    void removeByTask(TenantId tenantId, TaskId taskId) {
+        findByTask(tenantId, taskId).each!(a => remove(a));
     }
 
-    TaskAttachment[] findByTenant(string tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return [];
-    }
-
-    TaskAttachment[] findByTask(string tenantId, string taskId) {
-        TaskAttachment[] result;
-        if (auto arr = tenantId in store)
-            foreach (a; *arr)
-                if (a.taskId == taskId) result ~= a;
-        return result;
-    }
-
-    void save(string tenantId, TaskAttachment entity) {
-        store[tenantId] ~= entity;
-    }
-
-    void remove(string tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            TaskAttachment[] filtered;
-            foreach (a; *arr)
-                if (a.id != id) filtered ~= a;
-            store[tenantId] = filtered;
-        }
-    }
 }

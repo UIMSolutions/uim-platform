@@ -95,6 +95,6 @@ class ManageContentUseCase { // TODO: UIMUseCase {
   }
 
   void deleteContent(ContentId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

@@ -72,6 +72,6 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   }
 
   void deleteSubprocess(BusinessSubprocessId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

@@ -66,6 +66,6 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteChannel(ChannelId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

@@ -82,6 +82,6 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRequest(BlockingRequestId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

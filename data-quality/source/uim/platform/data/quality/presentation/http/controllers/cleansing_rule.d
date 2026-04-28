@@ -151,7 +151,7 @@ class CleansingRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.remove(tenantId, id);
+      auto result = uc.removeById(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

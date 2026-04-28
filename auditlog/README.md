@@ -440,7 +440,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + findById(id) : AuditConfig*
       + save(config) : void
       + update(config) : void
-      + remove(tenantId, id) : void
+      + removeById(tenantId, id) : void
     }
 
     @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
@@ -449,7 +449,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + findDefault(tenantId) : RetentionPolicy*
       + save(policy) : void
       + update(policy) : void
-      + remove(tenantId, id) : void
+      + removeById(tenantId, id) : void
     }
 
     @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
@@ -457,7 +457,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + findById(tenantId, id) : ExportJob*
       + save(job) : void
       + update(job) : void
-      + remove(tenantId, id) : void
+      + removeById(tenantId, id) : void
     }
 
     @safe: interface  SecurityEventRepository << (P,#42A5F5) >> {

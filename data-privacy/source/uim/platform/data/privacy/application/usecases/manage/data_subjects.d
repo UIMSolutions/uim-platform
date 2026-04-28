@@ -89,6 +89,6 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteSubject(DataSubjectId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

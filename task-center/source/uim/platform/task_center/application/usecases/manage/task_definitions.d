@@ -80,7 +80,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult remove(string tenantId, string id) {
-        repo.remove(tenantId, id);
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.toString, "");
     }
 }

@@ -66,6 +66,6 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
   }
 
   void deleteWorkpage(WorkpageId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

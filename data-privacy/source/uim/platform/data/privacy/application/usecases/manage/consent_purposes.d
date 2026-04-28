@@ -74,6 +74,6 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   }
 
   void deletePurpose(ConsentPurposeId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

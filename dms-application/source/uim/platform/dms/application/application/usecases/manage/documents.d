@@ -152,7 +152,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
 
     // Cascade delete versions
     versions.removeByDocument(tenantId, id);
-    docs.remove(tenantId, id);
+    docs.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

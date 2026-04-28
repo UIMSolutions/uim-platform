@@ -68,7 +68,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (g is null)
       return CommandResult(false, "", "Group not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

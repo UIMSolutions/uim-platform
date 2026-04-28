@@ -125,7 +125,7 @@ classDiagram
         +findById(TenantId, PlatformId) Platform*
         +save(Platform) void
         +update(Platform) void
-        +remove(TenantId, PlatformId) void
+        +removeById(tenantId, PlatformId) void
         +countByTenant(TenantId) ulong
     }
 
@@ -135,7 +135,7 @@ classDiagram
         +findById(TenantId, ServiceBrokerId) ServiceBroker*
         +save(ServiceBroker) void
         +update(ServiceBroker) void
-        +remove(TenantId, ServiceBrokerId) void
+        +removeById(tenantId, ServiceBrokerId) void
     }
 
     class ServiceOfferingRepository {
@@ -144,7 +144,7 @@ classDiagram
         +findById(TenantId, ServiceOfferingId) ServiceOffering*
         +save(ServiceOffering) void
         +update(ServiceOffering) void
-        +remove(TenantId, ServiceOfferingId) void
+        +removeById(tenantId, ServiceOfferingId) void
     }
 
     class ServicePlanRepository {
@@ -153,7 +153,7 @@ classDiagram
         +findById(TenantId, ServicePlanId) ServicePlan*
         +save(ServicePlan) void
         +update(ServicePlan) void
-        +remove(TenantId, ServicePlanId) void
+        +removeById(tenantId, ServicePlanId) void
     }
 
     class ServiceInstanceRepository {
@@ -162,7 +162,7 @@ classDiagram
         +findById(TenantId, ServiceInstanceId) ServiceInstance*
         +save(ServiceInstance) void
         +update(ServiceInstance) void
-        +remove(TenantId, ServiceInstanceId) void
+        +removeById(tenantId, ServiceInstanceId) void
     }
 
     class ServiceBindingRepository {
@@ -171,7 +171,7 @@ classDiagram
         +findById(TenantId, ServiceBindingId) ServiceBinding*
         +save(ServiceBinding) void
         +update(ServiceBinding) void
-        +remove(TenantId, ServiceBindingId) void
+        +removeById(tenantId, ServiceBindingId) void
     }
 
     class OperationRepository {
@@ -180,7 +180,7 @@ classDiagram
         +findById(TenantId, OperationId) Operation*
         +save(Operation) void
         +update(Operation) void
-        +remove(TenantId, OperationId) void
+        +removeById(tenantId, OperationId) void
     }
 
     class LabelRepository {
@@ -190,7 +190,7 @@ classDiagram
         +findByResource(TenantId, string, string) Label[]
         +save(Label) void
         +update(Label) void
-        +remove(TenantId, LabelId) void
+        +removeById(tenantId, LabelId) void
     }
 ```
 

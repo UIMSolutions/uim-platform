@@ -17,7 +17,7 @@ struct CreateRouteRequest {
 }
 
 struct MapRouteRequest {
-  RouteId id;
+  RouteId routeId;
   AppId appId;
   TenantId tenantId;
 }

@@ -63,7 +63,7 @@ struct AuditConfig {
 
   static AuditConfig createDefault(TenantId tenantId) {
     AuditConfig cfg;
-    cfg.createEntity(tenantId);
+    cfg.initEntity(tenantId);
     cfg.name = "Default";
     cfg.status = ConfigStatus.enabled;
     cfg.logDataAccess = true;

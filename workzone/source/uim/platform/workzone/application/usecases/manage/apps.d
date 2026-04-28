@@ -79,6 +79,6 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteApp(TenantId tenantId, AppId id) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

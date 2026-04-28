@@ -140,7 +140,7 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto result = uc.remove(tenantId, id);
+      auto result = uc.removeById(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

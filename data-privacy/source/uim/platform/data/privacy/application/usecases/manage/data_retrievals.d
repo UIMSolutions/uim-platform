@@ -113,6 +113,6 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRequest(DataRetrievalRequestId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

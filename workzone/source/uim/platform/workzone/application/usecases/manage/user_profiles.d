@@ -81,7 +81,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     if (p is null)
       return CommandResult(false, "", "User profile not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

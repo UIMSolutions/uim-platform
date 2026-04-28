@@ -74,7 +74,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     if (p is null)
       return CommandResult(false, "", "Plugin not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

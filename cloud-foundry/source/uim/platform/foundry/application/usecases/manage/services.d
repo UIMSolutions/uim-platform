@@ -109,9 +109,9 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     // Remove all bindings for this instance
     auto instanceBindings = bindings.findByServiceInstance(tenantId, id);
     foreach (b; instanceBindings)
-      bindings.remove(tenantId, b.id);
+      bindings.removeById(tenantId, b.id);
 
-    instances.remove(tenantId, id);
+    instances.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
@@ -159,7 +159,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (existing is null)
       return CommandResult(false, "", "Service binding not found");
 
-    bindings.remove(tenantId, bindingId);
+    bindings.removeById(tenantId, bindingId);
     return CommandResult(true, bindingId.toString, "");
   }
 }

@@ -47,6 +47,6 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteEntry(FeedEntryId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

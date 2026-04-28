@@ -103,7 +103,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     if (existing is null)
       return CommandResult(false, "", "Space not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

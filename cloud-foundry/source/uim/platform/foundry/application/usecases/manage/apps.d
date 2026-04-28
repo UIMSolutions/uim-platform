@@ -38,8 +38,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application name is required");
 
     // Unique name within space
-    auto existing = apps.findByName(req.tenantId, req.spaceId, req.name);
-    if (existing !is null)
+    if (apps.existsByName(req.tenantId, req.spaceId, req.name))
       return CommandResult(false, "", "Application with this name already exists in space");
 
     auto now = Clock.currStdTime();
@@ -87,10 +86,10 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = apps.findById(req.tenantId, req.id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Application not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.instances > 0)
@@ -123,7 +122,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   /// Start an application (stage then start).
   CommandResult startApp(TenantId tenantId, AppId id) {
     auto app = apps.findById(tenantId, id);
-    if (app is null)
+    if (app.isNull)
       return CommandResult(false, "", "Application not found");
     if (app.state == AppState.started)
       return CommandResult(false, "", "Application is already started");
@@ -136,6 +135,12 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult stopApp(TenantId tenantId, AppId id) {
+    auto app = apps.findById(tenantId, id);
+    if (app.isNull)
+      return CommandResult(false, "", "Application not found");
+    if (app.state == AppState.stopped)
+      return CommandResult(false, "", "Application is already stopped");
+
     if (!lifecycle.stopApp(tenantId, id))
       return CommandResult(false, "", "Cannot stop application");
     return CommandResult(true, id.toString, "");
@@ -173,14 +178,16 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.environmentVariables = envJson;
     app.updatedAt = Clock.currStdTime();
     apps.update(app);
+   
     return CommandResult(true, app.id.toString, "");
   }
 
   CommandResult deleteApp(TenantId tenantId, AppId appId) {
-    if (!apps.existsById(tenantId, appId))
+    auto app = apps.findById(tenantId, appId);
+    if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
-    apps.remove(tenantId, appId);
-    return CommandResult(true, appId.toString, "");
+    apps.remove(app);
+    return CommandResult(true, app.id.toString, "");
   }
 }

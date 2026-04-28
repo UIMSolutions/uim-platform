@@ -37,22 +37,19 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Buildpack with this name already exists");
 
     auto now = Clock.currStdTime();
-    auto bp = Buildpack();
-    bp.id = randomUUID();
-    bp.tenantId = req.tenantId;
-    bp.name = req.name;
-    bp.type_ = req.type_;
-    bp.position = req.position;
-    bp.stack = req.stack.length > 0 ? req.stack : "cflinuxfs4";
-    bp.filename = req.filename;
-    bp.enabled = true;
-    bp.locked = false;
-    bp.createdBy = req.createdBy;
-    bp.createdAt = now;
-    bp.updatedAt = now;
+    auto buildpack = Buildpack();
+    buildpack.initEntity(req.tenantId, req.createdBy);
 
-    buildpacks.save(bp);
-    return CommandResult(bp.id, "");
+    buildpack.name = req.name;
+    buildpack.type_ = req.type_;
+    buildpack.position = req.position;
+    buildpack.stack = req.stack.length > 0 ? req.stack : "cflinuxfs4";
+    buildpack.filename = req.filename;
+    buildpack.enabled = true;
+    buildpack.locked = false;
+
+    buildpacks.save(buildpack);
+    return CommandResult(buildpack.id.toString, "");
   }
 
   Buildpack getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
@@ -74,7 +71,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = buildpacks.findById(req.tenantId, req.id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Buildpack not found");
 
     auto updated = *existing;
@@ -91,18 +88,18 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     buildpacks.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(updated.id.toString, "");
   }
 
   CommandResult deleteBuildpack(TenantId tenantId, BuildpackId buildpackId) {
-    auto existing = buildpacks.findById(tenantId, buildpackId);
-    if (existing is null)
+    auto existing = buildpacks.findById(tenantId, buildpackId)  ;
+    if (existing.isNull)
       return CommandResult(false, "", "Buildpack not found");
 
     if (existing.locked)
       return CommandResult(false, "", "Cannot delete a locked buildpack");
 
-    buildpacks.remove(tenantId, buildpackId);
-    return CommandResult(true, buildpackId.toString, "");
+    buildpacks.remove(existing);
+    return CommandResult(true, existing.id.toString, "");
   }
 }

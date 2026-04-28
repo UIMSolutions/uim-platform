@@ -79,6 +79,6 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRuleSet(RuleSetId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

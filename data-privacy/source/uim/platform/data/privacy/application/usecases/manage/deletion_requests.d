@@ -92,6 +92,6 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRequest(DeletionRequestId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

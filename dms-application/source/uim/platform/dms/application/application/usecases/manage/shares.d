@@ -77,7 +77,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     if (!shareRepo.existsById(tenantId, id))
       return CommandResult(false, "", "Share not found");
 
-    shareRepo.remove(tenantId, id);
+    shareRepo.removeById(tenantId, id);
     return CommandResult(true, id.value, "");
   }
 }

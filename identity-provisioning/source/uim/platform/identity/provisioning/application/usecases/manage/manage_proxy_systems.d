@@ -129,7 +129,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     if (existing is null)
       return CommandResult(false, "", "Proxy system not found");
 
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

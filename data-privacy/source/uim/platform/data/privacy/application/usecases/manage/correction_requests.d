@@ -76,6 +76,6 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteRequest(CorrectionRequestId tenantId, id tenantId) {
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
   }
 }

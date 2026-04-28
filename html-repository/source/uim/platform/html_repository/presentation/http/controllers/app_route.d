@@ -153,7 +153,7 @@ class AppRouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto result = usecase.remove(tenantId, id);
+      auto result = usecase.removeById(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

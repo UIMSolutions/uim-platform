@@ -103,7 +103,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     if (entity is null)
       return CommandResult(false, "", "Repository not found");
 
-    repo.remove(tenantId, repositoryId);
+    repo.removeById(tenantId, repositoryId);
     return CommandResult(true, repositoryId.toString(), "");
   }
 }

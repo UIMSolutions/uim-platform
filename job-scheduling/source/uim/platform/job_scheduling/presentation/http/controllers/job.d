@@ -168,7 +168,7 @@ class JobController : PlatformController {
             // Delete all schedules first
             scheduleUc.removeAllByJob(tenantId, id);
 
-            auto result = jobUc.remove(tenantId, id);
+            auto result = jobUc.removeById(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             }) {
