@@ -63,7 +63,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Rule ID is required");
 
     auto existing = repo.findById(req.id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Validation rule not found");
     if (existing.tenantId != req.tenantId)
       return CommandResult(false, "", "Tenant mismatch");
@@ -93,7 +93,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(RuleId tenantId, id tenantId) {
     auto existing = repo.findById(id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Validation rule not found");
     if (existing.tenantId != tenantId)
       return CommandResult(false, "", "Tenant mismatch");

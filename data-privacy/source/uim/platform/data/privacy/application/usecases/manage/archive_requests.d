@@ -26,7 +26,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -61,7 +61,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateStatus(UpdateArchiveStatusRequest req) {
     auto archiveRequest = repo.findById(req.tenantId, req.id);
-    if (archiveRequest is null)
+    if (archiveRequest.isNull)
       return CommandResult(false, "", "Archive request not found");
 
     archiveRequest.status = req.status;

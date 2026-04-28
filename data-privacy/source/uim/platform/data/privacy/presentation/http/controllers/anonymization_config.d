@@ -75,7 +75,7 @@ class AnonymizationConfigController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getConfig(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Anonymization config not found");
         return;
       }

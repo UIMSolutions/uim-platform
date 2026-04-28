@@ -53,7 +53,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRuleSet(UpdateRuleSetRequest req) {
     auto rs = repo.findById(req.id, req.tenantId);
-    if (rs is null)
+    if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 
     if (req.name.length > 0) rs.name = req.name;
@@ -67,7 +67,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
 
   CommandResult activateRuleSet(RuleSetId tenantId, id tenantId) {
     auto rs = repo.findById(tenantId, id);
-    if (rs is null)
+    if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 
     rs.status = RuleSetStatus.active;

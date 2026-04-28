@@ -76,7 +76,7 @@ class InformationReportController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getReport(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Information report not found");
         return;
       }

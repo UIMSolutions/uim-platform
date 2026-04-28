@@ -35,14 +35,14 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
 
     // Validate repository exists
     auto repository = repoRepo.findById(r.tenantId, r.repositoryId);
-    if (repository is null)
+    if (repository.isNull)
       return CommandResult(false, "", "Repository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.value.length > 0) {
       auto parent = folders.findById(r.tenantId, r.parentFolderId);
-      if (parent is null)
+      if (parent.isNull)
         return CommandResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
     }
@@ -108,7 +108,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     auto entity = folders.findById(r.tenantId, r.id);
     if (r.newParentFolderId.value.length > 0) {
       auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
-      if (newParent is null)
+      if (newParent.isNull)
         return CommandResult(false, "", "New parent folder not found");
       entity.parentFolderId = r.newParentFolderId;
       entity.path = newParent.path ~ "/" ~ entity.name;

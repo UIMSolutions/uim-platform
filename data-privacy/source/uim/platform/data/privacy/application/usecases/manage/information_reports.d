@@ -26,7 +26,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -61,7 +61,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateStatus(UpdateInformationReportStatusRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
-    if (r is null)
+    if (r.isNull)
       return CommandResult(false, "", "Information report not found");
 
     r.status = req.status;

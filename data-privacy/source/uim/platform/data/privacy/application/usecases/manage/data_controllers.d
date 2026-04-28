@@ -54,7 +54,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
 
   CommandResult updateController(UpdateDataControllerRequest req) {
     auto c = repo.findById(req.id, req.tenantId);
-    if (c is null)
+    if (c.isNull)
       return CommandResult(false, "", "Data controller not found");
 
     if (req.name.length > 0) c.name = req.name;

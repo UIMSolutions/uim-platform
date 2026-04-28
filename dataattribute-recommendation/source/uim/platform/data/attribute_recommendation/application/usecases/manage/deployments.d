@@ -36,7 +36,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
     // Verify training job completed successfully
     auto job = jobRepo.findById(req.trainingJobId, req.tenantId);
-    if (job is null)
+    if (job.isNull)
       return CommandResult(false, "", "Training job not found");
     if (job.status != JobStatus.completed)
       return CommandResult(false, "", "Training job must be completed before deployment");
@@ -80,7 +80,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   /// Activate a deploying or inactive deployment.
   CommandResult activateDeployment(DeploymentId tenantId, id tenantId) {
     auto dep = repo.findById(tenantId, id);
-    if (dep is null)
+    if (dep.isNull)
       return CommandResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.deploying && dep.status != DeploymentStatus.inactive)
@@ -95,7 +95,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   /// Deactivate an active deployment.
   CommandResult deactivateDeployment(DeploymentId tenantId, id tenantId) {
     auto dep = repo.findById(tenantId, id);
-    if (dep is null)
+    if (dep.isNull)
       return CommandResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.active)
@@ -109,7 +109,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteDeployment(DeploymentId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Deployment not found");
 
     repo.removeById(tenantId, id);

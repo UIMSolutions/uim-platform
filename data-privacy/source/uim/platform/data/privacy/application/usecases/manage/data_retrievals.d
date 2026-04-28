@@ -38,7 +38,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -97,7 +97,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
-    if (request is null)
+    if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 
     request.status = req.status;

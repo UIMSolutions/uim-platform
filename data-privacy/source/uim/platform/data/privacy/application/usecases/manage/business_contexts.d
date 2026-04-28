@@ -57,7 +57,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateContext(UpdateBusinessContextRequest req) {
     auto ctx = repo.findById(req.id, req.tenantId);
-    if (ctx is null)
+    if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 
     if (req.name.length > 0) ctx.name = req.name;
@@ -74,7 +74,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
 
   CommandResult activateContext(ActivateBusinessContextRequest req) {
     auto ctx = repo.findById(req.id, req.tenantId);
-    if (ctx is null)
+    if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
     if (ctx.status == BusinessContextStatus.active)
       return CommandResult(false, "", "Business context already active");

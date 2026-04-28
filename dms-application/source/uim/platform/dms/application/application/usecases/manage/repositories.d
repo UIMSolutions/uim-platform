@@ -59,7 +59,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
     auto entity = repo.findById(r.id, r.tenantId);
-    if (entity is null)
+    if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
     if (r.name.length > 0)
@@ -78,7 +78,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
-    if (entity is null)
+    if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.archived;
@@ -89,7 +89,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
-    if (entity is null)
+    if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.active;
@@ -100,7 +100,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
-    if (entity is null)
+    if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
     repo.removeById(tenantId, repositoryId);

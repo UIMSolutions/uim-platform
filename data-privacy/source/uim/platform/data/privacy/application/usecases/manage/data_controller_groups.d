@@ -48,7 +48,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateGroup(UpdateDataControllerGroupRequest req) {
     auto g = repo.findById(req.id, req.tenantId);
-    if (g is null)
+    if (g.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
     if (req.name.length > 0) g.name = req.name;

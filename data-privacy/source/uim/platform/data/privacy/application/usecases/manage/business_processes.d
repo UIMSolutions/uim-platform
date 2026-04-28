@@ -51,7 +51,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "Business process not found");
 
     if (req.name.length > 0) p.name = req.name;

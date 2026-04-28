@@ -76,7 +76,7 @@ class BusinessSubprocessController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getSubprocess(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Business subprocess not found");
         return;
       }

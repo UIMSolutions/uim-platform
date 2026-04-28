@@ -49,7 +49,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateConfig(UpdateAnonymizationConfigRequest req) {
     auto c = repo.findById(req.tenantId, req.id);
-    if (c is null)
+    if (c.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
     if (req.name.length > 0) c.name = req.name;
@@ -64,7 +64,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
 
   CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId id) {
     auto c = repo.findById(tenantId, id);
-    if (c is null)
+    if (c.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
     c.status = AnonymizationConfigStatus.active;

@@ -86,7 +86,7 @@ class RepositoryController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto repo = uc.getRepository(tenantId, id);
-      if (repo is null) {
+      if (repo.isNull) {
         writeError(res, 404, "Repository not found");
         return;
       }

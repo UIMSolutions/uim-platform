@@ -88,7 +88,7 @@ class ShareController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto share = uc.getShare(tenantId, id);
-      if (share is null) {
+      if (share.isNull) {
         writeError(res, 404, "Share not found");
         return;
       }

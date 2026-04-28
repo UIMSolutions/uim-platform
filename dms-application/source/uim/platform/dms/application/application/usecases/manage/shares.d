@@ -32,7 +32,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document ID is required");
 
     auto doc = docs.findById(r.documentId, r.tenantId);
-    if (doc is null)
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
     auto entity = new Share();

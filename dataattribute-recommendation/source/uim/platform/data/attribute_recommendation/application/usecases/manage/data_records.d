@@ -34,7 +34,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
     // Verify dataset exists and is still mutable
     auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
-    if (ds is null)
+    if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
       return CommandResult(false, "", "Cannot add records to a processed or completed dataset");
@@ -63,7 +63,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
   CommandResult validateRecord(DataRecordId tenantId, id tenantId) {
     auto record = repo.findById(tenantId, id);
-    if (record is null)
+    if (record.isNull)
       return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.validated;
@@ -73,7 +73,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
   CommandResult rejectRecord(DataRecordId tenantId, id tenantId) {
     auto record = repo.findById(tenantId, id);
-    if (record is null)
+    if (record.isNull)
       return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.rejected;
@@ -83,7 +83,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteRecord(DataRecordId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Record not found");
 
     repo.removeById(tenantId, id);

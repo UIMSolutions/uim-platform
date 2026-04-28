@@ -97,7 +97,7 @@ class VersioningService {
   /// Cancel a checkout (unlock without creating a version).
   bool cancelCheckOut(TenantId tenantId, DocumentId docId) {
     auto doc = docs.findById(tenantId, docId);
-    if (doc is null)
+    if (doc.isNull)
       return false;
     if (doc.status != DocumentStatus.locked)
       return false;

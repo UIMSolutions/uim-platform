@@ -205,7 +205,7 @@ class DestinationController : PlatformController {
   private static DestinationProperty[] parseProperties(Json j) {
     DestinationProperty[] result;
     auto v = "properties" in j;
-    if (v is null || (*v).type != Json.Type.array)
+    if (v.isNull || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
       if (item.isObject)
@@ -217,7 +217,7 @@ class DestinationController : PlatformController {
   private static DestinationProperty[] parseHeaders(Json j) {
     DestinationProperty[] result;
     auto v = "additionalHeaders" in j;
-    if (v is null || (*v).type != Json.Type.array)
+    if (v.isNull || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
       if (item.isObject)

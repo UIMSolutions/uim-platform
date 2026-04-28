@@ -36,7 +36,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Consent text is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -81,7 +81,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
 
   CommandResult revokeConsent(RevokeConsentRequest req) {
     auto record = repo.findById(req.id, req.tenantId);
-    if (record is null)
+    if (record.isNull)
       return CommandResult(false, "", "Consent record not found");
     if (record.status == ConsentStatus.revoked)
       return CommandResult(false, "", "Consent already revoked");

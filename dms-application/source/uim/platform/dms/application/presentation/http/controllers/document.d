@@ -121,7 +121,7 @@ class DocumentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto doc = uc.getDocument(tenantId, id);
-      if (doc is null) {
+      if (doc.isNull) {
         writeError(res, 404, "Document not found");
         return;
       }

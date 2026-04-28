@@ -42,7 +42,7 @@ struct AccessControlEvaluator {
       }
     }
 
-    if (bestMatch is null)
+    if (bestMatch.isNull)
       return AccessEvaluation(false, "", "No matching access rule found");
 
     if (bestMatch.policy == AccessPolicy.allow)

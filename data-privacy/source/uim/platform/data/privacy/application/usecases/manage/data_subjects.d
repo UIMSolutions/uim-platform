@@ -69,7 +69,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateSubject(UpdateDataSubjectRequest req) {
     auto subject = repo.findById(req.id, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     if (req.displayName.length > 0)

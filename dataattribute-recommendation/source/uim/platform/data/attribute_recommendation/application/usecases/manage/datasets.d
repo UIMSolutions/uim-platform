@@ -65,7 +65,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     if (existing.status != DatasetStatus.draft)
@@ -87,7 +87,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   /// Validate a dataset and transition it to 'ready' status.
   CommandResult validateDataset(DatasetId tenantId, id tenantId) {
     auto ds = repo.findById(tenantId, id);
-    if (ds is null)
+    if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.draft)
@@ -109,7 +109,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   /// Process a dataset (simulate data preparation).
   CommandResult processDataset(DatasetId tenantId, id tenantId) {
     auto ds = repo.findById(tenantId, id);
-    if (ds is null)
+    if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.ready)
@@ -125,7 +125,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteDataset(DatasetId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     // Cascade delete records

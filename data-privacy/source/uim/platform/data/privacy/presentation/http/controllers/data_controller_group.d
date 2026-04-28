@@ -73,7 +73,7 @@ class DataControllerGroupController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getGroup(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Controller group not found");
         return;
       }

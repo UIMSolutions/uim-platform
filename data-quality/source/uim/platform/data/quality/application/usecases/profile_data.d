@@ -97,7 +97,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
 
     foreach (rec; records) {
       auto v = fieldName in rec.fieldValues;
-      if (v is null) {
+      if (v.isNull) {
         ++nullCount;
         continue;
       }

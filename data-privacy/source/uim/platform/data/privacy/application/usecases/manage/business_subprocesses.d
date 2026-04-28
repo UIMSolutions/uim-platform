@@ -57,7 +57,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateSubprocess(UpdateBusinessSubprocessRequest req) {
     auto sp = repo.findById(req.id, req.tenantId);
-    if (sp is null)
+    if (sp.isNull)
       return CommandResult(false, "", "Business subprocess not found");
 
     if (req.name.length > 0) sp.name = req.name;

@@ -85,7 +85,7 @@ class FolderController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto f = uc.getFolder(tenantId, id);
-      if (f is null) {
+      if (f.isNull) {
         writeError(res, 404, "Folder not found");
         return;
       }

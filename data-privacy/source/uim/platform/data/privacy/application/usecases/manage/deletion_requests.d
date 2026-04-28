@@ -36,7 +36,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
 
     // Verify data subject exists
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -78,7 +78,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateStatus(UpdateDeletionStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
-    if (request is null)
+    if (request.isNull)
       return CommandResult(false, "", "Deletion request not found");
 
     request.status = req.status;

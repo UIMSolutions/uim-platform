@@ -25,7 +25,7 @@ class AccessControlService {
   bool hasPermission(TenantId tenantId, string resourceId, ResourceType resourceType, UserId userId,
       PermissionLevel required) {
     auto perm = permissions.findByResourceAndUser(tenantId, resourceId, resourceType, userId);
-    if (perm is null)
+    if (perm.isNull)
       return false;
     return permissionRank(perm.level) >= permissionRank(required);
   }

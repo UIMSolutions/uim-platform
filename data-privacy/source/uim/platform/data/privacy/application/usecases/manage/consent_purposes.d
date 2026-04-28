@@ -59,7 +59,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
 
   CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
     auto cp = repo.findById(req.id, req.tenantId);
-    if (cp is null)
+    if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 
     if (req.name.length > 0) cp.name = req.name;

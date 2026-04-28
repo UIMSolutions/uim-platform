@@ -74,7 +74,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateGround(UpdateLegalGroundRequest req) {
     auto ground = repo.findById(req.id, req.tenantId);
-    if (ground is null)
+    if (ground.isNull)
       return CommandResult(false, "", "Legal ground not found");
 
     if (req.description.length > 0)

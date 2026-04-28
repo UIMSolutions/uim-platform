@@ -61,7 +61,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
 
   CommandResult deactivateRecord(DeactivatePurposeRecordRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
-    if (r is null)
+    if (r.isNull)
       return CommandResult(false, "", "Purpose record not found");
     if (r.status == PurposeRecordStatus.deactivated)
       return CommandResult(false, "", "Purpose record already deactivated");

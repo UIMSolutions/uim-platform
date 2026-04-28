@@ -32,7 +32,7 @@ class ManageVersionsUseCase { // TODO: UIMUseCase {
     auto ver = versioningService.checkIn(r.tenantId, r.documentId, r.userId,
         r.isMajor, r.comment, r.fileName, r.mimeType, r.fileSize, r.checksum);
 
-    if (ver is null)
+    if (ver.isNull)
       return CommandResult(false, "", "Cannot check in document (not found or not locked)");
     return CommandResult(true, ver.id.value, "");
   }

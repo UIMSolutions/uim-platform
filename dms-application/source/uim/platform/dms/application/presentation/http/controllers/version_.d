@@ -134,7 +134,7 @@ class VersionController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto ver = uc.getCurrentVersion(doctenantId, id);
-      if (ver is null) {
+      if (ver.isNull) {
         writeError(res, 404, "No current version found");
         return;
       }

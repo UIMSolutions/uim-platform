@@ -28,7 +28,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Field name is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
-    if (subject is null)
+    if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
@@ -64,7 +64,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateStatus(UpdateCorrectionStatusRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
-    if (r is null)
+    if (r.isNull)
       return CommandResult(false, "", "Correction request not found");
 
     r.status = req.status;

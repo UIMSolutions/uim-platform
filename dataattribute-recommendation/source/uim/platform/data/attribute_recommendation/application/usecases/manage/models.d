@@ -37,7 +37,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
     // Verify dataset exists
     auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
-    if (ds is null)
+    if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     auto existing = repo.findByName(req.tenantId, req.name);
@@ -79,7 +79,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");
 
     if (existing.status != ModelConfigStatus.draft)
@@ -106,7 +106,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   /// Mark a model configuration as ready for training.
   CommandResult activateConfig(ModelConfigId tenantId, id tenantId) {
     auto config = repo.findById(tenantId, id);
-    if (config is null)
+    if (config.isNull)
       return CommandResult(false, "", "Model configuration not found");
 
     if (config.status != ModelConfigStatus.draft)
@@ -129,7 +129,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);
-    if (job is null)
+    if (job.isNull)
       return CommandResult("",
           "Cannot start training - verify dataset is completed and config is ready");
 
@@ -138,7 +138,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteModelConfig(ModelConfigId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");
 
     if (existing.status == ModelConfigStatus.training)

@@ -70,7 +70,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateModel(UpdatePersonalDataModelRequest req) {
     auto model = repo.findById(req.id, req.tenantId);
-    if (model is null)
+    if (model.isNull)
       return CommandResult(false, "", "Personal data model not found");
 
     if (req.fieldName.length > 0)
