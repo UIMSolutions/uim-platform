@@ -14,6 +14,5 @@ mixin(ShowModule!());
 /// Port for persisting tenant-level audit configurations.
 @safe:
 interface AuditConfigRepository : ITenantRepository!(AuditConfig, AuditConfigId) {
-  AuditConfig[] findAll();
   AuditConfig getByTenant(TenantId tenantId);
 }

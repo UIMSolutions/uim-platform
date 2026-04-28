@@ -247,3 +247,19 @@ long clockSeconds() {
 string formatLong(long v) {
   return format("%d", v);
 }
+
+T[] skip(T)(T[] items, size_t offset) {
+  return items.length > offset ? items[offset .. $] : null;
+}
+
+T[] limit(T)(T[] items, size_t limit) {
+  return items.length > limit ? items[0 .. limit] : items;
+}
+
+T[] flat(T)(T[][] arrays) {
+  T[] result;
+  foreach (arr; arrays) {
+    result ~= arr;
+  }
+  return result;
+}

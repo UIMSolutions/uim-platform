@@ -18,17 +18,18 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
-  override AuditConfig[] findAll() {
-    return store.ByKeyValue.map!(kv => getByTenant(kv.key)).array;
+  override AuditConfig[] findAll(size_t offset = 0, size_t limit = 0) {
+    return limit == 0 
+      ? store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset)
+      : store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset).take(limit);
   }
 
   AuditConfig getByTenant(TenantId tenantId) {
     if (!existsByTenant(tenantId))
       return AuditConfig.init;
 
-    foreach (id, configs; store[tenantId])
-      if (configs.length > 0 && configs[0].tenantId == tenantId)
-        return configs[0];
+    foreach (config; store[tenantId])
+        return config;
 
     return AuditConfig.init;
   }

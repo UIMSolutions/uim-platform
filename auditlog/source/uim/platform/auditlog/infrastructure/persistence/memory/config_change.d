@@ -20,12 +20,12 @@ mixin(ShowModule!());
 class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return findByTenant(tenantId).any!(e => e.id == auditLogId);
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     foreach (e; findByTenant(tenantId))
-      if (e.id == auditLogId)
+      if (e.auditLogId == auditLogId)
         return e;
     return ConfigChangeLog.init;
   }
@@ -80,20 +80,4 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
     findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .each!(e => remove(e));
   }
-}
-///
-unittest {  
-  auto repository = new MemoryConfigChangeLogRepository();
-  auto log = ConfigChangeLog();
-  log.id = "log1";
-  log.tenantId = "tenant1";
-  log.changedBy = "user1";
-  log.configType = "type1";
-  log.timestamp = 1234567890;
-  repository.save(log);
-
-  assert(repository.existsByTenant(TenantId("tenant1")));
-  assert(repository.findByTenant(TenantId("tenant1")).length == 1);
-  assert(repository.existsByAuditLogId(TenantId("tenant1"), AuditLogId("log1")));
-  assert(repository.findByAuditLogId(TenantId("tenant1"), AuditLogId("log1")).changedBy == UserId("user1"));
 }

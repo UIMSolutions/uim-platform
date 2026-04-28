@@ -14,7 +14,9 @@ mixin(ShowModule!());
 /// Tracks security-critical configuration changes.
 @safe:
 struct ConfigChangeLog {
-  mixin TenantEntity!(AuditLogId);
+  mixin TenantEntity!(ConfigChangeLogId);
+
+  AuditLogId auditLogId; // link to parent audit log entry
   UserId changedBy;
   string configType; // e.g., "security_policy", "idp_settings", "role_mapping"
   string configObjectId;

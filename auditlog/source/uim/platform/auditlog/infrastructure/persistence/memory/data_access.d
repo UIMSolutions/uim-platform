@@ -21,12 +21,12 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return findByTenant(tenantId).any!(e => e.id == auditLogId);
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     foreach (e; findByTenant(tenantId))
-      if (e.id == auditLogId)
+      if (e.auditLogId == auditLogId)
         return e;
     return DataAccessLog.init;
   }

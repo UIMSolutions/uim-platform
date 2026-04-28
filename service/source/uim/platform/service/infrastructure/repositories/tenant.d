@@ -58,24 +58,15 @@ class TenantRepository(TEntity, TId) {
   // #endregion ById
 
   size_t countAll() {
-    size_t count = 0;
-    foreach (tenantId, items; findAll) {
-      count += items.length;
-    }
-    return count;
+    return findAll.length;
   }
 
-  TEntity[] findAll(uint offset = 0, uint limit = 0) {
-    TEntity[] allItems;
-    uint idx;
-    foreach (tenantId, items; findAll) {
-      foreach (item; items.values.array) {
-        if (idx >= offset && (limit == 0 || allItems.length < limit))
-          allItems ~= item;
-        idx++;
-      }
-    }
-    return allItems;
+  TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
+    TEntity[] allItems = store.byValue.map!(entities => entities.values).array.flat;
+    
+    return limit == 0
+      ? allItems.skip(offset).array : allItems.skip(offset).take(limit);
+
   }
 
   bool existsByTenant(TenantId tenantId) {

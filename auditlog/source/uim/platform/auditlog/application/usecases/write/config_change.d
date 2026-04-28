@@ -53,7 +53,8 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
 
     // Create config change record
     auto ccLog = ConfigChangeLog();
-    ccLog.id = entry.id;
+    ccLog.id = randomUUID();
+    ccLog.auditLogId = entry.id;
     ccLog.tenantId = req.tenantId;
     ccLog.changedBy = req.changedBy;
     ccLog.configType = req.configType;

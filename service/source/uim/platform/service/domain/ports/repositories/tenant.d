@@ -18,7 +18,7 @@ interface ITenantRepository(TEntity, TId) {
   void removeAllById(TenantId tenantId, TId[] ids, bool deleteTenantIfEmpty = false);
 
   size_t countAll();
-  TEntity[] findAll(uint offset = 0, uint limit = 0);
+  TEntity[] findAll(size_t offset = 0, size_t limit = 0);
 
   bool existsByTenant(TenantId tenantId);
 

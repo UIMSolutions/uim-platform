@@ -34,4 +34,5 @@ interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, Config
   ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
   void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
 
+  void removeOlderThan(TenantId tenantId, long timestamp);
 }
