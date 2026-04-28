@@ -25,8 +25,8 @@ struct OAuthClientDTO {
     long accessTokenValidity;
     long refreshTokenValidity;
     string contacts;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct OAuthScopeDTO {
@@ -35,8 +35,8 @@ struct OAuthScopeDTO {
     string applicationId;
     string name;
     string description;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct AccessTokenDTO {
@@ -47,7 +47,7 @@ struct AccessTokenDTO {
     string userId;
     string scopes;
     long expiresAt;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct RefreshTokenDTO {
@@ -59,7 +59,7 @@ struct RefreshTokenDTO {
     string scopes;
     string accessTokenId;
     long expiresAt;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct AuthorizationCodeDTO {
@@ -71,7 +71,7 @@ struct AuthorizationCodeDTO {
     string redirectUri;
     string scopes;
     long expiresAt;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct BrandingConfigDTO {
@@ -86,6 +86,6 @@ struct BrandingConfigDTO {
     string pageTitle;
     string footerText;
     string customCss;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }

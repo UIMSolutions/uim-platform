@@ -24,5 +24,5 @@ struct AppFile {
   long sizeBytes;
   long createdAt;
   long updatedAt;
-  string createdBy;
+  UserId createdBy;
 }

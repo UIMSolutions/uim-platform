@@ -21,7 +21,7 @@ struct TransportQueue {
   string endpoint;
   string authToken;
   bool isDefault;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

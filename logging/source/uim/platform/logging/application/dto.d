@@ -46,7 +46,7 @@ struct CreateLogStreamRequest {
   string description;
   string sourceType;
   RetentionPolicyId retentionPolicyId;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateLogStreamRequest {
@@ -121,7 +121,7 @@ struct CreateDashboardRequest {
   string description;
   bool isDefault;
   PanelDTO[] panels;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateDashboardRequest {
@@ -141,7 +141,7 @@ struct CreateRetentionPolicyRequest {
   int retentionDays;
   double maxSizeGB;
   bool isDefault;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateRetentionPolicyRequest {
@@ -167,7 +167,7 @@ struct CreateAlertRuleRequest {
   int evaluationWindowSeconds;
   string severity;
   NotificationChannelId[] channelIds;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateAlertRuleRequest {
@@ -212,7 +212,7 @@ struct CreateNotificationChannelRequest {
   string webhookMethod;
   string slackWebhookUrl;
   string slackChannel;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateNotificationChannelRequest {
@@ -243,7 +243,7 @@ struct CreatePipelineRequest {
   string format;
   ProcessorDTO[] processors;
   LogStreamId targetStreamId;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdatePipelineRequest {

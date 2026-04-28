@@ -61,7 +61,7 @@ struct Destination {
   FragmentId[] fragmentIds;
 
   // Metadata
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

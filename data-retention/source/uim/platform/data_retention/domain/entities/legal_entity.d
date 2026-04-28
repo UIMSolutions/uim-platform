@@ -13,7 +13,7 @@ struct LegalEntity {
     string country;
     string region;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

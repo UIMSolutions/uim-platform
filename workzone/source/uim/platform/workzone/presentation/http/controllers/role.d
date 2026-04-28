@@ -79,7 +79,7 @@ class RoleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto r = useCase.getRole(tenantId, id);
-      if (r is null) {
+      if (r.isNull) {
         writeError(res, 404, "Role not found");
         return;
       }

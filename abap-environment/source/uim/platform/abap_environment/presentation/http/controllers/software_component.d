@@ -53,16 +53,14 @@ class SoftwareComponentController : PlatformController {
 
       auto result = uc.createComponent(request);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -76,12 +74,12 @@ class SoftwareComponentController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (comp; components)
         arr ~= serializeComponent(comp);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(components.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", components.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -95,8 +93,7 @@ class SoftwareComponentController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeComponent(*comp), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -111,16 +108,14 @@ class SoftwareComponentController : PlatformController {
 
       auto result = uc.cloneComponent(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("cloned");
+        auto resp = Json.emptyObject
+          .set("status", "cloned");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -134,16 +129,14 @@ class SoftwareComponentController : PlatformController {
 
       auto result = uc.pullComponent(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("pulled");
+        auto resp = Json.emptyObject
+          .set("status", "pulled");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -153,47 +146,45 @@ class SoftwareComponentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteComponent(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeComponent(const SoftwareComponent comp) {
     auto j = Json.emptyObject
-    .set("id", comp.id)
-    .set("tenantId", comp.tenantId)
-    .set("systemInstanceId", comp.systemInstanceId)
-    .set("name", comp.name)
-    .set("description", comp.description)
-    .set("componentType", comp.componentType.to!string)
-    .set("status", comp.status.to!string)
-    .set("repositoryUrl", comp.repositoryUrl)
-    .set("branch", comp.branch)
-    .set("branchStrategy", comp.branchStrategy.to!string)
-    .set("currentCommitId", comp.currentCommitId)
-    .set("namespace", comp.namespace)
-    .set("clonedAt", comp.clonedAt)
-    .set("lastPulledAt", comp.lastPulledAt)
-    .set("createdAt", comp.createdAt)
-    .set("updatedAt", comp.updatedAt);
+      .set("id", comp.id)
+      .set("tenantId", comp.tenantId)
+      .set("systemInstanceId", comp.systemInstanceId)
+      .set("name", comp.name)
+      .set("description", comp.description)
+      .set("componentType", comp.componentType.to!string)
+      .set("status", comp.status.to!string)
+      .set("repositoryUrl", comp.repositoryUrl)
+      .set("branch", comp.branch)
+      .set("branchStrategy", comp.branchStrategy.to!string)
+      .set("currentCommitId", comp.currentCommitId)
+      .set("namespace", comp.namespace)
+      .set("clonedAt", comp.clonedAt)
+      .set("lastPulledAt", comp.lastPulledAt)
+      .set("createdAt", comp.createdAt)
+      .set("updatedAt", comp.updatedAt);
 
     if (comp.commitHistory.length > 0) {
       auto hist = Json.emptyArray;
       foreach (c; comp.commitHistory) {
         hist ~= Json.emptyObject
-        .set("commitId", c.commitId)
-        .set("message", c.message)
-        .set("author", c.author)
-        .set("timestamp", c.timestamp);
+          .set("commitId", c.commitId)
+          .set("message", c.message)
+          .set("author", c.author)
+          .set("timestamp", c.timestamp);
       }
       j["commitHistory"] = hist;
     }

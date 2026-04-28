@@ -53,7 +53,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
 
   CommandResult updatePlugin(UpdateShellPluginRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "Plugin not found");
 
     if (req.name.length > 0)
@@ -71,7 +71,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePlugin(ShellPluginId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "Plugin not found");
 
     repo.removeById(tenantId, id);

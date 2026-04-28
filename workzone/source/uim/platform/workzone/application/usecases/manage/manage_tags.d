@@ -52,7 +52,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateTag(UpdateTagRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Tag not found");
 
     if (req.name.length > 0)
@@ -68,7 +68,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteTag(TagId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Tag not found");
 
     repo.removeById(tenantId, id);

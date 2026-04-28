@@ -23,7 +23,7 @@ struct Workspace {
   WorkspaceSettings settings;
   long createdAt;
   long updatedAt;
-  string createdBy;
+  UserId createdBy;
 }
 
 /// Membership record within a workspace.

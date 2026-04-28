@@ -16,7 +16,7 @@ struct BusinessPurpose {
     BusinessPurposeStatus status = BusinessPurposeStatus.inactive;
     long referenceDate;
     long endOfPurposeDate;
-    string createdBy;
+    UserId createdBy;
     
     Json toJson() const {
         auto j = entityToJson

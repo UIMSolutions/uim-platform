@@ -48,9 +48,10 @@ class ModelController : PlatformController {
 
       auto result = uc.register(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Model registered");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Model registered");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -76,9 +77,10 @@ class ModelController : PlatformController {
         jarr ~= serializeModel(m);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(models.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(models.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -92,13 +94,13 @@ class ModelController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto m = uc.getById(id, connectionId);
+      auto model = uc.getById(id, connectionId);
       if (m.id.isEmpty) {
         writeError(res, 404, "Model not found");
         return;
       }
 
-      res.writeJsonBody(serializeModel(m), 200);
+      res.writeJsonBody(serializeModel(model), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -120,8 +122,10 @@ class ModelController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Model updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Model updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

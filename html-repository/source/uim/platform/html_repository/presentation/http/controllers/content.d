@@ -41,7 +41,7 @@ class ContentController : PlatformController {
         return;
       }
       auto entry = fileUc.getById(path, tenantId);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Content not found");
         return;
       }

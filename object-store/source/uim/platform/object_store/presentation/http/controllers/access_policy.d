@@ -89,7 +89,7 @@ class AccessPolicyController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto policy = uc.getPolicy(id);
-      if (policy is null || policy.id.isEmpty) {
+      if (policy.isNull || policy.id.isEmpty) {
         writeError(res, 404, "Access policy not found");
         return;
       }

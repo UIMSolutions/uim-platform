@@ -56,7 +56,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateNavigationItem(UpdateNavigationItemRequest req) {
     auto n = repo.findById(req.id, req.tenantId);
-    if (n is null)
+    if (n.isNull)
       return CommandResult(false, "", "Navigation item not found");
 
     if (req.title.length > 0)
@@ -74,7 +74,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteNavigationItem(NavigationItemId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
-    if (n is null)
+    if (n.isNull)
       return CommandResult(false, "", "Navigation item not found");
 
     repo.removeById(tenantId, id);

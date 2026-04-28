@@ -42,9 +42,10 @@ class ExecutableController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Executable registered");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Executable registered");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -79,9 +80,10 @@ class ExecutableController : PlatformController {
         .set("updatedAt", e.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(executables.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", executables.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,16 +103,17 @@ class ExecutableController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(e.id);
-      resp["scenarioId"] = Json(e.scenarioId);
-      resp["name"] = Json(e.name);
-      resp["description"] = Json(e.description);
-      resp["type"] = Json(e.type == ExecutableType.serving ? "serving" : "workflow");
-      resp["versionId"] = Json(e.versionId);
-      resp["deployable"] = Json(e.deployable);
-      resp["createdAt"] = Json(e.createdAt);
-      resp["updatedAt"] = Json(e.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", e.id)
+        .set("scenarioId", e.scenarioId)
+        .set("name", e.name)
+        .set("description", e.description)
+        .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
+        .set("versionId", e.versionId)
+        .set("deployable", e.deployable)
+        .set("createdAt", e.createdAt)
+        .set("updatedAt", e.updatedAt);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

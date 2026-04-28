@@ -79,7 +79,7 @@ class TagController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto t = useCase.getTag(tenantId, id);
-      if (t is null) {
+      if (t.isNull) {
         writeError(res, 404, "Tag not found");
         return;
       }

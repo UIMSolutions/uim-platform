@@ -16,7 +16,7 @@ struct DataSubject {
     long endOfRetentionDate;
     long blockedAt;
     long deletedAt;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

@@ -8,7 +8,7 @@ struct CreateAutomationRuleRequest {
     string description;
     string priority;
     int executionOrder;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateAutomationRuleRequest {
@@ -19,5 +19,5 @@ struct UpdateAutomationRuleRequest {
     string priority;
     int executionOrder;
     bool enabled;
-    string modifiedBy;
+    UserId updatedBy;
 }

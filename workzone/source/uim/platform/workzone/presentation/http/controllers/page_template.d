@@ -80,7 +80,7 @@ class PageTemplateController : PageformController{
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto t = useCase.getPageTemplate(tenantId, id);
-      if (t is null) {
+      if (t.isNull) {
         writeError(res, 404, "Page template not found");
         return;
       }

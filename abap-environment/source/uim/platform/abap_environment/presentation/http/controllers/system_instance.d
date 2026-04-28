@@ -73,8 +73,8 @@ class SystemInstanceController : PlatformController {
       auto arr = instances.map!(inst => inst.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(instances.length));
+        .set("items", arr)
+        .set("totalCount", Json(instances.length));
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -109,8 +109,9 @@ class SystemInstanceController : PlatformController {
 
       auto result = uc.updateInstance(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -125,8 +126,9 @@ class SystemInstanceController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteInstance(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleting");
+        auto resp = Json.emptyObject
+          .set("status", "deleting");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

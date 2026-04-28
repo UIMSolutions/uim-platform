@@ -18,7 +18,7 @@ classDiagram
         +string organizationId
         +string externalId
         +string[] applicationIds
-        +string createdBy
+        +UserId createdBy
         +string createdAt
     }
 

@@ -52,7 +52,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateForumTopic(UpdateForumTopicRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
 
     if (req.title.length > 0)
@@ -70,7 +70,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteForumTopic(ForumTopicId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
 
     repo.removeById(tenantId, id);

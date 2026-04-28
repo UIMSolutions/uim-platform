@@ -47,7 +47,7 @@ class ActivityController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
-            if (e is null) { writeError(res, 404, "Activity not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Activity not found"); return; }
             res.writeJsonBody(activityToJson(*e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

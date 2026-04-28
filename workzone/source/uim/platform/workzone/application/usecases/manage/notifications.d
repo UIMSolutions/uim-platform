@@ -57,7 +57,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
   CommandResult markAsRead(NotificationId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
-    if (n is null)
+    if (n.isNull)
       return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.read_;
@@ -68,7 +68,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
   CommandResult dismiss(NotificationId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
-    if (n is null)
+    if (n.isNull)
       return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.dismissed;

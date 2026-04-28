@@ -21,7 +21,7 @@ struct RetentionPolicy {
   double maxSizeGB = 10.0;
   bool isDefault;
   bool isActive = true;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

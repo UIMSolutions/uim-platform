@@ -31,7 +31,7 @@ class WorkflowEngine {
 
     foreach (depId; step.dependencies) {
       auto dep = stepRepo.findById(tenantId, depId);
-      if (dep is null || dep.status != StepStatus.completed)
+      if (dep.isNull || dep.status != StepStatus.completed)
         return false;
     }
     return true;
@@ -40,7 +40,7 @@ class WorkflowEngine {
   /// Advance the workflow to the next pending step if possible.
   bool advanceWorkflow(TenantId tenantId, WorkflowId workflowId) {
     auto wf = workflowRepo.findById(tenantId, workflowId);
-    if (wf is null || wf.status != WorkflowStatus.inProgress)
+    if (wf.isNull || wf.status != WorkflowStatus.inProgress)
       return false;
 
     auto steps = stepRepo.findByWorkflow(tenantId, workflowId);

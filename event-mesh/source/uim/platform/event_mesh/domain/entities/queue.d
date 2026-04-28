@@ -33,8 +33,8 @@ struct Queue {
     string currentSpoolUsage;
     string messageCount;
     string bindCount;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

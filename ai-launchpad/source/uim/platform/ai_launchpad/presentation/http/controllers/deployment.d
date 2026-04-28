@@ -110,8 +110,10 @@ class DeploymentController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Deployment updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Deployment updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -137,6 +139,7 @@ class DeploymentController : PlatformController {
         auto rj = Json.emptyObject
           .set("id", Json(result.id))
           .set("success", Json(result.success));
+
         if (result.error.length > 0)
           rj = rj.set("error", Json(result.error));
         jarr ~= rj;
@@ -144,6 +147,7 @@ class DeploymentController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("results", jarr);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

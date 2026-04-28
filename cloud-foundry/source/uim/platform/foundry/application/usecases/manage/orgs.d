@@ -36,7 +36,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Organization name is required");
 
     // Unique name per tenant
-    if (existing = orgs.existsByName(req.tenantId, req.name))
+    if (orgs.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Organization with this name already exists");
 
     auto org = Organization();
@@ -51,7 +51,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     org.totalAppInstances = req.totalAppInstances;
 
     orgs.save(org);
-    return CommandResult(org.id.toString, "");
+    return CommandResult(true, org.id.toString, "");
   }
 
   Organization getOrg(TenantId tenantId, OrgId id) {
@@ -68,11 +68,11 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = orgs.findById(req.tenantId, req.id);
-    if (existing.isNull)
+    auto org = orgs.findById(req.tenantId, req.id);
+    if (org.isNull)
       return CommandResult(false, "", "Organization not found");
 
-    auto updated = xisting;
+    auto updated = org; 
     if (req.name.length > 0)
       updated.name = req.name;
     updated.status = req.status;
@@ -88,7 +88,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     orgs.update(updated);
-    return CommandResult(updated.id.toString, "");
+    return CommandResult(true, updated.id.toString, "");
   }
 
   CommandResult suspendOrg(TenantId tenantId, OrgId id) {
@@ -118,14 +118,14 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteOrg(TenantId tenantId, OrgId id) {
-    auto existing = orgs.findById(tenantId, id);
-    if (existing.isNull)
+  CommandResult deleteOrg(TenantId tenantId, OrgId orgId) {
+    auto org = orgs.findById(tenantId, orgId);
+    if (org.isNull)
       return CommandResult(false, "", "Organization not found");
 
     // Cascade: remove all spaces in this org
-    spaces.removeByOrg(tenantId, id);
-    orgs.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    spaces.removeByOrg(tenantId, orgId);
+    orgs.remove(org);
+    return CommandResult(true, org.id.toString, "");
   }
 }

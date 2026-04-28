@@ -13,7 +13,7 @@ struct ResidenceRule {
     int duration;
     PeriodUnit periodUnit = PeriodUnit.years;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

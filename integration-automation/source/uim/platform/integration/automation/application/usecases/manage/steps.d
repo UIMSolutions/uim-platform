@@ -94,7 +94,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
   /// Assign a step to a user.
   CommandResult assignStep(AssignStepRequest req) {
     auto step = repo.findById(req.id, req.tenantId);
-    if (step is null)
+    if (step.isNull)
       return CommandResult(false, "", "Step not found");
 
     step.assignedTo = req.assignedTo;

@@ -82,7 +82,7 @@ class ShellPluginController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto p = useCase.getPlugin(tenantId, id);
-      if (p is null) {
+      if (p.isNull) {
         writeError(res, 404, "Plugin not found");
         return;
       }

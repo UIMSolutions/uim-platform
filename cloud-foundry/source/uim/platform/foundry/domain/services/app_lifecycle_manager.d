@@ -44,7 +44,7 @@ class AppLifecycleManager {
     app.state = AppState.staging;
     app.stagedAt = Clock.currStdTime();
     app.updatedAt = app.stagedAt;
-    apps.update(*app);
+    apps.update(app);
     return true;
   }
 
@@ -57,7 +57,7 @@ class AppLifecycleManager {
     app.state = AppState.started;
     app.runningInstances = app.instances;
     app.updatedAt = Clock.currStdTime();
-    apps.update(*app);
+    apps.update(app);
     return true;
   }
 
@@ -72,7 +72,7 @@ class AppLifecycleManager {
     app.state = AppState.stopped;
     app.runningInstances = 0;
     app.updatedAt = Clock.currStdTime();
-    apps.update(*app);
+    apps.update(app);
     return true;
   }
 
@@ -87,7 +87,7 @@ class AppLifecycleManager {
     app.state = AppState.started;
     app.runningInstances = app.instances;
     app.updatedAt = Clock.currStdTime();
-    apps.update(*app);
+    apps.update(app);
     return true;
   }
 
@@ -99,9 +99,9 @@ class AppLifecycleManager {
 
     // Validate instance memory against org quota
     auto space = spaces.findById(tenantId, app.spaceId);
-    if (space !is null) {
+    if (!space.isNull) {
       auto org = orgs.findById(tenantId, space.orgId);
-      if (org !is null) {
+      if (!org.isNull) {
         int effMemory = memoryMb > 0 ? memoryMb : app.memoryMb;
         if (org.instanceMemoryLimitMb > 0 && effMemory > org.instanceMemoryLimitMb)
           return false;
@@ -120,7 +120,7 @@ class AppLifecycleManager {
       app.runningInstances = app.instances;
 
     app.updatedAt = Clock.currStdTime();
-    apps.update(*app);
+    apps.update(app);
     return true;
   }
 

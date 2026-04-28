@@ -26,7 +26,7 @@ struct Destination {
   string audience;
   string scope_; // OAuth scope
   bool isEnabled = true;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

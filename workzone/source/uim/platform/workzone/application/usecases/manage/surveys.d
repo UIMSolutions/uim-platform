@@ -56,7 +56,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
 
   CommandResult updateSurvey(UpdateSurveyRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
-    if (s is null)
+    if (s.isNull)
       return CommandResult(false, "", "Survey not found");
 
     if (req.title.length > 0)
@@ -72,7 +72,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSurvey(SurveyId tenantId, id tenantId) {
     auto s = repo.findById(tenantId, id);
-    if (s is null)
+    if (s.isNull)
       return CommandResult(false, "", "Survey not found");
 
     repo.removeById(tenantId, id);

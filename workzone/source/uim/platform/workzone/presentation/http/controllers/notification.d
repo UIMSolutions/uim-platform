@@ -102,7 +102,7 @@ class NotificationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto n = useCase.getNotification(tenantId, id);
-      if (n is null) {
+      if (n.isNull) {
         writeError(res, 404, "Notification not found");
         return;
       }

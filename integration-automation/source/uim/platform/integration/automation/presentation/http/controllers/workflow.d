@@ -88,7 +88,7 @@ class WorkflowController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto wf = useCase.getWorkflow(tenantId, id);
-      if (wf is null) {
+      if (wf.isNull) {
         writeError(res, 404, "Workflow not found");
         return;
       }

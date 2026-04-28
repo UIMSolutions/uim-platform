@@ -21,5 +21,5 @@ struct AppVersion {
   long publishedAt;
   long createdAt;
   long updatedAt;
-  string createdBy;
+  UserId createdBy;
 }

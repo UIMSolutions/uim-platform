@@ -49,7 +49,7 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
   /// Get a workflow status summary suitable for a monitoring dashboard.
   WorkflowSummary getWorkflowSummary(WorkflowId workflowtenantId, id tenantId) {
     auto wf = workflowRepo.findById(workflowtenantId, id);
-    if (wf is null)
+    if (wf.isNull)
       return WorkflowSummary.init;
 
     auto steps = stepRepo.findByWorkflow(workflowtenantId, id);

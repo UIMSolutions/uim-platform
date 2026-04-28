@@ -41,7 +41,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     // Validate linked system if provided
     if (req.systemId.length > 0) {
       auto sys = systemRepo.findById(req.systemId, req.tenantId);
-      if (sys is null)
+      if (sys.isNull)
         return CommandResult(false, "", "Linked system not found");
     }
 
@@ -95,7 +95,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Destination not found");
 
     auto updated = *existing;
@@ -131,7 +131,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteDestination(DestinationId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Destination not found");
 
     repo.removeById(tenantId, id);

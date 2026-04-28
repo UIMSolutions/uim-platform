@@ -60,7 +60,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateArticle(UpdateKBArticleRequest req) {
     auto a = repo.findById(req.tenantId, req.id);
-    if (a is null)
+    if (a.isNull)
       return CommandResult(false, "", "Article not found");
 
     if (req.title.length > 0)
@@ -81,7 +81,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteArticle(TenantId tenantId, KBArticleId id) {
     auto a = repo.findById(tenantId, id);
-    if (a is null)
+    if (a.isNull)
       return CommandResult(false, "", "Article not found");
 
     repo.removeById(tenantId, id);

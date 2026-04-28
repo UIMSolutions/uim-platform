@@ -30,7 +30,7 @@ class StepExecutor {
   /// Mark a manual step as started.
   bool startStep(StepId steptenantId, id tenantId, UserId executedBy) {
     auto step = stepRepo.findById(steptenantId, id);
-    if (step is null)
+    if (step.isNull)
       return false;
     if (step.status != StepStatus.pending)
       return false;
@@ -47,7 +47,7 @@ class StepExecutor {
   /// Complete a manual step with a result.
   bool completeStep(StepId steptenantId, id tenantId, UserId executedBy, string result) {
     auto step = stepRepo.findById(steptenantId, id);
-    if (step is null)
+    if (step.isNull)
       return false;
     if (step.status != StepStatus.inProgress)
       return false;
@@ -69,7 +69,7 @@ class StepExecutor {
   /// Mark a step as failed.
   bool failStep(StepId steptenantId, id tenantId, UserId executedBy, string errorMessage) {
     auto step = stepRepo.findById(steptenantId, id);
-    if (step is null)
+    if (step.isNull)
       return false;
 
     step.status = StepStatus.failed;
@@ -85,7 +85,7 @@ class StepExecutor {
   /// Skip a step.
   bool skipStep(StepId steptenantId, id tenantId, UserId executedBy, string reason) {
     auto step = stepRepo.findById(steptenantId, id);
-    if (step is null)
+    if (step.isNull)
       return false;
 
     step.status = StepStatus.skipped;

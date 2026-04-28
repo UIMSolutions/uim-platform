@@ -11,7 +11,7 @@ struct DataSubjectRole {
     string name;
     string description;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

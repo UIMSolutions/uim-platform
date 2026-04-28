@@ -15,7 +15,7 @@ struct CreateBusinessPurposeRequest {
     string dataSubjectRoleId;
     string legalEntityId;
     long referenceDate;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateBusinessPurposeRequest {
@@ -36,7 +36,7 @@ struct CreateLegalGroundRequest {
     string businessPurposeId;
     string type;
     long referenceDate;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateLegalGroundRequest {
@@ -55,7 +55,7 @@ struct CreateRetentionRuleRequest {
     int duration;
     string periodUnit;
     string actionOnExpiry;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateRetentionRuleRequest {
@@ -73,7 +73,7 @@ struct CreateResidenceRuleRequest {
     string legalGroundId;
     int duration;
     string periodUnit;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateResidenceRuleRequest {
@@ -89,7 +89,7 @@ struct CreateDataSubjectRequest {
     string roleId;
     string applicationGroupId;
     string externalId;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDataSubjectRequest {
@@ -121,7 +121,7 @@ struct CreateArchivingJobRequest {
     string operationType;
     string selectionCriteria;
     long scheduledAt;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateArchivingJobRequest {
@@ -139,7 +139,7 @@ struct CreateApplicationGroupRequest {
     string description;
     string scope_;
     string[] applicationIds;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateApplicationGroupRequest {
@@ -158,7 +158,7 @@ struct CreateLegalEntityRequest {
     string description;
     string country;
     string region;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateLegalEntityRequest {
@@ -175,7 +175,7 @@ struct CreateDataSubjectRoleRequest {
     TenantId tenantId;
     string name;
     string description;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDataSubjectRoleRequest {

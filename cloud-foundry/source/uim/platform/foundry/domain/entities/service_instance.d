@@ -27,13 +27,13 @@ struct ServiceInstance {
 
   Json toJson() {
     return entityToJson()
-      .set("spaceId", si.spaceId)
-      .set("name", si.name)
-      .set("serviceName", si.serviceName)
-      .set("servicePlanName", si.servicePlanName)
-      .set("status", si.status.to!string)
-      .set("parameters", si.parameters)
-      .set("dashboardUrl", si.dashboardUrl)
-      .set("tags", si.tags);
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("serviceName", serviceName)
+      .set("servicePlanName", servicePlanName)
+      .set("status", status.to!string)
+      .set("parameters", parameters)
+      .set("dashboardUrl", dashboardUrl)
+      .set("tags", tags);
   }
 }

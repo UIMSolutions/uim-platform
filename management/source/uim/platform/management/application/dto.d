@@ -26,7 +26,7 @@ struct CreateGlobalAccountRequest {
   string contactEmail;
   int maxSubaccounts = 100;
   int maxDirectories = 20;
-  string createdBy;
+  UserId createdBy;
   string[string] customProperties;
 }
 
@@ -48,7 +48,7 @@ struct CreateDirectoryRequest {
   string[] features; // "entitlements", "authorizations"
   bool manageEntitlements;
   bool manageAuthorizations;
-  string createdBy;
+  UserId createdBy;
   string[string] labels;
   string[string] customProperties;
 }
@@ -72,7 +72,7 @@ struct CreateSubaccountRequest {
   string usage; // "production", "development", "test"
   bool betaEnabled = false;
   bool usedForProduction = false;
-  string createdBy;
+  UserId createdBy;
   string[string] labels;
   string[string] customProperties;
 }
@@ -124,7 +124,7 @@ struct CreateEnvironmentInstanceRequest {
   int memoryQuotaMb;
   int routeQuota;
   int serviceQuota;
-  string createdBy;
+  UserId createdBy;
   string[string] parameters;
   string[string] labels;
 }
@@ -192,7 +192,7 @@ struct CreateLabelRequest {
   string resourceId;
   string key;
   string[] values;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateLabelRequest {

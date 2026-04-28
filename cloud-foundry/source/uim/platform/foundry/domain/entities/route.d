@@ -33,7 +33,7 @@ struct Route {
       .set("path", path)
       .set("port", port)
       .set("protocol", protocol.to!string)
-      .set("mappedAppIds", mappedAppIds);
+      .set("mappedAppIds", mappedAppIds.toJson);
 
     return j;
   }

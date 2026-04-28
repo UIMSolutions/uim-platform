@@ -41,7 +41,7 @@ class ServiceBindingController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, ServiceBindingId(id));
-            if (e is null) { writeError(res, 404, "Service binding not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Service binding not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
                 .set("instanceId", e.instanceId.value)

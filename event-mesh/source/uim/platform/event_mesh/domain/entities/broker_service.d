@@ -38,8 +38,8 @@ struct BrokerService {
     string webSocketHost;
     string webSocketPort;
     string adminUrl;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

@@ -49,7 +49,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateGroup(UpdateGroupRequest req) {
     auto g = repo.findById(req.id, req.tenantId);
-    if (g is null)
+    if (g.isNull)
       return CommandResult(false, "", "Group not found");
 
     if (req.name.length > 0)
@@ -65,7 +65,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteGroup(GroupId tenantId, id tenantId) {
     auto g = repo.findById(tenantId, id);
-    if (g is null)
+    if (g.isNull)
       return CommandResult(false, "", "Group not found");
 
     repo.removeById(tenantId, id);

@@ -19,7 +19,7 @@ struct CreateMobileAppRequest {
   bool pushEnabled;
   bool offlineEnabled;
   string iconUrl;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateMobileAppRequest {
@@ -30,7 +30,7 @@ struct UpdateMobileAppRequest {
   bool pushEnabled;
   bool offlineEnabled;
   string iconUrl;
-  string modifiedBy;
+  UserId modifiedBy;
 }
 
 // DeviceRegistration DTOs
@@ -65,7 +65,7 @@ struct SendPushNotificationRequest {
   string[] targetTopics;
   long scheduledAt;
   long expiresAt;
-  string createdBy;
+  UserId createdBy;
 }
 
 // PushRegistration DTOs
@@ -93,13 +93,13 @@ struct CreateAppConfigRequest {
   string description;
   bool isSecret;
   string platform;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateAppConfigRequest {
   string value;
   string description;
-  string modifiedBy;
+  UserId modifiedBy;
 }
 
 // FeatureRestriction DTOs
@@ -113,7 +113,7 @@ struct CreateFeatureRestrictionRequest {
   int percentage;
   string[] whitelist;
   string metadata;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateFeatureRestrictionRequest {
@@ -122,7 +122,7 @@ struct UpdateFeatureRestrictionRequest {
   int percentage;
   string[] whitelist;
   string metadata;
-  string modifiedBy;
+  UserId modifiedBy;
 }
 
 // ClientResource DTOs
@@ -134,7 +134,7 @@ struct CreateClientResourceRequest {
   string type;
   string contentType;
   string data;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateClientResourceRequest {
@@ -153,7 +153,7 @@ struct CreateAppVersionRequest {
   string releaseNotes;
   string downloadUrl;
   long sizeBytes;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateAppVersionRequest {
@@ -185,7 +185,7 @@ struct CreateOfflineStoreRequest {
   string serviceUrl;
   string definingRequests;
   string storeType;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateOfflineStoreRequest {

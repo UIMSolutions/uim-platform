@@ -34,7 +34,7 @@ struct EventMessage {
     string publishTime;
     string deliveredTime;
     string acknowledgedTime;
-    string createdBy;
+    UserId createdBy;
     string createdAt;
 
     Json eventMessageToJson() {

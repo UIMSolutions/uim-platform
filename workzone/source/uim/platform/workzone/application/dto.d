@@ -24,7 +24,7 @@ struct CreateWorkspaceRequest {
   string description;
   string alias_;
   WorkspaceType type;
-  string createdBy;
+  UserId createdBy;
   WorkspaceSettings settings;
 }
 
@@ -259,7 +259,7 @@ struct CreateSiteRequest {
   string description;
   string alias_;
   string themeId;
-  string createdBy;
+  UserId createdBy;
   SiteSettings settings;
 }
 

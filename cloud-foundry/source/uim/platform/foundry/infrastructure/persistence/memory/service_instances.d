@@ -48,7 +48,7 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
-    findBySpace(tenantId, spaceId).each!(e => remove(e.id));
+    findBySpace(tenantId, spaceId).each!(e => remove(e));
   }
 
   size_t countByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {
@@ -60,7 +60,7 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
   ServiceInstance[] findByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {
-    return filterByServiceName(findByTenant(tenantId), spaceId, serviceName);
+    return filterByServiceName(findBySpace(tenantId, spaceId), serviceName);
   }
 
   void removeByServiceName(TenantId tenantId, SpaceId spaceId, string serviceName) {

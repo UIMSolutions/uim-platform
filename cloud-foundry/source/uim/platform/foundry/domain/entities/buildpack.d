@@ -23,4 +23,16 @@ struct Buildpack {
   string filename; // archive filename for custom buildpacks
   bool enabled = true;
   bool locked = false;
+
+    Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("type", type_.to!string)
+      .set("position", position)
+      .set("stack", stack)
+      .set("filename", filename)
+      .set("enabled", enabled)
+      .set("locked", locked);
+  }
+
 }

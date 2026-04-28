@@ -83,13 +83,13 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     Role role = roleRepo.findById(req.roleId);
     with (role) {
       foreach (uid; req.userIds) {
-        if (userIds is null)
+        if (userIds.isNull)
           userIds = [];
         if (!userIds.canFind(uid))
           userIds ~= uid;
 
         foreach (gid; req.groupIds) {
-          if (groupIds is null)
+          if (groupIds.isNull)
             groupIds = null;
           if (!groupIds.canFind(gid))
             groupIds ~= gid;

@@ -84,7 +84,7 @@ class UserProfileController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto p = useCase.getUserProfile(tenantId, id);
-      if (p is null) {
+      if (p.isNull) {
         writeError(res, 404, "User profile not found");
         return;
       }

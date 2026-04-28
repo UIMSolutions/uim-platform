@@ -47,7 +47,7 @@ class EventApplicationController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventApplicationId(id));
-            if (e is null) { writeError(res, 404, "Event application not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Event application not found"); return; }
             res.writeJsonBody(eventApplicationToJson(*e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

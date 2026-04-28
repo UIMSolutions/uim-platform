@@ -85,7 +85,7 @@ class ProvisioningJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto job = uc.getJob(tenantId, id);
-      if (job is null) {
+      if (job.isNull) {
         writeError(res, 404, "Provisioning job not found");
         return;
       }

@@ -93,7 +93,7 @@ class SystemController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto sys = useCase.getSystem(tenantId, id);
-      if (sys is null) {
+      if (sys.isNull) {
         writeError(res, 404, "System not found");
         return;
       }

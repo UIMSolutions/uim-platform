@@ -80,7 +80,7 @@ class SiteController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto s = useCase.getSite(tenantId, id);
-      if (s is null) {
+      if (s.isNull) {
         writeError(res, 404, "Site not found");
         return;
       }

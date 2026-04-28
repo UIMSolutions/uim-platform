@@ -18,7 +18,7 @@ struct CreateNamespaceRequest {
   bool istioInjection;
   string[string] labels;
   string[string] annotations;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateNamespaceRequest {

@@ -49,7 +49,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   void removeByDomain(TenantId tenantId, CfDomainId domainId) {
-    findByDomain(tenantId, domainId).each!(e => remove(e.id));
+    findByDomain(tenantId, domainId).each!(e => remove(e));
   }
   // #endregion ByDomain
 
@@ -59,7 +59,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] filterByApp(Route[] routes, AppId appId) {
-    return routes.filter!(e => e.mappedAppIds.canFind(appId)).array;
+    return routes.filter!(e => e.mappedAppIds.any!(id => id == appId)).array;
   }
 
   Route[] findByApp(TenantId tenantId, AppId appId) {

@@ -100,7 +100,7 @@ class WorkspaceController : PlatformController {
 
       TenantId tenantId = req.getTenantId;
       auto ws = useCase.getWorkspace(tenantId, id);
-      if (ws is null) {
+      if (ws.isNull) {
         writeError(res, 404, "Workspace not found");
         return;
       }

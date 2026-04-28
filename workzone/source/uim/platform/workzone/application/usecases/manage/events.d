@@ -59,7 +59,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateEvent(UpdateEventRequest req) {
     auto e = repo.findById(req.id, req.tenantId);
-    if (e is null)
+    if (e.isNull)
       return CommandResult(false, "", "Event not found");
 
     if (req.title.length > 0)
@@ -79,7 +79,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteEvent(EventId tenantId, id tenantId) {
     auto e = repo.findById(tenantId, id);
-    if (e is null)
+    if (e.isNull)
       return CommandResult(false, "", "Event not found");
 
     repo.removeById(tenantId, id);

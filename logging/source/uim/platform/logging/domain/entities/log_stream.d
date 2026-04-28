@@ -19,7 +19,7 @@ struct LogStream {
   LogSourceType sourceType = LogSourceType.application;
   RetentionPolicyId retentionPolicyId;
   bool isActive = true;
-  string createdBy;
+  UserId createdBy;
   
   Json toJson() const {
     return Json.entityToJson

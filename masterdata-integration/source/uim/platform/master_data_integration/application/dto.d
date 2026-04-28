@@ -23,7 +23,7 @@ struct CreateMasterDataObjectRequest {
   string[string] attributes;
   string sourceSystem;
   string sourceClient;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateMasterDataObjectRequest {
@@ -31,7 +31,7 @@ struct UpdateMasterDataObjectRequest {
   string description;
   string status; // "active", "inactive", "blocked", "markedForDeletion"
   string[string] attributes;
-  string modifiedBy;
+  UserId modifiedBy;
 }
 
 /// --- Data Model DTOs ---
@@ -46,7 +46,7 @@ struct CreateDataModelRequest {
   FieldDefinitionDto[] fields;
   string[] keyFields;
   string[] requiredFields;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateDataModelRequest {
@@ -83,7 +83,7 @@ struct CreateDistributionModelRequest {
   FilterRuleId[] filterRuleIds;
   bool autoReplicate;
   string cronSchedule;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateDistributionModelRequest {
@@ -144,7 +144,7 @@ struct CreateClientRequest {
   string authType;
   string clientIdRef;
   string certificateRef;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateClientRequest {
@@ -172,7 +172,7 @@ struct CreateReplicationJobRequest {
   ClientId sourceClientId;
   ClientId[] targetClientIds;
   bool isInitialLoad;
-  string createdBy;
+  UserId createdBy;
 }
 
 /// --- Filter Rule DTOs ---
@@ -186,7 +186,7 @@ struct CreateFilterRuleRequest {
   string objectType;
   FilterConditionDto[] conditions;
   string logicOperator; // "AND" or "OR"
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateFilterRuleRequest {

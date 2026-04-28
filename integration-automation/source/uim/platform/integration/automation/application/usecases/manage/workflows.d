@@ -48,7 +48,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     // Validate scenario exists and is active
     auto scenario = scenarioRepo.findById(req.scenarioId, req.tenantId);
-    if (scenario is null)
+    if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
     if (scenario.status != ScenarioStatus.active)
       return CommandResult(false, "", "Scenario is not active");
@@ -119,7 +119,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   /// Start a planned workflow.
   CommandResult startWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
-    if (wf is null)
+    if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.planned)
       return CommandResult(false, "", "Workflow is not in planned state");
@@ -136,7 +136,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   /// Suspend an in-progress workflow.
   CommandResult suspendWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
-    if (wf is null)
+    if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.inProgress)
       return CommandResult(false, "", "Workflow is not in progress");
@@ -150,7 +150,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   /// Resume a suspended workflow.
   CommandResult resumeWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
-    if (wf is null)
+    if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.suspended)
       return CommandResult(false, "", "Workflow is not suspended");
@@ -166,7 +166,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   /// Terminate a workflow.
   CommandResult terminateWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
-    if (wf is null)
+    if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status == WorkflowStatus.completed || wf.status == WorkflowStatus.terminated)
       return CommandResult(false, "", "Workflow is already finished");
@@ -180,7 +180,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteWorkflow(WorkflowId tenantId, id tenantId) {
     auto existing = workflowRepo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Workflow not found");
 
     stepRepo.removeByWorkflow(tenantId, id);

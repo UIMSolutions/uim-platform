@@ -59,7 +59,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateApp(UpdateAppRequest req) {
     auto app = repo.findById(req.tenantId, req.id);
-    if (app is null)
+    if (app.isNull)
       return CommandResult(false, "", "App not found");
 
     if (req.name.length > 0)

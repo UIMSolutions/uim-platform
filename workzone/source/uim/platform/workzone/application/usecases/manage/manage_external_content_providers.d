@@ -54,7 +54,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
 
   CommandResult updateProvider(UpdateExternalContentProviderRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "Provider not found");
 
     if (req.name.length > 0)
@@ -72,7 +72,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteProvider(ExternalContentProviderId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "Provider not found");
 
     repo.removeById(tenantId, id);

@@ -19,7 +19,7 @@ struct CreateTaskRequest {
     string creator;
     string sourceApplication;
     string dueDate;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateTaskRequest {
@@ -30,5 +30,5 @@ struct UpdateTaskRequest {
     string priority;
     string assignee;
     string dueDate;
-    string modifiedBy;
+    UserId updatedBy;
 }

@@ -24,7 +24,7 @@ struct SystemConnection {
   string region; // e.g. "eu10", "us20"
   string systemId; // SAP SID
   string tenant; // subaccount / tenant identifier
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

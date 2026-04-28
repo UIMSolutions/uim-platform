@@ -61,7 +61,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateWorkspace(UpdateWorkspaceRequest req) {
     auto ws = repo.findById(req.id, req.tenantId);
-    if (ws is null)
+    if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     if (req.name.length > 0)
@@ -79,7 +79,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult addMember(AddMemberRequest req) {
     auto ws = repo.findById(req.workspaceId, req.tenantId);
-    if (ws is null)
+    if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     // Check duplicate
@@ -95,7 +95,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult removeMember(WorkspaceId wstenantId, id tenantId, UserId userId) {
     auto ws = repo.findById(wstenantId, id);
-    if (ws is null)
+    if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     // import std.algorithm : remove;
@@ -116,7 +116,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult archiveWorkspace(WorkspaceId tenantId, id tenantId) {
     auto ws = repo.findById(tenantId, id);
-    if (ws is null)
+    if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
     ws.status = WorkspaceStatus.archived;
     ws.updatedAt = Clock.currStdTime();

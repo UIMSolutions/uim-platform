@@ -25,8 +25,8 @@ struct ProjectMember {
     string joinedAt;
     string createdAt;
     string updatedAt;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 
     Json projectMemberToJson() {
         return Json.emptyObject

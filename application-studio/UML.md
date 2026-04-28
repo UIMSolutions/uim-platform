@@ -21,8 +21,8 @@ classDiagram
         +string diskLimit
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +devSpaceToJson() Json
     }
 
@@ -38,8 +38,8 @@ classDiagram
         +string iconUrl
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +devSpaceTypeToJson() Json
     }
 
@@ -58,8 +58,8 @@ classDiagram
         +string iconUrl
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +extensionToJson() Json
     }
 
@@ -78,8 +78,8 @@ classDiagram
         +string namespace_
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +projectToJson() Json
     }
 
@@ -97,8 +97,8 @@ classDiagram
         +string iconUrl
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +projectTemplateToJson() Json
     }
 
@@ -117,8 +117,8 @@ classDiagram
         +string systemAlias
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +serviceBindingToJson() Json
     }
 
@@ -138,8 +138,8 @@ classDiagram
         +string lastRunAt
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +runConfigurationToJson() Json
     }
 
@@ -160,8 +160,8 @@ classDiagram
         +string buildLog
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +buildConfigurationToJson() Json
     }
 

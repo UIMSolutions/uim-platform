@@ -33,7 +33,7 @@ struct Client {
   string certificateRef;
 
   // Metadata
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
   long lastSyncAt;

@@ -53,7 +53,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
 
     CommandResult update(EventSchemaDTO dto) {
         auto existing = repo.findById(EventSchemaId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event schema not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -66,7 +66,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(EventSchemaId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event schema not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

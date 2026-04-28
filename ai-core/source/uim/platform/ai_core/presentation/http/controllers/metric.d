@@ -37,9 +37,10 @@ class MetricController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Metrics stored");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Metrics stored");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -87,9 +88,10 @@ class MetricController : PlatformController {
         jarr ~= mj;
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(metrics.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", metrics.length)
+        .set("resources", jarr);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

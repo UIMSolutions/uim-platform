@@ -7,7 +7,7 @@ struct CreateEntityTypeRequest {
     string description;
     string category;
     string sourceSystem;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateEntityTypeRequest {
@@ -16,5 +16,5 @@ struct UpdateEntityTypeRequest {
     string name;
     string description;
     string category;
-    string modifiedBy;
+    UserId updatedBy;
 }

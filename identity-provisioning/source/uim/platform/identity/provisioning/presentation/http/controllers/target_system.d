@@ -84,7 +84,7 @@ class TargetSystemController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto sys = uc.getTargetSystem(tenantId, id);
-      if (sys is null) {
+      if (sys.isNull) {
         writeError(res, 404, "Target system not found");
         return;
       }

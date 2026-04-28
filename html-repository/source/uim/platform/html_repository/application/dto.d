@@ -14,7 +14,7 @@ struct CreateHtmlAppRequest {
   string description;
   string visibility; // "private", "public"
   string serviceInstanceId;
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject
@@ -34,7 +34,7 @@ struct UpdateHtmlAppRequest {
   string description;
   string visibility;
   string status;
-  string modifiedBy;
+  UserId modifiedBy;
 
   Json toJson() const {
     return Json.emptyObject
@@ -51,7 +51,7 @@ struct CreateAppVersionRequest {
   string appId;
   string versionCode;
   string description;
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject
@@ -82,7 +82,7 @@ struct UploadAppFileRequest {
   string contentType; // MIME type
   string data; // base64-encoded file content
   string encoding; // e.g. "gzip", "br", "" for none
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject
@@ -117,7 +117,7 @@ struct CreateServiceInstanceRequest {
   string plan; // "appHost", "appRuntime"
   string description;
   long sizeQuotaMb;
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject
@@ -171,7 +171,7 @@ struct CreateAppRouteRequest {
   string pathPrefix;
   string targetUrl;
   string description;
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject

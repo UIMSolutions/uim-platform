@@ -28,7 +28,7 @@ struct NotificationChannel {
   // Slack config
   string slackWebhookUrl;
   string slackChannel;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 

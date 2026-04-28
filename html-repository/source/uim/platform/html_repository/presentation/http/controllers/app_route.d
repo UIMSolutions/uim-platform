@@ -94,7 +94,7 @@ class AppRouteController : PlatformController {
         return;
       }
       auto entry = usecase.getById(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Route not found");
         return;
       }

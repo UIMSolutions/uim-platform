@@ -83,7 +83,7 @@ class ServiceInstanceController : PlatformController {
         return;
       }
       auto entry = uc.getById(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }

@@ -42,15 +42,15 @@ class ProvisioningEngine {
   /// Validate that a provisioning job can be started.
   bool canRun(ProvisioningJobId jobtenantId, id tenantId) {
     auto job = jobRepo.findById(jobtenantId, id);
-    if (job is null)
+    if (job.isNull)
       return false;
 
     auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
-    if (src is null || src.status != SystemStatus.active)
+    if (src.isNull || src.status != SystemStatus.active)
       return false;
 
     auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
-    if (tgt is null || tgt.status != SystemStatus.active)
+    if (tgt.isNull || tgt.status != SystemStatus.active)
       return false;
 
     return job.status == JobStatus.scheduled;
@@ -59,7 +59,7 @@ class ProvisioningEngine {
   /// Execute a provisioning job (simulated).
   ProvisioningJob* runJob(TenantId tenantId, ProvisioningJobId jobId) {
     auto job = jobRepo.findById(tenantId, jobId);
-    if (job is null)
+    if (job.isNull)
       return null;
 
     auto now = Clock.currStdTime();
@@ -102,7 +102,7 @@ class ProvisioningEngine {
   /// Cancel a running or scheduled job.
   bool cancelJob(TenantId tenantId, ProvisioningJobId jobId) {
     auto job = jobRepo.findById(tenantId, jobId);
-    if (job is null)
+    if (job.isNull)
       return false;
     if (job.status != JobStatus.running && job.status != JobStatus.scheduled)
       return false;

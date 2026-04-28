@@ -16,7 +16,7 @@ struct CreateBuildpackRequest {
   int position;
   string stack;
   string filename;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateBuildpackRequest {

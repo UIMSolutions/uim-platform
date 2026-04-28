@@ -62,11 +62,11 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     space.updatedAt = now;
 
     repo.save(space);
-    return CommandResult(space.id, "");
+    return CommandResult(true, space.id.toString, "");
   }
 
-  Space* getSpace(TenantId tenantId, SpaceId id) {
-    return repo.findById(tenantId, id);
+  Space* getSpace(TenantId tenantId, SpaceId spaceId) {
+    return repo.findById(tenantId, spaceId);
   }
 
   Space[] listSpaces(TenantId tenantId) {
@@ -83,7 +83,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 
@@ -95,15 +95,15 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.toString, "");
   }
 
   CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
-    auto existing = repo.findById(tenantId, id);
-    if (existing.isNull)
+    auto space = repo.findById(tenantId, id);
+    if (space.isNull)
       return CommandResult(false, "", "Space not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    repo.remove(space);
+    return CommandResult(true, space.id.toString, "");
   }
 }

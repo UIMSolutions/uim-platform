@@ -28,7 +28,7 @@ struct Pipeline {
   PipelineProcessor[] processors;
   LogStreamId targetStreamId;
   bool isActive = true;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

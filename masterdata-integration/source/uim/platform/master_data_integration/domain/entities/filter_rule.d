@@ -24,7 +24,7 @@ struct FilterRule {
   string logicOperator; // "AND" or "OR"
 
   bool isActive;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

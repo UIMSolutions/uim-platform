@@ -21,7 +21,7 @@ struct Workflow {
   int completedSteps;
   SystemConnectionId sourceSystemConnectionId; // selected source system
   SystemConnectionId targetSystemConnectionId; // selected target system
-  string createdBy;
+  UserId createdBy;
   long startedAt;
   long completedAt;
   long createdAt;

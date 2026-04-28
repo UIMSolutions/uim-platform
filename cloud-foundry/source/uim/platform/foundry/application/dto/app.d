@@ -20,7 +20,7 @@ struct CreateAppRequest {
   int healthCheckTimeoutSec;
   string environmentVariables;
   string dockerImage;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateAppRequest {

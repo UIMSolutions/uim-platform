@@ -21,8 +21,8 @@ classDiagram
         +string contacts
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +oauthClientToJson() Json
     }
 
@@ -35,8 +35,8 @@ classDiagram
         +ScopeStatus status
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +oauthScopeToJson() Json
     }
 
@@ -99,8 +99,8 @@ classDiagram
         +string customCss
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +brandingConfigToJson() Json
     }
 

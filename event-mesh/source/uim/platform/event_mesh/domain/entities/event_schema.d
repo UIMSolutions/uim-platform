@@ -24,8 +24,8 @@ struct EventSchema {
     string shared_;
     string versionCount;
     string latestVersion;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

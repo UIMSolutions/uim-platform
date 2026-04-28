@@ -85,7 +85,7 @@ class SurveyController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto s = useCase.getSurvey(tenantId, id);
-      if (s is null) {
+      if (s.isNull) {
         writeError(res, 404, "Survey not found");
         return;
       }

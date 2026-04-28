@@ -43,7 +43,7 @@ class EnvironmentController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, PlatformId(id));
-            if (e is null) { writeError(res, 404, "Platform not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Platform not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
                 .set("description", e.description)

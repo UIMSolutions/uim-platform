@@ -18,8 +18,8 @@ classDiagram
         +string globalStyles
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +applicationToJson() Json
     }
 
@@ -39,8 +39,8 @@ classDiagram
         +bool isHomePage
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +pageToJson() Json
     }
 
@@ -59,8 +59,8 @@ classDiagram
         +string previewUrl
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +uiComponentToJson() Json
     }
 
@@ -77,8 +77,8 @@ classDiagram
         +string indexes
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +dataEntityToJson() Json
     }
 
@@ -97,8 +97,8 @@ classDiagram
         +string mappingConfig
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +dataConnectionToJson() Json
     }
 
@@ -116,8 +116,8 @@ classDiagram
         +string errorHandling
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +logicFlowToJson() Json
     }
 
@@ -136,8 +136,8 @@ classDiagram
         +string buildLog
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +appBuildToJson() Json
     }
 
@@ -155,8 +155,8 @@ classDiagram
         +string joinedAt
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +projectMemberToJson() Json
     }
 

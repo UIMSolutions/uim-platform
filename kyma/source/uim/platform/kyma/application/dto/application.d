@@ -23,7 +23,7 @@ struct RegisterApplicationRequest {
   AppEventEntryDto[] events;
   string[] boundNamespaces;
   string[string] labels;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateApplicationRequest {

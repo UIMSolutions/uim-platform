@@ -20,7 +20,7 @@ struct CreateEnvironmentRequest {
   string[] oidcGroupsClaim;
   string[] oidcUsernameClaim;
   string[] administrators;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateEnvironmentRequest {

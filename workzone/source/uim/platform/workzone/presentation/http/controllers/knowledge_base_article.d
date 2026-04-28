@@ -83,7 +83,7 @@ class KnowledgeBaseArticleController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto a = useCase.getArticle(tenantId, id);
-      if (a is null) {
+      if (a.isNull) {
         writeError(res, 404, "Article not found");
         return;
       }

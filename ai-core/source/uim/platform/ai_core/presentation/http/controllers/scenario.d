@@ -39,9 +39,10 @@ class ScenarioController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Scenario registered");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario registered"); 
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -67,9 +68,10 @@ class ScenarioController : PlatformController {
         .set("updatedAt", s.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(scenarios.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", scenarios.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,13 +91,14 @@ class ScenarioController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(s.id);
-      resp["name"] = Json(s.name);
-      resp["description"] = Json(s.description);
-      resp["labels"] = toJsonArray(s.labels);
-      resp["createdAt"] = Json(s.createdAt);
-      resp["updatedAt"] = Json(s.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", s.id)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("labels", toJsonArray(s.labels))
+        .set("createdAt", s.createdAt)
+        .set("updatedAt", s.updatedAt);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

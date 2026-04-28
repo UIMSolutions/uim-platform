@@ -59,7 +59,7 @@ class RouteResolver {
       return true;
 
     route.mappedAppIds ~= appId;
-    routes.update(*route);
+    routes.update(route);
     return true;
   }
 
@@ -78,7 +78,7 @@ class RouteResolver {
       return false; // app was not mapped
 
     route.mappedAppIds = updated;
-    routes.update(*route);
+    routes.update(route);
     return true;
   }
 }

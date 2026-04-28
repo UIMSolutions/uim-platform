@@ -14,7 +14,7 @@ struct CreateSubstitutionRuleRequest {
     string startDate;
     string endDate;
     bool isAutoForward;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateSubstitutionRuleRequest {
@@ -25,5 +25,5 @@ struct UpdateSubstitutionRuleRequest {
     string startDate;
     string endDate;
     bool isAutoForward;
-    string modifiedBy;
+    UserId updatedBy;
 }

@@ -11,5 +11,5 @@ struct CreateDomainRequest {
   string name;
   DomainScope scope_;
   bool isInternal;
-  string createdBy;
+  UserId createdBy;
 }

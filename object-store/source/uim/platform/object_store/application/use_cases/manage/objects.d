@@ -37,7 +37,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Object key is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
     if (bucket.status != BucketStatus.active)
       return CommandResult(false, "", "Bucket is not active");
@@ -94,7 +94,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
     auto obj = objectRepo.findById(id);
-    if (obj is null || obj.id.isEmpty)
+    if (obj.isNull || obj.id.isEmpty)
       return CommandResult(false, "", "Object not found");
 
     if (req.contentType.length > 0)
@@ -131,7 +131,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteObject(ObjectId id) {
     auto obj = objectRepo.findById(id);
-    if (obj is null || obj.id.isEmpty)
+    if (obj.isNull || obj.id.isEmpty)
       return CommandResult(false, "", "Object not found");
 
     auto bucket = bucketRepo.findById(obj.bucketId);
@@ -182,11 +182,11 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult copyObject(CopyObjectRequest req) {
     auto sourceObj = objectRepo.findByKey(req.sourceBucketId, req.sourceKey);
-    if (sourceObj is null || sourceObj.id.isEmpty)
+    if (sourceObj.isNull || sourceObj.id.isEmpty)
       return CommandResult(false, "", "Source object not found");
 
     auto destBucket = bucketRepo.findById(req.destBucketId);
-    if (destBucket is null || destBucket.id.isEmpty)
+    if (destBucket.isNull || destBucket.id.isEmpty)
       return CommandResult(false, "", "Destination bucket not found");
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);

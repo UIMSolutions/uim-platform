@@ -84,7 +84,7 @@ class ScenarioController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto scenario = useCase.getScenario(tenantId, id);
-      if (scenario is null) {
+      if (scenario.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
       }
@@ -180,7 +180,7 @@ class ScenarioController : PlatformController {
   private static ScenarioStepTemplate[] parseStepTemplates(Json j) {
     ScenarioStepTemplate[] result;
     auto v = "stepTemplates" in j;
-    if (v is null || (*v).type != Json.Type.array)
+    if (v.isNull || (*v).type != Json.Type.array)
       return result;
     foreach (item; *v) {
       if (item.isObject) {

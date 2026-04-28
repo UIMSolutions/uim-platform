@@ -77,7 +77,7 @@ class GroupController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto g = useCase.getGroup(tenantId, id);
-      if (g is null) {
+      if (g.isNull) {
         writeError(res, 404, "Group not found");
         return;
       }

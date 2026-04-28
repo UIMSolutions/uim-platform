@@ -37,9 +37,10 @@ class ResourceGroupController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["resourceGroupId"] = Json(result.id);
-        resp["message"] = Json("Resource group created");
+        auto resp = Json.emptyObject
+          .set("resourceGroupId", result.id)
+          .set("message", "Resource group created");
+        
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -64,10 +65,9 @@ class ResourceGroupController : PlatformController {
 
         auto lArr = Json.emptyArray;
         foreach (lbl; rg.labels) {
-          auto lj = Json.emptyObject
+          lArr ~= Json.emptyObject
             .set("key", lbl.key)
             .set("value", lbl.value);
-          lArr ~= lj;
         }
         rgj["labels"] = lArr;
 

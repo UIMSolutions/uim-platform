@@ -13,7 +13,7 @@ struct CreateServiceInstanceRequest {
   string servicePlanName;
   string parameters;
   string tags;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateServiceInstanceRequest {

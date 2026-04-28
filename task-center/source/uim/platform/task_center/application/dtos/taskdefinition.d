@@ -14,7 +14,7 @@ struct CreateTaskDefinitionRequest {
     string category;
     string taskSchema;
     bool requiresClaim;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateTaskDefinitionRequest {
@@ -25,5 +25,5 @@ struct UpdateTaskDefinitionRequest {
     string category;
     string taskSchema;
     bool requiresClaim;
-    string modifiedBy;
+    UserId updatedBy;
 }

@@ -47,7 +47,7 @@ struct CreateDashboardRequest {
     string description;
     string type;
     int refreshIntervalSeconds;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDashboardRequest {
@@ -56,5 +56,5 @@ struct UpdateDashboardRequest {
     string name;
     string description;
     int refreshIntervalSeconds;
-    string modifiedBy;
+    UserId updatedBy;
 }

@@ -29,7 +29,7 @@ class OverviewController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
-      if (summary is null) {
+      if (summary.isNull) {
         writeError(res, 404, "Overview not available");
         return;
       }

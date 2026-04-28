@@ -51,7 +51,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
 
   CommandResult updatePageTemplate(UpdatePageTemplateRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Page template not found");
 
     if (req.name.length > 0)
@@ -69,7 +69,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePageTemplate(PageTemplateId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Page template not found");
 
     repo.removeById(tenantId, id);

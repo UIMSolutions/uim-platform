@@ -62,7 +62,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Target system not found");
 
     auto updated = *existing;
@@ -80,7 +80,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult activateSystem(TargetSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Target system not found");
 
     if (sys.connectionConfig.length == 0)
@@ -94,7 +94,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deactivateSystem(TargetSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Target system not found");
 
     sys.status = SystemStatus.inactive;
@@ -105,7 +105,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteTargetSystem(TargetSystemId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Target system not found");
 
     repo.removeById(tenantId, id);

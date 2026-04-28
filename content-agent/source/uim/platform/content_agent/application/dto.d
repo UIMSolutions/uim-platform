@@ -23,7 +23,7 @@ struct CreatePackageRequest {
   string format; // "mtar", "zip", "json"
   ContentItem[] items;
   string[] tags;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdatePackageRequest {
@@ -66,7 +66,7 @@ struct CreateTransportRequest {
   string mode; // "cloudTransportManagement", "ctsPlus", "directExport", "fileDownload"
   ContentPackageId[] packageIds;
   TransportQueueId queueId;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct ReleaseTransportRequest {
@@ -105,7 +105,7 @@ struct CreateQueueRequest {
   string endpoint;
   string authToken;
   bool isDefault;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateQueueRequest {

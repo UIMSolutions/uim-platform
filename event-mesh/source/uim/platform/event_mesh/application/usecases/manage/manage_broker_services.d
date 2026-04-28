@@ -56,7 +56,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(BrokerServiceDTO dto) {
         auto existing = repo.findById(BrokerServiceId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -71,7 +71,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(BrokerServiceId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

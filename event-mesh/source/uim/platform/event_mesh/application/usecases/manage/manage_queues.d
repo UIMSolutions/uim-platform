@@ -60,7 +60,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(QueueDTO dto) {
         auto existing = repo.findById(QueueId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Queue not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -74,7 +74,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(QueueId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Queue not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

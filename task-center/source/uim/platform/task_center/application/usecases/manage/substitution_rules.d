@@ -58,7 +58,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         if (req.startDate.length > 0) existing.startDate = req.startDate;
         if (req.endDate.length > 0) existing.endDate = req.endDate;
         existing.isAutoForward = req.isAutoForward;
-        existing.modifiedBy = req.modifiedBy;
+        existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
         return CommandResult(true, req.id, "");
     }

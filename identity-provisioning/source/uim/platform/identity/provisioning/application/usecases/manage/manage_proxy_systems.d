@@ -39,10 +39,10 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
     // Verify source and target exist
     auto src = sourceRepo.findById(req.sourceSystemId, req.tenantId);
-    if (src is null)
+    if (src.isNull)
       return CommandResult(false, "", "Source system not found");
     auto tgt = targetRepo.findById(req.targetSystemId, req.tenantId);
-    if (tgt is null)
+    if (tgt.isNull)
       return CommandResult(false, "", "Target system not found");
 
     auto existing = repo.findByName(req.tenantId, req.name);
@@ -83,7 +83,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Proxy system not found");
 
     auto updated = *existing;
@@ -101,7 +101,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult activateSystem(ProxySystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Proxy system not found");
 
     if (sys.connectionConfig.length == 0)
@@ -115,7 +115,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deactivateSystem(ProxySystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Proxy system not found");
 
     sys.status = SystemStatus.inactive;
@@ -126,7 +126,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteProxySystem(ProxySystemId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Proxy system not found");
 
     repo.removeById(tenantId, id);

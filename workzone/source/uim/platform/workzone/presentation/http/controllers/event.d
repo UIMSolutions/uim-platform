@@ -88,7 +88,7 @@ class EventController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto ev = useCase.getEvent(tenantId, id);
-      if (ev is null) {
+      if (ev.isNull) {
         writeError(res, 404, "Event not found");
         return;
       }

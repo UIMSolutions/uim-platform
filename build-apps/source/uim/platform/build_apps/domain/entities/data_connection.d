@@ -29,8 +29,8 @@ struct DataConnection {
     string destinationName;
     string createdAt;
     string updatedAt;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 
     Json dataConnectionToJson() {
         return Json.emptyObject

@@ -26,7 +26,7 @@ struct AlertRule {
   AlertSeverity severity = AlertSeverity.warning;
   NotificationChannelId[] channelIds;
   bool isEnabled = true;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

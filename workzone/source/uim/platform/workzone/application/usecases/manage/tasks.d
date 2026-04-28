@@ -63,7 +63,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
   CommandResult updateTask(UpdateTaskRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Task not found");
 
     if (req.title.length > 0)
@@ -85,7 +85,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
   CommandResult completeTask(TaskId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
-    if (t is null)
+    if (t.isNull)
       return CommandResult(false, "", "Task not found");
 
     t.status = TaskStatus.completed;

@@ -19,6 +19,6 @@ struct IngestionToken {
   TokenScope[] scopes;
   long expiresAt;
   bool isActive = true;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
 }

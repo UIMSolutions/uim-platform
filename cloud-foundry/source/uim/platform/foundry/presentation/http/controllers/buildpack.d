@@ -25,7 +25,7 @@ class BuildpackController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/buildpacks", &handleCreate);
     router.get("/api/v1/buildpacks", &handleList);
     router.get("/api/v1/buildpacks/*", &handleGetById);
@@ -47,14 +47,13 @@ class BuildpackController : PlatformController {
 
       auto result = useCase.createBuildpack(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -64,42 +63,39 @@ class BuildpackController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listBuildpacks(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (bp; items)
-        arr ~= serializeBuildpack(bp);
+      auto arr = items.map!(bp => bp.toJson()).array;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto bp = useCase.getBuildpack(tenantId, id);
+      auto bp = useCase.getBuildpack(tenantId, buildpackId);
       if (bp.isNull) {
         writeError(res, 404, "Buildpack not found");
         return;
       }
-      res.writeJsonBody(serializeBuildpack(*bp), 200);
-    }
-    catch (Exception e) {
+      res.writeJsonBody(bp.toJson(), 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateBuildpackRequest();
-      r.id = id;
+      r.id = buildpackId;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.position = j.getInteger("position");
@@ -113,46 +109,26 @@ class BuildpackController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteBuildpack(tenantId, id);
+      auto result = useCase.deleteBuildpack(tenantId, buildpackId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeBuildpack(const Buildpack bp) {
-    return Json.emptyObject
-      .set("id", bp.id)
-      .set("tenantId", bp.tenantId)
-      .set("name", bp.name)
-      .set("type", bp.type_.to!string)
-      .set("position", bp.position)
-      .set("stack", bp.stack)
-      .set("filename", bp.filename)
-      .set("enabled", bp.enabled)
-      .set("locked", bp.locked)
-      .set("createdBy", bp.createdBy)
-      .set("createdAt", bp.createdAt)
-      .set("updatedAt", bp.updatedAt);
   }
 }

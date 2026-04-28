@@ -60,7 +60,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(MeshBridgeDTO dto) {
         auto existing = repo.findById(MeshBridgeId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -74,7 +74,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(MeshBridgeId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

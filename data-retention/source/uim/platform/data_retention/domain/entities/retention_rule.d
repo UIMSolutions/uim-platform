@@ -14,7 +14,7 @@ struct RetentionRule {
     PeriodUnit periodUnit = PeriodUnit.years;
     DeletionActionType actionOnExpiry = DeletionActionType.delete_;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

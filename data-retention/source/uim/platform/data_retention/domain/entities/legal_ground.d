@@ -16,7 +16,7 @@ struct LegalGround {
     long residenceEndDate;
     long retentionEndDate;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

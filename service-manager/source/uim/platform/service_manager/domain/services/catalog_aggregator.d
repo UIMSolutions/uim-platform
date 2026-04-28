@@ -43,7 +43,7 @@ class CatalogAggregator {
     /// Check if a plan allows new instances
     bool canProvision(TenantId tenantId, ServicePlanId planId) {
         auto plan = planRepo.findById(tenantId, planId);
-        if (plan is null) return false;
+        if (plan.isNull) return false;
         if (plan.maxInstances <= 0) return true;
         return true;
     }

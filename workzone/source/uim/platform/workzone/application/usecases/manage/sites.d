@@ -52,7 +52,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateSite(UpdateSiteRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
-    if (s is null)
+    if (s.isNull)
       return CommandResult(false, "", "Site not found");
 
     if (req.name.length > 0)
@@ -70,7 +70,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSite(SiteId tenantId, id tenantId) {
     auto s = repo.findById(tenantId, id);
-    if (s is null)
+    if (s.isNull)
       return CommandResult(false, "", "Site not found");
 
     repo.removeById(tenantId, id);

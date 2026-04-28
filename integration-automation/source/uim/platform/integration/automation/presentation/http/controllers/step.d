@@ -60,7 +60,7 @@ class StepController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto step = useCase.getStep(tenantId, id);
-      if (step is null) {
+      if (step.isNull) {
         writeError(res, 404, "Step not found");
         return;
       }

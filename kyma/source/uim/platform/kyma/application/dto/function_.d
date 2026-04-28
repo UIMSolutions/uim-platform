@@ -25,7 +25,7 @@ struct CreateFunctionRequest {
   string[string] envVars;
   string[string] labels;
   int timeoutSeconds;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateFunctionRequest {

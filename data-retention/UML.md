@@ -15,7 +15,7 @@ classDiagram
         +BusinessPurposeStatus status
         +long referenceDate
         +long endOfPurposeDate
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -31,7 +31,7 @@ classDiagram
         +long residenceEndDate
         +long retentionEndDate
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -45,7 +45,7 @@ classDiagram
         +PeriodUnit periodUnit
         +DeletionActionType actionOnExpiry
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -58,7 +58,7 @@ classDiagram
         +int duration
         +PeriodUnit periodUnit
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -74,7 +74,7 @@ classDiagram
         +long endOfRetentionDate
         +long blockedAt
         +long deletedAt
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -108,7 +108,7 @@ classDiagram
         +int recordsProcessed
         +int recordsFailed
         +string errorMessage
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -121,7 +121,7 @@ classDiagram
         +ApplicationGroupScope scope_
         +string[] applicationIds
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -134,7 +134,7 @@ classDiagram
         +string country
         +string region
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }
@@ -145,7 +145,7 @@ classDiagram
         +string name
         +string description
         +bool isActive
-        +string createdBy
+        +UserId createdBy
         +long createdAt
         +long updatedAt
     }

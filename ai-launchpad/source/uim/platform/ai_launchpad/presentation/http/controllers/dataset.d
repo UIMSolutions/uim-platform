@@ -19,7 +19,7 @@ class DatasetController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/datasets", &handleRegister);
     router.get("/api/v1/datasets", &handleList);
     router.get("/api/v1/datasets/*", &handleGet);
@@ -43,9 +43,10 @@ class DatasetController : PlatformController {
 
       auto result = uc.register(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Dataset registered");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Dataset registered");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -69,8 +70,8 @@ class DatasetController : PlatformController {
       auto jarr = Json.datasets.map(ds => serializeDataset(d)).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("count", Json(datasets.length))
-      .set("resources", jarr);
+        .set("count", Json(datasets.length))
+        .set("resources", jarr);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -81,6 +82,7 @@ class DatasetController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -99,6 +101,7 @@ class DatasetController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
@@ -111,8 +114,9 @@ class DatasetController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Dataset updated");
+        auto resp = Json.emptyObject
+          .set("message", "Dataset updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -125,6 +129,7 @@ class DatasetController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -141,6 +146,7 @@ class DatasetController : PlatformController {
 
   private Json serializeDataset(Dataset d) {
     import std.conv : to;
+
     return Json.emptyObject
       .set("id", d.id)
       .set("connectionId", d.connectionId)

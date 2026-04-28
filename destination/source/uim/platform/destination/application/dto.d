@@ -56,7 +56,7 @@ struct CreateDestinationRequest {
   // Fragment references
   string[] fragmentIds;
 
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateDestinationRequest {
@@ -130,7 +130,7 @@ struct CreateFragmentRequest {
   string keystoreId;
   string truststoreId;
   string[string] properties;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateFragmentRequest {

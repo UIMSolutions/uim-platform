@@ -11,5 +11,5 @@ struct CreateServiceBindingRequest {
   TenantId tenantId;
   string name;
   string bindingOptions;
-  string createdBy;
+  UserId createdBy;
 }

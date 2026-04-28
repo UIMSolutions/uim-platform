@@ -49,7 +49,7 @@ class AssignmentController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(id);
-            if (e is null) {
+            if (e.isNull) {
                 writeError(res, 404, "Assignment not found");
                 return;
             }

@@ -95,7 +95,7 @@ class WidgetController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto w = useCase.getWidget(tenantId, id);
-      if (w is null) {
+      if (w.isNull) {
         writeError(res, 404, "Widget not found");
         return;
       }

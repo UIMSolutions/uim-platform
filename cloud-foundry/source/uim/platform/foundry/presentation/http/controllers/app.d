@@ -81,13 +81,12 @@ class AppController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (a; apps)
-        arr ~= serializeApp(a);
+      auto arr = apps.map!(a => a.toJson).array;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(apps.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", apps.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -96,14 +95,15 @@ class AppController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto app = useCase.getApp(tenantId, id);
+      auto app = useCase.getApp(tenantId, appId);
       if (app.isNull) {
         writeError(res, 404, "Application not found");
         return;
       }
-      res.writeJsonBody(serializeApp(*app), 200);
+
+      res.writeJsonBody(app.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -111,10 +111,10 @@ class AppController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateAppRequest();
-      r.id = id;
+      r.id = appId;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.instances = j.getInteger("instances", 0);
@@ -143,9 +143,9 @@ class AppController : PlatformController {
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.startApp(tenantId, id);
+      auto result = useCase.startApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -159,12 +159,13 @@ class AppController : PlatformController {
 
   private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.stopApp(tenantId, id);
+      auto result = useCase.stopApp(tenantId, appId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -175,12 +176,13 @@ class AppController : PlatformController {
 
   private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.restartApp(tenantId, id);
+      auto result = useCase.restartApp(tenantId, appId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -191,10 +193,10 @@ class AppController : PlatformController {
 
   private void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = ScaleAppRequest();
-      r.id = id;
+      r.id = appId;
       r.tenantId = req.getTenantId;
       r.instances = j.getInteger("instances", 0);
       r.memoryMb = j.getInteger("memoryMb", 0);
@@ -202,8 +204,8 @@ class AppController : PlatformController {
 
       auto result = useCase.scaleApp(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+        .set("id", result.id);
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -214,13 +216,14 @@ class AppController : PlatformController {
 
   private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(tenantId, id);
 
-      auto resp = Json.emptyObject;
-      resp["appId"] = Json(id);
-      resp["environmentVariables"] = Json(env);
+      auto resp = Json.emptyObject
+      .set("appId", id)
+      .set("environmentVariables", env);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -229,15 +232,16 @@ class AppController : PlatformController {
 
   private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
       auto result = useCase.setEnvironment(tenantId, id, envJson);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -248,12 +252,13 @@ class AppController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
@@ -262,30 +267,4 @@ class AppController : PlatformController {
     }
   }
 
-  private static Json serializeApp(const Application a) {
-    return Json.emptyObject
-      .set("id", a.id)
-      .set("spaceId", a.spaceId)
-      .set("tenantId", a.tenantId)
-      .set("name", a.name)
-      .set("state", a.state.to!string)
-      .set("instances", a.instances)
-      .set("memoryMb", a.memoryMb)
-      .set("diskMb", a.diskMb)
-      .set("buildpackId", a.buildpackId)
-      .set("detectedBuildpack", a.detectedBuildpack)
-      .set("stack", a.stack)
-      .set("command", a.command)
-      .set("healthCheckType", a.healthCheckType.to!string)
-      .set("healthCheckEndpoint", a.healthCheckEndpoint)
-      .set("healthCheckTimeoutSec", a.healthCheckTimeoutSec)
-      .set("environmentVariables", a.environmentVariables)
-      .set("dockerImage", a.dockerImage)
-      .set("dockerCredentials", a.dockerCredentials)
-      .set("runningInstances", a.runningInstances)
-      .set("createdBy", a.createdBy)
-      .set("createdAt", a.createdAt)
-      .set("updatedAt", a.updatedAt)
-      .set("stagedAt", a.stagedAt);
-  }
 }

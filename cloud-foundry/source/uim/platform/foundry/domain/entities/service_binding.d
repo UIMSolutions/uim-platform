@@ -24,7 +24,7 @@ struct ServiceBinding {
   string bindingOptions; // JSON string of binding parameters
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
         .set("appId", appId)
         .set("serviceInstanceId", serviceInstanceId)
         .set("name", name)

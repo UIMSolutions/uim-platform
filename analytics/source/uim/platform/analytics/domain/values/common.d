@@ -42,7 +42,7 @@ Json toJson(EntityId id) {
 /// Audit metadata attached to every domain entity.
 struct AuditInfo {
   SysTime createdAt;
-  string createdBy;
+  UserId createdBy;
   SysTime updatedAt;
   string updatedBy;
 

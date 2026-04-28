@@ -10,7 +10,7 @@ struct CreateSpaceRequest {
   TenantId tenantId;
   string name;
   bool allowSsh;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateSpaceRequest {

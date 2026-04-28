@@ -45,11 +45,12 @@ class PromptController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Prompt created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Prompt created");
+
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

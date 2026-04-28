@@ -81,7 +81,7 @@ class TransformationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto t = uc.getTransformation(tenantId, id);
-      if (t is null) {
+      if (t.isNull) {
         writeError(res, 404, "Transformation not found");
         return;
       }

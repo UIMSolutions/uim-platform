@@ -27,7 +27,7 @@ struct CreateDataSubjectRequest {
     string organizationName;
     string organizationId;
     string externalId;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDataSubjectRequest {
@@ -38,7 +38,7 @@ struct UpdateDataSubjectRequest {
     string email;
     string phoneNumber;
     string organizationName;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Data Subject Request ---
@@ -53,7 +53,7 @@ struct CreateDataSubjectRequestRequest {
     string[] dataCategoryIds;
     string assignedTo;
     string dueDate;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDataSubjectRequestRequest {
@@ -64,7 +64,7 @@ struct UpdateDataSubjectRequestRequest {
     string rejectionReason;
     string commentAuthor;
     string commentText;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Personal Data Record ---
@@ -81,7 +81,7 @@ struct CreatePersonalDataRecordRequest {
     string legalBasis;
     string sourceSystem;
     string retentionRuleId;
-    string createdBy;
+    UserId createdBy;
 }
 
 // --- Registered Application ---
@@ -108,7 +108,7 @@ struct UpdateRegisteredApplicationRequest {
     string apiVersion;
     string contactEmail;
     string contactName;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Processing Purpose ---
@@ -123,7 +123,7 @@ struct CreateProcessingPurposeRequest {
     string retentionPeriod;
     string dataProtectionOfficer;
     bool requiresConsent;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateProcessingPurposeRequest {
@@ -135,7 +135,7 @@ struct UpdateProcessingPurposeRequest {
     string retentionPeriod;
     string dataProtectionOfficer;
     bool requiresConsent;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Consent Record ---
@@ -150,7 +150,7 @@ struct CreateConsentRecordRequest {
     string ipAddress;
     string userAgent;
     string source;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct WithdrawConsentRequest {
@@ -173,7 +173,7 @@ struct CreateRetentionRuleRequest {
     bool autoDelete;
     bool notifyBeforeExpiry;
     int notifyDaysBefore;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateRetentionRuleRequest {
@@ -186,7 +186,7 @@ struct UpdateRetentionRuleRequest {
     bool autoDelete;
     bool notifyBeforeExpiry;
     int notifyDaysBefore;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Data Processing Log ---

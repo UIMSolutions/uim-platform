@@ -28,8 +28,8 @@ struct Technician {
     string maxWorkload;
     string currentWorkload;
     string travelRadius;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

@@ -29,7 +29,7 @@ struct Dashboard {
   string description;
   bool isDefault;
   DashboardPanel[] panels;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

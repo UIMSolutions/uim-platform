@@ -20,7 +20,7 @@ struct ImportJob {
   ImportStatus status = ImportStatus.pending;
   string sourceFilePath;
   long importedSizeBytes;
-  string createdBy;
+  UserId createdBy;
   long startedAt;
   long completedAt;
   string errorMessage;

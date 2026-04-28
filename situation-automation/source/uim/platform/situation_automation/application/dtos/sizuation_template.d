@@ -13,7 +13,7 @@ struct CreateSituationTemplateRequest {
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
     string escalationTargetUserId;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateSituationTemplateRequest {
@@ -27,5 +27,5 @@ struct UpdateSituationTemplateRequest {
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
     string escalationTargetUserId;
-    string modifiedBy;
+    UserId updatedBy;
 }

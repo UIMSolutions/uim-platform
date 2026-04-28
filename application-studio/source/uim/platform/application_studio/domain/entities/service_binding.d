@@ -26,8 +26,8 @@ struct ServiceBinding {
     string systemAlias;
     string createdAt;
     string updatedAt;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 
     Json serviceBindingToJson() {
         return Json.emptyObject

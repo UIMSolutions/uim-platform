@@ -51,7 +51,7 @@ struct Prompt {
   string[] inputParams;
   string lastOutput;
   PromptStatus status;
-  string createdBy;
+  UserId createdBy;
   string createdAt;
   string updatedAt;
 

@@ -21,7 +21,7 @@ struct CreateScenarioRequest {
   SystemType targetSystemType;
   string[] prerequisites;
   ScenarioStepTemplate[] stepTemplates;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateScenarioRequest {
@@ -47,7 +47,7 @@ struct CreateWorkflowRequest {
   string description;
   SystemConnectionId sourceSystemConnectionId;
   SystemConnectionId targetSystemConnectionId;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateWorkflowStatusRequest {
@@ -120,7 +120,7 @@ struct CreateSystemRequest {
   string region;
   string systemId;
   string tenant;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateSystemRequest {
@@ -157,7 +157,7 @@ struct CreateDestinationRequest {
   string tokenServiceUser;
   string audience;
   string scope_;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateDestinationRequest {

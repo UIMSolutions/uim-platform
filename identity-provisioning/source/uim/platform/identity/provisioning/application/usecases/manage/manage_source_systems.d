@@ -62,7 +62,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Source system not found");
 
     auto updated = *existing;
@@ -81,7 +81,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   /// Activate a source system for provisioning.
   CommandResult activateSystem(SourceSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
 
     if (sys.connectionConfig.length == 0)
@@ -96,7 +96,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   /// Deactivate a source system.
   CommandResult deactivateSystem(SourceSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
 
     sys.status = SystemStatus.inactive;
@@ -107,7 +107,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSourceSystem(SourceSystemId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Source system not found");
 
     repo.removeById(tenantId, id);

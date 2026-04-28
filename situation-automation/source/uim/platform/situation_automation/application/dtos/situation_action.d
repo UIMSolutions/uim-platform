@@ -14,7 +14,7 @@ struct CreateSituationActionRequest {
     string webhookUrl;
     string emailTemplate;
     string scriptContent;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateSituationActionRequest {
@@ -28,5 +28,5 @@ struct UpdateSituationActionRequest {
     string destinationName;
     string webhookUrl;
     string emailTemplate;
-    string modifiedBy;
+    UserId updatedBy;
 }

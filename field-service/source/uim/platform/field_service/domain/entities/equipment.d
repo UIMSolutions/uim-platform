@@ -30,8 +30,8 @@ struct Equipment {
     string lastServiceDate;
     string nextServiceDate;
     string measuringPoint;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

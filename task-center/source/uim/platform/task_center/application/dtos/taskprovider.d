@@ -15,7 +15,7 @@ struct CreateTaskProviderRequest {
     string endpointUrl;
     string authEndpointUrl;
     string clientId;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateTaskProviderRequest {
@@ -26,5 +26,5 @@ struct UpdateTaskProviderRequest {
     string endpointUrl;
     string authEndpointUrl;
     string clientId;
-    string modifiedBy;
+    UserId updatedBy;
 }

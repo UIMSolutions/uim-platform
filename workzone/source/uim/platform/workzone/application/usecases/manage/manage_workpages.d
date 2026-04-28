@@ -50,7 +50,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateWorkpage(UpdateWorkpageRequest req) {
     auto page = repo.findById(req.id, req.tenantId);
-    if (page is null)
+    if (page.isNull)
       return CommandResult(false, "", "Page not found");
 
     if (req.title.length > 0)

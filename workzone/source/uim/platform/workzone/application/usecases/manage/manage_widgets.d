@@ -51,7 +51,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateWidget(UpdateWidgetRequest req) {
     auto w = repo.findById(req.id, req.tenantId);
-    if (w is null)
+    if (w.isNull)
       return CommandResult(false, "", "Widget not found");
 
     if (req.title.length > 0)

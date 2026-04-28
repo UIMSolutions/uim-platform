@@ -17,8 +17,8 @@ classDiagram
         +bool isShared
         +string sharedWithOrgs
         +bool clientAuthEnabled
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +string createdAt
         +string updatedAt
     }
@@ -33,7 +33,7 @@ classDiagram
         +KeyStatus status
         +string publicKeyFingerprint
         +string csrPem
-        +string createdBy
+        +UserId createdBy
         +string createdAt
     }
 
@@ -53,7 +53,7 @@ classDiagram
         +string validFrom
         +string validTo
         +string activatedAt
-        +string createdBy
+        +UserId createdBy
         +string createdAt
     }
 
@@ -69,8 +69,8 @@ classDiagram
         +bool hstsEnabled
         +long hstsMaxAge
         +bool hstsIncludeSubDomains
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +string createdAt
         +string updatedAt
     }
@@ -86,7 +86,7 @@ classDiagram
         +string applicationName
         +string organizationId
         +string spaceId
-        +string createdBy
+        +UserId createdBy
         +string createdAt
         +string updatedAt
     }
@@ -104,7 +104,7 @@ classDiagram
         +ClientAuthMode authMode
         +string validFrom
         +string validTo
-        +string createdBy
+        +UserId createdBy
         +string createdAt
     }
 
@@ -118,7 +118,7 @@ classDiagram
         +int ttl
         +DnsValidationStatus validationStatus
         +string lastValidatedAt
-        +string createdBy
+        +UserId createdBy
         +string createdAt
         +string updatedAt
     }

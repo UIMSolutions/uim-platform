@@ -23,8 +23,8 @@ struct Skill {
     string expirationDate;
     string certificationNumber;
     string issuingAuthority;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

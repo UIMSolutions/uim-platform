@@ -19,7 +19,7 @@ struct Label {
   string resourceId; // ID of the labeled resource
   string key; // label key, e.g. "costCenter", "project"
   string[] values; // one or more values for this key
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

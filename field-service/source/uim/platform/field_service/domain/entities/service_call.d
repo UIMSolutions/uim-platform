@@ -33,8 +33,8 @@ struct ServiceCall {
   string address;
   string latitude;
   string longitude;
-  string createdBy;
-  string modifiedBy;
+  UserId createdBy;
+  UserId modifiedBy;
   string createdAt;
   string updatedAt;
 

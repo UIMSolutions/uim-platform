@@ -50,7 +50,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateChannel(UpdateChannelRequest req) {
     auto ch = repo.findById(req.id, req.tenantId);
-    if (ch is null)
+    if (ch.isNull)
       return CommandResult(false, "", "Channel not found");
 
     if (req.name.length > 0)

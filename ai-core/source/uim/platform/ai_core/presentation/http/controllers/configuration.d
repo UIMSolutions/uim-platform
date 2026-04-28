@@ -19,7 +19,7 @@ class ConfigurationController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v2/lm/configurations", &handleList);
     router.get("/api/v2/lm/configurations/*", &handleGet);
     router.post("/api/v2/lm/configurations", &handleCreate);
@@ -40,9 +40,10 @@ class ConfigurationController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Configuration created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Configuration created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -66,22 +67,25 @@ class ConfigurationController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
         // Parameter bindings
-        auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv.value)).array.toJson;
-        auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia.artifactId)).array.toJson;
+        auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv
+            .value)).array.toJson;
+        auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia
+            .artifactId)).array.toJson;
 
         jarr ~= Json.emptyObject
-        .set("id", c.id)
-        .set("scenarioId", c.scenarioId)
-        .set("executableId", c.executableId)
-        .set("name", c.name)
-        .set("createdAt", c.createdAt)
-        .set("parameterBindings", pbArr)
-        .set("inputArtifactBindings", iaArr);
+          .set("id", c.id)
+          .set("scenarioId", c.scenarioId)
+          .set("executableId", c.executableId)
+          .set("name", c.name)
+          .set("createdAt", c.createdAt)
+          .set("parameterBindings", pbArr)
+          .set("inputArtifactBindings", iaArr);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(configs.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", configs.length) 
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,12 +105,13 @@ class ConfigurationController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(c.id);
-      resp["scenarioId"] = Json(c.scenarioId);
-      resp["executableId"] = Json(c.executableId);
-      resp["name"] = Json(c.name);
-      resp["createdAt"] = Json(c.createdAt);
+      auto resp = Json.emptyObject
+        .set("id", c.id)
+        .set("scenarioId", c.scenarioId)
+        .set("executableId", c.executableId)
+        .set("name", c.name)
+        .set("createdAt", c.createdAt);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

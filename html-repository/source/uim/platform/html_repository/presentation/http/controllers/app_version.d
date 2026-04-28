@@ -89,7 +89,7 @@ class AppVersionController : PlatformController {
         return;
       }
       auto entry = uc.getById(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Version not found");
         return;
       }

@@ -21,7 +21,7 @@ struct IntegrationScenario {
   SystemType targetSystemType;
   string[] prerequisites; // prerequisite descriptions
   ScenarioStepTemplate[] stepTemplates; // ordered step definitions
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
 }

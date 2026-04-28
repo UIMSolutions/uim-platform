@@ -24,7 +24,7 @@ struct CreateCustomDomainRequest {
     string organizationId;
     string spaceId;
     string environment;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateCustomDomainRequest {
@@ -36,7 +36,7 @@ struct UpdateCustomDomainRequest {
     bool isShared;
     string sharedWithOrgs;
     bool clientAuthEnabled;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Private Key ---
@@ -48,7 +48,7 @@ struct CreatePrivateKeyRequest {
     string[] domains;
     string algorithm;
     int keySize;
-    string createdBy;
+    UserId createdBy;
 }
 
 // --- Certificate ---
@@ -58,7 +58,7 @@ struct CreateCertificateRequest {
     string id;
     string keyId;
     string certificateType;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UploadCertificateChainRequest {
@@ -86,7 +86,7 @@ struct CreateTlsConfigurationRequest {
     bool hstsEnabled;
     long hstsMaxAge;
     bool hstsIncludeSubDomains;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateTlsConfigurationRequest {
@@ -100,7 +100,7 @@ struct UpdateTlsConfigurationRequest {
     bool hstsEnabled;
     long hstsMaxAge;
     bool hstsIncludeSubDomains;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Domain Mapping ---
@@ -115,7 +115,7 @@ struct CreateDomainMappingRequest {
     string applicationName;
     string organizationId;
     string spaceId;
-    string createdBy;
+    UserId createdBy;
 }
 
 // --- Trusted Certificate ---
@@ -126,7 +126,7 @@ struct CreateTrustedCertificateRequest {
     string customDomainId;
     string certificatePem;
     string authMode;
-    string createdBy;
+    UserId createdBy;
 }
 
 // --- DNS Record ---
@@ -139,7 +139,7 @@ struct CreateDnsRecordRequest {
     string hostname;
     string value;
     int ttl;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDnsRecordRequest {

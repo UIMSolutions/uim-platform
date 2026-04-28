@@ -30,7 +30,7 @@ struct EnvironmentInstance {
   int memoryQuotaMb = 0; // for CF: org memory quota
   int routeQuota = 0;
   int serviceQuota = 0;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
   string[string] parameters; // provisioning parameters

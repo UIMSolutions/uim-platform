@@ -21,6 +21,6 @@ struct AppRoute {
   RouteStatus status;
   long createdAt;
   long updatedAt;
-  string createdBy;
-  string modifiedBy;
+  UserId createdBy;
+  UserId modifiedBy;
 }

@@ -25,8 +25,8 @@ struct Assignment {
   string schedulingPolicy;
   string matchScore;
   string notes;
-  string createdBy;
-  string modifiedBy;
+  UserId createdBy;
+  UserId modifiedBy;
   string createdAt;
   string updatedAt;
 

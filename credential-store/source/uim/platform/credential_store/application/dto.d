@@ -10,7 +10,7 @@ struct CreateNamespaceRequest {
   TenantId tenantId;
   string name;
   string description;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateNamespaceRequest {
@@ -27,7 +27,7 @@ struct CreateCredentialRequest {
   string metadata;
   string format;
   string username;
-  string createdBy;
+  UserId createdBy;
   string ifNoneMatch; // "*" = create only, empty = create or update
 }
 
@@ -36,7 +36,7 @@ struct UpdateCredentialRequest {
   string metadata;
   string format;
   string username;
-  string modifiedBy;
+  UserId modifiedBy;
   string ifMatch;    // "*" = update only, "<id>" = conditional update
 }
 
@@ -62,7 +62,7 @@ struct CreateKeyringRequest {
   string metadata;
   string format;
   int rotationPeriodDays;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct RotateKeyringRequest {
@@ -123,7 +123,7 @@ struct CreateServiceBindingRequest {
   string permission;       // "readOnly", "readWrite", "admin"
   string[] allowedNamespaces;
   long expiresAt;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateServiceBindingRequest {

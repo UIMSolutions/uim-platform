@@ -87,7 +87,7 @@ class ChannelController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto ch = useCase.getChannel(tenantId, id);
-      if (ch is null) {
+      if (ch.isNull) {
         writeError(res, 404, "Channel not found");
         return;
       }

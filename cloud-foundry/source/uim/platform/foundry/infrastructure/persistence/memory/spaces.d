@@ -19,19 +19,19 @@ mixin(ShowModule!());
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
 
   bool existsByName(TenantId tenantId, OrgId orgId, string name) {
-    return findByName(tenantId, orgId, name) !is null;
+    return findByTenant(tenantId).any!(e => e.orgId == orgId && e.name == name);
   }
 
   Space findByName(TenantId tenantId, OrgId orgId, string name) {
-    foreach (e; findByTenant)
-      if (e.tenantId == tenantId && e.orgId == orgId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.orgId == orgId && e.name == name)
         return e;
-    return null;
+    return Space.init;
   }
   
   void removeByName(TenantId tenantId, OrgId orgId, string name) {
     auto e = findByName(tenantId, orgId, name);
-    if (e !is null)
+    if (!e.isNull)
       remove(e);
   }
 

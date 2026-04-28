@@ -79,7 +79,7 @@ class ExternalContentProviderController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto p = useCase.getProvider(tenantId, id);
-      if (p is null) {
+      if (p.isNull) {
         writeError(res, 404, "Provider not found");
         return;
       }

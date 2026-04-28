@@ -82,7 +82,7 @@ class CardController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto c = useCase.getCard(tenantId, id);
-      if (c is null) {
+      if (c.isNull) {
         writeError(res, 404, "Card not found");
         return;
       }

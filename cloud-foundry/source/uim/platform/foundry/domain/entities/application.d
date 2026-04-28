@@ -34,4 +34,29 @@ struct Application {
   string dockerCredentials;
   int runningInstances; // actual running instance count
   long stagedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("state", state.to!string)
+      .set("instances", instances)
+      .set("memoryMb", memoryMb)
+      .set("diskMb", diskMb)
+      .set("buildpackId", buildpackId)
+      .set("detectedBuildpack", detectedBuildpack)
+      .set("stack", stack)
+      .set("command", command)
+      .set("healthCheckType", healthCheckType.to!string)
+      .set("healthCheckEndpoint", healthCheckEndpoint)
+      .set("healthCheckTimeoutSec", healthCheckTimeoutSec)
+      .set("environmentVariables", environmentVariables)
+      .set("dockerImage", dockerImage)
+      .set("dockerCredentials", dockerCredentials)
+      .set("runningInstances", runningInstances)
+      .set("stagedAt", stagedAt);
+
+  }
 }
+
+

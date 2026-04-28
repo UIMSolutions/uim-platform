@@ -13,7 +13,7 @@ struct ApplicationGroup {
     ApplicationGroupScope scope_ = ApplicationGroupScope.global;
     string[] applicationIds;
     bool isActive = true;
-    string createdBy;
+    UserId createdBy;
     long createdAt;
     long updatedAt;
 }

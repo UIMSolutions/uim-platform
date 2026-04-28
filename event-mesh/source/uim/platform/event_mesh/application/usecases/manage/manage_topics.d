@@ -54,7 +54,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(TopicDTO dto) {
         auto existing = repo.findById(TopicId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Topic not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -67,7 +67,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(TopicId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Topic not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

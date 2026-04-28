@@ -74,7 +74,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
     auto updated = *existing;
@@ -108,7 +108,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSystem(SystemConnectionId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
     repo.removeById(tenantId, id);
@@ -118,7 +118,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
   /// Test a system connection (simulated).
   CommandResult testConnection(SystemConnectionId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
-    if (sys is null)
+    if (sys.isNull)
       return CommandResult(false, "", "System not found");
 
     // Simulate connection test — in production, would actually ping the system

@@ -21,8 +21,8 @@ struct Catalog {
     string tags;
     string version_;
     string commandCount;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

@@ -71,7 +71,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 
     auto updated = *existing;
@@ -97,7 +97,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteScenario(ScenarioId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 
     repo.removeById(tenantId, id);

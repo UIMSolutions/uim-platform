@@ -61,7 +61,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
 
   CommandResult updateContent(UpdateContentRequest req) {
     auto item = repo.findById(req.id, req.tenantId);
-    if (item is null)
+    if (item.isNull)
       return CommandResult(false, "", "Content not found");
 
     if (req.title.length > 0)
@@ -84,7 +84,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
 
   CommandResult publishContent(ContentId tenantId, id tenantId) {
     auto item = repo.findById(tenantId, id);
-    if (item is null)
+    if (item.isNull)
       return CommandResult(false, "", "Content not found");
 
     item.status = ContentStatus.published;

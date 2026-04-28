@@ -20,7 +20,7 @@ struct CreateEventSubscriptionRequest {
   bool exactTypeMatching;
   string[string] filterAttributes;
   string[string] labels;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateEventSubscriptionRequest {

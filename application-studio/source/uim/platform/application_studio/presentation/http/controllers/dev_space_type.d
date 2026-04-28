@@ -20,6 +20,7 @@ class DevSpaceTypeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/application-studio/dev-space-types", &handleList);
         router.get("/api/v1/application-studio/dev-space-types/*", &handleGet);
         router.post("/api/v1/application-studio/dev-space-types", &handleCreate);
@@ -32,9 +33,10 @@ class DevSpaceTypeController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= e.devSpaceTypeToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -70,9 +72,10 @@ class DevSpaceTypeController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dev space type created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Dev space type created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -96,9 +99,10 @@ class DevSpaceTypeController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dev space type updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Dev space type updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -115,8 +119,9 @@ class DevSpaceTypeController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(DevSpaceTypeId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Dev space type deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Dev space type deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

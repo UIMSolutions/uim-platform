@@ -21,7 +21,7 @@ struct ExportJob {
   ExportStatus status = ExportStatus.pending;
   string exportedFilePath;
   long exportedSizeBytes;
-  string createdBy;
+  UserId createdBy;
   long startedAt;
   long completedAt;
   string errorMessage;

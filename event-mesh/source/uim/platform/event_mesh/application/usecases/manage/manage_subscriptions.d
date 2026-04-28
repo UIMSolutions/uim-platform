@@ -61,7 +61,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(SubscriptionDTO dto) {
         auto existing = repo.findById(SubscriptionId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Subscription not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -74,7 +74,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(SubscriptionId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Subscription not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

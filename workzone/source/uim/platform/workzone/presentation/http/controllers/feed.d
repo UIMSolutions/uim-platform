@@ -83,7 +83,7 @@ class FeedController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto entry = useCase.getEntry(tenantId, id);
-      if (entry is null) {
+      if (entry.isNull) {
         writeError(res, 404, "Feed entry not found");
         return;
       }

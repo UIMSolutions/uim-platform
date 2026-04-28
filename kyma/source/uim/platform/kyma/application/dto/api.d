@@ -22,7 +22,7 @@ struct CreateApiRuleRequest {
   string[] corsAllowMethods;
   string[] corsAllowHeaders;
   string[string] labels;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateApiRuleRequest {

@@ -23,5 +23,5 @@ struct ServiceBinding {
   string[] allowedNamespaces; // empty = all namespaces
   long createdAt;
   long expiresAt;
-  string createdBy;
+  UserId createdBy;
 }

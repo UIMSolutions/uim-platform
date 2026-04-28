@@ -16,7 +16,7 @@ struct CreateServiceInstanceRequest {
     string externalName;
     string parametersJson;
     string[string] labels;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateServiceInstanceRequest {

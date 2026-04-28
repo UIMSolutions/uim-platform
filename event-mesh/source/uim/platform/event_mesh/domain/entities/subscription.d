@@ -29,8 +29,8 @@ struct EventSubscription {
     string maxTtl;
     string lastMessageTime;
     string messageCount;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
     string createdAt;
     string updatedAt;
 

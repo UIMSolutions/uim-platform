@@ -59,7 +59,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(EventApplicationDTO dto) {
         auto existing = repo.findById(EventApplicationId(dto.id));
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event application not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -75,7 +75,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(EventApplicationId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event application not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

@@ -105,7 +105,7 @@ class ContentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto item = useCase.getContent(tenantId, id);
-      if (item is null) {
+      if (item.isNull) {
         writeError(res, 404, "Content not found");
         return;
       }

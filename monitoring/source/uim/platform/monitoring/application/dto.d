@@ -48,7 +48,7 @@ struct CreateMetricDefinitionRequest {
   string category; // "cpu", "memory", "custom", etc.
   string unit; // "percent", "bytes", "milliseconds", etc.
   string aggregation; // "average", "sum", "min", "max", "last"
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateMetricDefinitionRequest {
@@ -101,7 +101,7 @@ struct CreateHealthCheckRequest {
   double warningThreshold;
   double criticalThreshold;
   string thresholdOperator;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateHealthCheckRequest {
@@ -142,7 +142,7 @@ struct CreateAlertRuleRequest {
   int consecutiveBreaches;
   string severity; // "info", "warning", "critical", "fatal"
   NotificationChannelId[] channelIds;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateAlertRuleRequest {
@@ -192,7 +192,7 @@ struct CreateNotificationChannelRequest {
   int onPremisePort;
   string onPremiseProtocol;
 
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateNotificationChannelRequest {

@@ -13,7 +13,7 @@ struct CreateOrgRequest {
   int totalRoutes;
   int totalServices;
   int totalAppInstances;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct UpdateOrgRequest {

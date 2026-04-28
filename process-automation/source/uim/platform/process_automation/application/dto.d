@@ -21,7 +21,7 @@ struct CreateProcessRequest {
     string description;
     string category;
     string version_;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateProcessRequest {
@@ -31,7 +31,7 @@ struct UpdateProcessRequest {
     string description;
     string category;
     string version_;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 struct DeployProcessRequest {
@@ -117,7 +117,7 @@ struct CreateDecisionRequest {
     string type;
     string hitPolicy;
     string version_;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateDecisionRequest {
@@ -127,7 +127,7 @@ struct UpdateDecisionRequest {
     string description;
     string hitPolicy;
     string version_;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Form ---
@@ -139,7 +139,7 @@ struct CreateFormRequest {
     string name;
     string description;
     string version_;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateFormRequest {
@@ -148,7 +148,7 @@ struct UpdateFormRequest {
     string name;
     string description;
     string version_;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Automation (RPA Bot) ---
@@ -162,7 +162,7 @@ struct CreateAutomationRequest {
     string type;
     string targetApplication;
     string version_;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateAutomationRequest {
@@ -173,7 +173,7 @@ struct UpdateAutomationRequest {
     string type;
     string targetApplication;
     string version_;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 struct RunAutomationRequest {
@@ -196,7 +196,7 @@ struct CreateTriggerRequest {
     string eventType;
     string eventSource;
     string filterExpression;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateTriggerRequest {
@@ -224,7 +224,7 @@ struct CreateActionRequest {
     string authType;
     string destinationName;
     string version_;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateActionRequest {
@@ -237,7 +237,7 @@ struct UpdateActionRequest {
     string authType;
     string destinationName;
     string version_;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Visibility (Process Monitoring) ---
@@ -250,7 +250,7 @@ struct CreateVisibilityRequest {
     string dashboardType;
     string[] processIds;
     string refreshIntervalSeconds;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateVisibilityRequest {
@@ -259,7 +259,7 @@ struct UpdateVisibilityRequest {
     string name;
     string description;
     string refreshIntervalSeconds;
-    string modifiedBy;
+    UserId modifiedBy;
 }
 
 // --- Artifact Store ---

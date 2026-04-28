@@ -13,7 +13,7 @@ struct CreateRouteRequest {
   string path;
   int port;
   RouteProtocol protocol;
-  string createdBy;
+  UserId createdBy;
 }
 
 struct MapRouteRequest {

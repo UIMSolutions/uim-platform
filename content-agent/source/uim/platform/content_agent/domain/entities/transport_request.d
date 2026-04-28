@@ -22,7 +22,7 @@ struct TransportRequest {
   TransportMode mode = TransportMode.cloudTransportManagement;
   ContentPackageId[] packageIds;
   TransportQueueId queueId;
-  string createdBy;
+  UserId createdBy;
   long createdAt;
   long updatedAt;
   long releasedAt;

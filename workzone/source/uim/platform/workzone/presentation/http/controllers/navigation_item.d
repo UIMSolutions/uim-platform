@@ -85,7 +85,7 @@ class NavigationItemController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto n = useCase.getNavigationItem(tenantId, id);
-      if (n is null) {
+      if (n.isNull) {
         writeError(res, 404, "Navigation item not found");
         return;
       }

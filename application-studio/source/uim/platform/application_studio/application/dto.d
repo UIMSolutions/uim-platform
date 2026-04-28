@@ -24,8 +24,8 @@ struct DevSpaceDTO {
     string hibernateAfterDays;
     string memoryLimit;
     string diskLimit;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct DevSpaceTypeDTO {
@@ -38,8 +38,8 @@ struct DevSpaceTypeDTO {
     string supportedProjectTypes;
     string runtimeStack;
     string iconUrl;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct ExtensionDTO {
@@ -55,8 +55,8 @@ struct ExtensionDTO {
     string dependencies;
     string capabilities;
     string iconUrl;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct ProjectDTO {
@@ -71,8 +71,8 @@ struct ProjectDTO {
     string gitRepositoryUrl;
     string gitBranch;
     string namespace_;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct ProjectTemplateDTO {
@@ -87,8 +87,8 @@ struct ProjectTemplateDTO {
     string scaffoldConfig;
     string defaultFiles;
     string iconUrl;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct ServiceBindingDTO {
@@ -103,8 +103,8 @@ struct ServiceBindingDTO {
     string authType;
     string credentials;
     string systemAlias;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct RunConfigurationDTO {
@@ -119,8 +119,8 @@ struct RunConfigurationDTO {
     string environmentVars;
     string port;
     string debugPort;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }
 
 struct BuildConfigurationDTO {
@@ -134,6 +134,6 @@ struct BuildConfigurationDTO {
     string deployCommand;
     string artifactPath;
     string mtaDescriptor;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 }

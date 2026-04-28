@@ -43,7 +43,7 @@ class OperationController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, OperationId(id));
-            if (e is null) { writeError(res, 404, "Operation not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Operation not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value)
                 .set("resourceId", e.resourceId)

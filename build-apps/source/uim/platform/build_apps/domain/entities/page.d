@@ -27,8 +27,8 @@ struct Page {
     bool isStartPage;
     string createdAt;
     string updatedAt;
-    string createdBy;
-    string modifiedBy;
+    UserId createdBy;
+    UserId modifiedBy;
 
     Json pageToJson() {
         return Json.emptyObject

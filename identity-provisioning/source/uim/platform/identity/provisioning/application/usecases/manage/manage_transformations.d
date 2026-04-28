@@ -72,7 +72,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Transformation not found");
 
     auto updated = *existing;
@@ -98,7 +98,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteTransformation(TransformationId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Transformation not found");
 
     repo.removeById(tenantId, id);

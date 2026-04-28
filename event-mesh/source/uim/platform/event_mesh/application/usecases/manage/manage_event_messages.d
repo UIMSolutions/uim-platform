@@ -61,7 +61,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
 
     CommandResult acknowledge(EventMessageId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event message not found");
         existing.status = MessageStatus.acknowledged;
         repo.update(*existing);
@@ -70,7 +70,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(EventMessageId id) {
         auto existing = repo.findById(id);
-        if (existing is null)
+        if (existing.isNull)
             return CommandResult(false, "", "Event message not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

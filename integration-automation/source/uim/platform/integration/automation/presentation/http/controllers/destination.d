@@ -94,7 +94,7 @@ class DestinationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto dest = useCase.getDestination(tenantId, id);
-      if (dest is null) {
+      if (dest.isNull) {
         writeError(res, 404, "Destination not found");
         return;
       }

@@ -59,7 +59,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateUserProfile(UpdateUserProfileRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "User profile not found");
 
     if (req.displayName.length > 0)
@@ -78,7 +78,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteUserProfile(UserProfileId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
-    if (p is null)
+    if (p.isNull)
       return CommandResult(false, "", "User profile not found");
 
     repo.removeById(tenantId, id);

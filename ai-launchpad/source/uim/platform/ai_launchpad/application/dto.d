@@ -291,7 +291,7 @@ struct CreatePromptRequest {
   double frequencyPenalty;
   double presencePenalty;
   string[] inputParams;
-  string createdBy;
+  UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject

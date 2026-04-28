@@ -104,7 +104,7 @@ class ObjectController : PlatformController {
         return;
 
       auto obj = uc.getObject(id);
-      if (obj is null || obj.id.isEmpty) {
+      if (obj.isNull || obj.id.isEmpty) {
         writeError(res, 404, "Object not found");
         return;
       }

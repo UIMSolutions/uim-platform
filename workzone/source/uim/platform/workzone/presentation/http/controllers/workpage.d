@@ -81,7 +81,7 @@ class WorkpageController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto page = useCase.getWorkpage(tenantId, id);
-      if (page is null) {
+      if (page.isNull) {
         writeError(res, 404, "Page not found");
         return;
       }

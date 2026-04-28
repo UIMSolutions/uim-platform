@@ -24,7 +24,7 @@ struct RegisteredApplication {
     string contactEmail;
     string contactName;
     string registeredBy;
-    string modifiedBy;
+    UserId modifiedBy;
     string registeredAt;
 
     Json toJson() const {

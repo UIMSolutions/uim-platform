@@ -82,7 +82,7 @@ class ThemeController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto t = useCase.getTheme(tenantId, id);
-      if (t is null) {
+      if (t.isNull) {
         writeError(res, 404, "Theme not found");
         return;
       }

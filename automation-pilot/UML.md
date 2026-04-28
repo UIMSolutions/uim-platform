@@ -15,8 +15,8 @@ classDiagram
         +string version_
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +catalogToJson() Json
     }
 
@@ -37,8 +37,8 @@ classDiagram
         +string tags
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +commandToJson() Json
     }
 
@@ -55,8 +55,8 @@ classDiagram
         +string commandId
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +commandInputToJson() Json
     }
 
@@ -75,8 +75,8 @@ classDiagram
         +string durationMs
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +executionToJson() Json
     }
 
@@ -96,8 +96,8 @@ classDiagram
         +string retryDelay
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +scheduledExecutionToJson() Json
     }
 
@@ -116,8 +116,8 @@ classDiagram
         +string lastTriggeredAt
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +triggerToJson() Json
     }
 
@@ -133,8 +133,8 @@ classDiagram
         +string lastUsedAt
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +serviceAccountToJson() Json
     }
 
@@ -153,8 +153,8 @@ classDiagram
         +string lastRestoreAt
         +string createdAt
         +string updatedAt
-        +string createdBy
-        +string modifiedBy
+        +UserId createdBy
+        +UserId modifiedBy
         +contentConnectorToJson() Json
     }
 

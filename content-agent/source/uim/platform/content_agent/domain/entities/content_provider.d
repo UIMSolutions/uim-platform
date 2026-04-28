@@ -39,7 +39,7 @@ struct ContentProvider {
   string authToken;
   ProviderStatus status = ProviderStatus.active;
   ProvidedContentType[] contentTypes;
-  string createdBy;
+  UserId createdBy;
   long registeredAt;
   long lastSyncAt;
 

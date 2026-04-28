@@ -56,7 +56,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateCard(UpdateCardRequest req) {
     auto c = repo.findById(req.tenantId, req.id);
-    if (c is null)
+    if (c.isNull)
       return CommandResult(false, "", "Card not found");
 
     if (req.title.length > 0)
