@@ -18,10 +18,6 @@ mixin(ShowModule!());
 @safe:
 class MemoryEnvironmentRepository :TenantRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
 
-  KymaEnvironment[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
-  }
-
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }

@@ -14,16 +14,36 @@ import uim.platform.master_data_integration.domain.ports.repositories.filter_rul
 
 class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), FilterRuleRepository {
 
-  FilterRule[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
+
+  FilterRule[] filterByCategory(FilterRule[] rules, MasterDataCategory category) {
+    return rules.filter!(e => e.category == category).array;
   }
 
   FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
+    return filterByCategory(findByTenant(tenantId), category);
+  }
+
+  void removeByCategory(TenantId tenantId, MasterDataCategory category) {
+    findByCategory(tenantId, category).each!(e => remove(e));
+  }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+
+  FilterRule[] filterActive(FilterRule[] rules) {
+    return rules.filter!(e => e.isActive).array;
   }
 
   FilterRule[] findActive(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.isActive).array;
+    return filterActive(findByTenant(tenantId));
+  }
+
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(e => remove(e));
   }
 
 }

@@ -15,6 +15,9 @@ import std.array : array;
 class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
 
+  bool existsByBundleId(string bundleId) {
+    return findByBundleId(bundleId).id != MobileAppId.init;
+  }
   MobileApp findByBundleId(string bundleId) {
     foreach (a; findAll) {
       if (a.bundleId == bundleId)
@@ -23,12 +26,14 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     return MobileApp.init;
   }
 
-  MobileApp[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(a => a.tenantId == tenantId).array;
+  size_t countByPlatform(TenantId tenantId, AppPlatform platform) {
+    return findByPlatform(tenantId, platform).length;
   }
-
+  MobileApp[] filterByPlatform(MobileApp[] apps, AppPlatform platform) {
+    return apps.filter!(e => e.platform == platform).array;
+  }
   MobileApp[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-    return findByTenant(tenantId).filter!(a => a.platform == platform).array;
+    return filterByPlatform(findByTenant(tenantId), platform);
   }
 
   void save(MobileApp app) {

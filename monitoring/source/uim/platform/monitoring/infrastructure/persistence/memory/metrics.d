@@ -17,89 +17,92 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricRepository {
-  private Metric[MetricId][TenantId] store;
 
-  bool existsByTenant(string tenantId) {
-    return existsByTenant(TenantId(tenantId));
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    return findByResource(tenantId, resourceId).length;
   }
-
-  bool existsByTenant(TenantId tenantId) {
-    return (tenantId in store) ? true : false;
-  }
-
-
-
-  Metric findById(MetricId id) {
-    foreach (tenantId, metrics; findAll) {
-      if (id in metrics)
-        return metrics[id];
-    }
-    return Metric.init;
-  }
-
-  Metric findById(string tenantId, string id) {
-    return findById(TenantId(tenantId), MetricId(id));
-  }
-
-  Metric findById(TenantId tenantId, MetricId id) {
-    return existsById(tenantId, id) ? store[tenantId][id] : Metric.init;
-  }
-
-  Metric[] findByTenant(string tenantId) {
-    return findByTenant(TenantId(tenantId));
-  }
-
-  Metric[] findByTenant(TenantId tenantId) {
-    return existsByTenant(tenantId) ? store[tenantId].byValue.array : null;
-  }
-
+  Metric[] filterByResource(Metric[] metrics, MonitoredResourceId resourceId) {
+    return metrics.filter!(m => m.resourceId == resourceId).array;
+  } 
   Metric[] findByResource(string tenantId, MonitoredResourceId resourceId) {
-    return findByResource(TenantId(tenantId), resourceId);
+    return filterByResource(findByTenant(TenantId(tenantId)), resourceId);
+  }
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    findByResource(tenantId, resourceId).each!(m => remove(m));
   }
 
+  size_t countByName(TenantId tenantId, string metricName) {
+    return findByName(tenantId, metricName).length;
+  }
+  Metric[] filterByName(Metric[] metrics, string metricName) {
+    return metrics.filter!(m => m.name == metricName).array;
+  }
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return findByTenant(tenantId).filter!(m => m.resourceId == resourceId).array;
+    return filterByResource(findByTenant(tenantId), resourceId);
+  }
+  void removeByName(TenantId tenantId, string metricName) {
+    findByName(tenantId, metricName).each!(m => remove(m));
   }
 
+  size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    return findByResourceAndName(tenantId, resourceId, metricName).length;
+  }
+  Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array;
+  }
+  Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    return filterByResourceAndName(findByTenant(tenantId), resourceId, metricName);
+  }
+  void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    findByResourceAndName(tenantId, resourceId, metricName).each!(m => remove(m));
+  }
+
+  size_t countInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    return findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).length;
+  }
+  Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
+  }   
   Metric[] findByName(string tenantId, string metricName) {
     return findByName(TenantId(tenantId), metricName);
   }
-
-  Metric[] findByName(TenantId tenantId, string metricName) {
-    return findByTenant(tenantId).filter!(m => m.name == metricName).array;
+  void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).each!(m => remove(m));
   }
 
-  Metric[] findByResourceAndName(string tenantId, string resourceId, string metricName) {
-    return findByResourceAndName(TenantId(tenantId), MonitoredResourceId(resourceId), metricName);
+  size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    return findByResourceAndName(tenantId, resourceId, metricName).length;
+  }
+  Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
+    return metrics.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId && m.name == metricName).array;
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return findByResource(tenantId, resourceId).filter!(m => m.name == metricName).array;
   }
+  void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    findByResourceAndName(tenantId, resourceId, metricName).each!(m => remove(m));
+  }
 
+  size_t countInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    return findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).length;
+  }
+  Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
+  }
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
       string metricName, long startTime, long endTime) {
     return findByResourceAndName(tenantId, resourceId, metricName).filter!(m => m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
-
-  void save(Metric m) {
-    if (!existsByTenant(m.tenantId)) {
-      Metric[MetricId] metrics;
-      store[m.tenantId] = metrics;
-    }
-    store[m.tenantId][m.id] = m;
-  }
-
-  void saveAll(Metric[] metrics) {
-    foreach (m; metrics)
-      save(m);
+  void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
+    findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).each!(m => remove(m));
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     if (!existsByTenant(tenantId))
       return;
 
-    auto metrics = store[tenantId];
+    auto metrics = findByTenant(tenantId).assocArray!(m => m.id);
     foreach (id, metric; metrics) {
       if (metric.timestamp < beforeTimestamp) {
         metrics.remove(id);

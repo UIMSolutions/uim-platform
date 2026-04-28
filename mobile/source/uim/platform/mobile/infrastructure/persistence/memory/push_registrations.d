@@ -14,6 +14,9 @@ import std.array : array;
 
 class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, PushRegistrationId), PushRegistrationRepository {
   
+  bool existsByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId) {
+    return findByDeviceAndApp(deviceId, appId).id != PushRegistrationId.init;
+  }
 
   PushRegistration findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId) {
     foreach (r; findAll) {
@@ -23,36 +26,40 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
     return PushRegistration.init;
   }
 
-  PushRegistration[] findByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array;
-  }
-
-  PushRegistration[] findByTopic(MobileAppId appId, string topic) {
-    PushRegistration[] result;
-    foreach (r; findAll) {
-      if (r.appId == appId && r.topics.canFind(topic))
-        result ~= r;
-    }
-    return result;
-  }
-
-  PushRegistration[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array;
-  }
-
-  void save(PushRegistration reg) {
-    store[reg.id] = reg;
-  }
-
-  void update(PushRegistration reg) {
-    store[reg.id] = reg;
-  }
-
-  void remove(PushRegistrationId id) {
-    store.remove(id);
-  }
-
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array.length;
+    return findByApp(appId).length;
   }
+  PushRegistration[] filterByApp(PushRegistration[] registrations, MobileAppId appId) {
+    return registrations.filter!(r => r.appId == appId).array;
+  }
+  PushRegistration[] findByApp(MobileAppId appId) {
+    return filterByApp(findAll()().values.array, appId);
+  }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(r => remove(r));
+  }
+
+  size_t countByDevice(DeviceRegistrationId deviceId) {
+    return findByDevice(deviceId).length;
+  }
+  PushRegistration[] filterByDevice(PushRegistration[] registrations, DeviceRegistrationId deviceId) {
+    return registrations.filter!(r => r.deviceId == deviceId).array;
+  }
+  PushRegistration[] findByDevice(DeviceRegistrationId deviceId) {
+    return filterByDevice(findAll()().values.array, deviceId);
+  }
+  void removeByDevice(DeviceRegistrationId deviceId) {
+    findByDevice(deviceId).each!(r => remove(r));
+  }
+
+  size_t countByTopic(MobileAppId appId, string topic) {
+    return findByTopic(appId, topic).length;
+  }
+  PushRegistration[] filterByTopic(PushRegistration[] registrations, string topic) {
+    return registrations.filter!(r => r.topics.canFind(topic)).array;
+  }
+  PushRegistration[] findByTopic(MobileAppId appId, string topic) {
+    return filterByTopic(findByApp(appId), topic);
+  }
+
 }

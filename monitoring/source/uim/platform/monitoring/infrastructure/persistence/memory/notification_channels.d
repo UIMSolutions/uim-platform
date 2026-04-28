@@ -16,30 +16,38 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationChannelRepository :TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {
+class MemoryNotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {
 
+  size_t countByType(TenantId tenantId, NotificationChannelType channelType) {
+    return findByType(tenantId, channelType).length;
+  }
 
-  NotificationChannel[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  NotificationChannel[] filterByType(NotificationChannel[] channels, NotificationChannelType channelType) {
+    return channels.filter!(e => e.channelType == channelType).array;
   }
 
   NotificationChannel[] findByType(TenantId tenantId, NotificationChannelType channelType) {
     return findByTenant(tenantId).filter!(e => e.channelType == channelType).array;
   }
 
+  void removeByType(TenantId tenantId, NotificationChannelType channelType) {
+    findByType(tenantId, channelType).each!(e => remove(e));
+  }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+
+  NotificationChannel[] filterActive(NotificationChannel[] channels) {
+    return channels.filter!(e => e.state == ChannelState.active).array;
+  }
+
   NotificationChannel[] findActive(TenantId tenantId) {
     return findByTenant(tenantId).filter!(e => e.state == ChannelState.active).array;
   }
 
-  void save(NotificationChannel channel) {
-    store[channel.id] = channel;
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(e => remove(e));
   }
 
-  void update(NotificationChannel channel) {
-    store[channel.id] = channel;
-  }
-
-  void remove(NotificationChannelId id) {
-    store.remove(id);
-  }
 }

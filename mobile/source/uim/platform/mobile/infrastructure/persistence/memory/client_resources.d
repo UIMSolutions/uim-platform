@@ -12,46 +12,44 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryClientResourceRepository : TenantRepository!( ClientResourceRepository {
+class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientResourceId), ClientResourceRepository {
   
-
   bool existsByName(MobileAppId appId, string name) {
-    return store.any!(r => r.appId == appId && r.name == name);
+    return findAll()().any!(r => r.appId == appId && r.name == name);
   }
 
   ClientResource findByName(MobileAppId appId, string name) {
-      foreach (r; findAll) {
+      foreach (r; findAll()) {
         if (r.appId == appId && r.name == name)
         return r;
     }
     return ClientResource.init;
   }
 
+  size_t count() {
+    return findAll()().values.length;
+  }
+  ClientResource[] filterByApp(ClientResource[] resources, MobileAppId appId)  {
+    return resources.filter!(r => r.appId == appId).array;
+  }
   ClientResource[] findByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array;
+    return filterByApp(findAll()().values.array, appId);
+  }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(r => remove(r));
   }
 
+  size_t countByType(MobileAppId appId, ClientResourceType type) {
+    return findByType(appId, type).length;
+  }
+  ClientResource[] filterByType(ClientResource[] resources, ClientResourceType type) {
+    return resources.filter!(r => r.type == type).array;
+  }
   ClientResource[] findByType(MobileAppId appId, ClientResourceType type) {
-    return store.values.filter!(r => r.appId == appId && r.type == type).array;
+    return filterByType(findByApp(appId), type);
+  }
+  void removeByType(MobileAppId appId, ClientResourceType type) {
+    findByType(appId, type).each!(r => remove(r));
   }
 
-  ClientResource[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array;
-  }
-
-  void save(ClientResource resource) {
-    store[resource.id] = resource;
-  }
-
-  void update(ClientResource resource) {
-    store[resource.id] = resource;
-  }
-
-  void remove(ClientResourceId id) {
-    store.remove(id);
-  }
-
-  size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array.length;
-  }
 }

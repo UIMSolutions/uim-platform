@@ -18,36 +18,68 @@ mixin(ShowModule!());
 @safe:
 class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository {
 
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    return findByResource(tenantId, resourceId).length;
+  }
 
-  Alert[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  Alert[] filterByResource(Alert[] alerts, MonitoredResourceId resourceId) {
+    return alerts.filter!(e => e.resourceId == resourceId).array;
   }
 
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
+    return filterByResource(findByTenant(tenantId), resourceId);
+  }
+
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    findByResource(tenantId, resourceId).each!(e => remove(e));
+  }
+
+  size_t countByState(TenantId tenantId, AlertState state) {
+    return findByState(tenantId, state).length;
+  }
+
+  Alert[] filterByState(Alert[] alerts, AlertState state) {
+    return alerts.filter!(e => e.state == state).array;
   }
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    return findByTenant(tenantId).filter!(e => e.state == state).array;
+    return filterByState(findByTenant(tenantId), state);
+  }
+
+  void removeByState(TenantId tenantId, AlertState state) {
+    findByState(tenantId, state).each!(e => remove(e));
+  }
+
+  size_t countBySeverity(TenantId tenantId, AlertSeverity severity) {
+    return findBySeverity(tenantId, severity).length;
+  }
+
+  Alert[] filterBySeverity(Alert[] alerts, AlertSeverity severity) {
+    return alerts.filter!(e => e.severity == severity).array;
   }
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return findByTenant(tenantId).filter!(e => e.severity == severity).array;
+    return filterBySeverity(findByTenant(tenantId), severity);
+  }
+
+  void removeBySeverity(TenantId tenantId, AlertSeverity severity) {
+    findBySeverity(tenantId, severity).each!(e => remove(e));
+  }
+
+  size_t countByRule(TenantId tenantId, AlertRuleId ruleId) {
+    return findByRule(tenantId, ruleId).length;
+  }
+
+  Alert[] filterByRule(Alert[] alerts, AlertRuleId ruleId) {
+    return alerts.filter!(e => e.ruleId == ruleId).array;
   }
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    return findByTenant(tenantId).filter!(e => e.ruleId == ruleId).array;
+    return filterByRule(findByTenant(tenantId), ruleId);
   }
 
-  void save(Alert alert) {
-    store[alert.id] = alert;
+  void removeByRule(TenantId tenantId, AlertRuleId ruleId) {
+    findByRule(tenantId, ruleId).each!(e => remove(e));
   }
 
-  void update(Alert alert) {
-    store[alert.id] = alert;
-  }
-
-  void remove(AlertId id) {
-    store.remove(id);
-  }
 }

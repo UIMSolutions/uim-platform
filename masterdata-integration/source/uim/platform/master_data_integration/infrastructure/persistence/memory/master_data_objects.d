@@ -15,27 +15,61 @@ import uim.platform.master_data_integration.domain.ports.repositories.master_dat
 
 class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
 
-  MasterDataObject[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
+
+  MasterDataObject[] filterByCategory(MasterDataObject[] objects, MasterDataCategory category) {
+    return objects.filter!(e => e.category == category).array;
   }
 
   MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return findAll()r!(e => e.tenantId == tenantId && e.category == category).array;
+    return findByTenant(tenantId).filter!(e => e.category == category).array;
+  }
+
+  void removeByCategory(TenantId tenantId, MasterDataCategory category) {
+    findByCategory(tenantId, category).each!(e => remove(e));
+  }
+
+  size_t countByDataModel(TenantId tenantId, DataModelId dataModelId) {
+    return findByDataModel(tenantId, dataModelId).length;
+  }
+
+  MasterDataObject[] filterByDataModel(MasterDataObject[] objects, DataModelId dataModelId) {
+    return objects.filter!(e => e.dataModelId == dataModelId).array;
   }
 
   MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId) {
-    return findAll()r!(e => e.tenantId == tenantId && e.dataModelId == dataModelId)
-      .array;
+    return findByTenant(tenantId).filter!(e => e.dataModelId == dataModelId).array;
+  }
+
+  void removeByDataModel(TenantId tenantId, DataModelId dataModelId) {
+    findByDataModel(tenantId, dataModelId).each!(e => remove(e));
+  }
+
+  size_t countBySourceSystem(TenantId tenantId, string sourceSystem) {
+    return findBySourceSystem(tenantId, sourceSystem).length;
+  }
+
+  MasterDataObject[] filterBySourceSystem(MasterDataObject[] objects, string sourceSystem) {
+    return objects.filter!(e => e.sourceSystem == sourceSystem).array;
   }
 
   MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    return findAll()r!(e => e.tenantId == tenantId
-        && e.sourceSystem == sourceSystem).array;
+    return findByTenant(tenantId).filter!(e => e.sourceSystem == sourceSystem).array;
+  }
+
+  void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
+    findBySourceSystem(tenantId, sourceSystem).each!(e => remove(e));
+  }
+
+  bool existsByGlobalId(TenantId tenantId, string globalId) {
+    return findByGlobalId(tenantId, globalId).id != MasterDataObjectId.init;
   }
 
   MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
-    foreach (obj; findAll()
-      if (obj.tenantId == tenantId && obj.globalId == globalId)
+    foreach (obj; findByTenant(tenantId)) {
+      if (obj.globalId == globalId)
         return obj;
     }
     return MasterDataObject.init;

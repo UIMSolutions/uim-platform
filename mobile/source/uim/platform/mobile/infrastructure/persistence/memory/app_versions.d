@@ -12,16 +12,7 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryAppVersionRepository : AppVersionRepository {
-  private AppVersion[AppVersionId] store;
-
-  bool existsById(AppVersionId id) {
-    return id in store ? true : false;
-  }
-
-  AppVersion findById(AppVersionId id) {
-    return existsById(id) ? store[id] : AppVersion.init;
-  }
+class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
   AppVersion findLatest(MobileAppId appId, AppPlatform platform) {
     AppVersion latest = AppVersion.init;
@@ -37,31 +28,33 @@ class MemoryAppVersionRepository : AppVersionRepository {
     return latest;
   }
 
-  AppVersion[] findByApp(MobileAppId appId) {
-    return store.values.filter!(v => v.appId == appId).array;
-  }
-
-  AppVersion[] findByStatus(MobileAppId appId, VersionStatus status) {
-    return findByApp(appId).filter!(v => v.status == status).array;
-  }
-
-  AppVersion[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(v => v.tenantId == tenantId).array;
-  }
-
-  void save(AppVersion ver) {
-    store[ver.id] = ver;
-  }
-
-  void update(AppVersion ver) {
-    store[ver.id] = ver;
-  }
-
-  void remove(AppVersionId id) {
-    store.remove(id);
-  }
-
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(v => v.appId == appId).array.length;
+    return findByApp(appId).length;
   }
+
+  AppVersion[] filterByApp(AppVersion[] versions, MobileAppId appId) {
+    return versions.filter!(v => v.appId == appId).array;
+  }
+
+  AppVersion[] findByApp(MobileAppId appId) {
+    return filterByApp(findAll(), appId);
+  }
+
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(v => remove(v));
+  }
+
+  size_t countByStatus(MobileAppId appId, VersionStatus status) {
+    return findByStatus(appId, status).length;
+  }
+  AppVersion[] filterByStatus(AppVersion[] versions, VersionStatus status) {
+    return versions.filter!(v => v.status == status).array;
+  }
+  AppVersion[] findByStatus(MobileAppId appId, VersionStatus status) {
+    return filterByStatus(findByApp(appId), status);
+  }
+  void removeByStatus(MobileAppId appId, VersionStatus status) {
+    findByStatus(appId, status).each!(v => remove(v));
+  }
+
 }

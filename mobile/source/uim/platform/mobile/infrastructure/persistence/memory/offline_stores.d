@@ -26,15 +26,17 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
     return OfflineStore.init;
   }
 
+  size_t countByApp(MobileAppId appId) {
+    return findByApp(appId).length;
+  }
+  OfflineStore[] filterByApp(OfflineStore[] stores, MobileAppId appId) {
+    return stores.filter!(s => s.appId == appId).array;
+  }
   OfflineStore[] findByApp(MobileAppId appId) {
     return store.values.filter!(s => s.appId == appId).array;
   }
-
-  OfflineStore[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(s => s.tenantId == tenantId).array;
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(s => remove(s));
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(s => s.appId == appId).array.length;
-  }
 }

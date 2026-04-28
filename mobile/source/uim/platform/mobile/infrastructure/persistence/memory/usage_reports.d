@@ -14,41 +14,61 @@ import std.array : array;
 
 class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId), UsageReportRepository {
   
-  
-
-  UsageReport[] findByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array;
+  size_t countByMetricType(MobileAppId appId, MetricType metricType) {
+    return findByMetricType(appId, metricType).length;
   }
 
-  UsageReport[] findByDevice(DeviceRegistrationId deviceId) {
-    return store.values.filter!(r => r.deviceId == deviceId).array;
+  UsageReport[] filterByMetricType(UsageReport[] reports, MetricType metricType) {
+    return reports.filter!(r => r.metricType == metricType).array;
   }
-
-  UsageReport[] findByUser(string userId) {
-    return store.values.filter!(r => r.userId == userId).array;
-  }
-
   UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType) {
-    return store.values.filter!(r => r.appId == appId && r.metricType == metricType).array;
+    return filterByMetricType(findByApp(appId), metricType);
   }
-
-  UsageReport[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array;
-  }
-
-  void save(UsageReport report) {
-    store[report.id] = report;
-  }
-
-  void remove(UsageReportId id) {
-    store.remove(id);
+  void removeByMetricType(MobileAppId appId, MetricType metricType) {
+    findByMetricType(appId, metricType).each!(r => remove(r));
   }
 
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array.length;
+    return findByApp(appId).length;
+  } 
+  UsageReport[] filterByApp(UsageReport[] reports, MobileAppId appId) {
+    return reports.filter!(r => r.appId == appId).array;
+  }
+  UsageReport[] findByApp(MobileAppId appId) {
+    return filterByApp(store.values.array, appId);
+  }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(r => remove(r));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array.length;
+  size_t countByDevice(DeviceRegistrationId deviceId) {
+    return findByDevice(deviceId).length;
   }
+  UsageReport[] filterByDevice(UsageReport[] reports, DeviceRegistrationId deviceId) {
+    return reports.filter!(r => r.deviceId == deviceId).array;
+  }
+  UsageReport[] findByDevice(DeviceRegistrationId deviceId) {
+    return filterByDevice(store.values.array, deviceId);
+  }
+  void removeByDevice(DeviceRegistrationId deviceId) {
+    findByDevice(deviceId).each!(r => remove(r));
+  }
+
+  size_t countByUser(string userId) {
+    return findByUser(userId).length;
+  }
+  UsageReport[] filterByUser(UsageReport[] reports, string userId) {
+    return reports.filter!(r => r.userId == userId).array;
+  }
+  UsageReport[] findByUser(string userId) {
+    return filterByUser(store.values.array, userId);
+  }
+
+  UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType) {
+    return filterByMetricType(findByApp(appId), metricType);
+  }
+  void removeByMetricType(MobileAppId appId, MetricType metricType) {
+    findByMetricType(appId, metricType).each!(r => remove(r));
+  }
+
 }

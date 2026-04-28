@@ -18,19 +18,6 @@ mixin(ShowModule!());
 @safe:
 class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {
 
-
-  HealthCheckResult[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
-  }
-
-  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
-    return findByTenant(tenantId).filter!(r => r.checkId == checkId).array;
-  }
-
-  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return findByTenant(tenantId).filter!(r => r.resourceId == resourceId).array;
-  }
-
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
     foreach (r; findByCheck(tenantId, checkId)) {
@@ -40,16 +27,59 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
     return latest;
   }
 
-  HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
-      long startTime, long endTime) {
-    return findByCheck(tenantId, checkId).filter!(r => r.executedAt >= startTime && r.executedAt <= endTime).array;
+  HealthCheckResult[] findByTenant(TenantId tenantId) {
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
-  void save(HealthCheckResult result) {
-    store ~= result;
+  size_t countByCheck(TenantId tenantId, HealthCheckId checkId) {
+    return findByCheck(tenantId, checkId).length;
+  }
+
+  HealthCheckResult[] filterByCheck(HealthCheckResult[] results, HealthCheckId checkId) {
+    return results.filter!(r => r.checkId == checkId).array;
+  }
+
+  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
+    return findByTenant(tenantId).filter!(r => r.checkId == checkId).array;
+  }
+
+  void removeByCheck(TenantId tenantId, HealthCheckId checkId) {
+    findByCheck(tenantId, checkId).each!(r => remove(r));
+  }
+
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    return findByResource(tenantId, resourceId).length;
+  }
+
+  HealthCheckResult[] filterByResource(HealthCheckResult[] results, MonitoredResourceId resourceId) {
+    return results.filter!(r => r.resourceId == resourceId).array;
+  }
+
+  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    return findByTenant(tenantId).filter!(r => r.resourceId == resourceId).array;
+  }
+
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    findByResource(tenantId, resourceId).each!(r => remove(r));
+  }
+
+  size_t countInTimeRange(TenantId tenantId, HealthCheckId checkId, long startTime, long endTime) {
+    return findInTimeRange(tenantId, checkId, startTime, endTime).length;
+  }
+  HealthCheckResult[] filterInTimeRange(HealthCheckResult[] results, HealthCheckId checkId, long startTime, long endTime) {
+    return results.filter!(r => r.checkId == checkId && r.executedAt >= startTime && r.executedAt <= endTime).array;
+  }
+  HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
+    long startTime, long endTime) {
+    return findByCheck(tenantId, checkId).filter!(r => r.executedAt >= startTime && r.executedAt <= endTime)
+      .array;
+  }
+  void removeInTimeRange(TenantId tenantId, HealthCheckId checkId, long startTime, long endTime) {
+    findInTimeRange(tenantId, checkId, startTime, endTime).each!(r => remove(r));
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findAll().filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp)).array;
+    store = findAll().filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp))
+      .array;
   }
 }

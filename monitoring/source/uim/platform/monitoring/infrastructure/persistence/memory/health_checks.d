@@ -18,28 +18,30 @@ mixin(ShowModule!());
 @safe:
 class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId), HealthCheckRepository {
 
-
-  HealthCheck[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    return findByResource(tenantId, resourceId).length;
   }
-
+  HealthCheck[] filterByResource(HealthCheck[] checks, MonitoredResourceId resourceId) {
+    return checks.filter!(e => e.resourceId == resourceId).array;
+  }
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
   }
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
+    findByResource(tenantId, resourceId).each!(e => remove(e));
+  }
 
+  size_t countByType(TenantId tenantId, CheckType checkType) {
+    return findByType(tenantId, checkType).length;
+  }
+  HealthCheck[] filterByType(HealthCheck[] checks, CheckType checkType) {
+    return checks.filter!(e => e.checkType == checkType).array;
+  }
   HealthCheck[] findByType(TenantId tenantId, CheckType checkType) {
     return findByTenant(tenantId).filter!(e => e.checkType == checkType).array;
   }
-
-  void save(HealthCheck check) {
-    store[check.id] = check;
+  void removeByType(TenantId tenantId, CheckType checkType) {
+    findByType(tenantId, checkType).each!(e => remove(e));
   }
 
-  void update(HealthCheck check) {
-    store[check.id] = check;
-  }
-
-  void remove(HealthCheckId id) {
-    store.remove(id);
-  }
 }
