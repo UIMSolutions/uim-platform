@@ -32,26 +32,9 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     if (configs.existsByTenant(req.tenantId))
       return CommandResult(false, "", "Audit configuration already exists for this tenant");
 
-    auto now = Clock.currStdTime();
-    auto cfg = AuditConfig();
-    cfg.id = randomUUID;
-    cfg.tenantId = req.tenantId;
-    cfg.name = req.name.length > 0 ? req.name : "Default";
-    cfg.status = ConfigStatus.enabled;
-    cfg.logDataAccess = req.logDataAccess;
-    cfg.logDataModification = req.logDataModification;
-    cfg.logSecurityEvents = req.logSecurityEvents;
-    cfg.logConfigurationChanges = req.logConfigurationChanges;
-    cfg.enableDataMasking = req.enableDataMasking;
-    cfg.maskedFields = req.maskedFields;
-    cfg.excludedServices = req.excludedServices;
-    cfg.minimumSeverity = req.minimumSeverity;
-    cfg.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
-    cfg.createdAt = now;
-    cfg.updatedAt = cfg.createdAt;
-
-    configs.save(cfg);
-    return CommandResult(true, cfg.id.toString, "");
+    AuditConfig config = AuditConfig.createFromRequest(req);
+    configs.save(config);
+    return CommandResult(true, config.id.toString, "");
   }
 
   bool existsConfig(TenantId tenantId) {
@@ -71,22 +54,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     if (cfg.isNull)
       return CommandResult(false, "", "Audit config not found");
 
-    if (req.name.length > 0)
-      cfg.name = req.name;
-    cfg.status = req.status;
-    cfg.tenantId = req.tenantId;    
-    cfg.logDataAccess = req.logDataAccess;
-    cfg.logDataModification = req.logDataModification;
-    cfg.logSecurityEvents = req.logSecurityEvents;
-    cfg.logConfigurationChanges = req.logConfigurationChanges;
-    cfg.enableDataMasking = req.enableDataMasking;
-    cfg.maskedFields = req.maskedFields;
-    cfg.excludedServices = req.excludedServices;
-    cfg.minimumSeverity = req.minimumSeverity;
-    if (req.rateLimitPerSecond > 0)
-      cfg.rateLimitPerSecond = req.rateLimitPerSecond;
-    cfg.updatedAt = Clock.currStdTime();
-
+    cfg.updateFromRequest(req);
     configs.update(cfg);
     return CommandResult(true, cfg.id.toString, "");
   }

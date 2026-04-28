@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.auditlog.application.dto;
+module uim.platform.auditlog.application.dtos.dto;
 
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;

@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.service.mixins.entities;
+
+public {
+  import uim.platform.service.mixins.entities.entity;
+}

@@ -1,4 +1,4 @@
-module uim.platform.service.mixins.entity;
+module uim.platform.service.mixins.entities.entity;
 
 import uim.platform.service;
 
@@ -18,7 +18,7 @@ mixin template IdEntity(TId) {
     }
 
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
-    void create() {
+    void createEntity() {
         id = randomUUID();
         createdAt = Clock.currStdTime();
         updatedAt = createdAt;

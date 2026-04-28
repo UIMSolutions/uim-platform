@@ -14,6 +14,7 @@ mixin(ShowModule!());
 @safe:
 struct AuditLogEntry {
   mixin TenantEntity!(AuditLogId);
+
   UserId userId;
   string userName;
   ServiceId serviceId; // app_or_service_id
@@ -60,6 +61,34 @@ struct AuditLogEntry {
       .set("timestamp", timestamp)
       .set("formatVersion", formatVersion);
   }
+
+  static AuditLogEntry fromJson(Json json) {
+    auto entry = AuditLogEntry();
+    entry.id = json["id"].to!AuditLogId;
+    entry.tenantId = json["tenantId"].to!TenantId;
+    entry.userId = json["userId"].to!UserId;
+    entry.userName = json["userName"].to!string;
+    entry.serviceId = json["serviceId"].to!ServiceId;
+    entry.serviceName = json["serviceName"].to!string;
+    entry.category = json["category"].to!AuditCategory;
+    entry.severity = json["severity"].to!AuditSeverity;
+    entry.action = json["action"].to!AuditAction;
+    entry.outcome = json["outcome"].to!AuditOutcome;
+    entry.objectType = json["objectType"].to!string;
+    entry.objectId = json["objectId"].to!string;
+    entry.message = json["message"].to!string;
+    // attributes parsing omitted for brevity
+    entry.ipAddress = json["ipAddress"].to!string;
+    entry.userAgent = json["userAgent"].to!string;
+    entry.correlationId = json["correlationId"].to!string;
+    entry.originApp = json["originApp"].to!string;
+    entry.timestamp = json["timestamp"].to!long;
+    return entry;
+  }
+
+  static AuditLogEntry createFromRequest(WriteDataAccessLogRequest req) {
+    auto entry = AuditLogEntry();
+    
 }
 
 /// Key/value pair describing a changed or accessed attribute.
