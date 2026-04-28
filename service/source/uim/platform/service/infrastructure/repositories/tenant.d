@@ -14,10 +14,6 @@ class TenantRepository(TEntity, TId) {
   }
 
   bool initialize(Json initData = Json(null)) {
-    if (!super.initialize(initData)) {
-      return false;
-    }
-
     return true;
   }
 
@@ -114,7 +110,7 @@ class TenantRepository(TEntity, TId) {
   }
 
   void removeByTenant(TenantId tenantId, bool deleteTenantIfEmpty = false) {
-    return findByTenant(tenantId).each!(e => remove(e, deleteTenantIfEmpty));
+    findByTenant(tenantId).each!(e => remove(e, deleteTenantIfEmpty));
   }
 
   void save(TEntity item) {

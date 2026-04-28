@@ -63,8 +63,7 @@ struct AuditConfig {
 
   static AuditConfig createDefault(TenantId tenantId) {
     AuditConfig cfg;
-    cfg.createEntity();
-    cfg.tenantId = tenantId;
+    cfg.createEntity(tenantId);
     cfg.name = "Default";
     cfg.status = ConfigStatus.enabled;
     cfg.logDataAccess = true;
@@ -81,37 +80,19 @@ struct AuditConfig {
 
   static createFromJson(Json json) {
     AuditConfig cfg;
-    cfg.id = json["id"].to!AuditConfigId;
-    cfg.tenantId = json["tenantId"].to!TenantId;
-    cfg.name = json.toString("name");
-    cfg.status = json.toString("status").to!ConfigStatus;
+    cfg.id = AuditConfigId(json.getString("id"));
+    cfg.tenantId = TenantId(json.getString("tenantId"));
+    cfg.name = json.getString("name");
+    cfg.status = json.getString("status").to!ConfigStatus;
     cfg.logDataAccess = json.toBoolean("logDataAccess");
     cfg.logDataModification = json.toBoolean("logDataModification");
     cfg.logSecurityEvents = json.toBoolean("logSecurityEvents");
     cfg.logConfigurationChanges = json.toBoolean("logConfigurationChanges");
     cfg.enableDataMasking = json.toBoolean("enableDataMasking");
-    cfg.maskedFields = json.toString("maskedFields");
-    cfg.excludedServices = json.toString("excludedServices");
-    cfg.minimumSeverity = json.toString("minimumSeverity").to!AuditSeverity;
-    cfg.rateLimitPerSecond = json.to!int("rateLimitPerSecond");
-    return cfg;
-  }
-
-  static AuditConfig createFromRequest(CreateAuditConfigRequest req) {
-    AuditConfig cfg;
-    cfg.createEntity();
-    cfg.tenantId = req.tenantId;
-    cfg.name = req.name.length > 0 ? req.name : "Default";
-    cfg.status = ConfigStatus.enabled;
-    cfg.logDataAccess = req.logDataAccess;
-    cfg.logDataModification = req.logDataModification;
-    cfg.logSecurityEvents = req.logSecurityEvents;
-    cfg.logConfigurationChanges = req.logConfigurationChanges;
-    cfg.enableDataMasking = req.enableDataMasking;
-    cfg.maskedFields = req.maskedFields;
-    cfg.excludedServices = req.excludedServices;
-    cfg.minimumSeverity = req.minimumSeverity;
-    cfg.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
+    cfg.maskedFields = json.getArray("maskedFields").map!(e => e.to!string).array;
+    cfg.excludedServices = json.getArray("excludedServices").map!(e => e.to!string).array;
+    cfg.minimumSeverity = json.getString("minimumSeverity").to!AuditSeverity;
+    cfg.rateLimitPerSecond = json.getInteger("rateLimitPerSecond");
     return cfg;
   }
 

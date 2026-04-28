@@ -32,7 +32,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeByCategory(TenantId tenantId, AuditCategory category) {
-    findByCategory(tenantId, category).removeAll;
+    findByCategory(tenantId, category).each!(e => remove(e));
   }
 
   size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -49,7 +49,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    findByTimeRange(tenantId, timeFrom, timeTo).removeAll;
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
 
   size_t countByUser(TenantId tenantId, UserId userId) {
@@ -65,7 +65,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
-    findByUser(tenantId, userId).removeAll;
+    findByUser(tenantId, userId).each!(e => remove(e));
   }
 
   size_t countByService(TenantId tenantId, ServiceId serviceId) {
@@ -81,7 +81,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeByService(TenantId tenantId, ServiceId serviceId) {
-    findByService(tenantId, serviceId).removeAll;
+    findByService(tenantId, serviceId).each!(e => remove(e));
   }
 
   size_t countByCorrelation(TenantId tenantId, string correlationId) {
@@ -97,7 +97,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeByCorrelation(TenantId tenantId, string correlationId) {
-    findByCorrelation(tenantId, correlationId).removeAll;
+    findByCorrelation(tenantId, correlationId).each!(e => remove(e));
   }
 
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,

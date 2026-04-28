@@ -86,6 +86,6 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
   }
 
   void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
-    policyRepo.remove(tenantId, policyId);
+    policyRepo.removeById(tenantId, policyId);
   }
 }

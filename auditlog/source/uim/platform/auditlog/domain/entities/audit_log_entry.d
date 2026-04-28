@@ -63,26 +63,26 @@ struct AuditLogEntry {
   }
 
   static AuditLogEntry fromJson(Json json) {
-    auto entry = AuditLogEntry();
-    entry.id = json["id"].to!AuditLogId;
-    entry.tenantId = json["tenantId"].to!TenantId;
-    entry.userId = json["userId"].to!UserId;
-    entry.userName = json.toString("userName");
-    entry.serviceId = json["serviceId"].to!ServiceId;
-    entry.serviceName = json.toString("serviceName");
-    entry.category = json["category"].to!AuditCategory;
-    entry.severity = json["severity"].to!AuditSeverity;
-    entry.action = json["action"].to!AuditAction;
-    entry.outcome = json["outcome"].to!AuditOutcome;
-    entry.objectType = json.toString("objectType");
-    entry.objectId = json.toString("objectId");
-    entry.message = json.toString("message");
+    AuditLogEntry entry;
+    entry.id = AuditLogId(json.getString("id"));
+    entry.tenantId = TenantId(json.getString("tenantId"));
+    entry.userId = UserId(json.getString("userId"));
+    entry.userName = json.getString("userName");
+    entry.serviceId = ServiceId(json.getString("serviceId"));
+    entry.serviceName = json.getString("serviceName");
+    entry.category = json.getString("category").to!AuditCategory;
+    entry.severity = json.getString("severity").to!AuditSeverity;
+    entry.action =  json.getString("action").to!AuditAction;
+    entry.outcome = json.getString("outcome").to!AuditOutcome;
+    entry.objectType = json.getString("objectType");
+    entry.objectId = json.getString("objectId");
+    entry.message = json.getString("message");
     // attributes parsing omitted for brevity
-    entry.ipAddress = json.toString("ipAddress");
-    entry.userAgent = json.toString("userAgent");
-    entry.correlationId = json.toString("correlationId");
-    entry.originApp = json.toString("originApp");
-    entry.timestamp = json["timestamp"].to!long;
+    entry.ipAddress = json.getString("ipAddress");
+    entry.userAgent = json.getString("userAgent");
+    entry.correlationId = json.getString("correlationId");
+    entry.originApp = json.getString("originApp");
+    entry.timestamp = json.getInteger("timestamp");
     return entry;
   }
 

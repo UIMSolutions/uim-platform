@@ -20,7 +20,7 @@ interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, Config
   
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
-  void findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   
   size_t countByUser(TenantId tenantId, UserId changedBy);
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy);

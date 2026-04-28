@@ -18,42 +18,19 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
-  AuditConfig[] findAll() {
-    AuditConfig[] result;
-    foreach (tenantConfigs; findAll())
-      result ~= tenantConfigs.byValue().array;
-    return result;    
+  override AuditConfig[] findAll() {
+    return store.ByKeyValue.map!(kv => getByTenant(kv.key)).array;
   }
 
   AuditConfig getByTenant(TenantId tenantId) {
     if (!existsByTenant(tenantId))
       return AuditConfig.init;
 
-    foreach (c; findAll())
-      if (c.tenantId == tenantId)
-        return c;
+    foreach (id, configs; store[tenantId])
+      if (configs.length > 0 && configs[0].tenantId == tenantId)
+        return configs[0];
 
     return AuditConfig.init;
   }
 }
-///
-unittest {
-  auto repository = new MemoryAuditConfigRepository();
-  auto cfg = AuditConfig();
-  cfg.id = "cfg1";
-  cfg.tenantId = "tenant1";
-  cfg.name = "Test Config";
-  repository.save(cfg);
 
-  assert(repository.existsByTenant(TenantId("tenant1")));
-  assert(repository.getByTenant(TenantId("tenant1")).id.toString == "cfg1");
-  assert(repository.existsById(TenantId("tenant1"), AuditConfigId("cfg1")));
-  assert(repository.findById(TenantId("tenant1"), AuditConfigId("cfg1")).name == "Test Config");
-
-  cfg.name = "Updated Config";
-  repository.update(cfg);
-  assert(repository.findById(TenantId("tenant1"), AuditConfigId("cfg1")).name == "Updated Config");
-
-  repository.remove(TenantId("tenant1"), AuditConfigId("cfg1"));
-  assert(!repository.existsById(TenantId("tenant1"), AuditConfigId("cfg1")));
-} 

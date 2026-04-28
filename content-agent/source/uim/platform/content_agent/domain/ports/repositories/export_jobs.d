@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - export job persistence.
 interface ExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
 
-  size_t countByPackage(ContentPackageId packageId);
-  ExportJob[] findByPackage(ContentPackageId packageId);
-  void removeByPackage(ContentPackageId packageId);
+  size_t countByFormat(ExportFormat format);
+  ExportJob[] findByFormat(ExportFormat format);
+  void removeByFormat(ExportFormat format);
 
-  size_t countByPackage(ContentPackageId packageId);
-  ExportJob[] findByPackage(ContentPackageId packageId);
-  void removeByPackage(ContentPackageId packageId);
+  size_t countByStatus(ExportStatus status);
+  ExportJob[] findByStatus(ExportStatus status);
+  void removeByStatus(ExportStatus status);
 
 }

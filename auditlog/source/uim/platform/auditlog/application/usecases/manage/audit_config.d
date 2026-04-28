@@ -32,7 +32,20 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     if (configs.existsByTenant(req.tenantId))
       return CommandResult(false, "", "Audit configuration already exists for this tenant");
 
-    AuditConfig config = AuditConfig.createFromRequest(req);
+    AuditConfig config;
+    config.createEntity(req.tenantId);
+    config.name = req.name.length > 0 ? req.name : "Default";
+    config.status = ConfigStatus.enabled;
+    config.logDataAccess = req.logDataAccess;
+    config.logDataModification = req.logDataModification;
+    config.logSecurityEvents = req.logSecurityEvents;
+    config.logConfigurationChanges = req.logConfigurationChanges;
+    config.enableDataMasking = req.enableDataMasking;
+    config.maskedFields = req.maskedFields;
+    config.excludedServices = req.excludedServices;
+    config.minimumSeverity = req.minimumSeverity;
+    config.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
+    
     configs.save(config);
     return CommandResult(true, config.id.toString, "");
   }
@@ -60,6 +73,6 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   void deleteConfig(TenantId tenantId, AuditConfigId id) {
-    configs.remove(tenantId, id);
+    configs.removeById(tenantId, id);
   }
 }

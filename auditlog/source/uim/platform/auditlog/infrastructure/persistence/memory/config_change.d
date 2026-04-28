@@ -77,7 +77,8 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findAll().filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
+      .each!(e => remove(e));
   }
 }
 ///

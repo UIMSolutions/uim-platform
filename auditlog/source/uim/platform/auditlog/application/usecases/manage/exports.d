@@ -36,15 +36,14 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto job = ExportJob();
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    job.initEntity(req.tenantId);
+
     job.requestedBy = req.requestedBy;
     job.format_ = req.format_;
     job.categories = req.categories;
     job.timeFrom = req.timeFrom;
     job.timeTo = req.timeTo;
     job.status = ExportStatus.pending;
-    job.createdAt = now;
 
     // Simulate immediate export completion
     auto logs = audits.search(req.tenantId, req.categories, req.timeFrom,
@@ -71,6 +70,6 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
   }
 
   void deleteExport(TenantId tenantId, ExportJobId id) {
-    jobs.remove(tenantId, id);
+    jobs.removeById(tenantId, id);
   }
 }

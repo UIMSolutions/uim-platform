@@ -53,7 +53,7 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
 
     // Create data access record
     auto daLog = DataAccessLog();
-    daLog.id = entry.id;
+    daLog.auditLogId = entry.id;
     daLog.tenantId = req.tenantId;
     daLog.accessedBy = req.accessedBy;
     daLog.dataSubject = req.dataSubject;

@@ -81,4 +81,8 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
   }
   // #endregion ByTimeRange
 
+
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
+  }
 }
