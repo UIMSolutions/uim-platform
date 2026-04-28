@@ -31,7 +31,7 @@ struct DataSourceResponse {
   string status;
 
   static DataSourceResponse fromEntity(DataSource ds) {
-    if (ds is null)
+    if (ds.isNull)
       return DataSourceResponse.init;
 
     return DataSourceResponse(ds.id.value, ds.name, ds.sourceType.to!string,

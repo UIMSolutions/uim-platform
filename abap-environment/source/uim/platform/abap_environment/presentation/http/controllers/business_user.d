@@ -83,7 +83,7 @@ class BusinessUserController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto user = uc.getUser(id);
-      if (user is null) {
+      if (user.isNull) {
         writeError(res, 404, "Business user not found");
         return;
       }

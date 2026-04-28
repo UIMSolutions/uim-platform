@@ -49,7 +49,7 @@ class PlanningUseCases {
 
   PlanningModelResponse lock(string id) {
     auto pm = repo.findById(EntityId(id));
-    if (pm is null)
+    if (pm.isNull)
       return PlanningModelResponse.init;
     pm.lock();
     repo.save(pm);
@@ -58,7 +58,7 @@ class PlanningUseCases {
 
   PlanningModelResponse approve(string id) {
     auto pm = repo.findById(EntityId(id));
-    if (pm is null)
+    if (pm.isNull)
       return PlanningModelResponse.init;
     pm.approve();
     repo.save(pm);

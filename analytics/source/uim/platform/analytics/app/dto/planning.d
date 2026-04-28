@@ -30,7 +30,7 @@ struct PlanningModelResponse {
   VersionResponse[] versions;
 
   static PlanningModelResponse fromEntity(PlanningModel pm) {
-    if (pm is null)
+    if (pm.isNull)
       return PlanningModelResponse.init;
 
     VersionResponse[] vers;

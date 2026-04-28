@@ -24,4 +24,16 @@ struct ServiceInstance {
   string parameters; // JSON string of creation parameters
   string dashboardUrl;
   string tags; // comma-separated tags
+
+  Json toJson() {
+    return entityToJson()
+      .set("spaceId", si.spaceId)
+      .set("name", si.name)
+      .set("serviceName", si.serviceName)
+      .set("servicePlanName", si.servicePlanName)
+      .set("status", si.status.to!string)
+      .set("parameters", si.parameters)
+      .set("dashboardUrl", si.dashboardUrl)
+      .set("tags", si.tags);
+  }
 }

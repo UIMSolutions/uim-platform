@@ -44,31 +44,29 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (req.servicePlanName.length == 0)
       return CommandResult(false, "", "Service plan name is required");
 
-    auto existing = instances.findByName(req.spaceId, req.tenantId, req.name);
+    auto existing = instances.findByName(req.tenantId, req.spaceId, req.name);
     if (existing !is null)
       return CommandResult(false, "", "Service instance with this name already exists in space");
 
     auto now = Clock.currStdTime();
-    auto si = ServiceInstance();
-    si.id = randomUUID();
-    si.spaceId = req.spaceId;
-    si.tenantId = req.tenantId;
-    si.name = req.name;
-    si.serviceName = req.serviceName;
-    si.servicePlanName = req.servicePlanName;
-    si.status = ServiceInstanceStatus.active;
-    si.parameters = req.parameters;
-    si.tags = req.tags;
-    si.createdBy = req.createdBy;
-    si.createdAt = now;
-    si.updatedAt = now;
+    auto srvInstance = ServiceInstance();
+    srvInstance.initEntity(req.tenantId, req.createdBy);
 
-    instances.save(si);
-    return CommandResult(si.id, "");
+    srvInstance.spaceId = req.spaceId;
+    srvInstance.tenantId = req.tenantId;
+    srvInstance.name = req.name;
+    srvInstance.serviceName = req.serviceName;
+    srvInstance.servicePlanName = req.servicePlanName;
+    srvInstance.status = ServiceInstanceStatus.active;
+    srvInstance.parameters = req.parameters;
+    srvInstance.tags = req.tags;
+
+    instances.save(srvInstance);
+    return CommandResult(srvInstance.id, "");
   }
 
-  ServiceInstance* getInstance(TenantId tenantId, ServiceInstanceId id) {
-    return instances.findById(tenantId, id);
+  ServiceInstance* getInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
+    return instances.findById(tenantId, serviceInstanceId);
   }
 
   ServiceInstance[] listInstances(TenantId tenantId) {
@@ -86,7 +84,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = instances.findById(req.tenantId, req.id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Service instance not found");
 
     auto updated = *existing;
@@ -99,20 +97,19 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     instances.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.toString, "");
   }
 
-  CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
-    if (!instances.existsById(tenantId, id))
+  CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
+    if (!instances.existsById(tenantId, serviceInstanceId))
       return CommandResult(false, "", "Service instance not found");
 
     // Remove all bindings for this instance
-    auto instanceBindings = bindings.findByServiceInstance(tenantId, id);
-    foreach (b; instanceBindings)
-      bindings.removeById(tenantId, b.id);
+    auto instanceBindings = bindings.findByServiceInstance(tenantId, serviceInstanceId);
+    instanceBindings.each!(b => bindings.removeById(tenantId, b.id));
 
-    instances.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    instances.removeById(tenantId, serviceInstanceId);
+    return CommandResult(true, serviceInstanceId.toString, "");
   }
 
   // --- Service Bindings ---
@@ -127,7 +124,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
 
     // Verify instance exists
     auto instance = instances.findById(request.tenantId, request.serviceInstanceId);
-    if (instance is null)
+    if (instance.isNull)
       return CommandResult(false, "", "Service instance not found");
 
     auto binding = ServiceBinding();
@@ -156,7 +153,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteBinding(TenantId tenantId, ServiceBindingId bindingId) {
     auto existing = bindings.findById(tenantId, bindingId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Service binding not found");
 
     bindings.removeById(tenantId, bindingId);

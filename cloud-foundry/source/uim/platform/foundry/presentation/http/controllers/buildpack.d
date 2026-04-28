@@ -83,7 +83,7 @@ class BuildpackController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto bp = useCase.getBuildpack(tenantId, id);
-      if (bp is null) {
+      if (bp.isNull) {
         writeError(res, 404, "Buildpack not found");
         return;
       }

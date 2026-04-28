@@ -28,7 +28,7 @@ struct DatasetResponse {
   ColumnResponse[] columns;
 
   static DatasetResponse fromEntity(Dataset d) {
-    if (d is null)
+    if (d.isNull)
       return DatasetResponse.init;
 
     ColumnResponse[] cols = d.columns.map!(col => ColumnResponse(col.name,

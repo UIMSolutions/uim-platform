@@ -52,7 +52,7 @@ class DataSourceUseCases {
 
   DataSourceResponse testConnection(string id) {
     auto ds = repo.findById(EntityId(id));
-    if (ds is null)
+    if (ds.isNull)
       return DataSourceResponse.init;
 
     auto connStr = ds.connection.host ~ ":" ~ ds.connection.port.to!string;

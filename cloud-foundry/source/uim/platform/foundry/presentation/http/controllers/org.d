@@ -86,7 +86,7 @@ class OrgController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto org = useCase.getOrg(tenantId, id);
-      if (org is null) {
+      if (org.isNull) {
         writeError(res, 404, "Organization not found");
         return;
       }

@@ -92,7 +92,7 @@ class RouteController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto r = useCase.getRoute(tenantId, id);
-      if (r is null) {
+      if (r.isNull) {
         writeError(res, 404, "Route not found");
         return;
       }

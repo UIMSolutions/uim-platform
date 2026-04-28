@@ -27,7 +27,7 @@ struct WidgetResponse {
   string datasetId;
 
   static WidgetResponse fromEntity(Widget w) {
-    if (w is null)
+    if (w.isNull)
       return WidgetResponse.init;
 
     return WidgetResponse(w.id.value, w.title, w.chartType.to!string, w.datasetId.value,);

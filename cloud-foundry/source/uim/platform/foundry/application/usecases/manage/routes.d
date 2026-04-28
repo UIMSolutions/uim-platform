@@ -56,7 +56,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = Route();
-    r.id = initEntity(req.tenantId, req.createdBy);
+    r.initEntity(req.tenantId, req.createdBy);
     r.spaceId = req.spaceId;
     r.domainId = req.domainId;
     r.host = req.host;

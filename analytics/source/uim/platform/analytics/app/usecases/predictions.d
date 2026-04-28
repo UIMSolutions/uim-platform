@@ -48,7 +48,7 @@ class PredictionUseCases {
 
   PredictionResponse train(string id) {
     auto p = repo.findById(EntityId(id));
-    if (p is null)
+    if (p.isNull)
       return PredictionResponse.init;
     p.markTraining();
     // Simulated training result

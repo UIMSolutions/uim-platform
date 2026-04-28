@@ -93,7 +93,7 @@ class CommunicationArrangementController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto arrangement = uc.getArrangement(id);
-      if (arrangement is null) {
+      if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
         return;
       }

@@ -30,7 +30,7 @@ struct DashboardResponse {
   string[] tags;
 
   static DashboardResponse fromEntity(Dashboard d) {
-    if (d is null)
+    if (d.isNull)
       return DashboardResponse.init;
 
     PageResponse[] pgs;

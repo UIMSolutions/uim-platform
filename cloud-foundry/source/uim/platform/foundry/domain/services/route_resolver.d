@@ -31,13 +31,13 @@ class RouteResolver {
   /// Check if a host+domain combination is already taken.
   bool isRouteAvailable(TenantId tenantId, string host, CfDomainId domainId) {
     auto existing = routes.findByHostAndDomain(tenantId, host, domainId);
-    return existing is null;
+    return existing.isNull;
   }
 
   /// Validate that a domain is accessible for the given org.
   bool isDomainAccessible(TenantId tenantId, CfDomainId domainId, OrgId orgId) {
     auto dom = domains.findById(tenantId, domainId);
-    if (dom is null)
+    if (dom.isNull)
       return false;
 
     // Shared and internal domains are accessible to all orgs
@@ -51,7 +51,7 @@ class RouteResolver {
   /// Map an application to a route.
   bool mapApp(TenantId tenantId, RouteId routeId, AppId appId) {
     auto route = routes.findById(tenantId, routeId);
-    if (route is null)
+    if (route.isNull)
       return false;
 
     // Already mapped?
@@ -66,7 +66,7 @@ class RouteResolver {
   /// Unmap an application from a route.
   bool unmapApp(TenantId tenantId, RouteId routeId, AppId appId) {
     auto route = routes.findById(tenantId, routeId);
-    if (route is null)
+    if (route.isNull)
       return false;
 
     string[] updated;

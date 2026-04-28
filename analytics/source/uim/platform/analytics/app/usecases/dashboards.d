@@ -41,7 +41,7 @@ class DashboardUseCases {
 
   DashboardResponse addPage(string dashboardId, string title) {
     auto d = repo.findById(EntityId(dashboardId));
-    if (d is null)
+    if (d.isNull)
       return DashboardResponse.init;
     d.addPage(title);
     repo.save(d);
@@ -50,7 +50,7 @@ class DashboardUseCases {
 
   DashboardResponse publish(string dashboardId) {
     auto d = repo.findById(EntityId(dashboardId));
-    if (d is null)
+    if (d.isNull)
       return DashboardResponse.init;
     d.publish();
     repo.save(d);

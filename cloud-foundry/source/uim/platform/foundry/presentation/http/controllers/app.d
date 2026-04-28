@@ -99,7 +99,7 @@ class AppController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, id);
-      if (app is null) {
+      if (app.isNull) {
         writeError(res, 404, "Application not found");
         return;
       }

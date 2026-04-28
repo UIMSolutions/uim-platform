@@ -90,7 +90,7 @@ class SoftwareComponentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto comp = uc.getComponent(id);
-      if (comp is null) {
+      if (comp.isNull) {
         writeError(res, 404, "Software component not found");
         return;
       }

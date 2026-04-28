@@ -28,7 +28,7 @@ struct StoryResponse {
   string[] tags;
 
   static StoryResponse fromEntity(Story s) {
-    if (s is null)
+    if (s.isNull)
       return StoryResponse.init;
 
     SectionResponse[] secs;

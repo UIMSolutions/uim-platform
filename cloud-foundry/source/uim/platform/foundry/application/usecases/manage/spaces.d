@@ -39,7 +39,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
 
     // Validate org exists
     auto org = orgRepo.findById(req.orgId, req.tenantId);
-    if (org is null)
+    if (org.isNull)
       return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
       return CommandResult(false, "", "Organization is suspended");
@@ -84,7 +84,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 
     auto updated = *existing;
@@ -100,7 +100,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 
     repo.removeById(tenantId, id);

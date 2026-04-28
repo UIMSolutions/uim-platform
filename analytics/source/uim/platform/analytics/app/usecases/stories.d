@@ -39,7 +39,7 @@ class StoryUseCases {
 
   StoryResponse addSection(string storyId, string heading, string narrative) {
     auto s = repo.findById(EntityId(storyId));
-    if (s is null)
+    if (s.isNull)
       return StoryResponse.init;
     s.addSection(heading, narrative);
     repo.save(s);
@@ -48,7 +48,7 @@ class StoryUseCases {
 
   StoryResponse publish(string storyId) {
     auto s = repo.findById(EntityId(storyId));
-    if (s is null)
+    if (s.isNull)
       return StoryResponse.init;
     s.publish();
     repo.save(s);

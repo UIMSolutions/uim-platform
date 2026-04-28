@@ -86,7 +86,7 @@ class ApplicationJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getJob(id);
-      if (job is null) {
+      if (job.isNull) {
         writeError(res, 404, "Application job not found");
         return;
       }

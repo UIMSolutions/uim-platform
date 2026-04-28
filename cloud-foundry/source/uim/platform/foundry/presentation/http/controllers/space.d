@@ -85,7 +85,7 @@ class SpaceController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto space = useCase.getSpace(tenantId, id);
-      if (space is null) {
+      if (space.isNull) {
         writeError(res, 404, "Space not found");
         return;
       }

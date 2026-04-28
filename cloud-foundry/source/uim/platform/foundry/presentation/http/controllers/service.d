@@ -75,13 +75,12 @@ class ServiceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (si; items)
-        arr ~= serializeInstance(si);
+      auto arr = items.map!(si => si.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -93,11 +92,11 @@ class ServiceController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto si = useCase.getInstance(tenantId, id);
-      if (si is null) {
+      if (si.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      res.writeJsonBody(serializeInstance(*si), 200);
+      res.writeJsonBody(si.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -172,13 +171,12 @@ class ServiceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (b; items)
-        arr ~= serializeBinding(b);
+      auto arr = items.map!(b => serializeBinding(b)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -191,8 +189,9 @@ class ServiceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
@@ -203,22 +202,6 @@ class ServiceController : PlatformController {
 
   // --- Serializers ---
 
-  private static Json serializeInstance(const ServiceInstance si) {
-    return Json.emptyObject
-      .set("id", si.id)
-      .set("spaceId", si.spaceId)
-      .set("tenantId", si.tenantId)
-      .set("name", si.name)
-      .set("serviceName", si.serviceName)
-      .set("servicePlanName", si.servicePlanName)
-      .set("status", si.status.to!string)
-      .set("parameters", si.parameters)
-      .set("dashboardUrl", si.dashboardUrl)
-      .set("tags", si.tags)
-      .set("createdBy", si.createdBy)
-      .set("createdAt", si.createdAt)
-      .set("updatedAt", si.updatedAt);
-  }
 
   private static Json serializeBinding(const ServiceBinding b) {
     return Json.emptyObject

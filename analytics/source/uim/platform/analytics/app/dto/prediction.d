@@ -37,7 +37,7 @@ struct PredictionResponse {
   string modelSummary;
 
   static PredictionResponse fromEntity(Prediction p) {
-    if (p is null)
+    if (p.isNull)
       return PredictionResponse.init;
 
     return PredictionResponse(p.id.value, p.name, p.description,

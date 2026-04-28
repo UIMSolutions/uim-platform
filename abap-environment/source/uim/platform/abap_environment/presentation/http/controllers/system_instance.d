@@ -70,12 +70,12 @@ class SystemInstanceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto instances = uc.listInstances(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (inst; instances)
-        arr ~= serializeInstance(inst);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(instances.length);
+      auto arr = instances.map!(inst => inst.toJson).array.toJson;
+
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(instances.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -86,11 +86,11 @@ class SystemInstanceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto inst = uc.getInstance(id);
-      if (inst is null) {
+      if (inst.isNull) {
         writeError(res, 404, "System instance not found");
         return;
       }
-      res.writeJsonBody(serializeInstance(*inst), 200);
+      res.writeJsonBody(inst.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -134,26 +134,5 @@ class SystemInstanceController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeInstance(const SystemInstance instance) {
-    return Json.emptyObject
-      .set("id", instance.id)
-      .set("tenantId", instance.tenantId)
-      .set("subaccountId", instance.subaccountId)
-      .set("name", instance.name)
-      .set("description", instance.description)
-      .set("plan", instance.plan.to!string)
-      .set("status", instance.status.to!string)
-      .set("region", instance.region)
-      .set("sapSystemId", instance.sapSystemId)
-      .set("adminEmail", instance.adminEmail)
-      .set("abapRuntimeSize", instance.abapRuntimeSize)
-      .set("hanaMemorySize", instance.hanaMemorySize)
-      .set("serviceUrl", instance.serviceUrl)
-      .set("softwareVersion", instance.softwareVersion)
-      .set("stackVersion", instance.stackVersion)
-      .set("createdAt", instance.createdAt)
-      .set("updatedAt", instance.updatedAt);
   }
 }

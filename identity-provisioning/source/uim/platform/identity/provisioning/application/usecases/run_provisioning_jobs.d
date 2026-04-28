@@ -44,10 +44,10 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
 
     // Verify systems exist
     auto src = sourceRepo.findById(req.sourceSystemId, req.tenantId);
-    if (src is null)
+    if (src.isNull)
       return CommandResult(false, "", "Source system not found");
     auto tgt = targetRepo.findById(req.targetSystemId, req.tenantId);
-    if (tgt is null)
+    if (tgt.isNull)
       return CommandResult(false, "", "Target system not found");
 
     auto now = Clock.currStdTime();
@@ -73,7 +73,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
           "Job cannot be started - verify systems are active and job is scheduled");
 
     auto result = engine.runJob(tenantId, id);
-    if (result is null)
+    if (result.isNull)
       return CommandResult(false, "", "Failed to execute provisioning job");
 
     return CommandResult(result.id, "");
@@ -109,7 +109,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteJob(ProvisioningJobId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
-    if (existing is null)
+    if (existing.isNull)
       return CommandResult(false, "", "Provisioning job not found");
 
     if (existing.status == JobStatus.running)
@@ -117,7 +117,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
 
     // Cascade delete logs
     logRepo.removeByJob(tenantId, id);
-    repo.remove(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

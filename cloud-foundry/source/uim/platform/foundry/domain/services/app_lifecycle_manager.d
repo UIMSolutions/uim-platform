@@ -36,7 +36,7 @@ class AppLifecycleManager {
   /// Stage an application (simulate buildpack detection and compilation).
   bool stageApp(TenantId tenantId, AppId appId) {
     auto app = apps.findById(tenantId, appId);
-    if (app is null)
+    if (app.isNull)
       return false;
     if (app.state != AppState.stopped && app.state != AppState.crashed)
       return false;
@@ -51,7 +51,7 @@ class AppLifecycleManager {
   /// Start an application (transition from staging/stopped to started).
   bool startApp(TenantId tenantId, AppId appId) {
     auto app = apps.findById(tenantId, appId);
-    if (app is null)
+    if (app.isNull)
       return false;
 
     app.state = AppState.started;
@@ -64,7 +64,7 @@ class AppLifecycleManager {
   /// Stop a running application.
   bool stopApp(TenantId tenantId, AppId appId) {
     auto app = apps.findById(tenantId, appId);
-    if (app is null)
+    if (app.isNull)
       return false;
     if (app.state == AppState.stopped)
       return false;
@@ -79,7 +79,7 @@ class AppLifecycleManager {
   /// Restart an application (stop then start).
   bool restartApp(TenantId tenantId, AppId appId) {
     auto app = apps.findById(tenantId, appId);
-    if (app is null)
+    if (app.isNull)
       return false;
     if (app.state != AppState.started && app.state != AppState.crashed)
       return false;
@@ -94,7 +94,7 @@ class AppLifecycleManager {
   /// Scale an application — validate against org quota before applying.
   bool scaleApp(TenantId tenantId, AppId appId, int instances, int memoryMb, int diskMb) {
     auto app = apps.findById(tenantId, appId);
-    if (app is null)
+    if (app.isNull)
       return false;
 
     // Validate instance memory against org quota
@@ -127,7 +127,7 @@ class AppLifecycleManager {
   /// Check if org memory quota would be exceeded by adding the given memory.
   bool isQuotaExceeded(OrgId orgId, TenantId tenantId, int additionalMemoryMb) {
     auto org = orgs.findById(tenantId, orgId);
-    if (org is null)
+    if (org.isNull)
       return true;
 
     auto spaces = spaces.findByOrg(tenantId, orgId);
