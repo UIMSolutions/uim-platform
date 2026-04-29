@@ -20,7 +20,7 @@ class DomainMappingController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/mappings", &handleList);
         router.get("/api/v1/custom-domain/mappings/*", &handleGet);
         router.post("/api/v1/custom-domain/mappings", &handleCreate);
@@ -44,9 +44,10 @@ class DomainMappingController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Domain mapping created");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "Domain mapping created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -64,20 +65,20 @@ class DomainMappingController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (m; mappings) {
                 jarr ~= Json.emptyObject
-                .set("id", m.id)
-                .set("customDomainId", m.customDomainId)
-                .set("standardRoute", m.standardRoute)
-                .set("customRoute", m.customRoute)
-                .set("mappingType", m.mappingType.to!string)
-                .set("status", m.status.to!string)
-                .set("applicationName", m.applicationName)
-                .set("createdBy", m.createdBy)
-                .set("createdAt", m.createdAt);
+                    .set("id", m.id)
+                    .set("customDomainId", m.customDomainId)
+                    .set("standardRoute", m.standardRoute)
+                    .set("customRoute", m.customRoute)
+                    .set("mappingType", m.mappingType.to!string)
+                    .set("status", m.status.to!string)
+                    .set("applicationName", m.applicationName)
+                    .set("createdBy", m.createdBy)
+                    .set("createdAt", m.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(mappings.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(mappings.length))
+                .set("resources", jarr);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -95,19 +96,20 @@ class DomainMappingController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(m.id);
-            resp["customDomainId"] = Json(m.customDomainId);
-            resp["standardRoute"] = Json(m.standardRoute);
-            resp["customRoute"] = Json(m.customRoute);
-            resp["mappingType"] = Json(m.mappingType.to!string);
-            resp["status"] = Json(m.status.to!string);
-            resp["applicationName"] = Json(m.applicationName);
-            resp["organizationId"] = Json(m.organizationId);
-            resp["spaceId"] = Json(m.spaceId);
-            resp["createdBy"] = Json(m.createdBy);
-            resp["createdAt"] = Json(m.createdAt);
-            resp["updatedAt"] = Json(m.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", Json(m.id))
+                .set("customDomainId", Json(m.customDomainId))
+                .set("standardRoute", Json(m.standardRoute))
+                .set("customRoute", Json(m.customRoute))
+                .set("mappingType", Json(m.mappingType.to!string))
+                .set("status", Json(m.status.to!string))
+                .set("applicationName", Json(m.applicationName))
+                .set("organizationId", Json(m.organizationId))
+                .set("spaceId", Json(m.spaceId))
+                .set("createdBy", Json(m.createdBy))
+                .set("createdAt", Json(m.createdAt))
+                .set("updatedAt", Json(m.updatedAt));
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -121,9 +123,10 @@ class DomainMappingController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Domain mapping deleted");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("Domain mapping deleted"));
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

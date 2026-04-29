@@ -46,9 +46,11 @@ class VersionController : PlatformController {
 
       auto result = uc.checkOut(doctenantId, id, userId);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["documentId"] = Json(docId);
-        resp["status"] = Json("locked");
+        auto resp = Json.emptyObject
+          .set("documentId", Json(docId))
+          .set("status", Json("locked"))
+          .set("message", Json("Document checked out successfully"));
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -75,10 +77,12 @@ class VersionController : PlatformController {
 
       auto result = uc.checkIn(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["versionId"] = Json(result.id);
-        resp["documentId"] = Json(r.documentId);
-        resp["status"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("versionId", Json(result.id))
+          .set("documentId", Json(r.documentId))
+          .set("status", Json("active"))
+          .set("message", Json("Document checked in successfully"));
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -96,9 +100,11 @@ class VersionController : PlatformController {
 
       auto result = uc.cancelCheckOut(doctenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["documentId"] = Json(docId);
-        resp["status"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("documentId", Json(docId))
+          .set("status", Json("active"))
+          .set("message", Json("Document checkout cancelled successfully"));
+
         res.writeJsonBody(resp, 200);
       }
       else

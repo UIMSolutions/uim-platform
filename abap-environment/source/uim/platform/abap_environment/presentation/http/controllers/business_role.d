@@ -62,8 +62,10 @@ class BusinessRoleController : PlatformController {
 
       auto result = uc.createRole(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Business role created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -120,8 +122,10 @@ class BusinessRoleController : PlatformController {
 
       auto result = uc.updateRole(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated")
+          .set("message", "Business role updated");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -139,8 +143,10 @@ class BusinessRoleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRole(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Business role deleted");
+          
         res.writeJsonBody(resp, 200);
       }
       else

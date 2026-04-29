@@ -49,8 +49,10 @@ class ConsentPurposeController : PlatformController {
 
       auto result = uc.createPurpose(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Consent purpose created successfully");
+            
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -63,13 +65,13 @@ class ConsentPurposeController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listPurposes(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Consent purposes retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

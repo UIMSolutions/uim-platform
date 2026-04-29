@@ -54,8 +54,10 @@ class PersonalDataModelController : PlatformController {
 
       auto result = uc.createModel(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Personal data model created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -80,9 +82,11 @@ class PersonalDataModelController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Personal data models retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -98,9 +102,11 @@ class PersonalDataModelController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Special category personal data models retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -139,8 +145,10 @@ class PersonalDataModelController : PlatformController {
 
       auto result = uc.updateModel(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Personal data model updated successfully");
+            
         res.writeJsonBody(resp, 200);
       }
       else

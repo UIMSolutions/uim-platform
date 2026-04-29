@@ -60,8 +60,10 @@ class ServiceController : PlatformController {
 
       auto result = useCase.createInstance(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service instance created");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -78,8 +80,9 @@ class ServiceController : PlatformController {
       auto arr = items.map!(si => si.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(items.length));
+        .set("items", arr)
+        .set("totalCount", Json(items.length))
+        .set("message", "Service instances retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -115,8 +118,10 @@ class ServiceController : PlatformController {
 
       auto result = useCase.updateInstance(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service instance updated");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -131,8 +136,10 @@ class ServiceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service instance deleted");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
@@ -156,8 +163,10 @@ class ServiceController : PlatformController {
 
       auto result = useCase.createBinding(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service binding created");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -190,7 +199,8 @@ class ServiceController : PlatformController {
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Service binding deleted");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -201,7 +211,6 @@ class ServiceController : PlatformController {
   }
 
   // --- Serializers ---
-
 
   private static Json serializeBinding(const ServiceBinding b) {
     return Json.emptyObject

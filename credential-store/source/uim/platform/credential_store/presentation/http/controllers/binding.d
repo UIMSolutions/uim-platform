@@ -24,7 +24,7 @@ class BindingController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/bindings", &handleCreate);
     router.get("/api/v1/bindings", &handleList);
     router.get("/api/v1/bindings/*", &handleGet);
@@ -47,16 +47,17 @@ class BindingController : PlatformController {
       auto result = uc.create(r);
 
       // Return binding credentials (only shown once at creation)
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(result.id);
-      resp["name"] = Json(result.name);
-      resp["clientId"] = Json(result.clientId);
-      resp["clientSecret"] = Json(result.clientSecret);
-      resp["permission"] = Json(result.permission);
-      resp["status"] = Json(result.status);
-      resp["allowedNamespaces"] = toJsonArray(result.allowedNamespaces);
-      resp["createdAt"] = Json(result.createdAt);
-      resp["expiresAt"] = Json(result.expiresAt);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("name", result.name)
+        .set("clientId", result.clientId)
+        .set("clientSecret", result.clientSecret)
+        .set("permission", result.permission)
+        .set("status", result.status)
+        .set("allowedNamespaces", toJsonArray(result.allowedNamespaces))
+        .set("createdAt", result.createdAt)
+        .set("expiresAt", result.expiresAt);
+
       res.writeJsonBody(resp, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -71,15 +72,17 @@ class BindingController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (b; bindings) {
         jarr ~= Json.emptyObject
-        .set("id", b.id)
-        .set("name", b.name)
-        .set("clientId", b.clientId)
-        .set("createdAt", b.createdAt);
+          .set("id", b.id)
+          .set("name", b.name)
+          .set("clientId", b.clientId)
+          .set("createdAt", b.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(bindings.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", bindings.length)
+        .set("message", "Service bindings retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -99,13 +102,13 @@ class BindingController : PlatformController {
       }
 
       auto response = Json.emptyObject
-      .set("id", b.id)
-      .set("name", b.name)
-      .set("description", b.description)
-      .set("clientId", b.clientId)
-      .set("allowedNamespaces", b.allowedNamespaces)
-      .set("createdAt", b.createdAt)
-      .set("expiresAt", b.expiresAt);
+        .set("id", b.id)
+        .set("name", b.name)
+        .set("description", b.description)
+        .set("clientId", b.clientId)
+        .set("allowedNamespaces", b.allowedNamespaces)
+        .set("createdAt", b.createdAt)
+        .set("expiresAt", b.expiresAt);
       // Note: clientSecret is NOT returned on GET (only on creation)
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -127,8 +130,10 @@ class BindingController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service binding updated successfully");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

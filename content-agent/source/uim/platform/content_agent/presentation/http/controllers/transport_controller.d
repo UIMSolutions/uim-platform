@@ -52,16 +52,15 @@ class TransportController : PlatformController {
 
       auto result = uc.createTransportRequest(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Transport request created successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,12 +74,13 @@ class TransportController : PlatformController {
       foreach (t; transports)
         arr ~= serializeTransport(t);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(transports.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(transports.length))
+        .set("message", "Transport requests retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +94,7 @@ class TransportController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeTransport(tr), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -110,17 +109,16 @@ class TransportController : PlatformController {
 
       auto result = uc.releaseTransport(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("released");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "released")
+          .set("message", "Transport request released successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -132,36 +130,35 @@ class TransportController : PlatformController {
 
       auto result = uc.cancelTransport(requestId);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("cancelled");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "cancelled")
+          .set("message", "Transport request cancelled successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeTransport(const TransportRequest t) {
     return Json.emptyObject
-    .set("id", t.id)
-    .set("tenantId", t.tenantId)
-    .set("sourceSubaccount", t.sourceSubaccount)
-    .set("targetSubaccount", t.targetSubaccount)
-    .set("description", t.description)
-    .set("status", t.status.to!string)
-    .set("mode", t.mode.to!string)
-    .set("queueId", t.queueId)
-    .set("createdBy", t.createdBy)
-    .set("createdAt", t.createdAt)
-    .set("updatedAt", t.updatedAt)
-    .set("releasedAt", t.releasedAt)
-    .set("errorMessage", t.errorMessage)
-    .set("packageIds", toJsonArray(t.packageIds));
+      .set("id", t.id)
+      .set("tenantId", t.tenantId)
+      .set("sourceSubaccount", t.sourceSubaccount)
+      .set("targetSubaccount", t.targetSubaccount)
+      .set("description", t.description)
+      .set("status", t.status.to!string)
+      .set("mode", t.mode.to!string)
+      .set("queueId", t.queueId)
+      .set("createdBy", t.createdBy)
+      .set("createdAt", t.createdAt)
+      .set("updatedAt", t.updatedAt)
+      .set("releasedAt", t.releasedAt)
+      .set("errorMessage", t.errorMessage)
+      .set("packageIds", toJsonArray(t.packageIds));
   }
 }

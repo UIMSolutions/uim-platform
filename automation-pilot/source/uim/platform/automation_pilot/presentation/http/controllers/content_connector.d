@@ -32,9 +32,10 @@ class ContentConnectorController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= e.contentConnectorToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -69,9 +70,10 @@ class ContentConnectorController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Content connector created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Content connector created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -97,9 +99,10 @@ class ContentConnectorController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Content connector updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Content connector updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -116,8 +119,10 @@ class ContentConnectorController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(ContentConnectorId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Content connector deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Content connector deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

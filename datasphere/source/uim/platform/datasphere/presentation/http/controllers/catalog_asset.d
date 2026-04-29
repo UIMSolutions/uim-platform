@@ -44,9 +44,10 @@ class CatalogAssetController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Catalog asset created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Catalog asset created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -73,9 +74,11 @@ class CatalogAssetController : PlatformController {
           .set("createdAt", ca.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(assets.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(assets.length))
+            .set("resources", jarr)
+            .set("message", "Catalog assets retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,9 +104,11 @@ class CatalogAssetController : PlatformController {
         .set("owner", ca.owner);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(assets.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(assets.length))
+            .set("resources", jarr)
+            .set("message", "Catalog assets retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -123,17 +128,19 @@ class CatalogAssetController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(ca.id);
-      resp["name"] = Json(ca.name);
-      resp["description"] = Json(ca.description);
-      resp["businessName"] = Json(ca.businessName);
-      resp["sourceObjectId"] = Json(ca.sourceObjectId);
-      resp["owner"] = Json(ca.owner);
-      resp["glossaryTerms"] = stringsToJsonArray(ca.glossaryTerms);
-      resp["accessCount"] = Json(ca.accessCount);
-      resp["createdAt"] = Json(ca.createdAt);
-      resp["updatedAt"] = Json(ca.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(ca.id))
+            .set("name", Json(ca.name))
+            .set("description", Json(ca.description))
+            .set("businessName", Json(ca.businessName))
+            .set("sourceObjectId", Json(ca.sourceObjectId))
+            .set("owner", Json(ca.owner))
+            .set("glossaryTerms", stringsToJsonArray(ca.glossaryTerms))
+            .set("accessCount", Json(ca.accessCount))
+            .set("createdAt", Json(ca.createdAt))
+            .set("updatedAt", Json(ca.updatedAt))
+            .set("message", "Catalog asset retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

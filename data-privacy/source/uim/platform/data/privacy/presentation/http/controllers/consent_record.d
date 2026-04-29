@@ -52,8 +52,10 @@ class ConsentController : PlatformController {
 
       auto result = uc.grantConsent(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Consent granted successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -79,9 +81,11 @@ class ConsentController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Consent records retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -102,9 +106,11 @@ class ConsentController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Active consent records retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -133,8 +139,10 @@ class ConsentController : PlatformController {
 
       auto result = uc.revokeConsent(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Consent revoked successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

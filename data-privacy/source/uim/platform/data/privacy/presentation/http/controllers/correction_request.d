@@ -46,8 +46,10 @@ class CorrectionRequestController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Correction request created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -64,9 +66,11 @@ class CorrectionRequestController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Correction requests retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -96,8 +100,10 @@ class CorrectionRequestController : PlatformController {
 
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Correction request status updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

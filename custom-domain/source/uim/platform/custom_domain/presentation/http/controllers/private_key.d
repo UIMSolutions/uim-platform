@@ -40,9 +40,10 @@ class PrivateKeyController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Private key created");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "Private key created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -60,18 +61,18 @@ class PrivateKeyController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (k; keys) {
                 jarr ~= Json.emptyObject
-                .set("id", k.id)
-                .set("subject", k.subject)
-                .set("algorithm", k.algorithm.to!string)
-                .set("status", k.status.to!string)
-                .set("keySize", k.keySize)
-                .set("createdBy", k.createdBy)
-                .set("createdAt", k.createdAt);
+                    .set("id", k.id)
+                    .set("subject", k.subject)
+                    .set("algorithm", k.algorithm.to!string)
+                    .set("status", k.status.to!string)
+                    .set("keySize", k.keySize)
+                    .set("createdBy", k.createdBy)
+                    .set("createdAt", k.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(keys.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(keys.length))
+                .set("resources", jarr);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -89,19 +90,20 @@ class PrivateKeyController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(k.id);
-            resp["subject"] = Json(k.subject);
-            resp["algorithm"] = Json(k.algorithm.to!string);
-            resp["status"] = Json(k.status.to!string);
-            resp["keySize"] = Json(k.keySize);
-            resp["publicKeyFingerprint"] = Json(k.publicKeyFingerprint);
-            resp["createdBy"] = Json(k.createdBy);
-            resp["createdAt"] = Json(k.createdAt);
+            auto resp = Json.emptyObject
+                .set("id", Json(k.id))
+                .set("subject", Json(k.subject))
+                .set("algorithm", Json(k.algorithm.to!string))
+                .set("status", Json(k.status.to!string))
+                .set("keySize", Json(k.keySize))
+                .set("publicKeyFingerprint", Json(k.publicKeyFingerprint))
+                .set("createdBy", Json(k.createdBy))
+                .set("createdAt", Json(k.createdAt));
 
             auto domainsArr = Json.emptyArray;
-            foreach (d; k.domains)
+            foreach (d; k.domains) {
                 domainsArr ~= Json(d);
+            }
             resp["domains"] = domainsArr;
 
             res.writeJsonBody(resp, 200);
@@ -117,9 +119,10 @@ class PrivateKeyController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Private key deleted");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("Private key deleted"));
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

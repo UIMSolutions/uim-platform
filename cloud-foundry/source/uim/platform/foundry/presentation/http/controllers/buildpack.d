@@ -106,8 +106,10 @@ class BuildpackController : PlatformController {
 
       auto result = useCase.updateBuildpack(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Buildpack updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

@@ -53,8 +53,10 @@ class RepositoryController : PlatformController {
 
       auto result = uc.createRepository(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Repository created successfully"));
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -72,9 +74,11 @@ class RepositoryController : PlatformController {
       foreach (r; items)
         arr ~= serializeRepo(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length))
+        .set("message", Json("Repositories retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -110,8 +114,10 @@ class RepositoryController : PlatformController {
 
       auto result = uc.updateRepository(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Repository updated successfully"));
+
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Repository not found" ? 404 : 400;
@@ -128,9 +134,11 @@ class RepositoryController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.activateRepository(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("status", Json("active"))
+          .set("message", Json("Repository activated successfully"));
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);

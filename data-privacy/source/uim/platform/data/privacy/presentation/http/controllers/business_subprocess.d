@@ -45,8 +45,10 @@ class BusinessSubprocessController : PlatformController {
 
       auto result = uc.createSubprocess(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Business subprocess created");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -63,9 +65,11 @@ class BusinessSubprocessController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Business subprocesses retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -99,8 +103,10 @@ class BusinessSubprocessController : PlatformController {
 
       auto result = uc.updateSubprocess(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Business subprocess updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

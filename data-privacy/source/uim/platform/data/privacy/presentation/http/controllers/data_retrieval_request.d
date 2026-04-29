@@ -48,8 +48,10 @@ class DataRetrievalController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Data retrieval request created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -63,19 +65,18 @@ class DataRetrievalController : PlatformController {
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
-      DataRetrievalRequest[] items;
-      if (statusParam.length > 0)
-        items = uc.listByStatus(tenantId, parseRetrievalStatus(statusParam));
-      else
-        items = uc.listRequests(tenantId);
+      DataRetrievalRequest[] items = statusParam.length > 0
+        ? uc.listByStatus(tenantId, parseRetrievalStatus(statusParam))
+        : uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -89,7 +90,7 @@ class DataRetrievalController : PlatformController {
       if (entry.isNull) {
         writeError(res, 404, "Data retrieval request not found");
         return;
-      }
+      } 
       res.writeJsonBody(serialize(*entry), 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -107,8 +108,10 @@ class DataRetrievalController : PlatformController {
 
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Data retrieval request status updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

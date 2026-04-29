@@ -51,8 +51,10 @@ class ChannelController : PlatformController {
 
       auto result = uc.createChannel(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Channel created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -74,9 +76,11 @@ class ChannelController : PlatformController {
       foreach (ch; channels)
         arr ~= serializeChannel(ch);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(channels.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(channels.length))
+        .set("message", "Channels retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -110,8 +114,11 @@ class ChannelController : PlatformController {
 
       auto result = uc.openChannel(channelId);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("opened");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "opened")
+          .set("message", "Channel opened successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -135,8 +142,11 @@ class ChannelController : PlatformController {
 
       auto result = uc.closeChannel(channelId);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("closed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "closed")
+          .set("message", "Channel closed successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -154,8 +164,11 @@ class ChannelController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteChannel(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("deleted", true)
+          .set("message", "Channel deleted successfully");
+          
         res.writeJsonBody(resp, 200);
       }
       else

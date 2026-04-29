@@ -43,9 +43,10 @@ class DocumentTypeController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Document type created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Document type created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -65,9 +66,10 @@ class DocumentTypeController : PlatformController {
         jarr ~= docTypeToJson(dt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(types.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(types.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -111,9 +113,10 @@ class DocumentTypeController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Document type updated");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Document type updated"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

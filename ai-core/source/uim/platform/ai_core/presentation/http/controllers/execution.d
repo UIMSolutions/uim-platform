@@ -61,9 +61,11 @@ class ExecutionController : PlatformController {
         jarr ~= executionToJson(ex);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(executions.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", executions.length)
+        .set("resources", jarr)
+        .set("message", "Executions retrieved");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -106,7 +108,7 @@ class ExecutionController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution modified");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

@@ -72,9 +72,11 @@ class ProfileController : PlatformController {
       foreach (p; profiles)
         arr ~= serializeProfile(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(profiles.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(profiles.length))
+          .set("message", "Data profiles retrieved successfully");
+          
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

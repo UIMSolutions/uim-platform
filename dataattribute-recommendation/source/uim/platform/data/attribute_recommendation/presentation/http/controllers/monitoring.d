@@ -43,9 +43,11 @@ class MonitoringController : PlatformController {
       foreach (j; jobs)
         arr ~= serializeJobSummary(j);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(jobs.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(jobs.length))
+            .set("message", "Training jobs retrieved successfully");
+            
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

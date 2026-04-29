@@ -91,8 +91,10 @@ class CredentialController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Credential created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -122,9 +124,11 @@ class CredentialController : PlatformController {
         .set("version", c.version_);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(creds.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", creds.length)
+        .set("message", "Credentials retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

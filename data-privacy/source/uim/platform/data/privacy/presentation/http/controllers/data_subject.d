@@ -50,8 +50,10 @@ class DataSubjectController : PlatformController {
 
       auto result = uc.createSubject(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Data subject created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -76,9 +78,11 @@ class DataSubjectController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(items.length))
+            .set("message", "Data subjects retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -115,8 +119,10 @@ class DataSubjectController : PlatformController {
 
       auto result = uc.updateSubject(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Data subject updated successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else

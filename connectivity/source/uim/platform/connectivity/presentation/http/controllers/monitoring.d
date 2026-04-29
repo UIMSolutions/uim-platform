@@ -43,9 +43,11 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(logs.length))
+        .set("message", "Logs retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

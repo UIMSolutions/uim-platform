@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class UIComponentController : PlatformController {
-    private ManageUIComponentsUseCase uc;
+    private ManageUIComponentsUseCase components;
 
-    this(ManageUIComponentsUseCase uc) {
-        this.uc = uc;
+    this(ManageUIComponentsUseCase components) {
+        this.components = components;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/build-apps/ui-components", &handleList);
         router.get("/api/v1/build-apps/ui-components/*", &handleGet);
         router.post("/api/v1/build-apps/ui-components", &handleCreate);
@@ -29,12 +30,13 @@ class UIComponentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.uiComponentToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto items = components.list();
+            auto jarr = items.map!(e => e.uiComponentToJson).array;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr)
+              .set("message", "UI components retrieved");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -46,7 +48,7 @@ class UIComponentController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(UIComponentId(id));
+            auto e = components.getById(UIComponentId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "UI component not found"); return; }
             res.writeJsonBody(e.uiComponentToJson(), 200);
         } catch (Exception e) {
@@ -73,11 +75,12 @@ class UIComponentController : PlatformController {
             dto.previewUrl = j.getString("previewUrl");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = components.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("UI component created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "UI component created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -99,11 +102,12 @@ class UIComponentController : PlatformController {
             dto.version_ = j.getString("version");
             dto.modifiedBy = j.getString("modifiedBy");
 
-            auto result = uc.update(dto);
+            auto result = components.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("UI component updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "UI component updated");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -118,10 +122,11 @@ class UIComponentController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(UIComponentId(id));
+            auto result = components.remove(UIComponentId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("UI component deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "UI component deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

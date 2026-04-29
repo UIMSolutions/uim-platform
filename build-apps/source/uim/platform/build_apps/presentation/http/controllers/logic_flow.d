@@ -20,6 +20,7 @@ class LogicFlowController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/build-apps/logic-flows", &handleList);
         router.get("/api/v1/build-apps/logic-flows/*", &handleGet);
         router.post("/api/v1/build-apps/logic-flows", &handleCreate);
@@ -32,9 +33,11 @@ class LogicFlowController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= e.logicFlowToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr)
+              .set("message", "Logic flows retrieved");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -74,9 +77,10 @@ class LogicFlowController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Logic flow created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Logic flow created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -101,9 +105,10 @@ class LogicFlowController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Logic flow updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Logic flow updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -120,8 +125,9 @@ class LogicFlowController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(LogicFlowId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Logic flow deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Logic flow deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

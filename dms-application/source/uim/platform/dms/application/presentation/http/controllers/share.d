@@ -52,8 +52,10 @@ class ShareController : PlatformController {
 
       auto result = uc.createShare(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Share created successfully"));
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -73,9 +75,10 @@ class ShareController : PlatformController {
       foreach (s; items)
         arr ~= serializeShare(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -105,9 +108,11 @@ class ShareController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.revokeShare(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("revoked");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("status", Json("revoked"))
+          .set("message", Json("Share revoked"));
+
         res.writeJsonBody(resp, 200);
       }
       else

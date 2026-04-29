@@ -60,16 +60,15 @@ class DestinationController : PlatformController {
 
       auto result = uc.createDestination(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Destination created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -83,12 +82,13 @@ class DestinationController : PlatformController {
       foreach (d; dests)
         arr ~= serializeDest(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(dests.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(dests.length))
+        .set("message", "Destinations retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -102,8 +102,7 @@ class DestinationController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDest(dest), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -131,16 +130,15 @@ class DestinationController : PlatformController {
 
       auto result = uc.updateDestination(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Destination updated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -150,31 +148,30 @@ class DestinationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteDestination(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true)
+          .set("message", "Destination deleted");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeDest(const Destination d) {
     auto j = Json.emptyObject
-    .set("id", d.id)
-    .set("tenantId", d.tenantId)
-    .set("name", d.name)
-    .set("description", d.description)
-    .set("url", d.url)
-    .set("type", d.destinationType.to!string)
-    .set("authentication", d.authType.to!string)
-    .set("proxyType", d.proxyType.to!string)
-    .set("cloudConnectorLocationId", d.cloudConnectorLocationId);
+      .set("id", d.id)
+      .set("tenantId", d.tenantId)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("url", d.url)
+      .set("type", d.destinationType.to!string)
+      .set("authentication", d.authType.to!string)
+      .set("proxyType", d.proxyType.to!string)
+      .set("cloudConnectorLocationId", d.cloudConnectorLocationId);
 
     if (d.properties.length > 0) {
       auto props = Json.emptyArray;
@@ -197,9 +194,9 @@ class DestinationController : PlatformController {
     }
 
     return j
-    .set("createdBy", d.createdBy)
-    .set("createdAt", d.createdAt)
-    .set("updatedAt", d.updatedAt);
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt)
+      .set("updatedAt", d.updatedAt);
   }
 
   private static DestinationProperty[] parseProperties(Json j) {

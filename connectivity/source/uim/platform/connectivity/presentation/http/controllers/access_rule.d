@@ -53,8 +53,10 @@ class AccessRuleController : PlatformController {
 
       auto result = uc.createRule(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Access rule created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -73,9 +75,11 @@ class AccessRuleController : PlatformController {
       foreach (r; rules)
         arr ~= serializeRule(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(rules.length))
+        .set("message", "Access rules retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -108,8 +112,10 @@ class AccessRuleController : PlatformController {
 
       auto result = uc.updateRule(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Access rule updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Access rule not found" ? 404 : 400, result.error);
@@ -124,8 +130,10 @@ class AccessRuleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Access rule deleted");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

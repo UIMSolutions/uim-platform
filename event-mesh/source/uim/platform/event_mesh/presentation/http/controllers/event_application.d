@@ -32,9 +32,11 @@ class EventApplicationController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= eventApplicationToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", Json(items.length))
+              .set("resources", jarr)
+              .set("message", Json("Event application list retrieved successfully"));
+              
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

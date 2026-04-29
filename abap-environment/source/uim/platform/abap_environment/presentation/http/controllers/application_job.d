@@ -72,9 +72,9 @@ class ApplicationJobController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (job; jobs)
         arr ~= serializeJob(job);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(jobs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", jobs.length);
       
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -143,8 +143,9 @@ class ApplicationJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteJob(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

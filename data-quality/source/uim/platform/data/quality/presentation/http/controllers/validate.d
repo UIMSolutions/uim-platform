@@ -74,9 +74,11 @@ class ValidateController : PlatformController {
       foreach (res_; results)
         arr ~= serializeResult(res_);
 
-      auto resp = Json.emptyObject;
-      resp["results"] = arr;
-      resp["totalCount"] = Json(results.length);
+      auto resp = Json.emptyObject
+            .set("results", arr)
+            .set("totalCount", Json(results.length))
+            .set("message", "Validation results retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

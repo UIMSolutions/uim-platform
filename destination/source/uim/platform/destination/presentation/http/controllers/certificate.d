@@ -58,8 +58,10 @@ class CertificateController : PlatformController {
 
       auto result = uc.upload(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Certificate uploaded"));
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -88,9 +90,10 @@ class CertificateController : PlatformController {
       foreach (c; certs)
         arr ~= serializeCertificate(c);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(certs.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(certs.length));
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -112,9 +115,10 @@ class CertificateController : PlatformController {
       foreach (c; certs)
         arr ~= serializeCertificate(c);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(certs.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(certs.length));
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -150,8 +154,10 @@ class CertificateController : PlatformController {
 
       auto result = uc.updateCertificate(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Certificate updated"));
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -169,8 +175,9 @@ class CertificateController : PlatformController {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = uc.removeCertificate(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+            .set("deleted", Json(true));
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -188,11 +195,12 @@ class CertificateController : PlatformController {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = uc.validateCertificate(id);
 
-      auto resp = Json.emptyObject;
-      resp["isValid"] = Json(result.isValid);
-      resp["status"] = Json(result.status.to!string);
-      resp["message"] = Json(result.message);
-      resp["daysUntilExpiry"] = Json(result.daysUntilExpiry);
+      auto resp = Json.emptyObject
+        .set("isValid", Json(result.isValid))
+        .set("status", Json(result.status.to!string))
+        .set("message", Json(result.message))
+        .set("daysUntilExpiry", Json(result.daysUntilExpiry));
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

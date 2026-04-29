@@ -32,9 +32,11 @@ class EventMessageController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= eventMessageToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", Json(items.length))
+              .set("resources", jarr)
+              .set("message", Json("Event message list retrieved successfully"));
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -74,9 +76,10 @@ class EventMessageController : PlatformController {
 
             auto result = uc.publish(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Event message published");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Event message published"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -93,8 +96,9 @@ class EventMessageController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.acknowledge(EventMessageId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Event message acknowledged");
+                auto resp = Json.emptyObject
+                  .set("message", Json("Event message acknowledged"));
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

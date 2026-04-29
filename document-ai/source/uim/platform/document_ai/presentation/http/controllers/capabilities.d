@@ -26,9 +26,9 @@ class CapabilitiesController : PlatformController {
     try {
       auto caps = uc.getById();
 
-      auto resp = Json.emptyObject;
-      resp["serviceName"] = Json(caps.serviceName);
-      resp["serviceVersion"] = Json(caps.serviceVersion);
+      auto resp = Json.emptyObject
+        .set("serviceName", Json(caps.serviceName))
+        .set("serviceVersion", Json(caps.serviceVersion));
 
       auto extArr = Json.emptyArray;
       foreach (m; caps.extractionMethods) {

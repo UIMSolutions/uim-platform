@@ -32,9 +32,10 @@ class AppBuildController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= e.appBuildToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -71,9 +72,10 @@ class AppBuildController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("App build created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "App build created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -97,9 +99,10 @@ class AppBuildController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("App build updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "App build updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -116,8 +119,9 @@ class AppBuildController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(AppBuildId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("App build deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "App build deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

@@ -47,8 +47,10 @@ class ArchiveRequestController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Archive request created");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -61,13 +63,13 @@ class ArchiveRequestController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.MAP!(e => serialize(e)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Archive requests retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -97,8 +99,10 @@ class ArchiveRequestController : PlatformController {
 
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Archive request status updated");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -132,7 +136,7 @@ class ArchiveRequestController : PlatformController {
   }
 
   private static ArchiveStatus parseArchiveStatus(string status) {
-    switch (s) {
+    switch (status) {
     case "inProgress":
       return ArchiveStatus.inProgress;
     case "completed":

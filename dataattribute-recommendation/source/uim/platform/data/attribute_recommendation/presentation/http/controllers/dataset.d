@@ -50,8 +50,10 @@ class DatasetController : PlatformController {
 
       auto result = uc.createDataset(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Dataset created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -69,9 +71,11 @@ class DatasetController : PlatformController {
       foreach (d; items)
         arr ~= serializeDataset(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(items.length))
+            .set("message", "Datasets retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -106,8 +110,10 @@ class DatasetController : PlatformController {
 
       auto result = uc.updateDataset(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Dataset updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
@@ -124,9 +130,11 @@ class DatasetController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.validateDataset(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("ready");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("status", Json("ready"))
+            .set("message", "Dataset validated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
@@ -143,9 +151,11 @@ class DatasetController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.processDataset(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("status", Json("completed"))
+            .set("message", "Dataset processed successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
@@ -162,8 +172,11 @@ class DatasetController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteDataset(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("deleted", true)
+            .set("message", "Dataset deleted successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);

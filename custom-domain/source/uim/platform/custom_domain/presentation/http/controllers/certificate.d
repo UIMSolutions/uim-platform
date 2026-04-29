@@ -42,9 +42,10 @@ class CertificateController : PlatformController {
 
             auto result = certificates.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Certificate created");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", "Certificate created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -76,7 +77,8 @@ class CertificateController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("count", Json(certs.length))
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Certificates retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -118,14 +120,10 @@ class CertificateController : PlatformController {
                 .set("createdAt", c.createdAt)
                 .set("activatedAt", c.activatedAt);
 
-            auto domainsArr = Json.emptyArray;
-            foreach (d; c.activatedDomains)
-                domainsArr ~= Json(d);
+            auto domainsArr = c.activatedDomains.map!(d => Json(d)).array;
             resp["activatedDomains"] = domainsArr;
 
-            auto sansArr = Json.emptyArray;
-            foreach (s; c.subjectAlternativeNames)
-                sansArr ~= Json(s);
+            auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array;
             resp["subjectAlternativeNames"] = sansArr;
 
             res.writeJsonBody(resp, 200);

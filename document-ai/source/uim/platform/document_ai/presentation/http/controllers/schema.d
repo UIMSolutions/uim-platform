@@ -44,9 +44,10 @@ class SchemaController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Schema created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Schema created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -66,9 +67,11 @@ class SchemaController : PlatformController {
         jarr ~= schemaToJson(s);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(schemas.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(schemas.length))
+        .set("resources", jarr)
+        .set("message", Json("Schema list retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -111,9 +114,10 @@ class SchemaController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Schema updated");
+        auto resp = Json.emptyObject  
+          .set("id", Json(result.id))
+          .set("message", Json("Schema updated"));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

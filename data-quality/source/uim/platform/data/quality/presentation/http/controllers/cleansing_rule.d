@@ -60,8 +60,10 @@ class CleansingRuleController : PlatformController {
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Cleansing rule created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -78,13 +80,13 @@ class CleansingRuleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (r; rules)
-        arr ~= serializeRule(r);
+      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(rules.length))
+          .set("message", "Cleansing rules retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -133,8 +135,10 @@ class CleansingRuleController : PlatformController {
 
       auto result = uc.update(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Cleansing rule updated successfully");
+            
         res.writeJsonBody(resp, 200);
       }
       else

@@ -39,11 +39,12 @@ class EncryptionController : PlatformController {
 
       auto result = uc.generate(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["dek"] = Json(result.dek);
-        resp["encryptedDek"] = Json(result.encryptedDek);
-        resp["keyringId"] = Json(result.keyringId);
-        resp["keyringVersion"] = Json(result.keyringVersion);
+        auto resp = Json.emptyObject
+          .set("dek", Json(result.dek))
+          .set("encryptedDek", Json(result.encryptedDek))
+          .set("keyringId", Json(result.keyringId))
+          .set("keyringVersion", Json(result.keyringVersion));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -64,10 +65,11 @@ class EncryptionController : PlatformController {
 
       auto result = uc.encrypt(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["encryptedDek"] = Json(result.encryptedDek);
-        resp["keyringId"] = Json(result.keyringId);
-        resp["keyringVersion"] = Json(result.keyringVersion);
+        auto resp = Json.emptyObject
+          .set("encryptedDek", Json(result.encryptedDek))
+          .set("keyringId", Json(result.keyringId))
+          .set("keyringVersion", Json(result.keyringVersion));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -89,8 +91,9 @@ class EncryptionController : PlatformController {
 
       auto result = uc.decrypt(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["dek"] = Json(result.dek);
+        auto resp = Json.emptyObject
+          .set("dek", Json(result.dek));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

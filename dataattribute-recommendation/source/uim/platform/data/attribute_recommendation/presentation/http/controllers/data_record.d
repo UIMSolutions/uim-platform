@@ -50,8 +50,10 @@ class DataRecordController : PlatformController {
 
       auto result = uc.createRecord(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Data record created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -88,9 +90,11 @@ class DataRecordController : PlatformController {
       foreach (r; items)
         arr ~= serializeRecord(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Data records retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -104,9 +108,11 @@ class DataRecordController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.validateRecord(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("validated");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("status", Json("validated"))
+            .set("message", "Data record validated successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -123,9 +129,11 @@ class DataRecordController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.rejectRecord(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("rejected");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("status", Json("rejected"))
+            .set("message", "Data record rejected successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -142,8 +150,11 @@ class DataRecordController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteRecord(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("deleted", Json(true))
+            .set("message", "Data record deleted successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else

@@ -45,9 +45,10 @@ class TlsConfigurationController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("TLS configuration created");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("TLS configuration created"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -65,20 +66,20 @@ class TlsConfigurationController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (c; configs) {
                 jarr ~= Json.emptyObject
-                .set("id", c.id)
-                .set("name", c.name)
-                .set("description", c.description)
-                .set("minProtocolVersion", c.minProtocolVersion.to!string)
-                .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
-                .set("http2Enabled", c.http2Enabled)
-                .set("hstsEnabled", c.hstsEnabled)
-                .set("createdBy", c.createdBy)
-                .set("createdAt", c.createdAt);
+                    .set("id", c.id)
+                    .set("name", c.name)
+                    .set("description", c.description)
+                    .set("minProtocolVersion", c.minProtocolVersion.to!string)
+                    .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
+                    .set("http2Enabled", c.http2Enabled)
+                    .set("hstsEnabled", c.hstsEnabled)
+                    .set("createdBy", c.createdBy)
+                    .set("createdAt", c.createdAt);
             }
 
             auto response = Json.emptyObject
-            .set("count", configs.length)
-            .set("resources", jarr);
+                .set("count", configs.length)
+                .set("resources", jarr);
 
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
@@ -98,19 +99,19 @@ class TlsConfigurationController : PlatformController {
             }
 
             auto response = Json.emptyObject
-            .set("id", c.id)
-            .set("name", c.name)
-            .set("description", c.description)
-            .set("minProtocolVersion", c.minProtocolVersion.to!string)
-            .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
-            .set("http2Enabled", c.http2Enabled)
-            .set("hstsEnabled", c.hstsEnabled)
-            .set("hstsMaxAge", c.hstsMaxAge)
-            .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
-            .set("createdBy", c.createdBy)
-            .set("modifiedBy", c.modifiedBy)
-            .set("createdAt", c.createdAt)
-            .set("updatedAt", c.updatedAt);
+                .set("id", c.id)
+                .set("name", c.name)
+                .set("description", c.description)
+                .set("minProtocolVersion", c.minProtocolVersion.to!string)
+                .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
+                .set("http2Enabled", c.http2Enabled)
+                .set("hstsEnabled", c.hstsEnabled)
+                .set("hstsMaxAge", c.hstsMaxAge)
+                .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
+                .set("createdBy", c.createdBy)
+                .set("modifiedBy", c.modifiedBy)
+                .set("createdAt", c.createdAt)
+                .set("updatedAt", c.updatedAt);
 
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
@@ -138,9 +139,10 @@ class TlsConfigurationController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("TLS configuration updated");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("TLS configuration updated"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -157,9 +159,10 @@ class TlsConfigurationController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("TLS configuration deleted");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("TLS configuration deleted"));
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

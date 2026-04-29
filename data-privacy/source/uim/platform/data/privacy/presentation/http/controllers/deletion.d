@@ -48,8 +48,10 @@ class DeletionController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Deletion request created successfully");
+            
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -75,9 +77,11 @@ class DeletionController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Deletion requests retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -108,8 +112,10 @@ class DeletionController : PlatformController {
 
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Deletion request status updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

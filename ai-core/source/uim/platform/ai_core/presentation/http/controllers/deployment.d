@@ -38,10 +38,11 @@ class DeploymentController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Deployment scheduled");
-        resp["status"] = Json("PENDING");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Deployment scheduled")
+          .set("status", "PENDING");
+
         res.writeJsonBody(resp, 202);
       } else {
         writeError(res, 400, result.error);
@@ -61,9 +62,11 @@ class DeploymentController : PlatformController {
         jarr ~= deploymentToJson(d);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(deployments.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", deployments.length)
+        .set("resources", jarr)
+        .set("message", "Deployments retrieved");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -105,9 +108,10 @@ class DeploymentController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Deployment modified");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Deployment modified");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -126,7 +130,11 @@ class DeploymentController : PlatformController {
 
       auto result = uc.remove(id, rgId);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Deployment deleted");
+
+        res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
       }

@@ -51,8 +51,10 @@ class PermissionController : PlatformController {
 
       auto result = uc.grantPermission(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject  
+          .set("id", Json(result.id))
+          .set("message", Json("Permission granted"));
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -76,9 +78,11 @@ class PermissionController : PlatformController {
       foreach (p; items)
         arr ~= serializePerm(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length))
+        .set("message", "Permissions for resource retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -90,15 +94,17 @@ class PermissionController : PlatformController {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByUser(usertenantId, id);
+      auto items = uc.listByUser(tenantId, userId);
 
       auto arr = Json.emptyArray;
       foreach (p; items)
         arr ~= serializePerm(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length))
+        .set("message", "Permissions for user retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -117,11 +123,13 @@ class PermissionController : PlatformController {
 
       auto allowed = uc.checkAccess(resourceId, resourceType, userId, required, tenantId);
 
-      auto resp = Json.emptyObject;
-      resp["allowed"] = allowed ? Json(true) : Json(false);
-      resp["resourceId"] = Json(resourceId);
-      resp["userId"] = Json(userId);
-      resp["requiredLevel"] = Json(required.to!string);
+      auto resp = Json.emptyObject
+        .set("allowed", allowed ? Json(true) : Json(false))
+        .set("resourceId", Json(resourceId))
+        .set("userId", Json(userId))
+        .set("requiredLevel", Json(required.to!string))
+        .set("message", "Access check completed");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -140,8 +148,10 @@ class PermissionController : PlatformController {
 
       auto result = uc.updatePermission(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Permission updated"));
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -158,8 +168,10 @@ class PermissionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.revokePermission(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", Json(true))
+          .set("message", Json("Permission revoked"));
+
         res.writeJsonBody(resp, 200);
       }
       else

@@ -63,9 +63,11 @@ class DuplicateController : PlatformController {
       foreach (g; groups)
         arr ~= serializeGroup(g);
 
-      auto resp = Json.emptyObject;
-      resp["matchGroups"] = arr;
-      resp["totalGroups"] = Json(groups.length);
+      auto resp = Json.emptyObject
+          .set("matchGroups", arr)
+          .set("totalGroups", Json(groups.length))
+          .set("message", "Duplicate groups detected successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -82,9 +84,11 @@ class DuplicateController : PlatformController {
 
       auto result = uc.resolve(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["resolved"] = Json(true);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("resolved", Json(true))
+            .set("message", "Duplicate group resolved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -102,9 +106,11 @@ class DuplicateController : PlatformController {
       foreach (g; groups)
         arr ~= serializeGroup(g);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(groups.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(groups.length))
+            .set("message", "Duplicate groups retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

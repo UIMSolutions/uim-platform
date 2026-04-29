@@ -43,9 +43,10 @@ class TemplateController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Template created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Template created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -65,9 +66,11 @@ class TemplateController : PlatformController {
         jarr ~= templateToJson(t);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(templates.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(templates.length))
+        .set("resources", jarr)
+        .set("message", Json("Template list retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

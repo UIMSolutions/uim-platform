@@ -45,8 +45,10 @@ class ConfigChangeController : PlatformController {
 
       auto result = useCase.writeChange(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Config change log entry created");
+
         res.writeJsonBody(resp, 201);
       }
       else

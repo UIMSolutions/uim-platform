@@ -43,9 +43,10 @@ class CustomDomainController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Custom domain created");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "Custom domain created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -142,9 +143,9 @@ class CustomDomainController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto response = Json.emptyObject;
-                response["id"] = Json(result.id);
-                response["message"] = Json("Custom domain updated");
+                auto response = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "Custom domain updated");
 
                 res.writeJsonBody(response, 200);
             } else {
@@ -209,7 +210,7 @@ class CustomDomainController : PlatformController {
             auto result = uc.remove(id);
             if (result.success) {
                 auto response = Json.emptyObject
-                    .set("id", result.id)
+                    .set("id", Json(result.id))
                     .set("message", "Custom domain deleted");
                     
                 res.writeJsonBody(response, 200);

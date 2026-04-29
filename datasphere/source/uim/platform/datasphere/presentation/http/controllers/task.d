@@ -43,9 +43,10 @@ class TaskController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Task created"));
+            
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);

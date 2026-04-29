@@ -47,10 +47,11 @@ class DocumentController : PlatformController {
 
       auto result = uc.upload(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("pending");
-        resp["message"] = Json("Document uploaded for processing");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("status", Json("pending"))
+          .set("message", Json("Document uploaded for processing"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -70,9 +71,11 @@ class DocumentController : PlatformController {
         jarr ~= documentToJson(d);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(docs.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(docs.length))
+        .set("resources", jarr)
+        .set("message", Json("Document list retrieved successfully"));
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

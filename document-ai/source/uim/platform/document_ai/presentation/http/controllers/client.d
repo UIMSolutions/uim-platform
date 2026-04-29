@@ -39,9 +39,10 @@ class ClientController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["clientId"] = Json(result.id);
-        resp["message"] = Json("Client created");
+        auto resp = Json.emptyObject
+          .set("clientId", Json(result.id))
+          .set("message", Json("Client created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -61,9 +62,10 @@ class ClientController : PlatformController {
         jarr ~= clientToJson(c);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(clients.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(clients.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -104,9 +106,10 @@ class ClientController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["clientId"] = Json(result.id);
-        resp["message"] = Json("Client updated");
+        auto resp = Json.emptyObject
+          .set("clientId", Json(result.id))
+          .set("message", Json("Client updated"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

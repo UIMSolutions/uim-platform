@@ -83,9 +83,11 @@ class AddressController : PlatformController {
       foreach (r; results)
         arr ~= serializeAddress(r);
 
-      auto resp = Json.emptyObject;
-      resp["results"] = arr;
-      resp["totalCount"] = Json(results.length);
+      auto resp = Json.emptyObject
+            .set("results", arr)
+            .set("totalCount", Json(results.length))
+            .set("message", "Address cleansing results retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -100,9 +102,11 @@ class AddressController : PlatformController {
       foreach (r; records)
         arr ~= serializeAddress(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(records.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(records.length))
+            .set("message", "Address records retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

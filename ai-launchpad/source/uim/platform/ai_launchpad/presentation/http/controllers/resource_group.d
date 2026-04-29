@@ -66,9 +66,10 @@ class ResourceGroupController : PlatformController {
         jarr ~= serializeResourceGroup(g);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(groups.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", groups.length)
+        .set("resources", jarr);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -112,7 +113,7 @@ class ResourceGroupController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Resource group updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

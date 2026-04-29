@@ -42,9 +42,10 @@ class ViewController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("View created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("View created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -72,9 +73,11 @@ class ViewController : PlatformController {
           .set("createdAt", v.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(views.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(views.length))
+            .set("resources", jarr)
+            .set("message", "Views retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -94,17 +97,19 @@ class ViewController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(v.id);
-      resp["name"] = Json(v.name);
-      resp["description"] = Json(v.description);
-      resp["businessName"] = Json(v.businessName);
-      resp["sqlExpression"] = Json(v.sqlExpression);
-      resp["isExposed"] = Json(v.isExposed);
-      resp["isPersisted"] = Json(v.isPersisted);
-      resp["rowCount"] = Json(v.rowCount);
-      resp["createdAt"] = Json(v.createdAt);
-      resp["updatedAt"] = Json(v.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(v.id))
+            .set("name", Json(v.name))
+            .set("description", Json(v.description))
+            .set("businessName", Json(v.businessName))
+            .set("sqlExpression", Json(v.sqlExpression))
+            .set("isExposed", Json(v.isExposed))
+            .set("isPersisted", Json(v.isPersisted))
+            .set("rowCount", Json(v.rowCount))
+            .set("createdAt", Json(v.createdAt))
+            .set("updatedAt", Json(v.updatedAt))
+            .set("message", "View retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -130,9 +135,10 @@ class ViewController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("View updated");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("View updated"));
+            
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

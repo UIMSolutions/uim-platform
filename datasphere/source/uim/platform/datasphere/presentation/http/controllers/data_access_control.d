@@ -41,9 +41,10 @@ class DataAccessControlController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Data access control created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Data access control created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -68,9 +69,11 @@ class DataAccessControlController : PlatformController {
           .set("createdAt", dac.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(controls.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(controls.length))
+            .set("resources", jarr)
+            .set("message", "Data access controls retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,15 +92,17 @@ class DataAccessControlController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(dac.id);
-      resp["name"] = Json(dac.name);
-      resp["description"] = Json(dac.description);
-      resp["isEnabled"] = Json(dac.isEnabled);
-      resp["targetViewIds"] = stringsToJsonArray(dac.targetViewIds);
-      resp["assignedUserIds"] = stringsToJsonArray(dac.assignedUserIds);
-      resp["createdAt"] = Json(dac.createdAt);
-      resp["updatedAt"] = Json(dac.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(dac.id))
+            .set("name", Json(dac.name))
+            .set("description", Json(dac.description))
+            .set("isEnabled", Json(dac.isEnabled))
+            .set("targetViewIds", stringsToJsonArray(dac.targetViewIds))
+            .set("assignedUserIds", stringsToJsonArray(dac.assignedUserIds))
+            .set("createdAt", Json(dac.createdAt))
+            .set("updatedAt", Json(dac.updatedAt))
+            .set("message", "Data access control retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

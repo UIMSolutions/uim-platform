@@ -59,8 +59,10 @@ class SecurityEventController : PlatformController {
 
       auto result = useCase.writeEvent(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Security event recorded");
+          
         res.writeJsonBody(resp, 201);
       }
       else

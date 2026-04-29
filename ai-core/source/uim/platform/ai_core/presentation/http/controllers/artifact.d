@@ -41,9 +41,10 @@ class ArtifactController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Artifact registered");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Artifact registered");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -69,9 +70,10 @@ class ArtifactController : PlatformController {
         jarr ~= artifactToJson(a);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(artifacts.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", artifacts.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -106,7 +108,11 @@ class ArtifactController : PlatformController {
 
       auto result = uc.remove(id, rgId);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Artifact deleted");
+
+        res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
       }

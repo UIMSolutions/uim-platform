@@ -38,9 +38,11 @@ class MonitoringController : PlatformController {
       foreach (h; items)
         arr ~= serializeHealth(h);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("message", "Application health summaries retrieved successfully")
+        .set("resources", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

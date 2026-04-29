@@ -43,9 +43,10 @@ class EnrichmentDataController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Enrichment data created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Enrichment data created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -65,9 +66,11 @@ class EnrichmentDataController : PlatformController {
         jarr ~= enrichmentToJson(ed);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(data.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(data.length))
+        .set("resources", jarr)
+        .set("message", Json("Enrichment data list retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -110,9 +113,10 @@ class EnrichmentDataController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Enrichment data updated");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Enrichment data updated"));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

@@ -42,9 +42,10 @@ class DnsRecordController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("DNS record created");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", "DNS record created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -73,9 +74,11 @@ class DnsRecordController : PlatformController {
                 .set("createdAt", r.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(records.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(records.length))
+                .set("resources", jarr)
+                .set("message", "DNS records retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -93,18 +96,19 @@ class DnsRecordController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(r.id);
-            resp["customDomainId"] = Json(r.customDomainId);
-            resp["recordType"] = Json(r.recordType.to!string);
-            resp["hostname"] = Json(r.hostname);
-            resp["value"] = Json(r.value);
-            resp["ttl"] = Json(r.ttl);
-            resp["validationStatus"] = Json(r.validationStatus.to!string);
-            resp["lastValidatedAt"] = Json(r.lastValidatedAt);
-            resp["createdBy"] = Json(r.createdBy);
-            resp["createdAt"] = Json(r.createdAt);
-            resp["updatedAt"] = Json(r.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", Json(r.id))
+                .set("customDomainId", Json(r.customDomainId))
+                .set("recordType", Json(r.recordType.to!string))
+                .set("hostname", Json(r.hostname))
+                .set("value", Json(r.value))
+                .set("ttl", Json(r.ttl))
+                .set("validationStatus", Json(r.validationStatus.to!string))
+                .set("lastValidatedAt", Json(r.lastValidatedAt))
+                .set("createdBy", Json(r.createdBy))
+                .set("createdAt", Json(r.createdAt))
+                .set("updatedAt", Json(r.updatedAt));
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -124,9 +128,10 @@ class DnsRecordController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("DNS record updated");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "DNS record updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -143,9 +148,10 @@ class DnsRecordController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("DNS record deleted");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", "DNS record deleted");
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

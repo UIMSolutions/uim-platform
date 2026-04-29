@@ -46,8 +46,9 @@ class DataAccessController : PlatformController {
 
       auto result = useCase.writeLog(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+            
         res.writeJsonBody(resp, 201);
       }
       else

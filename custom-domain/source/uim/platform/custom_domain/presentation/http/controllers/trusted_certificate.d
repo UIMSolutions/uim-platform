@@ -39,9 +39,10 @@ class TrustedCertificateController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Trusted certificate created");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("Trusted certificate created"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -91,19 +92,20 @@ class TrustedCertificateController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(c.id);
-            resp["customDomainId"] = Json(c.customDomainId);
-            resp["subjectDn"] = Json(c.subjectDn);
-            resp["issuerDn"] = Json(c.issuerDn);
-            resp["serialNumber"] = Json(c.serialNumber);
-            resp["fingerprint"] = Json(c.fingerprint);
-            resp["status"] = Json(c.status.to!string);
-            resp["authMode"] = Json(c.authMode.to!string);
-            resp["validFrom"] = Json(c.validFrom);
-            resp["validTo"] = Json(c.validTo);
-            resp["createdBy"] = Json(c.createdBy);
-            resp["createdAt"] = Json(c.createdAt);
+            auto resp = Json.emptyObject
+                .set("id", Json(c.id))
+                .set("customDomainId", Json(c.customDomainId))
+                .set("subjectDn", Json(c.subjectDn))
+                .set("issuerDn", Json(c.issuerDn))
+                .set("serialNumber", Json(c.serialNumber))
+                .set("fingerprint", Json(c.fingerprint))
+                .set("status", Json(c.status.to!string))
+                .set("authMode", Json(c.authMode.to!string))
+                .set("validFrom", Json(c.validFrom))
+                .set("validTo", Json(c.validTo))
+                .set("createdBy", Json(c.createdBy))
+                .set("createdAt", Json(c.createdAt));
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -117,9 +119,10 @@ class TrustedCertificateController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Trusted certificate deleted");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("Trusted certificate deleted"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

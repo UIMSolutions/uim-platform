@@ -47,8 +47,10 @@ class DestructionRequestController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Destruction request created successfully");
+            
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);

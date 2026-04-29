@@ -49,8 +49,10 @@ class SpaceController : PlatformController {
 
       auto result = useCase.createSpace(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Space created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -70,9 +72,11 @@ class SpaceController : PlatformController {
       foreach (s; spaces)
         arr ~= serializeSpace(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(spaces.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(spaces.length))
+        .set("message", "Spaces retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -108,8 +112,10 @@ class SpaceController : PlatformController {
 
       auto result = useCase.updateSpace(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Space updated");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -126,8 +132,10 @@ class SpaceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Space deleted");
+
         res.writeJsonBody(resp, 200);
       }
       else

@@ -45,9 +45,11 @@ class CleansingJobController : PlatformController {
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("pending");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("status", "pending")
+            .set("message", "Cleansing job created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -65,9 +67,11 @@ class CleansingJobController : PlatformController {
       foreach (j_; jobs)
         arr ~= serializeJob(j_);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(jobs.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(jobs.length))
+            .set("message", "Cleansing jobs retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -55,8 +55,10 @@ class SystemInstanceController : PlatformController {
 
       auto result = uc.createInstance(request);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "System instance creation initiated");  
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -74,7 +76,8 @@ class SystemInstanceController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(instances.length));
+        .set("totalCount", Json(instances.length))
+        .set("message", "System instances retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -110,7 +113,8 @@ class SystemInstanceController : PlatformController {
       auto result = uc.updateInstance(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "updated");
+          .set("status", "updated")
+          .set("message", "System instance updated");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -127,7 +131,8 @@ class SystemInstanceController : PlatformController {
       auto result = uc.deleteInstance(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "deleting");
+          .set("status", "deleting")
+          .set("message", "System instance deletion initiated");
 
         res.writeJsonBody(resp, 200);
       } else {

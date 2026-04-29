@@ -53,8 +53,10 @@ class FolderController : PlatformController {
 
       auto result = uc.createFolder(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Folder created"));
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -107,8 +109,10 @@ class FolderController : PlatformController {
 
       auto result = uc.updateFolder(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Folder updated"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Folder not found" ? 404 : 400;

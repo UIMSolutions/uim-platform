@@ -73,9 +73,10 @@ class PromptController : PlatformController {
         jarr ~= serializePrompt(p);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(prompts.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", prompts.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -117,10 +118,12 @@ class PromptController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Prompt updated");
+        auto resp = Json.emptyObject
+          .set("id", id)
+          .set("message", "Prompt updated");
+
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -146,7 +149,7 @@ class PromptController : PlatformController {
     .set("frequencyPenalty", p.parameters.frequencyPenalty)
     .set("presencePenalty", p.parameters.presencePenalty);
 
-    auto j = Json.emptyObject
+    return Json.emptyObject
       .set("id", p.id)
       .set("collectionId", p.collectionId)
       .set("name", p.name)

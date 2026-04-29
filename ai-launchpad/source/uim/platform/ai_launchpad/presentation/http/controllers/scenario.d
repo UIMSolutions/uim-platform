@@ -39,9 +39,10 @@ class ScenarioController : PlatformController {
 
       auto result = uc.sync(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Scenario synced");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario synced");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -66,9 +67,11 @@ class ScenarioController : PlatformController {
         jarr ~= serializeScenario(s);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(scenarios.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", scenarios.length)
+        .set("resources", jarr)
+        .set("message", "Scenarios retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

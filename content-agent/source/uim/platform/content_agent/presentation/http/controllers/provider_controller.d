@@ -28,7 +28,7 @@ class ProviderController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/providers", &handleRegister);
     router.get("/api/v1/providers", &handleList);
     router.get("/api/v1/providers/*", &handleGetById);
@@ -50,16 +50,15 @@ class ProviderController : PlatformController {
 
       auto result = uc.registerProvider(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Provider registered successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -73,12 +72,13 @@ class ProviderController : PlatformController {
       foreach (p; providers)
         arr ~= serializeProvider(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(providers.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(providers.length))
+        .set("message", "Providers retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -92,8 +92,7 @@ class ProviderController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeProvider(provider), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,16 +108,15 @@ class ProviderController : PlatformController {
 
       auto result = uc.updateProvider(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Provider updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Provider not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,16 +126,15 @@ class ProviderController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deregisterProvider(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deregistered"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Provider deregistered successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -149,41 +146,40 @@ class ProviderController : PlatformController {
 
       auto result = uc.syncProvider(providerId);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["synced"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Provider synced successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeProvider(const ContentProvider p) {
-    auto j = Json.emptyObject;
-    .set("id", p.id)
-    .set("tenantId", p.tenantId)
-    .set("name", p.name)
-    .set("description", p.description)
-    .set("endpoint", p.endpoint)
-    .set("status", p.status.to!string)
-    .set("createdBy", p.createdBy)
-    .set("registeredAt", p.registeredAt)
-    .set("lastSyncAt", p.lastSyncAt);
+    auto j = Json.emptyObject
+      .set("id", p.id)
+      .set("tenantId", p.tenantId)
+      .set("name", p.name)
+      .set("description", p.description)
+      .set("endpoint", p.endpoint)
+      .set("status", p.status.to!string)
+      .set("createdBy", p.createdBy)
+      .set("registeredAt", p.registeredAt)
+      .set("lastSyncAt", p.lastSyncAt);
 
     if (p.contentTypes.length > 0) {
       auto arr = Json.emptyArray;
       foreach (ct; p.contentTypes) {
         arr ~= Json.emptyObject
-        .set("typeId", ct.typeId)
-        .set("name", ct.name)
-        .set("category", ct.category.to!string)
-        .set("description", ct.description)
-        .set("version", ct.version_);
+          .set("typeId", ct.typeId)
+          .set("name", ct.name)
+          .set("category", ct.category.to!string)
+          .set("description", ct.description)
+          .set("version", ct.version_);
       }
       j["contentTypes"] = arr;
     }

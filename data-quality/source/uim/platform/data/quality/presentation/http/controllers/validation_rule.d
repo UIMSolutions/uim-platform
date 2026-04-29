@@ -59,8 +59,10 @@ class ValidationRuleController : PlatformController {
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Validation rule created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -81,9 +83,10 @@ class ValidationRuleController : PlatformController {
       foreach (r; rules)
         arr ~= serializeRule(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(rules.length));
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -131,8 +134,10 @@ class ValidationRuleController : PlatformController {
 
       auto result = uc.update(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Validation rule updated successfully");
+            
         res.writeJsonBody(resp, 200);
       }
       else

@@ -41,9 +41,10 @@ class RemoteTableController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Remote table created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Remote table created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -72,9 +73,11 @@ class RemoteTableController : PlatformController {
         .set("createdAt", Json(rt.createdAt));
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(tables.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(tables.length))
+            .set("resources", jarr)
+            .set("message", "Remote tables retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -93,17 +96,19 @@ class RemoteTableController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(rt.id);
-      resp["name"] = Json(rt.name);
-      resp["description"] = Json(rt.description);
-      resp["connectionId"] = Json(rt.connectionId);
-      resp["remoteSchema"] = Json(rt.remoteSchema);
-      resp["remoteObjectName"] = Json(rt.remoteObjectName);
-      resp["rowCount"] = Json(rt.rowCount);
-      resp["lastReplicatedAt"] = Json(rt.lastReplicatedAt);
-      resp["createdAt"] = Json(rt.createdAt);
-      resp["updatedAt"] = Json(rt.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(rt.id))
+            .set("name", Json(rt.name))
+            .set("description", Json(rt.description))
+            .set("connectionId", Json(rt.connectionId))
+            .set("remoteSchema", Json(rt.remoteSchema))
+            .set("remoteObjectName", Json(rt.remoteObjectName))
+            .set("rowCount", Json(rt.rowCount))
+            .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
+            .set("createdAt", Json(rt.createdAt))
+            .set("updatedAt", Json(rt.updatedAt))
+            .set("message", "Remote table retrieved successfully");
+            
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -40,9 +40,10 @@ class SpaceController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Space created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Space created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -69,9 +70,11 @@ class SpaceController : PlatformController {
           .set("updatedAt", s.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(spaces.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+            .set("count", Json(spaces.length))
+            .set("resources", jarr)
+            .set("message", "Spaces retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -88,15 +91,17 @@ class SpaceController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(s.id);
-      resp["name"] = Json(s.name);
-      resp["description"] = Json(s.description);
-      resp["businessName"] = Json(s.businessName);
-      resp["priority"] = Json(s.priority);
-      resp["enableAuditLog"] = Json(s.enableAuditLog);
-      resp["createdAt"] = Json(s.createdAt);
-      resp["updatedAt"] = Json(s.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(s.id))
+            .set("name", Json(s.name))
+            .set("description", Json(s.description))
+            .set("businessName", Json(s.businessName))
+            .set("priority", Json(s.priority))
+            .set("enableAuditLog", Json(s.enableAuditLog))
+            .set("createdAt", Json(s.createdAt))
+            .set("updatedAt", Json(s.updatedAt))
+            .set("message", "Space retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -118,9 +123,10 @@ class SpaceController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Space updated");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Space updated"));
+            
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

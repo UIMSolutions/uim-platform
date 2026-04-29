@@ -36,9 +36,10 @@ class WorkspaceController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Workspace created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Workspace created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -63,9 +64,10 @@ class WorkspaceController : PlatformController {
         jarr ~= serializeWorkspace(w);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(workspaces.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", workspaces.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -103,8 +105,9 @@ class WorkspaceController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Workspace updated");
+        auto resp = Json.emptyObject
+          .set("message", "Workspace updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -121,7 +124,10 @@ class WorkspaceController : PlatformController {
 
       auto result = uc.remove(id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Workspace deleted");
+          
+        res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
       }

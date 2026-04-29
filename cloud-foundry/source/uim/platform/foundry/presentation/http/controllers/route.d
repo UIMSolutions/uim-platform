@@ -61,8 +61,10 @@ class RouteController : PlatformController {
 
       auto result = useCase.createRoute(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Route created successfully");
+          
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);

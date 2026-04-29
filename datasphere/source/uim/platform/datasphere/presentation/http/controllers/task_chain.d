@@ -39,9 +39,10 @@ class TaskChainController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task chain created");
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", Json("Task chain created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -69,7 +70,9 @@ class TaskChainController : PlatformController {
 
       auto response = Json.emptyObject
         .set("count", Json(chains.length))
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Task chains retrieved successfully");
+        
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,16 +92,18 @@ class TaskChainController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(tc.id);
-      resp["name"] = Json(tc.name);
-      resp["description"] = Json(tc.description);
-      resp["scheduleExpression"] = Json(tc.scheduleExpression);
-      resp["lastRunAt"] = Json(tc.lastRunAt);
-      resp["lastRunDurationMs"] = Json(tc.lastRunDurationMs);
-      resp["lastRunMessage"] = Json(tc.lastRunMessage);
-      resp["createdAt"] = Json(tc.createdAt);
-      resp["updatedAt"] = Json(tc.updatedAt);
+      auto resp = Json.emptyObject
+            .set("id", Json(tc.id))
+            .set("name", Json(tc.name))
+            .set("description", Json(tc.description))
+            .set("scheduleExpression", Json(tc.scheduleExpression))
+            .set("lastRunAt", Json(tc.lastRunAt))
+            .set("lastRunDurationMs", Json(tc.lastRunDurationMs))
+            .set("lastRunMessage", Json(tc.lastRunMessage))
+            .set("createdAt", Json(tc.createdAt))
+            .set("updatedAt", Json(tc.updatedAt))
+            .set("message", "Task chain retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

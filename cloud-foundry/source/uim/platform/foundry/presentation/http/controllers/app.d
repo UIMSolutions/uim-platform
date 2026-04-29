@@ -66,8 +66,10 @@ class AppController : PlatformController {
 
       auto result = useCase.createApp(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Application created");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -131,8 +133,10 @@ class AppController : PlatformController {
 
       auto result = useCase.updateApp(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Application updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -147,8 +151,10 @@ class AppController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.startApp(tenantId, appId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Application started successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

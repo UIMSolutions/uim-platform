@@ -53,8 +53,10 @@ class PackageController : PlatformController {
 
       auto result = uc.createPackage(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Package created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -73,9 +75,11 @@ class PackageController : PlatformController {
       foreach (p; packages)
         arr ~= serializePackage(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(packages.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(packages.length))
+        .set("message", "Packages retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -108,8 +112,10 @@ class PackageController : PlatformController {
 
       auto result = uc.updatePackage(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Package updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Package not found" ? 404 : 400, result.error);
@@ -124,8 +130,10 @@ class PackageController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deletePackage(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true)
+          .set("message", "Package deleted successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -145,9 +153,11 @@ class PackageController : PlatformController {
 
       auto result = uc.assemblePackage(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("assembled");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "assembled")
+          .set("message", "Package assembled successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

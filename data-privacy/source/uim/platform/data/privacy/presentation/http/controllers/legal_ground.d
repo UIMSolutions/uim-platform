@@ -51,8 +51,10 @@ class LegalGroundController : PlatformController {
 
       auto result = uc.createGround(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Legal ground created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -83,9 +85,11 @@ class LegalGroundController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Legal grounds retrieved successfully");
+          
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -120,8 +124,10 @@ class LegalGroundController : PlatformController {
 
       auto result = uc.updateGround(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Legal ground updated successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else

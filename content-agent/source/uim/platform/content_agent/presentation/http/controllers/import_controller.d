@@ -46,9 +46,11 @@ class ImportController : PlatformController {
 
       auto result = uc.startImport(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "completed")
+          .set("message", "Import started successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -67,9 +69,11 @@ class ImportController : PlatformController {
       foreach (j; jobs)
         arr ~= serializeImportJob(j);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(jobs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(jobs.length))
+        .set("message", "Import jobs retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -30,16 +30,17 @@ class DomainDashboardController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto d = uc.getById(tenantId);
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(d.id);
-            resp["totalDomains"] = Json(d.totalDomains);
-            resp["activeDomains"] = Json(d.activeDomains);
-            resp["totalCertificates"] = Json(d.totalCertificates);
-            resp["activeCertificates"] = Json(d.activeCertificates);
-            resp["totalMappings"] = Json(d.totalMappings);
-            resp["activeMappings"] = Json(d.activeMappings);
-            resp["overallHealth"] = Json(d.overallHealth.to!string);
-            resp["lastUpdatedAt"] = Json(d.lastUpdatedAt);
+            auto resp = Json.emptyObject
+                .set("id", Json(d.id))
+                .set("totalDomains", Json(d.totalDomains))
+                .set("activeDomains", Json(d.activeDomains))
+                .set("totalCertificates", Json(d.totalCertificates))
+                .set("activeCertificates", Json(d.activeCertificates))
+                .set("totalMappings", Json(d.totalMappings))
+                .set("activeMappings", Json(d.activeMappings))
+                .set("overallHealth", Json(d.overallHealth.to!string))
+                .set("lastUpdatedAt", Json(d.lastUpdatedAt));
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -53,9 +54,10 @@ class DomainDashboardController : PlatformController {
 
             auto result = uc.refresh(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dashboard refreshed");
+                auto resp = Json.emptyObject
+                    .set("id", Json(result.id))
+                    .set("message", Json("Dashboard refreshed"));
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);

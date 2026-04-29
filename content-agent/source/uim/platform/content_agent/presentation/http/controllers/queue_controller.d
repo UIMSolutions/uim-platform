@@ -51,8 +51,10 @@ class QueueController : PlatformController {
 
       auto result = uc.createQueue(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Queue created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -74,9 +76,11 @@ class QueueController : PlatformController {
       foreach (q; queues)
         arr ~= serializeQueue(q);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(queues.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(queues.length))
+        .set("message", "Queues retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -111,8 +115,10 @@ class QueueController : PlatformController {
 
       auto result = uc.updateQueue(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Queue updated successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -130,8 +136,10 @@ class QueueController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteQueue(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Queue deleted successfully");
+
         res.writeJsonBody(resp, 200);
       }
       else

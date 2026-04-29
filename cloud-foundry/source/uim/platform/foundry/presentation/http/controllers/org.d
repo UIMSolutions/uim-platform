@@ -50,8 +50,10 @@ class OrgController : PlatformController {
 
       auto result = useCase.createOrg(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Organization created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -71,9 +73,11 @@ class OrgController : PlatformController {
       foreach (o; orgs)
         arr ~= serializeOrg(o);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(orgs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", orgs.length)
+        .set("message", "Organizations retrieved");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -113,8 +117,10 @@ class OrgController : PlatformController {
 
       auto result = useCase.updateOrg(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Organization updated");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -131,8 +137,10 @@ class OrgController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.suspendOrg(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Organization suspended");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -149,8 +157,10 @@ class OrgController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.activateOrg(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Organization activated");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -167,8 +177,10 @@ class OrgController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteOrg(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Organization deleted");
+          
         res.writeJsonBody(resp, 200);
       }
       else

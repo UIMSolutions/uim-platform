@@ -50,8 +50,10 @@ class ServiceBindingController : PlatformController {
 
       auto result = uc.createBinding(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service binding created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -68,9 +70,10 @@ class ServiceBindingController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (b; bindings)
         arr ~= serializeBinding(b);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(bindings.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", bindings.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,8 +104,10 @@ class ServiceBindingController : PlatformController {
 
       auto result = uc.updateBinding(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated")
+          .set("message", "Service binding updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -117,8 +122,10 @@ class ServiceBindingController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBinding(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Service binding deleted");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

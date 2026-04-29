@@ -50,8 +50,10 @@ class RetentionRuleController : PlatformController {
 
       auto result = uc.createRule(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Retention rule created successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -76,9 +78,11 @@ class RetentionRuleController : PlatformController {
       foreach (e; items)
         arr ~= serialize(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", Json(items.length))
+          .set("message", "Retention rules retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -114,8 +118,10 @@ class RetentionRuleController : PlatformController {
 
       auto result = uc.updateRule(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", Json(result.id))
+            .set("message", "Retention rule updated successfully");
+            
         res.writeJsonBody(resp, 200);
       }
       else

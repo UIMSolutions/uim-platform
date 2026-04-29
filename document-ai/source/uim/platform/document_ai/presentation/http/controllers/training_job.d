@@ -42,9 +42,10 @@ class TrainingJobController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Training job created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Training job created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -64,9 +65,11 @@ class TrainingJobController : PlatformController {
         jarr ~= jobToJson(tj);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(jobs.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(jobs.length))
+        .set("resources", jarr)
+        .set("message", Json("Training job list retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -107,9 +110,10 @@ class TrainingJobController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Training job updated");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Training job updated"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

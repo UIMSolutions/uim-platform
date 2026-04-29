@@ -117,7 +117,7 @@ class ExecutionController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -140,16 +140,18 @@ class ExecutionController : PlatformController {
       auto results = uc.bulkPatch(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
-        auto rj = Json.emptyObject;
-        rj["id"] = Json(result.id);
-        rj["success"] = Json(result.success);
+        auto rj = Json.emptyObject
+          .set("id", result.id)
+          .set("success", result.success);
+          
         if (result.error.length > 0)
           rj["error"] = Json(result.error);
         jarr ~= rj;
       }
 
-      auto resp = Json.emptyObject;
-      resp["results"] = jarr;
+      auto resp = Json.emptyObject
+        .set("results", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

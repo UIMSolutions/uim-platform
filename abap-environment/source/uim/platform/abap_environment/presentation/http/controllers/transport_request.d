@@ -52,8 +52,10 @@ class TransportRequestController : PlatformController {
 
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Transport request created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -70,9 +72,10 @@ class TransportRequestController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (tr; requests)
         arr ~= serializeRequest(tr);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(requests.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", requests.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -104,8 +107,10 @@ class TransportRequestController : PlatformController {
 
       auto result = uc.addTask(requestId, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["taskId"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("taskId", result.id)
+          .set("message", "Transport task added");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -120,8 +125,10 @@ class TransportRequestController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.releaseRequest(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("released");
+        auto resp = Json.emptyObject
+          .set("status", "released")
+          .set("message", "Transport request released");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -139,8 +146,10 @@ class TransportRequestController : PlatformController {
 
       auto result = uc.releaseTask(requestId, taskId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("released");
+        auto resp = Json.emptyObject
+          .set("status", "released")
+          .set("message", "Transport task released");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -155,8 +164,10 @@ class TransportRequestController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRequest(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Transport request deleted");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

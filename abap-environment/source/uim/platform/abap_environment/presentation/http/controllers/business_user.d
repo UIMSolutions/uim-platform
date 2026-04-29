@@ -106,8 +106,10 @@ class BusinessUserController : PlatformController {
 
       auto result = uc.updateUser(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated")
+          .set("message", "Business user updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -122,8 +124,10 @@ class BusinessUserController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteUser(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("deleted");
+        auto resp = Json.emptyObject
+          .set("status", "deleted")
+          .set("message", "Business user deleted");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

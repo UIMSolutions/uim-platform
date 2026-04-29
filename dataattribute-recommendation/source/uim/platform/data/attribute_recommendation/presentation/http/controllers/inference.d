@@ -46,9 +46,11 @@ class InferenceController : PlatformController {
 
       auto result = uc.submitInference(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["resultId"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+            .set("resultId", Json(result.id))
+            .set("status", Json("completed"))
+            .set("message", "Inference submitted successfully");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -71,9 +73,11 @@ class InferenceController : PlatformController {
         foreach (r; requests)
           arr ~= serializeRequest(r);
 
-        auto resp = Json.emptyObject;
-        resp["items"] = arr;
-        resp["totalCount"] = Json(requests.length);
+        auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(requests.length))
+            .set("message", "Inference requests retrieved successfully");
+
         res.writeJsonBody(resp, 200);
         return;
       }
@@ -114,9 +118,11 @@ class InferenceController : PlatformController {
       foreach (r; items)
         arr ~= serializeRequest(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+            .set("items", arr)
+            .set("totalCount", Json(items.length))
+            .set("message", "Inference requests retrieved successfully");
+            
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

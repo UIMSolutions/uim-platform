@@ -20,7 +20,7 @@ class ConnectionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/connections", &handleList);
     router.get("/api/v1/datasphere/connections/*", &handleGet);
     router.post("/api/v1/datasphere/connections", &handleCreate);
@@ -43,9 +43,10 @@ class ConnectionController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Connection created");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Connection created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -63,18 +64,19 @@ class ConnectionController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (c; connections) {
         jarr ~= Json.emptyObject
-        .set("id", c.id)
-        .set("name", c.name)
-        .set("description", c.description)
-        .set("isValid", c.isValid)
-        .set("statusMessage", c.statusMessage)
-        .set("createdAt", c.createdAt)
-        .set("updatedAt", c.updatedAt);
+          .set("id", c.id)
+          .set("name", c.name)
+          .set("description", c.description)
+          .set("isValid", c.isValid)
+          .set("statusMessage", c.statusMessage)
+          .set("createdAt", c.createdAt)
+          .set("updatedAt", c.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(connections.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(connections.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -84,6 +86,7 @@ class ConnectionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -93,17 +96,19 @@ class ConnectionController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(c.id);
-      resp["name"] = Json(c.name);
-      resp["description"] = Json(c.description);
-      resp["host"] = Json(c.host);
-      resp["port"] = Json(c.port);
-      resp["database"] = Json(c.database);
-      resp["isValid"] = Json(c.isValid);
-      resp["statusMessage"] = Json(c.statusMessage);
-      resp["createdAt"] = Json(c.createdAt);
-      resp["updatedAt"] = Json(c.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", Json(c.id))
+        .set("name", Json(c.name))
+        .set("description", Json(c.description))
+        .set("host", Json(c.host))
+        .set("port", Json(c.port))
+        .set("database", Json(c.database))
+        .set("isValid", Json(c.isValid))
+        .set("statusMessage", Json(c.statusMessage))
+        .set("createdAt", Json(c.createdAt))
+        .set("updatedAt", Json(c.updatedAt))
+        .set("message", "Connection retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -113,6 +118,7 @@ class ConnectionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

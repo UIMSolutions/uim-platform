@@ -11,15 +11,15 @@ import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core;
 
 class ResourceGroupController : PlatformController {
-  private ManageResourceGroupsUseCase uc;
+  private ManageResourceGroupsUseCase groups;
 
-  this(ManageResourceGroupsUseCase uc) {
-    this.uc = uc;
+  this(ManageResourceGroupsUseCase groups) {
+    this.groups = groups;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v2/admin/resourceGroups", &handleCreate);
     router.get("/api/v2/admin/resourceGroups", &handleList);
     router.get("/api/v2/admin/resourceGroups/*", &handleGet);
@@ -35,12 +35,12 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = groups.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("resourceGroupId", result.id)
           .set("message", "Resource group created");
-        
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -53,7 +53,7 @@ class ResourceGroupController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto groups = uc.list(tenantId);
+      auto groups = groups.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (rg; groups) {
@@ -74,9 +74,12 @@ class ResourceGroupController : PlatformController {
         jarr ~= rgj;
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(groups.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", groups.length)
+        .set("resources", jarr);
+      
+      .set("message", "Resource groups retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,18 +92,19 @@ class ResourceGroupController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto rg = uc.getbyId(id);
+      auto rg = groups.getbyId(id);
       if (rg.id.isEmpty) {
         writeError(res, 404, "Resource group not found");
         return;
       }
 
       auto resp = Json.emptyObject
-      .set("resourceGroupId", Json(rg.id))
-      .set("tenantId", Json(rg.tenantId))
-      .set("status", Json(rg.status))
-      .set("createdAt", Json(rg.createdAt));
-      
+        .set("resourceGroupId", rg.id)
+        .set("tenantId", rg.tenantId)
+        .set("status", rg.status)
+        .set("createdAt", rg.createdAt)
+        .set("message", "Resource group retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -118,11 +122,12 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = id;
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = uc.patch(r);
+      auto result = groups.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["resourceGroupId"] = Json(result.id);
-        resp["message"] = Json("Resource group updated");
+        auto resp = Json.emptyObject
+          .set("resourceGroupId", result.id)
+          .set("message", "Resource group updated");
+        
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -138,7 +143,7 @@ class ResourceGroupController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto result = uc.remove(id);
+      auto result = groups.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

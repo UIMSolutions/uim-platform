@@ -60,8 +60,10 @@ class FragmentController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Fragment created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -81,9 +83,10 @@ class FragmentController : PlatformController {
       foreach (f; fragments)
         arr ~= serializeFragment(f);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(fragments.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(fragments.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -125,8 +128,10 @@ class FragmentController : PlatformController {
 
       auto result = uc.updateFragment(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Fragment updated"));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Fragment not found" ? 404 : 400, result.error);
@@ -141,8 +146,10 @@ class FragmentController : PlatformController {
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto result = uc.removeFragment(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", Json(true))
+          .set("message", Json("Fragment deleted"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

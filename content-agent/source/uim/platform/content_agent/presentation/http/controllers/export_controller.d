@@ -46,9 +46,11 @@ class ExportController : PlatformController {
 
       auto result = uc.startExport(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "completed")
+          .set("message", "Export started successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -67,9 +69,11 @@ class ExportController : PlatformController {
       foreach (j; jobs)
         arr ~= serializeExportJob(j);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(jobs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(jobs.length))
+        .set("message", "Export jobs retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

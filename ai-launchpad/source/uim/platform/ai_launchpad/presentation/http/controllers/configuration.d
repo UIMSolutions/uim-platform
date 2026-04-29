@@ -11,15 +11,15 @@ import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad;
 
 class ConfigurationController : PlatformController {
-  private ManageConfigurationsUseCase uc;
+  private ManageConfigurationsUseCase configurations;
 
-  this(ManageConfigurationsUseCase uc) {
-    this.uc = uc;
+  this(ManageConfigurationsUseCase configurations) {
+    this.configurations = configurations;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/configurations", &handleCreate);
     router.get("/api/v1/configurations", &handleList);
     router.get("/api/v1/configurations/*", &handleGet);
@@ -39,12 +39,12 @@ class ConfigurationController : PlatformController {
       r.parameterValues = jsonPairArray(j, "parameterValues");
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 
-      auto result = uc.create(r);
+      auto result = configurations.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Configuration created");
-        
+          .set("id", result.id)
+          .set("message", "Configuration created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -59,20 +59,22 @@ class ConfigurationController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
       auto scenarioId = req.headers.get("X-Scenario-Id", "");
 
-      typeof(uc.listByConnection(connectionId)) configs;
+      typeof(configurations.listByConnection(connectionId)) configs;
       if (scenarioId.length > 0)
-        configs = uc.listByScenario(scenarioId, connectionId);
+        configs = configurations.listByScenario(scenarioId, connectionId);
       else
-        configs = uc.listByConnection(connectionId);
+        configs = configurations.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
         jarr ~= serializeConfiguration(c);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(configs.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", configs.length)
+        .set("resources", jarr)
+        .set("message", "Configurations retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -82,10 +84,11 @@ class ConfigurationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto c = uc.getById(id, connectionId);
+      auto c = configurations.getById(id, connectionId);
       if (c.id.isEmpty) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -100,10 +103,11 @@ class ConfigurationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto result = uc.remove(id, connectionId);
+      auto result = configurations.remove(id, connectionId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -116,12 +120,6 @@ class ConfigurationController : PlatformController {
 
   private Json serializeConfiguration(Configuration c) {
     import uim.platform.ai_launchpad.domain.entities.configuration : ParameterBinding, InputArtifactBinding;
-    auto j = Json.emptyObject
-      .set("id", c.id)
-      .set("connectionId", c.connectionId)
-      .set("scenarioId", c.scenarioId)
-      .set("executableId", c.executableId)
-      .set("name", c.name);
 
     auto params = Json.emptyArray;
     foreach (p; c.parameters) {
@@ -129,7 +127,6 @@ class ConfigurationController : PlatformController {
         .set("key", p.key)
         .set("value", p.value);
     }
-    j["parameters"] = params;
 
     auto artifacts = Json.emptyArray;
     foreach (a; c.inputArtifacts) {
@@ -137,9 +134,15 @@ class ConfigurationController : PlatformController {
         .set("key", a.key)
         .set("artifactId", a.artifactId);
     }
-    j["inputArtifacts"] = artifacts;
 
-    j["createdAt"] = Json(c.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", c.id)
+      .set("connectionId", c.connectionId)
+      .set("scenarioId", c.scenarioId)
+      .set("executableId", c.executableId)
+      .set("name", c.name)
+      .set("parameters", params)
+      .set("inputArtifacts", artifacts)
+      .set("createdAt", Json(c.createdAt));
   }
 }
