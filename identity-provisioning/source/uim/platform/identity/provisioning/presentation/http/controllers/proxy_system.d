@@ -50,8 +50,9 @@ class ProxySystemController : PlatformController {
 
       auto result = uc.createProxySystem(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -110,8 +111,9 @@ class ProxySystemController : PlatformController {
 
       auto result = uc.updateProxySystem(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       }
       else

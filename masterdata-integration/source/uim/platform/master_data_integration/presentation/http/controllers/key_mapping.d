@@ -46,8 +46,9 @@ class KeyMappingController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -74,9 +75,10 @@ class KeyMappingController : PlatformController {
       foreach (m; mappings)
         arr ~= serializeMapping(m);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(mappings.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", mappings.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -103,11 +105,12 @@ class KeyMappingController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["targetLocalKey"] = Json(targetKey);
-      resp["sourceClientId"] = Json(r.sourceClientId);
-      resp["sourceLocalKey"] = Json(r.sourceLocalKey);
-      resp["targetClientId"] = Json(r.targetClientId);
+      auto resp = Json.emptyObject
+        .set("targetLocalKey", targetKey)
+        .set("sourceClientId", r.sourceClientId)
+        .set("sourceLocalKey", r.sourceLocalKey)
+        .set("targetClientId", r.targetClientId);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

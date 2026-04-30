@@ -71,9 +71,10 @@ class SmartformController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Smartform created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Smartform created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -101,9 +102,10 @@ class SmartformController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Smartform updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Smartform updated");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

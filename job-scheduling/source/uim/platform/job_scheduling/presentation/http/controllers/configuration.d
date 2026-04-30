@@ -34,12 +34,13 @@ class ConfigurationController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto config = uc.getById(tenantId);
 
-            auto resp = Json.emptyObject;
-            resp["defaultRetries"] = Json(config.defaultRetries);
-            resp["defaultRetryDelayMs"] = Json(config.defaultRetryDelayMs);
-            resp["maxRunDurationMs"] = Json(config.maxRunDurationMs);
-            resp["enableAsyncMode"] = Json(config.enableAsyncMode);
-            resp["enableAlertNotifications"] = Json(config.enableAlertNotifications);
+            auto resp = Json.emptyObject
+                .set("defaultRetries", config.defaultRetries)
+                .set("defaultRetryDelayMs", config.defaultRetryDelayMs)
+                .set("maxRunDurationMs", config.maxRunDurationMs)
+                .set("enableAsyncMode", config.enableAsyncMode)
+                .set("enableAlertNotifications", config.enableAlertNotifications);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

@@ -44,9 +44,10 @@ class SchemaController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Schema created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Schema created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -94,17 +95,18 @@ class SchemaController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(s.id);
-      resp["instanceId"] = Json(s.instanceId);
-      resp["name"] = Json(s.name);
-      resp["owner"] = Json(s.owner);
-      resp["tableCount"] = Json(s.tableCount);
-      resp["viewCount"] = Json(s.viewCount);
-      resp["procedureCount"] = Json(s.procedureCount);
-      resp["sizeBytes"] = Json(s.sizeBytes);
-      resp["createdAt"] = Json(s.createdAt);
-      resp["updatedAt"] = Json(s.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", s.id)
+        .set("instanceId", s.instanceId)
+        .set("name", s.name)
+        .set("owner", s.owner)
+        .set("tableCount", s.tableCount)
+        .set("viewCount", s.viewCount)
+        .set("procedureCount", s.procedureCount)
+        .set("sizeBytes", s.sizeBytes)
+        .set("createdAt", s.createdAt)
+        .set("updatedAt", s.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -123,9 +125,10 @@ class SchemaController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Schema updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Schema updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

@@ -47,9 +47,10 @@ class RunLogController : PlatformController {
                 jarr ~= runLogToJson(l);
             }
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(logs.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", logs.length)
+                .set("results", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -64,12 +65,13 @@ class RunLogController : PlatformController {
             auto jobId = extractJobId(path);
             TenantId tenantId = req.getTenantId;
 
-            auto logs = uc.listByJob(jobtenantId, id);
+            auto logs = uc.listByJob(jobId, tenantId);
 
             auto jarr = logs.map!(log => runLogToJson(log)).array.toJson;
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(logs.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", logs.length)
+                .set("results", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -94,9 +96,10 @@ class RunLogController : PlatformController {
 
             auto result = uc.updateStatus(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Run log updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Run log updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);

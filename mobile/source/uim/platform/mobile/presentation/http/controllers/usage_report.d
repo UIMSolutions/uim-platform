@@ -22,6 +22,7 @@ class UsageReportController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/usage", &handleReport);
     router.get("/api/v1/usage", &handleList);
     router.get("/api/v1/usage/*", &handleGet);
@@ -44,10 +45,11 @@ class UsageReportController : PlatformController {
       r.timestamp = jsonLong(j, "timestamp");
       auto result = uc.report(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Usage report created successfully");
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -95,7 +97,7 @@ class UsageReportController : PlatformController {
         resp["appVersion"] = Json(result.data.appVersion);
         resp["timestamp"] = Json(result.data.timestamp);
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

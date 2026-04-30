@@ -38,13 +38,12 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listJobSummaries(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeJobSummary(s);
+      auto arr = items.map!(s => serializeJobSummary(s)).array;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -76,9 +75,10 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", logs.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -71,9 +71,10 @@ class ConnectionController : PlatformController {
         jarr ~= serializeConnection(c);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(connections.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+      .set("count", connections.length)
+      .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

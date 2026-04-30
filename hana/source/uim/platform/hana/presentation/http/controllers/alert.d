@@ -50,9 +50,10 @@ class AlertController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Alert created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Alert created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -79,9 +80,10 @@ class AlertController : PlatformController {
         .set("triggeredAt", a.triggeredAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(alerts.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", alerts.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -99,20 +101,21 @@ class AlertController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(a.id);
-      resp["instanceId"] = Json(a.instanceId);
-      resp["name"] = Json(a.name);
-      resp["description"] = Json(a.description);
-      resp["severity"] = Json(a.severity.to!string);
-      resp["status"] = Json(a.status.to!string);
-      resp["category"] = Json(a.category.to!string);
-      resp["metricName"] = Json(a.metricName);
-      resp["triggeredAt"] = Json(a.triggeredAt);
-      resp["acknowledgedAt"] = Json(a.acknowledgedAt);
-      resp["acknowledgedBy"] = Json(a.acknowledgedBy);
-      resp["resolvedAt"] = Json(a.resolvedAt);
-      resp["createdAt"] = Json(a.createdAt);
+      auto resp = Json.emptyObject
+        .set("id", a.id)
+        .set("instanceId", a.instanceId)
+        .set("name", a.name)
+        .set("description", a.description)
+        .set("severity", a.severity.to!string)
+        .set("status", a.status.to!string)
+        .set("category", a.category.to!string)
+        .set("metricName", a.metricName)
+        .set("triggeredAt", a.triggeredAt)
+        .set("acknowledgedAt", a.acknowledgedAt)
+        .set("acknowledgedBy", a.acknowledgedBy)
+        .set("resolvedAt", a.resolvedAt)
+        .set("createdAt", a.createdAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -135,9 +138,10 @@ class AlertController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Alert updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Alert updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -169,9 +173,10 @@ class AlertController : PlatformController {
 
       auto result = uc.acknowledge(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Alert acknowledged");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Alert acknowledged");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

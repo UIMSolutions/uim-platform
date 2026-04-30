@@ -48,8 +48,9 @@ class SourceSystemController : PlatformController {
 
       auto result = uc.createSourceSystem(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -69,9 +70,10 @@ class SourceSystemController : PlatformController {
       foreach (s; items)
         arr ~= serializeSystem(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -108,8 +110,9 @@ class SourceSystemController : PlatformController {
 
       auto result = uc.updateSourceSystem(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -129,9 +132,10 @@ class SourceSystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.activateSystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "active");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -151,9 +155,10 @@ class SourceSystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("inactive");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "inactive");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -170,8 +175,9 @@ class SourceSystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteSourceSystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+          
         res.writeJsonBody(resp, 200);
       }
       else

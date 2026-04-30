@@ -78,9 +78,10 @@ class MonitoringController : PlatformController {
       foreach (d; deps)
         arr ~= serializeDeploymentSummary(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(deps.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", deps.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

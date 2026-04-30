@@ -135,8 +135,9 @@ class AppRouteController : PlatformController {
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(id);
+        auto resp = Json.emptyObject
+          .set("id", id);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

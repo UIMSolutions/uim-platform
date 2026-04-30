@@ -107,9 +107,10 @@ class EquipmentController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Equipment updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Equipment updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -126,8 +127,9 @@ class EquipmentController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Equipment deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Equipment deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

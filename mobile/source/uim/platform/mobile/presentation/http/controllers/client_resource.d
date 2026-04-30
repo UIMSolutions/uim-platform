@@ -80,16 +80,18 @@ class ClientResourceController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["name"] = Json(result.data.name);
-        resp["description"] = Json(result.data.description);
-        resp["type"] = Json(result.data.type);
-        resp["contentType"] = Json(result.data.contentType);
-        resp["data"] = Json(result.data.data);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.data.id))
+          .set("tenantId", Json(result.data.tenantId))
+          .set("appId", Json(result.data.appId))
+          .set("name", Json(result.data.name))
+          .set("description", Json(result.data.description))
+          .set("type", Json(result.data.type))
+          .set("contentType", Json(result.data.contentType))
+          .set("data", Json(result.data.data))
+          .set("createdBy", Json(result.data.createdBy))
+          .set("message", "Client resource retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

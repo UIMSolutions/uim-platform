@@ -48,9 +48,10 @@ class ProvisioningJobController : PlatformController {
 
       auto result = uc.createJob(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("scheduled");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "scheduled");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -70,9 +71,10 @@ class ProvisioningJobController : PlatformController {
       foreach (j; items)
         arr ~= serializeJob(j);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -102,9 +104,10 @@ class ProvisioningJobController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.runJob(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "completed");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -128,9 +131,10 @@ class ProvisioningJobController : PlatformController {
 
       auto result = uc.createAndRunJob(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "completed");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -147,9 +151,10 @@ class ProvisioningJobController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.cancelJob(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("cancelled");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "cancelled");
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -166,8 +171,9 @@ class ProvisioningJobController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteJob(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -182,21 +188,21 @@ class ProvisioningJobController : PlatformController {
   }
 
   private static Json serializeJob(const ProvisioningJob j) {
-    auto o = Json.emptyObject;
-    o["id"] = Json(j.id);
-    o["tenantId"] = Json(j.tenantId);
-    o["sourceSystemId"] = Json(j.sourceSystemId);
-    o["targetSystemId"] = Json(j.targetSystemId);
-    o["jobType"] = Json(j.jobType.to!string);
-    o["status"] = Json(j.status.to!string);
-    o["schedule"] = Json(j.schedule);
-    o["totalEntities"] = Json(j.totalEntities);
-    o["processedEntities"] = Json(j.processedEntities);
-    o["failedEntities"] = Json(j.failedEntities);
-    o["startedAt"] = Json(j.startedAt);
-    o["completedAt"] = Json(j.completedAt);
-    o["createdBy"] = Json(j.createdBy);
-    o["createdAt"] = Json(j.createdAt);
-    return o;
+    auto job = Json.emptyObject;
+    job["id"] = Json(j.id);
+    job["tenantId"] = Json(j.tenantId);
+    job["sourceSystemId"] = Json(j.sourceSystemId);
+    job["targetSystemId"] = Json(j.targetSystemId);
+    job["jobType"] = Json(j.jobType.to!string);
+    job["status"] = Json(j.status.to!string);
+    job["schedule"] = Json(j.schedule);
+    job["totalEntities"] = Json(j.totalEntities);
+    job["processedEntities"] = Json(j.processedEntities);
+    job["failedEntities"] = Json(j.failedEntities);
+    job["startedAt"] = Json(j.startedAt);
+    job["completedAt"] = Json(j.completedAt);
+    job["createdBy"] = Json(j.createdBy);
+    job["createdAt"] = Json(j.createdAt);
+    return job;
   }
 }

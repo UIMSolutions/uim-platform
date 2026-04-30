@@ -23,9 +23,11 @@ class HealthController : PlatformController {
 
   private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resp = Json.emptyObject;
-      resp["status"] = Json("UP");
-      resp["service"] = Json(serviceName);
+      auto resp = Json.emptyObject
+        .set("status", Json("UP"))
+        .set("service", Json(serviceName))
+        .set("message", "Service is healthy");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

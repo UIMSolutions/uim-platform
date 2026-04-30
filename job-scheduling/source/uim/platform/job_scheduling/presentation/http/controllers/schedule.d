@@ -60,12 +60,13 @@ class ScheduleController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["jobId"] = Json(jobId);
-                resp["message"] = Json("Schedule created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("jobId", jobId)
+                    .set("message", "Schedule created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -88,9 +89,10 @@ class ScheduleController : PlatformController {
                 jarr ~= scheduleToJson(s);
             }
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(schedules.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", schedules.length)
+                .set("results", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -141,11 +143,12 @@ class ScheduleController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Schedule updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Schedule updated");
+                
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -164,7 +167,7 @@ class ScheduleController : PlatformController {
             auto result = uc.remove(ids[1], ids[0], tenantId);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -187,11 +190,13 @@ class ScheduleController : PlatformController {
 
             auto result = uc.activateAll(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json(r.active ? "All schedules activated"
+                auto resp = Json.emptyObject
+                    .set("message", r.active 
+                        ? "All schedules activated"
                         : "All schedules deactivated");
+                
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -206,14 +211,12 @@ class ScheduleController : PlatformController {
 
             auto schedules = uc.search(query, tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (s; schedules) {
-                jarr ~= scheduleToJson(s);
-            }
+            auto jarr = schedules.map!(s => scheduleToJson(s)).array.toJson;
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(schedules.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", schedules.length)
+                .set("results", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

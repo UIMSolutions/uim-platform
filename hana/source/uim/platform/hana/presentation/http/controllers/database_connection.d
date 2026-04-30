@@ -52,9 +52,10 @@ class DatabaseConnectionController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Database connection created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Database connection created");
+        
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -102,20 +103,21 @@ class DatabaseConnectionController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(c.id);
-      resp["instanceId"] = Json(c.instanceId);
-      resp["name"] = Json(c.name);
-      resp["description"] = Json(c.description);
-      resp["type"] = Json(c.type.to!string);
-      resp["status"] = Json(c.status.to!string);
-      resp["host"] = Json(c.host);
-      resp["port"] = Json(c.port);
-      resp["database"] = Json(c.database);
-      resp["user"] = Json(c.user);
-      resp["useTls"] = Json(c.useTls);
-      resp["createdAt"] = Json(c.createdAt);
-      resp["updatedAt"] = Json(c.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", c.id)
+        .set("instanceId", c.instanceId)
+        .set("name", c.name)
+        .set("description", c.description)
+        .set("type", c.type.to!string)
+        .set("status", c.status.to!string)
+        .set("host", c.host)
+        .set("port", c.port)
+        .set("database", c.database)
+        .set("user", c.user)
+        .set("useTls", c.useTls)
+        .set("createdAt", c.createdAt)
+        .set("updatedAt", c.updatedAt);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

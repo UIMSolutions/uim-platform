@@ -96,18 +96,19 @@ class ConfigurationController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(c.id);
-      resp["instanceId"] = Json(c.instanceId);
-      resp["section"] = Json(c.section);
-      resp["key"] = Json(c.key);
-      resp["value"] = Json(c.value);
-      resp["defaultValue"] = Json(c.defaultValue);
-      resp["description"] = Json(c.description);
-      resp["isReadOnly"] = Json(c.isReadOnly);
-      resp["requiresRestart"] = Json(c.requiresRestart);
-      resp["updatedAt"] = Json(c.updatedAt);
-      resp["modifiedBy"] = Json(c.modifiedBy);
+      auto resp = Json.emptyObject
+        .set("id", c.id)
+        .set("instanceId", c.instanceId)
+        .set("section", c.section)
+        .set("key", c.key)
+        .set("value", c.value)
+        .set("defaultValue", c.defaultValue)
+        .set("description", c.description)
+        .set("isReadOnly", c.isReadOnly)
+        .set("requiresRestart", c.requiresRestart)
+        .set("updatedAt", c.updatedAt)
+        .set("modifiedBy", c.modifiedBy);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -126,9 +127,10 @@ class ConfigurationController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Configuration updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Configuration updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

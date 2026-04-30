@@ -25,7 +25,7 @@ class WorkflowController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/workflows", &handleCreate);
     router.get("/api/v1/workflows", &handleList);
     router.get("/api/v1/workflows/*", &handleGetById);
@@ -50,16 +50,14 @@ class WorkflowController : PlatformController {
 
       auto result = useCase.createWorkflow(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -73,12 +71,12 @@ class WorkflowController : PlatformController {
       foreach (w; workflows)
         arr ~= serializeWorkflow(w);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(workflows.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", workflows.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -93,8 +91,7 @@ class WorkflowController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeWorkflow(*wf), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,17 +102,15 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.startWorkflow(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("inProgress");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "inProgress");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -126,17 +121,15 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.suspendWorkflow(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("suspended");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "suspended");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -147,17 +140,15 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.resumeWorkflow(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("inProgress");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "inProgress");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -168,17 +159,15 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.terminateWorkflow(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("terminated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "terminated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -189,37 +178,35 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteWorkflow(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeWorkflow(const Workflow w) {
     return Json.emptyObject
-     .set("id", w.id)
-     .set("tenantId", w.tenantId)
-     .set("scenarioId", w.scenarioId)
-     .set("name", w.name)
-     .set("description", w.description)
-     .set("status", w.status.to!string)
-     .set("currentStepIndex", w.currentStepIndex)
-     .set("totalSteps", w.totalSteps)
-     .set("completedSteps", w.completedSteps)
-     .set("sourceSystemConnectionId", w.sourceSystemConnectionId)
-     .set("targetSystemConnectionId", w.targetSystemConnectionId)
-     .set("createdBy", w.createdBy)
-     .set("startedAt", w.startedAt)
-     .set("completedAt", w.completedAt)
-     .set("createdAt", w.createdAt)
-     .set("updatedAt", w.updatedAt);
+      .set("id", w.id)
+      .set("tenantId", w.tenantId)
+      .set("scenarioId", w.scenarioId)
+      .set("name", w.name)
+      .set("description", w.description)
+      .set("status", w.status.to!string)
+      .set("currentStepIndex", w.currentStepIndex)
+      .set("totalSteps", w.totalSteps)
+      .set("completedSteps", w.completedSteps)
+      .set("sourceSystemConnectionId", w.sourceSystemConnectionId)
+      .set("targetSystemConnectionId", w.targetSystemConnectionId)
+      .set("createdBy", w.createdBy)
+      .set("startedAt", w.startedAt)
+      .set("completedAt", w.completedAt)
+      .set("createdAt", w.createdAt)
+      .set("updatedAt", w.updatedAt);
   }
 }

@@ -52,8 +52,9 @@ class LogController : PlatformController {
 
       auto result = uc.ingest(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -91,9 +92,10 @@ class LogController : PlatformController {
       }
 
       auto result = uc.ingestBatch(batchReq);
-      auto resp = Json.emptyObject;
-      resp["success"] = Json(result.success);
-      resp["message"] = Json(result.error);
+      auto resp = Json.emptyObject
+        .set("success", result.success)
+        .set("message", result.error);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -130,8 +130,9 @@ class KeyringController : PlatformController {
 
       auto result = uc.rotate(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["versionId"] = Json(result.id);
+        auto resp = Json.emptyObject
+        .set("versionId", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -148,8 +149,9 @@ class KeyringController : PlatformController {
 
       auto result = uc.disable(keyringId);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+        .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

@@ -40,8 +40,10 @@ class PushRegistrationController : PlatformController {
       r.topics = getStringArray(j, "topics");
       auto result = uc.register(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Push registration successful");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -77,15 +79,17 @@ class PushRegistrationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["deviceId"] = Json(result.data.deviceId);
-        resp["provider"] = Json(result.data.provider);
-        resp["pushToken"] = Json(result.data.pushToken);
-        resp["topics"] = toJsonArray(result.data.topics);
-        resp["status"] = Json(result.data.status);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.data.id))
+          .set("tenantId", Json(result.data.tenantId))
+          .set("appId", Json(result.data.appId))
+          .set("deviceId", Json(result.data.deviceId))
+          .set("provider", Json(result.data.provider))
+          .set("pushToken", Json(result.data.pushToken))
+          .set("topics", toJsonArray(result.data.topics))
+          .set("status", Json(result.data.status))
+          .set("message", "Push registration retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

@@ -49,9 +49,10 @@ class ReplicationTaskController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Replication task created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication task created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -99,22 +100,23 @@ class ReplicationTaskController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(t.id);
-      resp["instanceId"] = Json(t.instanceId);
-      resp["name"] = Json(t.name);
-      resp["description"] = Json(t.description);
-      resp["mode"] = Json(t.mode.to!string);
-      resp["status"] = Json(t.status.to!string);
-      resp["sourceConnectionId"] = Json(t.sourceConnectionId);
-      resp["targetConnectionId"] = Json(t.targetConnectionId);
-      resp["scheduleExpression"] = Json(t.scheduleExpression);
-      resp["rowsReplicated"] = Json(t.rowsReplicated);
-      resp["errorCount"] = Json(t.errorCount);
-      resp["lastRunAt"] = Json(t.lastRunAt);
-      resp["nextRunAt"] = Json(t.nextRunAt);
-      resp["createdAt"] = Json(t.createdAt);
-      resp["updatedAt"] = Json(t.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", t.id)
+        .set("instanceId", t.instanceId)
+        .set("name", t.name)
+        .set("description", t.description)
+        .set("mode", t.mode.to!string)
+        .set("status", t.status.to!string)
+        .set("sourceConnectionId", t.sourceConnectionId)
+        .set("targetConnectionId", t.targetConnectionId)
+        .set("scheduleExpression", t.scheduleExpression)
+        .set("rowsReplicated", t.rowsReplicated)
+        .set("errorCount", t.errorCount)
+        .set("lastRunAt", t.lastRunAt)
+        .set("nextRunAt", t.nextRunAt)
+        .set("createdAt", t.createdAt)
+        .set("updatedAt", t.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -136,9 +138,10 @@ class ReplicationTaskController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Replication task updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication task updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

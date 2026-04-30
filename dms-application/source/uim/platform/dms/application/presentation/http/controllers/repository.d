@@ -153,9 +153,10 @@ class RepositoryController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.archiveRepository(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("archived");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("status", Json("archived"));
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
@@ -170,8 +171,9 @@ class RepositoryController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteRepository(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);

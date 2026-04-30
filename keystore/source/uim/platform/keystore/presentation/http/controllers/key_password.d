@@ -111,9 +111,10 @@ class KeyPasswordController : PlatformController {
           .set("updatedAt",     kp.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"]      = jarr;
-      resp["totalCount"] = Json(cast(long)passwords.length);
+      auto resp = Json.emptyObject
+          .set("items", jarr)
+          .set("totalCount", passwords.length);
+          
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

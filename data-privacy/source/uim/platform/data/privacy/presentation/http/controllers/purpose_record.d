@@ -100,8 +100,9 @@ class PurposeRecordController : PlatformController {
 
       auto result = uc.deactivateRecord(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

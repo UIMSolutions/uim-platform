@@ -44,9 +44,10 @@ class HDIContainerController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("HDI Container created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "HDI Container created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -93,19 +94,20 @@ class HDIContainerController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(c.id);
-      resp["instanceId"] = Json(c.instanceId);
-      resp["name"] = Json(c.name);
-      resp["description"] = Json(c.description);
-      resp["status"] = Json(c.status.to!string);
-      resp["schemaName"] = Json(c.schemaName);
-      resp["appUser"] = Json(c.appUser);
-      resp["artifactCount"] = Json(c.artifactCount);
-      resp["sizeBytes"] = Json(c.sizeBytes);
-      resp["grantedSchemas"] = stringsToJsonArray(c.grantedSchemas);
-      resp["createdAt"] = Json(c.createdAt);
-      resp["updatedAt"] = Json(c.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", c.id)
+        .set("instanceId", c.instanceId)
+        .set("name", c.name)
+        .set("description", c.description)
+        .set("status", c.status.to!string)
+        .set("schemaName", c.schemaName)
+        .set("appUser", c.appUser)
+        .set("artifactCount", c.artifactCount)
+        .set("sizeBytes", c.sizeBytes)
+        .set("grantedSchemas", stringsToJsonArray(c.grantedSchemas))
+        .set("createdAt", c.createdAt)
+        .set("updatedAt", c.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -126,9 +128,10 @@ class HDIContainerController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("HDI Container updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "HDI Container updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

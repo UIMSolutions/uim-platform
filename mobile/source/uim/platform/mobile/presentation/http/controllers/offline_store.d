@@ -42,8 +42,10 @@ class OfflineStoreController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Offline store created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -79,16 +81,18 @@ class OfflineStoreController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["name"] = Json(result.data.name);
-        resp["description"] = Json(result.data.description);
-        resp["storeType"] = Json(result.data.storeType);
-        resp["syncPolicy"] = Json(result.data.syncPolicy);
-        resp["status"] = Json(result.data.status);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.data.id))
+          .set("tenantId", Json(result.data.tenantId))
+          .set("appId", Json(result.data.appId))
+          .set("name", Json(result.data.name))
+          .set("description", Json(result.data.description))
+          .set("storeType", Json(result.data.storeType))
+          .set("syncPolicy", Json(result.data.syncPolicy))
+          .set("status", Json(result.data.status))
+          .set("createdBy", Json(result.data.createdBy))
+          .set("message", "Offline store retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -111,8 +115,10 @@ class OfflineStoreController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Offline store updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

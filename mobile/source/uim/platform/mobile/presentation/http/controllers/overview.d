@@ -29,15 +29,17 @@ class OverviewController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
-      auto resp = Json.emptyObject;
-      resp["totalApps"] = Json(summary.totalApps);
-      resp["totalDevices"] = Json(summary.totalDevices);
-      resp["totalSessions"] = Json(summary.totalSessions);
-      resp["totalPushNotifications"] = Json(summary.totalPushNotifications);
-      resp["totalFeatureFlags"] = Json(summary.totalFeatureFlags);
-      resp["totalOfflineStores"] = Json(summary.totalOfflineStores);
-      resp["totalUsageReports"] = Json(summary.totalUsageReports);
-      resp["totalClientLogs"] = Json(summary.totalClientLogs);
+      auto resp = Json.emptyObject
+        .set("totalApps", Json(summary.totalApps))
+        .set("totalDevices", Json(summary.totalDevices))
+        .set("totalSessions", Json(summary.totalSessions))
+        .set("totalPushNotifications", Json(summary.totalPushNotifications))
+        .set("totalFeatureFlags", Json(summary.totalFeatureFlags))
+        .set("totalOfflineStores", Json(summary.totalOfflineStores))
+        .set("totalUsageReports", Json(summary.totalUsageReports))
+        .set("totalClientLogs", Json(summary.totalClientLogs))
+        .set("message", "Overview retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

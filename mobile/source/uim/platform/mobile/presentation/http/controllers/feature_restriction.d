@@ -46,8 +46,9 @@ class FeatureRestrictionController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -83,18 +84,20 @@ class FeatureRestrictionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["featureKey"] = Json(result.data.featureKey);
-        resp["description"] = Json(result.data.description);
-        resp["type"] = Json(result.data.type);
-        resp["enabled"] = Json(result.data.enabled);
-        resp["percentage"] = Json(result.data.percentage);
-        resp["whitelist"] = toJsonArray(result.data.whitelist);
-        resp["metadata"] = Json(result.data.metadata);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.data.id))
+          .set("tenantId", Json(result.data.tenantId))
+          .set("appId", Json(result.data.appId))
+          .set("featureKey", Json(result.data.featureKey))
+          .set("description", Json(result.data.description))
+          .set("type", Json(result.data.type))
+          .set("enabled", Json(result.data.enabled))
+          .set("percentage", Json(result.data.percentage))
+          .set("whitelist", toJsonArray(result.data.whitelist))
+          .set("metadata", Json(result.data.metadata))
+          .set("createdBy", Json(result.data.createdBy))
+          .set("message", "Feature restriction retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

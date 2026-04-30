@@ -48,9 +48,10 @@ class DatabaseUserController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Database user created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Database user created");
+        
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -76,9 +77,10 @@ class DatabaseUserController : PlatformController {
           .set("createdAt", u.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(users.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", users.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -96,17 +98,18 @@ class DatabaseUserController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(u.id);
-      resp["userName"] = Json(u.userName);
-      resp["status"] = Json(u.status.to!string);
-      resp["defaultSchema"] = Json(u.defaultSchema);
-      resp["isRestricted"] = Json(u.isRestricted);
-      resp["forcePasswordChange"] = Json(u.forcePasswordChange);
-      resp["failedLoginAttempts"] = Json(u.failedLoginAttempts);
-      resp["lastLoginAt"] = Json(u.lastLoginAt);
-      resp["createdAt"] = Json(u.createdAt);
-      resp["updatedAt"] = Json(u.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", u.id)
+        .set("userName", u.userName)
+        .set("status", u.status.to!string)
+        .set("defaultSchema", u.defaultSchema)
+        .set("isRestricted", u.isRestricted)
+        .set("forcePasswordChange", u.forcePasswordChange)
+        .set("failedLoginAttempts", u.failedLoginAttempts)
+        .set("lastLoginAt", u.lastLoginAt)
+        .set("createdAt", u.createdAt)
+        .set("updatedAt", u.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -129,9 +132,10 @@ class DatabaseUserController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Database user updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Database user updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

@@ -75,9 +75,10 @@ class ActivityController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Activity created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", Json("Activity created"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -106,9 +107,10 @@ class ActivityController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Activity updated");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Activity updated"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -125,8 +127,9 @@ class ActivityController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Activity deleted");
+                auto resp = Json.emptyObject
+                  .set("message", Json("Activity deleted"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

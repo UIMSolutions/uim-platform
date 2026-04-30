@@ -76,9 +76,9 @@ class TechnicianController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Technician created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Technician created");
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -105,9 +105,10 @@ class TechnicianController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Technician updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Technician updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -124,8 +125,9 @@ class TechnicianController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Technician deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Technician deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

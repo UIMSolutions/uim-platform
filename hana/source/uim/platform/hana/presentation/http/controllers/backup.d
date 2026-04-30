@@ -47,9 +47,10 @@ class BackupController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Backup created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Backup created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -97,18 +98,19 @@ class BackupController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(b.id);
-      resp["instanceId"] = Json(b.instanceId);
-      resp["name"] = Json(b.name);
-      resp["status"] = Json(b.status.to!string);
-      resp["sizeBytes"] = Json(b.sizeBytes);
-      resp["destination"] = Json(b.destination);
-      resp["encrypted"] = Json(b.encrypted);
-      resp["startedAt"] = Json(b.startedAt);
-      resp["completedAt"] = Json(b.completedAt);
-      resp["expiresAt"] = Json(b.expiresAt);
-      resp["createdAt"] = Json(b.createdAt);
+      auto resp = Json.emptyObject
+        .set("id", b.id)
+        .set("instanceId", b.instanceId)
+        .set("name", b.name)
+        .set("status", b.status.to!string)
+        .set("sizeBytes", b.sizeBytes)
+        .set("destination", b.destination)
+        .set("encrypted", b.encrypted)
+        .set("startedAt", b.startedAt)
+        .set("completedAt", b.completedAt)
+        .set("expiresAt", b.expiresAt)
+        .set("createdAt", b.createdAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -130,9 +132,10 @@ class BackupController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Backup updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Backup updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

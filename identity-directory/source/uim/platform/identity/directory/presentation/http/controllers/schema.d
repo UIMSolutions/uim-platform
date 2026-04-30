@@ -98,8 +98,9 @@ class SchemaController : PlatformController {
         writeScimError(res, 404, error);
       else
       {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+          
         res.writeJsonBody(resp, 200);
       }
     }

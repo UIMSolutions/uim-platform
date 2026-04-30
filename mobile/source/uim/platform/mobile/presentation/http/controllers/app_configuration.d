@@ -43,8 +43,10 @@ class AppConfigurationController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "App configuration created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -80,16 +82,18 @@ class AppConfigurationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["key"] = Json(result.data.key);
-        resp["value"] = Json(result.data.value);
-        resp["description"] = Json(result.data.description);
-        resp["isSecret"] = Json(result.data.isSecret);
-        resp["platform"] = Json(result.data.platform);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("key", result.data.key)
+          .set("value", result.data.value)
+          .set("description", result.data.description)
+          .set("isSecret", result.data.isSecret)
+          .set("platform", result.data.platform)
+          .set("createdBy", result.data.createdBy)
+          .set("message", "App configuration retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -112,8 +116,10 @@ class AppConfigurationController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "App configuration updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -128,7 +134,11 @@ class AppConfigurationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.remove(id);
       if (result.success) {
-        res.writeBody("", 204);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "App configuration deleted successfully");
+          
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 400, result.error);
       }

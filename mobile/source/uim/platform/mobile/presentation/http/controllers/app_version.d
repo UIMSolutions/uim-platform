@@ -44,8 +44,10 @@ class AppVersionController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "App version created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -81,18 +83,20 @@ class AppVersionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["versionCode"] = Json(result.data.versionCode);
-        resp["buildNumber"] = Json(result.data.buildNumber);
-        resp["platform"] = Json(result.data.platform);
-        resp["releaseNotes"] = Json(result.data.releaseNotes);
-        resp["downloadUrl"] = Json(result.data.downloadUrl);
-        resp["sizeBytes"] = Json(result.data.sizeBytes);
-        resp["createdBy"] = Json(result.data.createdBy);
-        resp["status"] = Json(result.data.status);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("versionCode", result.data.versionCode)
+          .set("buildNumber", result.data.buildNumber)
+          .set("platform", result.data.platform)
+          .set("releaseNotes", result.data.releaseNotes)
+          .set("downloadUrl", result.data.downloadUrl)
+          .set("sizeBytes", result.data.sizeBytes)
+          .set("createdBy", result.data.createdBy)
+          .set("status", result.data.status)
+          .set("message", "App version retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -115,8 +119,10 @@ class AppVersionController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "App version updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

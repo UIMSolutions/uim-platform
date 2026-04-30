@@ -57,8 +57,10 @@ class ClientController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Client created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -85,9 +87,11 @@ class ClientController : PlatformController {
       foreach (c; clients)
         arr ~= serializeClient(c);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(clients.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", clients.length)
+        .set("message", "Clients retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -125,9 +129,11 @@ class ClientController : PlatformController {
       r.certificateRef = j.getString("certificateRef");
 
       auto result = uc.updateClient(id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("message", "Client updated successfully");
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -138,9 +144,11 @@ class ClientController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteClient(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("message", "Client deleted successfully");
+        res.writeJsonBody(resp, 204);
+      } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

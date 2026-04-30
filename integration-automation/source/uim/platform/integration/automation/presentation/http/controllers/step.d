@@ -46,9 +46,10 @@ class StepController : PlatformController {
       foreach (s; steps)
         arr ~= serializeStep(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(steps.length);
+      auto resp = Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", steps.length);
+          
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -97,9 +98,10 @@ class StepController : PlatformController {
 
       auto result = useCase.startStep(tenantId, id, userId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("inProgress");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "inProgress");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -121,9 +123,10 @@ class StepController : PlatformController {
 
       auto result = useCase.completeStep(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "completed");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -145,9 +148,10 @@ class StepController : PlatformController {
 
       auto result = useCase.failStep(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("failed");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "failed");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -169,9 +173,10 @@ class StepController : PlatformController {
 
       auto result = useCase.skipStep(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("skipped");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "skipped");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -193,8 +198,9 @@ class StepController : PlatformController {
 
       auto result = useCase.assignStep(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

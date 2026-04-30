@@ -46,8 +46,10 @@ class PushNotificationController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.send(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Push notification sent successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -83,21 +85,23 @@ class PushNotificationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["title"] = Json(result.data.title);
-        resp["body"] = Json(result.data.body_);
-        resp["payload"] = Json(result.data.payload);
-        resp["provider"] = Json(result.data.provider);
-        resp["priority"] = Json(result.data.priority);
-        resp["targetDevices"] = toJsonArray(result.data.targetDevices);
-        resp["targetTopics"] = toJsonArray(result.data.targetTopics);
-        resp["scheduledAt"] = Json(result.data.scheduledAt);
-        resp["expiresAt"] = Json(result.data.expiresAt);
-        resp["status"] = Json(result.data.status);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.data.id))
+          .set("tenantId", Json(result.data.tenantId))
+          .set("appId", Json(result.data.appId))
+          .set("title", Json(result.data.title))
+          .set("body", Json(result.data.body_))
+          .set("payload", Json(result.data.payload))
+          .set("provider", Json(result.data.provider))
+          .set("priority", Json(result.data.priority))
+          .set("targetDevices", toJsonArray(result.data.targetDevices))
+          .set("targetTopics", toJsonArray(result.data.targetTopics))
+          .set("scheduledAt", Json(result.data.scheduledAt))
+          .set("expiresAt", Json(result.data.expiresAt))
+          .set("status", Json(result.data.status))
+          .set("createdBy", Json(result.data.createdBy))
+          .set("message", "Push notification retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

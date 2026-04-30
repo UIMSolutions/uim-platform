@@ -134,8 +134,9 @@ class FolderController : PlatformController {
 
       auto result = uc.moveFolder(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+          
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Folder not found" ? 404 : 400;

@@ -55,8 +55,9 @@ class ModuleController : PlatformController {
 
       auto result = uc.enableModule(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -77,9 +78,10 @@ class ModuleController : PlatformController {
       foreach (m; items)
         arr ~= serializeModule(m);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

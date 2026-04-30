@@ -46,8 +46,9 @@ class KeystoreController : PlatformController {
 
       auto result = uc.upload(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -85,9 +86,10 @@ class KeystoreController : PlatformController {
           .set("updatedAt",     ks.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"]      = jarr;
-      resp["totalCount"] = Json(cast(long)keystores.length);
+      auto resp = Json.emptyObject
+          .set("items", jarr)
+          .set("totalCount", keystores.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -116,6 +118,7 @@ class KeystoreController : PlatformController {
         .set("modifiedBy",    ks.modifiedBy)
         .set("createdAt",     ks.createdAt)
         .set("updatedAt",     ks.updatedAt);
+        
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

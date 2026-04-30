@@ -125,9 +125,10 @@ class VersionController : PlatformController {
       foreach (v; versions)
         arr ~= serializeVersion(v);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(versions.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(versions.length));
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

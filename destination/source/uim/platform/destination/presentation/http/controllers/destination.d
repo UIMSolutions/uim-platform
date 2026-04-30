@@ -79,8 +79,9 @@ class DestinationController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -106,9 +107,10 @@ class DestinationController : PlatformController {
       foreach (d; destinations)
         arr ~= serializeDestination(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(destinations.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", destinations.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -158,8 +160,9 @@ class DestinationController : PlatformController {
 
       auto result = uc.updateDestination(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
@@ -174,8 +177,9 @@ class DestinationController : PlatformController {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto result = uc.removeDestination(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", Json(true));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -186,9 +190,7 @@ class DestinationController : PlatformController {
   }
 
   private static Json serializeDestination(const ref Destination d) {
-    auto fragArr = Json.emptyArray;
-    foreach (fid; d.fragmentIds)
-      fragArr ~= fid.toJson();
+    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array;
 
     auto propsJson = Json.emptyObject;
     foreach (k, v; d.properties)

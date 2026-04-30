@@ -113,8 +113,9 @@ class GroupController : PlatformController {
       }
       else
       {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("member_added");
+        auto resp = Json.emptyObject
+          .set("status", "member_added");
+          
         res.writeJsonBody(resp, 200);
       }
     }

@@ -45,8 +45,9 @@ class InformationReportController : PlatformController {
 
       auto result = uc.createReport(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -59,13 +60,12 @@ class InformationReportController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listReports(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

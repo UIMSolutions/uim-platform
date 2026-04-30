@@ -78,9 +78,10 @@ class EventApplicationController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Event application created");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Event application created"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -108,9 +109,10 @@ class EventApplicationController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Event application updated");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Event application updated"));
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

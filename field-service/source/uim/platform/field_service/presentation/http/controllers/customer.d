@@ -76,9 +76,10 @@ class CustomerController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Customer created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Customer created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -105,9 +106,10 @@ class CustomerController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Customer updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Customer updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -124,8 +126,9 @@ class CustomerController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Customer deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Customer deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

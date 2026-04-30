@@ -32,9 +32,10 @@ class MeshBridgeController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= meshBridgeToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", items.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -77,9 +78,10 @@ class MeshBridgeController : PlatformController {
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Mesh bridge created");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Mesh bridge created"));
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -105,9 +107,10 @@ class MeshBridgeController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Mesh bridge updated");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Mesh bridge updated"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -124,8 +127,9 @@ class MeshBridgeController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(MeshBridgeId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Mesh bridge deleted");
+                auto resp = Json.emptyObject
+                  .set("message", Json("Mesh bridge deleted"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

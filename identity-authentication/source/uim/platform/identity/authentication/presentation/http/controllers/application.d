@@ -121,20 +121,23 @@ class ApplicationController : PlatformController {
 
       auto error = useCase.updateApplication(updateReq);
       if (error.length > 0) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json(error);
+        auto errRes = Json.emptyObject
+          .set("error", error);
+          
         res.writeJsonBody(errRes, 404);
       }
       else
       {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
       }
     }
     catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
+      auto errRes = Json.emptyObject
+        .set("error", "Internal server error");
+
       res.writeJsonBody(errRes, 500);
     }
   }

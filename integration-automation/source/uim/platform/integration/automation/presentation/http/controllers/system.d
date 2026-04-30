@@ -55,8 +55,9 @@ class SystemController : PlatformController {
 
       auto result = useCase.createSystem(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -78,9 +79,10 @@ class SystemController : PlatformController {
       foreach (s; systems)
         arr ~= serializeSystem(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(systems.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", systems.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -126,8 +128,9 @@ class SystemController : PlatformController {
 
       auto result = useCase.updateSystem(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -146,8 +149,9 @@ class SystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSystem(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -166,9 +170,10 @@ class SystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.testConnection(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["connectionStatus"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("connectionStatus", "active");
+          
         res.writeJsonBody(resp, 200);
       }
       else

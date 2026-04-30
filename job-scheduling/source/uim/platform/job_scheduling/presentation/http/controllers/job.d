@@ -78,9 +78,10 @@ class JobController : PlatformController {
                 }
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(result.id);
-            resp["message"] = Json("Job created");
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Job created");
+
             res.writeJsonBody(resp, 201);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,14 +93,12 @@ class JobController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto jobs = jobUc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (job; jobs) {
-                jarr ~= jobToJson(job);
-            }
+            auto jarr = jobs.map!(job => jobToJson(job)).array; 
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(jobs.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", jobs.length)
+                .set("results", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -146,11 +145,12 @@ class JobController : PlatformController {
 
             auto result = jobUc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Job updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Job updated");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -171,7 +171,7 @@ class JobController : PlatformController {
             auto result = jobUc.removeById(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -183,10 +183,11 @@ class JobController : PlatformController {
         try {
             TenantId tenantId = req.getTenantId;
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(jobUc.count(tenantId));
-            resp["active"] = Json(jobUc.countActive(tenantId));
-            resp["inactive"] = Json(jobUc.countInactive(tenantId));
+            auto resp = Json.emptyObject
+                .set("total", jobUc.count(tenantId))
+                .set("active", jobUc.countActive(tenantId))
+                .set("inactive", jobUc.countInactive(tenantId));
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -207,9 +208,10 @@ class JobController : PlatformController {
                 jarr ~= jobToJson(job);
             }
 
-            auto resp = Json.emptyObject;
-            resp["total"] = Json(jobs.length);
-            resp["results"] = jarr;
+            auto resp = Json.emptyObject
+                .set("total", jobs.length)
+                .set("results", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

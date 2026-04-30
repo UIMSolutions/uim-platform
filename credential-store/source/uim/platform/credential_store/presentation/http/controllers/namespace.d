@@ -69,9 +69,10 @@ class NamespaceController : PlatformController {
           .set("createdAt", ns.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(namespaces.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", namespaces.length);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

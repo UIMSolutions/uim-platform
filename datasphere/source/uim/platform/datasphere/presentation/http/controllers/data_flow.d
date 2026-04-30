@@ -40,9 +40,10 @@ class DataFlowController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Data flow created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Data flow created");
+          
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -68,9 +69,10 @@ class DataFlowController : PlatformController {
           .set("createdAt", df.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(flows.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", flows.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -90,16 +92,16 @@ class DataFlowController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(df.id);
-      resp["name"] = Json(df.name);
-      resp["description"] = Json(df.description);
-      resp["scheduleExpression"] = Json(df.scheduleExpression);
-      resp["lastRunAt"] = Json(df.lastRunAt);
-      resp["lastRunDurationMs"] = Json(df.lastRunDurationMs);
-      resp["lastRunMessage"] = Json(df.lastRunMessage);
-      resp["createdAt"] = Json(df.createdAt);
-      resp["updatedAt"] = Json(df.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", df.id)
+        .set("name", df.name)
+        .set("description", df.description)
+        .set("scheduleExpression", df.scheduleExpression)
+        .set("lastRunAt", df.lastRunAt)
+        .set("lastRunDurationMs", df.lastRunDurationMs)
+        .set("lastRunMessage", df.lastRunMessage)
+        .set("createdAt", df.createdAt)
+        .set("updatedAt", df.updatedAt);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

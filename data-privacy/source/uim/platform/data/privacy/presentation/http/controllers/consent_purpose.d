@@ -105,8 +105,9 @@ class ConsentPurposeController : PlatformController {
 
       auto result = uc.updatePurpose(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

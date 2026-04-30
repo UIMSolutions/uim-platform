@@ -41,9 +41,10 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", logs.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -61,9 +62,10 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", logs.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -81,9 +83,10 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", logs.length);
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -100,9 +103,10 @@ class MonitoringController : PlatformController {
       foreach (l; logs)
         arr ~= serializeLog(l);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(logs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", logs.length);
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

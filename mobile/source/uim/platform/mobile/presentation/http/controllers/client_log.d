@@ -45,8 +45,10 @@ class ClientLogController : PlatformController {
       r.timestamp = jsonLong(j, "timestamp");
       auto result = uc.upload(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Client log uploaded successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -82,20 +84,22 @@ class ClientLogController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["deviceId"] = Json(result.data.deviceId);
-        resp["userId"] = Json(result.data.userId);
-        resp["level"] = Json(result.data.level);
-        resp["source"] = Json(result.data.source);
-        resp["message"] = Json(result.data.message);
-        resp["stackTrace"] = Json(result.data.stackTrace);
-        resp["metadata"] = Json(result.data.metadata);
-        resp["platform"] = Json(result.data.platform);
-        resp["appVersion"] = Json(result.data.appVersion);
-        resp["timestamp"] = Json(result.data.timestamp);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("deviceId", result.data.deviceId)
+          .set("userId", result.data.userId)
+          .set("level", result.data.level)
+          .set("source", result.data.source)
+          .set("message", result.data.message)
+          .set("stackTrace", result.data.stackTrace)
+          .set("metadata", result.data.metadata)
+          .set("platform", result.data.platform)
+          .set("appVersion", result.data.appVersion)
+          .set("timestamp", result.data.timestamp)
+          .set("message", "Client log retrieved successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

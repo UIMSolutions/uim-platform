@@ -56,8 +56,9 @@ class DestinationController : PlatformController {
 
       auto result = useCase.createDestination(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -79,9 +80,10 @@ class DestinationController : PlatformController {
       foreach (d; destinations)
         arr ~= serializeDestination(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(destinations.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", destinations.length);
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -129,8 +131,9 @@ class DestinationController : PlatformController {
 
       auto result = useCase.updateDestination(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       }
       else

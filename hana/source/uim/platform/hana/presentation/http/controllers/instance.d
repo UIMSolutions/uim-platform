@@ -57,9 +57,10 @@ class InstanceController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Instance created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Instance created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -110,25 +111,26 @@ class InstanceController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(i.id);
-      resp["name"] = Json(i.name);
-      resp["description"] = Json(i.description);
-      resp["status"] = Json(i.status.to!string);
-      resp["version"] = Json(i.version_);
-      resp["region"] = Json(i.region);
-      resp["availabilityZone"] = Json(i.availabilityZone);
-      resp["memoryGB"] = Json(i.resources.memoryGB);
-      resp["vcpus"] = Json(i.resources.vcpus);
-      resp["storageGB"] = Json(i.resources.storageGB);
-      resp["usedStorageGB"] = Json(i.resources.usedStorageGB);
-      resp["enableScriptServer"] = Json(i.enableScriptServer);
-      resp["enableDocStore"] = Json(i.enableDocStore);
-      resp["enableDataLake"] = Json(i.enableDataLake);
-      resp["allowAllIpAccess"] = Json(i.allowAllIpAccess);
-      resp["whitelistedIps"] = stringsToJsonArray(i.whitelistedIps);
-      resp["createdAt"] = Json(i.createdAt);
-      resp["updatedAt"] = Json(i.updatedAt);
+      auto resp = Json.emptyObject
+        .set("id", i.id)
+        .set("name", i.name)
+        .set("description", i.description)
+        .set("status", i.status.to!string)
+        .set("version", i.version_)
+        .set("region", i.region)
+        .set("availabilityZone", i.availabilityZone)
+        .set("memoryGB", i.resources.memoryGB)
+        .set("vcpus", i.resources.vcpus)
+        .set("storageGB", i.resources.storageGB)
+        .set("usedStorageGB", i.resources.usedStorageGB)
+        .set("enableScriptServer", i.enableScriptServer)
+        .set("enableDocStore", i.enableDocStore)
+        .set("enableDataLake", i.enableDataLake)
+        .set("allowAllIpAccess", i.allowAllIpAccess)
+        .set("whitelistedIps", stringsToJsonArray(i.whitelistedIps))
+        .set("createdAt", i.createdAt)
+        .set("updatedAt", i.updatedAt);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -155,9 +157,10 @@ class InstanceController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Instance updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Instance updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

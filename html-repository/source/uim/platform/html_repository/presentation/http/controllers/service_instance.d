@@ -42,8 +42,9 @@ class ServiceInstanceController : PlatformController {
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -123,8 +124,9 @@ class ServiceInstanceController : PlatformController {
 
       auto result = uc.update(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(id);
+        auto resp = Json.emptyObject
+          .set("id", id);
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
