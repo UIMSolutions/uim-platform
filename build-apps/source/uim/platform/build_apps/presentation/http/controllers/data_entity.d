@@ -104,7 +104,7 @@ class DataEntityController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.fields = j.getString("fields");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

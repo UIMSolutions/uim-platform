@@ -102,7 +102,7 @@ class DashboardController : PlatformController {
                 .set("type", d.type.to!string)
                 .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
                 .set("createdBy", d.createdBy)
-                .set("modifiedBy", d.modifiedBy)
+                .set("updatedBy", d.updatedBy)
                 .set("createdAt", d.createdAt)
                 .set("updatedAt", d.updatedAt);
 
@@ -123,7 +123,7 @@ class DashboardController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

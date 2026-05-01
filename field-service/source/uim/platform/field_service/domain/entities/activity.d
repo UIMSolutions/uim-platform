@@ -32,7 +32,7 @@ struct Activity {
     string notes;
     string feedbackCode;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -58,7 +58,7 @@ struct Activity {
             .set("notes", notes)
             .set("feedbackCode", feedbackCode)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

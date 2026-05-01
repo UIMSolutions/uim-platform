@@ -43,7 +43,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         app.createdAt = currentTimestamp();
         app.updatedAt = app.createdAt;
         app.createdBy = r.createdBy;
-        app.modifiedBy = r.createdBy;
+        app.updatedBy = r.createdBy;
 
         repo.save(app);
         return CommandResult(true, app.id, "");
@@ -57,7 +57,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         if (r.description.length > 0) app.description = r.description;
         if (r.visibility.length > 0) app.visibility = parseVisibility(r.visibility);
         app.updatedAt = currentTimestamp();
-        app.modifiedBy = r.modifiedBy;
+        app.updatedBy = r.updatedBy;
 
         repo.update(app);
         return CommandResult(true, app.id, "");

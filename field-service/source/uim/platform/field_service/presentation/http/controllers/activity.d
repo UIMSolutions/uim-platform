@@ -104,7 +104,7 @@ class ActivityController : PlatformController {
             dto.actualEnd = j.getString("actualEnd");
             dto.notes = j.getString("notes");
             dto.feedbackCode = j.getString("feedbackCode");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

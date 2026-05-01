@@ -106,7 +106,7 @@ class RetentionRuleController : PlatformController {
             r.autoDelete = j.getBoolean("autoDelete");
             r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

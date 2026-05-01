@@ -95,7 +95,7 @@ class ContentConnectorController : PlatformController {
             dto.repositoryUrl = j.getString("repositoryUrl");
             dto.branch = j.getString("branch");
             dto.path = j.getString("path");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -57,7 +57,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         if (req.endpointUrl.length > 0) existing.endpointUrl = req.endpointUrl;
         if (req.authEndpointUrl.length > 0) existing.authEndpointUrl = req.authEndpointUrl;
         if (req.clientId.length > 0) existing.clientId = req.clientId;
-        existing.modifiedBy = req.modifiedBy;
+        existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
         return CommandResult(true, req.id, "");
     }

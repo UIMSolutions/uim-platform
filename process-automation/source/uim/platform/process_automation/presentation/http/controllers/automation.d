@@ -107,7 +107,7 @@ class AutomationController : PlatformController {
                 .set("version", a.version_)
                 .set("projectId", a.projectId)
                 .set("createdBy", a.createdBy)
-                .set("modifiedBy", a.modifiedBy)
+                .set("updatedBy", a.updatedBy)
                 .set("createdAt", a.createdAt)
                 .set("updatedAt", a.updatedAt);
 
@@ -130,7 +130,7 @@ class AutomationController : PlatformController {
             r.type = j.getString("type");
             r.targetApplication = j.getString("targetApplication");
             r.version_ = j.getString("version");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

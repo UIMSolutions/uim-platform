@@ -108,7 +108,7 @@ class FormController : PlatformController {
                 .set("version", f.version_)
                 .set("projectId", f.projectId)
                 .set("createdBy", f.createdBy)
-                .set("modifiedBy", f.modifiedBy)
+                .set("updatedBy", f.updatedBy)
                 .set("createdAt", f.createdAt)
                 .set("updatedAt", f.updatedAt);
 
@@ -129,7 +129,7 @@ class FormController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

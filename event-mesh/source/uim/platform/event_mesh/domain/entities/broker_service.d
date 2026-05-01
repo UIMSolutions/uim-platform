@@ -39,7 +39,7 @@ struct BrokerService {
     string webSocketPort;
     string adminUrl;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -72,7 +72,7 @@ struct BrokerService {
             .set("webSocketPort", webSocketPort)
             .set("adminUrl", adminUrl)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

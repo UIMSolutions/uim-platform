@@ -37,7 +37,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
             createdAt = currentTimestamp();
             updatedAt = createdAt;
             createdBy = request.createdBy;
-            modifiedBy = request.createdBy;
+            updatedBy = request.createdBy;
             
             /* versionId = request.versionId;
             pathPrefix = request.pathPrefix;
@@ -67,7 +67,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         route.authRequired = request.authRequired;
         route.cacheEnabled = request.cacheEnabled;
         route.updatedAt = currentTimestamp();
-        route.modifiedBy = request.modifiedBy;
+        route.updatedBy = request.updatedBy;
 
         repo.update(route);
         return CommandResult(true, route.id, "");

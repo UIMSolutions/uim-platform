@@ -24,7 +24,7 @@ struct Skill {
     string certificationNumber;
     string issuingAuthority;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -42,7 +42,7 @@ struct Skill {
     .set("certificationNumber", certificationNumber)
     .set("issuingAuthority", issuingAuthority)
     .set("createdBy", createdBy)
-    .set("modifiedBy", modifiedBy)
+    .set("updatedBy", updatedBy)
     .set("createdAt", createdAt)
     .set("updatedAt", updatedAt);
 }

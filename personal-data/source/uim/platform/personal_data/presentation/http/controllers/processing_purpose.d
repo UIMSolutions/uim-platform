@@ -106,7 +106,7 @@ class ProcessingPurposeController : PlatformController {
             r.retentionPeriod = j.getString("retentionPeriod");
             r.dataProtectionOfficer = j.getString("dataProtectionOfficer");
             r.requiresConsent = j.getBoolean("requiresConsent");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

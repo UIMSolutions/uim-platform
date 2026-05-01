@@ -31,7 +31,7 @@ struct UpdateProcessRequest {
     string description;
     string category;
     string version_;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct DeployProcessRequest {
@@ -127,7 +127,7 @@ struct UpdateDecisionRequest {
     string description;
     string hitPolicy;
     string version_;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Form ---
@@ -148,7 +148,7 @@ struct UpdateFormRequest {
     string name;
     string description;
     string version_;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Automation (RPA Bot) ---
@@ -173,7 +173,7 @@ struct UpdateAutomationRequest {
     string type;
     string targetApplication;
     string version_;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct RunAutomationRequest {
@@ -237,7 +237,7 @@ struct UpdateActionRequest {
     string authType;
     string destinationName;
     string version_;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Visibility (Process Monitoring) ---
@@ -259,7 +259,7 @@ struct UpdateVisibilityRequest {
     string name;
     string description;
     string refreshIntervalSeconds;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Artifact Store ---

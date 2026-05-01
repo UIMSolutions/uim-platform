@@ -109,7 +109,7 @@ class AppRouteController : PlatformController {
         .set("status", entry.status)
         .set("createdBy", entry.createdBy)
         .set("createdAt", entry.createdAt)
-        .set("modifiedBy", entry.modifiedBy)
+        .set("updatedBy", entry.updatedBy)
         .set("updatedAt", entry.updatedAt);
 
       res.writeJsonBody(response, 200);
@@ -132,7 +132,7 @@ class AppRouteController : PlatformController {
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.targetUrl = j.getString("targetUrl");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

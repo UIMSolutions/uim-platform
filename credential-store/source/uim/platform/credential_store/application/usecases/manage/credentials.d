@@ -47,7 +47,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
       existing.username = r.username;
       existing.version_ = existing.version_ + 1;
       existing.updatedAt = currentTimestamp();
-      existing.modifiedBy = r.createdBy;
+      existing.updatedBy = r.createdBy;
       credentials.update(existing);
       return CommandResult(true, existing.id.value, "");
     }
@@ -67,7 +67,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     cred.createdAt = currentTimestamp();
     cred.updatedAt = cred.createdAt;
     cred.createdBy = r.createdBy;
-    cred.modifiedBy = r.createdBy;
+    cred.updatedBy = r.createdBy;
 
     credentials.save(cred);
     return CommandResult(true, cred.id.value, "");
@@ -96,7 +96,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
       cred.username = r.username;
     cred.version_ = cred.version_ + 1;
     cred.updatedAt = currentTimestamp();
-    cred.modifiedBy = r.modifiedBy;
+    cred.updatedBy = r.updatedBy;
 
     credentials.update(cred);
     return CommandResult(true, cred.id, "");

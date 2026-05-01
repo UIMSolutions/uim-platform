@@ -24,7 +24,7 @@ struct RegisteredApplication {
     string contactEmail;
     string contactName;
     UserId registeredBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string registeredAt;
 
     Json toJson() const {
@@ -39,7 +39,7 @@ struct RegisteredApplication {
             .set("contactEmail", contactEmail)
             .set("contactName", contactName)
             .set("registeredBy", registeredBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("registeredAt", registeredAt);
     }
 }

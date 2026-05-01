@@ -123,7 +123,7 @@ class FeatureRestrictionController : PlatformController {
       r.percentage = j.getInteger("percentage");
       r.whitelist = getStringArray(j, "whitelist");
       r.metadata = j.getString("metadata");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

@@ -118,7 +118,7 @@ class SituationActionController : PlatformController {
                 .set("webhookUrl", a.webhookUrl)
                 .set("emailTemplate", a.emailTemplate)
                 .set("createdBy", a.createdBy)
-                .set("modifiedBy", a.modifiedBy)
+                .set("updatedBy", a.updatedBy)
                 .set("createdAt", a.createdAt)
                 .set("updatedAt", a.updatedAt)
                 .set("lastExecutedAt", a.lastExecutedAt)
@@ -147,7 +147,7 @@ class SituationActionController : PlatformController {
             r.destinationName = j.getString("destinationName");
             r.webhookUrl = j.getString("webhookUrl");
             r.emailTemplate = j.getString("emailTemplate");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

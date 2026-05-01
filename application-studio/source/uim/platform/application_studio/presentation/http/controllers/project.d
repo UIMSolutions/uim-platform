@@ -97,7 +97,7 @@ class ProjectController : PlatformController {
             dto.description = j.getString("description");
             dto.gitRepositoryUrl = j.getString("gitRepositoryUrl");
             dto.gitBranch = j.getString("gitBranch");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

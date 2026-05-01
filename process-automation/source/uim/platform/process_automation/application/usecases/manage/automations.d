@@ -64,7 +64,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         existing.description = r.description;
         existing.targetApplication = r.targetApplication;
         existing.version_ = r.version_;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

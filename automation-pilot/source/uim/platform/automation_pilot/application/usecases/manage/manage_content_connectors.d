@@ -55,7 +55,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (dto.repositoryUrl.length > 0) existing.repositoryUrl = dto.repositoryUrl;
         if (dto.branch.length > 0) existing.branch = dto.branch;
         if (dto.path.length > 0) existing.path = dto.path;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

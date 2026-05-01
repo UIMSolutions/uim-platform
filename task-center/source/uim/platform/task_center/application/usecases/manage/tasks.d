@@ -74,7 +74,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (req.description.length > 0) existing.description = req.description;
         if (req.assignee.length > 0) existing.assignee = req.assignee;
         if (req.dueDate.length > 0) existing.dueDate = req.dueDate;
-        existing.modifiedBy = req.modifiedBy;
+        existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
         return CommandResult(true, req.id, "");
     }

@@ -34,7 +34,7 @@ struct ServiceCall {
   string latitude;
   string longitude;
   UserId createdBy;
-  UserId modifiedBy;
+  UserId updatedBy;
   string createdAt;
   string updatedAt;
 
@@ -62,7 +62,7 @@ struct ServiceCall {
       .set("latitude", latitude)
       .set("longitude", longitude)
       .set("createdBy", createdBy)
-      .set("modifiedBy", modifiedBy)
+      .set("updatedBy", updatedBy)
       .set("createdAt", createdAt)
       .set("updatedAt", updatedAt);
   }

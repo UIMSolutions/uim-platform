@@ -58,7 +58,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
 
         existing.name = r.name;
         existing.description = r.description;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

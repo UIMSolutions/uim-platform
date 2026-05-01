@@ -31,7 +31,7 @@ struct UpdateMasterDataObjectRequest {
   string description;
   string status; // "active", "inactive", "blocked", "markedForDeletion"
   string[string] attributes;
-  UserId modifiedBy;
+  UserId updatedBy;
 }
 
 /// --- Data Model DTOs ---

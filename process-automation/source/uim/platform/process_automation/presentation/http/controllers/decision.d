@@ -110,7 +110,7 @@ class DecisionController : PlatformController {
                 .set("version", d.version_)
                 .set("projectId", d.projectId)
                 .set("createdBy", d.createdBy)
-                .set("modifiedBy", d.modifiedBy)
+                .set("updatedBy", d.updatedBy)
                 .set("createdAt", d.createdAt)
                 .set("updatedAt", d.updatedAt);
 
@@ -132,7 +132,7 @@ class DecisionController : PlatformController {
             r.description = j.getString("description");
             r.hitPolicy = j.getString("hitPolicy");
             r.version_ = j.getString("version");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -108,7 +108,7 @@ class OAuthClientController : PlatformController {
             dto.redirectUris = j.getString("redirectUris");
             dto.allowedScopes = j.getString("allowedScopes");
             dto.contacts = j.getString("contacts");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

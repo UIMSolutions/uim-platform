@@ -63,7 +63,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.baseUrl.length > 0) existing.baseUrl = dto.baseUrl;
         if (dto.basePath.length > 0) existing.basePath = dto.basePath;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

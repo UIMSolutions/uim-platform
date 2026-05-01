@@ -72,7 +72,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         if (r.email.length > 0) existing.email = r.email;
         if (r.phoneNumber.length > 0) existing.phoneNumber = r.phoneNumber;
         if (r.organizationName.length > 0) existing.organizationName = r.organizationName;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
         existing.updatedAt = clockTime();
 
         repo.update(existing);

@@ -70,7 +70,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         existing.isShared = r.isShared;
         existing.sharedWithOrgs = r.sharedWithOrgs;
         existing.clientAuthEnabled = r.clientAuthEnabled;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

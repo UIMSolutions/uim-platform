@@ -97,7 +97,7 @@ class TriggerController : PlatformController {
             dto.eventType = j.getString("eventType");
             dto.eventSource = j.getString("eventSource");
             dto.filterExpression = j.getString("filterExpression");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

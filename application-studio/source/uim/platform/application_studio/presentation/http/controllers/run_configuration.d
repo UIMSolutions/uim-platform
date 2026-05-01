@@ -97,7 +97,7 @@ class RunConfigurationController : PlatformController {
             dto.description = j.getString("description");
             dto.entryPoint = j.getString("entryPoint");
             dto.arguments = j.getString("arguments");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

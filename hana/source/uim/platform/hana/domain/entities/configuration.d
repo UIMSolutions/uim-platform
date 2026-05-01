@@ -25,5 +25,5 @@ struct Configuration {
   bool isReadOnly;
   bool requiresRestart;
   long updatedAt;
-  UserId modifiedBy;
+  UserId updatedBy;
 }

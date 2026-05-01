@@ -26,7 +26,7 @@ struct OAuthClientDTO {
     long refreshTokenValidity;
     string contacts;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct OAuthScopeDTO {
@@ -36,7 +36,7 @@ struct OAuthScopeDTO {
     string name;
     string description;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct AccessTokenDTO {
@@ -87,5 +87,5 @@ struct BrandingConfigDTO {
     string footerText;
     string customCss;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }

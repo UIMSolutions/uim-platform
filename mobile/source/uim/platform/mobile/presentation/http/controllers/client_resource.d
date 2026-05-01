@@ -116,7 +116,7 @@ class ClientResourceController : PlatformController {
       r.type = j.getString("type");
       r.contentType = j.getString("contentType");
       r.data = j.getString("data");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

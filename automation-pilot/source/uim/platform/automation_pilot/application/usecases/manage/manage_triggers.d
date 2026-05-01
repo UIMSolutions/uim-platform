@@ -61,7 +61,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (dto.eventType.length > 0) existing.eventType = dto.eventType;
         if (dto.eventSource.length > 0) existing.eventSource = dto.eventSource;
         if (dto.filterExpression.length > 0) existing.filterExpression = dto.filterExpression;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

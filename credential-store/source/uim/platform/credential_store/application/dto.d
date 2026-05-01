@@ -41,7 +41,7 @@ struct UpdateCredentialRequest {
   string metadata;
   string format;
   string username;
-  UserId modifiedBy;
+  UserId updatedBy;
   string ifMatch;    // "*" = update only, "<id>" = conditional update
 }
 

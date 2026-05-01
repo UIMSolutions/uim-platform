@@ -100,7 +100,7 @@ class ServiceInstanceController : PlatformController {
         .set("appCount", entry.appCount)
         .set("createdBy", entry.createdBy)
         .set("createdAt", entry.createdAt)
-        .set("modifiedBy", entry.modifiedBy)
+        .set("updatedBy", entry.updatedBy)
         .set("updatedAt", entry.updatedAt);
 
       res.writeJsonBody(response, 200);
@@ -121,7 +121,7 @@ class ServiceInstanceController : PlatformController {
       r.id = id;
       r.tenantId = tenantId;
       r.description = j.getString("description");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

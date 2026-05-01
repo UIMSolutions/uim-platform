@@ -56,7 +56,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         if (req.description.length > 0) existing.description = req.description;
         if (req.taskSchema.length > 0) existing.taskSchema = req.taskSchema;
         existing.requiresClaim = req.requiresClaim;
-        existing.modifiedBy = req.modifiedBy;
+        existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
         return CommandResult(true, req.id, "");
     }

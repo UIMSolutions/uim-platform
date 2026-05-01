@@ -41,7 +41,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         file.createdAt = currentTimestamp();
         file.updatedAt = file.createdAt;
         file.createdBy = r.createdBy;
-        file.modifiedBy = r.createdBy;
+        file.updatedBy = r.createdBy;
 
         repo.save(file);
         return CommandResult(true, file.id, "");
@@ -59,7 +59,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         }
         if (r.contentType.length > 0) file.contentType = r.contentType;
         file.updatedAt = currentTimestamp();
-        file.modifiedBy = r.modifiedBy;
+        file.updatedBy = r.updatedBy;
 
         repo.update(file);
         return CommandResult(true, file.id, "");

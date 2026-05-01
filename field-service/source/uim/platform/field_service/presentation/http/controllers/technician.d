@@ -102,7 +102,7 @@ class TechnicianController : PlatformController {
             dto.phone = j.getString("phone");
             dto.region = j.getString("region");
             dto.address = j.getString("address");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

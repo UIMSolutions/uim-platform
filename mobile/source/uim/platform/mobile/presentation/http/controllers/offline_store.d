@@ -114,7 +114,7 @@ class OfflineStoreController : PlatformController {
       r.description = j.getString("description");
       r.syncPolicy = j.getString("syncPolicy");
       r.status = j.getString("status");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

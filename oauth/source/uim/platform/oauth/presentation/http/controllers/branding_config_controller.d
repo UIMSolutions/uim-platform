@@ -104,7 +104,7 @@ class BrandingConfigController : PlatformController {
             dto.pageTitle = j.getString("pageTitle");
             dto.footerText = j.getString("footerText");
             dto.customCss = j.getString("customCss");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

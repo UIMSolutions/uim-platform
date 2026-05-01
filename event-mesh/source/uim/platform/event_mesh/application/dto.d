@@ -28,7 +28,7 @@ struct BrokerServiceDTO {
     string maxMessageSize;
     string msgVpnName;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -53,7 +53,7 @@ struct QueueDTO {
     string egressEnabled;
     string ingressEnabled;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -70,7 +70,7 @@ struct TopicDTO {
     string publishEnabled;
     string subscribeEnabled;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -92,7 +92,7 @@ struct SubscriptionDTO {
     string maxRedeliveryCount;
     string maxTtl;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -129,7 +129,7 @@ struct EventSchemaDTO {
     string applicationDomainId;
     string shared_;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -153,7 +153,7 @@ struct EventApplicationDTO {
     string webhookUrl;
     string maxConnections;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }
@@ -177,7 +177,7 @@ struct MeshBridgeDTO {
     string retryCount;
     string retryDelay;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 }

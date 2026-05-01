@@ -22,7 +22,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +oauthClientToJson() Json
     }
 
@@ -36,7 +36,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +oauthScopeToJson() Json
     }
 
@@ -100,7 +100,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +brandingConfigToJson() Json
     }
 

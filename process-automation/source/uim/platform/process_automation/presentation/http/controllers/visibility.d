@@ -101,7 +101,7 @@ class VisibilityController : PlatformController {
                 .set("processIds", stringsToJsonArray(v.processIds))
                 .set("refreshIntervalSeconds", Json(v.refreshIntervalSeconds))
                 .set("createdBy", Json(v.createdBy))
-                .set("modifiedBy", Json(v.modifiedBy))
+                .set("updatedBy", Json(v.updatedBy))
                 .set("createdAt", Json(v.createdAt))
                 .set("updatedAt", Json(v.updatedAt));
                 
@@ -122,7 +122,7 @@ class VisibilityController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

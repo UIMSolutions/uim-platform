@@ -34,7 +34,7 @@ struct Queue {
     string messageCount;
     string bindCount;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -62,7 +62,7 @@ struct Queue {
             .set("messageCount", messageCount)
             .set("bindCount", bindCount)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

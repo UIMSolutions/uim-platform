@@ -71,7 +71,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         existing.description = r.description;
         existing.executionOrder = r.executionOrder;
         existing.enabled = r.enabled;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

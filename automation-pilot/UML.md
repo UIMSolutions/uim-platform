@@ -16,7 +16,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +catalogToJson() Json
     }
 
@@ -38,7 +38,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +commandToJson() Json
     }
 
@@ -56,7 +56,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +commandInputToJson() Json
     }
 
@@ -76,7 +76,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +executionToJson() Json
     }
 
@@ -97,7 +97,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +scheduledExecutionToJson() Json
     }
 
@@ -117,7 +117,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +triggerToJson() Json
     }
 
@@ -134,7 +134,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +serviceAccountToJson() Json
     }
 
@@ -154,7 +154,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +contentConnectorToJson() Json
     }
 

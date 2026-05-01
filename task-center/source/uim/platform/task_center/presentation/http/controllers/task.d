@@ -138,7 +138,7 @@ class TaskController : PlatformController {
             r.priority = j.getString("priority");
             r.assignee = j.getString("assignee");
             r.dueDate = j.getString("dueDate");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -72,7 +72,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         existing.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
         existing.escalationEnabled = r.escalationEnabled;
         existing.escalationTargetUserId = r.escalationTargetUserId;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

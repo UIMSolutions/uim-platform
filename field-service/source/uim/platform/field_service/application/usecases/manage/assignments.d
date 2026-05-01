@@ -64,7 +64,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         if (dto.completedDate.length > 0) existing.completedDate = dto.completedDate;
         if (dto.travelDistance.length > 0) existing.travelDistance = dto.travelDistance;
         if (dto.notes.length > 0) existing.notes = dto.notes;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

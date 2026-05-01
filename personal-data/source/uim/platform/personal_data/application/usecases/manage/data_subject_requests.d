@@ -83,7 +83,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
             existing.comments ~= c;
         }
 
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
         existing.updatedAt = clockTime();
 
         repo.update(existing);

@@ -50,7 +50,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         if (r.minOsVersion.length > 0) ver.minOsVersion = r.minOsVersion;
         ver.mandatory = r.mandatory;
         ver.updatedAt = currentTimestamp();
-        ver.modifiedBy = r.modifiedBy;
+        ver.updatedBy = r.updatedBy;
         repo.update(ver);
         return CommandResult(true, ver.id, "");
     }

@@ -67,7 +67,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (dto.remoteAddress.length > 0) existing.remoteAddress = dto.remoteAddress;
         if (dto.topicSubscriptions.length > 0) existing.topicSubscriptions = dto.topicSubscriptions;
         if (dto.queueBindings.length > 0) existing.queueBindings = dto.queueBindings;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

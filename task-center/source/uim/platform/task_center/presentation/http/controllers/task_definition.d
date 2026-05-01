@@ -112,7 +112,7 @@ class TaskDefinitionController : PlatformController {
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.taskSchema = j.getString("taskSchema");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

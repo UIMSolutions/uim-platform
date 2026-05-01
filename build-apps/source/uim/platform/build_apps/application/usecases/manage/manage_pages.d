@@ -64,7 +64,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         if (dto.route.length > 0) existing.route = dto.route;
         if (dto.layoutConfig.length > 0) existing.layoutConfig = dto.layoutConfig;
         if (dto.componentTree.length > 0) existing.componentTree = dto.componentTree;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

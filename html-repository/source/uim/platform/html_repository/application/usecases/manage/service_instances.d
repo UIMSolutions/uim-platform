@@ -37,7 +37,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         inst.createdAt = currentTimestamp();
         inst.updatedAt = inst.createdAt;
         inst.createdBy = r.createdBy;
-        inst.modifiedBy = r.createdBy;
+        inst.updatedBy = r.createdBy;
 
         repo.save(inst);
         return CommandResult(true, inst.id, "");
@@ -52,7 +52,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         if (r.plan.length > 0) inst.plan = parsePlan(r.plan);
         if (r.sizeQuotaMb > 0) inst.sizeQuotaMb = r.sizeQuotaMb;
         inst.updatedAt = currentTimestamp();
-        inst.modifiedBy = r.modifiedBy;
+        inst.updatedBy = r.updatedBy;
 
         repo.update(inst);
         return CommandResult(true, inst.id, "");

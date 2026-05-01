@@ -71,7 +71,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         existing.apiConfig.destinationName = r.destinationName;
         existing.webhookUrl = r.webhookUrl;
         existing.emailTemplate = r.emailTemplate;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

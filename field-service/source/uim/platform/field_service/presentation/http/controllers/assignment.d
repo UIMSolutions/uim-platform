@@ -100,7 +100,7 @@ class AssignmentController : PlatformController {
             dto.completedDate = j.getString("completedDate");
             dto.travelDistance = j.getString("travelDistance");
             dto.notes = j.getString("notes");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = usecase.update(dto);
             if (result.success) {

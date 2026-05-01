@@ -104,7 +104,7 @@ class ServiceCallController : PlatformController {
             dto.contactPhone = j.getString("contactPhone");
             dto.contactEmail = j.getString("contactEmail");
             dto.resolution = j.getString("resolution");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

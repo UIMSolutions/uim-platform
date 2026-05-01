@@ -65,7 +65,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         if (dto.outputSchema.length > 0) existing.outputSchema = dto.outputSchema;
         if (dto.steps.length > 0) existing.steps = dto.steps;
         if (dto.timeout.length > 0) existing.timeout = dto.timeout;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

@@ -34,14 +34,14 @@ struct UpdateHtmlAppRequest {
   string description;
   string visibility;
   string status;
-  UserId modifiedBy;
+  UserId updatedBy;
 
   Json toJson() const {
     return Json.emptyObject
       .set("description", description)
       .set("visibility", visibility)
       .set("status", status)
-      .set("modifiedBy", modifiedBy);
+      .set("updatedBy", updatedBy);
   }
 }
 

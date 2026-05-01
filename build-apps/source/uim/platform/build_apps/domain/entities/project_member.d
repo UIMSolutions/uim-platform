@@ -26,7 +26,7 @@ struct ProjectMember {
     string createdAt;
     string updatedAt;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 
     Json projectMemberToJson() {
         return Json.emptyObject
@@ -44,6 +44,6 @@ struct ProjectMember {
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("updatedBy", updatedBy);
     }
 }

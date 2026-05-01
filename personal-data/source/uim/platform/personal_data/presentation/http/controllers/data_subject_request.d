@@ -124,7 +124,7 @@ class DataSubjectRequestController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.comment = j.getString("comment");
             r.rejectionReason = j.getString("rejectionReason");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -21,7 +21,7 @@ struct CatalogDTO {
     string tags;
     string version_;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct CommandDTO {
@@ -40,7 +40,7 @@ struct CommandDTO {
     string retryCount;
     string tags;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct CommandInputDTO {
@@ -55,7 +55,7 @@ struct CommandInputDTO {
     string version_;
     string commandId;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct ExecutionDTO {
@@ -82,7 +82,7 @@ struct ScheduledExecutionDTO {
     string maxRetries;
     string retryDelay;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct TriggerDTO {
@@ -98,7 +98,7 @@ struct TriggerDTO {
     string filterExpression;
     string inputMapping;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct ServiceAccountDTO {
@@ -111,7 +111,7 @@ struct ServiceAccountDTO {
     string permissions;
     string expiresAt;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct ContentConnectorDTO {
@@ -124,5 +124,5 @@ struct ContentConnectorDTO {
     string branch;
     string path;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }

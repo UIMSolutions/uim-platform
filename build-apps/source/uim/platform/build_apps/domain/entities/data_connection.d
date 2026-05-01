@@ -30,7 +30,7 @@ struct DataConnection {
     string createdAt;
     string updatedAt;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 
     Json dataConnectionToJson() {
         return Json.emptyObject
@@ -52,6 +52,6 @@ struct DataConnection {
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("updatedBy", updatedBy);
     }
 }

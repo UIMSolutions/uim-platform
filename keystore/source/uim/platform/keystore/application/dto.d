@@ -32,7 +32,7 @@ struct UploadKeystoreRequest {
 struct UpdateKeystoreRequest {
   string description;
   string content;         // base64-encoded replacement content (optional)
-  UserId modifiedBy;
+  UserId updatedBy;
 }
 
 // ---------------------------------------------------------------------------

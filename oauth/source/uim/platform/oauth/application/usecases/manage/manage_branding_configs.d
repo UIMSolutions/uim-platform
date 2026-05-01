@@ -64,7 +64,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
         existing.pageTitle = dto.pageTitle;
         existing.footerText = dto.footerText;
         existing.customCss = dto.customCss;
-        existing.modifiedBy = dto.modifiedBy;
+        existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

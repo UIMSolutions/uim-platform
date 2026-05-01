@@ -27,7 +27,7 @@ struct ServiceBinding {
     string createdAt;
     string updatedAt;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 
     Json serviceBindingToJson() {
         return Json.emptyObject
@@ -46,6 +46,6 @@ struct ServiceBinding {
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("updatedBy", updatedBy);
     }
 }

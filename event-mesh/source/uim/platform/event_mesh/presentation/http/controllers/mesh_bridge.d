@@ -103,7 +103,7 @@ class MeshBridgeController : PlatformController {
             dto.remoteAddress = j.getString("remoteAddress");
             dto.topicSubscriptions = j.getString("topicSubscriptions");
             dto.queueBindings = j.getString("queueBindings");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

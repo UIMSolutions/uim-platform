@@ -116,7 +116,7 @@ class CustomDomainController : PlatformController {
                 .set("sharedWithOrgs", d.sharedWithOrgs)
                 .set("clientAuthEnabled", d.clientAuthEnabled)
                 .set("createdBy", d.createdBy)
-                .set("modifiedBy", d.modifiedBy)
+                .set("updatedBy", d.updatedBy)
                 .set("createdAt", d.createdAt)
                 .set("updatedAt", d.updatedAt);
 
@@ -139,7 +139,7 @@ class CustomDomainController : PlatformController {
             r.isShared = j.getBoolean("isShared");
             r.sharedWithOrgs = j.getString("sharedWithOrgs");
             r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

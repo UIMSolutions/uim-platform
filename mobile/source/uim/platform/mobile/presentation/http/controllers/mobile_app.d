@@ -124,7 +124,7 @@ class MobileAppController : PlatformController {
       r.pushEnabled = j.getBoolean("pushEnabled");
       r.offlineEnabled = j.getBoolean("offlineEnabled");
       r.iconUrl = j.getString("iconUrl");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

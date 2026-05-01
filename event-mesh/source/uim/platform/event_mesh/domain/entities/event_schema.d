@@ -25,7 +25,7 @@ struct EventSchema {
     string versionCount;
     string latestVersion;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -44,7 +44,7 @@ struct EventSchema {
             .set("versionCount", versionCount)
             .set("latestVersion", latestVersion)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

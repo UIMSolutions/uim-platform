@@ -115,7 +115,7 @@ class KeystoreController : PlatformController {
         .set("accountId",     ks.accountId)
         .set("applicationId", ks.applicationId)
         .set("createdBy",     ks.createdBy)
-        .set("modifiedBy",    ks.modifiedBy)
+        .set("updatedBy",    ks.updatedBy)
         .set("createdAt",     ks.createdAt)
         .set("updatedAt",     ks.updatedAt);
         
@@ -133,7 +133,7 @@ class KeystoreController : PlatformController {
       UpdateKeystoreRequest r;
       r.description = j.getString("description");
       r.content     = j.getString("content");
-      r.modifiedBy  = j.getString("modifiedBy");
+      r.updatedBy  = j.getString("updatedBy");
 
       auto result = uc.update(id, r);
       if (result.success) {

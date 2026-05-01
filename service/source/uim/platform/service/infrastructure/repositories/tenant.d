@@ -26,6 +26,14 @@ class TenantRepository(TEntity, TId) {
     return ids.all!(id => existsById(id));
   }
 
+  TEntity findById(TId id) {
+    return findAll().any!(e => e.id == id);
+  }
+
+  TEntity[] findAllById(TId[] ids) {
+    return ids.filter!(id => existsById(id)).map!(id => findById(id)).array;
+  }
+
   bool existsById(TenantId tenantId, TId id) {
     return existsByTenant(tenantId) && (id in store[tenantId]);
   }
@@ -39,7 +47,7 @@ class TenantRepository(TEntity, TId) {
   }
 
   TEntity[] findAllById(TenantId tenantId, TId[] ids) {
-    return ids.map!(id => findById(tenantId, id)).array;
+    return ids.filter!(id => existsById(tenantId, id)).map!(id => findById(tenantId, id)).array;
   }
 
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {

@@ -61,7 +61,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         existing.name = r.name;
         existing.description = r.description;
         existing.refreshIntervalSeconds = r.refreshIntervalSeconds;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

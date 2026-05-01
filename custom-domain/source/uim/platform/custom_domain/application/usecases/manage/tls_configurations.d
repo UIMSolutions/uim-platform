@@ -66,7 +66,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         existing.hstsEnabled = r.hstsEnabled;
         existing.hstsMaxAge = r.hstsMaxAge;
         existing.hstsIncludeSubDomains = r.hstsIncludeSubDomains;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

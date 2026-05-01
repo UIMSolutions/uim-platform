@@ -30,7 +30,7 @@ struct UpdateMobileAppRequest {
   bool pushEnabled;
   bool offlineEnabled;
   string iconUrl;
-  UserId modifiedBy;
+  UserId updatedBy;
 }
 
 // DeviceRegistration DTOs
@@ -99,7 +99,7 @@ struct CreateAppConfigRequest {
 struct UpdateAppConfigRequest {
   string value;
   string description;
-  UserId modifiedBy;
+  UserId updatedBy;
 }
 
 // FeatureRestriction DTOs
@@ -122,7 +122,7 @@ struct UpdateFeatureRestrictionRequest {
   int percentage;
   string[] whitelist;
   string metadata;
-  UserId modifiedBy;
+  UserId updatedBy;
 }
 
 // ClientResource DTOs

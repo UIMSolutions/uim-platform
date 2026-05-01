@@ -102,7 +102,7 @@ class EntityTypeController : PlatformController {
                 .set("category", et.category.to!string)
                 .set("sourceSystem", et.sourceSystem)
                 .set("createdBy", et.createdBy)
-                .set("modifiedBy", et.modifiedBy)
+                .set("updatedBy", et.updatedBy)
                 .set("createdAt", et.createdAt)
                 .set("updatedAt", et.updatedAt)
                 .set("relatedTemplateIds", stringsToJsonArray(et.relatedTemplateIds));
@@ -124,7 +124,7 @@ class EntityTypeController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -28,7 +28,7 @@ struct Page {
     string createdAt;
     string updatedAt;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 
     Json pageToJson() {
         return Json.emptyObject
@@ -48,6 +48,6 @@ struct Page {
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy);
+            .set("updatedBy", updatedBy);
     }
 }

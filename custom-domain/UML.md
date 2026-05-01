@@ -18,7 +18,7 @@ classDiagram
         +string sharedWithOrgs
         +bool clientAuthEnabled
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +string createdAt
         +string updatedAt
     }
@@ -70,7 +70,7 @@ classDiagram
         +long hstsMaxAge
         +bool hstsIncludeSubDomains
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +string createdAt
         +string updatedAt
     }

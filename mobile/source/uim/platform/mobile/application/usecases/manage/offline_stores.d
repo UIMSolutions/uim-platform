@@ -52,7 +52,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         if (r.maxSizeMb > 0) store.maxSizeMb = r.maxSizeMb;
         store.encryptionEnabled = r.encryptionEnabled;
         store.updatedAt = currentTimestamp();
-        store.modifiedBy = r.modifiedBy;
+        store.updatedBy = r.updatedBy;
         repo.update(store);
         return CommandResult(true, store.id, "");
     }

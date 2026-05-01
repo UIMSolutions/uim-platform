@@ -60,7 +60,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.topicString.length > 0) existing.topicString = dto.topicString;
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

@@ -44,7 +44,7 @@ class ManageKeystoresUseCase {
     ks.applicationId = r.applicationId;
     ks.subscriptionId = r.subscriptionId;
     ks.createdBy     = r.createdBy;
-    ks.modifiedBy    = r.createdBy;
+    ks.updatedBy    = r.createdBy;
     ks.createdAt     = currentTimestamp();
     ks.updatedAt     = ks.createdAt;
 
@@ -62,7 +62,7 @@ class ManageKeystoresUseCase {
       ks.description = r.description;
     if (r.content.length > 0)
       ks.content = r.content;
-    ks.modifiedBy = r.modifiedBy;
+    ks.updatedBy = r.updatedBy;
     ks.updatedAt  = currentTimestamp();
 
     repo.update(ks);

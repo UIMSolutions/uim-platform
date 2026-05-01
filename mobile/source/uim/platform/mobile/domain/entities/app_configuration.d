@@ -20,5 +20,5 @@ struct AppConfiguration {
   long createdAt;
   long updatedAt;
   UserId createdBy;
-  UserId modifiedBy;
+  UserId updatedBy;
 }

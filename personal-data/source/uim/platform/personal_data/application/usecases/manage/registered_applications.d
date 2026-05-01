@@ -60,7 +60,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         if (r.apiVersion.length > 0) existing.apiVersion = r.apiVersion;
         if (r.contactEmail.length > 0) existing.contactEmail = r.contactEmail;
         if (r.contactName.length > 0) existing.contactName = r.contactName;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
         existing.updatedAt = clockTime();
 
         repo.update(existing);

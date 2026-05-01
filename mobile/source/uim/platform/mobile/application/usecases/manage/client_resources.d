@@ -48,7 +48,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         if (r.sizeBytes > 0) resource.sizeBytes = r.sizeBytes;
         if (r.version_.length > 0) resource.version_ = r.version_;
         resource.updatedAt = currentTimestamp();
-        resource.modifiedBy = r.modifiedBy;
+        resource.updatedBy = r.updatedBy;
         repo.update(resource);
         return CommandResult(true, resource.id, "");
     }

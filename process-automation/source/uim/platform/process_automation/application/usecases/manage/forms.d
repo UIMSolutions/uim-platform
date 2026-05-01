@@ -62,7 +62,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         existing.name = r.name;
         existing.description = r.description;
         existing.version_ = r.version_;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

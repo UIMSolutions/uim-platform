@@ -101,7 +101,7 @@ class CommandController : PlatformController {
             dto.outputSchema = j.getString("outputSchema");
             dto.steps = j.getString("steps");
             dto.timeout = j.getString("timeout");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -25,7 +25,7 @@ struct ApplicationDTO {
     string supportedLanguages;
     string owner;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct PageDTO {
@@ -43,7 +43,7 @@ struct PageDTO {
     int sortOrder;
     bool isStartPage;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct UIComponentDTO {
@@ -61,7 +61,7 @@ struct UIComponentDTO {
     string iconUrl;
     string previewUrl;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct DataEntityDTO {
@@ -77,7 +77,7 @@ struct DataEntityDTO {
     string defaultValues;
     string relations;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct DataConnectionDTO {
@@ -96,7 +96,7 @@ struct DataConnectionDTO {
     string responseMapping;
     string destinationName;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct LogicFlowDTO {
@@ -113,7 +113,7 @@ struct LogicFlowDTO {
     string variables;
     string errorHandler;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct AppBuildDTO {
@@ -127,7 +127,7 @@ struct AppBuildDTO {
     string buildConfig;
     string signingConfig;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 struct ProjectMemberDTO {
@@ -140,5 +140,5 @@ struct ProjectMemberDTO {
     string role;
     string permissions;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
 }

@@ -36,7 +36,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         ver.createdAt = currentTimestamp();
         ver.updatedAt = ver.createdAt;
         ver.createdBy = r.createdBy;
-        ver.modifiedBy = r.createdBy;
+        ver.updatedBy = r.createdBy;
 
         repo.save(ver);
         return CommandResult(true, ver.id, "");
@@ -50,7 +50,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         if (r.description.length > 0) ver.description = r.description;
         if (r.status.length > 0) ver.status = parseVersionStatus(r.status);
         ver.updatedAt = currentTimestamp();
-        ver.modifiedBy = r.modifiedBy;
+        ver.updatedBy = r.updatedBy;
 
         repo.update(ver);
         return CommandResult(true, ver.id, "");

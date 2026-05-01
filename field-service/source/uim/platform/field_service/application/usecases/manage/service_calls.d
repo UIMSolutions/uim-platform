@@ -72,7 +72,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         if (dto.contactPhone.length > 0) existing.contactPhone = dto.contactPhone;
         if (dto.contactEmail.length > 0) existing.contactEmail = dto.contactEmail;
         if (dto.resolution.length > 0) existing.resolution = dto.resolution;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

@@ -38,7 +38,7 @@ struct UpdateDataSubjectRequest {
     string email;
     string phoneNumber;
     string organizationName;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Data Subject Request ---
@@ -64,7 +64,7 @@ struct UpdateDataSubjectRequestRequest {
     string rejectionReason;
     string commentAuthor;
     string commentText;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Personal Data Record ---
@@ -108,7 +108,7 @@ struct UpdateRegisteredApplicationRequest {
     string apiVersion;
     string contactEmail;
     string contactName;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Processing Purpose ---
@@ -135,7 +135,7 @@ struct UpdateProcessingPurposeRequest {
     string retentionPeriod;
     string dataProtectionOfficer;
     bool requiresConsent;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Consent Record ---
@@ -186,7 +186,7 @@ struct UpdateRetentionRuleRequest {
     bool autoDelete;
     bool notifyBeforeExpiry;
     int notifyDaysBefore;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Data Processing Log ---

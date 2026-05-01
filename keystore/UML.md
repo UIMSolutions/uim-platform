@@ -60,7 +60,7 @@
 │ applicationId: string            │
 │ subscriptionId: string           │
 │ createdBy    : string            │
-│ modifiedBy   : string            │
+│ updatedBy   : string            │
 │ createdAt    : long              │
 │ updatedAt    : long              │
 └──────────────────────────────────┘

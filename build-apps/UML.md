@@ -19,7 +19,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +applicationToJson() Json
     }
 
@@ -40,7 +40,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +pageToJson() Json
     }
 
@@ -60,7 +60,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +uiComponentToJson() Json
     }
 
@@ -78,7 +78,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +dataEntityToJson() Json
     }
 
@@ -98,7 +98,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +dataConnectionToJson() Json
     }
 
@@ -117,7 +117,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +logicFlowToJson() Json
     }
 
@@ -137,7 +137,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +appBuildToJson() Json
     }
 
@@ -156,7 +156,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +projectMemberToJson() Json
     }
 

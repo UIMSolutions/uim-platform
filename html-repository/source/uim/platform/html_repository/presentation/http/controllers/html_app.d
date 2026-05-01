@@ -102,7 +102,7 @@ class HtmlAppController : PlatformController {
         .set("status", entry.status)
         .set("createdBy", entry.createdBy)
         .set("createdAt", entry.createdAt)
-        .set("modifiedBy", entry.modifiedBy)
+        .set("updatedBy", entry.updatedBy)
         .set("updatedAt", entry.updatedAt);
 
       res.writeJsonBody(response, 200);
@@ -124,7 +124,7 @@ class HtmlAppController : PlatformController {
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.visibility = j.getString("visibility");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

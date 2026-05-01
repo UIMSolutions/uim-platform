@@ -57,7 +57,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.email.length > 0) existing.email = dto.email;
         if (dto.permissions.length > 0) existing.permissions = dto.permissions;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

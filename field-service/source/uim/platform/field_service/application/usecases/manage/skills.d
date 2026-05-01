@@ -65,7 +65,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         if (dto.certificationDate.length > 0) existing.certificationDate = dto.certificationDate;
         if (dto.expirationDate.length > 0) existing.expirationDate = dto.expirationDate;
         if (dto.issuingAuthority.length > 0) existing.issuingAuthority = dto.issuingAuthority;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

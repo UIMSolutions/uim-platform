@@ -29,7 +29,7 @@ struct Technician {
     string currentWorkload;
     string travelRadius;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -52,7 +52,7 @@ struct Technician {
         .set("currentWorkload", currentWorkload)
         .set("travelRadius", travelRadius)
         .set("createdBy", createdBy)
-        .set("modifiedBy", modifiedBy)
+        .set("updatedBy", updatedBy)
         .set("createdAt", createdAt)
         .set("updatedAt", updatedAt);
     }

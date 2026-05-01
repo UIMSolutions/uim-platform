@@ -134,7 +134,7 @@ class MasterDataController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
       r.attributes = jsonStrMap(j, "attributes");
-      r.modifiedBy = req.headers.get("X-User-Id", "");
+      r.updatedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.updateObject(id, r);
       if (result.success)
@@ -179,6 +179,6 @@ class MasterDataController : PlatformController {
       .set("createdBy", Json(o.createdBy))
       .set("createdAt", Json(o.createdAt))
       .set("updatedAt", Json(o.updatedAt))
-      .set("modifiedBy", Json(o.modifiedBy));
+      .set("updatedBy", Json(o.updatedBy));
   }
 }

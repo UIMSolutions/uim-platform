@@ -36,7 +36,7 @@ struct UpdateCustomDomainRequest {
     bool isShared;
     string sharedWithOrgs;
     bool clientAuthEnabled;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Private Key ---
@@ -100,7 +100,7 @@ struct UpdateTlsConfigurationRequest {
     bool hstsEnabled;
     long hstsMaxAge;
     bool hstsIncludeSubDomains;
-    UserId modifiedBy;
+    UserId updatedBy;
 }
 
 // --- Domain Mapping ---

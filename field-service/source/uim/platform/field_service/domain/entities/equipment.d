@@ -31,7 +31,7 @@ struct Equipment {
     string nextServiceDate;
     string measuringPoint;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -56,7 +56,7 @@ struct Equipment {
             .set("nextServiceDate", nextServiceDate)
             .set("measuringPoint", measuringPoint)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

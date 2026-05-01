@@ -39,7 +39,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         app.createdAt = currentTimestamp();
         app.updatedAt = app.createdAt;
         app.createdBy = r.createdBy;
-        app.modifiedBy = r.createdBy;
+        app.updatedBy = r.createdBy;
         repo.save(app);
         return CommandResult(true, app.id, "");
     }
@@ -55,7 +55,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         app.pushEnabled = r.pushEnabled;
         app.offlineEnabled = r.offlineEnabled;
         app.updatedAt = currentTimestamp();
-        app.modifiedBy = r.modifiedBy;
+        app.updatedBy = r.updatedBy;
         repo.update(app);
         return CommandResult(true, app.id, "");
     }

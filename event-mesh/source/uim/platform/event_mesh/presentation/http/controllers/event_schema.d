@@ -96,7 +96,7 @@ class EventSchemaController : PlatformController {
             dto.description = j.getString("description");
             dto.schemaContent = j.getString("schemaContent");
             dto.version_ = j.getString("version");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

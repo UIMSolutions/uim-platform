@@ -101,7 +101,7 @@ class BrokerServiceController : PlatformController {
             dto.maxConnections = j.getString("maxConnections");
             dto.maxQueueDepth = j.getString("maxQueueDepth");
             dto.maxMessageSize = j.getString("maxMessageSize");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

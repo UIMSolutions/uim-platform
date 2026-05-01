@@ -105,7 +105,7 @@ class EventApplicationController : PlatformController {
             dto.aclProfile = j.getString("aclProfile");
             dto.publishTopics = j.getString("publishTopics");
             dto.subscribeTopics = j.getString("subscribeTopics");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -54,7 +54,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         restriction.startDate = r.startDate;
         restriction.endDate = r.endDate;
         restriction.updatedAt = currentTimestamp();
-        restriction.modifiedBy = r.modifiedBy;
+        restriction.updatedBy = r.updatedBy;
         repo.update(restriction);
         return CommandResult(true, restriction.id, "");
     }

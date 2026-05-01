@@ -120,7 +120,7 @@ class AppVersionController : PlatformController {
       r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
       r.status = j.getString("status");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

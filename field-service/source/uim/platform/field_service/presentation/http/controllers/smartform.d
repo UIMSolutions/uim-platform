@@ -100,7 +100,7 @@ class SmartformController : PlatformController {
             dto.submittedBy = j.getString("submittedBy");
             dto.submittedDate = j.getString("submittedDate");
             dto.approvedBy = j.getString("approvedBy");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

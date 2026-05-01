@@ -22,7 +22,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +devSpaceToJson() Json
     }
 
@@ -39,7 +39,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +devSpaceTypeToJson() Json
     }
 
@@ -59,7 +59,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +extensionToJson() Json
     }
 
@@ -79,7 +79,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +projectToJson() Json
     }
 
@@ -98,7 +98,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +projectTemplateToJson() Json
     }
 
@@ -118,7 +118,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +serviceBindingToJson() Json
     }
 
@@ -139,7 +139,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +runConfigurationToJson() Json
     }
 
@@ -161,7 +161,7 @@ classDiagram
         +string createdAt
         +string updatedAt
         +UserId createdBy
-        +UserId modifiedBy
+        +UserId updatedBy
         +buildConfigurationToJson() Json
     }
 

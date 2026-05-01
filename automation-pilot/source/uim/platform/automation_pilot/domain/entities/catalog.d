@@ -22,7 +22,7 @@ struct Catalog {
     string version_;
     string commandCount;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -38,7 +38,7 @@ struct Catalog {
             .set("version", version_)
             .set("commandCount", commandCount)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

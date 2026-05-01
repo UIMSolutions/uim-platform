@@ -46,7 +46,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         if (r.value.length > 0) config.value = r.value;
         if (r.description.length > 0) config.description = r.description;
         config.updatedAt = currentTimestamp();
-        config.modifiedBy = r.modifiedBy;
+        config.updatedBy = r.updatedBy;
         repo.update(config);
         return CommandResult(true, config.id, "");
     }

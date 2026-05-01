@@ -109,7 +109,7 @@ class ConfigurationController : PlatformController {
         .set("isReadOnly", c.isReadOnly)
         .set("requiresRestart", c.requiresRestart)
         .set("updatedAt", c.updatedAt)
-        .set("modifiedBy", c.modifiedBy);
+        .set("updatedBy", c.updatedBy);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

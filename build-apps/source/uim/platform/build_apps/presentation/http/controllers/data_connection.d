@@ -101,7 +101,7 @@ class DataConnectionController : PlatformController {
             dto.description = j.getString("description");
             dto.baseUrl = j.getString("baseUrl");
             dto.basePath = j.getString("basePath");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

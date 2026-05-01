@@ -55,7 +55,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.keys.length > 0) existing.keys = dto.keys;
         if (dto.values.length > 0) existing.values = dto.values;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

@@ -67,7 +67,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         existing.autoDelete = r.autoDelete;
         existing.notifyBeforeExpiry = r.notifyBeforeExpiry;
         existing.notifyDaysBefore = r.notifyDaysBefore;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
         existing.updatedAt = clockTime();
 
         repo.update(existing);

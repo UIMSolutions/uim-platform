@@ -117,7 +117,7 @@ class ConsentRecordController : PlatformController {
             WithdrawConsentRequest r;
             r.id = id;
             r.reason = j.getString("reason");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.withdraw(r);
             if (result.success) {

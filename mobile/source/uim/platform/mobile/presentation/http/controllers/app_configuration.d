@@ -117,7 +117,7 @@ class AppConfigurationController : PlatformController {
       r.description = j.getString("description");
       r.isSecret = j.getBoolean("isSecret");
       r.platform = j.getString("platform");
-      r.modifiedBy = j.getString("modifiedBy");
+      r.updatedBy = j.getString("updatedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

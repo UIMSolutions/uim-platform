@@ -47,7 +47,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     obj.createdBy = req.createdBy;
     obj.createdAt = clockSeconds();
     obj.updatedAt = obj.createdAt;
-    obj.modifiedBy = req.createdBy;
+    obj.updatedBy = req.createdBy;
 
     repo.save(obj);
     logChange(req.tenantId, id, req.dataModelId, obj.category,
@@ -92,12 +92,12 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     // import std.uuid : randomUUID;
     obj.currentVersion = randomUUID();
     obj.updatedAt = clockSeconds();
-    obj.modifiedBy = req.modifiedBy;
+    obj.updatedBy = req.updatedBy;
 
     repo.update(obj);
     logChange(obj.tenantId, id, obj.dataModelId, obj.category, ChangeType.update_,
         obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
-        obj.sourceClient, req.modifiedBy, oldVersion, obj.versionNumber);
+        obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
     return CommandResult(true, id.toString, "");
   }
 

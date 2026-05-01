@@ -30,7 +30,7 @@ struct EventSubscription {
     string lastMessageTime;
     string messageCount;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -54,7 +54,7 @@ struct EventSubscription {
             .set("lastMessageTime", lastMessageTime)
             .set("messageCount", messageCount)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

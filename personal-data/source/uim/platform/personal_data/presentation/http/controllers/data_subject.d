@@ -146,7 +146,7 @@ class DataSubjectController : PlatformController {
             request.dateOfBirth = j.getString("dateOfBirth");
             request.organizationName = j.getString("organizationName");
             request.organizationId = j.getString("organizationId");
-            request.modifiedBy = j.getString("modifiedBy");
+            request.updatedBy = j.getString("updatedBy");
 
             auto result = uc.updateDataSubject(request);
             if (result.success) {

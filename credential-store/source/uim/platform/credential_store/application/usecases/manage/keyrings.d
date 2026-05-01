@@ -51,7 +51,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     cred.status = CredentialStatus.active;
     cred.version_ = 1;
     cred.createdBy = r.createdBy;
-    cred.modifiedBy = r.createdBy;
+    cred.updatedBy = r.createdBy;
 
     credRepo.save(cred);
 

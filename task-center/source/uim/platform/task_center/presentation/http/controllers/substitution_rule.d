@@ -120,7 +120,7 @@ class SubstitutionRuleController : PlatformController {
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.startDate = j.getString("startDate");
             r.endDate = j.getString("endDate");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

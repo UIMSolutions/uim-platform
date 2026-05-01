@@ -68,7 +68,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         if (dto.aclProfile.length > 0) existing.aclProfile = dto.aclProfile;
         if (dto.publishTopics.length > 0) existing.publishTopics = dto.publishTopics;
         if (dto.subscribeTopics.length > 0) existing.subscribeTopics = dto.subscribeTopics;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

@@ -69,7 +69,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         existing.authType = r.authType;
         existing.destinationName = r.destinationName;
         existing.version_ = r.version_;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
         existing.updatedAt = MonoTime.currTime.ticks;

@@ -26,7 +26,7 @@ struct Assignment {
   string matchScore;
   string notes;
   UserId createdBy;
-  UserId modifiedBy;
+  UserId updatedBy;
   string createdAt;
   string updatedAt;
 
@@ -46,7 +46,7 @@ struct Assignment {
       .set("matchScore", matchScore)
       .set("notes", notes)
       .set("createdBy", createdBy)
-      .set("modifiedBy", modifiedBy)
+      .set("updatedBy", updatedBy)
       .set("createdAt", createdAt)
       .set("updatedAt", updatedAt);
   }
@@ -68,7 +68,7 @@ unittest {
     matchScore: "0.9",
     notes: "This is a test assignment.",
     createdBy: "user1",
-    modifiedBy: "user2",
+    updatedBy: "user2",
     createdAt: "2024-01-01T09:00:00Z",
     updatedAt: "2024-01-01T14:00:00Z"
   );
@@ -87,7 +87,7 @@ unittest {
   assert(assignment.matchScore == "0.9");
   assert(assignment.notes == "This is a test assignment.");
   assert(assignment.createdBy == "user1");
-  assert(assignment.modifiedBy == "user2");
+  assert(assignment.updatedBy == "user2");
   assert(assignment.createdAt == "2024-01-01T09:00:00Z");
   assert(assignment.updatedAt == "2024-01-01T14:00:00Z");
 
@@ -106,7 +106,7 @@ unittest {
   assert(json["matchScore"] == "0.9");
   assert(json["notes"] == "This is a test assignment.");
   assert(json["createdBy"] == "user1");
-  assert(json["modifiedBy"] == "user2");
+  assert(json["updatedBy"] == "user2");
   assert(json["createdAt"] == "2024-01-01T09:00:00Z");
   assert(json["updatedAt"] == "2024-01-01T14:00:00Z");
 }

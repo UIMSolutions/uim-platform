@@ -332,7 +332,7 @@ classDiagram
         +bool isReadOnly
         +bool requiresRestart
         +long updatedAt
-        +UserId modifiedBy
+        +UserId updatedBy
     }
 
     class DatabaseConnection {

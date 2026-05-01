@@ -111,7 +111,7 @@ class AutomationRuleController : PlatformController {
                 .set("enabled", r.enabled)
                 .set("executionOrder", r.executionOrder)
                 .set("createdBy", r.createdBy)
-                .set("modifiedBy", r.modifiedBy)
+                .set("updatedBy", r.updatedBy)
                 .set("createdAt", r.createdAt)
                 .set("updatedAt", r.updatedAt)
                 .set("lastTriggeredAt", r.lastTriggeredAt)
@@ -138,7 +138,7 @@ class AutomationRuleController : PlatformController {
             r.priority = j.getString("priority");
             r.executionOrder = j.getInteger("executionOrder");
             r.enabled = j.getBoolean("enabled", true);
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

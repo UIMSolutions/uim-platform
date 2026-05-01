@@ -12,22 +12,22 @@ mixin(ShowModule!());
 @safe:
 
 class ManageExtensionsUseCase { // TODO: UIMUseCase {
-    private ExtensionRepository repo;
+    private ExtensionRepository extensions;
 
-    this(ExtensionRepository repo) {
-        this.repo = repo;
+    this(ExtensionRepository extensions) {
+        this.extensions = extensions;
     }
 
     Extension getById(ExtensionId id) {
-        return repo.findById(id);
+        return extensions.findById(id);
     }
 
     Extension[] list() {
-        return repo.findAll();
+        return extensions.findAll();
     }
 
     Extension[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return extensions.findByTenant(tenantId);
     }
 
     CommandResult create(ExtensionDTO dto) {
@@ -45,26 +45,28 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidExtension(e))
             return CommandResult(false, "", "Invalid extension data");
-        repo.save(e);
+        extensions.save(e);
         return CommandResult(true, dto.id, "");
     }
 
     CommandResult update(ExtensionDTO dto) {
-        if (!repo.existsById(ExtensionId(dto.id)))
+        auto existing = extensions.findById(ExtensionId(dto.id));
+        if (extension.isNull)
             return CommandResult(false, "", "Extension not found");
-        auto existing = repo.findById(ExtensionId(dto.id));
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
-        repo.update(existing);
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        extensions.update(existing);
         return CommandResult(true, dto.id, "");
     }
 
     CommandResult remove(ExtensionId id) {
-        if (!repo.existsById(id))
+        if (!extensions.existsById(id))
             return CommandResult(false, "", "Extension not found");
-        repo.remove(id);
+
+        extensions.remove(id);
         return CommandResult(true, id.value, "");
     }
 }

@@ -118,7 +118,7 @@ class ActionController : PlatformController {
             .set("version", a.version_)
             .set("projectId", a.projectId)
             .set("createdBy", a.createdBy)
-            .set("modifiedBy", a.modifiedBy)
+            .set("updatedBy", a.updatedBy)
             .set("createdAt", a.createdAt)
             .set("updatedAt", a.updatedAt);
 
@@ -143,7 +143,7 @@ class ActionController : PlatformController {
             r.authType = j.getString("authType");
             r.destinationName = j.getString("destinationName");
             r.version_ = j.getString("version");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

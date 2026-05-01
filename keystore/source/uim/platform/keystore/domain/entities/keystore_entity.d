@@ -22,7 +22,7 @@ struct KeystoreEntity {
   string        applicationId;  // empty for account-level keystores
   string        subscriptionId; // non-empty only for subscription-level
   string        createdBy;
-  string        modifiedBy;
+  string        updatedBy;
   long          createdAt;
   long          updatedAt;
 }

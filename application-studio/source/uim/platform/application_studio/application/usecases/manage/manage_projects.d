@@ -61,7 +61,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.gitRepositoryUrl.length > 0) existing.gitRepositoryUrl = dto.gitRepositoryUrl;
         if (dto.gitBranch.length > 0) existing.gitBranch = dto.gitBranch;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

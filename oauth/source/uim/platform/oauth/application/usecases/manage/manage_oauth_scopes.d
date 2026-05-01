@@ -55,7 +55,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
         auto existing = repo.findById(OAuthScopeId(dto.id));
         existing.name = dto.name;
         existing.description = dto.description;
-        existing.modifiedBy = dto.modifiedBy;
+        existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

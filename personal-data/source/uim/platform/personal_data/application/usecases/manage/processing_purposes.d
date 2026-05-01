@@ -65,7 +65,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.retentionPeriod.length > 0) existing.retentionPeriod = r.retentionPeriod;
         if (r.dataProtectionOfficer.length > 0) existing.dataProtectionOfficer = r.dataProtectionOfficer;
         existing.requiresConsent = r.requiresConsent;
-        existing.modifiedBy = r.modifiedBy;
+        existing.updatedBy = r.updatedBy;
         existing.updatedAt = clockTime();
 
         repo.update(existing);

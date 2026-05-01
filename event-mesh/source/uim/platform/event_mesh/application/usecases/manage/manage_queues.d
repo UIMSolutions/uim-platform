@@ -67,7 +67,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         if (dto.maxMsgSpoolUsage.length > 0) existing.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
         if (dto.maxBindCount.length > 0) existing.maxBindCount = dto.maxBindCount;
         if (dto.maxMsgSize.length > 0) existing.maxMsgSize = dto.maxMsgSize;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(*existing);
         return CommandResult(true, dto.id, "");
     }

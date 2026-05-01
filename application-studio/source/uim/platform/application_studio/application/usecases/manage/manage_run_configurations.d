@@ -61,7 +61,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.entryPoint.length > 0) existing.entryPoint = dto.entryPoint;
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
-        if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
+        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

@@ -106,7 +106,7 @@ class ProcessController : PlatformController {
                 .set("version", p.version_)
                 .set("projectId", p.projectId)
                 .set("createdBy", p.createdBy)
-                .set("modifiedBy", p.modifiedBy)
+                .set("updatedBy", p.updatedBy)
                 .set("createdAt", p.createdAt)
                 .set("updatedAt", p.updatedAt);
 
@@ -128,7 +128,7 @@ class ProcessController : PlatformController {
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.version_ = j.getString("version");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

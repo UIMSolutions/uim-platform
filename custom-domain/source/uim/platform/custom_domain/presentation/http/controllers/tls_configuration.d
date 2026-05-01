@@ -109,7 +109,7 @@ class TlsConfigurationController : PlatformController {
                 .set("hstsMaxAge", c.hstsMaxAge)
                 .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
                 .set("createdBy", c.createdBy)
-                .set("modifiedBy", c.modifiedBy)
+                .set("updatedBy", c.updatedBy)
                 .set("createdAt", c.createdAt)
                 .set("updatedAt", c.updatedAt);
 
@@ -135,7 +135,7 @@ class TlsConfigurationController : PlatformController {
             r.hstsEnabled = j.getBoolean("hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
-            r.modifiedBy = j.getString("modifiedBy");
+            r.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(r);
             if (result.success) {

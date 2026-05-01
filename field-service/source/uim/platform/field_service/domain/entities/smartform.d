@@ -29,7 +29,7 @@ struct Smartform {
     string safetyLabel;
     string signatureData;
     UserId createdBy;
-    UserId modifiedBy;
+    UserId updatedBy;
     string createdAt;
     string updatedAt;
 
@@ -52,7 +52,7 @@ struct Smartform {
             .set("safetyLabel", safetyLabel)
             .set("signatureData", signatureData)
             .set("createdBy", createdBy)
-            .set("modifiedBy", modifiedBy)
+            .set("updatedBy", updatedBy)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

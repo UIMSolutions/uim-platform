@@ -30,15 +30,6 @@ struct CredentialId {
   mixin DomainId;
 }
 
-struct CredentialId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 struct KeyringVersionId {
   string value;
 

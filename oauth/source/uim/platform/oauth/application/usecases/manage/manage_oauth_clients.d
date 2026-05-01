@@ -68,7 +68,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
         existing.accessTokenValidity = dto.accessTokenValidity;
         existing.refreshTokenValidity = dto.refreshTokenValidity;
         existing.contacts = dto.contacts;
-        existing.modifiedBy = dto.modifiedBy;
+        existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

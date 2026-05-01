@@ -100,7 +100,7 @@ class PageController : PlatformController {
             dto.route = j.getString("route");
             dto.layoutConfig = j.getString("layoutConfig");
             dto.componentTree = j.getString("componentTree");
-            dto.modifiedBy = j.getString("modifiedBy");
+            dto.updatedBy = j.getString("updatedBy");
 
             auto result = uc.update(dto);
             if (result.success) {
