@@ -100,8 +100,8 @@ class DataAccessControlController : PlatformController {
             .set("name", dac.name)
             .set("description", dac.description)
             .set("isEnabled", dac.isEnabled)
-            .set("targetViewIds", dac.targetViewIds.map!(v => Json(v)).array.toJson)
-            .set("assignedUserIds", dac.assignedUserIds.map!(v => Json(v)).array.toJson)
+            .set("targetViewIds", dac.targetViewIds.map!(v => v.toJson).array.toJson)
+            .set("assignedUserIds", dac.assignedUserIds.map!(v => v.toJson).array.toJson)
             .set("createdAt", dac.createdAt)
             .set("updatedAt", dac.updatedAt)
             .set("message", "Data access control retrieved successfully");

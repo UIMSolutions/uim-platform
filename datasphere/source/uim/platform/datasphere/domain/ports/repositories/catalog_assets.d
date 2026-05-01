@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 @safe:
 interface CatalogAssetRepository {
-  CatalogAsset findById(CatalogAssetId id, SpaceId spaceId);
+  CatalogAsset findById(SpaceId spaceId, CatalogAssetId id);
   CatalogAsset[] findBySpace(SpaceId spaceId);
   CatalogAsset[] findByType(AssetType type, SpaceId spaceId);
-  CatalogAsset[] search(string query, SpaceId spaceId);
+  CatalogAsset[] search(SpaceId spaceId, string query);
   void save(CatalogAsset ca);
   void update(CatalogAsset ca);
-  void remove(CatalogAssetId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, CatalogAssetId id);
   size_t countBySpace(SpaceId spaceId);
 }

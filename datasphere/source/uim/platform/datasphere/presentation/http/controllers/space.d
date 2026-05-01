@@ -95,14 +95,14 @@ class SpaceController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(s.id))
-            .set("name", Json(s.name))
-            .set("description", Json(s.description))
-            .set("businessName", Json(s.businessName))
-            .set("priority", Json(s.priority))
-            .set("enableAuditLog", Json(s.enableAuditLog))
-            .set("createdAt", Json(s.createdAt))
-            .set("updatedAt", Json(s.updatedAt))
+            .set("id", s.id)
+            .set("name", s.name)
+            .set("description", s.description)
+            .set("businessName", s.businessName)
+            .set("priority", s.priority)
+            .set("enableAuditLog", s.enableAuditLog)
+            .set("createdAt", s.createdAt)
+            .set("updatedAt", s.updatedAt)
             .set("message", "Space retrieved successfully");
 
       res.writeJsonBody(resp, 200);

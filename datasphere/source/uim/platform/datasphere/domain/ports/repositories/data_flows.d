@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 interface DataFlowRepository {
-  DataFlow findById(DataFlowId id, SpaceId spaceId);
+  DataFlow findById(SpaceId spaceId, DataFlowId id);
   DataFlow[] findBySpace(SpaceId spaceId);
-  DataFlow[] findByStatus(FlowStatus status, SpaceId spaceId);
+  DataFlow[] findByStatus(SpaceId spaceId, FlowStatus status);
   void save(DataFlow df);
   void update(DataFlow df);
-  void remove(DataFlowId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, DataFlowId id);
   size_t countBySpace(SpaceId spaceId);
 }

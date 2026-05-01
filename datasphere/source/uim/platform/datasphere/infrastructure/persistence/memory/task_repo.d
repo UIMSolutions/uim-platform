@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryTaskRepository : TaskRepository {
   private DSTask[][SpaceId] store;
 
-  DSTask findById(TaskId id, SpaceId spaceId) {
+  DSTask findById(SpaceId spaceId, TaskId id) {
     if (spaceId in store) {
       foreach (t; store[spaceId]) {
         if (t.id == id)
@@ -35,13 +35,13 @@ class MemoryTaskRepository : TaskRepository {
     return null;
   }
 
-  DSTask[] findByStatus(TaskStatus status, SpaceId spaceId) {
+  DSTask[] findByStatus(SpaceId spaceId, TaskStatus status) {
     if (spaceId in store)
       return store[spaceId].filter!(t => t.status == status).array;
     return null;
   }
 
-  DSTask[] findByType(TaskType type, SpaceId spaceId) {
+  DSTask[] findByType(SpaceId spaceId, TaskType type) {
     if (spaceId in store)
       return store[spaceId].filter!(t => t.type == type).array;
     return null;
@@ -62,8 +62,8 @@ class MemoryTaskRepository : TaskRepository {
     }
   }
 
-  void remove(TaskId id, SpaceId spaceId) {
-    if (    spaceId in store) {
+  void remove(SpaceId spaceId, TaskId id) {
+    if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(t => t.id != id).array;
     }
   }

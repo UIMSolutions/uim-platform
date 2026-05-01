@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
-  private RemoteTableRepository repo;
+  private RemoteTableRepository tables;
 
-  this(RemoteTableRepository repo) {
-    this.repo = repo;
+  this(RemoteTableRepository tables) {
+    this.tables = tables;
   }
 
   CommandResult create(CreateRemoteTableRequest r) {
@@ -50,24 +50,24 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     rt.createdAt = now;
     rt.updatedAt = now;
 
-    repo.save(rt);
+    tables.save(rt);
     return CommandResult(true, rt.id.value, "");
   }
 
-  RemoteTable getById(RemoteTableId id, SpaceId spaceId) {
-    return repo.getById(id, spaceId);
+  RemoteTable getById(SpaceId spaceId, RemoteTableId id) {
+    return tables.findById(spaceId, id);
   }
 
   RemoteTable[] list(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+    return tables.findBySpace(spaceId);
   }
 
   CommandResult remove(RemoteTableId id, SpaceId spaceId) {
-    auto existing = repo.getById(id, spaceId);
-    if (existing.isNull)
+    auto existing = tables.findById(spaceId, id);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Remote table not found");
 
-    repo.remove(id, spaceId);
+    tables.remove(id, spaceId);
     return CommandResult(true, id.value, "");
   }
 }

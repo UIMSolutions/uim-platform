@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 interface DataAccessControlRepository {
-  DataAccessControl findById(DataAccessControlId id, SpaceId spaceId);
+  DataAccessControl findById(SpaceId spaceId, DataAccessControlId id);
   DataAccessControl[] findBySpace(SpaceId spaceId);
-  DataAccessControl[] findByView(ViewId viewId, SpaceId spaceId);
+  DataAccessControl[] findByView(SpaceId spaceId, ViewId viewId);
   void save(DataAccessControl dac);
   void update(DataAccessControl dac);
-  void remove(DataAccessControlId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, DataAccessControlId id);
   size_t countBySpace(SpaceId spaceId);
 }

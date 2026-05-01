@@ -45,8 +45,8 @@ class TaskController : PlatformController {
       r.maxRetries = j.getInteger("maxRetries", 3);
 
       auto now = Clock.currTime();
-      r.createdAt = now;
-      r.updatedAt = now;
+      // r.createdAt = now;
+      // r.updatedAt = now;
 
       auto result = uc.create(r);
       if (result.success) {
@@ -93,8 +93,8 @@ class TaskController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto t = uc.getById(id, spaceId);
       if (t.isNull) {
@@ -127,8 +127,8 @@ class TaskController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.remove(spaceId, id);
       if (result.success) {

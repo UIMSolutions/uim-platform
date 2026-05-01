@@ -22,7 +22,7 @@ mixin(ShowModule!());
 class MemoryCatalogAssetRepository : CatalogAssetRepository {
   private CatalogAsset[][SpaceId] store;
 
-  CatalogAsset findById(CatalogAssetId id, SpaceId spaceId) {
+  CatalogAsset findById(SpaceId spaceId, CatalogAssetId id) {
     if (spaceId in store) {
       foreach (ca; store[spaceId]) {
         if (ca.id == id)
@@ -38,13 +38,13 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
     return null;
   }
 
-  CatalogAsset[] findByType(AssetType type, SpaceId spaceId) {
+  CatalogAsset[] findByType(SpaceId spaceId, AssetType type) {
     if (spaceId in store)
       return store[spaceId].filter!(ca => ca.assetType == type).array;
     return null;
   }
 
-  CatalogAsset[] search(string query, SpaceId spaceId) {
+  CatalogAsset[] search(SpaceId spaceId, string query) {
     if (spaceId in store) {
       auto q = query.toLower;
       return store[spaceId].filter!(ca =>
@@ -71,7 +71,7 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
     }
   }
 
-  void remove(CatalogAssetId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, CatalogAssetId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(ca => ca.id != id).array;
     }

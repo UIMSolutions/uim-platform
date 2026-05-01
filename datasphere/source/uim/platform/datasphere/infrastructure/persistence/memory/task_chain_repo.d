@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryTaskChainRepository : TaskChainRepository {
   private TaskChain[][SpaceId] store;
 
-  TaskChain findById(TaskChainId id, SpaceId spaceId) {
+  TaskChain findById(SpaceId spaceId, TaskChainId id) {
     if (spaceId in store) {
       foreach (tc; store[spaceId]) {
         if (tc.id == id)
@@ -35,7 +35,7 @@ class MemoryTaskChainRepository : TaskChainRepository {
     return null;
   }
 
-  TaskChain[] findByStatus(TaskStatus status, SpaceId spaceId) {
+  TaskChain[] findByStatus(SpaceId spaceId, TaskStatus status) {
     if (spaceId in store)
       return store[spaceId].filter!(tc => tc.status == status).array;
     return null;
@@ -56,7 +56,7 @@ class MemoryTaskChainRepository : TaskChainRepository {
     }
   }
 
-  void remove(TaskChainId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, TaskChainId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(tc => tc.id != id).array;
     }

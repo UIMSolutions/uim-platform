@@ -95,7 +95,7 @@ class CatalogAssetController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto query = req.params.get("q", "");
 
-      auto assets = assets.search(query, spaceId);
+      auto assets = assets.search(spaceId, query);
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
@@ -108,7 +108,7 @@ class CatalogAssetController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("count", Json(assets.length))
+            .set("count", assets.length)
             .set("resources", jarr)
             .set("message", "Catalog assets retrieved successfully");
 
@@ -125,7 +125,7 @@ class CatalogAssetController : PlatformController {
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto ca = assets.getById(id, spaceId);
+      auto ca = assets.getById(spaceId, id);
       if (ca.id.isEmpty) {
         writeError(res, 404, "Catalog asset not found");
         return;
@@ -157,7 +157,7 @@ class CatalogAssetController : PlatformController {
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = assets.remove(id, spaceId);
+      auto result = assets.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

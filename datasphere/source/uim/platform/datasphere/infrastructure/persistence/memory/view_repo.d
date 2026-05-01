@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryViewRepository : ViewRepository {
   private View[][SpaceId] store;
 
-  View findById(ViewId id, SpaceId spaceId) {
+  View findById(SpaceId spaceId, ViewId id) {
     if (spaceId in store) {
       foreach (v; store[spaceId]) {
         if (v.id == id)
@@ -35,7 +35,7 @@ class MemoryViewRepository : ViewRepository {
     return null;
   }
 
-  View[] findBySemantic(ViewSemantic semantic, SpaceId spaceId) {
+  View[] findBySemantic(SpaceId spaceId, ViewSemantic semantic) {
     if (spaceId in store)
       return store[spaceId].filter!(v => v.semantic == semantic).array;
     return null;
@@ -62,7 +62,7 @@ class MemoryViewRepository : ViewRepository {
     }
   }
 
-  void remove(ViewId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, ViewId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(v => v.id != id).array;
     }

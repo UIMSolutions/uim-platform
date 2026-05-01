@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryDataFlowRepository : DataFlowRepository {
   private DataFlow[][SpaceId] store;
 
-  DataFlow findById(DataFlowId id, SpaceId spaceId) {
+  DataFlow findById(SpaceId spaceId, DataFlowId id) {
     if (spaceId in store) {
       foreach (df; store[spaceId]) {
         if (df.id == id)
@@ -35,7 +35,7 @@ class MemoryDataFlowRepository : DataFlowRepository {
     return null;
   }
 
-  DataFlow[] findByStatus(FlowStatus status, SpaceId spaceId) {
+  DataFlow[] findByStatus(SpaceId spaceId, FlowStatus status) {
     if (spaceId in store)
       return store[spaceId].filter!(df => df.status == status).array;
     return null;
@@ -56,7 +56,7 @@ class MemoryDataFlowRepository : DataFlowRepository {
     }
   }
 
-  void remove(DataFlowId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, DataFlowId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(df => df.id != id).array;
     }

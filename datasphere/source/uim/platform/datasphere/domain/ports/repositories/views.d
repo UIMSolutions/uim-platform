@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 @safe:
 interface ViewRepository {
-  View findById(ViewId id, SpaceId spaceId);
+  View findById(SpaceId spaceId, ViewId id);
   View[] findBySpace(SpaceId spaceId);
-  View[] findBySemantic(ViewSemantic semantic, SpaceId spaceId);
+  View[] findBySemantic(SpaceId spaceId, ViewSemantic semantic);
   View[] findExposed(SpaceId spaceId);
   void save(View v);
   void update(View v);
-  void remove(ViewId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, ViewId id);
   size_t countBySpace(SpaceId spaceId);
 }

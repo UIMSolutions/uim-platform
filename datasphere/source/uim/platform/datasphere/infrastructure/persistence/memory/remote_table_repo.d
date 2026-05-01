@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryRemoteTableRepository : RemoteTableRepository {
   private RemoteTable[][SpaceId] store;
 
-  RemoteTable findById(RemoteTableId id, SpaceId spaceId) {
+  RemoteTable findById(SpaceId spaceId, RemoteTableId id) {
     if (spaceId in store) {
       foreach (rt; store[spaceId]) {
         if (rt.id == id)
@@ -35,7 +35,7 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
     return null;
   }
 
-  RemoteTable[] findByConnection(ConnectionId connId, SpaceId spaceId) {
+  RemoteTable[] findByConnection(SpaceId spaceId, ConnectionId connId) {
     if (spaceId in store)
       return store[spaceId].filter!(rt => rt.connectionId == connId).array;
     return null;
@@ -56,7 +56,7 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
     }
   }
 
-  void remove(RemoteTableId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, RemoteTableId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(rt => rt.id != id).array;
     }

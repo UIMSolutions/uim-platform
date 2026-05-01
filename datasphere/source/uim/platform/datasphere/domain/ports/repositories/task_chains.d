@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 interface TaskChainRepository {
-  TaskChain findById(TaskChainId id, SpaceId spaceId);
+  TaskChain findById(SpaceId spaceId, TaskChainId id);
   TaskChain[] findBySpace(SpaceId spaceId);
-  TaskChain[] findByStatus(TaskStatus status, SpaceId spaceId);
+  TaskChain[] findByStatus(SpaceId spaceId, TaskStatus status);
   void save(TaskChain tc);
   void update(TaskChain tc);
-  void remove(TaskChainId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, TaskChainId id);
   size_t countBySpace(SpaceId spaceId);
 }

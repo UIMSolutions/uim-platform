@@ -35,7 +35,7 @@ class DataFlowController : PlatformController {
       auto j = req.json;
       CreateDataFlowRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.scheduleExpression = j.getString("scheduleExpression");
@@ -86,10 +86,10 @@ class DataFlowController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto df = uc.getById(id, spaceId);
+      auto df = uc.getById(spaceId, id);
       if (df.isNull) {
         writeError(res, 404, "Data flow not found");
         return;
@@ -115,10 +115,10 @@ class DataFlowController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = uc.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

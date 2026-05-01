@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryDataAccessControlRepository : DataAccessControlRepository {
   private DataAccessControl[][SpaceId] store;
 
-  DataAccessControl findById(DataAccessControlId id, SpaceId spaceId) {
+  DataAccessControl findById(SpaceId spaceId, DataAccessControlId id) {
     if (spaceId in store) {
       foreach (dac; store[spaceId]) {
         if (dac.id == id)
@@ -35,7 +35,7 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
     return null;
   }
 
-  DataAccessControl[] findByView(ViewId viewId, SpaceId spaceId) {
+  DataAccessControl[] findByView(SpaceId spaceId, ViewId viewId) {
     if (spaceId in store)
       return store[spaceId].filter!(dac => dac.targetViewIds.any!(id => id == viewId)).array;
     return null;
@@ -56,7 +56,7 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
     }
   }
 
-  void remove(DataAccessControlId id, SpaceId spaceId) {
+  void remove(SpaceId spaceId, DataAccessControlId id) {
     if (spaceId in store) {
       store[spaceId] = store[spaceId].filter!(dac => dac.id != id).array;
     }

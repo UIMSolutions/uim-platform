@@ -85,7 +85,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ViewId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "View not found");
 
     repo.remove(id, spaceId);

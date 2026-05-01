@@ -54,21 +54,21 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ca.id.value, "");
   }
 
-  CatalogAsset getById(CatalogAssetId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+  CatalogAsset getById(SpaceId spaceId, CatalogAssetId id) {
+    return repo.findById(spaceId, id);
   }
 
   CatalogAsset[] list(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CatalogAsset[] search(string query, SpaceId spaceId) {
+  CatalogAsset[] search(SpaceId spaceId, string query) {
     return repo.search(query, spaceId);
   }
 
   CommandResult update(UpdateCatalogAssetRequest r) {
-    auto existing = repo.getById(r.assetId, r.spaceId);
-    if (existing.isNull)
+    auto existing = repo.findById(r.spaceId, r.assetId);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Catalog asset not found");
 
     existing.name = r.name;
@@ -85,7 +85,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(CatalogAssetId id, SpaceId spaceId) {
-    auto existing = repo.getById(id, spaceId);
+    auto existing = repo.findById(spaceId, id);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Catalog asset not found");
 

@@ -44,8 +44,8 @@ class ViewController : PlatformController {
       r.isExposed = j.getBoolean("isExposed", false);
 
       auto now = Clock.currTime();
-      r.createdAt = now;
-      r.updatedAt = now;
+      // r.createdAt = now;
+      // r.updatedAt = now;
 
       auto result = uc.create(r);
       if (result.success) {
@@ -105,16 +105,16 @@ class ViewController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(v.id))
-            .set("name", Json(v.name))
-            .set("description", Json(v.description))
-            .set("businessName", Json(v.businessName))
-            .set("sqlExpression", Json(v.sqlExpression))
-            .set("isExposed", Json(v.isExposed))
-            .set("isPersisted", Json(v.isPersisted))
-            .set("rowCount", Json(v.rowCount))
-            .set("createdAt", Json(v.createdAt))
-            .set("updatedAt", Json(v.updatedAt))
+            .set("id", v.id)
+            .set("name", v.name)
+            .set("description", v.description)
+            .set("businessName", v.businessName)
+            .set("sqlExpression", v.sqlExpression)
+            .set("isExposed", v.isExposed)
+            .set("isPersisted", v.isPersisted)
+            .set("rowCount", v.rowCount)
+            .set("createdAt", v.createdAt)
+            .set("updatedAt", v.updatedAt)
             .set("message", "View retrieved successfully");
 
       res.writeJsonBody(resp, 200);

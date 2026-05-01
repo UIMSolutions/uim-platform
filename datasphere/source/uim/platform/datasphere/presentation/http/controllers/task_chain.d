@@ -41,8 +41,8 @@ class TaskChainController : PlatformController {
       r.scheduleFrequency = j.getString("scheduleFrequency");
 
       auto now = Clock.currTime();
-      r.createdAt = now;
-      r.updatedAt = now;
+      // r.createdAt = now;
+      // r.updatedAt = now;
 
       auto result = uc.create(r);
       if (result.success) {

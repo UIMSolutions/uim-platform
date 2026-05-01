@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 interface RemoteTableRepository {
-  RemoteTable findById(RemoteTableId id, SpaceId spaceId);
+  RemoteTable findById(SpaceId spaceId, RemoteTableId id);
   RemoteTable[] findBySpace(SpaceId spaceId);
-  RemoteTable[] findByConnection(ConnectionId connId, SpaceId spaceId);
+  RemoteTable[] findByConnection(SpaceId spaceId, ConnectionId connId);
   void save(RemoteTable rt);
   void update(RemoteTable rt);
-  void remove(RemoteTableId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, RemoteTableId id);
   size_t countBySpace(SpaceId spaceId);
 }
