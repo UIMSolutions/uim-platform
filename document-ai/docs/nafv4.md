@@ -417,14 +417,14 @@ F-DA-07: Client Administration
   → Detect FileType enum from extension
   → Generate UUID
   → Build Document entity (status = pending)
-  → Set uploadedAt = now()
+  → Set uploadedAt = Clock.currStdTime()
   → Persist Document
   → Set status = processing
   → Run Extraction (ML / AI / Template / Hybrid)
   → Build ExtractionResult entity
   → Compute overallConfidence
   → Persist ExtractionResult
-  → Set Document status = completed, processedAt = now()
+  → Set Document status = completed, processedAt = Clock.currStdTime()
   → Update Document
   → Return 201 Created
   → [End]

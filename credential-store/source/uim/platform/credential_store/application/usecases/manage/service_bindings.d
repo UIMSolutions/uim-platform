@@ -40,7 +40,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     bindings.save(binding);
 
     ServiceBindingResponse resp;
-    resp.id = binding.id;
+    resp.serviceBindingId = binding.id;
     resp.name = binding.name;
     resp.clientId = binding.clientId;
     resp.clientSecret = binding.clientSecret; // only returned on creation

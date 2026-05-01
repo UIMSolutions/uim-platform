@@ -20,7 +20,7 @@ struct KeyringVersion {
   bool isActive;           // latest version is active for encryption; older only for decryption
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("keyringId", keyringId)
       .set("versionNumber", versionNumber)
       .set("keyMaterial", keyMaterial)

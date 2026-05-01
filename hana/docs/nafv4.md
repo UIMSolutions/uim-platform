@@ -487,7 +487,7 @@ F-HC-10: Connection Management
   → Build InstanceResource sub-struct (memoryGB, vcpus, storageGB)
   → Build InstanceLabel[] from labels
   → Set status = creating
-  → Set createdAt = now()
+  → Set createdAt = Clock.currStdTime()
   → Persist via InstanceRepository
   → Return 201 Created
   → [End]

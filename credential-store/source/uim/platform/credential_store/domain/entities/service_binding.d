@@ -29,9 +29,9 @@ struct ServiceBinding {
       .set("description", description)
       .set("clientId", clientId)
       .set("clientSecret", clientSecret)
-      .set("permission", permission)
+      .set("permission", permission.to!string)
       .set("status", status)
-      .set("allowedNamespaces", allowedNamespaces)
+      .set("allowedNamespaces", allowedNamespaces.map!(ns => ns.value).array.toJson)
       .set("expiresAt", expiresAt);
   }
 }

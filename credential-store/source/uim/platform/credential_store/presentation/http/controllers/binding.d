@@ -106,7 +106,7 @@ class BindingController : PlatformController {
         .set("name", b.name)
         .set("description", b.description)
         .set("clientId", b.clientId)
-        .set("allowedNamespaces", b.allowedNamespaces)
+        .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value).array.toJson)
         .set("createdAt", b.createdAt)
         .set("expiresAt", b.expiresAt);
       // Note: clientSecret is NOT returned on GET (only on creation)

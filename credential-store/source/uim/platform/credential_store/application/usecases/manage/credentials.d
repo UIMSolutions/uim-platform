@@ -53,9 +53,8 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     }
 
     Credential cred;
-    cred.id = randomUUID();
+    cred.initEntity(r.tenantId);
     cred.namespaceId = r.namespaceId;
-    cred.tenantId = r.tenantId;
     cred.name = r.name;
     cred.type = credType;
     cred.value = r.value;
@@ -64,8 +63,6 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     cred.username = r.username;
     cred.status = CredentialStatus.active;
     cred.version_ = 1;
-    cred.createdAt = currentTimestamp();
-    cred.updatedAt = cred.createdAt;
     cred.createdBy = r.createdBy;
     cred.updatedBy = r.createdBy;
 

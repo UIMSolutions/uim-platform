@@ -27,18 +27,25 @@ class TenantRepository(TEntity, TId) {
   }
 
   TEntity findById(TId id) {
-    return findAll().any!(e => e.id == id);
+    foreach (tenantId, entities; store) {
+      if (id in entities)
+        return entities[id];
+    }
+    return TEntity.init;
   }
 
   TEntity[] findAllById(TId[] ids) {
-    return ids.filter!(id => existsById(id)).map!(id => findById(id)).array;
+    return ids.filter!(id => existsById(id))
+      .map!(id => findById(id))
+      .array;
   }
 
   void removeById(TId id, bool deleteTenantIfEmpty = false) {
     auto entity = findById(id);
-    if (!entity.isNull) {
-      remove(entity, deleteTenantIfEmpty);
-    }
+    if (!entity.isNull)
+      return;
+
+    remove(entity, deleteTenantIfEmpty);
   }
 
   void removeAllById(TId[] ids, bool deleteTenantIfEmpty = false) {
@@ -54,11 +61,16 @@ class TenantRepository(TEntity, TId) {
   }
 
   TEntity findById(TenantId tenantId, TId id) {
-    return existsById(tenantId, id) ? store[tenantId][id] : TEntity.init;
+    if (tenantId in store && id in store[tenantId]) {
+      return store[tenantId][id];
+    }
+    return TEntity.init;
   }
 
   TEntity[] findAllById(TenantId tenantId, TId[] ids) {
-    return ids.filter!(id => existsById(tenantId, id)).map!(id => findById(tenantId, id)).array;
+    return ids.filter!(id => existsById(tenantId, id))
+      .map!(id => findById(tenantId, id))
+      .array;
   }
 
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
@@ -82,7 +94,7 @@ class TenantRepository(TEntity, TId) {
 
   TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     TEntity[] allItems = store.byValue.map!(entities => entities.values).array.flat;
-    
+
     return limit == 0
       ? allItems.skip(offset).array : allItems.skip(offset).take(limit);
 
