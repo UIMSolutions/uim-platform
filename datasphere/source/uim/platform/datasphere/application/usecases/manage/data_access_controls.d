@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.data_access_controls;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.data_access_control;
-import uim.platform.datasphere.domain.ports.repositories.data_access_controls;
-import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.data_access_control;
+// import uim.platform.datasphere.domain.ports.repositories.data_access_controls;
+// import uim.platform.datasphere.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
   private DataAccessControlRepository repo;
 

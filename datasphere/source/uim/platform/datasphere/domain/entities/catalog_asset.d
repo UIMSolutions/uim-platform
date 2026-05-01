@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.entities.catalog_asset;
 
-import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct CatalogTag {
   string key;
   string value;

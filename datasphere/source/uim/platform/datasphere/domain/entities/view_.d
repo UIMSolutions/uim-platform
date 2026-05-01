@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.entities.view_;
 
-import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ViewColumn {
   string name;
   string dataType;

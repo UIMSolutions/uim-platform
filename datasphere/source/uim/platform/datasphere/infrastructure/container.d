@@ -5,41 +5,46 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.container;
 
-import uim.platform.datasphere.infrastructure.config;
+// import uim.platform.datasphere.infrastructure.config;
 
-// Repositories
-import uim.platform.datasphere.infrastructure.persistence.memory.space;
-import uim.platform.datasphere.infrastructure.persistence.memory.connection;
-import uim.platform.datasphere.infrastructure.persistence.memory.remote_table;
-import uim.platform.datasphere.infrastructure.persistence.memory.data_flow;
-import uim.platform.datasphere.infrastructure.persistence.memory.view;
-import uim.platform.datasphere.infrastructure.persistence.memory.task;
-import uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
-import uim.platform.datasphere.infrastructure.persistence.memory.data_access_control;
-import uim.platform.datasphere.infrastructure.persistence.memory.catalog_asset;
+// // Repositories
+// import uim.platform.datasphere.infrastructure.persistence.memory.space;
+// import uim.platform.datasphere.infrastructure.persistence.memory.connection;
+// import uim.platform.datasphere.infrastructure.persistence.memory.remote_table;
+// import uim.platform.datasphere.infrastructure.persistence.memory.data_flow;
+// import uim.platform.datasphere.infrastructure.persistence.memory.view;
+// import uim.platform.datasphere.infrastructure.persistence.memory.task;
+// import uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
+// import uim.platform.datasphere.infrastructure.persistence.memory.data_access_control;
+// import uim.platform.datasphere.infrastructure.persistence.memory.catalog_asset;
 
-// Use Cases
-import uim.platform.datasphere.application.usecases.manage.spaces;
-import uim.platform.datasphere.application.usecases.manage.connections;
-import uim.platform.datasphere.application.usecases.manage.remote_tables;
-import uim.platform.datasphere.application.usecases.manage.data_flows;
-import uim.platform.datasphere.application.usecases.manage.views;
-import uim.platform.datasphere.application.usecases.manage.tasks;
-import uim.platform.datasphere.application.usecases.manage.task_chains;
-import uim.platform.datasphere.application.usecases.manage.data_access_controls;
-import uim.platform.datasphere.application.usecases.manage.catalog_assets;
+// // Use Cases
+// import uim.platform.datasphere.application.usecases.manage.spaces;
+// import uim.platform.datasphere.application.usecases.manage.connections;
+// import uim.platform.datasphere.application.usecases.manage.remote_tables;
+// import uim.platform.datasphere.application.usecases.manage.data_flows;
+// import uim.platform.datasphere.application.usecases.manage.views;
+// import uim.platform.datasphere.application.usecases.manage.tasks;
+// import uim.platform.datasphere.application.usecases.manage.task_chains;
+// import uim.platform.datasphere.application.usecases.manage.data_access_controls;
+// import uim.platform.datasphere.application.usecases.manage.catalog_assets;
 
-// Controllers
-import uim.platform.datasphere.presentation.http.controllers.space;
-import uim.platform.datasphere.presentation.http.controllers.connection;
-import uim.platform.datasphere.presentation.http.controllers.remote_table;
-import uim.platform.datasphere.presentation.http.controllers.data_flow;
-import uim.platform.datasphere.presentation.http.controllers.view_;
-import uim.platform.datasphere.presentation.http.controllers.task;
-import uim.platform.datasphere.presentation.http.controllers.task_chain;
-import uim.platform.datasphere.presentation.http.controllers.data_access_control;
-import uim.platform.datasphere.presentation.http.controllers.catalog_asset;
-import uim.platform.datasphere.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.datasphere.presentation.http.controllers.space;
+// import uim.platform.datasphere.presentation.http.controllers.connection;
+// import uim.platform.datasphere.presentation.http.controllers.remote_table;
+// import uim.platform.datasphere.presentation.http.controllers.data_flow;
+// import uim.platform.datasphere.presentation.http.controllers.view_;
+// import uim.platform.datasphere.presentation.http.controllers.task;
+// import uim.platform.datasphere.presentation.http.controllers.task_chain;
+// import uim.platform.datasphere.presentation.http.controllers.data_access_control;
+// import uim.platform.datasphere.presentation.http.controllers.catalog_asset;
+// import uim.platform.datasphere.presentation.http.controllers.health;
+import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 struct Container {
   // Repositories (driven adapters)

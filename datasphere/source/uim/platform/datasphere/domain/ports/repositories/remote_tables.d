@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.remote_tables;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.remote_table;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.remote_table;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface RemoteTableRepository {
   RemoteTable findById(RemoteTableId id, SpaceId spaceId);
   RemoteTable[] findBySpace(SpaceId spaceId);

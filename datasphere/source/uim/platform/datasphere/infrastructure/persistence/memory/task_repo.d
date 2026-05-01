@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.task;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.task;
-import uim.platform.datasphere.domain.ports.repositories.tasks;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.task;
+// import uim.platform.datasphere.domain.ports.repositories.tasks;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryTaskRepository : TaskRepository {
   private Task[][string] store;
 

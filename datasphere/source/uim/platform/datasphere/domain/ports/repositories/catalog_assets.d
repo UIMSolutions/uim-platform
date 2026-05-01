@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.catalog_assets;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.catalog_asset;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.catalog_asset;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface CatalogAssetRepository {
   CatalogAsset findById(CatalogAssetId id, SpaceId spaceId);
   CatalogAsset[] findBySpace(SpaceId spaceId);

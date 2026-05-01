@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.data_flow;
 
-import uim.platform.datasphere.application.usecases.manage.data_flows;
-import uim.platform.datasphere.application.dto;
-import uim.platform.datasphere.presentation.http.json_utils;
+// import uim.platform.datasphere.application.usecases.manage.data_flows;
+// import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 class DataFlowController : PlatformController {
   private ManageDataFlowsUseCase uc;

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.data_flow;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.data_flow;
-import uim.platform.datasphere.domain.ports.repositories.data_flows;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.data_flow;
+// import uim.platform.datasphere.domain.ports.repositories.data_flows;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryDataFlowRepository : DataFlowRepository {
   private DataFlow[][string] store;
 

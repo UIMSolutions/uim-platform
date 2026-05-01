@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.view_;
 
-import uim.platform.datasphere.application.usecases.manage.views;
-import uim.platform.datasphere.application.dto;
-import uim.platform.datasphere.presentation.http.json_utils;
+// import uim.platform.datasphere.application.usecases.manage.views;
+// import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 class ViewController : PlatformController {
   private ManageViewsUseCase uc;

@@ -5,12 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.application.usecases.manage.lifecycle_rules;
 
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.lifecycle_rule;
-import uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
-import uim.platform.object_store.domain.ports.repositories.bucket;
-import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.lifecycle_rule;
+// import uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
+// import uim.platform.object_store.domain.ports.repositories.bucket;
+// import uim.platform.object_store.domain.types;
 
+import uim.platform.object_store;
+
+mixin(ShowModule!());
+
+@safe:
 /// Application service for lifecycle rule management.
 class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   private LifecycleRuleRepository ruleRepo;
@@ -28,7 +33,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Rule name is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -54,7 +59,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(id);
-    if (rule.isNull || rule.isNull)
+    if (rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
     if (req.name.length > 0)
@@ -87,7 +92,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteRule(LifecycleRuleId id) {
     auto rule = ruleRepo.findById(id);
-    if (rule.isNull || rule.isNull)
+    if (rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
     ruleRepo.removeById(id);

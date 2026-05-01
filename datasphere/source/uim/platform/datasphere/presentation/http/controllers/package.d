@@ -10,5 +10,4 @@ public {
   import uim.platform.datasphere.presentation.http.controllers.task_chain;
   import uim.platform.datasphere.presentation.http.controllers.data_access_control;
   import uim.platform.datasphere.presentation.http.controllers.catalog_asset;
-  import uim.platform.datasphere.presentation.http.controllers.health;
 }

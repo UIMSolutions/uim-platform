@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.spaces;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.space;
-import uim.platform.datasphere.domain.ports.repositories.spaces;
-import uim.platform.datasphere.domain.services.space_validator;
-import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.space;
+// import uim.platform.datasphere.domain.ports.repositories.spaces;
+// import uim.platform.datasphere.domain.services.space_validator;
+// import uim.platform.datasphere.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageSpacesUseCase { // TODO: UIMUseCase {
   private SpaceRepository repo;
 

@@ -16,15 +16,20 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAccessPolicyRepository : AccessPolicyRepository {
+class MemoryAccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {
 
-
+  size_t countByBucket(BucketId bucketId) {
+    return findByBucket(bucketId).length;
+  }
+  AccessPolicy[] filterByBucket(AccessPolicy[] policies, BucketId bucketId) {
+    return policies.filter!(e => e.bucketId == bucketId).array;
+  }
   AccessPolicy[] findByBucket(BucketId bucketId) {
     return findAll().filter!(e => e.bucketId == bucketId).array;
   }
-
-  AccessPolicy[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  void removeByBucket(BucketId bucketId) {
+    foreach (e; findByBucket(bucketId))
+      remove(e);
   }
 
 }

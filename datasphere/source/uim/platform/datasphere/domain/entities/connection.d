@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.entities.connection;
 
-import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ConnectionProperty {
   string key;
   string value;

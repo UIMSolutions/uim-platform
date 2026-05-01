@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.view;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.view_;
-import uim.platform.datasphere.domain.ports.repositories.views;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.view_;
+// import uim.platform.datasphere.domain.ports.repositories.views;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryViewRepository : ViewRepository {
   private View[][string] store;
 

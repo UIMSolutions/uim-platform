@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.remote_table;
 
-import uim.platform.datasphere.application.usecases.manage.remote_tables;
-import uim.platform.datasphere.application.dto;
-import uim.platform.datasphere.presentation.http.json_utils;
+// import uim.platform.datasphere.application.usecases.manage.remote_tables;
+// import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 class RemoteTableController : PlatformController {
   private ManageRemoteTablesUseCase uc;

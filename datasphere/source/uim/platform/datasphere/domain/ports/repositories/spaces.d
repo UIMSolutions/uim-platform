@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.spaces;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.space;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.space;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface SpaceRepository : ITenantRepository!(Space, SpaceId) {
 }

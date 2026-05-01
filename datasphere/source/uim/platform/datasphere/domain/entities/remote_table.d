@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.entities.remote_table;
 
-import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ColumnDefinition {
   string name;
   string dataType;

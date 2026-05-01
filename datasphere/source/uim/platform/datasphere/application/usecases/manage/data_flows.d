@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.data_flows;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.data_flow;
-import uim.platform.datasphere.domain.ports.repositories.data_flows;
-import uim.platform.datasphere.domain.services.task_scheduler;
-import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.data_flow;
+// import uim.platform.datasphere.domain.ports.repositories.data_flows;
+// import uim.platform.datasphere.domain.services.task_scheduler;
+// import uim.platform.datasphere.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageDataFlowsUseCase { // TODO: UIMUseCase {
   private DataFlowRepository repo;
 

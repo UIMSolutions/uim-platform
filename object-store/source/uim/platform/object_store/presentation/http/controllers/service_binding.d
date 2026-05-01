@@ -10,12 +10,15 @@ module uim.platform.object_store.presentation.http.controllers.service_binding;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.object_store.application.usecases.manage.service_bindings;
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.service_binding;
-import uim.platform.object_store.presentation.http.json_utils;
+// import uim.platform.object_store.application.usecases.manage.service_bindings;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.service_binding;
+import uim.platform.object_store;
 
-class ServiceBindingController {
+mixin(ShowModule!());
+
+@safe:
+class ServiceBindingController : PlatformController {
   private ManageServiceBindingsUseCase uc;
 
   this(ManageServiceBindingsUseCase uc) {

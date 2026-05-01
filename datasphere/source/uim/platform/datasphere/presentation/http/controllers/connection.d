@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.connection;
 
-import uim.platform.datasphere.application.usecases.manage.connections;
-import uim.platform.datasphere.application.dto;
-import uim.platform.datasphere.presentation.http.json_utils;
+// import uim.platform.datasphere.application.usecases.manage.connections;
+// import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 class ConnectionController : PlatformController {
   private ManageConnectionsUseCase uc;

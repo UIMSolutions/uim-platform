@@ -7,7 +7,11 @@ module uim.platform.datasphere.infrastructure.config;
 
 import std.process : environment;
 import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8095;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.services.task_scheduler;
 
-import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct TaskScheduler {
   static bool isValidCron(string cron) {
     import std.array : split;

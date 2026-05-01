@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.data_access_control;
 
-import uim.platform.datasphere.application.usecases.manage.data_access_controls;
-import uim.platform.datasphere.application.dto;
-import uim.platform.datasphere.presentation.http.json_utils;
+// import uim.platform.datasphere.application.usecases.manage.data_access_controls;
+// import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 class DataAccessControlController : PlatformController {
   private ManageDataAccessControlsUseCase uc;

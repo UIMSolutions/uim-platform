@@ -10,10 +10,14 @@ module uim.platform.object_store.presentation.http.controllers.cors_rule;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.object_store.application.usecases.manage.cors_rules;
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.cors_rule;
-import uim.platform.object_store.presentation.http.json_utils;
+// import uim.platform.object_store.application.usecases.manage.cors_rules;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.cors_rule;
+import uim.platform.object_store;
+
+mixin(ShowModule!());
+
+@safe:
 
 class CorsRuleController : PlatformController {
   private ManageCorsRulesUseCase uc;

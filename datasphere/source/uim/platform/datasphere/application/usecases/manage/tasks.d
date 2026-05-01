@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.tasks;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.task;
-import uim.platform.datasphere.domain.ports.repositories.tasks;
-import uim.platform.datasphere.domain.services.task_scheduler;
-import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.task;
+// import uim.platform.datasphere.domain.ports.repositories.tasks;
+// import uim.platform.datasphere.domain.services.task_scheduler;
+// import uim.platform.datasphere.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 alias Task = uim.platform.datasphere.domain.entities.task.Task;
 
 class ManageTasksUseCase { // TODO: UIMUseCase {

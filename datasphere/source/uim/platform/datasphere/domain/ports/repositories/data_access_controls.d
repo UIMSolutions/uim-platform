@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.data_access_controls;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.data_access_control;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.data_access_control;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface DataAccessControlRepository {
   DataAccessControl findById(DataAccessControlId id, SpaceId spaceId);
   DataAccessControl[] findBySpace(SpaceId spaceId);

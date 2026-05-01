@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.remote_table;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.remote_table;
-import uim.platform.datasphere.domain.ports.repositories.remote_tables;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.remote_table;
+// import uim.platform.datasphere.domain.ports.repositories.remote_tables;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryRemoteTableRepository : RemoteTableRepository {
   private RemoteTable[][string] store;
 

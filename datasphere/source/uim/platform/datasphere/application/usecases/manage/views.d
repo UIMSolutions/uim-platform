@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.views;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.view_;
-import uim.platform.datasphere.domain.ports.repositories.views;
-import uim.platform.datasphere.application.dto;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.view_;
+// import uim.platform.datasphere.domain.ports.repositories.views;
+// import uim.platform.datasphere.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageViewsUseCase { // TODO: UIMUseCase {
   private ViewRepository repo;
 

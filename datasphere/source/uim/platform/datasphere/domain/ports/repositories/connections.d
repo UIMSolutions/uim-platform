@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.connections;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.connection;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.connection;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface ConnectionRepository {
   Connection findById(ConnectionId id, SpaceId spaceId);
   Connection[] findBySpace(SpaceId spaceId);

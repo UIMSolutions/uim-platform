@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.views;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.view_;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.view_;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface ViewRepository {
   View findById(ViewId id, SpaceId spaceId);
   View[] findBySpace(SpaceId spaceId);

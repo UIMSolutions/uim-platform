@@ -25,6 +25,7 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).remove;
+    remove(findByName(tenantId, name));
 
+  }
 }

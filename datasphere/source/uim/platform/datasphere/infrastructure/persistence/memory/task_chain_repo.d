@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
 
-import uim.platform.datasphere.domain.types;
-import uim.platform.datasphere.domain.entities.task_chain;
-import uim.platform.datasphere.domain.ports.repositories.task_chains;
+// import uim.platform.datasphere.domain.types;
+// import uim.platform.datasphere.domain.entities.task_chain;
+// import uim.platform.datasphere.domain.ports.repositories.task_chains;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.datasphere;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryTaskChainRepository : TaskChainRepository {
   private TaskChain[][string] store;
 
