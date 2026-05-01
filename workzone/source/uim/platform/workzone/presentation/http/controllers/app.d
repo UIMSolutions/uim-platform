@@ -12,7 +12,6 @@ module uim.platform.workzone.presentation.http.controllers.app;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.app_registration;
-// import uim.platform.identity_authentication.presentation.http.json_utils;
 import uim.platform.workzone;
 
 mixin(ShowModule!());

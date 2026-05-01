@@ -13,7 +13,6 @@ module uim.platform.object_store.presentation.http.controllers.access_policy;
 // import uim.platform.object_store.application.usecases.manage.access_policies;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.access_policy;
-// import uim.platform.object_store.presentation.http.json_utils;
 
 import uim.platform.object_store;
 

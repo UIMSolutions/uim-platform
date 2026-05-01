@@ -14,7 +14,6 @@ module uim.platform.destination.presentation.http.controllers.fragment;
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.types;
-// import uim.platform.destination.presentation.http.json_utils;
 import uim.platform.destination;
 
 mixin(ShowModule!());

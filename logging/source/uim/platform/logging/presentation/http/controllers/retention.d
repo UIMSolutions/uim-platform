@@ -7,7 +7,6 @@ module uim.platform.logging.presentation.http.controllers.retention;
 
 // import uim.platform.logging.application.usecases.manage.retention_policies;
 // import uim.platform.logging.application.dto;
-// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 

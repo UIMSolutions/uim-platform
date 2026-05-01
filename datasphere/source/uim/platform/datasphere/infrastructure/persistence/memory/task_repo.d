@@ -17,41 +17,41 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryTaskRepository : TaskRepository {
-  private Task[][string] store;
+  private DSTask[][string] store;
 
-  Task findById(TaskId id, SpaceId spaceId) {
+  DSTask findById(TaskId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
       foreach (t; *sp) {
         if (t.id == id)
           return t;
       }
     }
-    return Task.init;
+    return DSTask.init;
   }
 
-  Task[] findBySpace(SpaceId spaceId) {
+  DSTask[] findBySpace(SpaceId spaceId) {
     if (auto sp = spaceId in store)
       return *sp;
     return [];
   }
 
-  Task[] findByStatus(TaskStatus status, SpaceId spaceId) {
+  DSTask[] findByStatus(TaskStatus status, SpaceId spaceId) {
     if (auto sp = spaceId in store)
       return (*sp).filter!(t => t.status == status).array;
     return [];
   }
 
-  Task[] findByType(TaskType type, SpaceId spaceId) {
+  DSTask[] findByType(TaskType type, SpaceId spaceId) {
     if (auto sp = spaceId in store)
       return (*sp).filter!(t => t.type == type).array;
     return [];
   }
 
-  void save(Task t) {
+  void save(DSTask t) {
     store[t.spaceId] ~= t;
   }
 
-  void update(Task t) {
+  void update(DSTask t) {
     if (auto sp = t.spaceId in store) {
       foreach (existing; *sp) {
         if (existing.id == t.id) {

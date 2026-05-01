@@ -7,7 +7,6 @@ module uim.platform.mobile.presentation.http.controllers.mobile_app;
 
 import uim.platform.mobile.application.usecases.manage.mobile_apps;
 import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http.json_utils;
 
 import uim.platform.mobile;
 

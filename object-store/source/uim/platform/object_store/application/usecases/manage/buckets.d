@@ -34,7 +34,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
-    auto bucket = new Bucket();
+    Bucket bucket ;
     bucket.id = randomUUID();
     bucket.tenantId = req.tenantId;
     bucket.name = req.name;

@@ -69,7 +69,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
       auto versionId = randomUUID();
-      auto ver = new ObjectVersion();
+      ObjectVersion ver;
       ver.id = versionId;
       ver.tenantId = req.tenantId;
       ver.objectId = id;
@@ -93,7 +93,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     bucket.updatedAt = obj.createdAt;
     bucketRepo.update(bucket);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
   CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
@@ -135,7 +135,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteObject(ObjectId id) {
     auto obj = objectRepo.findById(id);
-    if (obj.isNull || obj.isNull)
+    if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 
     auto bucket = bucketRepo.findById(obj.bucketId);
@@ -153,7 +153,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
         versionRepo.save(currentLatest);
       }
 
-      auto marker = new ObjectVersion();
+      ObjectVersion marker;
       marker.id = versionId;
       marker.tenantId = obj.tenantId;
       marker.objectId = id;

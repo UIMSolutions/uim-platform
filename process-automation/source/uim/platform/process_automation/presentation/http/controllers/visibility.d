@@ -7,7 +7,6 @@ module uim.platform.process_automation.presentation.http.controllers.visibility;
 
 import uim.platform.process_automation.application.usecases.manage.visibilities;
 import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 

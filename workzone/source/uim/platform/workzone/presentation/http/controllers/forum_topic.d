@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.forum_topics;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.forum_topic;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ForumTopicController : PlatformController {
   private ManageForumTopicsUseCase useCase;

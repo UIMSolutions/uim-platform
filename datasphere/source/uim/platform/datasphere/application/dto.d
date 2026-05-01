@@ -5,7 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.dto;
 
-import uim.platform.datasphere.domain.types;
+import uim.platform.datasphere;
+mixin(ShowModule!());
+@safe:
 
 // --- Space ---
 
@@ -123,7 +125,7 @@ struct UpdateViewRequest {
   bool isPersisted;
 }
 
-// --- Task ---
+// --- DSTask ---
 
 struct CreateTaskRequest {
   TenantId tenantId;

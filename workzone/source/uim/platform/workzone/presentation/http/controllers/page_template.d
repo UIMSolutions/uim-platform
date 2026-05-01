@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.manage.page_templates;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.page_template;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class PageTemplateController : PageformController {
   private ManagePageTemplatesUseCase useCase;

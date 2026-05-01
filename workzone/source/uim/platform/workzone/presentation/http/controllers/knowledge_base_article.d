@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.knowledge_base_articles
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.knowledge_base_article;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class KnowledgeBaseArticleController {
   private ManageKnowledgeBaseArticlesUseCase useCase;

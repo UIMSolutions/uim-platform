@@ -12,7 +12,7 @@ import uim.platform.workzone.application.usecases.manage.feeds;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http
 
 class FeedController : PlatformController {
   private ManageFeedsUseCase useCase;

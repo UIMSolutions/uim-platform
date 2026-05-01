@@ -6,6 +6,5 @@
 module uim.platform.mobile.presentation.http;
 
 public {
-  import uim.platform.mobile.presentation.http.json_utils;
   import uim.platform.mobile.presentation.http.controllers;
 }

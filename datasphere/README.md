@@ -10,7 +10,7 @@ A BTP-style Datasphere service built with D language using vibe.d, following cle
 - **Data Flows** - ETL/ELT data pipelines with scheduling
 - **Views** - SQL/graphical views with semantic types (fact, dimension, analytical, etc.)
 - **Tasks** - Scheduled data processing tasks with retry support
-- **Task Chains** - Chain multiple tasks with success/failure routing
+- **DSTask Chains** - Chain multiple tasks with success/failure routing
 - **Data Access Controls** - Row-level security with criteria-based filtering
 - **Catalog** - Data discovery, governance, and full-text search
 

@@ -160,7 +160,7 @@ enum TaskType {
   persistence,
 }
 
-// Task execution status
+// DSTask execution status
 enum TaskStatus {
   scheduled,
   running,

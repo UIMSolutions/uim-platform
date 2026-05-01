@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.application.usecases.manage.master_d
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.master_data_object;
 import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class MasterDataController : PlatformController {
   private ManageMasterDataObjectsUseCase uc;

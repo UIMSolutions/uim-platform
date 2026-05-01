@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.roles;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.role;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class RoleController : PlatformController {
   private ManageRolesUseCase useCase;

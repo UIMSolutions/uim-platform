@@ -17,9 +17,6 @@ import uim.platform.datasphere;
 
 mixin(ShowModule!()); 
 
-@safe:
-alias Task = uim.platform.datasphere.domain.entities.task.Task;
-
 class ManageTasksUseCase { // TODO: UIMUseCase {
   private TaskRepository repo;
 
@@ -36,7 +33,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
     auto id = randomUUID();
 
-    Task t;
+    DSTask t;
     t.id = randomUUID();
     t.tenantId = r.tenantId;
     t.spaceId = r.spaceId;
@@ -56,11 +53,11 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id, "");
   }
 
-  Task getById(TaskId id, SpaceId spaceId) {
+  DSTask getById(TaskId id, SpaceId spaceId) {
     return repo.findById(id, spaceId);
   }
 
-  Task[] list(SpaceId spaceId) {
+  DSTask[] list(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 

@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.channels;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ChannelController : PlatformController {
   private ManageChannelsUseCase useCase;

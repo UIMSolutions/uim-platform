@@ -7,7 +7,6 @@ module uim.platform.mobile.presentation.http.controllers.push_registration;
 
 import uim.platform.mobile.application.usecases.manage.push_registrations;
 import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http.json_utils;
 
 import uim.platform.mobile;
 
@@ -22,6 +21,7 @@ class PushRegistrationController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/push/registrations", &handleRegister);
     router.get("/api/v1/push/registrations", &handleList);
     router.get("/api/v1/push/registrations/*", &handleGet);

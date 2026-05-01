@@ -13,7 +13,7 @@ module uim.platform.object_store.presentation.http.controllers.bucket;
 // import uim.platform.object_store.application.usecases.manage.buckets;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.bucket;
-// import uim.platform.object_store.presentation.http.json_utils;
+// import uim.platform.object_store.presentation.http
 
 import uim.platform.object_store;
 

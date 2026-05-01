@@ -17,11 +17,11 @@ mixin(ShowModule!());
 @safe:
 /// Application service for CORS rule management.
 class ManageCorsRulesUseCase { // TODO: UIMUseCase {
-  private CorsRuleRepository corsRepo;
+  private CorsRuleRepository corsRules;
   private BucketRepository bucketRepo;
 
-  this(CorsRuleRepository corsRepo, BucketRepository bucketRepo) {
-    this.corsRepo = corsRepo;
+  this(CorsRuleRepository corsRules, BucketRepository bucketRepo) {
+    this.corsRules = corsRules;
     this.bucketRepo = bucketRepo;
   }
 
@@ -45,13 +45,13 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
     rule.createdAt = currentTimestamp();
     rule.updatedAt = rule.createdAt;
 
-    corsRepo.save(rule);
-    return CommandResult(true, id.toString, "");
+    corsRules.save(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
-    auto rule = corsRepo.findById(id);
-    if (rule.isNull || rule.isNull)
+    auto rule = corsRules.findById(id);
+    if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
     if (req.allowedOrigins.length > 0)
@@ -66,25 +66,25 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
       rule.maxAgeSeconds = req.maxAgeSeconds;
     rule.updatedAt = currentTimestamp();
 
-    corsRepo.update(rule);
-    return CommandResult(true, id.toString, "");
+    corsRules.update(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   CorsRule getRule(CorsRuleId id) {
-    return corsRepo.findById(id);
+    return corsRules.findById(id);
   }
 
   CorsRule[] listRules(BucketId bucketId) {
-    return corsRepo.findByBucket(bucketId);
+    return corsRules.findByBucket(bucketId);
   }
 
   CommandResult deleteRule(CorsRuleId id) {
-    auto rule = corsRepo.findById(id);
-    if (rule.isNull || rule.isNull)
+    auto rule = corsRules.findById(id);
+    if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
-    corsRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    corsRules.removeById(id);
+    return CommandResult(true, rule.id.value, "");
   }
 }
 

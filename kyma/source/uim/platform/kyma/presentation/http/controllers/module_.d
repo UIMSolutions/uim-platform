@@ -14,7 +14,6 @@ module uim.platform.kyma.presentation.http.controllers.module_;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.kyma_module;
 // import uim.platform.kyma.domain.types;
-// import uim.platform.kyma.presentation.http.json_utils;
 
 import uim.platform.kyma;
 

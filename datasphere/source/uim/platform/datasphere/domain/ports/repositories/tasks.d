@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 @safe:
 interface TaskRepository {
-  Task findById(TaskId id, SpaceId spaceId);
-  Task[] findBySpace(SpaceId spaceId);
-  Task[] findByStatus(TaskStatus status, SpaceId spaceId);
-  Task[] findByType(TaskType type, SpaceId spaceId);
-  void save(Task t);
-  void update(Task t);
+  DSTask findById(TaskId id, SpaceId spaceId);
+  DSTask[] findBySpace(SpaceId spaceId);
+  DSTask[] findByStatus(TaskStatus status, SpaceId spaceId);
+  DSTask[] findByType(TaskType type, SpaceId spaceId);
+  void save(DSTask t);
+  void update(DSTask t);
   void remove(TaskId id, SpaceId spaceId);
   size_t countBySpace(SpaceId spaceId);
 }

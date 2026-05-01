@@ -7,5 +7,5 @@ module uim.platform.destination.presentation.http;
 
 public {
   import uim.platform.destination.presentation.http.controllers;
-  import uim.platform.destination.presentation.http.json_utils;
+  import uim.platform.destination.presentation.http
 }

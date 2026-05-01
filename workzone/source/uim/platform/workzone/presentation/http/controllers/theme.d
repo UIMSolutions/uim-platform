@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.manage.themes;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.theme;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ThemeController : PlatformController {
   private ManageThemesUseCase useCase;

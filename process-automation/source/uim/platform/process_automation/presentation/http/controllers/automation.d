@@ -7,7 +7,7 @@ module uim.platform.process_automation.presentation.http.controllers.automation;
 
 import uim.platform.process_automation.application.usecases.manage.automations;
 import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http.json_utils;
+import uim.platform.process_automation.presentation.http
 
 import uim.platform.process_automation;
 

@@ -5,32 +5,3 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.health;
 
-import uim.platform.mobile.presentation.http.json_utils;
-
-import uim.platform.mobile;
-
-class HealthController : PlatformController {
-  private string serviceName;
-
-  this(string serviceName = "mobile-services") {
-    this.serviceName = serviceName;
-  }
-
-  override void registerRoutes(URLRouter router) {
-    super.registerRoutes(router);
-    router.get("/api/v1/health", &handleHealth);
-  }
-
-  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto resp = Json.emptyObject
-        .set("status", Json("UP"))
-        .set("service", Json(serviceName))
-        .set("message", "Service is healthy");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-}

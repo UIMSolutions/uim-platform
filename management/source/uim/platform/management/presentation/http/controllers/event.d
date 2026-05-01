@@ -12,7 +12,6 @@ module uim.platform.management.presentation.http.controllers.event;
 // import uim.platform.management.application.usecases.query_platform_events;
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.types;
-// import uim.platform.management.presentation.http.json_utils;
 import uim.platform.management;
 
 mixin(ShowModule!());

@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.notifications;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class NotificationController : PlatformController {
   private ManageNotificationsUseCase useCase;

@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.workpages;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class WorkpageController : PlatformController {
   private ManageWorkpagesUseCase useCase;

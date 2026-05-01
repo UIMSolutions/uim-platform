@@ -12,7 +12,7 @@ import uim.platform.workzone.application.usecases.manage.manage.groups;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.group;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http
 
 class GroupController : PlatformController {
   private ManageGroupsUseCase useCase;

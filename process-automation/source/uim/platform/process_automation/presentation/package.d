@@ -1,7 +1,6 @@
 module uim.platform.process_automation.presentation;
 
 public {
-    import uim.platform.process_automation.presentation.http.json_utils;
     import uim.platform.process_automation.presentation.http.controllers.health;
     import uim.platform.process_automation.presentation.http.controllers.process;
     import uim.platform.process_automation.presentation.http.controllers.process_instance;

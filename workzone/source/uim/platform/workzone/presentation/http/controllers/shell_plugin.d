@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.manage.shell_plugins;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.shell_plugin;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ShellPluginController : PlatformController {
   private ManageShellPluginsUseCase useCase;

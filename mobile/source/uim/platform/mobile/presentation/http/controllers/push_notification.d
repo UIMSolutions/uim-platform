@@ -7,7 +7,6 @@ module uim.platform.mobile.presentation.http.controllers.push_notification;
 
 import uim.platform.mobile.application.usecases.manage.push_notifications;
 import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http.json_utils;
 
 import uim.platform.mobile;
 

@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-struct Task {
+struct DSTask {
   mixin TenantEntity!(TaskId);
 
   SpaceId spaceId;
@@ -30,7 +30,7 @@ struct Task {
   int maxRetries;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("spaceId", spaceId)
       .set("name", name)
       .set("description", description)
@@ -46,6 +46,5 @@ struct Task {
       .set("retryCount", retryCount)
       .set("maxRetries", maxRetries);
 
-    return j;
   }
 }

@@ -12,7 +12,6 @@ import uim.platform.workzone.application.usecases.manage.manage.tags;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.tag;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class TagController : PlatformController {
   private ManageTagsUseCase useCase;
