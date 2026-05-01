@@ -56,7 +56,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;

@@ -18,7 +18,7 @@ class MemoryStepRepository : StepRepository {
   private WorkflowStep[StepId] store;
 
   WorkflowStep[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    auto result = findAll()r!(e => e.workflowId == workflowId
+    auto result = findAll().filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
@@ -32,16 +32,16 @@ class MemoryStepRepository : StepRepository {
   }
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo) {
-    return findAll()r!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
+    return findAll().filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
   }
 
   WorkflowStep[] findByRole(TenantId tenantId, string assignedRole) {
-    return findAll()r!(e => e.tenantId == tenantId
+    return findAll().filter!(e => e.tenantId == tenantId
         && e.assignedRole == assignedRole).array;
   }
 
   WorkflowStep[] findByStatus(WorkflowId workflowtenantId, id tenantId, StepStatus status) {
-    return findAll()r!(e => e.workflowId == workflowId
+    return findAll().filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId && e.status == status).array;
   }
 

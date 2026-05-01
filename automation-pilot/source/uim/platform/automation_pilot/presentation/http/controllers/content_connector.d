@@ -20,6 +20,7 @@ class ContentConnectorController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/automation-pilot/content-connectors", &handleList);
         router.get("/api/v1/automation-pilot/content-connectors/*", &handleGet);
         router.post("/api/v1/automation-pilot/content-connectors", &handleCreate);
@@ -31,7 +32,7 @@ class ContentConnectorController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = items.map!(e => e.contentConnectorToJson()).array;
-            
+
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);

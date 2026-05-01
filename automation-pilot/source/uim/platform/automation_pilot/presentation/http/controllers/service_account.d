@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceAccountController : PlatformController {
-    private ManageServiceAccountsUseCase uc;
+    private ManageServiceAccountsUseCase serviceAccounts;
 
-    this(ManageServiceAccountsUseCase uc) {
-        this.uc = uc;
+    this(ManageServiceAccountsUseCase serviceAccounts) {
+        this.serviceAccounts = serviceAccounts;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/automation-pilot/service-accounts", &handleList);
         router.get("/api/v1/automation-pilot/service-accounts/*", &handleGet);
         router.post("/api/v1/automation-pilot/service-accounts", &handleCreate);
@@ -29,9 +30,9 @@ class ServiceAccountController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = serviceAccounts.list();
             auto jarr = items.map!(e => e.serviceAccountToJson()).array;
-            
+
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);
@@ -47,7 +48,7 @@ class ServiceAccountController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(ServiceAccountId(id));
+            auto e = serviceAccounts.getById(ServiceAccountId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Service account not found"); return; }
             res.writeJsonBody(e.serviceAccountToJson(), 200);
         } catch (Exception e) {
@@ -68,7 +69,7 @@ class ServiceAccountController : PlatformController {
             dto.expiresAt = j.getString("expiresAt");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = serviceAccounts.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -94,7 +95,7 @@ class ServiceAccountController : PlatformController {
             dto.permissions = j.getString("permissions");
             dto.updatedBy = j.getString("updatedBy");
 
-            auto result = uc.update(dto);
+            auto result = serviceAccounts.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -114,7 +115,7 @@ class ServiceAccountController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(ServiceAccountId(id));
+            auto result = serviceAccounts.remove(ServiceAccountId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service account deleted");

@@ -26,7 +26,7 @@ class MemorySectionRepository : SectionRepository {
   }
 
   PortalSection[] findByPage(PageId pageId) {
-    return findAll()r!(s => s.pageId == pageId).array;
+    return findAll().filter!(s => s.pageId == pageId).array;
   }
 
   void save(PortalSection section) {

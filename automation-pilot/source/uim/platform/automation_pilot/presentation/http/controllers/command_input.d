@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class CommandInputController : PlatformController {
-    private ManageCommandInputsUseCase uc;
+    private ManageCommandInputsUseCase commandInputs;
 
-    this(ManageCommandInputsUseCase uc) {
-        this.uc = uc;
+    this(ManageCommandInputsUseCase commandInputs) {
+        this.commandInputs = commandInputs;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/automation-pilot/inputs", &handleList);
         router.get("/api/v1/automation-pilot/inputs/*", &handleGet);
         router.post("/api/v1/automation-pilot/inputs", &handleCreate);
@@ -29,9 +30,9 @@ class CommandInputController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = commandInputs.list();
             auto jarr = items.map!(e => e.commandInputToJson()).array;
-            
+
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr);
@@ -46,8 +47,8 @@ class CommandInputController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(CommandInputId(id));
+            auto id = CommandInputId(extractIdFromPath(path));
+            auto e = commandInputs.getById(id);
             if (e.id.value.length == 0) { writeError(res, 404, "Input not found"); return; }
             res.writeJsonBody(e.commandInputToJson(), 200);
         } catch (Exception e) {
@@ -69,7 +70,7 @@ class CommandInputController : PlatformController {
             dto.commandId = j.getString("commandId");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = commandInputs.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -90,14 +91,14 @@ class CommandInputController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CommandInputDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.commandInputId = CommandInputId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.keys = j.getString("keys");
             dto.values = j.getString("values");
             dto.updatedBy = j.getString("updatedBy");
 
-            auto result = uc.update(dto);
+            auto result = commandInputs.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -116,8 +117,8 @@ class CommandInputController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(CommandInputId(id));
+            auto id = CommandInputId(extractIdFromPath(path));
+            auto result = commandInputs.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

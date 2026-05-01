@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class CatalogController : PlatformController {
-    private ManageCatalogsUseCase uc;
+    private ManageCatalogsUseCase catalogs;
 
-    this(ManageCatalogsUseCase uc) {
-        this.uc = uc;
+    this(ManageCatalogsUseCase catalogs) {
+        this.catalogs = catalogs;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class CatalogController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = catalogs.list();
             auto jarr = items.map!(e => e.catalogToJson()).array;
             
             auto resp = Json.emptyObject
@@ -46,8 +46,8 @@ class CatalogController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(CatalogId(id));
+            auto id = CatalogId(extractIdFromPath(path));
+            auto e = catalogs.getById(id);
             if (e.id.value.length == 0) { writeError(res, 404, "Catalog not found"); return; }
             res.writeJsonBody(e.catalogToJson(), 200);
         } catch (Exception e) {
@@ -67,7 +67,7 @@ class CatalogController : PlatformController {
             dto.version_ = j.getString("version");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = catalogs.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -88,13 +88,13 @@ class CatalogController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CatalogDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.catalogId = CatalogId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.tags = j.getString("tags");
             dto.updatedBy = j.getString("updatedBy");
 
-            auto result = uc.update(dto);
+            auto result = catalogs.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -113,8 +113,8 @@ class CatalogController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(CatalogId(id));
+            auto id = CatalogId(extractIdFromPath(path));
+            auto result = catalogs.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

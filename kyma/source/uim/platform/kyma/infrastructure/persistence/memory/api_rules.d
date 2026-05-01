@@ -41,15 +41,15 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   ApiRule[] findByNamespace(NamespaceId nsId) {
-    return findAll()r!(e => e.namespaceId == nsId).array;
+    return findAll().filter!(e => e.namespaceId == nsId).array;
   }
 
   ApiRule[] findByEnvironment(KymaEnvironmentId envId) {
-    return findAll()r!(e => e.environmentId == envId).array;
+    return findAll().filter!(e => e.environmentId == envId).array;
   }
 
   ApiRule[] findByStatus(ApiRuleStatus status) {
-    return findAll()r!(e => e.status == status).array;
+    return findAll().filter!(e => e.status == status).array;
   }
 
   void save(ApiRule rule) {

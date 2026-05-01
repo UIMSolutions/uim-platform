@@ -30,7 +30,7 @@ class MemoryPageRepository : PageRepository {
   }
 
   Page findByAlias(SiteId siteId, string alias_) {
-    return findAll()r!(p => p.siteId == siteId && p.alias_ == alias_).array;
+    return findAll().filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
   Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100) {

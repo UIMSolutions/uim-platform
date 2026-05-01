@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class CommandController : PlatformController {
-    private ManageCommandsUseCase uc;
+    private ManageCommandsUseCase commands;
 
-    this(ManageCommandsUseCase uc) {
-        this.uc = uc;
+    this(ManageCommandsUseCase commands) {
+        this.commands = commands;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/automation-pilot/commands", &handleList);
         router.get("/api/v1/automation-pilot/commands/*", &handleGet);
         router.post("/api/v1/automation-pilot/commands", &handleCreate);
@@ -29,9 +30,9 @@ class CommandController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = commands.list();
             auto jarr = items.map!(e => e.commandToJson()).array;
-            
+
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr);
@@ -45,10 +46,14 @@ class CommandController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(CommandId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Command not found"); return; }
+            auto id = CommandId(extractIdFromPath(path));
+            auto e = commands.getById(id);
+            if (e.id.value.length == 0) {
+                writeError(res, 404, "Command not found");
+                return;
+            }
             res.writeJsonBody(e.commandToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,9 +64,9 @@ class CommandController : PlatformController {
         try {
             auto j = req.json;
             CommandDTO dto;
-            dto.id = j.getString("id");
+            dto.id = CommandId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.catalogId = j.getString("catalogId");
+            dto.catalogId = CatalogId(j.getString("catalogId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -73,7 +78,7 @@ class CommandController : PlatformController {
             dto.tags = j.getString("tags");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = commands.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -91,10 +96,11 @@ class CommandController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CommandDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.commandId = CommandId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.inputSchema = j.getString("inputSchema");
@@ -103,7 +109,7 @@ class CommandController : PlatformController {
             dto.timeout = j.getString("timeout");
             dto.updatedBy = j.getString("updatedBy");
 
-            auto result = uc.update(dto);
+            auto result = commands.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -121,14 +127,15 @@ class CommandController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(CommandId(id));
+            auto id = CommandId(extractIdFromPath(path));
+            auto result = commands.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Command deleted");
-                    
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

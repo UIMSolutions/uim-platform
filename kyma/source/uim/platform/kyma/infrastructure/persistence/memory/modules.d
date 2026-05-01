@@ -39,15 +39,15 @@ class MemoryModuleRepository : ModuleRepository {
   }
 
   KymaModule[] findByEnvironment(KymaEnvironmentId environmentId) {
-    return findAll()r!(enviroment => enviroment.environmentId == environmentId).array;
+    return findAll().filter!(enviroment => enviroment.environmentId == environmentId).array;
   }
 
   KymaModule[] findByStatus(ModuleStatus status) {
-    return findAll()r!(enviroment => enviroment.status == status).array;
+    return findAll().filter!(enviroment => enviroment.status == status).array;
   }
 
   KymaModule[] findByType(ModuleType moduleType) {
-    return findAll()r!(enviroment => enviroment.moduleType == moduleType).array;
+    return findAll().filter!(enviroment => enviroment.moduleType == moduleType).array;
   }
 
   void save(KymaModule mod) {

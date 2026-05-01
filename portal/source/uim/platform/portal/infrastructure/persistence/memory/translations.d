@@ -27,7 +27,7 @@ class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId)
   }
 
   Translation[] findByTenant(TenantId tenantId) {
-    return findAll()r!(t => t.tenantId == tenantId).array;
+    return findAll().filter!(t => t.tenantId == tenantId).array;
   }
 
   Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {

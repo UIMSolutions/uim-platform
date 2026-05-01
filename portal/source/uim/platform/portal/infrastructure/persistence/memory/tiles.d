@@ -18,7 +18,7 @@ mixin(ShowModule!());
 class MemoryTileRepository : TileRepository {
 
   Tile[] findByCatalog(CatalogId catalogId) {
-    return findAll()r!(t => t.catalogId == catalogId).array;
+    return findAll().filter!(t => t.catalogId == catalogId).array;
   }
 
   Tile[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
