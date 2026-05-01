@@ -7,6 +7,11 @@ module uim.platform.credential_store.infrastructure.config;
 
 import std.process : environment;
 import std.conv : to;
+import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct AppConfig {
   string host = "0.0.0.0";

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
 
-import uim.platform.credential_store.domain.entities.namespace;
-import uim.platform.credential_store.domain.ports.repositories.namespaces;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.namespace;
+// import uim.platform.credential_store.domain.ports.repositories.namespaces;
+// import uim.platform.credential_store.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
 
   bool existsByName(TenantId tenantId, string name) {

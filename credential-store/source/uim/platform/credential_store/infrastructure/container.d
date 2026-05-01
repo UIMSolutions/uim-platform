@@ -5,34 +5,38 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.container;
 
-import uim.platform.credential_store.infrastructure.config;
+// import uim.platform.credential_store.infrastructure.config;
 
-// Repositories
-import uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
-import uim.platform.credential_store.infrastructure.persistence.memory.credentials;
-import uim.platform.credential_store.infrastructure.persistence.memory.keyring_versions;
-import uim.platform.credential_store.infrastructure.persistence.memory.service_bindings;
-import uim.platform.credential_store.infrastructure.persistence.memory.audit_logs;
+// // Repositories
+// import uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
+// import uim.platform.credential_store.infrastructure.persistence.memory.credentials;
+// import uim.platform.credential_store.infrastructure.persistence.memory.keyring_versions;
+// import uim.platform.credential_store.infrastructure.persistence.memory.service_bindings;
+// import uim.platform.credential_store.infrastructure.persistence.memory.audit_logs;
 
-// Use Cases
-import uim.platform.credential_store.application.usecases.manage.namespaces;
-import uim.platform.credential_store.application.usecases.manage.credentials;
-import uim.platform.credential_store.application.usecases.manage.keyrings;
-import uim.platform.credential_store.application.usecases.encrypt_dek;
-import uim.platform.credential_store.application.usecases.manage.service_bindings;
-import uim.platform.credential_store.application.usecases.get_audit_logs;
-import uim.platform.credential_store.application.usecases.get_overview;
+// // Use Cases
+// import uim.platform.credential_store.application.usecases.manage.namespaces;
+// import uim.platform.credential_store.application.usecases.manage.credentials;
+// import uim.platform.credential_store.application.usecases.manage.keyrings;
+// import uim.platform.credential_store.application.usecases.encrypt_dek;
+// import uim.platform.credential_store.application.usecases.manage.service_bindings;
+// import uim.platform.credential_store.application.usecases.get_audit_logs;
+// import uim.platform.credential_store.application.usecases.get_overview;
 
-// Controllers
-import uim.platform.credential_store.presentation.http.controllers.namespace;
-import uim.platform.credential_store.presentation.http.controllers.credential;
-import uim.platform.credential_store.presentation.http.controllers.keyring;
-import uim.platform.credential_store.presentation.http.controllers.encryption;
-import uim.platform.credential_store.presentation.http.controllers.binding;
-import uim.platform.credential_store.presentation.http.controllers.audit;
-import uim.platform.credential_store.presentation.http.controllers.overview;
-import uim.platform.credential_store.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.credential_store.presentation.http.controllers.namespace;
+// import uim.platform.credential_store.presentation.http.controllers.credential;
+// import uim.platform.credential_store.presentation.http.controllers.keyring;
+// import uim.platform.credential_store.presentation.http.controllers.encryption;
+// import uim.platform.credential_store.presentation.http.controllers.binding;
+// import uim.platform.credential_store.presentation.http.controllers.audit;
+// import uim.platform.credential_store.presentation.http.controllers.overview;
+// import uim.platform.credential_store.presentation.http.controllers.health;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct Container {
   // Repositories (driven adapters)
   MemoryNamespaceRepository nsRepo;

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence.memory.keyring_version;
 
-import uim.platform.credential_store.domain.entities.keyring_version;
-import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.keyring_version;
+// import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
+// import uim.platform.credential_store.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryKeyringVersionRepository : KeyringVersionRepository {
   private KeyringVersion[] store;
 

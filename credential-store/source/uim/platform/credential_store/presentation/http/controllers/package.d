@@ -13,5 +13,4 @@ public {
   import uim.platform.credential_store.presentation.http.controllers.binding;
   import uim.platform.credential_store.presentation.http.controllers.audit;
   import uim.platform.credential_store.presentation.http.controllers.overview;
-  import uim.platform.credential_store.presentation.http.controllers.health;
 }

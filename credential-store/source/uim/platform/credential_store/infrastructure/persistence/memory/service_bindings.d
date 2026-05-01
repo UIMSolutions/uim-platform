@@ -5,21 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence.memory.service_binding;
 
-import uim.platform.credential_store.domain.entities.service_binding;
-import uim.platform.credential_store.domain.ports.repositories.service_bindings;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.service_binding;
+// import uim.platform.credential_store.domain.ports.repositories.service_bindings;
+// import uim.platform.credential_store.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   bool existsByClientId(string clientId) {
-    foreach (b; findAll) {
-      if (b.clientId == clientId)
-        return true;
-    }
-    return false;
+    return findAll().any!(b => b.clientId == clientId);
   }
 
   ServiceBinding findByClientId(string clientId) {

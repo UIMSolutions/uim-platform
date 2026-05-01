@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct ServiceBinding {
-  ServiceBindingId id;
-  TenantId tenantId;
+  mixin TenantEntity!ServiceBindingId;
+
   string name;
   string description;
   string clientId;           // basic auth username
@@ -21,7 +21,17 @@ struct ServiceBinding {
   PermissionLevel permission;
   BindingStatus status;
   string[] allowedNamespaces; // empty = all namespaces
-  long createdAt;
   long expiresAt;
-  UserId createdBy;
+
+  Json toJson() const {
+    returnentityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("clientId", clientId)
+      .set("clientSecret", clientSecret)
+      .set("permission", permission)
+      .set("status", status)
+      .set("allowedNamespaces", allowedNamespaces)
+      .set("expiresAt", expiresAt);
+  }
 }

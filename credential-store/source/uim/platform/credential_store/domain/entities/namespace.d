@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.entities.namespace;
 
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.types;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct Namespace {
   mixin TenantEntity!(NamespaceId);
 
