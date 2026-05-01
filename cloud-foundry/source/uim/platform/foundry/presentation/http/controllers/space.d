@@ -68,9 +68,7 @@ class SpaceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto spaces = useCase.listSpaces(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; spaces)
-        arr ~= serializeSpace(s);
+      auto arr = spaces.map!(s => serializeSpace(s)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

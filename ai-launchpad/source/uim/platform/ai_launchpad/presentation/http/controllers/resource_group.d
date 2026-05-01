@@ -55,16 +55,11 @@ class ResourceGroupController : PlatformController {
     try {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      typeof(uc.listAll()) groups;
-      if (connectionId.length > 0)
-        groups = uc.listByConnection(connectionId);
-      else
-        groups = uc.listAll();
+      auto groups = connectionId.length > 0
+        ? uc.listByConnection(connectionId)
+        : uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (g; groups) {
-        jarr ~= serializeResourceGroup(g);
-      }
+      auto jarr = groups.map!(g => serializeResourceGroup(g)).array;
 
       auto resp = Json.emptyObject
         .set("count", groups.length)

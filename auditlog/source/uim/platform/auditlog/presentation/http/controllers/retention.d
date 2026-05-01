@@ -65,12 +65,12 @@ class RetentionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (p; policies)
-        arr ~= serializePolicy(p);
+      auto arr = policies.map!(p => serializePolicy(p)).array;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(policies.length));
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

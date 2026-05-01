@@ -65,9 +65,7 @@ class ExportController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listExportJobs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (j; jobs)
-        arr ~= serializeExportJob(j);
+      auto arr = jobs.map!(j => serializeExportJob(j)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

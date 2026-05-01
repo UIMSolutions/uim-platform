@@ -69,9 +69,8 @@ class ApplicationJobController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto jobs = uc.listJobs(systemId);
-      auto arr = Json.emptyArray;
-      foreach (job; jobs)
-        arr ~= serializeJob(job);
+      auto arr = jobs.map!(job => job.toJson).array;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", jobs.length);
@@ -90,7 +89,7 @@ class ApplicationJobController : PlatformController {
         writeError(res, 404, "Application job not found");
         return;
       }
-      res.writeJsonBody(serializeJob(*job), 200);
+      res.writeJsonBody(job.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

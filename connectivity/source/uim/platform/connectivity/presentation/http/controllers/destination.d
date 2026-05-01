@@ -78,9 +78,7 @@ class DestinationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto dests = uc.listDestinations(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; dests)
-        arr ~= serializeDest(d);
+      auto arr = dests.map!(d => serializeDest(d)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -31,8 +31,8 @@ class DevSpaceTypeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.devSpaceTypeToJson();
+            auto jarr = items.map!(e => e.devSpaceTypeToJson()).array;
+            
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);

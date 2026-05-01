@@ -30,8 +30,8 @@ class ExtensionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.extensionToJson();
+            auto jarr = items.map!(e => e.extensionToJson()).array;
+            
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);

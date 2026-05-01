@@ -71,9 +71,7 @@ class AccessRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; rules)
-        arr ~= serializeRule(r);
+      auto arr = rules.map!(r => serializeRule(r)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

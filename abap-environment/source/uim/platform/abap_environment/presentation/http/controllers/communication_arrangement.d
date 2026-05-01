@@ -75,9 +75,8 @@ class CommunicationArrangementController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto arrangements = uc.listArrangements(systemId);
-      auto arr = Json.emptyArray;
-      foreach (a; arrangements)
-        arr ~= serializeArrangement(a);
+      auto arr = arrangements.map!(a => a.toJson).array;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", arrangements.length);

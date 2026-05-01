@@ -62,16 +62,11 @@ class PromptController : PlatformController {
     try {
       auto collectionId = req.headers.get("X-Collection-Id", "");
 
-      typeof(uc.listAll()) prompts;
-      if (collectionId.length > 0)
-        prompts = uc.listByCollection(collectionId);
-      else
-        prompts = uc.listAll();
+      auto prompts = collectionId.length > 0
+        ? uc.listByCollection(collectionId)
+        : uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (p; prompts) {
-        jarr ~= serializePrompt(p);
-      }
+      auto jarr = prompts.map!(p => serializePrompt(p)).array;
 
       auto resp = Json.emptyObject
         .set("count", prompts.length)

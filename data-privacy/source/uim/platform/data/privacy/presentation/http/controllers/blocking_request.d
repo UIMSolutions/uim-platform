@@ -63,15 +63,11 @@ class BlockingController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
-      BlockingRequest[] items;
-      if (statusParam.length > 0)
-        items = uc.listByStatus(tenantId, parseBlockingStatus(statusParam));
-      else
-        items = uc.listRequests(tenantId);
+      BlockingRequest[] items = statusParam.length > 0 
+        ? uc.listByStatus(tenantId, parseBlockingStatus(statusParam)) 
+        : uc.listRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)

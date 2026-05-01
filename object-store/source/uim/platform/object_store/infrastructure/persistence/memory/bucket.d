@@ -16,44 +16,20 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBucketRepository : BucketRepository {
-  private Bucket[BucketId] store;
-
-  bool existsById(BucketId id) {
-    return (id in store) ? true : false;
-  }
-
-  Bucket findById(BucketId id) {
-    return existsById(id) ? store[id] : Bucket.init;
-  }
+class MemoryBucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; findAll()
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.name == name)
         return true;
     return false;
   }
   
   Bucket findByName(TenantId tenantId, string name) {
-    foreach (e; findAll()
+    foreach (e; findAll())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return Bucket.init;
   }
 
-  Bucket[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
-  }
-
-  void save(Bucket entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(Bucket entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(BucketId id) {
-    store.removeById(id);
-  }
 }

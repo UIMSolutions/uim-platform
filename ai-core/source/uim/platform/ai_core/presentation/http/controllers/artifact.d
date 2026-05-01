@@ -59,16 +59,11 @@ class ArtifactController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
       auto scenarioId = req.params.get("scenarioId", "");
 
-      typeof(uc.list(rgId)) artifacts;
-      if (scenarioId.length > 0)
-        artifacts = uc.listByScenario(scenarioId, rgId);
-      else
-        artifacts = uc.list(rgId);
+      auto artifacts = scenarioId.length > 0
+        ? uc.listByScenario(scenarioId, rgId)
+        : uc.list(rgId);
 
-      auto jarr = Json.emptyArray;
-      foreach (a; artifacts) {
-        jarr ~= artifactToJson(a);
-      }
+      auto jarr = artifacts.map!(a => artifactToJson(a)).array;
 
       auto resp = Json.emptyObject
         .set("count", artifacts.length)

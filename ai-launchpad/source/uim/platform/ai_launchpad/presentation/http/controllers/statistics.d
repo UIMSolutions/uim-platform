@@ -37,10 +37,7 @@ class StatisticsController : PlatformController {
       else
         stats = uc.getAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (s; stats) {
-        jarr ~= serializeStatistic(s);
-      }
+      auto jarr = stats.map!(s => serializeStatistic(s)).array;
 
       auto resp = Json.emptyObject
         .set("count", stats.length)

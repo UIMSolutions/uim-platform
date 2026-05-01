@@ -65,10 +65,7 @@ class ExecutionController : PlatformController {
       else
         executions = uc.listByConnection(connectionId);
 
-      auto jarr = Json.emptyArray;
-      foreach (e; executions) {
-        jarr ~= serializeExecution(e);
-      }
+      auto jarr = executions.map!(e => serializeExecution(e)).array;
 
       auto resp = Json.emptyObject
         .set("count", executions.length)

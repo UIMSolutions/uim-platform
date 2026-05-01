@@ -53,16 +53,11 @@ class WorkspaceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      typeof(uc.listAll()) workspaces;
-      if (tenantId.length > 0)
-        workspaces = uc.listByTenant(tenantId);
-      else
-        workspaces = uc.listAll();
+      auto workspaces = tenantId.length > 0
+        ? uc.listByTenant(tenantId)
+        : uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (w; workspaces) {
-        jarr ~= serializeWorkspace(w);
-      }
+      auto jarr = workspaces.map!(w => serializeWorkspace(w)).array;
 
       auto resp = Json.emptyObject
         .set("count", workspaces.length)

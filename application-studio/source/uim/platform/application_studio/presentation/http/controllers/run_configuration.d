@@ -20,6 +20,7 @@ class RunConfigurationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/application-studio/run-configurations", &handleList);
         router.get("/api/v1/application-studio/run-configurations/*", &handleGet);
         router.post("/api/v1/application-studio/run-configurations", &handleCreate);
@@ -30,8 +31,8 @@ class RunConfigurationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.runConfigurationToJson();
+            auto jarr = items.map!(e => e.runConfigurationToJson()).array;
+
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);

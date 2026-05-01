@@ -55,16 +55,11 @@ class PromptCollectionController : PlatformController {
     try {
       auto workspaceId = req.headers.get("X-Workspace-Id", "");
 
-      typeof(uc.listAll()) collections;
-      if (workspaceId.length > 0)
-        collections = uc.listByWorkspace(workspaceId);
-      else
-        collections = uc.listAll();
+      auto collections = workspaceId.length > 0
+        ? uc.listByWorkspace(workspaceId)
+        : uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (c; collections) {
-        jarr ~= serializeCollection(c);
-      }
+      auto jarr = collections.map!(c => serializeCollection(c)).array;
 
       auto resp = Json.emptyObject
         .set("count", Json(collections.length))

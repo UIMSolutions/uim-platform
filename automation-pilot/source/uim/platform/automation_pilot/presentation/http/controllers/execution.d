@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class ExecutionController : PlatformController {
-    private ManageExecutionsUseCase uc;
+    private ManageExecutionsUseCase executions;
 
-    this(ManageExecutionsUseCase uc) {
-        this.uc = uc;
+    this(ManageExecutionsUseCase executions) {
+        this.executions = executions;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/automation-pilot/executions", &handleList);
         router.get("/api/v1/automation-pilot/executions/*", &handleGet);
         router.post("/api/v1/automation-pilot/executions", &handleCreate);
@@ -29,9 +30,9 @@ class ExecutionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.executionToJson();
+            auto items = executions.list();
+            auto jarr = items.map!(e => e.executionToJson()).array;
+            
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);
@@ -47,7 +48,7 @@ class ExecutionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(ExecutionId(id));
+            auto e = executions.getById(ExecutionId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Execution not found"); return; }
             res.writeJsonBody(e.executionToJson(), 200);
         } catch (Exception e) {
@@ -66,7 +67,7 @@ class ExecutionController : PlatformController {
             dto.triggeredBy = j.getString("triggeredBy");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = executions.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -88,7 +89,7 @@ class ExecutionController : PlatformController {
             ExecutionDTO dto;
             dto.id = extractIdFromPath(path);
 
-            auto result = uc.update(dto);
+            auto result = executions.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -108,7 +109,7 @@ class ExecutionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(ExecutionId(id));
+            auto result = executions.remove(ExecutionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

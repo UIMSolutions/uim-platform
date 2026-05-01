@@ -125,13 +125,9 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private static Json serialize(const BusinessSubprocess e) {
-    auto purps = Json.emptyArray;
-    foreach (p; e.purposes)
-      purps ~= Json(p);
+    auto purps = e.purposes.map!(p => Json(p)).array.toJson;
 
-    auto cats = Json.emptyArray;
-    foreach (c; e.dataCategories)
-      cats ~= Json(c);
+    auto cats = e.dataCategories.map!(c => Json(c)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

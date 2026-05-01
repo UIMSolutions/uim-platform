@@ -56,16 +56,11 @@ class ScenarioController : PlatformController {
     try {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      typeof(uc.listAll()) scenarios;
-      if (connectionId.length > 0)
-        scenarios = uc.listByConnection(connectionId);
-      else
-        scenarios = uc.listAll();
+      auto scenarios = connectionId.length > 0
+        ? uc.listByConnection(connectionId)
+        : uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (s; scenarios) {
-        jarr ~= serializeScenario(s);
-      }
+      auto jarr = scenarios.map!(s => serializeScenario(s)).array;
 
       auto resp = Json.emptyObject
         .set("count", scenarios.length)

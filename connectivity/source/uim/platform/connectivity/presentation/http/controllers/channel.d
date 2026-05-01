@@ -72,9 +72,7 @@ class ChannelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto channels = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (ch; channels)
-        arr ~= serializeChannel(ch);
+      auto arr = channels.map!(ch => serializeChannel(ch)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

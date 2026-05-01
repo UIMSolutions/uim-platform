@@ -63,9 +63,7 @@ class BusinessContextController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listContexts(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -147,13 +145,9 @@ class BusinessContextController : PlatformController {
   }
 
   private static Json serialize(const BusinessContext e) {
-    auto cats = Json.emptyArray;
-    foreach (c; e.dataCategories)
-      cats ~= Json(c);
+    auto cats = e.dataCategories.map!(c => Json(c)).array.toJson;
 
-    auto purps = Json.emptyArray;
-    foreach (p; e.purposes)
-      purps ~= Json(p);
+    auto purps = e.purposes.map!(p => Json(p)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

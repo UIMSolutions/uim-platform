@@ -30,8 +30,8 @@ class CatalogController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.catalogToJson();
+            auto jarr = items.map!(e => e.catalogToJson()).array;
+            
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr);
