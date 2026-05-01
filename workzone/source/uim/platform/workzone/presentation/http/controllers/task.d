@@ -23,7 +23,7 @@ class TaskController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/tasks", &handleCreate);
     router.get("/api/v1/tasks", &handleList);
     router.get("/api/v1/tasks/*", &handleGet);
@@ -62,16 +62,15 @@ class TaskController : PlatformController {
 
       auto result = useCase.createTask(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Task created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -79,17 +78,18 @@ class TaskController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto assigneeId = req.params.get("assigneeId", "");
-      auto tasks = useCase.listByAssignee(assigneetenantId, id);
+      auto assigneeId = AssigneeId(req.params.get("assigneeId", ""));
+      auto tasks = useCase.listByAssignee(tenantId, assigneeId);
       auto arr = Json.emptyArray;
       foreach (t; tasks)
         arr ~= serializeTask(t);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(tasks.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(tasks.length))
+        .set("message", "Tasks retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -104,8 +104,7 @@ class TaskController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeTask(*t), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -142,16 +141,15 @@ class TaskController : PlatformController {
 
       auto result = useCase.updateTask(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated")
+          .set("message", "Task updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -162,16 +160,14 @@ class TaskController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.completeTask(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("completed");
+        auto resp = Json.emptyObject
+          .set("status", "completed");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -182,8 +178,7 @@ class TaskController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteTask(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -193,23 +188,23 @@ private Json serializeTask(Task t) {
   auto tags = t.tags.map!(tag => Json(tag)).array.toJson;
 
   return Json.emptyObject
-  .set("id", t.id)
-  .set("tenantId", t.tenantId)
-  .set("assigneeId", t.assigneeId)
-  .set("assigneeName", t.assigneeName)
-  .set("creatorId", t.creatorId)
-  .set("creatorName", t.creatorName)
-  .set("title", t.title)
-  .set("description", t.description)
-  .set("status", t.status.to!string)
-  .set("priority", t.priority.to!string)
-  .set("sourceApp", t.sourceApp)
-  .set("sourceTaskId", t.sourceTaskId)
-  .set("actionUrl", t.actionUrl)
-  .set("category", t.category)
-  .set("dueDate", t.dueDate)
-  .set("completedAt", t.completedAt)
-  .set("createdAt", t.createdAt)
-  .set("updatedAt", t.updatedAt)
-  .set("tags", tags);
+    .set("id", t.id)
+    .set("tenantId", t.tenantId)
+    .set("assigneeId", t.assigneeId)
+    .set("assigneeName", t.assigneeName)
+    .set("creatorId", t.creatorId)
+    .set("creatorName", t.creatorName)
+    .set("title", t.title)
+    .set("description", t.description)
+    .set("status", t.status.to!string)
+    .set("priority", t.priority.to!string)
+    .set("sourceApp", t.sourceApp)
+    .set("sourceTaskId", t.sourceTaskId)
+    .set("actionUrl", t.actionUrl)
+    .set("category", t.category)
+    .set("dueDate", t.dueDate)
+    .set("completedAt", t.completedAt)
+    .set("createdAt", t.createdAt)
+    .set("updatedAt", t.updatedAt)
+    .set("tags", tags);
 }

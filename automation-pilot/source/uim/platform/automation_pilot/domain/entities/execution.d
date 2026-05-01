@@ -24,7 +24,7 @@ struct Execution {
     string completedAt;
     string duration;
     string errorMessage;
-    string triggeredBy;
+    UserId triggeredBy;
     string retryAttempt;
 
     Json toJson() const {

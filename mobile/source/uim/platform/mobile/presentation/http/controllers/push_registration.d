@@ -57,7 +57,6 @@ class PushRegistrationController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -67,7 +66,8 @@ class PushRegistrationController : PlatformController {
           .set("provider", item.provider)
           .set("status", item.status);
       }
-      resp["items"] = items;
+      auto resp = Json.emptyObject
+        .set("items", items);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

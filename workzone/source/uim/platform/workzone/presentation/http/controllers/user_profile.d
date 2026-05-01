@@ -23,7 +23,7 @@ class UserProfileController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/user-profiles", &handleCreate);
     router.get("/api/v1/user-profiles", &handleList);
     router.get("/api/v1/user-profiles/*", &handleGet);
@@ -48,16 +48,15 @@ class UserProfileController : PlatformController {
 
       auto result = useCase.createUserProfile(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "User profile created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -69,12 +68,12 @@ class UserProfileController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (p; profiles)
         arr ~= serializeUserProfile(p);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(profiles.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(profiles.length));
+        
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -89,8 +88,7 @@ class UserProfileController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeUserProfile(*p), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -112,8 +110,7 @@ class UserProfileController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -127,8 +124,7 @@ class UserProfileController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

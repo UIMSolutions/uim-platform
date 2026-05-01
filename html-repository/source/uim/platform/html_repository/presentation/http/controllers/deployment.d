@@ -49,12 +49,13 @@ class DeploymentController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
-    } catch (Exception e)
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -72,9 +73,10 @@ class DeploymentController : PlatformController {
           .set("status", e.status);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -84,7 +86,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;
       }
@@ -93,20 +95,20 @@ class DeploymentController : PlatformController {
         writeError(res, 404, "Deployment not found");
         return;
       }
-      
-      auto response = Json.emptyObject
-      .set("id", entry.id)
-      .set("appId", entry.appId)
-      .set("versionId", entry.versionId)
-      .set("serviceInstanceId", entry.serviceInstanceId)
-      .set("operation", entry.operation)
-      .set("status", entry.status)
-      .set("deployedBy", entry.deployedBy)
-      .set("deployedAt", entry.deployedAt)
-      .set("completedAt", entry.completedAt)
-      .set("errorMessage", entry.errorMessage);
 
-      res.writeJsonBody(obj, 200);
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("appId", entry.appId)
+        .set("versionId", entry.versionId)
+        .set("serviceInstanceId", entry.serviceInstanceId)
+        .set("operation", entry.operation)
+        .set("status", entry.status)
+        .set("deployedBy", entry.deployedBy)
+        .set("deployedAt", entry.deployedAt)
+        .set("completedAt", entry.completedAt)
+        .set("errorMessage", entry.errorMessage);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

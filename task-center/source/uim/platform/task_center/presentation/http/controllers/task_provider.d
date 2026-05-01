@@ -47,9 +47,10 @@ class TaskProviderController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -69,9 +70,10 @@ class TaskProviderController : PlatformController {
                 jarr ~= providerToJson(p);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(providers.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", providers.length)
+                .set("resources", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -115,9 +117,10 @@ class TaskProviderController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -137,9 +140,10 @@ class TaskProviderController : PlatformController {
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider activated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider activated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -159,9 +163,10 @@ class TaskProviderController : PlatformController {
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider deactivated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider deactivated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -181,9 +186,10 @@ class TaskProviderController : PlatformController {
 
             auto result = uc.sync(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider sync initiated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider sync initiated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -200,9 +206,10 @@ class TaskProviderController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Provider deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Provider deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

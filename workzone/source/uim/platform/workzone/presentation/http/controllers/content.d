@@ -23,7 +23,7 @@ class ContentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/content", &handleCreate);
     router.get("/api/v1/content", &handleList);
     router.get("/api/v1/content/*", &handleGet);
@@ -62,16 +62,15 @@ class ContentController : PlatformController {
 
       auto result = useCase.createContent(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Content created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,12 +89,12 @@ class ContentController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (c; items)
         arr ~= serializeContent(c);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -110,8 +109,7 @@ class ContentController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeContent(*item), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -138,16 +136,15 @@ class ContentController : PlatformController {
 
       auto result = useCase.updateContent(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -158,8 +155,7 @@ class ContentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteContent(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -170,16 +166,15 @@ class ContentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.publishContent(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("published");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "published");
+          
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -190,23 +185,23 @@ private Json serializeContent(ContentItem c) {
   auto tags = c.tags.map!(t => t.toJson).array.toJson;
 
   return Json.emptyObject
-  .set("id", c.id)
-  .set("workspaceId", c.workspaceId)
-  .set("tenantId", c.tenantId)
-  .set("title", c.title)
-  .set("body", c.body_)
-  .set("summary", c.summary)
-  .set("contentType", c.contentType.to!string)
-  .set("status", c.status.to!string)
-  .set("authorId", c.authorId)
-  .set("authorName", c.authorName)
-  .set("language", c.language)
-  .set("viewCount", c.viewCount)
-  .set("likeCount", c.likeCount)
-  .set("pinned", c.pinned)
-  .set("commentsEnabled", c.commentsEnabled)
-  .set("publishedAt", c.publishedAt)
-  .set("createdAt", c.createdAt)
-  .set("updatedAt", c.updatedAt)
-  .set("tags", tags);
+    .set("id", c.id)
+    .set("workspaceId", c.workspaceId)
+    .set("tenantId", c.tenantId)
+    .set("title", c.title)
+    .set("body", c.body_)
+    .set("summary", c.summary)
+    .set("contentType", c.contentType.to!string)
+    .set("status", c.status.to!string)
+    .set("authorId", c.authorId)
+    .set("authorName", c.authorName)
+    .set("language", c.language)
+    .set("viewCount", c.viewCount)
+    .set("likeCount", c.likeCount)
+    .set("pinned", c.pinned)
+    .set("commentsEnabled", c.commentsEnabled)
+    .set("publishedAt", c.publishedAt)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt)
+    .set("tags", tags);
 }

@@ -147,10 +147,10 @@ class ActionController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action updated");
-                
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Action updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -167,9 +167,10 @@ class ActionController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Action deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

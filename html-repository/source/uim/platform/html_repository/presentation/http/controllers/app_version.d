@@ -73,9 +73,10 @@ class AppVersionController : PlatformController {
         arr ~= obj;
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -85,7 +86,7 @@ class AppVersionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Version not found");
         return;
       }
@@ -94,16 +95,16 @@ class AppVersionController : PlatformController {
         writeError(res, 404, "Version not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["appId"] = Json(entry.appId);
-      obj["versionCode"] = Json(entry.versionCode);
-      obj["description"] = Json(entry.description);
-      obj["status"] = Json(entry.status);
-      obj["fileCount"] = Json(entry.fileCount);
-      obj["createdBy"] = Json(entry.createdBy);
-      obj["createdAt"] = Json(entry.createdAt);
-      obj["updatedAt"] = Json(entry.updatedAt);
+      auto obj = Json.emptyObject
+        .set("id", entry.id)
+        .set("appId", entry.appId)
+        .set("versionCode", entry.versionCode)
+        .set("description", entry.description)
+        .set("status", entry.status)
+        .set("fileCount", entry.fileCount)
+        .set("createdBy", entry.createdBy)
+        .set("createdAt", entry.createdAt)
+        .set("updatedAt", entry.updatedAt);
 
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
@@ -115,7 +116,7 @@ class AppVersionController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Version not found");
         return;
       }
@@ -139,7 +140,7 @@ class AppVersionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Version not found");
         return;
       }

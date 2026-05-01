@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 struct ResolutionInfo {
     ResolutionType type;
-    string resolvedBy;
+    UserId resolvedBy;
     string actionId;
     string ruleId;
     string outcome;

@@ -53,11 +53,12 @@ class TaskController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -82,7 +83,7 @@ class TaskController : PlatformController {
                 tasks = uc.listByStatus(tenantId, status.to!TaskStatus);
             } else if (providerId.length > 0) {
                 tasks = uc.listByProvider(tenantId, providerId);
-            }) {
+            } else {
                 tasks = uc.list(tenantId);
             }
 
@@ -91,9 +92,11 @@ class TaskController : PlatformController {
                 jarr ~= taskToJson(t);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(tasks.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", tasks.length)
+                .set("resources", jarr)
+                .set("message", "Tasks retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -139,11 +142,12 @@ class TaskController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task updated");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -164,11 +168,12 @@ class TaskController : PlatformController {
 
             auto result = uc.claim(tenantId, id, userId);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task claimed");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task claimed");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -187,11 +192,12 @@ class TaskController : PlatformController {
 
             auto result = uc.release(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task released");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task released");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -213,11 +219,12 @@ class TaskController : PlatformController {
 
             auto result = uc.forward(tenantId, id, toUser, comment);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task forwarded");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task forwarded");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -236,11 +243,12 @@ class TaskController : PlatformController {
 
             auto result = uc.complete(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task completed");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task completed");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -259,11 +267,12 @@ class TaskController : PlatformController {
 
             auto result = uc.cancel(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task cancelled");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task cancelled");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -279,11 +288,12 @@ class TaskController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task deleted");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

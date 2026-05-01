@@ -23,7 +23,7 @@ class GroupController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/groups", &handleCreate);
     router.get("/api/v1/groups", &handleList);
     router.get("/api/v1/groups/*", &handleGet);
@@ -41,16 +41,14 @@ class GroupController : PlatformController {
 
       auto result = useCase.createGroup(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -62,12 +60,12 @@ class GroupController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (g; groups)
         arr ~= serializeGroup(g);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(groups.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", groups.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -82,8 +80,7 @@ class GroupController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeGroup(*g), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -104,8 +101,7 @@ class GroupController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -119,8 +115,7 @@ class GroupController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

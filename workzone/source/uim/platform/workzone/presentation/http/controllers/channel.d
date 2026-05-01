@@ -54,8 +54,10 @@ class ChannelController : PlatformController {
 
       auto result = useCase.createChannel(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Channel created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -68,14 +70,16 @@ class ChannelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto workspaceId = req.params.get("workspaceId", "");
-      auto channels = useCase.listByWorkspace(workspacetenantId, id);
+      auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
+      auto channels = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = Json.emptyArray;
       foreach (c; channels)
         arr ~= serializeChannel(c);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(channels.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", channels.length)
+        .set("message", "Channels retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -110,8 +114,11 @@ class ChannelController : PlatformController {
 
       auto result = useCase.updateChannel(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "updated")
+          .set("message", "Channel updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

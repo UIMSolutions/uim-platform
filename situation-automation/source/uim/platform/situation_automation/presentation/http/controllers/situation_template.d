@@ -50,11 +50,12 @@ class SituationTemplateController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation template created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation template created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -83,9 +84,10 @@ class SituationTemplateController : PlatformController {
                     .set("updatedAt", t.updatedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(templates.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", templates.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -103,23 +105,24 @@ class SituationTemplateController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(t.id);
-            resp["name"] = Json(t.name);
-            resp["description"] = Json(t.description);
-            resp["category"] = Json(t.category.to!string);
-            resp["defaultSeverity"] = Json(t.defaultSeverity.to!string);
-            resp["status"] = Json(t.status.to!string);
-            resp["entityTypeId"] = Json(t.entityTypeId);
-            resp["sourceSystem"] = Json(t.sourceSystem);
-            resp["sourceTemplateId"] = Json(t.sourceTemplateId);
-            resp["autoResolveTimeoutMinutes"] = Json(t.autoResolveTimeoutMinutes);
-            resp["escalationEnabled"] = Json(t.escalationEnabled);
-            resp["escalationTargetUserId"] = Json(t.escalationTargetUserId);
-            resp["createdBy"] = Json(t.createdBy);
-            resp["modifiedBy"] = Json(t.modifiedBy);
-            resp["createdAt"] = Json(t.createdAt);
-            resp["updatedAt"] = Json(t.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", t.id)
+                .set("name", t.name)
+                .set("description", t.description)
+                .set("category", t.category.to!string)
+                .set("defaultSeverity", t.defaultSeverity.to!string)
+                .set("status", t.status.to!string)
+                .set("entityTypeId", t.entityTypeId)
+                .set("sourceSystem", t.sourceSystem)
+                .set("sourceTemplateId", t.sourceTemplateId)
+                .set("autoResolveTimeoutMinutes", t.autoResolveTimeoutMinutes)
+                .set("escalationEnabled", t.escalationEnabled)
+                .set("escalationTargetUserId", t.escalationTargetUserId)
+                .set("createdBy", t.createdBy)
+                .set("modifiedBy", t.modifiedBy)
+                .set("createdAt", t.createdAt)
+                .set("updatedAt", t.updatedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -146,11 +149,12 @@ class SituationTemplateController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation template updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation template updated");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -165,11 +169,12 @@ class SituationTemplateController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation template deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation template deleted");
+                    
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

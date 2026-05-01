@@ -75,9 +75,10 @@ class SchemaController : PlatformController {
         .set("createdAt", s.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(schemas.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", schemas.length)
+        .set("resources", jarr);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

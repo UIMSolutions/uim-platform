@@ -115,8 +115,9 @@ class EventMessageController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(EventMessageId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Event message deleted");
+                auto resp = Json.emptyObject
+                .set("message", "Event message deleted");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 struct DomainValidator {
     static string validate(string id, string name) {
-        if (Id.isEmpty)
+        if (id.isEmpty)
             return "ID is required";
         if (name.length == 0)
             return "Name is required";

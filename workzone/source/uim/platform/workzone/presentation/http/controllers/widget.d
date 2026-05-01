@@ -23,7 +23,7 @@ class WidgetController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/widgets", &handleCreate);
     router.get("/api/v1/widgets", &handleList);
     router.get("/api/v1/widgets/*", &handleGet);
@@ -58,16 +58,15 @@ class WidgetController : PlatformController {
 
       auto result = useCase.createWidget(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Widget created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,12 +79,13 @@ class WidgetController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (w; widgets)
         arr ~= serializeWidget(w);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(widgets.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", widgets.length)
+        .set("message", "Widgets retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -100,8 +100,7 @@ class WidgetController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeWidget(*w), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -131,16 +130,14 @@ class WidgetController : PlatformController {
 
       auto result = useCase.updateWidget(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -151,8 +148,7 @@ class WidgetController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteWidget(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -176,19 +172,19 @@ private WidgetConfig parseWidgetConfig(Json j) {
 private Json serializeWidget(Widget w) {
   // import std.conv : to;
   auto j = Json.emptyObject
-  .set("id", w.id)
-  .set("pageId", w.pageId)
-  .set("tenantId", w.tenantId)
-  .set("title", w.title)
-  .set("cardId", w.cardId)
-  .set("appId", w.appId)
-  .set("size", w.size.to!string)
-  .set("row", w.row)
-  .set("col", w.col)
-  .set("sortOrder", w.sortOrder)
-  .set("visible", w.visible)
-  .set("createdAt", w.createdAt)
-  .set("updatedAt", w.updatedAt);
+    .set("id", w.id)
+    .set("pageId", w.pageId)
+    .set("tenantId", w.tenantId)
+    .set("title", w.title)
+    .set("cardId", w.cardId)
+    .set("appId", w.appId)
+    .set("size", w.size.to!string)
+    .set("row", w.row)
+    .set("col", w.col)
+    .set("sortOrder", w.sortOrder)
+    .set("visible", w.visible)
+    .set("createdAt", w.createdAt)
+    .set("updatedAt", w.updatedAt);
 
   auto cfg = Json.emptyObject;
   cfg["customTitle"] = Json(w.config.customTitle);

@@ -43,8 +43,9 @@ class DeviceRegistrationController : PlatformController {
       r.deviceToken = j.getString("deviceToken");
       auto result = uc.register(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -58,7 +59,6 @@ class DeviceRegistrationController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -68,7 +68,11 @@ class DeviceRegistrationController : PlatformController {
           .set("platform", item.platform)
           .set("status", item.status);
       }
-      resp["items"] = items;
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", results.length)
+        .set("message", "Device registrations retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -80,18 +84,19 @@ class DeviceRegistrationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["deviceModel"] = Json(result.data.deviceModel);
-        resp["osVersion"] = Json(result.data.osVersion);
-        resp["appVersion"] = Json(result.data.appVersion);
-        resp["platform"] = Json(result.data.platform);
-        resp["userId"] = Json(result.data.userId);
-        resp["deviceToken"] = Json(result.data.deviceToken);
-        resp["status"] = Json(result.data.status);
-        res.writeJsonBody(resp, 200);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("deviceModel", result.data.deviceModel)
+          .set("osVersion", result.data.osVersion)
+          .set("appVersion", result.data.appVersion)
+          .set("platform", result.data.platform)
+          .set("userId", result.data.userId)
+          .set("deviceToken", result.data.deviceToken)
+          .set("status", result.data.status);
+
+        res.writeJsonBody(resp, 200); 
       } else {
         writeError(res, 404, result.error);
       }
@@ -107,8 +112,9 @@ class DeviceRegistrationController : PlatformController {
       auto status = j.getString("status");
       auto result = uc.updateStatus(id, status);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

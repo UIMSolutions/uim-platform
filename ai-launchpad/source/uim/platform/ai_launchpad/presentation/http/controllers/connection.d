@@ -66,10 +66,7 @@ class ConnectionController : PlatformController {
       else
         connections = uc.listAll();
 
-      auto jarr = Json.emptyArray;
-      foreach (c; connections) {
-        jarr ~= serializeConnection(c);
-      }
+      auto jarr = connections.map!(connection => connection.toJson).array;
 
       auto resp = Json.emptyObject
       .set("count", connections.length)
@@ -86,13 +83,13 @@ class ConnectionController : PlatformController {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto c = uc.getById(id);
-      if (c.id.isEmpty) {
+      auto connection = uc.getById(id);
+      if (connection.isNull) {
         writeError(res, 404, "Connection not found");
         return;
       }
 
-      res.writeJsonBody(serializeConnection(c), 200);
+      res.writeJsonBody(connection.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -140,22 +137,4 @@ class ConnectionController : PlatformController {
     }
   }
 
-  private Json serializeConnection(Connection c) {
-    import std.conv : to;
-    return Json.emptyObject
-    .set("id", c.id)
-    .set("name", c.name)
-    .set("type", c.type.to!string)
-    .set("url", c.url)
-    .set("authUrl", c.authUrl)
-    .set("clientId", c.clientId)
-    .set("clientSecretMasked", c.clientSecretMasked)
-    .set("status", c.status.to!string)
-    .set("statusMessage", c.statusMessage)
-    .set("workspaceId", c.workspaceId)
-    .set("defaultResourceGroupId", c.defaultResourceGroupId)
-    .set("description", c.description)
-    .set("createdAt", c.createdAt)
-    .set("updatedAt", c.updatedAt);
-  }
 }

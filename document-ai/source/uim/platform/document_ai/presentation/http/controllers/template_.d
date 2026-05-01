@@ -113,9 +113,10 @@ class TemplateController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Template updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Template updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -134,7 +135,10 @@ class TemplateController : PlatformController {
 
       auto result = uc.remove(id, clientId);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Template deleted");
+
+        res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
       }

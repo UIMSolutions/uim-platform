@@ -67,8 +67,9 @@ class DataModelController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -82,19 +83,17 @@ class DataModelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
 
-      DataModel[] models;
-      if (category.length > 0)
-        models = uc.listByCategory(tenantId, category);
-      else
-        models = uc.listByTenant(tenantId);
+      DataModel[] models = category.length > 0
+        ? uc.listByCategory(tenantId, category) : uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (m; models)
         arr ~= serializeModel(m);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(models.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(models.length));
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -181,19 +180,19 @@ class DataModelController : PlatformController {
     }
 
     return Json.emptyObject
-    .set("id", m.id)
-    .set("tenantId", m.tenantId)
-    .set("name", m.name)
-    .set("namespace", m.namespace)
-    .set("version", m.version_)
-    .set("description", m.description)
-    .set("category", m.category.to!string)
-    .set("isActive", m.isActive)
-    .set("keyFields", serializeStrArray(m.keyFields))
-    .set("requiredFields", serializeStrArray(m.requiredFields))
-    .set("fields", fieldsArr)
-    .set("createdBy", Json(m.createdBy))
-    .set("createdAt", Json(m.createdAt))
-    .set("updatedAt", Json(m.updatedAt));
+      .set("id", m.id)
+      .set("tenantId", m.tenantId)
+      .set("name", m.name)
+      .set("namespace", m.namespace)
+      .set("version", m.version_)
+      .set("description", m.description)
+      .set("category", m.category.to!string)
+      .set("isActive", m.isActive)
+      .set("keyFields", serializeStrArray(m.keyFields))
+      .set("requiredFields", serializeStrArray(m.requiredFields))
+      .set("fields", fieldsArr)
+      .set("createdBy", Json(m.createdBy))
+      .set("createdAt", Json(m.createdAt))
+      .set("updatedAt", Json(m.updatedAt));
   }
-} 
+}

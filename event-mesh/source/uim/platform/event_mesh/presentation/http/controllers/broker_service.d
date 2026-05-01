@@ -125,8 +125,9 @@ class BrokerServiceController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(BrokerServiceId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Broker service deleted");
+                auto resp = Json.emptyObject
+                  .set("message", "Broker service deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

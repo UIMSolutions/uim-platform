@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.page_template;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class PageTemplateController : PageformController{
+class PageTemplateController : PageformController {
   private ManagePageTemplatesUseCase useCase;
 
   this(ManagePageTemplatesUseCase useCase) {
@@ -23,7 +23,7 @@ class PageTemplateController : PageformController{
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/page-templates", &handleCreate);
     router.get("/api/v1/page-templates", &handleList);
     router.get("/api/v1/page-templates/*", &handleGet);
@@ -44,16 +44,15 @@ class PageTemplateController : PageformController{
 
       auto result = useCase.createPageTemplate(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Page template created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -62,15 +61,15 @@ class PageTemplateController : PageformController{
     try {
       TenantId tenantId = req.getTenantId;
       auto templates = useCase.listPageTemplates(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (t; templates)
-        arr ~= serializePageTemplate(t);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(templates.length);
+      auto arr = templates.map!(t => serializePageTemplate(t)).array;
+
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", templates.length)
+        .set("message", "Page templates retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -85,8 +84,7 @@ class PageTemplateController : PageformController{
         return;
       }
       res.writeJsonBody(serializePageTemplate(*t), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -108,8 +106,7 @@ class PageTemplateController : PageformController{
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -123,8 +120,7 @@ class PageTemplateController : PageformController{
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

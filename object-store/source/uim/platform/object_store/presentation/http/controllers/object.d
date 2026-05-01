@@ -55,16 +55,15 @@ class ObjectController : PlatformController {
 
       auto result = uc.createObject(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Object created successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -86,12 +85,13 @@ class ObjectController : PlatformController {
       foreach (o; objects)
         arr ~= serializeObject(o);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(objects.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", objects.length)
+        .set("message", "Objects retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,8 +109,7 @@ class ObjectController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeObject(obj), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -126,16 +125,15 @@ class ObjectController : PlatformController {
 
       auto result = uc.updateObjectMetadata(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Object metadata updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Object not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -145,16 +143,15 @@ class ObjectController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteObject(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Object deleted successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -172,16 +169,15 @@ class ObjectController : PlatformController {
 
       auto result = uc.copyObject(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Object copied successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -198,46 +194,47 @@ class ObjectController : PlatformController {
       foreach (v; versions)
         arr ~= serializeVersion(v);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(versions.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", versions.length);
+        .set("message", "Object versions retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeObject(StorageObject o) {
     return Json.emptyObject
-    .set("id", o.id)
-    .set("tenantId", o.tenantId)
-    .set("bucketId", o.bucketId)
-    .set("key", o.key)
-    .set("contentType", o.contentType)
-    .set("size", o.size)
-    .set("etag", o.etag)
-    .set("metadata", o.metadata)
-    .set("storageClass", o.storageClass.to!string)
-    .set("status", o.status.to!string)
-    .set("currentVersionId", o.currentVersionId)
-    .set("createdBy", o.createdBy)
-    .set("createdAt", o.createdAt)
-    .set("updatedAt", o.updatedAt);
+      .set("id", o.id)
+      .set("tenantId", o.tenantId)
+      .set("bucketId", o.bucketId)
+      .set("key", o.key)
+      .set("contentType", o.contentType)
+      .set("size", o.size)
+      .set("etag", o.etag)
+      .set("metadata", o.metadata)
+      .set("storageClass", o.storageClass.to!string)
+      .set("status", o.status.to!string)
+      .set("currentVersionId", o.currentVersionId)
+      .set("createdBy", o.createdBy)
+      .set("createdAt", o.createdAt)
+      .set("updatedAt", o.updatedAt);
   }
 
   private static Json serializeVersion(ObjectVersion v) {
     return Json.emptyObject
-    .set("id", v.id)
-    .set("objectId", v.objectId)
-    .set("versionTag", v.versionTag)
-    .set("size", v.size)
-    .set("etag", v.etag)
-    .set("contentType", v.contentType)
-    .set("isLatest", v.isLatest)
-    .set("isDeleteMarker", v.isDeleteMarker)
-    .set("createdBy", v.createdBy)
-    .set("createdAt", v.createdAt);
+      .set("id", v.id)
+      .set("objectId", v.objectId)
+      .set("versionTag", v.versionTag)
+      .set("size", v.size)
+      .set("etag", v.etag)
+      .set("contentType", v.contentType)
+      .set("isLatest", v.isLatest)
+      .set("isDeleteMarker", v.isDeleteMarker)
+      .set("createdBy", v.createdBy)
+      .set("createdAt", v.createdAt);
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects

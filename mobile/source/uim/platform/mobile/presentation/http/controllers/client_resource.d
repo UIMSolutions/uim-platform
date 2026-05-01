@@ -43,8 +43,9 @@ class ClientResourceController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -58,7 +59,6 @@ class ClientResourceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -68,7 +68,11 @@ class ClientResourceController : PlatformController {
           .set("type", item.type)
           .set("contentType", item.contentType);
       }
-      resp["items"] = items;
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", Json(results.length))
+        .set("message", Json("Client resources retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -115,8 +119,9 @@ class ClientResourceController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

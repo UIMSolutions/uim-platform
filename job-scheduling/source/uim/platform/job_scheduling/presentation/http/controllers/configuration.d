@@ -61,8 +61,10 @@ class ConfigurationController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Configuration updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Configuration updated");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);

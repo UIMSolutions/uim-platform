@@ -40,9 +40,10 @@ class TaskActionController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action recorded");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Action recorded");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -70,9 +71,10 @@ class TaskActionController : PlatformController {
                 jarr ~= actionToJson(a);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(actions.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", actions.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -82,6 +84,7 @@ class TaskActionController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.getById(tenantId, id);
@@ -98,13 +101,15 @@ class TaskActionController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Action deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -116,13 +121,13 @@ class TaskActionController : PlatformController {
 
     private Json actionToJson(TaskAction a) {
         return Json.emptyObject
-        .set("id", a.id)
-        .set("tenantId", a.tenantId)
-        .set("taskId", a.taskId)
-        .set("actionType", a.actionType.to!string)
-        .set("performedBy", a.performedBy)
-        .set("forwardTo", a.forwardTo)
-        .set("comment", a.comment)
-        .set("performedAt", a.performedAt);
+            .set("id", a.id)
+            .set("tenantId", a.tenantId)
+            .set("taskId", a.taskId)
+            .set("actionType", a.actionType.to!string)
+            .set("performedBy", a.performedBy)
+            .set("forwardTo", a.forwardTo)
+            .set("comment", a.comment)
+            .set("performedAt", a.performedAt);
     }
 }

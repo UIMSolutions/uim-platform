@@ -65,18 +65,19 @@ class HDIContainerController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (c; containers) {
         jarr ~= Json.emptyObject
-        .set("id", c.id)
-        .set("instanceId", c.instanceId)
-        .set("name", c.name)
-        .set("status", c.status.to!string)
-        .set("artifactCount", c.artifactCount)
-        .set("sizeBytes", c.sizeBytes)
-        .set("createdAt", c.createdAt);
+          .set("id", c.id)
+          .set("instanceId", c.instanceId)
+          .set("name", c.name)
+          .set("status", c.status.to!string)
+          .set("artifactCount", c.artifactCount)
+          .set("sizeBytes", c.sizeBytes)
+          .set("createdAt", c.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(containers.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(containers.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -131,7 +132,7 @@ class HDIContainerController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "HDI Container updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

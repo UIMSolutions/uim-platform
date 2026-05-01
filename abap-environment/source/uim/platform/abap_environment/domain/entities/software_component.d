@@ -36,7 +36,7 @@ struct SoftwareComponent {
   string softwareComponentVersion;
 
   /// Metadata
-  string clonedBy;
+  UserId clonedBy;
   long clonedAt;
   long lastPulledAt;
 

@@ -31,7 +31,7 @@ struct Directory {
 
   static Directory createFromRequest(CreateDirectoryRequest req) {
     Directory directory;
-    directory.create();
+    directory.initEntity();
 
     directory.globalAccountId = req.globalAccountId;
     directory.parentDirectoryId = req.parentDirectoryId;

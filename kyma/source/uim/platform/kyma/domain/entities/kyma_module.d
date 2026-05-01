@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A Kyma module — an optional component that can be enabled/disabled.
 struct KymaModule {
-  TenantId tenantId;
-  KymaModuleId id;
+  mixin TenantEntity!KymaModuleId;
+
   KymaEnvironmentId environmentId;
   string name;
   string description;
@@ -32,8 +32,4 @@ struct KymaModule {
   // Dependencies — other modules that must be enabled
   string[] requiredModules;
 
-  // Metadata
-  string enabledBy;
-  long enabledAt;
-  long updatedAt;
 }

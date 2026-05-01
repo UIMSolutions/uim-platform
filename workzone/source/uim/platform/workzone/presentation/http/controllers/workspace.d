@@ -23,7 +23,7 @@ class WorkspaceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/workspaces", &handleCreate);
     router.get("/api/v1/workspaces", &handleList);
     router.get("/api/v1/workspaces/*", &handleGet);
@@ -58,16 +58,15 @@ class WorkspaceController : PlatformController {
 
       auto result = useCase.createWorkspace(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Workspace created successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -79,12 +78,13 @@ class WorkspaceController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (w; workspaces)
         arr ~= serializeWorkspace(w);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(workspaces.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", workspaces.length)
+        .set("message", "Workspaces retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,8 +105,7 @@ class WorkspaceController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeWorkspace(*ws), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -124,16 +123,15 @@ class WorkspaceController : PlatformController {
 
       auto result = useCase.updateWorkspace(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated")
+          .set("message", "Workspace updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -144,8 +142,7 @@ class WorkspaceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteWorkspace(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -171,16 +168,15 @@ class WorkspaceController : PlatformController {
 
       auto result = useCase.addMember(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("member_added");
+        auto resp = Json.emptyObject
+          .set("status", "member_added")
+          .set("message", "Member added successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -206,39 +202,39 @@ private Json serializeWorkspace(Workspace w) {
   // import std.conv : to;
 
   auto j = Json.emptyObject
-  .set("id", w.id)
-  .set("tenantId", w.tenantId)
-  .set("name", w.name)
-  .set("description", w.description)
-  .set("alias", w.alias_)
-  .set("type", w.type.to!string)
-  .set("status", w.status.to!string)
-  .set("imageUrl", w.imageUrl)
-  .set("createdAt", w.createdAt)
-  .set("updatedAt", w.updatedAt)
-  .set("createdBy", w.createdBy);
+    .set("id", w.id)
+    .set("tenantId", w.tenantId)
+    .set("name", w.name)
+    .set("description", w.description)
+    .set("alias", w.alias_)
+    .set("type", w.type.to!string)
+    .set("status", w.status.to!string)
+    .set("imageUrl", w.imageUrl)
+    .set("createdAt", w.createdAt)
+    .set("updatedAt", w.updatedAt)
+    .set("createdBy", w.createdBy);
 
   // Members
   auto members = Json.emptyArray;
   foreach (m; w.members) {
     members ~= Json.emptyObject
-    .set("userId", m.userId)
-    .set("displayName", m.displayName)
-    .set("role", m.role.to!string)
-    .set("joinedAt", m.joinedAt);
+      .set("userId", m.userId)
+      .set("displayName", m.displayName)
+      .set("role", m.role.to!string)
+      .set("joinedAt", m.joinedAt);
   }
   j["members"] = members;
 
   // Settings
   auto sj = Json.emptyObject
-  .set("allowExternalMembers", w.settings.allowExternalMembers)
-  .set("enableNotifications", w.settings.enableNotifications)
-  .set("enableFeeds", w.settings.enableFeeds)
-  .set("enableWiki", w.settings.enableWiki)
-  .set("enableKnowledgeBase", w.settings.enableKnowledgeBase)
-  .set("enableForum", w.settings.enableForum)
-  .set("defaultLanguage", w.settings.defaultLanguage);
-  
+    .set("allowExternalMembers", w.settings.allowExternalMembers)
+    .set("enableNotifications", w.settings.enableNotifications)
+    .set("enableFeeds", w.settings.enableFeeds)
+    .set("enableWiki", w.settings.enableWiki)
+    .set("enableKnowledgeBase", w.settings.enableKnowledgeBase)
+    .set("enableForum", w.settings.enableForum)
+    .set("defaultLanguage", w.settings.defaultLanguage);
+
   j["settings"] = sj;
 
   return j;

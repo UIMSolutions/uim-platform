@@ -28,7 +28,7 @@ class DataSourceHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
-    if (Id.isEmpty) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }

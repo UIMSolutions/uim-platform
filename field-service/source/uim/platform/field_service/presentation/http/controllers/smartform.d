@@ -20,6 +20,7 @@ class SmartformController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/smartforms", &handleList);
         router.get("/api/v1/field-service/smartforms/*", &handleGet);
         router.post("/api/v1/field-service/smartforms", &handleCreate);
@@ -32,9 +33,10 @@ class SmartformController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= smartformToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(items.length))
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -122,8 +124,9 @@ class SmartformController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Smartform deleted");
+                auto resp = Json.emptyObject
+                .set("message", "Smartform deleted");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

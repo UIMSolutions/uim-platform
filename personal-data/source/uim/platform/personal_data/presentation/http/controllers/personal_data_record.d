@@ -82,9 +82,11 @@ class PersonalDataRecordController : PlatformController {
                 jarr ~= recordToJson(r);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(records.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", records.length)
+                .set("resources", jarr)
+                .set("message", "Personal data records retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -114,9 +116,10 @@ class PersonalDataRecordController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Personal data record deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Personal data record deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

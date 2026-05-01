@@ -40,11 +40,12 @@ class UserTaskFilterController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Filter created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Filter created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +62,7 @@ class UserTaskFilterController : PlatformController {
             UserTaskFilter[] filters;
             if (userId.length > 0) {
                 filters = uc.listByUser(tenantId, userId);
-            }) {
+            } else {
                 filters = [];
             }
 
@@ -70,9 +71,10 @@ class UserTaskFilterController : PlatformController {
                 jarr ~= filterToJson(f);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(filters.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", filters.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -115,11 +117,12 @@ class UserTaskFilterController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Filter updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Filter updated");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -138,11 +141,12 @@ class UserTaskFilterController : PlatformController {
 
             auto result = uc.setDefault(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Filter set as default");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Filter set as default");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -158,11 +162,12 @@ class UserTaskFilterController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Filter deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Filter deleted");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

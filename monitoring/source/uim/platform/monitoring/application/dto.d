@@ -26,7 +26,7 @@ struct RegisterResourceRequest {
   string region;
   int instanceCount;
   string[] tags;
-  string registeredBy;
+  UserId registeredBy;
 }
 
 struct UpdateResourceRequest {

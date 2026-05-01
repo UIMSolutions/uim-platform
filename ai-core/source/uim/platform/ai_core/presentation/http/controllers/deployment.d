@@ -11,10 +11,10 @@ import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core;
 
 class DeploymentController : PlatformController {
-  private ManageDeploymentsUseCase uc;
+  private ManageDeploymentsUseCase deployments;
 
-  this(ManageDeploymentsUseCase uc) {
-    this.uc = uc;
+  this(ManageDeploymentsUseCase deployments) {
+    this.deployments = deployments;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -36,7 +36,7 @@ class DeploymentController : PlatformController {
       r.configurationId = j.getString("configurationId");
       r.ttl = j.getInteger("ttl");
 
-      auto result = uc.create(r);
+      auto result = deployments.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -55,16 +55,13 @@ class DeploymentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto rgId = req.headers.get("AI-Resource-Group", "");
-      auto deployments = uc.list(rgId);
+      auto deploys = deployments.list(rgId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; deployments) {
-        jarr ~= deploymentToJson(d);
-      }
+      auto jDeploys = deploys.map!(deployment => deployment.toJson).array;
 
       auto resp = Json.emptyObject
-        .set("count", deployments.length)
-        .set("resources", jarr)
+        .set("count", deploys.length)
+        .set("resources", jDeploys)
         .set("message", "Deployments retrieved");
         
       res.writeJsonBody(resp, 200);
@@ -80,13 +77,13 @@ class DeploymentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
-      auto d = uc.getbyId(id, rgId);
-      if (d.id.isEmpty) {
+      auto deployment = deployments.getbyId(id, rgId);
+      if (deployment.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
       }
 
-      res.writeJsonBody(deploymentToJson(d), 200);
+      res.writeJsonBody(deployment.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -98,15 +95,15 @@ class DeploymentController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      PatchDeploymentRequest r;
-      r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.deploymentId = id;
-      r.targetStatus = j.getString("targetStatus");
-      r.configurationId = j.getString("configurationId");
-      r.ttl = j.getInteger("ttl");
+      PatchDeploymentRequest request;
+      request.tenantId = req.getTenantId;
+      request.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      request.deploymentId = id;
+      request.targetStatus = j.getString("targetStatus");
+      request.configurationId = j.getString("configurationId");
+      request.ttl = j.getInteger("ttl");
 
-      auto result = uc.patch(r);
+      auto result = deployments.patch(request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -128,7 +125,7 @@ class DeploymentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
-      auto result = uc.remove(id, rgId);
+      auto result = deployments.remove(id, rgId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

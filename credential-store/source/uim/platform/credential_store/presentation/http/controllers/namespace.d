@@ -23,7 +23,7 @@ class NamespaceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/namespaces", &handleCreate);
     router.get("/api/v1/namespaces", &handleList);
     router.get("/api/v1/namespaces/*", &handleGet);
@@ -45,7 +45,7 @@ class NamespaceController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
           .set("message", "Namespace created successfully");
-          
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -72,7 +72,7 @@ class NamespaceController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", jarr)
         .set("totalCount", namespaces.length);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -99,7 +99,7 @@ class NamespaceController : PlatformController {
         .set("createdAt", ns.createdAt)
         .set("updatedAt", ns.updatedAt)
         .set("createdBy", ns.createdBy);
-        
+
       res.writeJsonBody(nj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -117,8 +117,9 @@ class NamespaceController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

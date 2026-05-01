@@ -76,24 +76,25 @@ class InstanceController : PlatformController {
       auto instances = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (i; instances) {
+      foreach (instance; instances) {
         jarr ~= Json.emptyObject
-          .set("id", i.id)
-          .set("name", i.name)
-          .set("description", i.description)
-          .set("status", i.status.to!string)
-          .set("version", i.version_)
-          .set("region", i.region)
-          .set("memoryGB", i.resources.memoryGB)
-          .set("vcpus", i.resources.vcpus)
-          .set("storageGB", i.resources.storageGB)
-          .set("createdAt", i.createdAt)
-          .set("updatedAt", i.updatedAt);
+          .set("id", instance.id)
+          .set("name", instance.name)
+          .set("description", instance.description)
+          .set("status", instance.status.to!string)
+          .set("version", instance.version_)
+          .set("region", instance.region)
+          .set("memoryGB", instance.resources.memoryGB)
+          .set("vcpus", instance.resources.vcpus)
+          .set("storageGB", instance.resources.storageGB)
+          .set("createdAt", instance.createdAt)
+          .set("updatedAt", instance.updatedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(instances.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(instances.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -105,32 +106,32 @@ class InstanceController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto i = uc.getById(id);
-      if (i.id.isEmpty) {
+      auto instance = uc.getById(id);
+      if (instance.id.isEmpty) {
         writeError(res, 404, "Instance not found");
         return;
       }
 
       auto resp = Json.emptyObject
-        .set("id", i.id)
-        .set("name", i.name)
-        .set("description", i.description)
-        .set("status", i.status.to!string)
-        .set("version", i.version_)
-        .set("region", i.region)
-        .set("availabilityZone", i.availabilityZone)
-        .set("memoryGB", i.resources.memoryGB)
-        .set("vcpus", i.resources.vcpus)
-        .set("storageGB", i.resources.storageGB)
-        .set("usedStorageGB", i.resources.usedStorageGB)
-        .set("enableScriptServer", i.enableScriptServer)
-        .set("enableDocStore", i.enableDocStore)
-        .set("enableDataLake", i.enableDataLake)
-        .set("allowAllIpAccess", i.allowAllIpAccess)
+        .set("id", instance.id)
+        .set("name", instance.name)
+        .set("description", instance.description)
+        .set("status", instance.status.to!string)
+        .set("version", instance.version_)
+        .set("region", instance.region)
+        .set("availabilityZone", instance.availabilityZone)
+        .set("memoryGB", instance.resources.memoryGB)
+        .set("vcpus", instance.resources.vcpus)
+        .set("storageGB", instance.resources.storageGB)
+        .set("usedStorageGB", instance.resources.usedStorageGB)
+        .set("enableScriptServer", instance.enableScriptServer)
+        .set("enableDocStore", instance.enableDocStore)
+        .set("enableDataLake", instance.enableDataLake)
+        .set("allowAllIpAccess", instance.allowAllIpAccess)
         .set("whitelistedIps", stringsToJsonArray(i.whitelistedIps))
-        .set("createdAt", i.createdAt)
-        .set("updatedAt", i.updatedAt);
-        
+        .set("createdAt", instance.createdAt)
+        .set("updatedAt", instance.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -193,9 +194,10 @@ class InstanceController : PlatformController {
 
       auto result = uc.performAction(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Action performed: " ~ r.action);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Action performed: " ~ r.action);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

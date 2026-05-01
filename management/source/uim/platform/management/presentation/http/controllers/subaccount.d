@@ -59,7 +59,7 @@ class SubaccountController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -85,9 +85,10 @@ class SubaccountController : PlatformController {
       foreach (s; items)
         arr ~= serializeSubaccount(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -201,4 +202,3 @@ private Json serializeSubaccount(Subaccount subaccount) {
     .set("labels", subaccount.labels)
     .set("customProperties", subaccount.customProperties);
 }
-

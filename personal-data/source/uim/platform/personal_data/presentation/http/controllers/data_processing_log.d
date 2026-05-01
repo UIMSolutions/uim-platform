@@ -44,9 +44,10 @@ class DataProcessingLogController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Processing log entry created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Processing log entry created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -77,9 +78,10 @@ class DataProcessingLogController : PlatformController {
                 jarr ~= logToJson(l);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(logs.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", logs.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -107,9 +109,10 @@ class DataProcessingLogController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Processing log entry deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Processing log entry deleted");
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

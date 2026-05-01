@@ -57,8 +57,10 @@ class ChannelController : PlatformController {
 
       auto result = uc.createChannel(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Notification channel created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -77,9 +79,10 @@ class ChannelController : PlatformController {
       foreach (channel; channels)
         arr ~= serializeChannel(channel);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(channels.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(channels.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

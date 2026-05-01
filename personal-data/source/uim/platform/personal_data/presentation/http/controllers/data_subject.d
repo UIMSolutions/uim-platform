@@ -49,9 +49,10 @@ class DataSubjectController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Data subject created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -149,9 +150,10 @@ class DataSubjectController : PlatformController {
 
             auto result = uc.updateDataSubject(request);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Data subject updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -171,9 +173,10 @@ class DataSubjectController : PlatformController {
 
             auto result = uc.block(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject blocked");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Data subject blocked");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -193,9 +196,10 @@ class DataSubjectController : PlatformController {
 
             auto result = uc.erase(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject erased (anonymized)");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Data subject erased (anonymized)");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -212,9 +216,10 @@ class DataSubjectController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Data subject deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

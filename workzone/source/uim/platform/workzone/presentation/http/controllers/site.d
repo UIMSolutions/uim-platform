@@ -44,8 +44,10 @@ class SiteController : PlatformController {
 
       auto result = useCase.createSite(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Site created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -65,9 +67,11 @@ class SiteController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (s; sites)
         arr ~= serializeSite(s);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(sites.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(sites.length))
+        .set("message", "Sites retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -62,7 +62,6 @@ class ClientLogController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -72,7 +71,12 @@ class ClientLogController : PlatformController {
           .set("source", item.source)
           .set("message", item.message);
       }
-      resp["items"] = items;
+
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", results.length)
+        .set("message", "Client logs retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

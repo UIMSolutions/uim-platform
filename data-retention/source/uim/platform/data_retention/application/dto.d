@@ -105,7 +105,7 @@ struct CreateDeletionRequestRequest {
     string applicationGroupId;
     string actionType;
     string reason;
-    string requestedBy;
+    UserId requestedBy;
 }
 
 struct UpdateDeletionRequestRequest {

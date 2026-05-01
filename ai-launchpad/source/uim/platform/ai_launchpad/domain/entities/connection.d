@@ -13,7 +13,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Connection {
-  ConnectionId id;
+  mixin TenantEntity!ConnectionId;
+
   string name;
   ConnectionType type;
   string url;
@@ -25,6 +26,19 @@ struct Connection {
   WorkspaceId workspaceId;
   string defaultResourceGroupId;
   string description;
-  string createdAt;
-  string updatedAt;
+
+  Json toJson() {
+    return entityToJson
+      .set("name", c.name)
+      .set("type", c.type.to!string)
+      .set("url", c.url)
+      .set("authUrl", c.authUrl)
+      .set("clientId", c.clientId)
+      .set("clientSecretMasked", c.clientSecretMasked)
+      .set("status", c.status.to!string)
+      .set("statusMessage", c.statusMessage)
+      .set("workspaceId", c.workspaceId)
+      .set("defaultResourceGroupId", c.defaultResourceGroupId)
+      .set("description", c.description);
+  }
 }

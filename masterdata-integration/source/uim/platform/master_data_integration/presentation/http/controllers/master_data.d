@@ -53,8 +53,10 @@ class MasterDataController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Master data object created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -78,9 +80,11 @@ class MasterDataController : PlatformController {
       foreach (o; objs)
         arr ~= serializeObj(o);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(objs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", objs.length)
+        .set("message", "Master data objects retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

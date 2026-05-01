@@ -43,12 +43,12 @@ class TagController : PlatformController {
 
       auto result = useCase.createTag(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Tag created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
     }
@@ -64,9 +64,11 @@ class TagController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (t; tags)
         arr ~= serializeTag(t);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(tags.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", tags.length)
+        .set("message", "Tags retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -44,9 +44,9 @@ class TaskController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Task created"));
-            
+          .set("id", Json(result.id))
+          .set("message", Json("Task created"));
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -72,9 +72,10 @@ class TaskController : PlatformController {
           .set("createdAt", t.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(tasks.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(tasks.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -95,19 +96,19 @@ class TaskController : PlatformController {
       }
 
       auto response = Json.emptyObject
-      .set("id", t.id)
-      .set("name", t.name)
-      .set("description", t.description)
-      .set("targetObjectId", t.targetObjectId)
-      .set("scheduleExpression", t.scheduleExpression)
-      .set("startedAt", t.startedAt)
-      .set("completedAt", t.completedAt)
-      .set("lastRunDurationMs", t.lastRunDurationMs)
-      .set("lastRunMessage", t.lastRunMessage)
-      .set("retryCount", t.retryCount)
-      .set("maxRetries", t.maxRetries)
-      .set("createdAt", t.createdAt)
-      .set("updatedAt", t.updatedAt);
+        .set("id", t.id)
+        .set("name", t.name)
+        .set("description", t.description)
+        .set("targetObjectId", t.targetObjectId)
+        .set("scheduleExpression", t.scheduleExpression)
+        .set("startedAt", t.startedAt)
+        .set("completedAt", t.completedAt)
+        .set("lastRunDurationMs", t.lastRunDurationMs)
+        .set("lastRunMessage", t.lastRunMessage)
+        .set("retryCount", t.retryCount)
+        .set("maxRetries", t.maxRetries)
+        .set("createdAt", t.createdAt)
+        .set("updatedAt", t.updatedAt);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

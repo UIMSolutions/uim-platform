@@ -16,21 +16,18 @@ struct EntityId {
     return EntityId(randomUUID().toString());
   }
 
-  bool opEquals(const EntityId other) const
-  {
+  bool opEquals(const EntityId other) const {
     return value == other.value;
   }
 
-  size_t toHash() const nothrow @safe
-  {
+  size_t toHash() const nothrow @safe {
     size_t hash;
     foreach (c; value)
       hash = hash * 31 + c;
     return hash;
   }
 
-  bool empty() const
-  {
+  bool empty() const {
     return value.length == 0;
   }
 }
@@ -44,15 +41,14 @@ struct AuditInfo {
   SysTime createdAt;
   UserId createdBy;
   SysTime updatedAt;
-  string updatedBy;
+  UserId updatedBy;
 
   static AuditInfo create(string userId) {
     auto now = Clock.currTime();
     return AuditInfo(now, userId, now, userId);
   }
 
-  AuditInfo touch(string userId) const
-  {
+  AuditInfo touch(string userId) const {
     return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
   }
 

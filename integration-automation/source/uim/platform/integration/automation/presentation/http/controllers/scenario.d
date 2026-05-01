@@ -50,8 +50,10 @@ class ScenarioController : PlatformController {
 
       auto result = useCase.createScenario(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -70,9 +72,11 @@ class ScenarioController : PlatformController {
       foreach (s; scenarios)
         arr ~= serializeScenario(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(scenarios.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", scenarios.length)
+        .set("message", "Scenarios retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -113,8 +117,10 @@ class ScenarioController : PlatformController {
 
       auto result = useCase.updateScenario(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -130,8 +136,10 @@ class ScenarioController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteScenario(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario deleted");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

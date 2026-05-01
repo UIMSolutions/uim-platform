@@ -40,11 +40,12 @@ class TaskAttachmentController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Attachment created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Attachment created");
+                
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +62,7 @@ class TaskAttachmentController : PlatformController {
             TaskAttachment[] attachments;
             if (taskId.length > 0) {
                 attachments = uc.listByTask(tenantId, taskId);
-            }) {
+            } else {
                 attachments = [];
             }
 
@@ -70,9 +71,10 @@ class TaskAttachmentController : PlatformController {
                 jarr ~= attachmentToJson(a);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(attachments.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", attachments.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -104,11 +106,12 @@ class TaskAttachmentController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Attachment deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Attachment deleted");
+                
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

@@ -54,11 +54,9 @@ class ProxySystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -72,12 +70,12 @@ class ProxySystemController : PlatformController {
       foreach (s; items)
         arr ~= serializeSystem(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -92,8 +90,7 @@ class ProxySystemController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeSystem(*sys), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,16 +110,13 @@ class ProxySystemController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Proxy system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -133,18 +127,15 @@ class ProxySystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.activateSystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("active");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "active");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Proxy system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -155,15 +146,15 @@ class ProxySystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("inactive");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "inactive");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else {
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+      }
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -174,14 +165,13 @@ class ProxySystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteProxySystem(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

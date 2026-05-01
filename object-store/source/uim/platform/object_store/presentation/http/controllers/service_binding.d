@@ -43,8 +43,10 @@ class ServiceBindingController {
 
       auto result = uc.createBinding(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Service binding created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -63,9 +65,10 @@ class ServiceBindingController {
       foreach (b; bindings)
         arr ~= serializeBinding(b);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(bindings.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", bindings.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -106,8 +109,10 @@ class ServiceBindingController {
 
       auto result = uc.revokeBinding(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["revoked"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("revoked", true)
+          .set("message", "Service binding revoked");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

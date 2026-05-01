@@ -46,7 +46,7 @@ struct StartProcessInstanceRequest {
     TenantId tenantId;
     string processId;
     string id;
-    string startedBy;
+    UserId startedBy;
     string priority;
     string[][] context;
     long dueDate;

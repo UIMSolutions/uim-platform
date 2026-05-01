@@ -23,6 +23,7 @@ class AutomationRuleController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/situation-automation/rules", &handleList);
         router.get("/api/v1/situation-automation/rules/*", &handleGet);
         router.post("/api/v1/situation-automation/rules", &handleCreate);
@@ -45,9 +46,10 @@ class AutomationRuleController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation rule created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Automation rule created");
+                
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -65,22 +67,23 @@ class AutomationRuleController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (r; rules) {
                 jarr ~= Json.emptyObject
-                .set("id", r.id)
-                .set("name", r.name)
-                .set("templateId", r.templateId)
-                .set("status", r.status.to!string)
-                .set("priority", r.priority.to!string)
-                .set("enabled", r.enabled)
-                .set("executionOrder", r.executionOrder)
-                .set("triggerCount", r.triggerCount)
-                .set("successCount", r.successCount)
-                .set("failureCount", r.failureCount)
-                .set("createdAt", r.createdAt);
+                    .set("id", r.id)
+                    .set("name", r.name)
+                    .set("templateId", r.templateId)
+                    .set("status", r.status.to!string)
+                    .set("priority", r.priority.to!string)
+                    .set("enabled", r.enabled)
+                    .set("executionOrder", r.executionOrder)
+                    .set("triggerCount", r.triggerCount)
+                    .set("successCount", r.successCount)
+                    .set("failureCount", r.failureCount)
+                    .set("createdAt", r.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(rules.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(rules.length))
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -98,23 +101,24 @@ class AutomationRuleController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(r.id);
-            resp["name"] = Json(r.name);
-            resp["description"] = Json(r.description);
-            resp["templateId"] = Json(r.templateId);
-            resp["status"] = Json(r.status.to!string);
-            resp["priority"] = Json(r.priority.to!string);
-            resp["enabled"] = Json(r.enabled);
-            resp["executionOrder"] = Json(r.executionOrder);
-            resp["createdBy"] = Json(r.createdBy);
-            resp["modifiedBy"] = Json(r.modifiedBy);
-            resp["createdAt"] = Json(r.createdAt);
-            resp["updatedAt"] = Json(r.updatedAt);
-            resp["lastTriggeredAt"] = Json(r.lastTriggeredAt);
-            resp["triggerCount"] = Json(r.triggerCount);
-            resp["successCount"] = Json(r.successCount);
-            resp["failureCount"] = Json(r.failureCount);
+            auto resp = Json.emptyObject
+                .set("id", r.id)
+                .set("name", r.name)
+                .set("description", r.description)
+                .set("templateId", r.templateId)
+                .set("status", r.status.to!string)
+                .set("priority", r.priority.to!string)
+                .set("enabled", r.enabled)
+                .set("executionOrder", r.executionOrder)
+                .set("createdBy", r.createdBy)
+                .set("modifiedBy", r.modifiedBy)
+                .set("createdAt", r.createdAt)
+                .set("updatedAt", r.updatedAt)
+                .set("lastTriggeredAt", r.lastTriggeredAt)
+                .set("triggerCount", r.triggerCount)
+                .set("successCount", r.successCount)
+                .set("failureCount", r.failureCount);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -138,9 +142,10 @@ class AutomationRuleController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation rule updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Automation rule updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -157,9 +162,10 @@ class AutomationRuleController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Automation rule deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Automation rule deleted");
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

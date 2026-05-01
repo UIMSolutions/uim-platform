@@ -7,7 +7,7 @@ module uim.platform.process_automation.domain.services.process_validator;
 
 struct ProcessValidator {
     static string validate(string id, string name) {
-        if (Id.isEmpty)
+        if (id.isEmpty)
             return "Process ID is required";
         if (name.length == 0)
             return "Process name is required";
@@ -16,7 +16,7 @@ struct ProcessValidator {
         return "";
     }
 
-    static string validateInstance(string processId, string startedBy) {
+    static string validateInstance(string processId, UserId startedBy) {
         if (processId.isEmpty)
             return "Process ID is required";
         if (startedBy.length == 0)

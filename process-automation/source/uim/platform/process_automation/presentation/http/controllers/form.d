@@ -153,9 +153,10 @@ class FormController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Form deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Form deleted");
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

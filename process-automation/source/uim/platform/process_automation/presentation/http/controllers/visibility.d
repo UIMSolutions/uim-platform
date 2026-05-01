@@ -42,9 +42,10 @@ class VisibilityController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Visibility dashboard created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Visibility dashboard created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -71,9 +72,9 @@ class VisibilityController : PlatformController {
                 .set("updatedAt", v.updatedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(dashboards.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", dashboards.length)
+                .set("resources", jarr);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -91,18 +92,19 @@ class VisibilityController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(v.id);
-            resp["name"] = Json(v.name);
-            resp["description"] = Json(v.description);
-            resp["status"] = Json(v.status.to!string);
-            resp["dashboardType"] = Json(v.dashboardType.to!string);
-            resp["processIds"] = stringsToJsonArray(v.processIds);
-            resp["refreshIntervalSeconds"] = Json(v.refreshIntervalSeconds);
-            resp["createdBy"] = Json(v.createdBy);
-            resp["modifiedBy"] = Json(v.modifiedBy);
-            resp["createdAt"] = Json(v.createdAt);
-            resp["updatedAt"] = Json(v.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", v.id)
+                .set("name", v.name)
+                .set("description", v.description)
+                .set("status", v.status.to!string)
+                .set("dashboardType", v.dashboardType.to!string)
+                .set("processIds", stringsToJsonArray(v.processIds))
+                .set("refreshIntervalSeconds", Json(v.refreshIntervalSeconds))
+                .set("createdBy", Json(v.createdBy))
+                .set("modifiedBy", Json(v.modifiedBy))
+                .set("createdAt", Json(v.createdAt))
+                .set("updatedAt", Json(v.updatedAt));
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -124,9 +126,10 @@ class VisibilityController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Visibility dashboard updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Visibility dashboard updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -143,9 +146,10 @@ class VisibilityController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Visibility dashboard deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Visibility dashboard deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

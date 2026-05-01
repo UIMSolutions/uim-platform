@@ -69,9 +69,9 @@ class HtmlAppController : PlatformController {
           .set("status", e.status);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -82,7 +82,7 @@ class HtmlAppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -105,7 +105,7 @@ class HtmlAppController : PlatformController {
         .set("modifiedBy", entry.modifiedBy)
         .set("updatedAt", entry.updatedAt);
 
-      res.writeJsonBody(obj, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
@@ -115,7 +115,7 @@ class HtmlAppController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -129,8 +129,9 @@ class HtmlAppController : PlatformController {
       auto result = uc.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", id);
-          
+          .set("id", id)
+          .set("message", "App updated");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -142,16 +143,22 @@ class HtmlAppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }
       auto result = uc.removeById(tenantId, id);
-      if (result.isSuccess())
-        res.writeBody("", 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("id", id)
+          .set("message", "App deleted");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 400, result.error);
-    } catch (Exception e)
+      }
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    }
   }
 }

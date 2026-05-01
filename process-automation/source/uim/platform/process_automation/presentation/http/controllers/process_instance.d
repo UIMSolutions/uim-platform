@@ -42,9 +42,10 @@ class ProcessInstanceController : PlatformController {
 
             auto result = uc.start(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process instance started");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Process instance started");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -72,9 +73,10 @@ class ProcessInstanceController : PlatformController {
                 .set("completedAt", i.completedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(instances.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", instances.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,19 +94,20 @@ class ProcessInstanceController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(i.id);
-            resp["processId"] = Json(i.processId);
-            resp["processName"] = Json(i.processName);
-            resp["status"] = Json(i.status.to!string);
-            resp["priority"] = Json(i.priority.to!string);
-            resp["startedBy"] = Json(i.startedBy);
-            resp["currentStepId"] = Json(i.currentStepId);
-            resp["errorMessage"] = Json(i.errorMessage);
-            resp["retryCount"] = Json(i.retryCount);
-            resp["startedAt"] = Json(i.startedAt);
-            resp["completedAt"] = Json(i.completedAt);
-            resp["dueDate"] = Json(i.dueDate);
+            auto resp = Json.emptyObject
+                .set("id", i.id)
+                .set("processId", i.processId)
+                .set("processName", i.processName)
+                .set("status", i.status.to!string)
+                .set("priority", i.priority.to!string)
+                .set("startedBy", i.startedBy)
+                .set("currentStepId", i.currentStepId)
+                .set("errorMessage", i.errorMessage)
+                .set("retryCount", i.retryCount)
+                .set("startedAt", i.startedAt)
+                .set("completedAt", i.completedAt)
+                .set("dueDate", i.dueDate);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -133,9 +136,9 @@ class ProcessInstanceController : PlatformController {
 
             auto result = uc.performAction(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Action performed: " ~ r.action);
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Action performed: " ~ r.action);
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);
@@ -152,9 +155,10 @@ class ProcessInstanceController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process instance deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Process instance deleted");
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

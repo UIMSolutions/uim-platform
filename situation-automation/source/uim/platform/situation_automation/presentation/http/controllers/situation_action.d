@@ -51,9 +51,10 @@ class SituationActionController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation action created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation action created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -81,9 +82,10 @@ class SituationActionController : PlatformController {
                 .set("createdAt", a.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(actions.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", actions.length)
+                .set("resources", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -101,27 +103,27 @@ class SituationActionController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(a.id);
-            resp["name"] = Json(a.name);
-            resp["description"] = Json(a.description);
-            resp["type"] = Json(a.type.to!string);
-            resp["status"] = Json(a.status.to!string);
-            resp["webhookUrl"] = Json(a.webhookUrl);
-            resp["emailTemplate"] = Json(a.emailTemplate);
-            resp["createdBy"] = Json(a.createdBy);
-            resp["modifiedBy"] = Json(a.modifiedBy);
-            resp["createdAt"] = Json(a.createdAt);
-            resp["updatedAt"] = Json(a.updatedAt);
-            resp["lastExecutedAt"] = Json(a.lastExecutedAt);
-            resp["executionCount"] = Json(a.executionCount);
+            auto apiCfg = Json.emptyObject
+                .set("baseUrl", a.apiConfig.baseUrl)
+                .set("path", a.apiConfig.path)
+                .set("authType", a.apiConfig.authType)
+                .set("destinationName", a.apiConfig.destinationName);
 
-            auto apiCfg = Json.emptyObject;
-            apiCfg["baseUrl"] = Json(a.apiConfig.baseUrl);
-            apiCfg["path"] = Json(a.apiConfig.path);
-            apiCfg["authType"] = Json(a.apiConfig.authType);
-            apiCfg["destinationName"] = Json(a.apiConfig.destinationName);
-            resp["apiConfig"] = apiCfg;
+            auto resp = Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("type", a.type.to!string)
+                .set("status", a.status.to!string)
+                .set("webhookUrl", a.webhookUrl)
+                .set("emailTemplate", a.emailTemplate)
+                .set("createdBy", a.createdBy)
+                .set("modifiedBy", a.modifiedBy)
+                .set("createdAt", a.createdAt)
+                .set("updatedAt", a.updatedAt)
+                .set("lastExecutedAt", a.lastExecutedAt)
+                .set("executionCount", a.executionCount)
+                .set("apiConfig", apiCfg);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -149,9 +151,10 @@ class SituationActionController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation action updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation action updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -168,9 +171,10 @@ class SituationActionController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation action deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation action deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

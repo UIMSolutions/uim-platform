@@ -15,14 +15,15 @@ mixin(ShowModule!());
 @safe:
 
 class DataContextController : PlatformController {
-    private ManageDataContextsUseCase uc;
+    private ManageDataContextsUseCase dataContexts;
 
-    this(ManageDataContextsUseCase uc) {
-        this.uc = uc;
+    this(ManageDataContextsUseCase dataContexts) {
+        this.dataContexts = dataContexts;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/situation-automation/data-contexts", &handleList);
         router.get("/api/v1/situation-automation/data-contexts/*", &handleGet);
         router.post("/api/v1/situation-automation/data-contexts", &handleCreate);
@@ -44,13 +45,14 @@ class DataContextController : PlatformController {
             r.containsPersonalData = j.getBoolean("containsPersonalData");
             r.expiresAt = jsonLong(j, "expiresAt");
 
-            auto result = uc.create(r);
+            auto result = dataContexts.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data context created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Data context created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +63,7 @@ class DataContextController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto contexts = uc.list(tenantId);
+            auto contexts = dataContexts.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; contexts) {
@@ -76,9 +78,11 @@ class DataContextController : PlatformController {
                     .set("expiresAt", d.expiresAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(contexts.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(contexts.length))
+                .set("resources", jarr);
+                .set("message", "Data contexts retrieved");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -90,21 +94,22 @@ class DataContextController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = uc.getById(id);
+            auto d = dataContexts.getById(id);
             if (d.id.isEmpty) {
                 writeError(res, 404, "Data context not found");
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(d.id);
-            resp["instanceId"] = Json(d.instanceId);
-            resp["entityId"] = Json(d.entityId);
-            resp["entityTypeId"] = Json(d.entityTypeId);
-            resp["sourceSystem"] = Json(d.sourceSystem);
-            resp["containsPersonalData"] = Json(d.containsPersonalData);
-            resp["capturedAt"] = Json(d.capturedAt);
-            resp["expiresAt"] = Json(d.expiresAt);
+            auto resp = Json.emptyObject
+                .set("id", d.id)
+                .set("instanceId", d.instanceId)
+                .set("entityId", d.entityId)
+                .set("entityTypeId", d.entityTypeId)
+                .set("sourceSystem", d.sourceSystem)
+                .set("containsPersonalData", d.containsPersonalData)
+                .set("capturedAt", d.capturedAt)
+                .set("expiresAt", d.expiresAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -116,13 +121,14 @@ class DataContextController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(id);
+            auto result = dataContexts.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data context deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Data context deleted");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -133,12 +139,13 @@ class DataContextController : PlatformController {
     private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto result = uc.removePersonalData(tenantId);
+            auto result = dataContexts.removePersonalData(tenantId);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Personal data contexts deleted");
+                auto resp = Json.emptyObject
+                    .set("message", "Personal data contexts deleted");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

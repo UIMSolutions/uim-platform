@@ -30,7 +30,7 @@ struct Subscription {
   string errorDescription;
   string[] dependentServices; // services required by this subscription
   long subscribedAt;
-  string subscribedBy;
+  UserId subscribedBy;
   string[string] parameters;
   string[string] labels;
 

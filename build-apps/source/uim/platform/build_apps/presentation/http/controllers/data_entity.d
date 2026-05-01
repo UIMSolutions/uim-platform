@@ -31,11 +31,12 @@ class DataEntityController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.dataEntityToJson();
+            foreach (e; items)
+                jarr ~= e.dataEntityToJson();
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Data entities retrieved");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Data entities retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -46,10 +47,14 @@ class DataEntityController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(DataEntityId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Data entity not found"); return; }
+            if (e.id.value.length == 0) {
+                writeError(res, 404, "Data entity not found");
+                return;
+            }
             res.writeJsonBody(e.dataEntityToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -76,8 +81,8 @@ class DataEntityController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data entity created");
+                    .set("id", result.id)
+                    .set("message", "Data entity created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -91,6 +96,7 @@ class DataEntityController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataEntityDTO dto;
@@ -103,8 +109,8 @@ class DataEntityController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data entity updated");
+                    .set("id", result.id)
+                    .set("message", "Data entity updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -118,12 +124,14 @@ class DataEntityController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.remove(DataEntityId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Data entity deleted");
+                auto resp = Json.emptyObject
+                    .set("message", "Data entity deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

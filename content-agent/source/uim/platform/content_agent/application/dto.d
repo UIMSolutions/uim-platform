@@ -36,7 +36,7 @@ struct UpdatePackageRequest {
 struct AssemblePackageRequest {
   ContentPackageId packageId;
   TenantId tenantId;
-  string assembledBy;
+  UserId assembledBy;
 }
 
 /// --- Content Provider DTOs ---
@@ -47,7 +47,7 @@ struct RegisterProviderRequest {
   string description;
   string endpoint;
   string authToken;
-  string registeredBy;
+  UserId registeredBy;
 }
 
 struct UpdateProviderRequest {
@@ -72,7 +72,7 @@ struct CreateTransportRequest {
 struct ReleaseTransportRequest {
   TransportRequestId requestId;
   TenantId tenantId;
-  string releasedBy;
+  UserId releasedBy;
 }
 
 /// --- Export Job DTOs ---
@@ -82,7 +82,7 @@ struct StartExportRequest {
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
   TransportQueueId queueId;
-  string startedBy;
+  UserId startedBy;
 }
 
 /// --- Import Job DTOs ---
@@ -92,7 +92,7 @@ struct StartImportRequest {
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
   string sourceFilePath;
-  string startedBy;
+  UserId startedBy;
 }
 
 /// --- Transport Queue DTOs ---

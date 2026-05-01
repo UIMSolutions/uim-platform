@@ -90,6 +90,11 @@ class PrivateKeyController : PlatformController {
                 return;
             }
 
+            auto domainsArr = Json.emptyArray;
+            foreach (d; k.domains) {
+                domainsArr ~= Json(d);
+            }
+
             auto resp = Json.emptyObject
                 .set("id", Json(k.id))
                 .set("subject", Json(k.subject))
@@ -98,13 +103,8 @@ class PrivateKeyController : PlatformController {
                 .set("keySize", Json(k.keySize))
                 .set("publicKeyFingerprint", Json(k.publicKeyFingerprint))
                 .set("createdBy", Json(k.createdBy))
-                .set("createdAt", Json(k.createdAt));
-
-            auto domainsArr = Json.emptyArray;
-            foreach (d; k.domains) {
-                domainsArr ~= Json(d);
-            }
-            resp["domains"] = domainsArr;
+                .set("createdAt", Json(k.createdAt))
+                .set("domains", domainsArr);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -122,7 +122,7 @@ class PrivateKeyController : PlatformController {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
                     .set("message", Json("Private key deleted"));
-                    
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

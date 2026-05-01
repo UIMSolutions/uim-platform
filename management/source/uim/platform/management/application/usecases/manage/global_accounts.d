@@ -51,7 +51,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
 
     repo.save(globalAccount);
     emitEvent(eventRepo, globalAccount.id.toString, "", PlatformEventCategory.globalAccountChange,
-        "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
+      "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, globalAccount.id.toString, "");
   }
@@ -98,10 +98,10 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     repo.update(globalAccount);
 
     emitEvent(eventRepo, accountId.toString, "", PlatformEventCategory.globalAccountChange,
-        "globalAccount.suspended", "Global account suspended", "system");
+      "globalAccount.suspended", "Global account suspended", UserId("system"));
     return CommandResult(true, accountId.toString, "");
   }
-  
+
   CommandResult reactivate(string id) {
     return reactivate(GlobalAccountId(id));
   }
@@ -157,4 +157,3 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
 }
-

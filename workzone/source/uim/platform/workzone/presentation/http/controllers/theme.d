@@ -23,7 +23,7 @@ class ThemeController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/themes", &handleCreate);
     router.get("/api/v1/themes", &handleList);
     router.get("/api/v1/themes/*", &handleGet);
@@ -46,16 +46,15 @@ class ThemeController : PlatformController {
 
       auto result = useCase.createTheme(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Theme created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -64,15 +63,15 @@ class ThemeController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (t; themes)
-        arr ~= serializeTheme(t);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(themes.length);
+      auto arr = themes.map!(t => serializeTheme(t)).array;
+
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(themes.length))
+        .set("message", "Themes retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +86,7 @@ class ThemeController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeTheme(*t), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -110,8 +108,7 @@ class ThemeController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -125,8 +122,7 @@ class ThemeController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

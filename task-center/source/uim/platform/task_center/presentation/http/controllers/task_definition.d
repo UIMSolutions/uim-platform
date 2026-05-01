@@ -44,9 +44,10 @@ class TaskDefinitionController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task definition created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task definition created");
+                    
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -62,21 +63,17 @@ class TaskDefinitionController : PlatformController {
             auto params = req.queryParams();
             auto providerId = params.get("providerId", "");
 
-            TaskDefinition[] defs;
-            if (providerId.length > 0) {
-                defs = uc.listByProvider(tenantId, providerId);
-            } else {
-                defs = uc.list(tenantId);
-            }
+            TaskDefinition[] defs = providerId.length > 0 ? uc.listByProvider(tenantId, providerId) : uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; defs) {
                 jarr ~= defToJson(d);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(defs.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", defs.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -119,9 +116,10 @@ class TaskDefinitionController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task definition updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task definition updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -141,9 +139,10 @@ class TaskDefinitionController : PlatformController {
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task definition activated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task definition activated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -163,9 +162,10 @@ class TaskDefinitionController : PlatformController {
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task definition deactivated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task definition deactivated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -182,9 +182,10 @@ class TaskDefinitionController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Task definition deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Task definition deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

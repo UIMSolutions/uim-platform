@@ -127,8 +127,9 @@ class QueueController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(QueueId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Queue deleted");
+                auto resp = Json.emptyObject
+                  .set("message", Json("Queue deleted"));
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

@@ -49,8 +49,9 @@ class MetricController : PlatformController {
 
       auto result = uc.pushMetric(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -85,8 +86,10 @@ class MetricController : PlatformController {
       }
 
       auto result = uc.pushMetricBatch(batchReq);
-      auto resp = Json.emptyObject;
-      resp["accepted"] = Json(batchReq.metrics.length);
+      auto resp = Json.emptyObject
+        .set("accepted", batchReq.metrics.length)
+        .set("message", "Metrics batch pushed successfully");
+      
       res.writeJsonBody(resp, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -132,16 +135,18 @@ class MetricController : PlatformController {
 
       auto summary = uc.computeSummary(tenantId, resourceId, metricName, windowStart, now);
 
-      auto resp = Json.emptyObject;
-      resp["name"] = Json(summary.name);
-      resp["resourceId"] = Json(summary.resourceId);
-      resp["minValue"] = Json(summary.minValue);
-      resp["maxValue"] = Json(summary.maxValue);
-      resp["avgValue"] = Json(summary.avgValue);
-      resp["sumValue"] = Json(summary.sumValue);
-      resp["dataPointCount"] = Json(summary.dataPointCount);
-      resp["windowStartTime"] = Json(summary.windowStartTime);
-      resp["windowEndTime"] = Json(summary.windowEndTime);
+      auto resp = Json.emptyObject
+        .set("name", summary.name)
+        .set("resourceId", summary.resourceId)
+        .set("minValue", summary.minValue)
+        .set("maxValue", summary.maxValue)
+        .set("avgValue", summary.avgValue)
+        .set("sumValue", summary.sumValue)
+        .set("dataPointCount", summary.dataPointCount)
+        .set("windowStartTime", summary.windowStartTime)
+        .set("windowEndTime", summary.windowEndTime)
+        .set("message", "Metric summary retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -45,9 +45,10 @@ class RegisteredApplicationController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Application registered");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Application registered");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -62,14 +63,12 @@ class RegisteredApplicationController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto apps = uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (a; apps) {
-                jarr ~= appToJson(a);
-            }
+            auto jarr = apps.map!(a => appToJson(a)).array; {
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(apps.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+              .set("count", apps.length)
+              .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -114,9 +113,10 @@ class RegisteredApplicationController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Application updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Application updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -136,9 +136,10 @@ class RegisteredApplicationController : PlatformController {
 
             auto result = uc.activate(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Application activated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Application activated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -158,9 +159,10 @@ class RegisteredApplicationController : PlatformController {
 
             auto result = uc.suspend(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Application suspended");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Application suspended");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -176,9 +178,10 @@ class RegisteredApplicationController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Application deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Application deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

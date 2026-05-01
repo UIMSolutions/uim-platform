@@ -46,8 +46,10 @@ class CorsRuleController : PlatformController {
 
       auto result = uc.createRule(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "CORS rule created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -64,9 +66,11 @@ class CorsRuleController : PlatformController {
 
       auto arr = rules.map!(r => serializeRule(r)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length)
+        .set("message", "CORS rules retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

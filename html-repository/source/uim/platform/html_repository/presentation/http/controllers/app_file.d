@@ -75,19 +75,21 @@ class AppFileController : PlatformController {
         arr ~= obj;
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    } catch (Exception e)
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    } 
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
       }
@@ -110,8 +112,9 @@ class AppFileController : PlatformController {
       obj["updatedAt"] = Json(entry.updatedAt);
 
       res.writeJsonBody(obj, 200);
-    } catch (Exception e)
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    } 
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -119,7 +122,7 @@ class AppFileController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
       }
@@ -130,8 +133,10 @@ class AppFileController : PlatformController {
 
       auto result = uc.update(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(id);
+        auto resp = Json.emptyObject
+          .set("id", id)
+          .set("message", "File updated");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -143,7 +148,7 @@ class AppFileController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
       }

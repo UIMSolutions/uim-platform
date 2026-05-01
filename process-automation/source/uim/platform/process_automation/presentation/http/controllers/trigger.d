@@ -46,9 +46,10 @@ class TriggerController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Trigger created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Trigger created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -76,9 +77,10 @@ class TriggerController : PlatformController {
                 .set("fireCount", t.fireCount);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(triggers.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(triggers.length))
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -96,21 +98,22 @@ class TriggerController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(t.id);
-            resp["name"] = Json(t.name);
-            resp["description"] = Json(t.description);
-            resp["type"] = Json(t.type.to!string);
-            resp["status"] = Json(t.status.to!string);
-            resp["processId"] = Json(t.processId);
-            resp["eventType"] = Json(t.eventType);
-            resp["eventSource"] = Json(t.eventSource);
-            resp["filterExpression"] = Json(t.filterExpression);
-            resp["createdBy"] = Json(t.createdBy);
-            resp["createdAt"] = Json(t.createdAt);
-            resp["updatedAt"] = Json(t.updatedAt);
-            resp["lastFiredAt"] = Json(t.lastFiredAt);
-            resp["fireCount"] = Json(t.fireCount);
+            auto resp = Json.emptyObject
+                .set("id", t.id)
+                .set("name", t.name)
+                .set("description", t.description)
+                .set("type", t.type.to!string)
+                .set("status", t.status.to!string)
+                .set("processId", t.processId)
+                .set("eventType", t.eventType)
+                .set("eventSource", t.eventSource)
+                .set("filterExpression", t.filterExpression)
+                .set("createdBy", t.createdBy)
+                .set("createdAt", t.createdAt)
+                .set("updatedAt", t.updatedAt)
+                .set("lastFiredAt", t.lastFiredAt)
+                .set("fireCount", t.fireCount);
+            
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -133,9 +136,10 @@ class TriggerController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Trigger updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Trigger updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -152,9 +156,10 @@ class TriggerController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Trigger deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Trigger deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

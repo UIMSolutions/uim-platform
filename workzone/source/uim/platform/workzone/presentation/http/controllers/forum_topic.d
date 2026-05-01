@@ -23,7 +23,7 @@ class ForumTopicController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/forum-topics", &handleCreate);
     router.get("/api/v1/forum-topics", &handleList);
     router.get("/api/v1/forum-topics/*", &handleGet);
@@ -45,16 +45,14 @@ class ForumTopicController : PlatformController {
 
       auto result = useCase.createForumTopic(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -67,12 +65,13 @@ class ForumTopicController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (t; topics)
         arr ~= serializeForumTopic(t);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(topics.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", topics.length)
+        .set("message", "Forum topics retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +86,7 @@ class ForumTopicController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeForumTopic(*t), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -110,8 +108,7 @@ class ForumTopicController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -125,8 +122,7 @@ class ForumTopicController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

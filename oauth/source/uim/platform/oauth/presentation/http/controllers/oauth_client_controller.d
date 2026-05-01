@@ -31,10 +31,12 @@ class OAuthClientController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.oauthClientToJson();
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            foreach (e; items)
+                jarr ~= e.oauthClientToJson();
+            auto resp = Json.emptyObject
+                .set("count", Json(items.length))
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -44,10 +46,14 @@ class OAuthClientController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(OAuthClientId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "OAuth client not found"); return; }
+            if (e.id.value.length == 0) {
+                writeError(res, 404, "OAuth client not found");
+                return;
+            }
             res.writeJsonBody(e.oauthClientToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -69,15 +75,17 @@ class OAuthClientController : PlatformController {
             dto.allowedScopes = j.getString("allowedScopes");
             dto.grantTypes = j.getString("grantTypes");
             dto.accessTokenValidity = j.getString("accessTokenValidity").length > 0 ? 3600 : 3600;
-            dto.refreshTokenValidity = j.getString("refreshTokenValidity").length > 0 ? 86400 : 86400;
+            dto.refreshTokenValidity = j.getString("refreshTokenValidity").length > 0 ? 86400
+                : 86400;
             dto.contacts = j.getString("contacts");
             dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("OAuth client created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "OAuth client created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -90,6 +98,7 @@ class OAuthClientController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             OAuthClientDTO dto;
@@ -103,9 +112,10 @@ class OAuthClientController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("OAuth client updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "OAuth client updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -118,12 +128,14 @@ class OAuthClientController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.remove(OAuthClientId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("OAuth client deleted");
+                auto resp = Json.emptyObject
+                    .set("message", "OAuth client deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

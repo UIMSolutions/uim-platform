@@ -44,9 +44,10 @@ class SubstitutionRuleController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Substitution rule created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Substitution rule created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -74,9 +75,10 @@ class SubstitutionRuleController : PlatformController {
                 jarr ~= ruleToJson(r);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(rules.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", rules.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -87,8 +89,10 @@ class SubstitutionRuleController : PlatformController {
         try {
             import std.conv : to;
             import std.algorithm : endsWith;
+
             auto path = req.requestURI.to!string;
-            if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
+            if (path.endsWith("/activate") || path.endsWith("/deactivate"))
+                return;
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
@@ -106,6 +110,7 @@ class SubstitutionRuleController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateSubstitutionRuleRequest r;
@@ -119,9 +124,10 @@ class SubstitutionRuleController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Substitution rule updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Substitution rule updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -134,6 +140,7 @@ class SubstitutionRuleController : PlatformController {
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
@@ -141,9 +148,10 @@ class SubstitutionRuleController : PlatformController {
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Substitution rule activated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Substitution rule activated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -156,6 +164,7 @@ class SubstitutionRuleController : PlatformController {
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
@@ -163,9 +172,10 @@ class SubstitutionRuleController : PlatformController {
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Substitution rule deactivated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Substitution rule deactivated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -178,13 +188,15 @@ class SubstitutionRuleController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Substitution rule deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Substitution rule deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -196,16 +208,16 @@ class SubstitutionRuleController : PlatformController {
 
     private Json ruleToJson(SubstitutionRule r) {
         return Json.emptyObject
-        .set("id", r.id)
-        .set("tenantId", r.tenantId)
-        .set("userId", r.userId)
-        .set("substituteId", r.substituteId)
-        .set("taskDefinitionId", r.taskDefinitionId)
-        .set("status", r.status.to!string)
-        .set("startDate", r.startDate)
-        .set("endDate", r.endDate)
-        .set("isAutoForward", r.isAutoForward)
-        .set("createdBy", r.createdBy)
-        .set("createdAt", r.createdAt);
+            .set("id", r.id)
+            .set("tenantId", r.tenantId)
+            .set("userId", r.userId)
+            .set("substituteId", r.substituteId)
+            .set("taskDefinitionId", r.taskDefinitionId)
+            .set("status", r.status.to!string)
+            .set("startDate", r.startDate)
+            .set("endDate", r.endDate)
+            .set("isAutoForward", r.isAutoForward)
+            .set("createdBy", r.createdBy)
+            .set("createdAt", r.createdAt);
     }
 }

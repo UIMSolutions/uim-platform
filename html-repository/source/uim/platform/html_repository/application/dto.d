@@ -151,7 +151,7 @@ struct CreateDeploymentRequest {
   string versionId;
   string serviceInstanceId;
   string operation; // "deploy", "undeploy", "redeploy"
-  string deployedBy;
+  UserId deployedBy;
 
   Json toJson() const {
     return Json.emptyObject

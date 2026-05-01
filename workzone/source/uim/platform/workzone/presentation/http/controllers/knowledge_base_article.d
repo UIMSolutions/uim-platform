@@ -46,16 +46,15 @@ class KnowledgeBaseArticleController {
 
       auto result = useCase.createArticle(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Knowledge base article created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -64,16 +63,17 @@ class KnowledgeBaseArticleController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto articles = useCase.listByWorkspace(workspacetenantId, id);
+      auto articles = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = Json.emptyArray;
       foreach (a; articles)
         arr ~= serializeKBArticle(a);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(articles.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", articles.length)
+        .set("message", "Knowledge base articles retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -88,8 +88,7 @@ class KnowledgeBaseArticleController {
         return;
       }
       res.writeJsonBody(serializeKBArticle(*a), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -112,8 +111,7 @@ class KnowledgeBaseArticleController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -127,8 +125,7 @@ class KnowledgeBaseArticleController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -83,9 +83,10 @@ class DatabaseConnectionController : PlatformController {
           .set("createdAt", c.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(conns.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(conns.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -142,9 +143,10 @@ class DatabaseConnectionController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Database connection updated");
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", Json("Database connection updated"));
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

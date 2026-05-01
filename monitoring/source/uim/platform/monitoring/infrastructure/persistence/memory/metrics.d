@@ -16,17 +16,21 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricRepository {
+class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
+
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;
   }
+
   Metric[] filterByResource(Metric[] metrics, MonitoredResourceId resourceId) {
     return metrics.filter!(m => m.resourceId == resourceId).array;
-  } 
+  }
+
   Metric[] findByResource(string tenantId, MonitoredResourceId resourceId) {
     return filterByResource(findByTenant(TenantId(tenantId)), resourceId);
   }
+
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     findByResource(tenantId, resourceId).each!(m => remove(m));
   }
@@ -34,12 +38,15 @@ class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricReposit
   size_t countByName(TenantId tenantId, string metricName) {
     return findByName(tenantId, metricName).length;
   }
+
   Metric[] filterByName(Metric[] metrics, string metricName) {
     return metrics.filter!(m => m.name == metricName).array;
   }
+
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return filterByResource(findByTenant(tenantId), resourceId);
   }
+
   void removeByName(TenantId tenantId, string metricName) {
     findByName(tenantId, metricName).each!(m => remove(m));
   }
@@ -47,12 +54,15 @@ class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricReposit
   size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return findByResourceAndName(tenantId, resourceId, metricName).length;
   }
+
   Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
     return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array;
   }
+
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return filterByResourceAndName(findByTenant(tenantId), resourceId, metricName);
   }
+
   void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     findByResourceAndName(tenantId, resourceId, metricName).each!(m => remove(m));
   }
@@ -60,12 +70,16 @@ class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricReposit
   size_t countInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     return findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).length;
   }
+
   Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
-    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
-  }   
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m
+        .timestamp <= endTime).array;
+  }
+
   Metric[] findByName(string tenantId, string metricName) {
     return findByName(TenantId(tenantId), metricName);
   }
+
   void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).each!(m => remove(m));
   }
@@ -73,13 +87,16 @@ class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricReposit
   size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return findByResourceAndName(tenantId, resourceId, metricName).length;
   }
+
   Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
-    return metrics.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId && m.name == metricName).array;
+    return metrics.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId && m.name == metricName)
+      .array;
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return findByResource(tenantId, resourceId).filter!(m => m.name == metricName).array;
   }
+
   void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     findByResourceAndName(tenantId, resourceId, metricName).each!(m => remove(m));
   }
@@ -87,13 +104,18 @@ class MemoryMetricRepository :TenantRepository!(Metric, MetricId), MetricReposit
   size_t countInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     return findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).length;
   }
+
   Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
-    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m
+        .timestamp <= endTime).array;
   }
+
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName, long startTime, long endTime) {
-    return findByResourceAndName(tenantId, resourceId, metricName).filter!(m => m.timestamp >= startTime && m.timestamp <= endTime).array;
+    string metricName, long startTime, long endTime) {
+    return findByResourceAndName(tenantId, resourceId, metricName).filter!(
+      m => m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
+
   void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     findInTimeRange(tenantId, resourceId, metricName, startTime, endTime).each!(m => remove(m));
   }

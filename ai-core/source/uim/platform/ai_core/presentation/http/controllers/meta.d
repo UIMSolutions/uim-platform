@@ -10,31 +10,30 @@ import uim.platform.ai_core;
 class MetaController : PlatformController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v2/lm/meta", &handleMeta);
   }
 
   private void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject;
 
+    auto logs = Json.emptyObject
+      .set("executions", true)
+      .set("deployments", true);
+
+    auto caps = Json.emptyObject
+      .set("logs", logs)
+      .set("multitenant", true)
+      .set("shareable", true)
+      .set("staticDeployments", false)
+      .set("userDeployments", true)
+      .set("userExecutions", true)
+      .set("executionSchedules", true)
+      .set("bulkUpdates", true)
+      .set("timeToLiveDeployments", true);
+
     // AI API capabilities
     auto aiApi = Json.emptyObject;
-    auto caps = Json.emptyObject;
-
-    auto logs = Json.emptyObject;
-    logs["executions"] = Json(true);
-    logs["deployments"] = Json(true);
-    caps["logs"] = logs;
-
-    caps["multitenant"] = Json(true);
-    caps["shareable"] = Json(true);
-    caps["staticDeployments"] = Json(false);
-    caps["userDeployments"] = Json(true);
-    caps["userExecutions"] = Json(true);
-    caps["executionSchedules"] = Json(true);
-    caps["bulkUpdates"] = Json(true);
-    caps["timeToLiveDeployments"] = Json(true);
-
     aiApi["capabilities"] = caps;
 
     auto limits = Json.emptyObject;

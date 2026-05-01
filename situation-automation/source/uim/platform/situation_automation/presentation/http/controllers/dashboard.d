@@ -44,9 +44,10 @@ class DashboardController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dashboard created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Dashboard created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -72,9 +73,11 @@ class DashboardController : PlatformController {
                 .set("createdAt", d.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(dashboards.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(dashboards.length))
+                .set("resources", jarr)
+                .set("message", "Dashboards retrieved");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,16 +95,17 @@ class DashboardController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(d.id);
-            resp["name"] = Json(d.name);
-            resp["description"] = Json(d.description);
-            resp["type"] = Json(d.type.to!string);
-            resp["refreshIntervalSeconds"] = Json(d.refreshIntervalSeconds);
-            resp["createdBy"] = Json(d.createdBy);
-            resp["modifiedBy"] = Json(d.modifiedBy);
-            resp["createdAt"] = Json(d.createdAt);
-            resp["updatedAt"] = Json(d.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", d.id)
+                .set("name", d.name)
+                .set("description", d.description)
+                .set("type", d.type.to!string)
+                .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
+                .set("createdBy", d.createdBy)
+                .set("modifiedBy", d.modifiedBy)
+                .set("createdAt", d.createdAt)
+                .set("updatedAt", d.updatedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -123,9 +127,10 @@ class DashboardController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dashboard updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Dashboard updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -142,9 +147,10 @@ class DashboardController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Dashboard deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Dashboard deleted");
+                    
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

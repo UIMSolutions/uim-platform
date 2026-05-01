@@ -67,13 +67,10 @@ class BusinessRoleController : PlatformController {
           .set("message", "Business role created");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -86,11 +83,11 @@ class BusinessRoleController : PlatformController {
 
       auto response = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", roles.length);
+        .set("totalCount", roles.length)
+        .set("message", "Business roles fetched");
 
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,8 +102,7 @@ class BusinessRoleController : PlatformController {
 
       auto role = uc.getRole(id);
       res.writeJsonBody(role.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -127,13 +123,10 @@ class BusinessRoleController : PlatformController {
           .set("message", "Business role updated");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -146,20 +139,14 @@ class BusinessRoleController : PlatformController {
         auto resp = Json.emptyObject
           .set("status", "deleted")
           .set("message", "Business role deleted");
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeRole(const BusinessRole role) {
-    
-  }
 }

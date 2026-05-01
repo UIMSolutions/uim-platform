@@ -53,8 +53,9 @@ class BucketController : PlatformController {
 
       auto result = uc.createBucket(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+        
         res.writeJsonBody(resp, 201);
       }
       else
@@ -76,9 +77,10 @@ class BucketController : PlatformController {
       foreach (b; buckets)
         arr ~= serializeBucket(b);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(buckets.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", buckets.length);
+      
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -120,8 +122,9 @@ class BucketController : PlatformController {
 
       auto result = uc.updateBucket(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       }
       else
@@ -139,8 +142,10 @@ class BucketController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBucket(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true)
+          .set("message", "Bucket deleted successfully");
+            
         res.writeJsonBody(resp, 200);
       }
       else

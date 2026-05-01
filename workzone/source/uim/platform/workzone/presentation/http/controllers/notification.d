@@ -23,7 +23,7 @@ class NotificationController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/notifications", &handleCreate);
     router.get("/api/v1/notifications", &handleList);
     router.get("/api/v1/notifications/*", &handleGet);
@@ -58,16 +58,15 @@ class NotificationController : PlatformController {
 
       auto result = useCase.createNotification(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Notification created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,12 +86,13 @@ class NotificationController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (n; items)
         arr ~= serializeNotification(n);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Notifications retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -107,8 +107,7 @@ class NotificationController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeNotification(*n), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -119,16 +118,15 @@ class NotificationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.markAsRead(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("read");
+        auto resp = Json.emptyObject
+          .set("status", "read")
+          .set("message", "Notification marked as read");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -139,16 +137,14 @@ class NotificationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("dismissed");
+        auto resp = Json.emptyObject
+        .set("status", "dismissed");
+        
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -159,8 +155,7 @@ class NotificationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteNotification(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -168,18 +163,18 @@ class NotificationController : PlatformController {
 
 private Json serializeNotification(Notification n) {
   return Json.emptyObject
-  .set("id", n.id)
-  .set("tenantId", n.tenantId)
-  .set("recipientId", n.recipientId)
-  .set("title", n.title)
-  .set("body", n.body_)
-  .set("sourceApp", n.sourceApp)
-  .set("sourceObjectType", n.sourceObjectType)
-  .set("sourceObjectId", n.sourceObjectId)
-  .set("actionUrl", n.actionUrl)
-  .set("priority", n.priority.to!string)
-  .set("status", n.status.to!string)
-  .set("createdAt", n.createdAt)
-  .set("readAt", n.readAt)
-  .set("expiresAt", n.expiresAt);
+    .set("id", n.id)
+    .set("tenantId", n.tenantId)
+    .set("recipientId", n.recipientId)
+    .set("title", n.title)
+    .set("body", n.body_)
+    .set("sourceApp", n.sourceApp)
+    .set("sourceObjectType", n.sourceObjectType)
+    .set("sourceObjectId", n.sourceObjectId)
+    .set("actionUrl", n.actionUrl)
+    .set("priority", n.priority.to!string)
+    .set("status", n.status.to!string)
+    .set("createdAt", n.createdAt)
+    .set("readAt", n.readAt)
+    .set("expiresAt", n.expiresAt);
 }

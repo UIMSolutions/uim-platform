@@ -25,7 +25,7 @@ class MonitoringController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/monitoring/jobs", &handleListJobSummaries);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJobSummary);
     router.get("/api/v1/monitoring/logs/*", &handleGetJobLogs);
@@ -94,9 +94,10 @@ class MonitoringController : PlatformController {
       foreach (e; items)
         arr ~= serializeEntity(e);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+      
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

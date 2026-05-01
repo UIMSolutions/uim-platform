@@ -21,9 +21,9 @@ struct Smartform {
     SmartformType formType = SmartformType.checklist;
     SmartformStatus status = SmartformStatus.draft;
     string templateId;
-    string submittedBy;
+    UserId submittedBy;
     string submittedDate;
-    string approvedBy;
+    UserId approvedBy;
     string approvedDate;
     string formData;
     string safetyLabel;

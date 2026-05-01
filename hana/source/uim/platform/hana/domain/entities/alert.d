@@ -39,7 +39,7 @@ struct Alert {
   string metricName;
   double metricValue;
   AlertThreshold threshold;
-  string acknowledgedBy;
+  UserId acknowledgedBy;
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;

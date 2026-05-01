@@ -57,11 +57,9 @@ class ShareController : PlatformController {
           .set("message", Json("Share created successfully"));
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,8 +78,7 @@ class ShareController : PlatformController {
         .set("totalCount", Json(items.length));
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -96,8 +93,7 @@ class ShareController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeShare(share), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,11 +110,9 @@ class ShareController : PlatformController {
           .set("message", Json("Share revoked"));
 
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -129,29 +123,28 @@ class ShareController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteShare(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeShare(const Share s) {
     return Json.emptyObject
-    .set("id", s.id)
-    .set("tenantId", s.tenantId)
-    .set("documentId", s.documentId)
-    .set("shareType", s.shareType.to!string)
-    .set("sharedWith", s.sharedWith)
-    .set("permissionLevel", s.permissionLevel.to!string)
-    .set("status", s.status.to!string)
-    .set("expiresAt", s.expiresAt)
-    .set("createdBy", s.createdBy)
-    .set("createdAt", s.createdAt);
+      .set("id", s.id)
+      .set("tenantId", s.tenantId)
+      .set("documentId", s.documentId)
+      .set("shareType", s.shareType.to!string)
+      .set("sharedWith", s.sharedWith)
+      .set("permissionLevel", s.permissionLevel.to!string)
+      .set("status", s.status.to!string)
+      .set("expiresAt", s.expiresAt)
+      .set("createdBy", s.createdBy)
+      .set("createdAt", s.createdAt);
   }
 }

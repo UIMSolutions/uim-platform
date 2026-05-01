@@ -81,9 +81,10 @@ class StepController : PlatformController {
       foreach (s; tasks)
         arr ~= serializeStep(s);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(tasks.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(tasks.length));
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

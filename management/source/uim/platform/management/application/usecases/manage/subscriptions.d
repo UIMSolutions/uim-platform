@@ -87,7 +87,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     repo.update(subscription);
 
     emitEvent(eventRepo, subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
-      "subscription.deleted", "Unsubscribed from " ~ subscription.appName, "system");
+      "subscription.deleted", "Unsubscribed from " ~ subscription.appName, UserId("system"));
 
     return CommandResult(true, subscription.id.toString, "");
   }

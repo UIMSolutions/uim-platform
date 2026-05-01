@@ -6,12 +6,12 @@ mixin(ShowModule!());
 
 @safe:
 void emitEvent(PlatformEventRepository eventRepo, string gaId, string subId, PlatformEventCategory cat,
-  string eventType, string desc, string initiatedBy) {
+  string eventType, string desc, UserId initiatedBy) {
   emitEvent(eventRepo, GlobalAccountId(gaId), SubaccountId(subId), cat, eventType, desc, initiatedBy);
 }
 
 void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, SubaccountId subId, PlatformEventCategory cat,
-  string eventType, string desc, string initiatedBy, string sourceService = "cloud-management") {
+  string eventType, string desc, UserId initiatedBy, string sourceService = "cloud-management") {
   // import std.uuid : randomUUID;
 
   PlatformEvent event;

@@ -23,7 +23,7 @@ class CardController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/cards", &handleCreate);
     router.get("/api/v1/cards", &handleList);
     router.get("/api/v1/cards/*", &handleGet);
@@ -46,16 +46,15 @@ class CardController : PlatformController {
 
       auto result = useCase.createCard(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Card created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -67,12 +66,12 @@ class CardController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (c; cards)
         arr ~= serializeCard(c);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(cards.length);
+      auto resp = Json.emptyObject
+        .set("count", cards.length)
+        .set("items", arr);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +86,7 @@ class CardController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeCard(*c), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,16 +107,15 @@ class CardController : PlatformController {
 
       auto result = useCase.updateCard(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Card updated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -129,8 +126,7 @@ class CardController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteCard(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -192,33 +188,33 @@ private CardManifest parseManifest(Json j) {
 }
 
 private Json serializeCard(Card c) {
-    // Data source
+  // Data source
   auto ds = Json.emptyObject
-  .set("url", c.dataSource.url)
-  .set("method", c.dataSource.method)
-  .set("path", c.dataSource.path)
-  .set("refreshIntervalSec", c.dataSource.refreshIntervalSec)
-  .set("authType", c.dataSource.authType);
+    .set("url", c.dataSource.url)
+    .set("method", c.dataSource.method)
+    .set("path", c.dataSource.path)
+    .set("refreshIntervalSec", c.dataSource.refreshIntervalSec)
+    .set("authType", c.dataSource.authType);
 
   // Manifest
   auto mj = Json.emptyObject
-  .set("type", c.manifest.type)
-  .set("version", c.manifest.version_)
-  .set("headerTitle", c.manifest.headerTitle)
-  .set("maxItems", c.manifest.maxItems);
+    .set("type", c.manifest.type)
+    .set("version", c.manifest.version_)
+    .set("headerTitle", c.manifest.headerTitle)
+    .set("maxItems", c.manifest.maxItems);
 
   // import std.conv : to;
   return Json.emptyObject
-  .set("id", c.id)
-  .set("tenantId", c.tenantId)
-  .set("title", c.title)
-  .set("subtitle", c.subtitle)
-  .set("description", c.description)
-  .set("icon", c.icon)
-  .set("cardType", c.cardType.to!string)
-  .set("active", c.active)
-  .set("createdAt", c.createdAt)
-  .set("updatedAt", c.updatedAt)
-  .set("dataSource", ds)
-  .set("manifest", mj);
+    .set("id", c.id)
+    .set("tenantId", c.tenantId)
+    .set("title", c.title)
+    .set("subtitle", c.subtitle)
+    .set("description", c.description)
+    .set("icon", c.icon)
+    .set("cardType", c.cardType.to!string)
+    .set("active", c.active)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt)
+    .set("dataSource", ds)
+    .set("manifest", mj);
 }

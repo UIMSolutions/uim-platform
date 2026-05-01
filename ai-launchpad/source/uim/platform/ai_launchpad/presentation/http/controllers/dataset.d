@@ -61,11 +61,9 @@ class DatasetController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
       auto scenarioId = req.headers.get("X-Scenario-Id", "");
 
-      typeof(uc.listByConnection(connectionId)) datasets;
-      if (scenarioId.length > 0)
-        datasets = uc.listByScenario(scenarioId, connectionId);
-      else
-        datasets = uc.listByConnection(connectionId);
+      typeof(uc.listByConnection(connectionId)) datasets = scenarioId.length > 0
+        ? uc.listByScenario(scenarioId, connectionId)
+        : uc.listByConnection(connectionId);
 
       auto jarr = Json.datasets.map(ds => serializeDataset(d)).array.toJson;
 
@@ -144,20 +142,4 @@ class DatasetController : PlatformController {
     }
   }
 
-  private Json serializeDataset(Dataset d) {
-    import std.conv : to;
-
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("connectionId", d.connectionId)
-      .set("name", d.name)
-      .set("description", d.description)
-      .set("scenarioId", d.scenarioId)
-      .set("url", d.url)
-      .set("size", d.size)
-      .set("status", d.status.to!string)
-      .set("labels", toJsonArray(d.labels))
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt);
-  }
 }

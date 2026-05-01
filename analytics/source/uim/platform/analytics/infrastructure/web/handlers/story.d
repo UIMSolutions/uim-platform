@@ -28,7 +28,7 @@ class StoryHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
-    if (Id.isEmpty) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }

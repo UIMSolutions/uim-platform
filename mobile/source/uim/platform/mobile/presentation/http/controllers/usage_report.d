@@ -22,7 +22,7 @@ class UsageReportController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/usage", &handleReport);
     router.get("/api/v1/usage", &handleList);
     router.get("/api/v1/usage/*", &handleGet);
@@ -61,7 +61,6 @@ class UsageReportController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -71,7 +70,9 @@ class UsageReportController : PlatformController {
           .set("metricKey", item.metricKey)
           .set("metricValue", item.metricValue);
       }
-      resp["items"] = items;
+      auto resp = Json.emptyObject
+        .set("items", items);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -83,19 +84,20 @@ class UsageReportController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["deviceId"] = Json(result.data.deviceId);
-        resp["userId"] = Json(result.data.userId);
-        resp["metricType"] = Json(result.data.metricType);
-        resp["metricKey"] = Json(result.data.metricKey);
-        resp["metricValue"] = Json(result.data.metricValue);
-        resp["sessionId"] = Json(result.data.sessionId);
-        resp["platform"] = Json(result.data.platform);
-        resp["appVersion"] = Json(result.data.appVersion);
-        resp["timestamp"] = Json(result.data.timestamp);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("deviceId", result.data.deviceId)
+          .set("userId", result.data.userId)
+          .set("metricType", result.data.metricType)
+          .set("metricKey", result.data.metricKey)
+          .set("metricValue", result.data.metricValue)
+          .set("sessionId", result.data.sessionId)
+          .set("platform", result.data.platform)
+          .set("appVersion", result.data.appVersion)
+          .set("timestamp", result.data.timestamp);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

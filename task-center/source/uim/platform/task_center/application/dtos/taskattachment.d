@@ -12,5 +12,5 @@ struct CreateTaskAttachmentRequest {
     string fileName;
     string fileSize;
     string mimeType;
-    string uploadedBy;
+    UserId uploadedBy;
 }

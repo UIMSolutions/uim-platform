@@ -43,8 +43,9 @@ class UserSessionController : PlatformController {
       r.appVersion = j.getString("appVersion");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -58,7 +59,6 @@ class UserSessionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -68,7 +68,10 @@ class UserSessionController : PlatformController {
         .set("platform", item.platform)
         .set("status", item.status);
       }
-      resp["items"] = items;
+
+      auto resp = Json.emptyObject
+        .set("items", items);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -80,17 +83,18 @@ class UserSessionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["appId"] = Json(result.data.appId);
-        resp["deviceId"] = Json(result.data.deviceId);
-        resp["userId"] = Json(result.data.userId);
-        resp["ipAddress"] = Json(result.data.ipAddress);
-        resp["userAgent"] = Json(result.data.userAgent);
-        resp["platform"] = Json(result.data.platform);
-        resp["appVersion"] = Json(result.data.appVersion);
-        resp["status"] = Json(result.data.status);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("appId", result.data.appId)
+          .set("deviceId", result.data.deviceId)
+          .set("userId", result.data.userId)
+          .set("ipAddress", result.data.ipAddress)
+          .set("userAgent", result.data.userAgent)
+          .set("platform", result.data.platform)
+          .set("appVersion", result.data.appVersion)
+          .set("status", result.data.status);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -105,8 +109,9 @@ class UserSessionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.terminate(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

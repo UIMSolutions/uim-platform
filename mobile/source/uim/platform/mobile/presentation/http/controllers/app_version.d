@@ -61,7 +61,6 @@ class AppVersionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -71,7 +70,12 @@ class AppVersionController : PlatformController {
           .set("platform", item.platform)
           .set("status", item.status);
       }
-      resp["items"] = items;
+
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", Json(results.length))
+        .set("message", Json("App versions retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

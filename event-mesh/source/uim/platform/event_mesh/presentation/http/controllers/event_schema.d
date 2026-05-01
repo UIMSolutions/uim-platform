@@ -100,9 +100,10 @@ class EventSchemaController : PlatformController {
 
             auto result = uc.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Event schema updated");
+                auto resp = Json.emptyObject
+                  .set("id", Json(result.id))
+                  .set("message", Json("Event schema updated"));
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -119,8 +120,9 @@ class EventSchemaController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(EventSchemaId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Event schema deleted");
+                auto resp = Json.emptyObject
+                  .set("message", Json("Event schema deleted"));
+                  
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

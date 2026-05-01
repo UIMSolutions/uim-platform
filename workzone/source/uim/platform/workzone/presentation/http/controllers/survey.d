@@ -23,7 +23,7 @@ class SurveyController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/surveys", &handleCreate);
     router.get("/api/v1/surveys", &handleList);
     router.get("/api/v1/surveys/*", &handleGet);
@@ -48,16 +48,15 @@ class SurveyController : PlatformController {
 
       auto result = useCase.createSurvey(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Survey created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,12 +69,13 @@ class SurveyController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (s; surveys)
         arr ~= serializeSurvey(s);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(surveys.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", surveys.length)
+        .set("message", "Surveys retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,8 +90,7 @@ class SurveyController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeSurvey(*s), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -100,7 +99,8 @@ class SurveyController : PlatformController {
     try {
       auto j = req.json;
       auto r = UpdateSurveyRequest();
-      r.id = extractIdFromPath(req.requestURI);;
+      r.id = extractIdFromPath(req.requestURI);
+      ;
       r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
@@ -110,8 +110,7 @@ class SurveyController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -125,8 +124,7 @@ class SurveyController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

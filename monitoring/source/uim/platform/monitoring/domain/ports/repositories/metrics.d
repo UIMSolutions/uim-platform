@@ -13,9 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - metric data point persistence.
-interface MetricRepository {
-  bool existsById(MetricId id);
-  Metric findById(MetricId id);
+interface MetricRepository : ITenantRepository!(Metric, MetricId) {
 
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
   Metric[] findByName(TenantId tenantId, string metricName);

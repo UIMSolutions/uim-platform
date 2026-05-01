@@ -24,4 +24,20 @@ struct Dataset {
   string[] labels;
   string createdAt;
   string updatedAt;
+
+  Json toJson() {
+
+    return Json.emptyObject
+      .set("id", id)
+      .set("connectionId", connectionId)
+      .set("name", name)
+      .set("description", description)
+      .set("scenarioId", scenarioId)
+      .set("url", url)
+      .set("size", size)
+      .set("status", status.to!string)
+      .set("labels", JsonArray(d.labels))
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }

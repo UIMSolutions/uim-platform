@@ -23,7 +23,7 @@ class NavigationItemController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/navigation-items", &handleCreate);
     router.get("/api/v1/navigation-items", &handleList);
     router.get("/api/v1/navigation-items/*", &handleGet);
@@ -48,16 +48,15 @@ class NavigationItemController : PlatformController {
 
       auto result = useCase.createNavigationItem(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Navigation item created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -66,16 +65,17 @@ class NavigationItemController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
-      auto items = useCase.listBySite(sitetenantId, id);
+      auto items = useCase.listBySite(tenantId, siteId);
       auto arr = Json.emptyArray;
       foreach (n; items)
         arr ~= serializeNavigationItem(n);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Navigation items retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,8 +90,7 @@ class NavigationItemController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeNavigationItem(*n), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,8 +113,7 @@ class NavigationItemController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -129,8 +127,7 @@ class NavigationItemController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -46,8 +46,9 @@ class MobileAppController : PlatformController {
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -61,7 +62,6 @@ class MobileAppController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -71,7 +71,11 @@ class MobileAppController : PlatformController {
           .set("platform", item.platform)
           .set("status", item.status);
       }
-      resp["items"] = items;
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", Json(results.length))
+        .set("message", Json("Mobile apps retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -83,20 +87,21 @@ class MobileAppController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.get(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.data.id);
-        resp["tenantId"] = Json(result.data.tenantId);
-        resp["name"] = Json(result.data.name);
-        resp["description"] = Json(result.data.description);
-        resp["bundleId"] = Json(result.data.bundleId);
-        resp["platform"] = Json(result.data.platform);
-        resp["securityConfig"] = Json(result.data.securityConfig);
-        resp["authProvider"] = Json(result.data.authProvider);
-        resp["pushEnabled"] = Json(result.data.pushEnabled);
-        resp["offlineEnabled"] = Json(result.data.offlineEnabled);
-        resp["iconUrl"] = Json(result.data.iconUrl);
-        resp["status"] = Json(result.data.status);
-        resp["createdBy"] = Json(result.data.createdBy);
+        auto resp = Json.emptyObject
+          .set("id", result.data.id)
+          .set("tenantId", result.data.tenantId)
+          .set("name", result.data.name)
+          .set("description", result.data.description)
+          .set("bundleId", result.data.bundleId)
+          .set("platform", result.data.platform)
+          .set("securityConfig", result.data.securityConfig)
+          .set("authProvider", result.data.authProvider)
+          .set("pushEnabled", result.data.pushEnabled)
+          .set("offlineEnabled", result.data.offlineEnabled)
+          .set("iconUrl", result.data.iconUrl)
+          .set("status", result.data.status)
+          .set("createdBy", result.data.createdBy)
+          .set("message", "Mobile app retrieved successfully");
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -122,8 +127,10 @@ class MobileAppController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Mobile app updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

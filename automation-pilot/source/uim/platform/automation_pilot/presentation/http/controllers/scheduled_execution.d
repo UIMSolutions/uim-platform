@@ -119,8 +119,10 @@ class ScheduledExecutionController : PlatformController {
             auto id = extractIdFromPath(path);
             auto result = uc.remove(ScheduledExecutionId(id));
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Scheduled execution deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Scheduled execution deleted");
+                
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

@@ -172,29 +172,5 @@ class DeploymentController : PlatformController {
     }
   }
 
-  private Json serializeDeployment(Deployment d) {
-    import std.conv : to;
-    import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
 
-    auto sj = Json.emptyObject
-      .set("minReplicas", d.scaling.minReplicas)
-      .set("maxReplicas", d.scaling.maxReplicas);
-
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("connectionId", d.connectionId)
-      .set("configurationId", d.configurationId)
-      .set("scenarioId", d.scenarioId)
-      .set("resourceGroupId", d.resourceGroupId)
-      .set("status", d.status.to!string)
-      .set("targetStatus", d.targetStatus)
-      .set("deploymentUrl", d.deploymentUrl)
-      .set("scaling", sj)
-      .set("ttl", d.ttl)
-      .set("startedAt", d.startedAt)
-      .set("stoppedAt", d.stoppedAt)
-      .set("statusMessage", d.statusMessage)
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt);
-  }
 }

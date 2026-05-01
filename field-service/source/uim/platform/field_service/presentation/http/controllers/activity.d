@@ -32,9 +32,10 @@ class ActivityController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= activityToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(items.length))
+                .set("resources", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

@@ -10,7 +10,7 @@ struct PerformTaskActionRequest {
     string id;
     string taskId;
     string actionType;
-    string performedBy;
+    UserId performedBy;
     string forwardTo;
     string comment;
 }

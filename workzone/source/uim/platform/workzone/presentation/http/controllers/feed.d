@@ -46,8 +46,10 @@ class FeedController : PlatformController {
 
       auto result = useCase.createEntry(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Feed entry created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -68,9 +70,11 @@ class FeedController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (e; entries)
         arr ~= serializeFeed(e);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(entries.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(entries.length))
+        .set("message", "Feed entries retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

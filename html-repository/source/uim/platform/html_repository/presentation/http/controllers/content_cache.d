@@ -86,7 +86,7 @@ class ContentCacheController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
       }
@@ -118,7 +118,7 @@ class ContentCacheController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
       }
@@ -136,8 +136,9 @@ class ContentCacheController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.purgeExpired(tenantId);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("purged");
+        auto resp = Json.emptyObject
+        .set("status", "purged");
+        
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);

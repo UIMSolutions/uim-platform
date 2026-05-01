@@ -29,7 +29,7 @@ class AlertController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/alerts", &handleList);
     router.get("/api/v1/alerts/*", &handleGetById);
     router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);
@@ -55,12 +55,13 @@ class AlertController : PlatformController {
       foreach (a; alerts)
         arr ~= serializeAlert(a);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(alerts.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", alerts.length)
+        .set("message", "Alerts retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -74,8 +75,7 @@ class AlertController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeAlert(a), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,17 +90,16 @@ class AlertController : PlatformController {
 
       auto result = uc.acknowledgeAlert(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["state"] = Json("acknowledged");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("state", "acknowledged")
+          .set("message", "Alert acknowledged successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -115,17 +114,16 @@ class AlertController : PlatformController {
 
       auto result = uc.resolveAlert(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["state"] = Json("resolved");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("state", "resolved")
+          .set("message", "Alert resolved successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -135,16 +133,14 @@ class AlertController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteAlert(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

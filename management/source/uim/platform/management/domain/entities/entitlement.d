@@ -31,5 +31,5 @@ struct Entitlement {
   bool unlimited = false;
   bool autoAssign = false; // auto-assign to new subaccounts
   long assignedAt;
-  string assignedBy;
+  UserId assignedBy;
 }

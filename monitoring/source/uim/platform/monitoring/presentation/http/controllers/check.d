@@ -82,8 +82,8 @@ class CheckController : PlatformController {
       auto arr = checks.map!(c => serializeCheck(c)).array;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(checks.length));
+        .set("items", arr)
+        .set("totalCount", Json(checks.length));
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -121,8 +121,10 @@ class CheckController : PlatformController {
 
       auto result = usecase.updateCheck(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Health check updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Health check not found" ? 404 : 400, result.error);
@@ -137,8 +139,11 @@ class CheckController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteCheck(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("id", id)
+          .set("deleted", true)
+          .set("message", "Health check deleted successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -163,8 +168,9 @@ class CheckController : PlatformController {
 
       auto result = usecase.recordResult(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);

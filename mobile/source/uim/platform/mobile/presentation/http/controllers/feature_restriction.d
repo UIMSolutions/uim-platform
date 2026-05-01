@@ -62,17 +62,21 @@ class FeatureRestrictionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
-      auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
-        .set("id", item.id)
-        .set("appId", item.appId)
-        .set("featureKey", item.featureKey)
-        .set("type", item.type)
-        .set("enabled", item.enabled);
+          .set("id", item.id)
+          .set("appId", item.appId)
+          .set("featureKey", item.featureKey)
+          .set("type", item.type)
+          .set("enabled", item.enabled);
       }
-      resp["items"] = items;
+
+      auto resp = Json.emptyObject
+        .set("items", items)
+        .set("totalCount", Json(results.length))
+        .set("message", Json("Feature restrictions retrieved successfully"));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -122,8 +126,10 @@ class FeatureRestrictionController : PlatformController {
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Feature restriction updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -154,8 +160,9 @@ class FeatureRestrictionController : PlatformController {
       auto userId = j.getString("userId");
       auto deviceId = j.getString("deviceId");
       auto result = uc.evaluate(featureId, userId, deviceId);
-      auto resp = Json.emptyObject;
-      resp["enabled"] = Json(result.enabled);
+      auto resp = Json.emptyObject
+        .set("enabled", result.enabled);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

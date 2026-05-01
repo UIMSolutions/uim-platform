@@ -24,7 +24,7 @@ struct PlatformEvent {
   string description;
   string resourceId; // ID of the affected resource
   string resourceType; // "subaccount", "entitlement", etc.
-  string initiatedBy; // user or system
+  UserId initiatedBy; // user or system
   string sourceService; // service that triggered the event
   long timestamp;
   string[string] details; // additional event data

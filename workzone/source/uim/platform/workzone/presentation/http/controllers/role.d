@@ -43,8 +43,10 @@ class RoleController : PlatformController {
 
       auto result = useCase.createRole(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Role created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -64,9 +66,11 @@ class RoleController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (r; roles)
         arr ~= serializeRole(r);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(roles.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(roles.length))
+        .set("message", "Roles retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

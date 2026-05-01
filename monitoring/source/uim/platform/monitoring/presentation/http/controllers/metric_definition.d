@@ -52,16 +52,15 @@ class MetricDefinitionController : PlatformController {
 
       auto result = uc.createDefinition(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Metric definition created successfully");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,12 +74,13 @@ class MetricDefinitionController : PlatformController {
       foreach (d; defs)
         arr ~= serializeDefinition(d);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(defs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", defs.length)
+        .set("message", "Metric definitions retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +94,7 @@ class MetricDefinitionController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDefinition(d), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -104,24 +103,22 @@ class MetricDefinitionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
-      UpdateMetricDefinitionRequest r;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.aggregation = j.getString("aggregation");
-      r.isEnabled = j.getBoolean("isEnabled", true);
+      UpdateMetricDefinitionRequest request;
+      request.displayName = j.getString("displayName");
+      request.description = j.getString("description");
+      request.aggregation = j.getString("aggregation");
+      request.isEnabled = j.getBoolean("isEnabled", true);
 
-      auto result = uc.updateDefinition(id, r);
+      auto result = uc.updateDefinition(id, request);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Metric definition not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -131,16 +128,14 @@ class MetricDefinitionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.removeDefinition(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -48,11 +48,12 @@ class DecisionController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Decision created");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Decision created");
+
                 res.writeJsonBody(resp, 201);
-            }) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -78,9 +79,10 @@ class DecisionController : PlatformController {
                     .set("updatedAt", d.updatedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(decisions.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", decisions.length)
+                .set("resources", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -98,19 +100,20 @@ class DecisionController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(d.id);
-            resp["name"] = Json(d.name);
-            resp["description"] = Json(d.description);
-            resp["status"] = Json(d.status.to!string);
-            resp["type"] = Json(d.type.to!string);
-            resp["hitPolicy"] = Json(d.hitPolicy.to!string);
-            resp["version"] = Json(d.version_);
-            resp["projectId"] = Json(d.projectId);
-            resp["createdBy"] = Json(d.createdBy);
-            resp["modifiedBy"] = Json(d.modifiedBy);
-            resp["createdAt"] = Json(d.createdAt);
-            resp["updatedAt"] = Json(d.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", d.id)
+                .set("name", d.name)
+                .set("description", d.description)
+                .set("status", d.status.to!string)
+                .set("type", d.type.to!string)
+                .set("hitPolicy", d.hitPolicy.to!string)
+                .set("version", d.version_)
+                .set("projectId", d.projectId)
+                .set("createdBy", d.createdBy)
+                .set("modifiedBy", d.modifiedBy)
+                .set("createdAt", d.createdAt)
+                .set("updatedAt", d.updatedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -133,11 +136,12 @@ class DecisionController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Decision updated");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Decision updated");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -152,11 +156,12 @@ class DecisionController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Decision deleted");
+                auto resp = Json.emptyObject
+                  .set("id", result.id)
+                  .set("message", "Decision deleted");
+
                 res.writeJsonBody(resp, 200);
-            }) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

@@ -52,16 +52,14 @@ class AccessPolicyController : PlatformController {
 
       auto result = uc.createPolicy(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,12 +73,12 @@ class AccessPolicyController : PlatformController {
       foreach (p; policies)
         arr ~= serializePolicy(p);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(policies.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", policies.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +92,7 @@ class AccessPolicyController : PlatformController {
         return;
       }
       res.writeJsonBody(serializePolicy(policy), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,16 +110,14 @@ class AccessPolicyController : PlatformController {
 
       auto result = uc.updatePolicy(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Policy not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -132,16 +127,15 @@ class AccessPolicyController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deletePolicy(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true)
+          .set("message", "Access policy deleted successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -158,7 +152,7 @@ class AccessPolicyController : PlatformController {
       .set("resources", p.resources)
       .set("createdBy", p.createdBy)
       .set("createdAt", p.createdAt)
-      .set("updatedAt", p.updatedAt); 
+      .set("updatedAt", p.updatedAt);
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/access-policies

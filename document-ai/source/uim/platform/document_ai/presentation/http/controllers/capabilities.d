@@ -26,36 +26,23 @@ class CapabilitiesController : PlatformController {
     try {
       auto caps = uc.getById();
 
-      auto resp = Json.emptyObject
-        .set("serviceName", Json(caps.serviceName))
-        .set("serviceVersion", Json(caps.serviceVersion));
-
-      auto extArr = Json.emptyArray;
-      foreach (m; caps.extractionMethods) {
-        extArr ~= Json(m);
-      }
-      resp["extractionMethods"] = extArr;
-
-      auto ftArr = Json.emptyArray;
-      foreach (f; caps.supportedFileTypes) {
-        ftArr ~= Json(f);
-      }
-      resp["supportedFileTypes"] = ftArr;
-
-      auto fvArr = Json.emptyArray;
-      foreach (fv; caps.fieldValueTypes) {
-        fvArr ~= Json(fv);
-      }
-      resp["fieldValueTypes"] = fvArr;
-
+      auto exMethods = caps.extractionMethods.map!(method => Json(m)).array;
+      auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array;
+      auto fvArr = caps.fieldValueTypes.map!(fv => Json(fv)).array;
       auto fArr = Json.emptyArray;
       foreach (feat; caps.features) {
         fArr ~= Json(feat);
       }
-      resp["features"] = fArr;
 
-      resp["maxDocumentSizeMb"] = Json(caps.maxDocumentSizeMb);
-      resp["maxPagesPerDocument"] = Json(caps.maxPagesPerDocument);
+      auto resp = Json.emptyObject
+        .set("serviceName", Json(caps.serviceName))
+        .set("serviceVersion", Json(caps.serviceVersion))
+        .set("extractionMethods", exMethods)
+        .set("supportedFileTypes", supFileTypes)
+        .set("fieldValueTypes", fvArr)
+        .set("features", fArr)
+        .set("maxDocumentSizeMb", Json(caps.maxDocumentSizeMb))
+        .set("maxPagesPerDocument", Json(caps.maxPagesPerDocument));
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

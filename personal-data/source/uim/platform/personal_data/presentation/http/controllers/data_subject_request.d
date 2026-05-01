@@ -43,9 +43,10 @@ class DataSubjectRequestController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject request created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Data subject request created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -67,6 +68,7 @@ class DataSubjectRequestController : PlatformController {
                 requests = uc.listByDataSubject(dataSubjectId);
             } else if (statusFilter.length > 0) {
                 import std.conv : to;
+
                 try {
                     auto s = statusFilter.to!RequestStatus;
                     requests = uc.listByStatus(s);
@@ -82,9 +84,10 @@ class DataSubjectRequestController : PlatformController {
                 jarr ~= requestToJson(r);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(requests.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", requests.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -94,6 +97,7 @@ class DataSubjectRequestController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.getById(id);
             if (r.id.isEmpty) {
@@ -124,9 +128,10 @@ class DataSubjectRequestController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject request updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Data subject request updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -139,12 +144,14 @@ class DataSubjectRequestController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Data subject request deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Data subject request deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -156,17 +163,17 @@ class DataSubjectRequestController : PlatformController {
 
     private Json requestToJson(DataSubjectRequest r) {
         return Json.emptyObject
-        .set("id", r.id)
-        .set("dataSubjectId", r.dataSubjectId)
-        .set("requestType", r.requestType.to!string)
-        .set("status", r.status.to!string)
-        .set("priority", r.priority.to!string)
-        .set("description", r.description)
-        .set("assignedTo", r.assignedTo)
-        .set("dueDate", r.dueDate)
-        .set("rejectionReason", r.rejectionReason)
-        .set("createdBy", r.createdBy)
-        .set("createdAt", r.createdAt)
-        .set("updatedAt", r.updatedAt);
+            .set("id", r.id)
+            .set("dataSubjectId", r.dataSubjectId)
+            .set("requestType", r.requestType.to!string)
+            .set("status", r.status.to!string)
+            .set("priority", r.priority.to!string)
+            .set("description", r.description)
+            .set("assignedTo", r.assignedTo)
+            .set("dueDate", r.dueDate)
+            .set("rejectionReason", r.rejectionReason)
+            .set("createdBy", r.createdBy)
+            .set("createdAt", r.createdAt)
+            .set("updatedAt", r.updatedAt);
     }
 }

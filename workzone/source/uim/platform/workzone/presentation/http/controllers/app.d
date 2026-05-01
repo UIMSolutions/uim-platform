@@ -52,10 +52,12 @@ class AppController : PlatformController {
 
       auto result = useCase.createApp(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "App created");
+
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -114,10 +116,12 @@ class AppController : PlatformController {
 
       auto result = useCase.updateApp(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "App updated");
+
         res.writeJsonBody(resp, 200);
-      }) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -129,8 +133,16 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteApp(tenantId, id);
-      res.writeBody("", 204);
+      auto result = useCase.deleteApp(tenantId, id);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "App deleted");
+
+        res.writeJsonBody(resp, 200);
+      } else {
+        writeError(res, 404, result.error);
+      } 
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

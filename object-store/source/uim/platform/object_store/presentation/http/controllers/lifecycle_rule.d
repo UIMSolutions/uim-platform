@@ -40,30 +40,28 @@ class LifecycleRuleController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto r = CreateLifecycleRuleRequest();
-      r.tenantId = req.getTenantId;
-      r.bucketId = j.getString("bucketId");
-      r.name = j.getString("name");
-      r.prefix = j.getString("prefix");
-      r.status = j.getString("status");
-      r.expirationDays = j.getInteger("expirationDays");
-      r.transitionDays = j.getInteger("transitionDays");
-      r.transitionStorageClass = j.getString("transitionStorageClass");
-      r.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      auto request = CreateLifecycleRuleRequest();
+      request.tenantId = request.getTenantId;
+      request.bucketId = j.getString("bucketId");
+      request.name = j.getString("name");
+      request.prefix = j.getString("prefix");
+      request.status = j.getString("status");
+      request.expirationDays = j.getInteger("expirationDays");
+      request.transitionDays = j.getInteger("transitionDays");
+      request.transitionStorageClass = j.getString("transitionStorageClass");
+      request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
+      request.createdBy = req.headers.get("X-User-Id", "");
 
-      auto result = uc.createRule(r);
+      auto result = uc.createRule(request);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -77,12 +75,13 @@ class LifecycleRuleController : PlatformController {
       foreach (r; rules)
         arr ~= serializeRule(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length)
+        .set("message", "Lifecycle rules retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -96,8 +95,7 @@ class LifecycleRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -106,27 +104,26 @@ class LifecycleRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
-      auto r = UpdateLifecycleRuleRequest();
-      r.name = j.getString("name");
-      r.prefix = j.getString("prefix");
-      r.status = j.getString("status");
-      r.expirationDays = j.getInteger("expirationDays");
-      r.transitionDays = j.getInteger("transitionDays");
-      r.transitionStorageClass = j.getString("transitionStorageClass");
-      r.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
+      auto request = UpdateLifecycleRuleRequest();
+      request.name = j.getString("name");
+      request.prefix = j.getString("prefix");
+      request.status = j.getString("status");
+      request.expirationDays = j.getInteger("expirationDays");
+      request.transitionDays = j.getInteger("transitionDays");
+      request.transitionStorageClass = j.getString("transitionStorageClass");
+      request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
 
-      auto result = uc.updateRule(id, r);
+      auto result = uc.updateRule(id, request);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Lifecycle rule updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Rule not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -136,35 +133,34 @@ class LifecycleRuleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true)
+          .set("message", "Lifecycle rule deleted successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRule(LifecycleRule r) {
     return Json.emptyObject
-    .set("id", r.id)
-    .set("tenantId", r.tenantId)
-    .set("bucketId", r.bucketId)
-    .set("name", r.name)
-    .set("prefix", r.prefix)
-    .set("status", r.status.to!string)
-    .set("expirationDays", r.expirationDays)
-    .set("transitionDays", r.transitionDays)
-    .set("transitionStorageClass", r.transitionStorageClass.to!string)
-    .set("abortIncompleteUploadDays", r.abortIncompleteUploadDays)
-    .set("createdBy", r.createdBy)
-    .set("createdAt", r.createdAt)
-    .set("updatedAt", r.updatedAt);
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("bucketId", r.bucketId)
+      .set("name", r.name)
+      .set("prefix", r.prefix)
+      .set("status", r.status.to!string)
+      .set("expirationDays", r.expirationDays)
+      .set("transitionDays", r.transitionDays)
+      .set("transitionStorageClass", r.transitionStorageClass.to!string)
+      .set("abortIncompleteUploadDays", r.abortIncompleteUploadDays)
+      .set("createdBy", r.createdBy)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt);
   }
 
   private static string extractBucketIdFromRulesPath(string uri) {

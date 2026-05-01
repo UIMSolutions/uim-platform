@@ -114,14 +114,16 @@ class ApiClientController : PlatformController {
       }
       else
       {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("revoked");
+        auto resp = Json.emptyObject
+          .set("status", "revoked");
+
         res.writeJsonBody(resp, 200);
       }
     }
     catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
+      auto errRes = Json.emptyObject
+        .set("error", "Internal server error");
+      
       res.writeJsonBody(errRes, 500);
     }
   }

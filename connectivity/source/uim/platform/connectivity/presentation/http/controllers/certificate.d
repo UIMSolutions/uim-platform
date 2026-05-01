@@ -53,8 +53,10 @@ class CertificateController : PlatformController {
 
       auto result = uc.createCertificate(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Certificate created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -73,9 +75,10 @@ class CertificateController : PlatformController {
       foreach (c; certs)
         arr ~= serializeCert(c);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(certs.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(certs.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -106,8 +109,10 @@ class CertificateController : PlatformController {
 
       auto result = uc.updateCertificate(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id))
+          .set("message", "Certificate updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
@@ -122,8 +127,10 @@ class CertificateController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteCertificate(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", Json(true))
+          .set("message", "Certificate deleted successfully");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

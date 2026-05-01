@@ -39,9 +39,10 @@ class TaskCommentController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Comment created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Comment created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -69,9 +70,10 @@ class TaskCommentController : PlatformController {
                 jarr ~= commentToJson(c);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(comments.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", comments.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -106,10 +108,11 @@ class TaskCommentController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Comment updated");
-                res.writeJsonBody(resp, 200);
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Comment updated");
+
+#                res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -125,9 +128,10 @@ class TaskCommentController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Comment deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Comment deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

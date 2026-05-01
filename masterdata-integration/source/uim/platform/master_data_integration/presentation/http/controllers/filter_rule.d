@@ -78,9 +78,11 @@ class FilterRuleController : PlatformController {
       foreach (r; rules)
         arr ~= serializeRule(r);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length)
+        .set("message", "Filter rules retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

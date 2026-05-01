@@ -17,11 +17,11 @@ struct TaskAction {
     TaskId taskId;
 
     ActionType actionType = ActionType.approve;
-    string performedBy;
+    UserId performedBy;
+    string performedAt;
     string forwardTo;
     string comment;
 
-    string performedAt;
 
     Json toJson() const {
         return entityToJson()

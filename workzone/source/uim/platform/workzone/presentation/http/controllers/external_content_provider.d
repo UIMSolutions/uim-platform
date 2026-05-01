@@ -43,8 +43,10 @@ class ExternalContentProviderController {
 
       auto result = useCase.createProvider(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "External content provider created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -64,9 +66,11 @@ class ExternalContentProviderController {
       auto arr = Json.emptyArray;
       foreach (p; providers)
         arr ~= serializeExternalProvider(p);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(providers.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", providers.length)
+        .set("message", "External content providers retrieved successfully");
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -28,4 +28,30 @@ struct Deployment {
   string statusMessage;
   string createdAt;
   string updatedAt;
+
+  Json toJson() {
+    import std.conv : to;
+    import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
+
+    auto sj = Json.emptyObject
+      .set("minReplicas", scaling.minReplicas)
+      .set("maxReplicas", scaling.maxReplicas);
+
+    return Json.emptyObject
+      .set("id", id)
+      .set("connectionId", connectionId)
+      .set("configurationId", configurationId)
+      .set("scenarioId", scenarioId)
+      .set("resourceGroupId", resourceGroupId)
+      .set("status", status.to!string)
+      .set("targetStatus", targetStatus)
+      .set("deploymentUrl", deploymentUrl)
+      .set("scaling", sj)
+      .set("ttl", ttl)
+      .set("startedAt", startedAt)
+      .set("stoppedAt", stoppedAt)
+      .set("statusMessage", statusMessage)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }

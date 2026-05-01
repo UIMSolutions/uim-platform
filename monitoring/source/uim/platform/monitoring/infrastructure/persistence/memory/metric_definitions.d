@@ -18,12 +18,41 @@ mixin(ShowModule!());
 @safe:
 class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {
 
-  MetricDefinition[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name = name);
+  }
+
+  MetricDefinition findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId)) {
+      if (e.name = name)
+        return e;
+    }
+    return MetricDefinition.init;
+  }
+
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId)) {
+      if (e.name = name) {
+        remove(e);
+        return;
+      }
+    }
+  }
+
+  size_t countByCategory(TenantId tenantId, MetricCategory category) {
+    return findByCategory(tenantId, category).length;
+  }
+
+  MetricDefinition[] filterByCategory(MetricDefinition[] definitions, MetricCategory category) {
+    return definitions.filter!(e => e.category == category).array;
   }
 
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category) {
-    return findByTenant(tenantId).filter!(e => e.category == category).array;
+    return filterByCategory(findByTenant(tenantId), category);
+  }
+
+  void removeByCategory(TenantId tenantId, MetricCategory category) {
+    findByCategory(tenantId, category).each!(cat => remove(cat));
   }
 
 }

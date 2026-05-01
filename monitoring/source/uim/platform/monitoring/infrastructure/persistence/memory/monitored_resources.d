@@ -16,45 +16,40 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
-  private MonitoredResource[MonitoredResourceId] store;
-
-  bool existsById(MonitoredResourceId id) {
-    return (id in store) ? true : false;
-  }
-
-  MonitoredResource findById(MonitoredResourceId id) {
-    return (existsById(id)) ? store[id] : MonitoredResource.init;
-  }
+class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, MonitoredResourceId), MonitoredResourceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return (findByTenant(tenantId).any!(e => e.name == name));
   }
 
   MonitoredResource findByName(TenantId tenantId, string name) {
-    foreach (e; findAll()
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
         return e;
     return MonitoredResource.init;
   }
 
-  MonitoredResource[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name) {
+        remove(e);
+        return;
+      }
+  }
+
+  size_t countByType(TenantId tenantId, ResourceType type) {
+    return findByType(tenantId, type).length;
+  }
+
+  MonitoredResource[] filterByType(MonitoredResource[] resources, ResourceType type) {
+    return resources.filter!(res => res.resourceType = type).array;
   }
 
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type) {
-    return findAll()r!(e => e.tenantId == tenantId && e.resourceType == type).array;
+    return filterByType(findByTenant(tenantId), type);
   }
 
-  void save(MonitoredResource resource) {
-    store[resource.id] = resource;
-  }
-
-  void update(MonitoredResource resource) {
-    store[resource.id] = resource;
-  }
-
-  void remove(MonitoredResourceId id) {
-    store.remove(id);
+  void removeByType(TenantId tenantId, ResourceType type) {
+    findByType.each!(res => remove(res));
   }
 }

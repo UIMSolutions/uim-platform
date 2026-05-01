@@ -18,7 +18,7 @@ struct AuditLogEntry {
   OperationType operation;
   ResourceType resourceType;
   string resourceName;
-  string performedBy;
+  UserId performedBy;
   long timestamp;
   string details;
   string sourceIp;

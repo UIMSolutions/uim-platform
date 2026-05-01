@@ -103,7 +103,7 @@ struct AssignEntitlementRequest {
   int quotaAssigned;
   bool unlimited;
   bool autoAssign;
-  string assignedBy;
+  UserId assignedBy;
 }
 
 struct UpdateEntitlementQuotaRequest {
@@ -145,7 +145,7 @@ struct CreateSubscriptionRequest {
   GlobalAccountId globalAccountId;
   string appName;
   string planName;
-  string subscribedBy;
+  UserId subscribedBy;
   string[string] parameters;
   string[string] labels;
 }

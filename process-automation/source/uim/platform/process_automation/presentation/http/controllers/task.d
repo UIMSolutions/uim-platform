@@ -49,11 +49,12 @@ class TaskController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task created");
+        
         res.writeJsonBody(resp, 201);
-      }) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -80,9 +81,10 @@ class TaskController : PlatformController {
           .set("dueDate", t.dueDate);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(tasks.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+          .set("count", tasks.length)
+          .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -141,9 +143,10 @@ class TaskController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -175,9 +178,10 @@ class TaskController : PlatformController {
 
       auto result = uc.claim(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task claimed");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task claimed");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -211,9 +215,10 @@ class TaskController : PlatformController {
 
       auto result = uc.complete(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Task completed");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task completed");
+            
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

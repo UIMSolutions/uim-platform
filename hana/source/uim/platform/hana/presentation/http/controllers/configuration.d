@@ -47,9 +47,10 @@ class ConfigurationController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Configuration created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Configuration created");
+        
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -76,9 +77,10 @@ class ConfigurationController : PlatformController {
           .set("requiresRestart", c.requiresRestart);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(configs.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", configs.length)
+        .set("resources", jarr);
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

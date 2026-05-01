@@ -26,7 +26,7 @@ class DestinationController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
     router.get("/api/v1/destinations/*", &handleGetById);
@@ -60,13 +60,10 @@ class DestinationController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -83,10 +80,9 @@ class DestinationController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", destinations.length);
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -101,8 +97,7 @@ class DestinationController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDestination(*dest), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -133,15 +128,12 @@ class DestinationController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -152,40 +144,38 @@ class DestinationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteDestination(tenantId, id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+          
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeDestination(const Destination d) {
     return Json.emptyObject
-    .set("id", d.id)
-    .set("tenantId", d.tenantId)
-    .set("name", d.name)
-    .set("description", d.description)
-    .set("systemId", d.systemId)
-    .set("destinationType", d.destinationType.to!string)
-    .set("url", d.url)
-    .set("authenticationType", d.authenticationType.to!string)
-    .set("proxyType", d.proxyType.to!string)
-    .set("cloudConnectorLocationId", d.cloudConnectorLocationId)
-    .set("user", d.user)
-    .set("tokenServiceUrl", d.tokenServiceUrl)
-    .set("audience", d.audience)
-    .set("scope", d.scope_)
-    .set("isEnabled", d.isEnabled)
-    .set("createdBy", d.createdBy)
-    .set("createdAt", d.createdAt)
-    .set("updatedAt", d.updatedAt);
+      .set("id", d.id)
+      .set("tenantId", d.tenantId)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("systemId", d.systemId)
+      .set("destinationType", d.destinationType.to!string)
+      .set("url", d.url)
+      .set("authenticationType", d.authenticationType.to!string)
+      .set("proxyType", d.proxyType.to!string)
+      .set("cloudConnectorLocationId", d.cloudConnectorLocationId)
+      .set("user", d.user)
+      .set("tokenServiceUrl", d.tokenServiceUrl)
+      .set("audience", d.audience)
+      .set("scope", d.scope_)
+      .set("isEnabled", d.isEnabled)
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt)
+      .set("updatedAt", d.updatedAt);
   }
 }
 

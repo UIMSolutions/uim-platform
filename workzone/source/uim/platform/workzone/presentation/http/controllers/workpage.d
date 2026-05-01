@@ -23,7 +23,7 @@ class WorkpageController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/workpages", &handleCreate);
     router.get("/api/v1/workpages", &handleList);
     router.get("/api/v1/workpages/*", &handleGet);
@@ -44,16 +44,15 @@ class WorkpageController : PlatformController {
 
       auto result = useCase.createWorkpage(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Workpage created");
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -66,12 +65,13 @@ class WorkpageController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (p; pages)
         arr ~= serializePage(p);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(pages.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(pages.length))
+        .set("message", "Workpages retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -86,8 +86,7 @@ class WorkpageController : PlatformController {
         return;
       }
       res.writeJsonBody(serializePage(*page), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,16 +104,14 @@ class WorkpageController : PlatformController {
 
       auto result = useCase.updateWorkpage(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -125,8 +122,7 @@ class WorkpageController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteWorkpage(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -134,14 +130,14 @@ class WorkpageController : PlatformController {
 
 private Json serializePage(Workpage p) {
   return Json.emptyObject
-  .set("id", p.id)
-  .set("workspaceId", p.workspaceId)
-  .set("tenantId", p.tenantId)
-  .set("title", p.title)
-  .set("description", p.description)
-  .set("sortOrder", p.sortOrder)
-  .set("visible", p.visible)
-  .set("isDefault", p.isDefault)
-  .set("createdAt", p.createdAt)
-  .set("updatedAt", p.updatedAt);
+    .set("id", p.id)
+    .set("workspaceId", p.workspaceId)
+    .set("tenantId", p.tenantId)
+    .set("title", p.title)
+    .set("description", p.description)
+    .set("sortOrder", p.sortOrder)
+    .set("visible", p.visible)
+    .set("isDefault", p.isDefault)
+    .set("createdAt", p.createdAt)
+    .set("updatedAt", p.updatedAt);
 }

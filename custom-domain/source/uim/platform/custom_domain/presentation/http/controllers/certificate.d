@@ -43,8 +43,8 @@ class CertificateController : PlatformController {
             auto result = certificates.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", "Certificate created");
+                    .set("id", Json(result.id))
+                    .set("message", "Certificate created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -104,6 +104,8 @@ class CertificateController : PlatformController {
                 writeError(res, 404, "Certificate not found");
                 return;
             }
+            auto domainsArr = c.activatedDomains.map!(d => Json(d)).array;
+            auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array;
 
             auto resp = Json.emptyObject
                 .set("id", c.id)
@@ -118,13 +120,9 @@ class CertificateController : PlatformController {
                 .set("validTo", c.validTo)
                 .set("createdBy", c.createdBy)
                 .set("createdAt", c.createdAt)
-                .set("activatedAt", c.activatedAt);
-
-            auto domainsArr = c.activatedDomains.map!(d => Json(d)).array;
-            resp["activatedDomains"] = domainsArr;
-
-            auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array;
-            resp["subjectAlternativeNames"] = sansArr;
+                .set("activatedAt", c.activatedAt)
+                .set("activatedDomains", domainsArr)
+                .set("subjectAlternativeNames", sansArr);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -180,6 +178,7 @@ class CertificateController : PlatformController {
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Certificate activated");
+                    
                 res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 400, result.error);
@@ -222,7 +221,7 @@ class CertificateController : PlatformController {
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Certificate deleted");
-                    
+
                 res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);

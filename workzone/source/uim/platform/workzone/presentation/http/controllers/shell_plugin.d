@@ -46,8 +46,10 @@ class ShellPluginController : PlatformController {
 
       auto result = useCase.createPlugin(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Plugin created");
+
         res.writeJsonBody(resp, 201);
       }
       else
@@ -64,12 +66,13 @@ class ShellPluginController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto plugins = useCase.listPlugins(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (p; plugins)
-        arr ~= serializeShellPlugin(p);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(plugins.length);
+      auto arr = plugins.map!(p => serializeShellPlugin(p)).array;
+
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(plugins.length))
+        .set("message", "Plugins retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

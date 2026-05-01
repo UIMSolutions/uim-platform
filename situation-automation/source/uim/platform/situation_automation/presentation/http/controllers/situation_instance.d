@@ -50,9 +50,10 @@ class SituationInstanceController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation instance created");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation instance created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -70,21 +71,23 @@ class SituationInstanceController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
                 jarr ~= Json.emptyObject
-                .set("id", i.id)
-                .set("templateId", i.templateId)
-                .set("description", i.description)
-                .set("status", i.status.to!string)
-                .set("severity", i.severity.to!string)
-                .set("entityId", i.entityId)
-                .set("assignedTo", i.assignedTo)
-                .set("detectedAt", i.detectedAt)
-                .set("dueAt", i.dueAt)
-                .set("updatedAt", i.updatedAt);
+                    .set("id", i.id)
+                    .set("templateId", i.templateId)
+                    .set("description", i.description)
+                    .set("status", i.status.to!string)
+                    .set("severity", i.severity.to!string)
+                    .set("entityId", i.entityId)
+                    .set("assignedTo", i.assignedTo)
+                    .set("detectedAt", i.detectedAt)
+                    .set("dueAt", i.dueAt)
+                    .set("updatedAt", i.updatedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(instances.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", instances.length)
+                .set("resources", jarr)
+                .set("message", "Situation instances retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -102,30 +105,30 @@ class SituationInstanceController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(i.id);
-            resp["templateId"] = Json(i.templateId);
-            resp["description"] = Json(i.description);
-            resp["status"] = Json(i.status.to!string);
-            resp["severity"] = Json(i.severity.to!string);
-            resp["entityId"] = Json(i.entityId);
-            resp["entityTypeId"] = Json(i.entityTypeId);
-            resp["assignedTo"] = Json(i.assignedTo);
-            resp["sourceSystem"] = Json(i.sourceSystem);
-            resp["sourceInstanceId"] = Json(i.sourceInstanceId);
-            resp["retryCount"] = Json(i.retryCount);
-            resp["detectedAt"] = Json(i.detectedAt);
-            resp["dueAt"] = Json(i.dueAt);
-            resp["updatedAt"] = Json(i.updatedAt);
+            auto resInfo = Json.emptyObject
+                .set("type", i.resolution.type.to!string)
+                .set("resolvedBy", i.resolution.resolvedBy)
+                .set("actionId", i.resolution.actionId)
+                .set("ruleId", i.resolution.ruleId)
+                .set("outcome", i.resolution.outcome)
+                .set("resolvedAt", i.resolution.resolvedAt);
 
-            auto resInfo = Json.emptyObject;
-            resInfo["type"] = Json(i.resolution.type.to!string);
-            resInfo["resolvedBy"] = Json(i.resolution.resolvedBy);
-            resInfo["actionId"] = Json(i.resolution.actionId);
-            resInfo["ruleId"] = Json(i.resolution.ruleId);
-            resInfo["outcome"] = Json(i.resolution.outcome);
-            resInfo["resolvedAt"] = Json(i.resolution.resolvedAt);
-            resp["resolution"] = resInfo;
+            auto resp = Json.emptyObject
+                .set("id", i.id)
+                .set("templateId", i.templateId)
+                .set("description", i.description)
+                .set("status", i.status.to!string)
+                .set("severity", i.severity.to!string)
+                .set("entityId", i.entityId)
+                .set("entityTypeId", i.entityTypeId)
+                .set("assignedTo", i.assignedTo)
+                .set("sourceSystem", i.sourceSystem)
+                .set("sourceInstanceId", i.sourceInstanceId)
+                .set("retryCount", i.retryCount)
+                .set("detectedAt", i.detectedAt)
+                .set("dueAt", i.dueAt)
+                .set("updatedAt", i.updatedAt)
+                .set("resolution", resInfo);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -147,9 +150,10 @@ class SituationInstanceController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation instance updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation instance updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -185,9 +189,10 @@ class SituationInstanceController : PlatformController {
 
             auto result = uc.resolve(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation resolved");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation resolved");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);
@@ -204,9 +209,10 @@ class SituationInstanceController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Situation instance deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Situation instance deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

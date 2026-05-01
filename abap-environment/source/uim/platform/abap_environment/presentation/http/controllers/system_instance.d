@@ -76,7 +76,7 @@ class SystemInstanceController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(instances.length))
+        .set("totalCount", instances.length)
         .set("message", "System instances retrieved successfully");
 
       res.writeJsonBody(resp, 200);

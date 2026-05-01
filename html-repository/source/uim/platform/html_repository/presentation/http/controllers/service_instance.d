@@ -44,7 +44,7 @@ class ServiceInstanceController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -67,9 +67,10 @@ class ServiceInstanceController : PlatformController {
           .set("appCount", e.appCount);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(items.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -79,7 +80,7 @@ class ServiceInstanceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -88,7 +89,7 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      
+
       auto response = Json.emptyObject
         .set("id", entry.id)
         .set("name", entry.name)
@@ -112,7 +113,7 @@ class ServiceInstanceController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -138,7 +139,7 @@ class ServiceInstanceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (Id.isEmpty) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }

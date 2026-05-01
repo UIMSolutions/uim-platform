@@ -23,7 +23,7 @@ struct RegisteredApplication {
     string[] purposeIds;
     string contactEmail;
     string contactName;
-    string registeredBy;
+    UserId registeredBy;
     UserId modifiedBy;
     string registeredAt;
 

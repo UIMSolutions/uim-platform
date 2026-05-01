@@ -23,5 +23,5 @@ struct DeploymentRecord {
   long startedAt;
   long completedAt;
   long createdAt;
-  string deployedBy;
+  UserId deployedBy;
 }

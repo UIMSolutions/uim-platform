@@ -58,8 +58,10 @@ class AlertRuleController : PlatformController {
 
       auto result = uc.createRule(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Alert rule created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);

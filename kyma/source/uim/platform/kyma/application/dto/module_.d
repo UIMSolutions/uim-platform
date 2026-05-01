@@ -13,7 +13,7 @@ struct EnableModuleRequest {
   string channel;
   string customResourcePolicy;
   string configurationJson;
-  string enabledBy;
+  UserId enabledBy;
 }
 
 struct UpdateModuleRequest {

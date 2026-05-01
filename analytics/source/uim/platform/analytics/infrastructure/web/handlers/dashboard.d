@@ -29,7 +29,7 @@ class DashboardHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
-    if (Id.isEmpty) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing dashboard id"), HTTPStatus.badRequest);
       return;
     }

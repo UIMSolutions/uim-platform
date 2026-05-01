@@ -99,7 +99,7 @@ struct UploadCertificateRequest {
   string serialNumber;
   long validFrom;
   long validTo;
-  string uploadedBy;
+  UserId uploadedBy;
 }
 
 struct UpdateCertificateRequest {

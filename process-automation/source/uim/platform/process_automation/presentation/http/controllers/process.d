@@ -44,9 +44,10 @@ class ProcessController : PlatformController {
 
             auto result = uc.create(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process created");
+                auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Process created");
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -75,9 +76,10 @@ class ProcessController : PlatformController {
                 .set("updatedAt", p.updatedAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(processes.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", processes.length)
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -95,18 +97,19 @@ class ProcessController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(p.id);
-            resp["name"] = Json(p.name);
-            resp["description"] = Json(p.description);
-            resp["status"] = Json(p.status.to!string);
-            resp["category"] = Json(p.category.to!string);
-            resp["version"] = Json(p.version_);
-            resp["projectId"] = Json(p.projectId);
-            resp["createdBy"] = Json(p.createdBy);
-            resp["modifiedBy"] = Json(p.modifiedBy);
-            resp["createdAt"] = Json(p.createdAt);
-            resp["updatedAt"] = Json(p.updatedAt);
+            auto resp = Json.emptyObject
+                .set("id", p.id)
+                .set("name", p.name)
+                .set("description", p.description)
+                .set("status", p.status.to!string)
+                .set("category", p.category.to!string)
+                .set("version", p.version_)
+                .set("projectId", p.projectId)
+                .set("createdBy", p.createdBy)
+                .set("modifiedBy", p.modifiedBy)
+                .set("createdAt", p.createdAt)
+                .set("updatedAt", p.updatedAt);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -129,9 +132,10 @@ class ProcessController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process updated");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Process updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -163,9 +167,10 @@ class ProcessController : PlatformController {
 
             auto result = uc.deploy(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process deployment action performed: " ~ r.action);
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Process deployment action performed: " ~ r.action);
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);
@@ -182,9 +187,10 @@ class ProcessController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Process deleted");
+                auto resp = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Process deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
