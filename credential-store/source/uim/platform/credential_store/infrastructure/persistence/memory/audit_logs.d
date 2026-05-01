@@ -31,7 +31,4 @@ class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLog
       .array;
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).array.length;
-  }
 }

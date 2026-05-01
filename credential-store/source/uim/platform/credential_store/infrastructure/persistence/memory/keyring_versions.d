@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.credential_store.infrastructure.persistence.memory.keyring_version;
+module uim.platform.credential_store.infrastructure.persistence.memory.keyring_versions;
 
 // import uim.platform.credential_store.domain.entities.keyring_version;
 // import uim.platform.credential_store.domain.ports.repositories.keyring_versions;

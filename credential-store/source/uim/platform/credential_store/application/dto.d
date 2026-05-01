@@ -5,6 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.dto;
 
+import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 // Namespace DTOs
 struct CreateNamespaceRequest {
   TenantId tenantId;
@@ -20,7 +25,7 @@ struct UpdateNamespaceRequest {
 // Credential DTOs
 struct CreateCredentialRequest {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string name;
   string type;       // "password", "key", "keyring"
   string value;
@@ -57,7 +62,7 @@ struct CredentialResponse {
 // Keyring DTOs
 struct CreateKeyringRequest {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string name;
   string metadata;
   string format;
@@ -66,14 +71,14 @@ struct CreateKeyringRequest {
 }
 
 struct RotateKeyringRequest {
-  string keyringId;
+  KeyringId keyringId;
   TenantId tenantId;
 }
 
 // DEK Encryption DTOs
 struct GenerateDekRequest {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string keyringName;
 }
 
@@ -81,14 +86,14 @@ struct GenerateDekResponse {
   bool success;
   string dek;         // plaintext DEK
   string encryptedDek; // DEK encrypted with keyring
-  string keyringId;
+  KeyringId keyringId;
   long keyringVersion;
   string error;
 }
 
 struct EncryptDekRequest {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string keyringName;
   string dek;           // plaintext DEK to encrypt
 }
@@ -96,14 +101,14 @@ struct EncryptDekRequest {
 struct EncryptDekResponse {
   bool success;
   string encryptedDek;
-  string keyringId;
+  KeyringId keyringId;
   long keyringVersion;
   string error;
 }
 
 struct DecryptDekRequest {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string keyringName;
   string encryptedDek;   // encrypted DEK to decrypt
   long keyringVersion;   // version used for encryption
@@ -121,7 +126,7 @@ struct CreateServiceBindingRequest {
   string name;
   string description;
   string permission;       // "readOnly", "readWrite", "admin"
-  string[] allowedNamespaces;
+  NamespaceId[] allowedNamespaces;
   long expiresAt;
   UserId createdBy;
 }
@@ -130,7 +135,7 @@ struct UpdateServiceBindingRequest {
   string description;
   string permission;
   string status;           // "active", "revoked"
-  string[] allowedNamespaces;
+  NamespaceId[] allowedNamespaces;
 }
 
 struct ServiceBindingResponse {
@@ -140,7 +145,7 @@ struct ServiceBindingResponse {
   string clientSecret;     // only returned on creation
   string permission;
   string status;
-  string[] allowedNamespaces;
+  NamespaceId[] allowedNamespaces;
   long createdAt;
   long expiresAt;
 }
@@ -148,7 +153,7 @@ struct ServiceBindingResponse {
 // Audit DTOs
 struct AuditLogFilter {
   TenantId tenantId;
-  string namespaceId;
+  NamespaceId namespaceId;
   string resourceType;
   long startTime;
   long endTime;
