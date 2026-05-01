@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class NamespaceController : PlatformController {
-  private ManageNamespacesUseCase uc;
+  private ManageNamespacesUseCase namespaces;
 
-  this(ManageNamespacesUseCase uc) {
-    this.uc = uc;
+  this(ManageNamespacesUseCase namespaces) {
+    this.namespaces = namespaces;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class NamespaceController : PlatformController {
       r.description = j.getString("description");
       r.createdBy = j.getString("createdBy");
 
-      auto result = uc.create(r);
+      auto result = namespaces.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
@@ -58,7 +58,7 @@ class NamespaceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto namespaces = uc.list(tenantId);
+      auto namespaces = namespaces.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (ns; namespaces) {
@@ -83,8 +83,8 @@ class NamespaceController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto ns = uc.getById(id);
+      auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
+      auto ns = namespaces.getById(id);
 
       if (ns.isNull) {
         writeError(res, 404, "Namespace not found");
@@ -110,12 +110,12 @@ class NamespaceController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateNamespaceRequest r;
       r.description = j.getString("description");
 
-      auto result = uc.update(id, r);
+      auto result = namespaces.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -133,8 +133,8 @@ class NamespaceController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.removeById(id);
+      auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
+      namespaces.remove(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

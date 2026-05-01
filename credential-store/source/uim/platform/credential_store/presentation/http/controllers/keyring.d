@@ -15,14 +15,15 @@ mixin(ShowModule!());
 @safe:
 
 class KeyringController : PlatformController {
-  private ManageKeyringsUseCase uc;
+  private ManageKeyringsUseCase keyrings;
 
-  this(ManageKeyringsUseCase uc) {
-    this.uc = uc;
+  this(ManageKeyringsUseCase keyrings) {
+    this.keyrings = keyrings;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/keyrings", &handleCreate);
     router.get("/api/v1/keyrings", &handleList);
     router.get("/api/v1/keyrings/*", &handleGet);
@@ -43,7 +44,7 @@ class KeyringController : PlatformController {
       r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
       r.createdBy = j.getString("createdBy");
 
-      auto result = uc.create(r);
+      auto result = keyrings.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
@@ -61,10 +62,10 @@ class KeyringController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
-      auto keyrings = uc.listByNamespace(namespaceId);
+      auto rings = keyrings.listByNamespace(NamespaceId(namespaceId));
 
       auto jarr = Json.emptyArray;
-      foreach (k; keyrings) {
+      foreach (k; rings) {
         jarr ~= Json.emptyObject
           .set("id", k.id)
           .set("name", k.name)
@@ -74,7 +75,7 @@ class KeyringController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", keyrings.length)
+        .set("totalCount", rings.length)
         .set("message", "Keyrings retrieved successfully");
         
       res.writeJsonBody(resp, 200);
@@ -87,15 +88,15 @@ class KeyringController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto k = uc.getById(id);
+      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+      auto k = keyrings.getById(id);
 
       if (k.isNull) {
         writeError(res, 404, "Keyring not found");
         return;
       }
 
-      auto versions = uc.getVersions(k.id);
+      auto versions = keyrings.getVersions(k.id);
 
       auto varr = Json.emptyArray;
       foreach (v; versions) {
@@ -128,7 +129,7 @@ class KeyringController : PlatformController {
       r.keyringId = j.getString("keyringId");
       r.tenantId = req.getTenantId;
 
-      auto result = uc.rotate(r);
+      auto result = keyrings.rotate(r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("versionId", result.id);
@@ -145,9 +146,9 @@ class KeyringController : PlatformController {
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto keyringId = j.getString("keyringId");
+      auto keyringId = CredentialId(j.getString("keyringId"));
 
-      auto result = uc.disable(keyringId);
+      auto result = keyrings.disable(keyringId);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -165,8 +166,8 @@ class KeyringController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+      auto result = keyrings.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

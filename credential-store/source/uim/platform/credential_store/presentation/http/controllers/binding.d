@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 
 class BindingController : PlatformController {
-  private ManageServiceBindingsUseCase uc;
+  private ManageServiceBindingsUseCase bindings;
 
-  this(ManageServiceBindingsUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceBindingsUseCase bindings) {
+    this.bindings = bindings;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,15 +40,15 @@ class BindingController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permission = j.getString("permission");
-      r.allowedNamespaces = getStringArray(j, "allowedNamespaces");
+      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = j.getString("createdBy");
 
-      auto result = uc.create(r);
+      auto result = bindings.create(r);
 
       // Return binding credentials (only shown once at creation)
       auto resp = Json.emptyObject
-        .set("id", result.id)
+        .set("id", result.serviceBindingId)
         .set("name", result.name)
         .set("clientId", result.clientId)
         .set("clientSecret", result.clientSecret)
@@ -67,7 +67,7 @@ class BindingController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto bindings = uc.list(tenantId);
+      auto bindings = bindings.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (b; bindings) {
@@ -93,8 +93,8 @@ class BindingController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto b = uc.getById(id);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+      auto b = bindings.getById(id);
 
       if (b.isNull) {
         writeError(res, 404, "Service binding not found");
@@ -108,7 +108,9 @@ class BindingController : PlatformController {
         .set("clientId", b.clientId)
         .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value).array.toJson)
         .set("createdAt", b.createdAt)
-        .set("expiresAt", b.expiresAt);
+        .set("expiresAt", b.expiresAt)
+        .set("message", "Service binding retrieved successfully");
+
       // Note: clientSecret is NOT returned on GET (only on creation)
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -120,15 +122,15 @@ class BindingController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateServiceBindingRequest r;
       r.description = j.getString("description");
       r.permission = j.getString("permission");
       r.status = j.getString("status");
-      r.allowedNamespaces = getStringArray(j, "allowedNamespaces");
+      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array;
 
-      auto result = uc.update(id, r);
+      auto result = bindings.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -145,10 +147,9 @@ class BindingController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+      bindings.remove(id);
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.removeById(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

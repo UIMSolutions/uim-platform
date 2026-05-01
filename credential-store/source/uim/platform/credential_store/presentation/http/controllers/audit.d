@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class AuditController : PlatformController {
-  private GetAuditLogsUseCase uc;
+  private GetAuditLogsUseCase auditLogs;
 
-  this(GetAuditLogsUseCase uc) {
-    this.uc = uc;
+  this(GetAuditLogsUseCase auditLogs) {
+    this.auditLogs = auditLogs;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,29 +40,29 @@ class AuditController : PlatformController {
 
       AuditLogEntry[] entries;
       if (namespaceId.length > 0) {
-        entries = uc.listByNamespace(tenantId, namespaceId);
+        entries = auditLogs.listByNamespace(tenantId, NamespaceId(namespaceId));
       } else if (resourceType.length > 0) {
-        entries = uc.listByResourceType(tenantId, resourceType);
+        entries = auditLogs.listByResourceType(tenantId, resourceType);
       } else {
-        entries = uc.list(tenantId);
+        entries = auditLogs.list(tenantId);
       }
 
       auto jarr = Json.emptyArray;
-      foreach (e; entries) {
+      foreach (auditLog; entries) {
         jarr ~= Json.emptyObject
-          .set("id", e.id)
-          .set("namespaceId", e.namespaceId)
-          .set("resourceName", e.resourceName)
-          .set("performedBy", e.performedBy)
-          .set("timestamp", e.timestamp)
-          .set("details", e.details)
-          .set("success", e.success);
+          .set("id", auditLog.id)
+          .set("namespaceId", auditLog.namespaceId)
+          .set("resourceName", auditLog.resourceName)
+          .set("performedBy", auditLog.performedBy)
+          .set("timestamp", auditLog.timestamp)
+          .set("details", auditLog.details)
+          .set("success", auditLog.success);
       }
 
       auto resp = Json.emptyObject
         .set("items", jarr)
         .set("totalCount", entries.length);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -73,24 +73,24 @@ class AuditController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto e = uc.getById(id);
+      auto id = AuditLogEntryId(extractIdFromPath(req.requestURI.to!string));
+      auto auditLog = auditLogs.getById(id);
 
-      if (e.isNull) {
+      if (auditLog.isNull) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }
 
       auto response = Json.emptyObject
-        .set("id", e.id)
-        .set("tenantId", e.tenantId)
-        .set("namespaceId", e.namespaceId)
-        .set("resourceName", e.resourceName)
-        .set("performedBy", e.performedBy)
-        .set("timestamp", e.timestamp)
-        .set("details", e.details)
-        .set("sourceIp", e.sourceIp)
-        .set("success", e.success);
+        .set("id", auditLog.id)
+        .set("tenantId", auditLog.tenantId)
+        .set("namespaceId", auditLog.namespaceId)
+        .set("resourceName", auditLog.resourceName)
+        .set("performedBy", auditLog.performedBy)
+        .set("timestamp", auditLog.timestamp)
+        .set("details", auditLog.details)
+        .set("sourceIp", auditLog.sourceIp)
+        .set("success", auditLog.success);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

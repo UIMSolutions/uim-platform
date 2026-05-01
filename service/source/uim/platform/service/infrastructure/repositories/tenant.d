@@ -75,7 +75,7 @@ class TenantRepository(TEntity, TId) {
 
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
     if (existsById(tenantId, id)) {
-      store[tenantId].removeById(id);
+      store[tenantId].remove(id);
 
       if (deleteTenantIfEmpty && store[tenantId].empty) {
         store.remove(tenantId);

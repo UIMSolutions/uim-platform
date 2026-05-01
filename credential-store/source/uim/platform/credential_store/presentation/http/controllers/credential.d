@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class CredentialController : PlatformController {
-  private ManageCredentialsUseCase uc;
+  private ManageCredentialsUseCase credentials;
 
-  this(ManageCredentialsUseCase uc) {
-    this.uc = uc;
+  this(ManageCredentialsUseCase credentials) {
+    this.credentials = credentials;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -89,7 +89,7 @@ class CredentialController : PlatformController {
       r.createdBy = j.getString("createdBy");
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto result = uc.create(r);
+      auto result = credentials.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -108,9 +108,9 @@ class CredentialController : PlatformController {
     try {
       auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
 
-      typeof(uc.listByType(namespaceId, type)) creds;
+      Credential[] creds;
       if (namespaceId.length > 0) {
-        creds = uc.listByType(namespaceId, type);
+        creds = credentials.listByType(NamespaceId(namespaceId), type);
       }
 
       auto jarr = Json.emptyArray;
@@ -139,12 +139,12 @@ class CredentialController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
       // Support conditional read via If-None-Match
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto c = uc.getById(id);
+      auto c = credentials.getById(id);
       if (c.isNull) {
         writeError(res, 404, "Credential not found");
         return;
@@ -183,8 +183,8 @@ class CredentialController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.removeById(id);
+      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+      credentials.remove(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

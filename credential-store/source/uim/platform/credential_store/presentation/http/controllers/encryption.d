@@ -23,7 +23,7 @@ class EncryptionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/encryption/generate", &handleGenerate);
     router.post("/api/v1/encryption/encrypt", &handleEncrypt);
     router.post("/api/v1/encryption/decrypt", &handleDecrypt);
@@ -42,7 +42,7 @@ class EncryptionController : PlatformController {
         auto resp = Json.emptyObject
           .set("dek", Json(result.dek))
           .set("encryptedDek", Json(result.encryptedDek))
-          .set("keyringId", Json(result.keyringId))
+          .set("keyringId", result.keyringId.value)
           .set("keyringVersion", Json(result.keyringVersion));
 
         res.writeJsonBody(resp, 200);
@@ -67,7 +67,7 @@ class EncryptionController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("encryptedDek", Json(result.encryptedDek))
-          .set("keyringId", Json(result.keyringId))
+          .set("keyringId", result.keyringId.value)
           .set("keyringVersion", Json(result.keyringVersion));
 
         res.writeJsonBody(resp, 200);
@@ -93,7 +93,7 @@ class EncryptionController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("dek", Json(result.dek));
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
