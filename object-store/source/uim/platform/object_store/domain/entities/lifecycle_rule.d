@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class LifecycleRule {
+struct LifecycleRule {
   mixin TenantEntity!(LifecycleRuleId);
 
   BucketId bucketId;

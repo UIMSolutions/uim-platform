@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.object_store.domain.ports.repositories.storage_object;
+module uim.platform.object_store.domain.ports.repositories.storage_objects;
 
 // import uim.platform.object_store.domain.entities.storage_object;
 // import uim.platform.object_store.domain.types;

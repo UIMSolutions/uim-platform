@@ -32,10 +32,8 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
-
-    auto ts = 
-
-    auto rule = new LifecycleRule();
+    
+    LifecycleRule rule;
     rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.bucketId = req.bucketId;

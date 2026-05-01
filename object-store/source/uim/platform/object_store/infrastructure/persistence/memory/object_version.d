@@ -28,21 +28,21 @@ class MemoryObjectVersionRepository : ObjectVersionRepository {
   }
 
   bool existsLatest(ObjectId objectId) {
-    foreach (e; findAll()
+    foreach (e; findAll())
       if (e.objectId == objectId && e.isLatest)
         return true;
     return false;
   }
 
   ObjectVersion findLatest(ObjectId objectId) {
-    foreach (e; findAll()
+    foreach (e; findAll())
       if (e.objectId == objectId && e.isLatest)
         return e;
     return ObjectVersion.init;
   }
 
   ObjectVersion[] findByObject(ObjectId objectId) {
-    return findAll()r!(e => e.objectId == objectId).array;
+    return findAll().filter!(e => e.objectId == objectId).array;
   }
 
   void save(ObjectVersion entity) {

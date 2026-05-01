@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.application.usecases.manage.cors_rules;
 
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.cors_rule;
-import uim.platform.object_store.domain.ports.repositories.cors_rule;
-import uim.platform.object_store.domain.ports.repositories.bucket;
-import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.cors_rule;
+// import uim.platform.object_store.domain.ports.repositories.cors_rule;
+// import uim.platform.object_store.domain.ports.repositories.bucket;
+// import uim.platform.object_store.domain.types;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for CORS rule management.
 class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   private CorsRuleRepository corsRepo;

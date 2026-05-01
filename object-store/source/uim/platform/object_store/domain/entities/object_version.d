@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ObjectVersion {
+struct  ObjectVersion {
   ObjectVersionId id;
   TenantId tenantId;
   ObjectId objectId;
@@ -23,4 +23,18 @@ class ObjectVersion {
   bool isDeleteMarker;
   UserId createdBy;
   long createdAt;
+
+  Json toJson() const {
+    return Json()
+      .set("id", id.value)
+      .set("objectId", objectId.value)
+      .set("versionTag", versionTag)
+      .set("size", size)
+      .set("etag", etag)
+      .set("contentType", contentType)
+      .set("isLatest", isLatest)
+      .set("isDeleteMarker", isDeleteMarker)
+      .set("createdBy", createdBy.value)
+      .set("createdAt", createdAt);
+  }
 }

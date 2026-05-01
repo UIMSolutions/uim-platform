@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.application.usecases.manage.access_policies;
 
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.access_policy;
-import uim.platform.object_store.domain.ports.repositories.access_policy;
-import uim.platform.object_store.domain.ports.repositories.bucket;
-import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.access_policy;
+// import uim.platform.object_store.domain.ports.repositories.access_policy;
+// import uim.platform.object_store.domain.ports.repositories.bucket;
+// import uim.platform.object_store.domain.types;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for bucket access policy management.
 class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
   private AccessPolicyRepository policyRepo;
@@ -33,9 +37,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto ts = ;
-
-    auto policy = new AccessPolicy();
+     auto policy = new AccessPolicy();
     policy.id = randomUUID();
     policy.tenantId = req.tenantId;
     policy.bucketId = req.bucketId;
@@ -49,7 +51,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     policy.updatedAt = policy.createdAt;
 
     policyRepo.save(policy);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, policy.id.value, "");
   }
 
   CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
@@ -70,7 +72,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     policy.updatedAt = currentTimestamp();
 
     policyRepo.update(policy);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, policy.id.value, "");
   }
 
   AccessPolicy getPolicy(AccessPolicyId id) {
@@ -83,11 +85,11 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePolicy(AccessPolicyId id) {
     auto policy = policyRepo.findById(id);
-    if (policy.isNull || policy.isNull)
+    if (policy.isNull)
       return CommandResult(false, "", "Policy not found");
 
     policyRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, policy.id.value, "");
   }
 }
 

@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBinding {
+struct ServiceBinding {
   mixin TenantEntity!(ServiceBindingId);
 
   string name;

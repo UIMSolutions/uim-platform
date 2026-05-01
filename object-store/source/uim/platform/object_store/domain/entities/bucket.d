@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class Bucket {
+struct Bucket {
   mixin TenantEntity!(BucketId);
 
   string name;

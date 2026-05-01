@@ -19,11 +19,11 @@ mixin(ShowModule!());
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   ServiceBinding[] findByBucket(BucketId bucketId) {
-    return findAll()r!(e => e.bucketId == bucketId).array;
+    return findAll().filter!(e => e.bucketId == bucketId).array;
   }
 
   ServiceBinding[] findByTenant(TenantId tenantId) {
-    return findAll()r!(e => e.tenantId == tenantId).array;
+    return findAll().filter!(e => e.tenantId == tenantId).array;
   }
 
 }

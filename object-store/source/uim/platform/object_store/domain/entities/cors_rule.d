@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class CorsRule {
+struct CorsRule {
   mixin TenantEntity!(CorsRuleId);
 
   BucketId bucketId;

@@ -11,7 +11,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class StorageObject {
+struct StorageObject {
   ObjectId id;
   TenantId tenantId;
   BucketId bucketId;

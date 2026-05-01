@@ -28,7 +28,7 @@ class MemoryLifecycleRuleRepository : LifecycleRuleRepository {
   }
 
   LifecycleRule[] findByBucket(BucketId bucketId) {
-    return findAll()r!(e => e.bucketId == bucketId).array;
+    return findAll().filter!(e => e.bucketId == bucketId).array;
   }
 
   void save(LifecycleRule entity) {
@@ -40,6 +40,6 @@ class MemoryLifecycleRuleRepository : LifecycleRuleRepository {
   }
 
   void remove(LifecycleRuleId id) {
-    store.removeById(id);
+    store.remove(id);
   }
 }
