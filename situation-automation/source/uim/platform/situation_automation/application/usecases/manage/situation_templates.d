@@ -23,7 +23,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", err);
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Situation template already exists");
 
         SituationTemplate t;

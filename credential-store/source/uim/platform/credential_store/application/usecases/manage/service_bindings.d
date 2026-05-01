@@ -18,16 +18,15 @@ mixin(ShowModule!());
 
 @safe:
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private ServiceBindingRepository repo;
+  private ServiceBindingRepository bindings;
 
-  this(ServiceBindingRepository repo) {
-    this.repo = repo;
+  this(ServiceBindingRepository bindings) {
+    this.bindings = bindings;
   }
 
   ServiceBindingResponse create(CreateServiceBindingRequest r) {
     ServiceBinding binding;
-    binding.id = randomUUID();
-    binding.tenantId = r.tenantId;
+    binding.initEntity(r.tenantId);
     binding.name = r.name;
     binding.description = r.description;
     binding.clientId = randomUUID();
@@ -35,11 +34,10 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.permission = parsePermission(r.permission);
     binding.status = BindingStatus.active;
     binding.allowedNamespaces = r.allowedNamespaces;
-    binding.createdAt = currentTimestamp();
     binding.expiresAt = r.expiresAt;
     binding.createdBy = r.createdBy;
 
-    repo.save(binding);
+    bindings.save(binding);
 
     ServiceBindingResponse resp;
     resp.id = binding.id;
@@ -55,7 +53,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(ServiceBindingId id, UpdateServiceBindingRequest r) {
-    auto binding = repo.findById(id);
+    auto binding = bindings.findById(id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
@@ -68,24 +66,24 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (r.allowedNamespaces.length > 0)
       binding.allowedNamespaces = r.allowedNamespaces;
 
-    repo.update(binding);
-    return CommandResult(true, binding.id, "");
+    bindings.update(binding);
+    return CommandResult(true, binding.id.value, "");
   }
 
   ServiceBinding getById(ServiceBindingId id) {
-    return repo.findById(id);
+    return bindings.findById(id);
   }
 
   ServiceBinding[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return bindings.findByTenant(tenantId);
   }
 
   void remove(ServiceBindingId id) {
-    repo.remove(id);
+    bindings.remove(id);
   }
 
   size_t count(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return bindings.countByTenant(tenantId);
   }
 
   private static PermissionLevel parsePermission(string p) {

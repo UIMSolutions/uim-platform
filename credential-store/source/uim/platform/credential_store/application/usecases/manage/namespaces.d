@@ -19,31 +19,28 @@ mixin(ShowModule!());
 
 @safe:
 class ManageNamespacesUseCase { // TODO: UIMUseCase {
-  private NamespaceRepository repo;
+  private NamespaceRepository namespaces;
 
-  this(NamespaceRepository repo) {
-    this.repo = repo;
+  this(NamespaceRepository namespaces) {
+    this.namespaces = namespaces;
   }
 
   CommandResult create(CreateNamespaceRequest r) {
     if (!CredentialValidator.validateNamespaceName(r.name))
       return CommandResult(false, "", "Invalid namespace name (1-100 chars, allowed: letters, digits, _ - . : ! ~)");
 
-    auto existing = repo.findByName(r.tenantId, r.name);
-    if (existing.id.length > 0)
+    auto existing = namespaces.findByName(r.tenantId, r.name);
+    if (!existing.isNull)
       return CommandResult(false, "", "Namespace already exists");
 
     Namespace ns;
-    ns.id = randomUUID();
-    ns.tenantId = r.tenantId;
+    ns.initEntity(r.tenantId);
     ns.name = r.name;
     ns.description = r.description;
     ns.createdBy = r.createdBy;
-    ns.createdAt = currentTimestamp();
-    ns.updatedAt = ns.createdAt;
 
-    repo.save(ns);
-    return CommandResult(true, ns.id, "");
+    namespaces.save(ns);
+    return CommandResult(true, ns.id.value, "");
   }
 
   CommandResult update(string id, UpdateNamespaceRequest r) {
@@ -51,42 +48,41 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(NamespaceId id, UpdateNamespaceRequest r) {
-    auto ns = repo.findById(id);
+    auto ns = namespaces.findById(id);
     if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
     ns.description = r.description;
     ns.updatedAt = currentTimestamp();
-    repo.update(ns);
-    return CommandResult(true, ns.id, "");
+    namespaces.update(ns);
+    return CommandResult(true, ns.id.value, "");
   }
 
   bool hasById(NamespaceId id) {
-    return repo.existsById(id);
+    return namespaces.existsById(id);
   }
 
 
   Namespace getById(NamespaceId id) {
-    return repo.findById(id);
+    return namespaces.findById(id);
   }
 
   Namespace getByName(TenantId tenantId, string name) {
-    return repo.findByName(tenantId, name);
+    return namespaces.findByName(tenantId, name);
   }
 
   Namespace[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return namespaces.findByTenant(tenantId);
   }
 
 
   void remove(NamespaceId id) {
-    repo.remove(id);
+    namespaces.remove(id);
   }
 
 
   size_t count(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return namespaces.countByTenant(tenantId);
   }
-
 
 }

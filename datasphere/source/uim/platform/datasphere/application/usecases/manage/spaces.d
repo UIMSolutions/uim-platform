@@ -27,7 +27,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", err);
 
     auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "", "Space already exists");
 
     Space s;

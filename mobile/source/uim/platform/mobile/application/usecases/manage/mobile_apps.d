@@ -21,7 +21,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
 
     CommandResult create(CreateMobileAppRequest r) {
         auto existing = repo.findByBundleId(r.bundleId);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "App with this bundle ID already exists");
         MobileApp app;
         app.id = randomUUID();

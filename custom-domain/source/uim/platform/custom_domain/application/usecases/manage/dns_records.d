@@ -27,7 +27,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Value is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "DNS record already exists");
 
         DnsRecord rec;

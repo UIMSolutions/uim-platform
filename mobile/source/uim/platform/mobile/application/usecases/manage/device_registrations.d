@@ -21,7 +21,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
 
     CommandResult register(RegisterDeviceRequest r) {
         auto existing = repo.findByDeviceToken(r.deviceToken);
-        if (existing.id.length > 0) {
+        if (!existing.isNull) {
             existing.osVersion = r.osVersion;
             existing.appVersion = r.appVersion;
             existing.lastConnectedAt = currentTimestamp();

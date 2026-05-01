@@ -21,7 +21,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
 
     CommandResult create(CreateAppConfigurationRequest r) {
         auto existing = repo.findByKey(r.appId, r.key);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
         AppConfiguration config;
         config.id = randomUUID();

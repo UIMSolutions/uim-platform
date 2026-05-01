@@ -29,7 +29,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Schema ID and name are required");
 
     auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "", "Schema already exists");
 
     Schema s;

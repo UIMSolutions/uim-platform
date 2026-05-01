@@ -25,7 +25,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Key ID is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Certificate already exists");
 
         Certificate c;

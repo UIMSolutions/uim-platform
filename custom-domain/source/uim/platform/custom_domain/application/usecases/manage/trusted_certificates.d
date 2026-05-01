@@ -27,7 +27,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Custom domain ID is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Trusted certificate already exists");
 
         TrustedCertificate c;

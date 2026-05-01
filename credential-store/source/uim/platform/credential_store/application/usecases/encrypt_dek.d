@@ -48,13 +48,13 @@ class EncryptDekUseCase { // TODO: UIMUseCase {
   EncryptDekResponse encrypt(EncryptDekRequest r) {
     auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
     if (keyring.isNull)
-      return EncryptDekResponse(false, "", keyring.id.value, 0, "Keyring not found");
+      return EncryptDekResponse(false, "", keyring.id, 0, "Keyring not found");
     if (keyring.status != CredentialStatus.active)
-      return EncryptDekResponse(false, "", keyring.id.value, 0, "Keyring is not active");
+      return EncryptDekResponse(false, "", keyring.id, 0, "Keyring is not active");
 
     auto activeVersion = versionRepo.findActiveVersion(keyring.id);
     if (activeVersion.isNull)
-      return EncryptDekResponse(false, "", keyring.id.value, 0, "No active keyring version");
+      return EncryptDekResponse(false, "", keyring.id, 0, "No active keyring version");
 
     auto encryptedDek = EncryptionService.encryptDek(r.dek, activeVersion.keyMaterial);
 

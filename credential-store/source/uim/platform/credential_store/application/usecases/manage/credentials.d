@@ -99,7 +99,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     cred.updatedBy = r.updatedBy;
 
     credentials.update(cred);
-    return CommandResult(true, cred.id, "");
+    return CommandResult(true, cred.id.value, "");
   }
 
   Credential getById(CredentialId id) {
@@ -119,7 +119,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   void remove(CredentialId id) {
-    credentials.remove(id);
+    credentials.removeById(id);
   }
 
   size_t countByNamespace(NamespaceId namespaceId) {

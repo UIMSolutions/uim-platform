@@ -27,7 +27,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "ID is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Custom domain already exists");
 
         auto byName = repo.findByDomainName(r.tenantId, r.domainName);

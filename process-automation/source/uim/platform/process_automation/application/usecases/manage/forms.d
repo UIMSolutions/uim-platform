@@ -24,7 +24,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Form name is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Form already exists");
 
         Form f;

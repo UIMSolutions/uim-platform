@@ -46,7 +46,7 @@ struct UpdateCredentialRequest {
 }
 
 struct CredentialResponse {
-  string id;
+  CredentialId credentialId;
   string name;
   string type;
   string value;
@@ -139,7 +139,7 @@ struct UpdateServiceBindingRequest {
 }
 
 struct ServiceBindingResponse {
-  string id;
+  ServiceBindingId serviceBindingId;
   string name;
   string clientId;
   string clientSecret;     // only returned on creation

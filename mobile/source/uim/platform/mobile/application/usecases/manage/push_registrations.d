@@ -21,7 +21,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
 
     CommandResult register(CreatePushRegistrationRequest r) {
         auto existing = repo.findByDeviceAndApp(r.deviceId, r.appId);
-        if (existing.id.length > 0) {
+        if (!existing.isNull) {
             existing.pushToken = r.pushToken;
             existing.topics = r.topics;
             existing.updatedAt = currentTimestamp();

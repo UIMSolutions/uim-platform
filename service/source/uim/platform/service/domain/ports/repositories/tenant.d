@@ -8,6 +8,12 @@ mixin(ShowModule!());
 
 interface ITenantRepository(TEntity, TId) {
 
+  bool existsById(TId id);
+  bool existsAllById(TId[] ids);  
+  
+  TEntity findById(TId id);
+  TEntity[] findAllById(TId[] ids);
+
   bool existsById(TenantId tenantId, TId id);
   bool existsAllById(TenantId tenantId, TId[] ids);  
   

@@ -26,7 +26,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid application name");
 
         auto existing = repo.findByName(r.tenantId, r.name);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Application with this name already exists");
 
         HtmlApp app;

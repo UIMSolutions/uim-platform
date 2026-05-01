@@ -24,7 +24,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Template ID is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Situation instance already exists");
 
         SituationInstance i;

@@ -29,7 +29,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Configuration ID and key are required");
 
     auto existing = repo.findById(r.id);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "", "Configuration already exists");
 
     Configuration c;

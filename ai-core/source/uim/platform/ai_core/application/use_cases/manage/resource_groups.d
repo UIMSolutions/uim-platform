@@ -24,7 +24,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(r.resourceGroupId);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "", "Resource group already exists");
 
     ResourceGroup rg;

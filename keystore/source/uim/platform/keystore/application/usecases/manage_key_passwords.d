@@ -31,7 +31,7 @@ class ManageKeyPasswordsUseCase {
     auto now = currentTimestamp();
 
     auto existing = repo.findByAlias(r.accountId, r.applicationId, r.alias_);
-    if (existing.id.length > 0) {
+    if (!existing.isNull) {
       existing.passwordValue = r.passwordValue;
       existing.updatedAt     = now;
       repo.update(existing);

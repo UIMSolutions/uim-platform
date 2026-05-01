@@ -24,7 +24,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Recipient ID is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Notification already exists");
 
         Notification n;

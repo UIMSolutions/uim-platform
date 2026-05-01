@@ -29,7 +29,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   CommandResult registerConnector(RegisterConnectorRequest req) {
     // Check for duplicate location ID within subaccount
     auto existing = repo.findByLocationId(req.subaccountId, req.locationId);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "",
           "Connector with locationId '" ~ req.locationId ~ "' already registered");
 

@@ -27,7 +27,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "At least one domain is required");
 
         auto existing = repo.findById(r.id);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Key already exists");
 
         PrivateKey k;

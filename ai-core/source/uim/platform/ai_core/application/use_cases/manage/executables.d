@@ -26,7 +26,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Resource group ID is required");
 
         auto existing = repo.findById(r.id, r.resourceGroupId);
-        if (existing.id.length > 0)
+        if (!existing.isNull)
             return CommandResult(false, "", "Executable already exists");
 
         Executable e;

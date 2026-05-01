@@ -36,7 +36,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
   CommandResult createPackage(CreatePackageRequest req) {
     auto existing = packages.findByName(req.tenantId, req.name);
-    if (existing.id.length > 0)
+    if (!existing.isNull)
       return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
 
     if (req.name.length == 0)
