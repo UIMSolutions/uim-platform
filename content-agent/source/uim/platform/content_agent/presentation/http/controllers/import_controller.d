@@ -84,7 +84,7 @@ class ImportController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getImportJob(id);
-      if (job.id.isEmpty) {
+      if (job.isNull) {
         writeError(res, 404, "Import job not found");
         return;
       }

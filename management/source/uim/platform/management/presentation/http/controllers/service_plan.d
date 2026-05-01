@@ -100,7 +100,7 @@ class ServicePlanController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto p = uc.getById(id);
-      if (p.id.isEmpty) {
+      if (p.isNull) {
         writeError(res, 404, "Service plan not found");
         return;
       }

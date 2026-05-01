@@ -87,7 +87,7 @@ class TrustedCertificateController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto c = uc.getById(id);
-            if (c.id.isEmpty) {
+            if (c.isNull) {
                 writeError(res, 404, "Trusted certificate not found");
                 return;
             }

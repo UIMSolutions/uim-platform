@@ -89,7 +89,7 @@ class RetentionController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto p = uc.getById(id);
-      if (p.id.isEmpty) {
+      if (p.isNull) {
         writeError(res, 404, "Retention policy not found");
         return;
       }

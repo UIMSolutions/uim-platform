@@ -49,7 +49,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(AppFileId id, UpdateAppFileRequest r) {
         auto file = repo.findById(id);
-        if (file.id.isEmpty)
+        if (file.isNull)
             return CommandResult(false, "", "File not found");
 
         if (r.content.length > 0) {

@@ -19,7 +19,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateRegisteredApplicationRequest r) {
-        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
+        if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Application name is required");
 
         RegisteredApplication app;
@@ -51,7 +51,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateRegisteredApplicationRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Application not found");
 
         if (r.name.length > 0) existing.name = r.name;
@@ -69,7 +69,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult activate(RegisteredApplicationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
         existing.updatedAt = clockTime();
@@ -79,7 +79,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult suspend(RegisteredApplicationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.suspended;
         existing.updatedAt = clockTime();
@@ -89,7 +89,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(RegisteredApplicationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

@@ -61,7 +61,7 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(RemoteTableId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Remote table not found");
 
     repo.remove(id, spaceId);

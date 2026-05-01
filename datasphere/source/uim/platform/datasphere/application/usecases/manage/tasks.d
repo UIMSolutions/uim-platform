@@ -62,7 +62,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchTaskRequest r) {
     auto existing = repo.findById(r.taskId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
     import core.time : MonoTime;
@@ -74,7 +74,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(TaskId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
     repo.remove(id, spaceId);

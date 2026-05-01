@@ -25,7 +25,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateDatabaseUserRequest r) {
-    if (r.id.isEmpty || r.userName.length == 0)
+    if (r.isNull || r.userName.length == 0)
       return CommandResult(false, "", "User ID and username are required");
 
     if (repo.existsById(r.id))

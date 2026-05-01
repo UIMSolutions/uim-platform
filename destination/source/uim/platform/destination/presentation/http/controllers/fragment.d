@@ -97,7 +97,7 @@ class FragmentController : PlatformController {
     try {
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto f = uc.getFragment(id);
-      if (f.id.isEmpty) {
+      if (f.isNull) {
         writeError(res, 404, "Fragment not found");
         return;
       }

@@ -91,7 +91,7 @@ class RemoteTableController : PlatformController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto rt = uc.getById(id, spaceId);
-      if (rt.id.isEmpty) {
+      if (rt.isNull) {
         writeError(res, 404, "Remote table not found");
         return;
       }

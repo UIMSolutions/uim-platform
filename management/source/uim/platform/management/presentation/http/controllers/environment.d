@@ -91,7 +91,7 @@ class EnvironmentController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto inst = uc.getById(id);
-      if (inst.id.isEmpty) {
+      if (inst.isNull) {
         writeError(res, 404, "Environment instance not found");
         return;
       }

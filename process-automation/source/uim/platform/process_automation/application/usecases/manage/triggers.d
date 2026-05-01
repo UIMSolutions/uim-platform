@@ -18,7 +18,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateTriggerRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Trigger ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Trigger name is required");
@@ -62,7 +62,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateTriggerRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");
 
         existing.name = r.name;
@@ -79,7 +79,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(TriggerId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");
 
         repo.remove(id);

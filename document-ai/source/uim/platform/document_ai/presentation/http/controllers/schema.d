@@ -86,7 +86,7 @@ class SchemaController : PlatformController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto s = uc.getById(id, clientId);
-      if (s.id.isEmpty) {
+      if (s.isNull) {
         writeError(res, 404, "Schema not found");
         return;
       }

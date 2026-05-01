@@ -92,7 +92,7 @@ class DistributionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto model = uc.getModel(id);
-      if (model.id.isEmpty) {
+      if (model.isNull) {
         writeError(res, 404, "Distribution model not found");
         return;
       }

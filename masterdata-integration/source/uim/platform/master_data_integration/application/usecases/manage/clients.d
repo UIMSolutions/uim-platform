@@ -49,7 +49,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateClient(ClientId id, UpdateClientRequest req) {
     auto client = repo.findById(id);
-    if (client.id.isEmpty)
+    if (client.isNull)
       return CommandResult(false, "", "Client not found");
 
     if (req.name.length > 0)
@@ -80,7 +80,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
   CommandResult connect(ClientId id) {
     auto client = repo.findById(id);
-    if (client.id.isEmpty)
+    if (client.isNull)
       return CommandResult(false, "", "Client not found");
     client.status = ClientStatus.connected;
     client.lastSyncAt = clockSeconds();
@@ -91,7 +91,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
   CommandResult disconnect(ClientId id) {
     auto client = repo.findById(id);
-    if (client.id.isEmpty)
+    if (client.isNull)
       return CommandResult(false, "", "Client not found");
     client.status = ClientStatus.disconnected;
     client.updatedAt = clockSeconds();
@@ -117,7 +117,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteClient(ClientId id) {
     auto client = repo.findById(id);
-    if (client.id.isEmpty)
+    if (client.isNull)
       return CommandResult(false, "", "Client not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

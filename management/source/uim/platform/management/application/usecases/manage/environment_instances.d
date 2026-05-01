@@ -37,7 +37,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Environment name is required");
 
     auto subaccount = subaccountRepo.findById(req.subaccountId);
-    if (subaccount.id.isEmpty)
+    if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
 
     auto envType = parseEnvironmentType(req.environmentType);

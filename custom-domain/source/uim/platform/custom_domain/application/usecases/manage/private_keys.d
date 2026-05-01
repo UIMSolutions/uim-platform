@@ -19,7 +19,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreatePrivateKeyRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.subject.length == 0)
             return CommandResult(false, "", "Subject is required");
@@ -56,7 +56,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(PrivateKeyId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Key not found");
 
         repo.remove(id);

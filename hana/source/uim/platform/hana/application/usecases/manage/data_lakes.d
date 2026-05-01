@@ -25,7 +25,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateDataLakeRequest r) {
-    if (r.id.isEmpty || r.name.length == 0)
+    if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Data lake ID and name are required");
 
     if (repo.existsById(r.id))

@@ -87,7 +87,7 @@ class VisibilityController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto v = uc.getById(id);
-            if (v.id.isEmpty) {
+            if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;
             }

@@ -19,7 +19,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateRetentionRuleRequest r) {
-        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
+        if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Rule name is required");
 
         import std.conv : to;
@@ -55,7 +55,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateRetentionRuleRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
         import std.conv : to;
@@ -76,7 +76,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(RetentionRuleId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Retention rule not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

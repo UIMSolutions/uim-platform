@@ -58,7 +58,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     auto existing = repo.findById(r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Client not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -96,7 +96,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ClientId id) {
     auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Client not found");
 
     repo.remove(id);

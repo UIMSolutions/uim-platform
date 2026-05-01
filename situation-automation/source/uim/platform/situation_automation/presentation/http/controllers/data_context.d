@@ -95,7 +95,7 @@ class DataContextController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto d = dataContexts.getById(id);
-            if (d.id.isEmpty) {
+            if (d.isNull) {
                 writeError(res, 404, "Data context not found");
                 return;
             }

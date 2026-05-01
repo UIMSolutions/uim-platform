@@ -19,7 +19,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateCertificateRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.keyId.isEmpty)
             return CommandResult(false, "", "Key ID is required");
@@ -44,7 +44,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
     CommandResult uploadChain(UploadCertificateChainRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
         if (r.certificatePem.length == 0)
             return CommandResult(false, "", "Certificate PEM is required");
@@ -56,7 +56,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
     CommandResult activate(ActivateCertificateRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
         existing.status = CertificateStatus.active;
@@ -71,7 +71,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
     CommandResult deactivate(CertificateId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
         existing.status = CertificateStatus.deactivated;
@@ -97,7 +97,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(CertificateId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
         repo.remove(id);

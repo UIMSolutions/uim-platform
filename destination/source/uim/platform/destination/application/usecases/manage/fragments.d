@@ -29,7 +29,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Fragment name is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (!existing.id.isEmpty)
+    if (!existing.isNull)
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
     DestinationFragment f;

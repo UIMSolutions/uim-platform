@@ -90,7 +90,7 @@ class EntityTypeController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto et = uc.getById(id);
-            if (et.id.isEmpty) {
+            if (et.isNull) {
                 writeError(res, 404, "Entity type not found");
                 return;
             }

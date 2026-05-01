@@ -85,7 +85,7 @@ class PrivateKeyController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto k = uc.getById(id);
-            if (k.id.isEmpty) {
+            if (k.isNull) {
                 writeError(res, 404, "Private key not found");
                 return;
             }

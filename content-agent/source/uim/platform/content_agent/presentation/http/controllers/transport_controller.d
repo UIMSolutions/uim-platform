@@ -89,7 +89,7 @@ class TransportController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto tr = uc.getTransportRequest(id);
-      if (tr.id.isEmpty) {
+      if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
         return;
       }

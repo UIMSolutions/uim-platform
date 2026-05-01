@@ -101,7 +101,7 @@ class ServiceInstanceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto inst = uc.getServiceInstance(ServiceInstanceId(id));
-      if (inst.id.isEmpty) {
+      if (inst.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }

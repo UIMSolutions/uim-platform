@@ -89,7 +89,7 @@ class ProcessInstanceController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto i = uc.getById(id);
-            if (i.id.isEmpty) {
+            if (i.isNull) {
                 writeError(res, 404, "Process instance not found");
                 return;
             }

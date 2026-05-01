@@ -90,7 +90,7 @@ class TaskDefinitionController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto d = uc.getById(tenantId, id);
-            if (d.id.isEmpty) {
+            if (d.isNull) {
                 writeError(res, 404, "Task definition not found");
                 return;
             }

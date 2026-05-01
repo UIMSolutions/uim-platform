@@ -55,7 +55,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateBucket(BucketId id, UpdateBucketRequest req) {
     auto bucket = repo.findById(id);
-    if (bucket.isNull || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     if (req.storageClass.length > 0)
@@ -87,7 +87,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteBucket(BucketId id) {
     auto bucket = repo.findById(id);
-    if (bucket.isNull || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     if (bucket.objectCount > 0)

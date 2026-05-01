@@ -18,7 +18,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateVisibilityRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Visibility ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Visibility name is required");

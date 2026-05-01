@@ -89,7 +89,7 @@ class LabelController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto l = uc.getById(id);
-      if (l.id.isEmpty) {
+      if (l.isNull) {
         writeError(res, 404, "Label not found");
         return;
       }

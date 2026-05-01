@@ -73,7 +73,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
 
   CommandResult unsubscribe(SubscriptionId id) {
     auto subscription = repo.findById(id);
-    if (subscription.id.isEmpty)
+    if (subscription.isNull)
       return CommandResult(false, "", "Subscription not found");
     if (subscription.status != SubscriptionStatus.subscribed)
       return CommandResult(false, "", "Subscription must be in subscribed status");
@@ -98,7 +98,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
     auto subscription = repo.findById(id);
-    if (subscription.id.isEmpty)
+    if (subscription.isNull)
       return CommandResult(false, "", "Subscription not found");
 
     if (req.planName.length > 0)

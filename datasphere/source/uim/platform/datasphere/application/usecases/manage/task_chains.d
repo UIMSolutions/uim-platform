@@ -57,7 +57,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchTaskChainRequest r) {
     auto existing = repo.findById(r.taskChainId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Task chain not found");
 
     import core.time : MonoTime;
@@ -69,7 +69,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(TaskChainId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Task chain not found");
 
     repo.remove(id, spaceId);

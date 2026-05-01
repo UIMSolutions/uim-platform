@@ -121,7 +121,7 @@ class KeyMappingController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto mapping = uc.getMapping(id);
-      if (mapping.id.isEmpty) {
+      if (mapping.isNull) {
         writeError(res, 404, "Key mapping not found");
         return;
       }

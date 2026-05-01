@@ -90,7 +90,7 @@ class HDIContainerController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = uc.getById(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "HDI Container not found");
         return;
       }

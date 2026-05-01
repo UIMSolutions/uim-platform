@@ -26,7 +26,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     auto rule = new CorsRule();
@@ -47,7 +47,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
     auto rule = corsRepo.findById(id);
-    if (rule.isNull || rule.id.isEmpty)
+    if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
     if (req.allowedOrigins.length > 0)
@@ -76,7 +76,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteRule(CorsRuleId id) {
     auto rule = corsRepo.findById(id);
-    if (rule.isNull || rule.id.isEmpty)
+    if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
     corsRepo.remove(id);

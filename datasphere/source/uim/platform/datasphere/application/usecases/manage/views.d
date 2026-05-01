@@ -62,7 +62,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateViewRequest r) {
     auto existing = repo.findById(r.viewId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "View not found");
 
     existing.name = r.name;
@@ -81,7 +81,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ViewId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "View not found");
 
     repo.remove(id, spaceId);

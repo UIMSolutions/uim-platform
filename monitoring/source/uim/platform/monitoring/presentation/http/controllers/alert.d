@@ -70,7 +70,7 @@ class AlertController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto a = uc.getAlert(id);
-      if (a.id.isEmpty) {
+      if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;
       }

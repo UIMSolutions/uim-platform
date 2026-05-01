@@ -60,7 +60,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateConnectionRequest r) {
     auto existing = repo.findById(r.connectionId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Connection not found");
 
     existing.name = r.name;
@@ -79,7 +79,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ConnectionId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Connection not found");
 
     repo.remove(id, spaceId);

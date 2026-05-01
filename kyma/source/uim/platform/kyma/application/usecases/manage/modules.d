@@ -64,7 +64,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Missing required modules: " ~ missing.join(", "));
     }
 
-    if (!existing.id.isEmpty)
+    if (!existing.isNull)
       moduleRepository.update(mod);
     else
       moduleRepository.save(mod);

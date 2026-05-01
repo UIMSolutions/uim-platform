@@ -86,7 +86,7 @@ class SpaceController : PlatformController {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto s = uc.getById(id);
-      if (s.id.isEmpty) {
+      if (s.isNull) {
         writeError(res, 404, "Space not found");
         return;
       }

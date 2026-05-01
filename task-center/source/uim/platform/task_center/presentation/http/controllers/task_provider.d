@@ -90,7 +90,7 @@ class TaskProviderController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto p = uc.getById(tenantId, id);
-            if (p.id.isEmpty) {
+            if (p.isNull) {
                 writeError(res, 404, "Provider not found");
                 return;
             }

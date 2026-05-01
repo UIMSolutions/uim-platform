@@ -95,7 +95,7 @@ class ReplicationTaskController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto t = uc.getById(id);
-      if (t.id.isEmpty) {
+      if (t.isNull) {
         writeError(res, 404, "Replication task not found");
         return;
       }

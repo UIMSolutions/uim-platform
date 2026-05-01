@@ -58,7 +58,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
 
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
     auto plan = servicePlans.findById(id);
-    if (plan.id.isEmpty)
+    if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
 
     if (req.planDisplayName.length > 0)
@@ -109,7 +109,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ServicePlanId id) {
     auto plan = servicePlans.findById(id);
-    if (plan.id.isEmpty)
+    if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
     servicePlans.removeById(id);
     return CommandResult(true, id.toString, "");

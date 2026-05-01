@@ -19,7 +19,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateConsentRecordRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.dataSubjectId.isEmpty)
             return CommandResult(false, "", "Data subject ID is required");
@@ -80,7 +80,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
 
     CommandResult withdraw(WithdrawConsentRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
 
         existing.status = ConsentStatus.withdrawn;
@@ -97,7 +97,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
 
     CommandResult removeById(ConsentRecordId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

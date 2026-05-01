@@ -33,7 +33,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "URL is required for non-RFC destinations");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (!existing.id.isEmpty)
+    if (!existing.isNull)
       return CommandResult(false, "",
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
@@ -88,7 +88,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
     auto d = repo.findById(id);
-    if (d.id.isEmpty)
+    if (d.isNull)
       return CommandResult(false, "", "Destination not found");
 
     if (req.description.length > 0)
@@ -160,7 +160,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
   CommandResult removeDestination(DestinationId id) {
     auto d = repo.findById(id);
-    if (d.id.isEmpty)
+    if (d.isNull)
       return CommandResult(false, "", "Destination not found");
     repo.remove(id);
     return CommandResult(true, id.value, "");

@@ -58,7 +58,7 @@ class DataSubjectController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto ds = uc.getById(id);
-            if (ds.id.isEmpty) { writeError(res, 404, "Data subject not found"); return; }
+            if (ds.isNull) { writeError(res, 404, "Data subject not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", ds.id.value).set("externalId", ds.externalId)
                 .set("roleId", ds.roleId.value)

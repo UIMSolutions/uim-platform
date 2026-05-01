@@ -97,7 +97,7 @@ class SubstitutionRuleController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto r = uc.getById(tenantId, id);
-            if (r.id.isEmpty) {
+            if (r.isNull) {
                 writeError(res, 404, "Substitution rule not found");
                 return;
             }

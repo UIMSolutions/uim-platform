@@ -60,7 +60,7 @@ class ResidenceRuleController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto rr = uc.getById(id);
-            if (rr.id.isEmpty) { writeError(res, 404, "Residence rule not found"); return; }
+            if (rr.isNull) { writeError(res, 404, "Residence rule not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", rr.id.value)
                 .set("businessPurposeId", rr.businessPurposeId.value)

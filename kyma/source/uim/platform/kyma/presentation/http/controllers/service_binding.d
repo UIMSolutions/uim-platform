@@ -100,7 +100,7 @@ class ServiceBindingController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto b = uc.getBinding(ServiceBindingId(id));
-      if (b.id.isEmpty) {
+      if (b.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
       }

@@ -93,7 +93,7 @@ class DatabaseUserController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto u = uc.getById(id);
-      if (u.id.isEmpty) {
+      if (u.isNull) {
         writeError(res, 404, "Database user not found");
         return;
       }

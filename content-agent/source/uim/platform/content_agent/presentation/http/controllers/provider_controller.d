@@ -87,7 +87,7 @@ class ProviderController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto provider = uc.getProvider(id);
-      if (provider.id.isEmpty) {
+      if (provider.isNull) {
         writeError(res, 404, "Provider not found");
         return;
       }

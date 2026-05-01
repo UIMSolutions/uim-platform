@@ -95,7 +95,7 @@ class CheckController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto c = usecase.getCheck(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Health check not found");
         return;
       }

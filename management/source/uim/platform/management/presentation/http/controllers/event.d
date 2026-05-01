@@ -65,7 +65,7 @@ class EventController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto ev = uc.getById(id);
-      if (ev.id.isEmpty) {
+      if (ev.isNull) {
         writeError(res, 404, "Event not found");
         return;
       }

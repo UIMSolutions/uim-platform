@@ -60,7 +60,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateCleansingRuleRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Rule ID is required");
 
     auto existing = repo.findById(req.id);

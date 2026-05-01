@@ -60,7 +60,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateSituationActionRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Situation action not found");
 
         existing.name = r.name;
@@ -82,7 +82,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(SituationActionId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Situation action not found");
 
         repo.remove(id);

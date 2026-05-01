@@ -91,7 +91,7 @@ class DnsRecordController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.getById(id);
-            if (r.id.isEmpty) {
+            if (r.isNull) {
                 writeError(res, 404, "DNS record not found");
                 return;
             }

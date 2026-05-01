@@ -93,7 +93,7 @@ class TlsConfigurationController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto c = uc.getById(id);
-            if (c.id.isEmpty) {
+            if (c.isNull) {
                 writeError(res, 404, "TLS configuration not found");
                 return;
             }

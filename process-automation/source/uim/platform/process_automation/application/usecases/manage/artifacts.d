@@ -18,7 +18,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateArtifactRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Artifact ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Artifact name is required");

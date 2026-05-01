@@ -130,7 +130,7 @@ class CertificateController : PlatformController {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto c = uc.getCertificate(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Certificate not found");
         return;
       }

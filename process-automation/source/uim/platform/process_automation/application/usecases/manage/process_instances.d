@@ -55,7 +55,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
 
     CommandResult performAction(ProcessInstanceActionRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Process instance not found");
 
         switch (r.action) {
@@ -84,7 +84,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(ProcessInstanceId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Process instance not found");
 
         repo.remove(id);

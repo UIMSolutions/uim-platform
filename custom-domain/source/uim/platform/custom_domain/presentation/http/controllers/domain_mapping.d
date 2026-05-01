@@ -91,7 +91,7 @@ class DomainMappingController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto m = uc.getById(id);
-            if (m.id.isEmpty) {
+            if (m.isNull) {
                 writeError(res, 404, "Domain mapping not found");
                 return;
             }

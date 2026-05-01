@@ -31,11 +31,11 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
 
     CommandResult deploy(CreateDeploymentRequest r) {
         auto app = appRepo.findById(r.appId);
-        if (app.id.isEmpty)
+        if (app.isNull)
             return CommandResult(false, "", "App not found");
 
         auto version_ = versionRepo.findById(r.versionId);
-        if (version_.id.isEmpty)
+        if (version_.isNull)
             return CommandResult(false, "", "Version not found");
 
         DeploymentRecord record;

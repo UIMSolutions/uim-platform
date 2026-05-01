@@ -64,7 +64,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateAutomationRuleRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
         existing.name = r.name;
@@ -82,7 +82,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(AutomationRuleId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
         repo.remove(id);

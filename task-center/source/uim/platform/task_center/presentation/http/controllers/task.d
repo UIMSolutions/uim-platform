@@ -114,7 +114,7 @@ class TaskController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto t = uc.getById(tenantId, id);
-            if (t.id.isEmpty) {
+            if (t.isNull) {
                 writeError(res, 404, "Task not found");
                 return;
             }

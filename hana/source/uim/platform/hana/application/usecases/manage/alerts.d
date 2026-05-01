@@ -25,7 +25,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateAlertRequest r) {
-    if (r.id.isEmpty || r.name.length == 0)
+    if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
     if (repo.existsById(r.id))

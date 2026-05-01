@@ -100,7 +100,7 @@ class SituationInstanceController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto i = uc.getById(id);
-            if (i.id.isEmpty) {
+            if (i.isNull) {
                 writeError(res, 404, "Situation instance not found");
                 return;
             }

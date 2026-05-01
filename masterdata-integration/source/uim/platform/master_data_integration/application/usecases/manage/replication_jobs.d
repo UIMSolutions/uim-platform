@@ -45,7 +45,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult startJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.isEmpty)
+    if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.pending && job.status != ReplicationJobStatus.paused)
       return CommandResult(false, "", "Job can only be started from pending or paused state");
@@ -59,7 +59,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   CommandResult completeJob(ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(id);
-    if (job.id.isEmpty)
+    if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
 
     job.status = errorRecords > 0 ? ReplicationJobStatus.failed : ReplicationJobStatus.completed;
@@ -77,7 +77,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult cancelJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.isEmpty)
+    if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
@@ -87,7 +87,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult pauseJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.isEmpty)
+    if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.running)
       return CommandResult(false, "", "Job can only be paused when running");
@@ -114,7 +114,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.isEmpty)
+    if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

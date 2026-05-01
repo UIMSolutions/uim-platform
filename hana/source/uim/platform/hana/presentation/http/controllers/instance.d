@@ -107,7 +107,7 @@ class InstanceController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto instance = uc.getById(id);
-      if (instance.id.isEmpty) {
+      if (instance.isNull) {
         writeError(res, 404, "Instance not found");
         return;
       }

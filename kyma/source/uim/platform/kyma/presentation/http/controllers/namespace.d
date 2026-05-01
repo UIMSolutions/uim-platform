@@ -93,7 +93,7 @@ class NamespaceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto ns = uc.getNamespace(NamespaceId(id));
-      if (ns.id.isEmpty) {
+      if (ns.isNull) {
         writeError(res, 404, "Namespace not found");
         return;
       }

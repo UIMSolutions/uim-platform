@@ -81,7 +81,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.clientId);
-    if (doc.id.isEmpty)
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
     if (doc.status != DocumentStatus.completed)
       return CommandResult(false, "", "Document must be in completed status to confirm");
@@ -113,7 +113,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(DocumentId id, ClientId clientId) {
     auto existing = docRepo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Document not found");
 
     docRepo.remove(id, clientId);

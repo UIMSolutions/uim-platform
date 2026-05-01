@@ -28,7 +28,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Rule name is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -56,7 +56,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(id);
-    if (rule.isNull || rule.id.isEmpty)
+    if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
     if (req.name.length > 0)
@@ -89,7 +89,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteRule(LifecycleRuleId id) {
     auto rule = ruleRepo.findById(id);
-    if (rule.isNull || rule.id.isEmpty)
+    if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
     ruleRepo.remove(id);

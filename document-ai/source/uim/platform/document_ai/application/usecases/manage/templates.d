@@ -72,7 +72,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Template ID is required");
 
     auto existing = repo.findById(r.templateId, r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Template not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -112,7 +112,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(TemplateId id, ClientId clientId) {
     auto existing = repo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Template not found");
 
     repo.remove(id, clientId);

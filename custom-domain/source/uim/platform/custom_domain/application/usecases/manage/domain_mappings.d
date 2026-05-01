@@ -19,7 +19,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateDomainMappingRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.standardRoute.length == 0)
             return CommandResult(false, "", "Standard route is required");
@@ -69,7 +69,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(DomainMappingId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Domain mapping not found");
 
         repo.remove(id);

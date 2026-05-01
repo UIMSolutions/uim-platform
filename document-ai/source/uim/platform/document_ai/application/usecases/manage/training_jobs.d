@@ -63,7 +63,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Training job ID is required");
 
     auto existing = jobRepo.findById(r.trainingJobId, r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Training job not found");
 
     if (r.targetStatus.length > 0) {
@@ -110,7 +110,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(TrainingJobId id, ClientId clientId) {
     auto existing = jobRepo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Training job not found");
     if (existing.status == TrainingJobStatus.running)
       return CommandResult(false, "", "Cannot delete running training job");

@@ -41,7 +41,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult update(DirectoryId id, UpdateDirectoryRequest request) {
     auto directory = directories.findById(id);
-    if (directory.id.isEmpty)
+    if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
 
     if (request.displayName.length > 0)
@@ -88,7 +88,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(DirectoryId id) {
     auto directory = directories.findById(id);
-    if (directory.id.isEmpty)
+    if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");

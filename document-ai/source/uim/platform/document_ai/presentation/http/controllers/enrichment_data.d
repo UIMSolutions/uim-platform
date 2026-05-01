@@ -85,7 +85,7 @@ class EnrichmentDataController : PlatformController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto ed = uc.getById(id, clientId);
-      if (ed.id.isEmpty) {
+      if (ed.isNull) {
         writeError(res, 404, "Enrichment data not found");
         return;
       }

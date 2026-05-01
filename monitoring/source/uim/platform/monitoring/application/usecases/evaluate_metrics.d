@@ -71,7 +71,7 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
 
   bool evaluateRule(TenantId tenantId, AlertRuleId ruleId) {
     auto rule = ruleRepo.findById(ruleId);
-    if (rule.id.isEmpty || !rule.isEnabled)
+    if (rule.isNull || !rule.isEnabled)
       return false;
 
     auto now = clockSeconds();

@@ -58,7 +58,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
     auto obj = repo.findById(id);
-    if (obj.id.isEmpty)
+    if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
     string[] changedFields;
@@ -123,7 +123,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteObject(MasterDataObjectId id) {
     auto obj = repo.findById(id);
-    if (obj.id.isEmpty)
+    if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
     repo.remove(id);

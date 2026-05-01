@@ -35,7 +35,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
 
   CommandResult startImport(StartImportRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
-    if (pkg.id.isEmpty)
+    if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
     ImportJob job;

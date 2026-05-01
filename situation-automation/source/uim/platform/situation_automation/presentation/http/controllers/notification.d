@@ -95,7 +95,7 @@ class NotificationController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto n = notifications.getById(id);
-            if (n.id.isEmpty) {
+            if (n.isNull) {
                 writeError(res, 404, "Notification not found");
                 return;
             }

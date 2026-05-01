@@ -44,7 +44,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(AppVersionId id, UpdateAppVersionRequest r) {
         auto ver = repo.findById(id);
-        if (ver.id.isEmpty)
+        if (ver.isNull)
             return CommandResult(false, "", "Version not found");
 
         if (r.description.length > 0) ver.description = r.description;

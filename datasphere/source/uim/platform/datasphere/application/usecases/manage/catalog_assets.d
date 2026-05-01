@@ -64,7 +64,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateCatalogAssetRequest r) {
     auto existing = repo.findById(r.assetId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
     existing.name = r.name;
@@ -82,7 +82,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(CatalogAssetId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
     repo.remove(id, spaceId);

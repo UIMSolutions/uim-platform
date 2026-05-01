@@ -92,7 +92,7 @@ class ViewController : PlatformController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto v = uc.getById(id, spaceId);
-      if (v.id.isEmpty) {
+      if (v.isNull) {
         writeError(res, 404, "View not found");
         return;
       }

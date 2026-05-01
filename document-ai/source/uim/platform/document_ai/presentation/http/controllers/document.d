@@ -90,7 +90,7 @@ class DocumentController : PlatformController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto d = uc.getById(id, clientId);
-      if (d.id.isEmpty) {
+      if (d.isNull) {
         writeError(res, 404, "Document not found");
         return;
       }
@@ -155,7 +155,7 @@ class DocumentController : PlatformController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto result = uc.getExtractionResult(docId, clientId);
-      if (result.id.isEmpty) {
+      if (result.isNull) {
         writeError(res, 404, "Extraction result not found");
         return;
       }

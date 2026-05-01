@@ -78,7 +78,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Schema ID is required");
 
     auto existing = repo.findById(r.schemaId, r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Schema not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -114,7 +114,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(SchemaId id, ClientId clientId) {
     auto existing = repo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Schema not found");
 
     repo.remove(id, clientId);

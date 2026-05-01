@@ -33,7 +33,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Certificate content is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (!existing.id.isEmpty)
+    if (!existing.isNull)
       return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
     Certificate certificate;

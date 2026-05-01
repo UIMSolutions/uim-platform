@@ -19,7 +19,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateDataSubjectRequest r) {
-        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
+        if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.firstName.length == 0 && r.lastName.length == 0)
             return CommandResult(false, "", "First name or last name is required");
 
@@ -64,7 +64,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateDataSubjectRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
         if (r.firstName.length > 0) existing.firstName = r.firstName;
@@ -81,7 +81,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult block(DataSubjectId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
         existing.status = DataSubjectStatus.blocked;
@@ -92,7 +92,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult erase(DataSubjectId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
         existing.status = DataSubjectStatus.erased;
@@ -108,7 +108,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(DataSubjectId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
         repo.remove(id);
         return CommandResult(true, id.toString, "");

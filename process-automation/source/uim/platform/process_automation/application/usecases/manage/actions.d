@@ -18,7 +18,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateActionRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Action ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Action name is required");

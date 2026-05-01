@@ -90,7 +90,7 @@ class TaskController : PlatformController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto t = uc.getById(id, spaceId);
-      if (t.id.isEmpty) {
+      if (t.isNull) {
         writeError(res, 404, "Task not found");
         return;
       }

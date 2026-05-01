@@ -71,7 +71,7 @@ class ChangeLogController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto entry = uc.getEntry(id);
-      if (entry.id.isEmpty) {
+      if (entry.isNull) {
         writeError(res, 404, "Change log entry not found");
         return;
       }

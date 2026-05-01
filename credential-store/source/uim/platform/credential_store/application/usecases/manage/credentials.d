@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCredentialsUseCase { // TODO: UIMUseCase {
-  private CredentialRepository repo;
+  private CredentialRepository credentials;
 
-  this(CredentialRepository repo) {
-    this.repo = repo;
+  this(CredentialRepository credentials) {
+    this.credentials = credentials;
   }
 
   // Create or create-or-update based on ifNoneMatch header
@@ -33,7 +33,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     if (validationError.length > 0)
       return CommandResult(false, "", validationError);
 
-    auto existing = repo.findByName(r.namespaceId, r.name, credType);
+    auto existing = credentials.findByName(r.namespaceId, r.name, credType);
 
     // If-None-Match: * means create only (fail if exists)
     if (r.ifNoneMatch == "*" && !existing.isNull)
@@ -48,8 +48,8 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
       existing.version_ = existing.version_ + 1;
       existing.updatedAt = currentTimestamp();
       existing.modifiedBy = r.createdBy;
-      repo.update(existing);
-      return CommandResult(true, existing.id, "");
+      credentials.update(existing);
+      return CommandResult(true, existing.id.value, "");
     }
 
     Credential cred;
@@ -69,13 +69,13 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     cred.createdBy = r.createdBy;
     cred.modifiedBy = r.createdBy;
 
-    repo.save(cred);
-    return CommandResult(true, cred.id, "");
+    credentials.save(cred);
+    return CommandResult(true, cred.id.value, "");
   }
 
   // Update with conditional support via ifMatch header
   CommandResult update(CredentialId id, UpdateCredentialRequest r) {
-    auto cred = repo.findById(id);
+    auto cred = credentials.findById(id);
     if (cred.isNull)
       return CommandResult(false, "", "Credential not found");
 
@@ -98,36 +98,36 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     cred.updatedAt = currentTimestamp();
     cred.modifiedBy = r.modifiedBy;
 
-    repo.update(cred);
+    credentials.update(cred);
     return CommandResult(true, cred.id, "");
   }
 
   Credential getById(CredentialId id) {
-    return repo.findById(id);
+    return credentials.findById(id);
   }
 
   Credential getByName(NamespaceId namespaceId, string name, string type) {
-    return repo.findByName(namespaceId, name, parseCredentialType(type));
+    return credentials.findByName(namespaceId, name, parseCredentialType(type));
   }
 
   Credential[] listByNamespace(NamespaceId namespaceId) {
-    return repo.findByNamespace(namespaceId);
+    return credentials.findByNamespace(namespaceId);
   }
 
   Credential[] listByType(NamespaceId namespaceId, string type) {
-    return repo.findByNamespaceAndType(namespaceId, parseCredentialType(type));
+    return credentials.findByNamespaceAndType(namespaceId, parseCredentialType(type));
   }
 
   void remove(CredentialId id) {
-    repo.remove(id);
+    credentials.remove(id);
   }
 
   size_t countByNamespace(NamespaceId namespaceId) {
-    return repo.countByNamespace(namespaceId);
+    return credentials.countByNamespace(namespaceId);
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return credentials.countByTenant(tenantId);
   }
 
   private static CredentialType parseCredentialType(string t) {

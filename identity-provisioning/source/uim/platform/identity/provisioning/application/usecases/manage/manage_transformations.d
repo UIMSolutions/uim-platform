@@ -66,7 +66,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateTransformation(UpdateTransformationRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Transformation ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

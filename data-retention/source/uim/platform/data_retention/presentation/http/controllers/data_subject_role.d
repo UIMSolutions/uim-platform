@@ -55,7 +55,7 @@ class DataSubjectRoleController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto dsr = uc.getById(id);
-            if (dsr.id.isEmpty) { writeError(res, 404, "Data subject role not found"); return; }
+            if (dsr.isNull) { writeError(res, 404, "Data subject role not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", dsr.id.value).set("name", dsr.name)
                 .set("description", dsr.description)

@@ -97,7 +97,7 @@ class TaskController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto t = uc.getById(id);
-      if (t.id.isEmpty) {
+      if (t.isNull) {
         writeError(res, 404, "Task not found");
         return;
       }

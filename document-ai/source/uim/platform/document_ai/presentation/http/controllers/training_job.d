@@ -84,7 +84,7 @@ class TrainingJobController : PlatformController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto tj = uc.getById(id, clientId);
-      if (tj.id.isEmpty) {
+      if (tj.isNull) {
         writeError(res, 404, "Training job not found");
         return;
       }

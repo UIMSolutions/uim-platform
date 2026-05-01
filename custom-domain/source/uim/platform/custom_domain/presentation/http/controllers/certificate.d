@@ -100,7 +100,7 @@ class CertificateController : PlatformController {
 
             auto id = extractIdFromPath(path);
             auto c = certificates.getById(id);
-            if (c.id.isEmpty) {
+            if (c.isNull) {
                 writeError(res, 404, "Certificate not found");
                 return;
             }

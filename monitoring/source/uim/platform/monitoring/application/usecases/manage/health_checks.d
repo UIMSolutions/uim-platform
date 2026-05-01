@@ -76,7 +76,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
     auto check = checkRepo.findById(id);
-    if (check.id.isEmpty)
+    if (check.isNull)
       return CommandResult(false, "", "Health check not found");
 
     if (req.description.length > 0)

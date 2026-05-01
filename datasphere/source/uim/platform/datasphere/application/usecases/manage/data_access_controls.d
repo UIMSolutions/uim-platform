@@ -55,7 +55,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateDataAccessControlRequest r) {
     auto existing = repo.findById(r.controlId, r.spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Data access control not found");
 
     existing.name = r.name;
@@ -73,7 +73,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(DataAccessControlId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Data access control not found");
 
     repo.remove(id, spaceId);

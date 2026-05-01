@@ -94,7 +94,7 @@ class EntitlementController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto ent = uc.getById(id);
-      if (ent.id.isEmpty) {
+      if (ent.isNull) {
         writeError(res, 404, "Entitlement not found");
         return;
       }

@@ -93,7 +93,7 @@ class FilterRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule.id.isEmpty) {
+      if (rule.isNull) {
         writeError(res, 404, "Filter rule not found");
         return;
       }

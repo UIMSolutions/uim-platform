@@ -46,7 +46,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateModel(DataModelId id, UpdateDataModelRequest req) {
     auto model = repo.findById(id);
-    if (model.id.isEmpty)
+    if (model.isNull)
       return CommandResult(false, "", "Data model not found");
 
     if (req.description.length > 0)
@@ -83,7 +83,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteModel(DataModelId id) {
     auto model = repo.findById(id);
-    if (model.id.isEmpty)
+    if (model.isNull)
       return CommandResult(false, "", "Data model not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

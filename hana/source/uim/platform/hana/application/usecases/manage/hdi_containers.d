@@ -25,7 +25,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateHDIContainerRequest r) {
-    if (r.id.isEmpty || r.name.length == 0)
+    if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "HDI Container ID and name are required");
 
     if (repo.existsById(r.id))

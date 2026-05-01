@@ -60,7 +60,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Enrichment data ID is required");
 
     auto existing = repo.findById(r.enrichmentDataId, r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Enrichment data not found");
 
     if (r.name.length > 0) existing.name = r.name;

@@ -109,7 +109,7 @@ class ApiRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getApiRule(id);
-      if (rule.id.isEmpty) {
+      if (rule.isNull) {
         writeError(res, 404, "API rule not found");
         return;
       }

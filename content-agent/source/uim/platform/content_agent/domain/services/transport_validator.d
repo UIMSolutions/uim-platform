@@ -51,7 +51,7 @@ struct TransportValidator {
     }
 
     // Validate queue
-    if (queue.id.isEmpty)
+    if (queue.isNull)
       errors ~= "Transport queue not found";
 
     // Validate mode vs queue type compatibility

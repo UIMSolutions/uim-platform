@@ -46,7 +46,7 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
 
     // Look up the destination by name
     auto dest = destRepo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (dest.id.isEmpty) {
+    if (dest.isNull) {
       resp.found = false;
       resp.error = "Destination '" ~ req.name ~ "' not found";
       return resp;
@@ -63,7 +63,7 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
     string[] fragmentNames;
     foreach (fid; dest.fragmentIds) {
       auto frag = fragRepo.findById(fid);
-      if (!frag.id.isEmpty) {
+      if (!frag.isNull) {
         fragments ~= frag;
         fragmentNames ~= frag.name;
       }
@@ -79,12 +79,12 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
     Certificate[] certs;
     if (!resolved.keystoreId.isEmpty) {
       auto ks = certRepo.findById(resolved.keystoreId);
-      if (!ks.id.isEmpty)
+      if (!ks.isNull)
         certs ~= ks;
     }
     if (!resolved.truststoreId.isEmpty) {
       auto ts = certRepo.findById(resolved.truststoreId);
-      if (!ts.id.isEmpty)
+      if (!ts.isNull)
         certs ~= ts;
     }
 

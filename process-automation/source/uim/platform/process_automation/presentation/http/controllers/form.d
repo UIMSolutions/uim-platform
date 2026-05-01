@@ -95,7 +95,7 @@ class FormController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto f = uc.getById(id);
-            if (f.id.isEmpty) {
+            if (f.isNull) {
                 writeError(res, 404, "Form not found");
                 return;
             }

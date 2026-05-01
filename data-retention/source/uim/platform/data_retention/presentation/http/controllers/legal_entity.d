@@ -58,7 +58,7 @@ class LegalEntityController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto le = uc.getById(id);
-            if (le.id.isEmpty) { writeError(res, 404, "Legal entity not found"); return; }
+            if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", le.id.value).set("name", le.name)
                 .set("description", le.description)

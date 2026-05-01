@@ -81,7 +81,7 @@ class CorsRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule.isNull || rule.id.isEmpty) {
+      if (rule.isNull || rule.isNull) {
         writeError(res, 404, "CORS rule not found");
         return;
       }

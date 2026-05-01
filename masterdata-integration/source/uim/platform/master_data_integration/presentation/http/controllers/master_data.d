@@ -101,7 +101,7 @@ class MasterDataController : PlatformController {
       }
 
       auto obj = uc.findByGlobalId(tenantId, globalId);
-      if (obj.id.isEmpty) {
+      if (obj.isNull) {
         writeError(res, 404, "Master data object not found");
         return;
       }
@@ -115,7 +115,7 @@ class MasterDataController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto obj = uc.getObject(id);
-      if (obj.id.isEmpty) {
+      if (obj.isNull) {
         writeError(res, 404, "Master data object not found");
         return;
       }

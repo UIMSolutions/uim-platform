@@ -87,7 +87,7 @@ class DataFlowController : PlatformController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto df = uc.getById(id, spaceId);
-      if (df.id.isEmpty) {
+      if (df.isNull) {
         writeError(res, 404, "Data flow not found");
         return;
       }

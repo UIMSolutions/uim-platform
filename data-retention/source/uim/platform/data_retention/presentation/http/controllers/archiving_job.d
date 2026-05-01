@@ -59,7 +59,7 @@ class ArchivingJobController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto aj = uc.getById(id);
-            if (aj.id.isEmpty) { writeError(res, 404, "Archiving job not found"); return; }
+            if (aj.isNull) { writeError(res, 404, "Archiving job not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", aj.id.value)
                 .set("applicationGroupId", aj.applicationGroupId.value)

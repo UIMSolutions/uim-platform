@@ -88,7 +88,7 @@ class TaskActionController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.getById(tenantId, id);
-            if (a.id.isEmpty) {
+            if (a.isNull) {
                 writeError(res, 404, "Action not found");
                 return;
             }

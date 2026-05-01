@@ -29,7 +29,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Environment ID is required");
 
     auto existing = appRepository.findByName(req.environmentId, req.name);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     Application app;

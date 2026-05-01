@@ -93,7 +93,7 @@ class TriggerController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto t = uc.getById(id);
-            if (t.id.isEmpty) {
+            if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
                 return;
             }

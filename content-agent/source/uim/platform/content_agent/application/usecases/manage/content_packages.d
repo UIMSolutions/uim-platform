@@ -72,7 +72,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
   CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
     auto pkg = packages.findById(id);
-    if (pkg.id.isEmpty)
+    if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
     if (req.description.length > 0)
@@ -95,7 +95,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
   CommandResult assemblePackage(AssemblePackageRequest req) {
     auto pkg = packages.findById(req.packageId);
-    if (pkg.id.isEmpty)
+    if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
     if (pkg.status != PackageStatus.draft)
@@ -140,7 +140,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePackage(ContentPackageId id) {
     auto pkg = packages.findById(id);
-    if (pkg.id.isEmpty)
+    if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
     packages.remove(id);

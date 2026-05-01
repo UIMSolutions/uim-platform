@@ -97,7 +97,7 @@ class BucketController : PlatformController {
       }
 
       auto bucket = uc.getBucket(id);
-      if (bucket.id.isEmpty) {
+      if (bucket.isNull) {
         writeError(res, 404, "Bucket not valid");
         return;
       }

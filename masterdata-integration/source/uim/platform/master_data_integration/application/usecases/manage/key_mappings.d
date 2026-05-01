@@ -47,7 +47,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req) {
     auto mapping = repo.findById(id);
-    if (mapping.id.isEmpty)
+    if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
     if (req.entries.length > 0)
@@ -64,7 +64,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   /// Lookup: given a source client+key, find the target client's key.
   string lookupKey(LookupKeyRequest req) {
     auto mapping = repo.findByClientKey(req.tenantId, req.sourceClientId, req.sourceLocalKey);
-    if (mapping.id.isEmpty)
+    if (mapping.isNull)
       return "";
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
@@ -87,7 +87,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteMapping(KeyMappingId id) {
     auto mapping = repo.findById(id);
-    if (mapping.id.isEmpty)
+    if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

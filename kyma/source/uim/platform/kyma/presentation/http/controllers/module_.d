@@ -93,7 +93,7 @@ class ModuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto m = uc.getModule(id);
-      if (m.id.isEmpty) {
+      if (m.isNull) {
         writeError(res, 404, "Module not found");
         return;
       }

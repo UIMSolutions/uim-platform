@@ -99,7 +99,7 @@ class DatabaseConnectionController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = uc.getById(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Database connection not found");
         return;
       }

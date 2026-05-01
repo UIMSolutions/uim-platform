@@ -104,7 +104,7 @@ class DataModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto model = uc.getModel(id);
-      if (model.id.isEmpty) {
+      if (model.isNull) {
         writeError(res, 404, "Data model not found");
         return;
       }

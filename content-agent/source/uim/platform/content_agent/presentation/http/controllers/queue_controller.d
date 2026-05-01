@@ -92,7 +92,7 @@ class QueueController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto queue = uc.getQueue(id);
-      if (queue.id.isEmpty) {
+      if (queue.isNull) {
         writeError(res, 404, "Queue not found");
         return;
       }

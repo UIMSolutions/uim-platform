@@ -89,7 +89,7 @@ class StreamController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto s = uc.getById(id);
 
-      if (s.id.isEmpty) {
+      if (s.isNull) {
         writeError(res, 404, "Log stream not found");
         return;
       }

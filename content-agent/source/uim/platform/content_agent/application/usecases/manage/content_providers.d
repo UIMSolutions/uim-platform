@@ -58,7 +58,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
 
   CommandResult updateProvider(ContentProviderId id, UpdateProviderRequest req) {
     auto provider = providerRepo.findById(id);
-    if (provider.id.isEmpty)
+    if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
     if (req.description.length > 0)
@@ -74,7 +74,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
 
   CommandResult deregisterProvider(ContentProviderId id) {
     auto provider = providerRepo.findById(id);
-    if (provider.id.isEmpty)
+    if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
     provider.status = ProviderStatus.deregistered;
@@ -88,7 +88,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
 
   CommandResult syncProvider(ContentProviderId id) {
     auto provider = providerRepo.findById(id);
-    if (provider.id.isEmpty)
+    if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
     if (provider.status != ProviderStatus.active)

@@ -96,7 +96,7 @@ class ArtifactController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.getById(id);
-            if (a.id.isEmpty) {
+            if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
                 return;
             }

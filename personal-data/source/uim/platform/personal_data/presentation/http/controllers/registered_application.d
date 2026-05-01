@@ -85,7 +85,7 @@ class RegisteredApplicationController : PlatformController {
 
             auto id = extractIdFromPath(path);
             auto a = uc.getById(id);
-            if (a.id.isEmpty) {
+            if (a.isNull) {
                 writeError(res, 404, "Application not found");
                 return;
             }

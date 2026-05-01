@@ -84,7 +84,7 @@ class SubscriptionController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto s = uc.getById(id);
-      if (s.id.isEmpty) {
+      if (s.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
       }

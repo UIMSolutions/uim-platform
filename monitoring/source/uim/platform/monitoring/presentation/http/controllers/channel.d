@@ -93,7 +93,7 @@ class ChannelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto ch = uc.getChannel(id);
-      if (ch.id.isEmpty) {
+      if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
         return;
       }

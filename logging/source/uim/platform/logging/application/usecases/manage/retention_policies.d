@@ -58,7 +58,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
 
   CommandResult update(RetentionPolicyId id, UpdateRetentionPolicyRequest req) {
     auto p = repo.findById(id);
-    if (p.id.isEmpty)
+    if (p.isNull)
       return CommandResult(false, "", "Retention policy not found");
 
     if (req.description.length > 0)

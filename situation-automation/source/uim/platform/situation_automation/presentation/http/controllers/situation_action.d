@@ -98,7 +98,7 @@ class SituationActionController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.getById(id);
-            if (a.id.isEmpty) {
+            if (a.isNull) {
                 writeError(res, 404, "Situation action not found");
                 return;
             }

@@ -82,7 +82,7 @@ class ServiceBindingController {
         return;
 
       auto binding = uc.getBinding(id);
-      if (binding.isNull || binding.id.isEmpty) {
+      if (binding.isNull || binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
       }

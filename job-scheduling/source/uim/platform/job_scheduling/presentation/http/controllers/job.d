@@ -113,7 +113,7 @@ class JobController : PlatformController {
             TenantId tenantId = req.getTenantId;
 
             auto job = jobUc.getById(tenantId, id);
-            if (job.id.isEmpty) {
+            if (job.isNull) {
                 writeError(res, 404, "Job not found");
                 return;
             }

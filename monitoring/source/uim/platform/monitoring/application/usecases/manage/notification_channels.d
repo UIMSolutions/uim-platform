@@ -95,7 +95,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteChannel(NotificationChannelId id) {
     auto ch = channels.findById(id);
-    if (ch.id.isEmpty)
+    if (ch.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
     channels.remove(id);

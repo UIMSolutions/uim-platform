@@ -25,7 +25,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateConfigurationRequest r) {
-    if (r.id.isEmpty || r.key.length == 0)
+    if (r.isNull || r.key.length == 0)
       return CommandResult(false, "", "Configuration ID and key are required");
 
     auto existing = repo.findById(r.id);
@@ -62,7 +62,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateConfigurationRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Configuration not found");
 
     if (existing.isReadOnly)
@@ -79,7 +79,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ConfigurationId id) {
     auto existing = repo.findById(id);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Configuration not found");
 
     repo.remove(id);

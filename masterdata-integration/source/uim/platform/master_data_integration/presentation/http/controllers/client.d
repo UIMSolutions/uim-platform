@@ -102,7 +102,7 @@ class ClientController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto client = uc.getClient(id);
-      if (client.id.isEmpty) {
+      if (client.isNull) {
         writeError(res, 404, "Client not found");
         return;
       }

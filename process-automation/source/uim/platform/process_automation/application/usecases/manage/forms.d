@@ -18,7 +18,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateFormRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Form ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Form name is required");
@@ -56,7 +56,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateFormRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Form not found");
 
         existing.name = r.name;
@@ -73,7 +73,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(FormId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Form not found");
 
         repo.remove(id);

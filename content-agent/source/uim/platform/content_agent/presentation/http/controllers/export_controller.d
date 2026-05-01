@@ -84,7 +84,7 @@ class ExportController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getExportJob(id);
-      if (job.id.isEmpty) {
+      if (job.isNull) {
         writeError(res, 404, "Export job not found");
         return;
       }

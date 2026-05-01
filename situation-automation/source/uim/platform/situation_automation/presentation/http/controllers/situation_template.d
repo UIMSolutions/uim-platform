@@ -100,7 +100,7 @@ class SituationTemplateController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto t = uc.getById(id);
-            if (t.id.isEmpty) {
+            if (t.isNull) {
                 writeError(res, 404, "Situation template not found");
                 return;
             }

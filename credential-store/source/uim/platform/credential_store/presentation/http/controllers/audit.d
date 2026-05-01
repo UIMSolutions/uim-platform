@@ -76,7 +76,7 @@ class AuditController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto e = uc.getById(id);
 
-      if (e.id.isEmpty) {
+      if (e.isNull) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }

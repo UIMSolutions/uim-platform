@@ -93,7 +93,7 @@ class SearchController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto entry = uc.getById(id);
 
-      if (entry.id.isEmpty) {
+      if (entry.isNull) {
         writeError(res, 404, "Log entry not found");
         return;
       }

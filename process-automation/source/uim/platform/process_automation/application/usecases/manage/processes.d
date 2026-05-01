@@ -59,7 +59,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateProcessRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Process not found");
 
         existing.name = r.name;
@@ -76,7 +76,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
 
     CommandResult deploy(DeployProcessRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Process not found");
 
         switch (r.action) {
@@ -99,7 +99,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(ProcessId id) {
         auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Process not found");
 
         repo.remove(id);

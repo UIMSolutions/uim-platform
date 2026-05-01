@@ -21,7 +21,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
     foreach (r; findByCheck(tenantId, checkId)) {
-      if (latest.id.isEmpty || r.executedAt > latest.executedAt)
+      if (latest.isNull || r.executedAt > latest.executedAt)
         latest = r;
     }
     return latest;

@@ -59,7 +59,7 @@ class DeletionRequestController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto dr = uc.getById(id);
-            if (dr.id.isEmpty) { writeError(res, 404, "Deletion request not found"); return; }
+            if (dr.isNull) { writeError(res, 404, "Deletion request not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", dr.id.value)
                 .set("dataSubjectId", dr.dataSubjectId.value)

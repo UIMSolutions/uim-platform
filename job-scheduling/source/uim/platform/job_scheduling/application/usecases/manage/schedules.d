@@ -55,7 +55,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateScheduleRequest request) {
         auto existing = schedules.findById(request.tenantId, request.scheduleId, request.jobId);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
         if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(
@@ -89,7 +89,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(TenantId tenantId, ScheduleId id, JobId jobId) {
         auto existing = schedules.findById(tenantId, id, jobId);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
         schedules.removeById(tenantId, id, jobId);

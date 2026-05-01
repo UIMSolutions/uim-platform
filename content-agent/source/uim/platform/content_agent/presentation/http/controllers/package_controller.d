@@ -90,7 +90,7 @@ class PackageController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto pkg = uc.getPackage(id);
-      if (pkg.id.isEmpty) {
+      if (pkg.isNull) {
         writeError(res, 404, "Package not found");
         return;
       }

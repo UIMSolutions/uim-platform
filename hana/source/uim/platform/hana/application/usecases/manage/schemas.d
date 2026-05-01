@@ -25,7 +25,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateSchemaRequest r) {
-    if (r.id.isEmpty || r.name.length == 0)
+    if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Schema ID and name are required");
 
     auto existing = repo.findById(r.id);

@@ -110,7 +110,7 @@ class EventSubscriptionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto sub = uc.getSubscription(id);
-      if (sub.id.isEmpty) {
+      if (sub.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
       }

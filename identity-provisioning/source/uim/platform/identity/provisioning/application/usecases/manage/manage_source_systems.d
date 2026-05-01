@@ -56,7 +56,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSourceSystem(UpdateSourceSystemRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "System ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

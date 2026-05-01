@@ -51,7 +51,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document type ID is required");
 
     auto existing = repo.findById(r.documentTypeId, r.clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Document type not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -80,7 +80,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(DocumentTypeId id, ClientId clientId) {
     auto existing = repo.findById(id, clientId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Document type not found");
 
     repo.remove(id, clientId);

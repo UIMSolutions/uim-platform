@@ -59,7 +59,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDataset(UpdateDatasetRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Dataset ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

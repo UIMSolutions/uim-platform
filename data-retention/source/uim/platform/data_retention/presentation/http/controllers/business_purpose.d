@@ -63,7 +63,7 @@ class BusinessPurposeController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto bp = uc.getById(id);
-            if (bp.id.isEmpty) { writeError(res, 404, "Business purpose not found"); return; }
+            if (bp.isNull) { writeError(res, 404, "Business purpose not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", bp.id.value).set("name", bp.name)
                 .set("description", bp.description)

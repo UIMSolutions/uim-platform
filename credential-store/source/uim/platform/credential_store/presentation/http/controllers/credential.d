@@ -145,7 +145,7 @@ class CredentialController : PlatformController {
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto c = uc.getById(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Credential not found");
         return;
       }

@@ -73,7 +73,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

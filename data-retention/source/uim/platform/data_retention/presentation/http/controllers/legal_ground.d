@@ -59,7 +59,7 @@ class LegalGroundController : PlatformController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto lg = uc.getById(id);
-            if (lg.id.isEmpty) { writeError(res, 404, "Legal ground not found"); return; }
+            if (lg.isNull) { writeError(res, 404, "Legal ground not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", lg.id.value).set("name", lg.name)
                 .set("description", lg.description)

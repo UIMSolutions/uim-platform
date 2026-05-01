@@ -28,7 +28,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.id.isEmpty)
+    if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -83,7 +83,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePolicy(AccessPolicyId id) {
     auto policy = policyRepo.findById(id);
-    if (policy.isNull || policy.id.isEmpty)
+    if (policy.isNull || policy.isNull)
       return CommandResult(false, "", "Policy not found");
 
     policyRepo.remove(id);

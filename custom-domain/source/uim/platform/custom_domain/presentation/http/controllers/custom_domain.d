@@ -98,7 +98,7 @@ class CustomDomainController : PlatformController {
 
             auto id = extractIdFromPath(path);
             auto d = uc.getById(id);
-            if (d.id.isEmpty) {
+            if (d.isNull) {
                 writeError(res, 404, "Custom domain not found");
                 return;
             }
