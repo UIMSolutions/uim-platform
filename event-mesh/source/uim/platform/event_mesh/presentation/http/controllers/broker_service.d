@@ -30,8 +30,8 @@ class BrokerServiceController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= brokerServiceToJson(e);
+            auto jarr = items.map!(e => brokerServiceToJson(e)).array;
+            
             auto resp = Json.emptyObject
               .set("count", Json(items.length))
               .set("resources", jarr)

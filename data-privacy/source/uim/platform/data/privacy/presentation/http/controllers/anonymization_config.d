@@ -59,9 +59,7 @@ class AnonymizationConfigController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listConfigs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

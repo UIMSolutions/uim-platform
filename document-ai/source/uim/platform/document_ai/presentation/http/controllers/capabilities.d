@@ -29,10 +29,7 @@ class CapabilitiesController : PlatformController {
       auto exMethods = caps.extractionMethods.map!(method => Json(m)).array;
       auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array;
       auto fvArr = caps.fieldValueTypes.map!(fv => Json(fv)).array;
-      auto fArr = Json.emptyArray;
-      foreach (feat; caps.features) {
-        fArr ~= Json(feat);
-      }
+      auto fArr = caps.features.map!(feat => Json(feat)).array;
 
       auto resp = Json.emptyObject
         .set("serviceName", Json(caps.serviceName))

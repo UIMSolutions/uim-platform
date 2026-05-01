@@ -113,10 +113,7 @@ class InferenceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
-
-      auto arr = Json.emptyArray;
-      foreach (r; items)
-        arr ~= serializeRequest(r);
+      auto arr = items.map!(r => serializeRequest(r)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

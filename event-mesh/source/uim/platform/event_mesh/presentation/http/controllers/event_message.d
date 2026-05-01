@@ -20,6 +20,7 @@ class EventMessageController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/messages", &handleList);
         router.get("/api/v1/event-mesh/messages/*", &handleGet);
         router.post("/api/v1/event-mesh/messages", &handlePublish);
@@ -30,8 +31,8 @@ class EventMessageController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= eventMessageToJson(e);
+            auto jarr = items.map!(e => eventMessageToJson(e)).array;
+
             auto resp = Json.emptyObject
               .set("count", Json(items.length))
               .set("resources", jarr)
@@ -116,7 +117,7 @@ class EventMessageController : PlatformController {
             auto result = uc.remove(EventMessageId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("message", "Event message deleted");
+                .set("message", Json("Event message deleted"));
                 
                 res.writeJsonBody(resp, 200);
             } else {

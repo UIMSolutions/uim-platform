@@ -30,11 +30,12 @@ class EquipmentController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= equipmentToJson(e);
+            auto jarr = items.map!(e => equipmentToJson(e)).array;
+
             auto resp = Json.emptyObject
                 .set("count", Json(items.length))
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Equipment list retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

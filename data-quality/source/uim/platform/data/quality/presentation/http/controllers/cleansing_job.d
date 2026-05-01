@@ -112,9 +112,7 @@ class CleansingJobController : PlatformController {
       r["errorMessage"] = Json(j.errorMessage);
 
     if (j.ruleIds.length > 0) {
-      auto ids = Json.emptyArray;
-      foreach (id; j.ruleIds)
-        ids ~= Json(id);
+      auto ids = j.ruleIds.map!(id => Json(id)).array.toJson;
       r["ruleIds"] = ids;
     }
 

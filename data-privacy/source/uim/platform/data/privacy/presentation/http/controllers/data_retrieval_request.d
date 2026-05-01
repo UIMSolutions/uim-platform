@@ -69,9 +69,7 @@ class DataRetrievalController : PlatformController {
         ? uc.listByStatus(tenantId, parseRetrievalStatus(statusParam))
         : uc.listRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)
@@ -134,9 +132,7 @@ class DataRetrievalController : PlatformController {
     foreach (s; e.targetSystems)
       systems ~= Json(s);
 
-    auto cats = Json.emptyArray;
-    foreach (c; e.categories)
-      cats ~= Json(c.to!string);
+    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

@@ -73,10 +73,7 @@ class PermissionController : PlatformController {
       auto resourceType = parseResourceType(resourceTypeStr);
 
       auto items = uc.listByResource(resourceId, resourceType, tenantId);
-
-      auto arr = Json.emptyArray;
-      foreach (p; items)
-        arr ~= serializePerm(p);
+      auto arr = items.map!(p => serializePerm(p)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

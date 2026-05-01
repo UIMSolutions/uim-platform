@@ -28,7 +28,7 @@ class RetentionRuleController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/retention-rules", &handleCreate);
     router.get("/api/v1/retention-rules", &handleList);
     router.get("/api/v1/retention-rules/*", &handleGetById);
@@ -51,15 +51,13 @@ class RetentionRuleController : PlatformController {
       auto result = uc.createRule(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Retention rule created successfully");
+          .set("id", Json(result.id))
+          .set("message", "Retention rule created successfully");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -79,13 +77,12 @@ class RetentionRuleController : PlatformController {
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(items.length))
-          .set("message", "Retention rules retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", Json(items.length))
+        .set("message", "Retention rules retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -99,8 +96,7 @@ class RetentionRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(serialize(*entry), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -119,15 +115,13 @@ class RetentionRuleController : PlatformController {
       auto result = uc.updateRule(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Retention rule updated successfully");
-            
+          .set("id", Json(result.id))
+          .set("message", "Retention rule updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -137,15 +131,12 @@ class RetentionRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       uc.deleteRule(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private static Json serialize(const RetentionRule e) {
-        auto cats = Json.emptyArray;
-    foreach (c; e.categories)
-      cats ~= Json(c.to!string);
+    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

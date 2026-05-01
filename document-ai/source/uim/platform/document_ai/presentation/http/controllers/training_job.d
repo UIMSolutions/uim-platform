@@ -144,11 +144,10 @@ class TrainingJobController : PlatformController {
   private Json jobToJson(TrainingJob tj) {
     auto mArr = Json.emptyArray;
     foreach (m; tj.metrics) {
-      auto mj = Json.emptyObject;
-      mj["name"] = Json(m.name);
-      mj["value"] = Json(m.value);
-      mj["timestamp"] = Json(m.timestamp);
-      mArr ~= mj;
+      mArr ~= Json.emptyObject
+        .set("name", Json(m.name))
+        .set("value", Json(m.value))
+        .set("timestamp", Json(m.timestamp));
     }
 
     return Json.emptyObject

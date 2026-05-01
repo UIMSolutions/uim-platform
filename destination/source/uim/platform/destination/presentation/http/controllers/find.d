@@ -56,9 +56,7 @@ class FindController : PlatformController {
         propsJson[k] = Json(v);
       j["properties"] = propsJson;
 
-      auto fragArr = Json.emptyArray;
-      foreach (s; result.appliedFragments)
-        fragArr ~= Json(s);
+      auto fragArr = result.appliedFragments.map!(s => Json(s)).array.toJson;
       j["appliedFragments"] = fragArr;
 
       // Auth tokens

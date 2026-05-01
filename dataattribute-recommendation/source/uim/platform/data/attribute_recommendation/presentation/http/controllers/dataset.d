@@ -66,10 +66,7 @@ class DatasetController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listDatasets(tenantId);
-
-      auto arr = Json.emptyArray;
-      foreach (d; items)
-        arr ~= serializeDataset(d);
+      auto arr = items.map!(d => serializeDataset(d)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

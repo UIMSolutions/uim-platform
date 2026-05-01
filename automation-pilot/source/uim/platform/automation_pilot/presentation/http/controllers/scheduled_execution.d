@@ -30,11 +30,12 @@ class ScheduledExecutionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.scheduledExecutionToJson();
+            auto jarr = items.map!(e => e.scheduledExecutionToJson()).array;
+
             auto resp = Json.emptyObject
               .set("count", items.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+              .set("message", "Scheduled executions retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -121,7 +122,7 @@ class ScheduledExecutionController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
-                  .set("message", "Scheduled execution deleted");
+                  .set("message", "Scheduled execution deleted successfully");
                 
                 res.writeJsonBody(resp, 200);
             } else {

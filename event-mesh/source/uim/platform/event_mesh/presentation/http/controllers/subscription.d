@@ -30,8 +30,8 @@ class SubscriptionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= subscriptionToJson(e);
+            auto jarr = items.map!(e => subscriptionToJson(e)).array;
+            
             auto resp = Json.emptyObject
                 .set("count", Json(items.length))
                 .set("resources", jarr);

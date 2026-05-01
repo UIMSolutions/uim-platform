@@ -31,8 +31,8 @@ class TechnicianController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= technicianToJson(e);
+            auto jarr = items.map!(e => technicianToJson(e)).array;
+            
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr);

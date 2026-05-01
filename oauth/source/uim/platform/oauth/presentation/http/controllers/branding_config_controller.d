@@ -30,8 +30,8 @@ class BrandingConfigController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.brandingConfigToJson();
+            auto jarr = items.map!(e => e.brandingConfigToJson()).array;
+            
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr)

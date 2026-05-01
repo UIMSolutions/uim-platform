@@ -97,15 +97,11 @@ class DestinationController : PlatformController {
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto instanceId = req.params.get("serviceInstanceId");
 
-      Destination[] destinations;
-      if (instanceId.length > 0)
-        destinations = uc.listByServiceInstance(tenantId, ServiceInstanceId(instanceId));
-      else
-        destinations = uc.listBySubaccount(tenantId, subaccountId);
+      Destination[] destinations = instanceId.length > 0
+        ? uc.listByServiceInstance(tenantId, ServiceInstanceId(instanceId))
+        : uc.listBySubaccount(tenantId, subaccountId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; destinations)
-        arr ~= serializeDestination(d);
+      auto arr = destinations.map!(d => serializeDestination(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

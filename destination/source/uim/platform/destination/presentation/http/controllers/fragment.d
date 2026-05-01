@@ -78,10 +78,7 @@ class FragmentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto fragments = uc.listBySubaccount(tenantId, subaccountId);
-
-      auto arr = Json.emptyArray;
-      foreach (f; fragments)
-        arr ~= serializeFragment(f);
+      auto arr = fragments.map!(f => serializeFragment(f)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

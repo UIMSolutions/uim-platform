@@ -30,8 +30,8 @@ class QueueController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= queueToJson(e);
+            auto jarr = items.map!(e => queueToJson(e)).array;
+            
             auto resp = Json.emptyObject
               .set("count", Json(items.length))
               .set("resources", jarr);

@@ -30,8 +30,8 @@ class MeshBridgeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= meshBridgeToJson(e);
+            auto jarr = items.map!(e => meshBridgeToJson(e)).array;
+            
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr);

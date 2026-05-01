@@ -72,15 +72,11 @@ class PersonalDataModelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
 
-      PersonalDataModel[] items;
-      if (catParam.length > 0)
-        items = uc.listByCategory(tenantId, parseCategory(catParam));
-      else
-        items = uc.listModels(tenantId);
+      PersonalDataModel[] items = catParam.length > 0
+        ? uc.listByCategory(tenantId, parseCategory(catParam))
+        : uc.listModels(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -98,9 +94,7 @@ class PersonalDataModelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listSpecialCategories(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

@@ -68,9 +68,7 @@ class ProfileController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto profiles = uc.listByTenant(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (p; profiles)
-        arr ~= serializeProfile(p);
+      auto arr = profiles.map!(p => serializeProfile(p)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

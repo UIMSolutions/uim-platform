@@ -71,10 +71,7 @@ class ModelController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listModelConfigs(tenantId);
-
-      auto arr = Json.emptyArray;
-      foreach (c; items)
-        arr ~= serializeConfig(c);
+      auto arr = items.map!(c => serializeConfig(c)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

@@ -79,9 +79,7 @@ class AddressController : PlatformController {
       }
 
       auto results = uc.cleanseBatch(batchReq);
-      auto arr = Json.emptyArray;
-      foreach (r; results)
-        arr ~= serializeAddress(r);
+      auto arr = results.map!(r => serializeAddress(r)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("results", arr)

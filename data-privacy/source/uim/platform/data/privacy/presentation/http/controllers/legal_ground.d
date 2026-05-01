@@ -81,9 +81,7 @@ class LegalGroundController : PlatformController {
       else
         items = uc.listGrounds(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -149,9 +147,7 @@ class LegalGroundController : PlatformController {
   }
 
   private static Json serialize(const LegalGround e) {
-    auto cats = Json.emptyArray;
-    foreach (c; e.categories)
-      cats ~= Json(c.to!string);
+    auto cats = e.categories)
 
     return Json.emptyObject
       .set("id", e.id)

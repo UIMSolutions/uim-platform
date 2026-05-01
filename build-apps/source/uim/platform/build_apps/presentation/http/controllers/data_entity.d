@@ -20,6 +20,7 @@ class DataEntityController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/build-apps/data-entities", &handleList);
         router.get("/api/v1/build-apps/data-entities/*", &handleGet);
         router.post("/api/v1/build-apps/data-entities", &handleCreate);
@@ -30,9 +31,8 @@ class DataEntityController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items)
-                jarr ~= e.dataEntityToJson();
+            auto jarr = items.map!(e => e.dataEntityToJson()).array;
+
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr)

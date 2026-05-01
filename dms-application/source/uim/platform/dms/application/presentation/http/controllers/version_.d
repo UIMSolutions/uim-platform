@@ -120,10 +120,7 @@ class VersionController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto versions = uc.getAllVersions(doctenantId, id);
-
-      auto arr = Json.emptyArray;
-      foreach (v; versions)
-        arr ~= serializeVersion(v);
+      auto arr = versions.map!(v => serializeVersion(v)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -77,9 +77,7 @@ class ConsentController : PlatformController {
       else
         items = uc.listConsents(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -102,9 +100,7 @@ class ConsentController : PlatformController {
       else
         items = uc.listConsents(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

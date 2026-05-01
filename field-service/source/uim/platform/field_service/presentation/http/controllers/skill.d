@@ -30,11 +30,12 @@ class SkillController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= skillToJson(e);
+            auto jarr = items.map!(e => skillToJson(e)).array;
+
             auto resp = Json.emptyObject
               .set("count", items.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+              .set("message", "Skills retrieved successfully");
               
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

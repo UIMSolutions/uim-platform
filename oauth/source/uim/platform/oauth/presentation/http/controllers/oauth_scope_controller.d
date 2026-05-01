@@ -30,8 +30,8 @@ class OAuthScopeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.oauthScopeToJson();
+            auto jarr = items.map!(e => e.oauthScopeToJson()).array;
+            
             auto resp = Json.emptyObject
             .set("count", Json(items.length))
             .set("resources", jarr);

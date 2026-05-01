@@ -68,15 +68,11 @@ class DataSubjectController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
-      DataSubject[] items;
-      if (typeParam.length > 0)
-        items = uc.listByType(tenantId, parseSubjectType(typeParam));
-      else
-        items = uc.listSubjects(tenantId);
+      DataSubject[] items = typeParam.length > 0
+        ? uc.listByType(tenantId, parseSubjectType(typeParam))
+        : uc.listSubjects(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => serialize(e)).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

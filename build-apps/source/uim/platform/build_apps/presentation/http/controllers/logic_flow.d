@@ -31,12 +31,12 @@ class LogicFlowController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= e.logicFlowToJson();
+            auto jarr = items.map!(e => e.logicFlowToJson()).array;
+
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr)
-              .set("message", "Logic flows retrieved");
+              .set("message", "Logic flows retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -126,8 +126,8 @@ class LogicFlowController : PlatformController {
             auto result = uc.remove(LogicFlowId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Logic flow deleted");
-                  
+                  .set("message", "Logic flow deleted successfully");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
