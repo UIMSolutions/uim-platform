@@ -25,8 +25,8 @@ struct DataAccessControl {
   string description;
   CriteriaType criteriaType;
   CriteriaCondition[] conditions;
-  string[] targetViewIds;
-  string[] assignedUserIds;
+  ViewId[] targetViewIds;
+  UserId[] assignedUserIds;
   bool isEnabled;
   long createdAt;
   long updatedAt;

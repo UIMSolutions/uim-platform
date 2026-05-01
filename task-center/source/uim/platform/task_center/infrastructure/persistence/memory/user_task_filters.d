@@ -23,7 +23,7 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
 
     UserTaskFilter[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     UserTaskFilter[] findByUser(string tenantId, string userId) {

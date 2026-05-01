@@ -13,7 +13,7 @@ struct ForecastingEngine {
   /// Simple exponential smoothing forecast.
   static double[] forecast(double[] historicalData, int periods, double alpha = 0.3) {
     if (historicalData.length == 0)
-      return [];
+      return null;
 
     double[] result;
     result.length = periods;
@@ -58,7 +58,7 @@ struct ForecastingEngine {
   /// Moving average.
   static double[] movingAverage(double[] data, int window) {
     if (data.length < window)
-      return [];
+      return null;
 
     double[] result;
     result.length = data.length - window + 1;

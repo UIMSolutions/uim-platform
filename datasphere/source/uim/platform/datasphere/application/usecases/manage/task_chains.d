@@ -48,7 +48,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     tc.updatedAt = now;
 
     repo.save(tc);
-    return CommandResult(true, tc.id, "");
+    return CommandResult(true, tc.id.value, "");
   }
 
   TaskChain getById(TaskChainId id, SpaceId spaceId) {
@@ -61,22 +61,22 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchTaskChainRequest r) {
     auto existing = repo.findById(r.taskChainId, r.spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
     import core.time : MonoTime;
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(TaskChainId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

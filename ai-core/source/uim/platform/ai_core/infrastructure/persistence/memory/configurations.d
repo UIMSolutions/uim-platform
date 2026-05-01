@@ -28,19 +28,19 @@ class MemoryConfigurationRepository : ConfigurationRepository {
   Configuration[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(c => c.scenarioId == scenarioId).array;
-    return [];
+    return null;
   }
 
   Configuration[] findByExecutable(ExecutableId execId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(c => c.executableId == execId).array;
-    return [];
+    return null;
   }
 
   Configuration[] findByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return *rg;
-    return [];
+    return null;
   }
 
   void save(Configuration c) {

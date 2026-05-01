@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryTaskChainRepository : TaskChainRepository {
-  private TaskChain[][string] store;
+  private TaskChain[][SpaceId] store;
 
   TaskChain findById(TaskChainId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (tc; *sp) {
+    if (spaceId in store) {
+      foreach (tc; store[spaceId]) {
         if (tc.id == id)
           return tc;
       }
@@ -30,15 +30,15 @@ class MemoryTaskChainRepository : TaskChainRepository {
   }
 
   TaskChain[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   TaskChain[] findByStatus(TaskStatus status, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(tc => tc.status == status).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(tc => tc.status == status).array;
+    return null;
   }
 
   void save(TaskChain tc) {
@@ -46,8 +46,8 @@ class MemoryTaskChainRepository : TaskChainRepository {
   }
 
   void update(TaskChain tc) {
-    if (auto sp = tc.spaceId in store) {
-      foreach (existing; *sp) {
+    if (tc.spaceId in store) {
+      foreach (existing; store[tc.spaceId]) {
         if (existing.id == tc.id) {
           existing = tc;
           return;
@@ -57,14 +57,14 @@ class MemoryTaskChainRepository : TaskChainRepository {
   }
 
   void remove(TaskChainId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(tc => tc.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(tc => tc.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

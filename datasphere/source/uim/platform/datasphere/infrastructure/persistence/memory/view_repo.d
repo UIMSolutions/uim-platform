@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryViewRepository : ViewRepository {
-  private View[][string] store;
+  private View[][SpaceId] store;
 
   View findById(ViewId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (v; *sp) {
+    if (spaceId in store) {
+      foreach (v; store[spaceId]) {
         if (v.id == id)
           return v;
       }
@@ -30,21 +30,21 @@ class MemoryViewRepository : ViewRepository {
   }
 
   View[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   View[] findBySemantic(ViewSemantic semantic, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(v => v.semantic == semantic).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(v => v.semantic == semantic).array;
+    return null;
   }
 
   View[] findExposed(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(v => v.isExposed).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(v => v.isExposed).array;
+    return null;
   }
 
   void save(View v) {
@@ -52,8 +52,8 @@ class MemoryViewRepository : ViewRepository {
   }
 
   void update(View v) {
-    if (auto sp = v.spaceId in store) {
-      foreach (existing; *sp) {
+    if (v.spaceId in store) {
+      foreach (existing; store[v.spaceId]) {
         if (existing.id == v.id) {
           existing = v;
           return;
@@ -63,14 +63,14 @@ class MemoryViewRepository : ViewRepository {
   }
 
   void remove(ViewId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(v => v.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(v => v.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

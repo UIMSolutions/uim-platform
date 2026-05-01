@@ -26,16 +26,16 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateSpaceRequest r) {
-    auto err = SpaceValidator.validate(r.id, r.name);
+    auto err = SpaceValidator.validate(r.spaceId, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    auto existing = repo.findById(r.id);
+    auto existing = repo.findById(r.spaceId);
     if (!existing.isNull)
       return CommandResult(false, "", "Space already exists");
 
     Space s;
-    s.id = r.id;
+    s.id = r.spaceId;
     s.tenantId = r.tenantId;
     s.name = r.name;
     s.description = r.description;
@@ -48,7 +48,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     s.updatedAt = now;
 
     repo.save(s);
-    return CommandResult(true, s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   Space getById(SpaceId id) {
@@ -60,7 +60,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateSpaceRequest r) {
-    auto existing = repo.findById(r.id);
+    auto existing = repo.findById(r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 
@@ -73,7 +73,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(SpaceId id) {
@@ -82,7 +82,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(TenantId tenantId) {

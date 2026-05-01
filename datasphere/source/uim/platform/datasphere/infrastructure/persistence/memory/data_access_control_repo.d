@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDataAccessControlRepository : DataAccessControlRepository {
-  private DataAccessControl[][string] store;
+  private DataAccessControl[][SpaceId] store;
 
   DataAccessControl findById(DataAccessControlId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (dac; *sp) {
+    if (spaceId in store) {
+      foreach (dac; store[spaceId]) {
         if (dac.id == id)
           return dac;
       }
@@ -30,15 +30,15 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
   }
 
   DataAccessControl[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   DataAccessControl[] findByView(ViewId viewId, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(dac => dac.targetViewIds.canFind(viewId)).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(dac => dac.targetViewIds.any!(id => id == viewId)).array;
+    return null;
   }
 
   void save(DataAccessControl dac) {
@@ -46,8 +46,8 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
   }
 
   void update(DataAccessControl dac) {
-    if (auto sp = dac.spaceId in store) {
-      foreach (existing; *sp) {
+    if (dac.spaceId in store) {
+      foreach (existing; store[dac.spaceId]) {
         if (existing.id == dac.id) {
           existing = dac;
           return;
@@ -57,14 +57,14 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
   }
 
   void remove(DataAccessControlId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(dac => dac.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(dac => dac.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

@@ -23,7 +23,7 @@ class MemoryTaskActionRepository :TenantRepository!(TaskAction, TaskActionId), T
 
     TaskAction[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     TaskAction[] findByTask(string tenantId, string taskId) {

@@ -59,18 +59,18 @@ class RemoteTableController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto tables = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (rt; tables) {
         jarr ~=  Json.emptyObject
-        .set("id", Json(rt.id))
-        .set("name", Json(rt.name))
-        .set("description", Json(rt.description))
-        .set("connectionId", Json(rt.connectionId))
-        .set("remoteSchema", Json(rt.remoteSchema))
-        .set("remoteObjectName", Json(rt.remoteObjectName))
+        .set("id", rt.id)
+        .set("name", rt.name)
+        .set("description", rt.description)
+        .set("connectionId", rt.connectionId)
+        .set("remoteSchema", rt.remoteSchema)
+        .set("remoteObjectName", rt.remoteObjectName)
         .set("rowCount", Json(rt.rowCount))
         .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
         .set("createdAt", Json(rt.createdAt));
@@ -90,8 +90,8 @@ class RemoteTableController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto rt = uc.getById(id, spaceId);
       if (rt.isNull) {
@@ -100,13 +100,13 @@ class RemoteTableController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(rt.id))
-            .set("name", Json(rt.name))
-            .set("description", Json(rt.description))
-            .set("connectionId", Json(rt.connectionId))
-            .set("remoteSchema", Json(rt.remoteSchema))
-            .set("remoteObjectName", Json(rt.remoteObjectName))
-            .set("rowCount", Json(rt.rowCount))
+            .set("id", rt.id)
+            .set("name", rt.name)
+            .set("description", rt.description)
+            .set("connectionId", rt.connectionId)
+            .set("remoteSchema", rt.remoteSchema)
+            .set("remoteObjectName", rt.remoteObjectName)
+            .set("rowCount", rt.rowCount)
             .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
             .set("createdAt", Json(rt.createdAt))
             .set("updatedAt", Json(rt.updatedAt))
@@ -121,8 +121,8 @@ class RemoteTableController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = uc.remove(id, spaceId);
       if (result.success) {

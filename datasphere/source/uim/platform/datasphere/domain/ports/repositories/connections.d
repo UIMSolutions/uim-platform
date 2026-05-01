@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 @safe:
 interface ConnectionRepository {
-  Connection findById(ConnectionId id, SpaceId spaceId);
+  Connection findById(SpaceId spaceId, ConnectionId id);
   Connection[] findBySpace(SpaceId spaceId);
-  Connection[] findByType(ConnectionType type, SpaceId spaceId);
+  Connection[] findByType(SpaceId spaceId, ConnectionType type);
   void save(Connection c);
   void update(Connection c);
-  void remove(ConnectionId id, SpaceId spaceId);
+  void remove(SpaceId spaceId, ConnectionId id);
   size_t countBySpace(SpaceId spaceId);
 }

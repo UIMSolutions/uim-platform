@@ -58,7 +58,7 @@ class DataFlowController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto flows = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;

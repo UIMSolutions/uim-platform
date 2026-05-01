@@ -23,7 +23,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
 
     TaskDefinition[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     TaskDefinition[] findByProvider(string tenantId, string providerId) {

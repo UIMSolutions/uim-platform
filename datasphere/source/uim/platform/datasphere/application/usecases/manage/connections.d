@@ -51,11 +51,11 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Connection getById(ConnectionId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+    return repo.findById(spaceId, id);
   }
 
   Connection[] list(SpaceId spaceId) {
@@ -63,8 +63,8 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateConnectionRequest r) {
-    auto existing = repo.findById(r.connectionId, r.spaceId);
-    if (existing.isNull)
+    auto existing = repo.findById(r.spaceId, r.connectionId);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
     existing.name = r.name;
@@ -78,15 +78,15 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(ConnectionId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
-    if (existing.isNull)
+    auto existing = repo.findById(spaceId, id);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
-    repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    repo.remove(spaceId, id);
+    return CommandResult(true, id.value, "");
   }
 }

@@ -127,7 +127,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
 
     // Apply pagination
     if (offset >= filtered.length)
-      return [];
+      return null;
     auto end = offset + limit;
     if (end > filtered.length)
       end = cast(int)filtered.length;

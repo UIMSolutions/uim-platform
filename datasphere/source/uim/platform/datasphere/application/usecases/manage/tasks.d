@@ -17,11 +17,13 @@ import uim.platform.datasphere;
 
 mixin(ShowModule!()); 
 
-class ManageTasksUseCase { // TODO: UIMUseCase {
-  private TaskRepository repo;
+@safe:
 
-  this(TaskRepository repo) {
-    this.repo = repo;
+class ManageTasksUseCase { // TODO: UIMUseCase {
+  private TaskRepository tasks;
+
+  this(TaskRepository tasks) {
+    this.tasks = tasks;
   }
 
   CommandResult create(CreateTaskRequest r) {
@@ -30,12 +32,8 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     DSTask t;
-    t.id = randomUUID();
-    t.tenantId = r.tenantId;
+    t.initEntity(r.tenantId);
     t.spaceId = r.spaceId;
     t.name = r.name;
     t.description = r.description;
@@ -44,41 +42,36 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.status = TaskStatus.scheduled;
     t.maxRetries = r.maxRetries;
 
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    t.createdAt = now;
-    t.updatedAt = now;
-
-    repo.save(t);
-    return CommandResult(true, t.id, "");
+    tasks.save(t);
+    return CommandResult(true, t.id.value, "");
   }
 
   DSTask getById(TaskId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+    return tasks.findById(id, spaceId);
   }
 
   DSTask[] list(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+    return tasks.findBySpace(spaceId);
   }
 
   CommandResult patch(PatchTaskRequest r) {
-    auto existing = repo.findById(r.taskId, r.spaceId);
+    auto existing = tasks.findById(r.taskId, r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
     import core.time : MonoTime;
     existing.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    tasks.update(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(TaskId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+    auto existing = tasks.findById(id, spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
-    repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    tasks.remove(id, spaceId);
+    return CommandResult(true, id.value, "");
   }
 }

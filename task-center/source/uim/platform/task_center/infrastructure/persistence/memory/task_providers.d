@@ -23,7 +23,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
 
     TaskProvider[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     TaskProvider[] findByName(string tenantId, string name) {

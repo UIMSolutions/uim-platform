@@ -35,7 +35,7 @@ class SpaceController : PlatformController {
       auto j = req.json;
       CreateSpaceRequest r;
       r.tenantId = req.getTenantId;
-      r.id = j.getString("id");
+      r.spaceId = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
@@ -87,7 +87,7 @@ class SpaceController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
       auto s = uc.getById(id);
       if (s.isNull) {
         writeError(res, 404, "Space not found");
@@ -118,7 +118,7 @@ class SpaceController : PlatformController {
 
       UpdateSpaceRequest r;
       r.tenantId = req.getTenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.spaceId = SpaceId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
@@ -142,9 +142,9 @@ class SpaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.removeById(id);
+      auto result = uc.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

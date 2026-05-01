@@ -28,13 +28,13 @@ class MemoryExecutableRepository : ExecutableRepository {
   Executable[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(e => e.scenarioId == scenarioId).array;
-    return [];
+    return null;
   }
 
   Executable[] findByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return *rg;
-    return [];
+    return null;
   }
 
   void save(Executable e) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 struct CreateSpaceRequest {
   TenantId tenantId;
-  string id;
+  SpaceId spaceId;
   string name;
   string description;
   string businessName;
@@ -24,7 +24,7 @@ struct CreateSpaceRequest {
 
 struct UpdateSpaceRequest {
   TenantId tenantId;
-  string id;
+  SpaceId spaceId;
   string name;
   string description;
   string businessName;
@@ -35,7 +35,7 @@ struct UpdateSpaceRequest {
 
 struct CreateConnectionRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string type;
@@ -49,8 +49,8 @@ struct CreateConnectionRequest {
 
 struct UpdateConnectionRequest {
   TenantId tenantId;
-  string spaceId;
-  string connectionId;
+  SpaceId spaceId;
+  ConnectionId connectionId;
   string name;
   string description;
   string host;
@@ -64,8 +64,8 @@ struct UpdateConnectionRequest {
 
 struct CreateRemoteTableRequest {
   TenantId tenantId;
-  string spaceId;
-  string connectionId;
+  SpaceId spaceId;
+  ConnectionId connectionId;
   string name;
   string description;
   string remoteSchema;
@@ -76,8 +76,8 @@ struct CreateRemoteTableRequest {
 
 struct UpdateRemoteTableRequest {
   TenantId tenantId;
-  string spaceId;
-  string remoteTableId;
+  SpaceId spaceId;
+  RemoteTableId remoteTableId;
   string replicationMode;
   string replicationSchedule;
 }
@@ -86,7 +86,7 @@ struct UpdateRemoteTableRequest {
 
 struct CreateDataFlowRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string scheduleExpression;
@@ -95,8 +95,8 @@ struct CreateDataFlowRequest {
 
 struct PatchDataFlowRequest {
   TenantId tenantId;
-  string spaceId;
-  string dataFlowId;
+  SpaceId spaceId;
+  DataFlowId dataFlowId;
   string targetStatus;
 }
 
@@ -104,7 +104,7 @@ struct PatchDataFlowRequest {
 
 struct CreateViewRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string businessName;
@@ -115,8 +115,8 @@ struct CreateViewRequest {
 
 struct UpdateViewRequest {
   TenantId tenantId;
-  string spaceId;
-  string viewId;
+  SpaceId spaceId;
+  ViewId viewId;
   string name;
   string description;
   string businessName;
@@ -129,7 +129,7 @@ struct UpdateViewRequest {
 
 struct CreateTaskRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string type;
@@ -141,8 +141,8 @@ struct CreateTaskRequest {
 
 struct PatchTaskRequest {
   TenantId tenantId;
-  string spaceId;
-  string taskId;
+  SpaceId spaceId;
+  TaskId taskId;
   string targetStatus;
 }
 
@@ -150,7 +150,7 @@ struct PatchTaskRequest {
 
 struct CreateTaskChainRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string scheduleExpression;
@@ -160,8 +160,8 @@ struct CreateTaskChainRequest {
 
 struct PatchTaskChainRequest {
   TenantId tenantId;
-  string spaceId;
-  string taskChainId;
+  SpaceId spaceId;
+  TaskChainId taskChainId;
   string targetStatus;
 }
 
@@ -169,22 +169,22 @@ struct PatchTaskChainRequest {
 
 struct CreateDataAccessControlRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string criteriaType;
-  string[] targetViewIds;
-  string[] assignedUserIds;
+  ViewId[] targetViewIds;
+  UserId[] assignedUserIds;
 }
 
 struct UpdateDataAccessControlRequest {
   TenantId tenantId;
-  string spaceId;
-  string controlId;
+  SpaceId spaceId;
+  DataAccessControlId controlId;
   string name;
   string description;
-  string[] targetViewIds;
-  string[] assignedUserIds;
+  ViewId[] targetViewIds;
+  UserId[] assignedUserIds;
   bool isEnabled;
 }
 
@@ -192,7 +192,7 @@ struct UpdateDataAccessControlRequest {
 
 struct CreateCatalogAssetRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string description;
   string businessName;
@@ -205,7 +205,7 @@ struct CreateCatalogAssetRequest {
 
 struct UpdateCatalogAssetRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string assetId;
   string name;
   string description;

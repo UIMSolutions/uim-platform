@@ -20,11 +20,11 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryCatalogAssetRepository : CatalogAssetRepository {
-  private CatalogAsset[][string] store;
+  private CatalogAsset[][SpaceId] store;
 
   CatalogAsset findById(CatalogAssetId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (ca; *sp) {
+    if (spaceId in store) {
+      foreach (ca; store[spaceId]) {
         if (ca.id == id)
           return ca;
       }
@@ -33,27 +33,27 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
   }
 
   CatalogAsset[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   CatalogAsset[] findByType(AssetType type, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(ca => ca.assetType == type).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(ca => ca.assetType == type).array;
+    return null;
   }
 
   CatalogAsset[] search(string query, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
+    if (spaceId in store) {
       auto q = query.toLower;
-      return (*sp).filter!(ca =>
+      return store[spaceId].filter!(ca =>
         ca.name.toLower.canFind(q) ||
         ca.description.toLower.canFind(q) ||
         ca.businessName.toLower.canFind(q)
       ).array;
     }
-    return [];
+    return null;
   }
 
   void save(CatalogAsset ca) {
@@ -61,8 +61,8 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
   }
 
   void update(CatalogAsset ca) {
-    if (auto sp = ca.spaceId in store) {
-      foreach (existing; *sp) {
+    if (ca.spaceId in store) {
+      foreach (existing; store[ca.spaceId]) {
         if (existing.id == ca.id) {
           existing = ca;
           return;
@@ -72,14 +72,14 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
   }
 
   void remove(CatalogAssetId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(ca => ca.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(ca => ca.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

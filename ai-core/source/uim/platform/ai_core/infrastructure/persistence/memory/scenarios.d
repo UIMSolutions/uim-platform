@@ -22,7 +22,7 @@ class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), Scenar
   Scenario[] findByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return *rg;
-    return [];
+    return null;
   }
 
   void removeByResourceGroup(ResourceGroupId rgId) {

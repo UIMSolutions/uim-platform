@@ -28,25 +28,25 @@ class MemoryDeploymentRepository : DeploymentRepository {
   Deployment[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(d => d.configurationId == confId).array;
-    return [];
+    return null;
   }
 
   Deployment[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(d => d.scenarioId == scenarioId).array;
-    return [];
+    return null;
   }
 
   Deployment[] findByStatus(DeploymentStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(d => d.status == status).array;
-    return [];
+    return null;
   }
 
   Deployment[] findByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return *rg;
-    return [];
+    return null;
   }
 
   void save(Deployment d) {

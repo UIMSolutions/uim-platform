@@ -35,7 +35,7 @@ class ViewController : PlatformController {
       auto j = req.json;
       CreateViewRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
@@ -43,11 +43,15 @@ class ViewController : PlatformController {
       r.sqlExpression = j.getString("sqlExpression");
       r.isExposed = j.getBoolean("isExposed", false);
 
+      auto now = Clock.currTime();
+      r.createdAt = now;
+      r.updatedAt = now;
+
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("View created"));
+            .set("id", result.id)
+            .set("message", "View created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -60,7 +64,7 @@ class ViewController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto views = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
@@ -91,11 +95,11 @@ class ViewController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto v = uc.getById(id, spaceId);
-      if (v.isNull) {
+      if (v.id.isEmpty) {
         writeError(res, 404, "View not found");
         return;
       }
@@ -127,8 +131,8 @@ class ViewController : PlatformController {
 
       UpdateViewRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
-      r.viewId = extractIdFromPath(req.requestURI.to!string);
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+      r.viewId = ViewId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
@@ -139,8 +143,8 @@ class ViewController : PlatformController {
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("View updated"));
+            .set("id", result.id)
+            .set("message", "View updated");
             
         res.writeJsonBody(resp, 200);
       } else {
@@ -155,8 +159,8 @@ class ViewController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = uc.remove(id, spaceId);
       if (result.success) {

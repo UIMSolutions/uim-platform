@@ -33,7 +33,6 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Connection ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     RemoteTable rt;
     rt.id = randomUUID();
@@ -52,11 +51,11 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     rt.updatedAt = now;
 
     repo.save(rt);
-    return CommandResult(true, rt.id, "");
+    return CommandResult(true, rt.id.value, "");
   }
 
   RemoteTable getById(RemoteTableId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+    return repo.getById(id, spaceId);
   }
 
   RemoteTable[] list(SpaceId spaceId) {
@@ -64,11 +63,11 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(RemoteTableId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+    auto existing = repo.getById(id, spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Remote table not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

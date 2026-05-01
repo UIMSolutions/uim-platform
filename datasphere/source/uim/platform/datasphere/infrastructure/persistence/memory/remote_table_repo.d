@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryRemoteTableRepository : RemoteTableRepository {
-  private RemoteTable[][string] store;
+  private RemoteTable[][SpaceId] store;
 
   RemoteTable findById(RemoteTableId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (rt; *sp) {
+    if (spaceId in store) {
+      foreach (rt; store[spaceId]) {
         if (rt.id == id)
           return rt;
       }
@@ -30,15 +30,15 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
   }
 
   RemoteTable[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   RemoteTable[] findByConnection(ConnectionId connId, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(rt => rt.connectionId == connId).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(rt => rt.connectionId == connId).array;
+    return null;
   }
 
   void save(RemoteTable rt) {
@@ -46,8 +46,8 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
   }
 
   void update(RemoteTable rt) {
-    if (auto sp = rt.spaceId in store) {
-      foreach (existing; *sp) {
+    if (rt.spaceId in store) {
+      foreach (existing; store[rt.spaceId]) {
         if (existing.id == rt.id) {
           existing = rt;
           return;
@@ -57,14 +57,14 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
   }
 
   void remove(RemoteTableId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(rt => rt.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(rt => rt.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

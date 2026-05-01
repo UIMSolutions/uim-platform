@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryConnectionRepository : ConnectionRepository {
-  private Connection[][string] store;
+  private Connection[][SpaceId] store;
 
-  Connection findById(ConnectionId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (c; *sp) {
+  Connection findById(SpaceId spaceId, ConnectionId id) {
+    if (spaceId in store) {
+      foreach (c; store[spaceId]) {
         if (c.id == id)
           return c;
       }
@@ -30,15 +30,15 @@ class MemoryConnectionRepository : ConnectionRepository {
   }
 
   Connection[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
-  Connection[] findByType(ConnectionType type, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(c => c.type == type).array;
-    return [];
+  Connection[] findByType(SpaceId spaceId, ConnectionType type) {
+    if (spaceId in store)
+      return store[spaceId].filter!(c => c.type == type).array;
+    return null;
   }
 
   void save(Connection c) {
@@ -46,8 +46,8 @@ class MemoryConnectionRepository : ConnectionRepository {
   }
 
   void update(Connection c) {
-    if (auto sp = c.spaceId in store) {
-      foreach (existing; *sp) {
+    if (c.spaceId in store) {
+      foreach (existing; store[c.spaceId]) {
         if (existing.id == c.id) {
           existing = c;
           return;
@@ -56,15 +56,15 @@ class MemoryConnectionRepository : ConnectionRepository {
     }
   }
 
-  void remove(ConnectionId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(c => c.id != id).array;
+  void remove(SpaceId spaceId, ConnectionId id) {
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(c => c.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

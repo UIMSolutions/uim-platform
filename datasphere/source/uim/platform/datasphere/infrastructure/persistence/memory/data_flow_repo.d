@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDataFlowRepository : DataFlowRepository {
-  private DataFlow[][string] store;
+  private DataFlow[][SpaceId] store;
 
   DataFlow findById(DataFlowId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (df; *sp) {
+    if (spaceId in store) {
+      foreach (df; store[spaceId]) {
         if (df.id == id)
           return df;
       }
@@ -30,15 +30,15 @@ class MemoryDataFlowRepository : DataFlowRepository {
   }
 
   DataFlow[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   DataFlow[] findByStatus(FlowStatus status, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(df => df.status == status).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(df => df.status == status).array;
+    return null;
   }
 
   void save(DataFlow df) {
@@ -46,8 +46,8 @@ class MemoryDataFlowRepository : DataFlowRepository {
   }
 
   void update(DataFlow df) {
-    if (auto sp = df.spaceId in store) {
-      foreach (existing; *sp) {
+    if (df.spaceId in store) {
+      foreach (existing; store[df.spaceId]) {
         if (existing.id == df.id) {
           existing = df;
           return;
@@ -57,14 +57,14 @@ class MemoryDataFlowRepository : DataFlowRepository {
   }
 
   void remove(DataFlowId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(df => df.id != id).array;
+    if (spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(df => df.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

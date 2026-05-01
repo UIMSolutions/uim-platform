@@ -23,7 +23,7 @@ class MemorySubstitutionRuleRepository :TenantRepository!(SubstitutionRule, Subs
 
     SubstitutionRule[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     SubstitutionRule[] findByUser(string tenantId, string userId) {

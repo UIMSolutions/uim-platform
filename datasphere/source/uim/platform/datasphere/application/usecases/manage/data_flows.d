@@ -32,7 +32,6 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     DataFlow df;
     df.id = randomUUID();
@@ -49,7 +48,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     df.updatedAt = now;
 
     repo.save(df);
-    return CommandResult(true, df.id, "");
+    return CommandResult(true, df.id.value, "");
   }
 
   DataFlow getById(DataFlowId id, SpaceId spaceId) {
@@ -62,22 +61,22 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchDataFlowRequest r) {
     auto existing = repo.findById(r.dataFlowId, r.spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
     import core.time : MonoTime;
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(DataFlowId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

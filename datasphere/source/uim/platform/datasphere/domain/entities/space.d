@@ -59,13 +59,13 @@ struct Space {
   bool enableAuditLog;
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("businessName", businessName)
-      .set("storage", storage.map!(s => s.toJson()).array)
-      .set("members", members.map!(m => m.toJson()).array)
-      .set("labels", labels.map!(l => l.toJson()).array)
+      .set("storage", storage.map!(s => s.toJson()).array.toJson)
+      .set("members", members.map!(m => m.toJson()).array.toJson)
+      .set("labels", labels.map!(l => l.toJson()).array.toJson)
       .set("priority", priority)
       .set("enableAuditLog", enableAuditLog);
   }

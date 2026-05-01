@@ -49,7 +49,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     v.updatedAt = now;
 
     repo.save(v);
-    return CommandResult(true, v.id, "");
+    return CommandResult(true, v.id.value, "");
   }
 
   View getById(ViewId id, SpaceId spaceId) {
@@ -66,7 +66,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
 
   CommandResult update(UpdateViewRequest r) {
     auto existing = repo.findById(r.viewId, r.spaceId);
-    if (existing.isNull)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "View not found");
 
     existing.name = r.name;
@@ -80,7 +80,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(ViewId id, SpaceId spaceId) {
@@ -89,6 +89,6 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "View not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

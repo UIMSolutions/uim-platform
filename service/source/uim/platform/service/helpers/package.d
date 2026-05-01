@@ -17,4 +17,5 @@ public {
   import uim.platform.service.helpers.required;
   import uim.platform.service.helpers.set;
   import uim.platform.service.helpers.validate;
+  import uim.platform.service.helpers.json_utils;
 }

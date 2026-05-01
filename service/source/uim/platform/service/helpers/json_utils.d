@@ -38,10 +38,10 @@ double getDouble(Json j, string key) {
 
 string[][] jsonPairArray(Json j, string key) {
   if (!j.isObject)
-    return [];
+    return null;
   auto v = j[key];
   if (!v.isArray)
-    return [];
+    return null;
   auto arr = v.toArray;
   auto result = appender!(string[][]);
   result.reserve(arr.length);

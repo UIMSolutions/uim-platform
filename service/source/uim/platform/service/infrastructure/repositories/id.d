@@ -16,6 +16,7 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   bool existsById(TId id) {
     return (id in store) !is null;
   }
+
   bool existsAllById(TId[] ids) {
     return ids.all!(id => existsById(id));
   }
@@ -24,13 +25,15 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
     auto entity = id in store;
     return entity is null ? TEntity.init : *entity;
   }
+
   TEntity[] findAllById(TId[] ids) {
     return ids.map!(id => findById(id)).array;
   }
 
   void removeById(TId id) {
-    store.removeById(id);
+    remove(findById(id));
   }
+
   void removeAllById(TId[] ids) {
     ids.each!(id => removeById(id));
   }
@@ -52,7 +55,7 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   void updateAll(TEntity[] entities) {
     entities.each!(entity => update(entity));
   }
-  
+
   void remove(TEntity entity) {
     store.remove(entity.id);
   }

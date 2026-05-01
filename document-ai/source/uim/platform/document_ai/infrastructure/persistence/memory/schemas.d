@@ -32,19 +32,19 @@ class MemorySchemaRepository : SchemaRepository {
   Schema[] findByClient(ClientId clientId) {
     if (auto cl = clientId in store)
       return *cl;
-    return [];
+    return null;
   }
 
   Schema[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
     if (auto cl = clientId in store)
       return (*cl).filter!(s => s.documentTypeId == typeId).array;
-    return [];
+    return null;
   }
 
   Schema[] findByStatus(SchemaStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
       return (*cl).filter!(s => s.status == status).array;
-    return [];
+    return null;
   }
 
   void save(Schema s) {

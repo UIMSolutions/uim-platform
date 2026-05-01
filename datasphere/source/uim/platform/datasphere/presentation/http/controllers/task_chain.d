@@ -34,17 +34,21 @@ class TaskChainController : PlatformController {
       auto j = req.json;
       CreateTaskChainRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.scheduleExpression = j.getString("scheduleExpression");
       r.scheduleFrequency = j.getString("scheduleFrequency");
 
+      auto now = Clock.currTime();
+      r.createdAt = now;
+      r.updatedAt = now;
+
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Task chain created"));
+            .set("id", result.id)
+            .set("message", "Task chain created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -57,7 +61,7 @@ class TaskChainController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto chains = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
@@ -86,25 +90,25 @@ class TaskChainController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tc = uc.getById(id, spaceId);
-      if (tc.isNull) {
+      if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(tc.id))
-            .set("name", Json(tc.name))
-            .set("description", Json(tc.description))
-            .set("scheduleExpression", Json(tc.scheduleExpression))
-            .set("lastRunAt", Json(tc.lastRunAt))
-            .set("lastRunDurationMs", Json(tc.lastRunDurationMs))
-            .set("lastRunMessage", Json(tc.lastRunMessage))
-            .set("createdAt", Json(tc.createdAt))
-            .set("updatedAt", Json(tc.updatedAt))
+            .set("id", tc.id)
+            .set("name", tc.name)
+            .set("description", tc.description)
+            .set("scheduleExpression", tc.scheduleExpression)
+            .set("lastRunAt", tc.lastRunAt)
+            .set("lastRunDurationMs", tc.lastRunDurationMs)
+            .set("lastRunMessage", tc.lastRunMessage)
+            .set("createdAt", tc.createdAt)
+            .set("updatedAt", tc.updatedAt)
             .set("message", "Task chain retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -117,8 +121,8 @@ class TaskChainController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = uc.remove(id, spaceId);
       if (result.success) {

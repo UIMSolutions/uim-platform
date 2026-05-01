@@ -17,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryTaskRepository : TaskRepository {
-  private DSTask[][string] store;
+  private DSTask[][SpaceId] store;
 
   DSTask findById(TaskId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      foreach (t; *sp) {
+    if (spaceId in store) {
+      foreach (t; store[spaceId]) {
         if (t.id == id)
           return t;
       }
@@ -30,21 +30,21 @@ class MemoryTaskRepository : TaskRepository {
   }
 
   DSTask[] findBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return *sp;
-    return [];
+    if (spaceId in store)
+      return store[spaceId];
+    return null;
   }
 
   DSTask[] findByStatus(TaskStatus status, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(t => t.status == status).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(t => t.status == status).array;
+    return null;
   }
 
   DSTask[] findByType(TaskType type, SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).filter!(t => t.type == type).array;
-    return [];
+    if (spaceId in store)
+      return store[spaceId].filter!(t => t.type == type).array;
+    return null;
   }
 
   void save(DSTask t) {
@@ -52,8 +52,8 @@ class MemoryTaskRepository : TaskRepository {
   }
 
   void update(DSTask t) {
-    if (auto sp = t.spaceId in store) {
-      foreach (existing; *sp) {
+    if (t.spaceId in store) {
+      foreach (existing; store[t.spaceId]) {
         if (existing.id == t.id) {
           existing = t;
           return;
@@ -63,14 +63,14 @@ class MemoryTaskRepository : TaskRepository {
   }
 
   void remove(TaskId id, SpaceId spaceId) {
-    if (auto sp = spaceId in store) {
-      *sp = (*sp).filter!(t => t.id != id).array;
+    if (    spaceId in store) {
+      store[spaceId] = store[spaceId].filter!(t => t.id != id).array;
     }
   }
 
   size_t countBySpace(SpaceId spaceId) {
-    if (auto sp = spaceId in store)
-      return (*sp).length;
+    if (spaceId in store)
+      return store[spaceId].length;
     return 0;
   }
 }

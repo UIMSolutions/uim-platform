@@ -23,7 +23,7 @@ class MemoryTaskCommentRepository :TenantRepository!(TaskComment, TaskCommentId)
 
     TaskComment[] findByTenant(string tenantId) {
         if (auto arr = tenantId in store) return *arr;
-        return [];
+        return null;
     }
 
     TaskComment[] findByTask(string tenantId, string taskId) {

@@ -28,25 +28,25 @@ class MemoryArtifactRepository : ArtifactRepository {
   Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(a => a.scenarioId == scenarioId).array;
-    return [];
+    return null;
   }
 
   Artifact[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(a => a.executionId == execId).array;
-    return [];
+    return null;
   }
 
   Artifact[] findByKind(ArtifactKind kind, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return (*rg).filter!(a => a.kind == kind).array;
-    return [];
+    return null;
   }
 
   Artifact[] findByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return *rg;
-    return [];
+    return null;
   }
 
   void save(Artifact a) {

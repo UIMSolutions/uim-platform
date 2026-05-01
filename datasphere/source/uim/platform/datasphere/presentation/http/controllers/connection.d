@@ -61,7 +61,7 @@ class ConnectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto connections = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
@@ -90,26 +90,26 @@ class ConnectionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto c = uc.getById(id, spaceId);
-      if (c.isNull) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;
       }
 
       auto resp = Json.emptyObject
-        .set("id", Json(c.id))
-        .set("name", Json(c.name))
-        .set("description", Json(c.description))
-        .set("host", Json(c.host))
-        .set("port", Json(c.port))
-        .set("database", Json(c.database))
-        .set("isValid", Json(c.isValid))
-        .set("statusMessage", Json(c.statusMessage))
-        .set("createdAt", Json(c.createdAt))
-        .set("updatedAt", Json(c.updatedAt))
+        .set("id", c.id)
+        .set("name", c.name)
+        .set("description", c.description)
+        .set("host", c.host)
+        .set("port", c.port)
+        .set("database", c.database)
+        .set("isValid", c.isValid)
+        .set("statusMessage", c.statusMessage)
+        .set("createdAt", c.createdAt)
+        .set("updatedAt", c.updatedAt)
         .set("message", "Connection retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -122,8 +122,8 @@ class ConnectionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = uc.remove(id, spaceId);
       if (result.success) {

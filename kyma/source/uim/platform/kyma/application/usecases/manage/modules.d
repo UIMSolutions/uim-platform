@@ -162,15 +162,15 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     case ModuleType.apiGateway:
       return ["istio"];
     case ModuleType.serverless:
-      return [];
+      return null;
     case ModuleType.eventing:
       return ["nats"];
     case ModuleType.keda:
-      return [];
+      return null;
     case ModuleType.connectivityProxy:
       return ["istio"];
     default:
-      return [];
+      return null;
     }
   }
 }

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class CatalogAssetController : PlatformController {
-  private ManageCatalogAssetsUseCase uc;
+  private ManageCatalogAssetsUseCase assets;
 
-  this(ManageCatalogAssetsUseCase uc) {
-    this.uc = uc;
+  this(ManageCatalogAssetsUseCase assets) {
+    this.assets = assets;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class CatalogAssetController : PlatformController {
       r.owner = j.getString("owner");
       r.glossaryTerms = getStringArray(j, "glossaryTerms");
 
-      auto result = uc.create(r);
+      auto result = assets.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", Json(result.id))
@@ -62,8 +62,8 @@ class CatalogAssetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
-      auto assets = uc.list(spaceId);
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+      auto assets = assets.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
@@ -92,10 +92,10 @@ class CatalogAssetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto query = req.params.get("q", "");
 
-      auto assets = uc.search(query, spaceId);
+      auto assets = assets.search(query, spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
@@ -122,26 +122,26 @@ class CatalogAssetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto ca = uc.getById(id, spaceId);
-      if (ca.isNull) {
+      auto ca = assets.getById(id, spaceId);
+      if (ca.id.isEmpty) {
         writeError(res, 404, "Catalog asset not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(ca.id))
-            .set("name", Json(ca.name))
-            .set("description", Json(ca.description))
-            .set("businessName", Json(ca.businessName))
-            .set("sourceObjectId", Json(ca.sourceObjectId))
-            .set("owner", Json(ca.owner))
-            .set("glossaryTerms", stringsToJsonArray(ca.glossaryTerms))
-            .set("accessCount", Json(ca.accessCount))
-            .set("createdAt", Json(ca.createdAt))
-            .set("updatedAt", Json(ca.updatedAt))
+            .set("id", ca.id)
+            .set("name", ca.name)
+            .set("description", ca.description)
+            .set("businessName", ca.businessName)
+            .set("sourceObjectId", ca.sourceObjectId)
+            .set("owner", ca.owner)
+            .set("glossaryTerms", ca.glossaryTerms.map!(term => Json(term)).array.toJson)
+            .set("accessCount", ca.accessCount)
+            .set("createdAt", ca.createdAt)
+            .set("updatedAt", ca.updatedAt)
             .set("message", "Catalog asset retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -154,10 +154,10 @@ class CatalogAssetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = assets.remove(id, spaceId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

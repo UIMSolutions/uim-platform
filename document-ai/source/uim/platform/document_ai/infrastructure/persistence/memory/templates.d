@@ -37,25 +37,25 @@ class MemoryTemplateRepository : TemplateRepository {
   Template[] findByClient(ClientId clientId) {
     if (clientId in store)
       return store[clientId];
-    return [];
+    return null;
   }
 
   Template[] findBySchema(ClientId clientId, SchemaId schemaId) {
     if (clientId in store)
       return store[clientId].filter!(t => t.schemaId == schemaId).array;
-    return [];
+    return null;
   }
 
   Template[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
     if (clientId in store)
       return store[clientId].filter!(t => t.documentTypeId == typeId).array;
-    return [];
+    return null;
   }
 
   Template[] findByStatus(ClientId clientId, TemplateStatus status) {
     if (clientId in store)
       return store[clientId].filter!(t => t.status == status).array;
-    return [];
+    return null;
   }
 
   void save(Template t) {

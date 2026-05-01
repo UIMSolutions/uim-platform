@@ -35,18 +35,18 @@ class DataAccessControlController : PlatformController {
       auto j = req.json;
       CreateDataAccessControlRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.criteriaType = j.getString("criteriaType");
-      r.targetViewIds = getStringArray(j, "targetViewIds");
-      r.assignedUserIds = getStringArray(j, "assignedUserIds");
+      r.targetViewIds = j.getArray("targetViewIds").map!(v => v.get!string).array;
+      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => v.get!string).array;
 
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Data access control created"));
+            .set("id", result.id)
+            .set("message", "Data access control created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -59,7 +59,7 @@ class DataAccessControlController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto controls = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
@@ -73,7 +73,7 @@ class DataAccessControlController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("count", Json(controls.length))
+            .set("count", controls.length)
             .set("resources", jarr)
             .set("message", "Data access controls retrieved successfully");
 
@@ -86,24 +86,24 @@ class DataAccessControlController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto dac = uc.getById(id, spaceId);
-      if (dac.isNull) {
+      if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", Json(dac.id))
-            .set("name", Json(dac.name))
-            .set("description", Json(dac.description))
-            .set("isEnabled", Json(dac.isEnabled))
-            .set("targetViewIds", stringsToJsonArray(dac.targetViewIds))
-            .set("assignedUserIds", stringsToJsonArray(dac.assignedUserIds))
-            .set("createdAt", Json(dac.createdAt))
-            .set("updatedAt", Json(dac.updatedAt))
+            .set("id", dac.id)
+            .set("name", dac.name)
+            .set("description", dac.description)
+            .set("isEnabled", dac.isEnabled)
+            .set("targetViewIds", dac.targetViewIds.map!(v => Json(v)).array.toJson)
+            .set("assignedUserIds", dac.assignedUserIds.map!(v => Json(v)).array.toJson)
+            .set("createdAt", dac.createdAt)
+            .set("updatedAt", dac.updatedAt)
             .set("message", "Data access control retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -115,8 +115,8 @@ class DataAccessControlController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto spaceId = req.headers.get("X-Space-Id", "");
+      auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
+      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = uc.remove(id, spaceId);
       if (result.success) {

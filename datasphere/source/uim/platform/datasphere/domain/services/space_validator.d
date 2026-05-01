@@ -18,8 +18,8 @@ struct SpaceValidator {
     return id.length > 0 && id.length <= 128;
   }
 
-  static string validate(string id, string name) {
-    if (!validateId(id))
+  static string validate(SpaceId id, string name) {
+    if (!validateId(id.value))
       return "Space ID must be between 1 and 128 characters";
     if (!validateName(name))
       return "Space name must be between 1 and 256 characters";

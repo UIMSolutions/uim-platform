@@ -44,9 +44,9 @@ struct RemoteTable {
       .set("description", description)
       .set("remoteSchema", remoteSchema)
       .set("remoteObjectName", remoteObjectName)
-      .set("replicationMode", replicationMode.toString())
+      .set("replicationMode", replicationMode.to!string)
       .set("replicationSchedule", replicationSchedule)
-      .set("columns", columns.map!(col => Json()
+      .set("columns", columns.map!(col => Json.emptyObject
         .set("name", col.name)
         .set("dataType", col.dataType)
         .set("nullable", col.nullable)

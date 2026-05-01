@@ -51,7 +51,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     ca.updatedAt = now;
 
     repo.save(ca);
-    return CommandResult(true, ca.id, "");
+    return CommandResult(true, ca.id.value, "");
   }
 
   CatalogAsset getById(CatalogAssetId id, SpaceId spaceId) {
@@ -67,7 +67,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateCatalogAssetRequest r) {
-    auto existing = repo.findById(r.assetId, r.spaceId);
+    auto existing = repo.getById(r.assetId, r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
@@ -81,15 +81,15 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(CatalogAssetId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
-    if (existing.isNull)
+    auto existing = repo.getById(id, spaceId);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Catalog asset not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
