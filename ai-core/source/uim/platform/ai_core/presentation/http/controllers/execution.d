@@ -80,7 +80,7 @@ class ExecutionController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto ex = uc.getbyId(id, rgId);
-      if (ex.id.isEmpty) {
+      if (ex.isNull) {
         writeError(res, 404, "Execution not found");
         return;
       }

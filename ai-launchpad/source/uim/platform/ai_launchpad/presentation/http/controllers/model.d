@@ -95,7 +95,7 @@ class ModelController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto model = uc.getById(id, connectionId);
-      if (m.id.isEmpty) {
+      if (m.isNull) {
         writeError(res, 404, "Model not found");
         return;
       }

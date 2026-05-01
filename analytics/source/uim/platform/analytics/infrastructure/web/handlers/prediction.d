@@ -31,7 +31,7 @@ class PredictionHandler {
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.isEmpty) {
+    if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -58,7 +58,7 @@ class PredictionHandler {
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
     auto result = useCases.train(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

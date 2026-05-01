@@ -80,7 +80,7 @@ class WorkspaceController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto w = uc.getById(id);
-      if (w.id.isEmpty) {
+      if (w.isNull) {
         writeError(res, 404, "Workspace not found");
         return;
       }

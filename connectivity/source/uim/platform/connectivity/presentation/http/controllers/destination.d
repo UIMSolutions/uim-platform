@@ -97,7 +97,7 @@ class DestinationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto dest = uc.getDestination(id);
-      if (dest.id.isEmpty) {
+      if (dest.isNull) {
         writeError(res, 404, "Destination not found");
         return;
       }

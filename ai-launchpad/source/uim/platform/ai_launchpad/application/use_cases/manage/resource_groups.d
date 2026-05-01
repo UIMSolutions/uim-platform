@@ -51,7 +51,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.resourceGroupId, r.connectionId);
-    if (rg.id.isEmpty) return CommandResult(false, "", "Resource group not found");
+    if (rg.isNull) return CommandResult(false, "", "Resource group not found");
 
     if (r.labels.length > 0) {
       rg.labels = [];
@@ -69,7 +69,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ResourceGroupId id, ConnectionId connectionId) {
     auto rg = repo.findById(id, connectionId);
-    if (rg.id.isEmpty) return CommandResult(false, "", "Resource group not found");
+    if (rg.isNull) return CommandResult(false, "", "Resource group not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

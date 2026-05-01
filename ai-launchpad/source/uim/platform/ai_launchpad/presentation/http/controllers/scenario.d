@@ -85,7 +85,7 @@ class ScenarioController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto s = uc.getById(id, connectionId);
-      if (s.id.isEmpty) {
+      if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
       }

@@ -18,7 +18,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(CreateExecutableRequest r) {
-        if (r.id.isEmpty)
+        if (r.isNull)
             return CommandResult(false, "", "Executable ID is required");
         if (r.scenarioId.isEmpty)
             return CommandResult(false, "", "Scenario ID is required");
@@ -68,7 +68,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
 
     CommandResult remove(ExecutableId id, ResourceGroupId rgId) {
         auto existing = repo.findById(id, rgId);
-        if (existing.id.isEmpty)
+        if (existing.isNull)
             return CommandResult(false, "", "Executable not found");
 
         repo.remove(id, rgId);

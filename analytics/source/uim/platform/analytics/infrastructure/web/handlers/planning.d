@@ -32,7 +32,7 @@ class PlanningHandler {
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.isEmpty) {
+    if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -55,7 +55,7 @@ class PlanningHandler {
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.lock(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -65,7 +65,7 @@ class PlanningHandler {
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.approve(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

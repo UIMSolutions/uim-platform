@@ -44,7 +44,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ScenarioId id, ConnectionId connectionId) {
     auto s = repo.findById(id, connectionId);
-    if (s.id.isEmpty) return CommandResult(false, "", "Scenario not found");
+    if (s.isNull) return CommandResult(false, "", "Scenario not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

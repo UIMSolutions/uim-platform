@@ -100,7 +100,7 @@ class ConfigurationController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto c = uc.getbyId(id, rgId);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
       }

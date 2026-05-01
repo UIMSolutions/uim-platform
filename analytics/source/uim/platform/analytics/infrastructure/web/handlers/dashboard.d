@@ -34,7 +34,7 @@ class DashboardHandler {
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.isEmpty) {
+    if (item.isNull) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -69,7 +69,7 @@ class DashboardHandler {
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     auto result = useCases.publish(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }

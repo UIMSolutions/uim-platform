@@ -98,7 +98,7 @@ class ExecutableController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto e = uc.getbyId(id, rgId);
-      if (e.id.isEmpty) {
+      if (e.isNull) {
         writeError(res, 404, "Executable not found");
         return;
       }

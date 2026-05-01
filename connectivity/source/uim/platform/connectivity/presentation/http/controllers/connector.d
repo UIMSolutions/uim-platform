@@ -84,7 +84,7 @@ class ConnectorController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto cc = usecase.getConnector(id);
-      if (cc.id.isEmpty) {
+      if (cc.isNull) {
         writeError(res, 404, "Connector not found");
         return;
       }

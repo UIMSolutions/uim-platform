@@ -47,7 +47,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchExecutionRequest r) {
     auto e = repo.findById(r.executionId, r.connectionId);
-    if (e.id.isEmpty) return CommandResult(false, "", "Execution not found");
+    if (e.isNull) return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped") e.status = ExecutionStatus.stopped;
     else if (r.targetStatus == "deleted") e.status = ExecutionStatus.dead;
@@ -70,7 +70,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ExecutionId id, ConnectionId connectionId) {
     auto e = repo.findById(id, connectionId);
-    if (e.id.isEmpty) return CommandResult(false, "", "Execution not found");
+    if (e.isNull) return CommandResult(false, "", "Execution not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

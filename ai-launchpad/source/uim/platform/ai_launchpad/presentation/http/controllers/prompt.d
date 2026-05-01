@@ -90,7 +90,7 @@ class PromptController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto p = uc.getById(id);
-      if (p.id.isEmpty) {
+      if (p.isNull) {
         writeError(res, 404, "Prompt not found");
         return;
       }

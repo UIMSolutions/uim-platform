@@ -97,7 +97,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ArtifactId id, ResourceGroupId rgId) {
     auto existing = repo.findById(id, rgId);
-    if (existing.id.isEmpty)
+    if (existing.isNull)
       return CommandResult(false, "", "Artifact not found");
 
     repo.remove(id, rgId);

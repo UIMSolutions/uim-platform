@@ -51,7 +51,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchWorkspaceRequest r) {
     auto w = repo.findById(r.workspaceId);
-    if (w.id.isEmpty)
+    if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
     if (r.name.length > 0)
       w.name = r.name;
@@ -64,7 +64,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(WorkspaceId id) {
     auto w = repo.findById(id);
-    if (w.id.isEmpty)
+    if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

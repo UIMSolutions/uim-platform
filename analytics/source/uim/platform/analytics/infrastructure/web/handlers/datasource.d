@@ -33,7 +33,7 @@ class DataSourceHandler {
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.isEmpty) {
+    if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -57,7 +57,7 @@ class DataSourceHandler {
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     auto result = useCases.testConnection(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

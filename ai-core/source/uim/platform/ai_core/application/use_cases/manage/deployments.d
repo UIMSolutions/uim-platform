@@ -31,7 +31,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);
-    if (conf.id.isEmpty)
+    if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
     Deployment d;

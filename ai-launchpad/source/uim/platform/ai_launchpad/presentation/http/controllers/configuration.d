@@ -89,7 +89,7 @@ class ConfigurationController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto c = configurations.getById(id, connectionId);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
       }

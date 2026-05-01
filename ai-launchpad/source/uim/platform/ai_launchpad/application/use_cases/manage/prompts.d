@@ -81,7 +81,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchPromptRequest r) {
     auto p = repo.findById(r.promptId);
-    if (p.id.isEmpty)
+    if (p.isNull)
       return CommandResult(false, "", "Prompt not found");
     if (r.name.length > 0)
       p.name = r.name;
@@ -115,7 +115,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(PromptId id) {
     auto p = repo.findById(id);
-    if (p.id.isEmpty)
+    if (p.isNull)
       return CommandResult(false, "", "Prompt not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");

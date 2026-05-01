@@ -33,7 +33,7 @@ class StoryHandler {
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.isEmpty) {
+    if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -55,7 +55,7 @@ class StoryHandler {
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
     auto result = useCases.publish(id);
-    if (result.id.isEmpty) {
+    if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

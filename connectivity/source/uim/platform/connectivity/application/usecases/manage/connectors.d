@@ -58,7 +58,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   CommandResult heartbeat(ConnectorId id, HeartbeatRequest req) {
     auto cc = repo.findById(id);
-    if (cc.id.isEmpty)
+    if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
     cc.status = ConnectorStatus.connected;
@@ -75,7 +75,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   CommandResult disconnect(ConnectorId id) {
     auto cc = repo.findById(id);
-    if (cc.id.isEmpty)
+    if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
     cc.status = ConnectorStatus.disconnected;
@@ -117,7 +117,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   CommandResult unregister(ConnectorId id) {
     auto cc = repo.findById(id);
-    if (cc.id.isEmpty)
+    if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
     repo.remove(id);

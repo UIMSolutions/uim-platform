@@ -55,7 +55,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchModelRequest r) {
     auto m = repo.findById(r.modelId, r.connectionId);
-    if (m.id.isEmpty) return CommandResult(false, "", "Model not found");
+    if (m.isNull) return CommandResult(false, "", "Model not found");
     if (r.description.length > 0) m.description = r.description;
     if (r.status == "archived") m.status = ModelStatus.archived;
     else if (r.status == "deprecated") m.status = ModelStatus.deprecated_;
@@ -66,7 +66,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(ModelId id, ConnectionId connectionId) {
     auto m = repo.findById(id, connectionId);
-    if (m.id.isEmpty) return CommandResult(false, "", "Model not found");
+    if (m.isNull) return CommandResult(false, "", "Model not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

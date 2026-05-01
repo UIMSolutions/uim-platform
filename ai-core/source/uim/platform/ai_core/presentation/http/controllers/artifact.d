@@ -88,7 +88,7 @@ class ArtifactController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto a = uc.getbyId(id, rgId);
-      if (a.id.isEmpty) {
+      if (a.isNull) {
         writeError(res, 404, "Artifact not found");
         return;
       }

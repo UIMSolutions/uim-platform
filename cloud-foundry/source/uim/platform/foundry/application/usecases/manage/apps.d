@@ -80,7 +80,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateApp(UpdateAppRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Application ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
@@ -153,7 +153,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult scaleApp(ScaleAppRequest req) {
-    if (req.id.isEmpty)
+    if (req.isNull)
       return CommandResult(false, "", "Application ID is required");
 
     if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))

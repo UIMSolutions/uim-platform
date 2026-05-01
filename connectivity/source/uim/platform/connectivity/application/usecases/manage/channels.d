@@ -33,7 +33,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   CommandResult createChannel(CreateChannelRequest req) {
     // Validate connector exists
     auto cc = connectorRepo.findById(req.connectorId);
-    if (cc.id.isEmpty)
+    if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
     if (req.name.length == 0)

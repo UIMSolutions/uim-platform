@@ -82,7 +82,7 @@ class PromptCollectionController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto c = uc.getById(id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Prompt collection not found");
         return;
       }

@@ -85,7 +85,7 @@ class DatasetController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto d = uc.getById(id, connectionId);
-      if (d.id.isEmpty) {
+      if (d.isNull) {
         writeError(res, 404, "Dataset not found");
         return;
       }
