@@ -15,7 +15,7 @@ mixin(ShowModule!());
 interface CatalogAssetRepository {
   CatalogAsset findById(SpaceId spaceId, CatalogAssetId id);
   CatalogAsset[] findBySpace(SpaceId spaceId);
-  CatalogAsset[] findByType(AssetType type, SpaceId spaceId);
+  CatalogAsset[] findByType(SpaceId spaceId, AssetType type);
   CatalogAsset[] search(SpaceId spaceId, string query);
   void save(CatalogAsset ca);
   void update(CatalogAsset ca);

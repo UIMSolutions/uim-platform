@@ -98,7 +98,7 @@ class ViewController : PlatformController {
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto v = uc.getById(id, spaceId);
+      auto v = uc.getById(spaceId, id);
       if (v.id.isEmpty) {
         writeError(res, 404, "View not found");
         return;
@@ -162,7 +162,7 @@ class ViewController : PlatformController {
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = uc.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

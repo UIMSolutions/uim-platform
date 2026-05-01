@@ -39,8 +39,8 @@ class DataAccessControlController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.criteriaType = j.getString("criteriaType");
-      r.targetViewIds = j.getArray("targetViewIds").map!(v => v.get!string).array;
-      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => v.get!string).array;
+      r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array;
+      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array;
 
       auto result = uc.create(r);
       if (result.success) {
@@ -89,7 +89,7 @@ class DataAccessControlController : PlatformController {
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto dac = uc.getById(id, spaceId);
+      auto dac = uc.getById(spaceId, id);
       if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
@@ -118,7 +118,7 @@ class DataAccessControlController : PlatformController {
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = uc.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

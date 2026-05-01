@@ -34,7 +34,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     auto id = randomUUID();
 
     View v;
-    v.id = randomUUID();
+    v.id = id;
     v.tenantId = r.tenantId;
     v.spaceId = r.spaceId;
     v.name = r.name;
@@ -52,8 +52,8 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, v.id.value, "");
   }
 
-  View getById(ViewId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+  View getById(SpaceId spaceId, ViewId id) {
+    return repo.findById(spaceId, id);
   }
 
   View[] list(SpaceId spaceId) {
@@ -65,7 +65,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateViewRequest r) {
-    auto existing = repo.findById(r.viewId, r.spaceId);
+    auto existing = repo.findById(r.spaceId, r.viewId);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "View not found");
 
@@ -83,12 +83,12 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(ViewId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+  CommandResult remove(SpaceId spaceId, ViewId id) {
+    auto existing = repo.findById(spaceId, id);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "View not found");
 
-    repo.remove(id, spaceId);
+    repo.remove(spaceId, id);
     return CommandResult(true, id.value, "");
   }
 }

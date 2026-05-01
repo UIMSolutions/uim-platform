@@ -46,8 +46,8 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  DSTask getById(TaskId id, SpaceId spaceId) {
-    return tasks.findById(id, spaceId);
+  DSTask getById(SpaceId spaceId, TaskId id) {
+    return tasks.findById(spaceId, id);
   }
 
   DSTask[] list(SpaceId spaceId) {
@@ -55,7 +55,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patch(PatchTaskRequest r) {
-    auto existing = tasks.findById(r.taskId, r.spaceId);
+    auto existing = tasks.findById(r.spaceId, r.taskId);
     if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
@@ -66,12 +66,12 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(TaskId id, SpaceId spaceId) {
-    auto existing = tasks.findById(id, spaceId);
+  CommandResult remove(SpaceId spaceId, TaskId id) {
+    auto existing = tasks.findById(spaceId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Task not found");
 
-    tasks.remove(id, spaceId);
+    tasks.remove(spaceId, id);
     return CommandResult(true, id.value, "");
   }
 }

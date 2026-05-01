@@ -51,8 +51,8 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, df.id.value, "");
   }
 
-  DataFlow getById(DataFlowId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+  DataFlow getById(SpaceId spaceId, DataFlowId id) {
+    return repo.findById(spaceId, id);
   }
 
   DataFlow[] list(SpaceId spaceId) {
@@ -60,7 +60,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patch(PatchDataFlowRequest r) {
-    auto existing = repo.findById(r.dataFlowId, r.spaceId);
+    auto existing = repo.findById(r.spaceId, r.dataFlowId);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
@@ -71,12 +71,12 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DataFlowId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+  CommandResult remove(SpaceId spaceId, DataFlowId id) {
+    auto existing = repo.findById(spaceId, id);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
-    repo.remove(id, spaceId);
+    repo.remove(spaceId, id);
     return CommandResult(true, id.value, "");
   }
 }

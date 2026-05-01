@@ -23,6 +23,7 @@ class RemoteTableController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/datasphere/remoteTables", &handleList);
     router.get("/api/v1/datasphere/remoteTables/*", &handleGet);
     router.post("/api/v1/datasphere/remoteTables", &handleCreate);
@@ -71,9 +72,9 @@ class RemoteTableController : PlatformController {
         .set("connectionId", rt.connectionId)
         .set("remoteSchema", rt.remoteSchema)
         .set("remoteObjectName", rt.remoteObjectName)
-        .set("rowCount", Json(rt.rowCount))
-        .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
-        .set("createdAt", Json(rt.createdAt));
+        .set("rowCount", rt.rowCount)
+        .set("lastReplicatedAt", rt.lastReplicatedAt)
+        .set("createdAt", rt.createdAt);
       }
 
       auto resp = Json.emptyObject
@@ -107,9 +108,9 @@ class RemoteTableController : PlatformController {
             .set("remoteSchema", rt.remoteSchema)
             .set("remoteObjectName", rt.remoteObjectName)
             .set("rowCount", rt.rowCount)
-            .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
-            .set("createdAt", Json(rt.createdAt))
-            .set("updatedAt", Json(rt.updatedAt))
+            .set("lastReplicatedAt", rt.lastReplicatedAt)
+            .set("createdAt", rt.createdAt)
+            .set("updatedAt", rt.updatedAt)
             .set("message", "Remote table retrieved successfully");
             
       res.writeJsonBody(resp, 200);
@@ -124,7 +125,7 @@ class RemoteTableController : PlatformController {
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = uc.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
