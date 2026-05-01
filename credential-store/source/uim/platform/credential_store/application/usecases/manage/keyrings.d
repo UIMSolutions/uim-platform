@@ -41,17 +41,15 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
 
     // Create keyring credential entry
     Credential cred;
-    cred.id = randomUUID();
+    cred.initEntity(r.tenantId);
+
     cred.namespaceId = r.namespaceId;
-    cred.tenantId = r.tenantId;
     cred.name = r.name;
     cred.type = CredentialType.keyring;
     cred.metadata = r.metadata;
     cred.format = r.format;
     cred.status = CredentialStatus.active;
     cred.version_ = 1;
-    cred.createdAt = now;
-    cred.updatedAt = now;
     cred.createdBy = r.createdBy;
     cred.modifiedBy = r.createdBy;
 

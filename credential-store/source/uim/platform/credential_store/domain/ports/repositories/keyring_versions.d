@@ -13,12 +13,11 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-interface KeyringVersionRepository {
+interface KeyringVersionRepository : ITenantRepository!(KeyringVersion, KeyringVersionId) {
   KeyringVersion findActiveVersion(CredentialId keyringId);
   KeyringVersion findByVersion(CredentialId keyringId, long versionNumber);
   KeyringVersion[] findByKeyring(CredentialId keyringId);
   void deactivateAll(CredentialId keyringId);
-  void remove(KeyringVersionId id);
   void removeByKeyring(CredentialId keyringId);
   size_t countByKeyring(CredentialId keyringId);
 }

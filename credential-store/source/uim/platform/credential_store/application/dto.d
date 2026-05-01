@@ -71,7 +71,7 @@ struct CreateKeyringRequest {
 }
 
 struct RotateKeyringRequest {
-  KeyringId keyringId;
+  CredentialId keyringId;
   TenantId tenantId;
 }
 
@@ -86,7 +86,7 @@ struct GenerateDekResponse {
   bool success;
   string dek;         // plaintext DEK
   string encryptedDek; // DEK encrypted with keyring
-  KeyringId keyringId;
+  CredentialId keyringId;
   long keyringVersion;
   string error;
 }
@@ -101,7 +101,7 @@ struct EncryptDekRequest {
 struct EncryptDekResponse {
   bool success;
   string encryptedDek;
-  KeyringId keyringId;
+  CredentialId keyringId;
   long keyringVersion;
   string error;
 }

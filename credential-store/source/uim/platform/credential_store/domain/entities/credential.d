@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 @safe:
 struct Credential {
-  CredentialId id;
+  mixin TenantEntity!CredentialId;
+
   NamespaceId namespaceId;
-  TenantId tenantId;
   string name;
   CredentialType type;
   string value;          // text for passwords, base64-encoded for keys/keyrings
@@ -23,8 +23,18 @@ struct Credential {
   string username;       // optional, for passwords, up to 1024 chars
   CredentialStatus status;
   long version_;         // for conditional update support (ETag)
-  long createdAt;
-  long updatedAt;
-  UserId createdBy;
-  UserId modifiedBy;
+
+  Json toJson() const {
+    return entityToJson
+      .set("id", id.value)
+      .set("namespaceId", namespaceId.value)
+      .set("name", name)
+      .set("type", type.to!string())
+      .set("value", value)
+      .set("metadata", metadata)
+      .set("format", format)
+      .set("username", username)
+      .set("status", status.to!string())
+      .set("version", version_);
+  }
 }
