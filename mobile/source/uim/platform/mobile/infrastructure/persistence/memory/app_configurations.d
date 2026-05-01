@@ -34,7 +34,7 @@ class MemoryAppConfigurationRepository : TenantRepository!(AppConfiguration, App
     return configs.filter!(c => c.appId == appId).array;
   }
   AppConfiguration[] findByApp(MobileAppId appId) {
-    return filterByApp(store.values.array, appId);
+    return filterByApp(findAll().array, appId);
   }
 
   void removeByApp(MobileAppId appId) {

@@ -16,23 +16,23 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
   
 
   UserSession[] findByUser(string userId) {
-    return store.values.filter!(s => s.userId == userId).array;
+    return findAll().filter!(s => s.userId == userId).array;
   }
 
   UserSession[] findByDevice(DeviceRegistrationId deviceId) {
-    return store.values.filter!(s => s.deviceId == deviceId).array;
+    return findAll().filter!(s => s.deviceId == deviceId).array;
   }
 
   UserSession[] findByApp(MobileAppId appId) {
-    return store.values.filter!(s => s.appId == appId).array;
+    return findAll().filter!(s => s.appId == appId).array;
   }
 
   UserSession[] findActive(MobileAppId appId) {
-    return store.values.filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
+    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
   }
 
   UserSession[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(s => s.tenantId == tenantId).array;
+    return findAll().filter!(s => s.tenantId == tenantId).array;
   }
 
   void save(UserSession session) {
@@ -48,10 +48,10 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
   }
 
   size_t countActive(MobileAppId appId) {
-    return store.values.filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
+    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return store.values.filter!(s => s.tenantId == tenantId).array.length;
+    return findAll().filter!(s => s.tenantId == tenantId).array.length;
   }
 }

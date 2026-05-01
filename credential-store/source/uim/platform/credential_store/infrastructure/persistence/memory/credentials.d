@@ -17,10 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
-  
+
   bool existsByName(NamespaceId namespaceId, string name, CredentialType type) {
     return !findByName(namespaceId, name, type).isNull;
   }
+
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
     foreach (c; findAll) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
@@ -28,6 +29,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
     }
     return Credential.init;
   }
+
   void removeByName(NamespaceId namespaceId, string name, CredentialType type) {
     Credential c = findByName(namespaceId, name, type);
     if (!c.isNull)
@@ -37,9 +39,11 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
   size_t countByNamespace(NamespaceId namespaceId) {
     return findByNamespace(namespaceId).length;
   }
+
   Credential[] findByNamespace(NamespaceId namespaceId) {
-    return store.values.filter!(c => c.namespaceId == namespaceId).array;
+    return findAll().filter!(c => c.namespaceId == namespaceId).array;
   }
+
   void removeByNamespace(NamespaceId namespaceId) {
     findByNamespace(namespaceId).each!(c => remove(c));
   }
@@ -47,9 +51,11 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
   size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
     return findByNamespaceAndType(namespaceId, type).length;
   }
+
   Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
     return findByNamespace(namespaceId).filter!(c => c.type == type).array;
   }
+
   void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
     findByNamespaceAndType(namespaceId, type).each!(c => remove(c));
   }

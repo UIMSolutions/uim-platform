@@ -32,7 +32,7 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   FeatureRestriction[] findByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array;
+    return findAll().filter!(r => r.appId == appId).array;
   }
 
   FeatureRestriction[] findEnabled(MobileAppId appId) {
@@ -40,7 +40,7 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   FeatureRestriction[] findByTenant(TenantId tenantId) {
-    return store.values.filter!(r => r.tenantId == tenantId).array;
+    return findAll().filter!(r => r.tenantId == tenantId).array;
   }
 
   void save(FeatureRestriction restriction) {
@@ -56,6 +56,6 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array.length;
+    return findAll().filter!(r => r.appId == appId).array.length;
   }
 }

@@ -39,7 +39,7 @@ class MemoryKeystoreRepository : KeystoreRepository {
   }
 
   KeystoreEntity[] findByAccount(string accountId) {
-    return store.values.filter!(ks => ks.accountId == accountId).array;
+    return findAll().filter!(ks => ks.accountId == accountId).array;
   }
 
   KeystoreEntity[] findByApplication(string accountId, string applicationId) {
@@ -74,6 +74,6 @@ class MemoryKeystoreRepository : KeystoreRepository {
   }
 
   size_t countByAccount(string accountId) {
-    return store.values.filter!(ks => ks.accountId == accountId).array.length;
+    return findAll().filter!(ks => ks.accountId == accountId).array.length;
   }
 }

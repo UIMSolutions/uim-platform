@@ -20,7 +20,7 @@ struct ServiceBinding {
   string clientSecret;       // basic auth password (hashed)
   PermissionLevel permission;
   BindingStatus status;
-  string[] allowedNamespaces; // empty = all namespaces
+  NamespaceId[] allowedNamespaces; // empty = all namespaces
   long expiresAt;
 
   Json toJson() const {

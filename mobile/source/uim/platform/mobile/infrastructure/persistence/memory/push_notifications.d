@@ -21,7 +21,7 @@ class MemoryPushNotificationRepository : TenantRepository!(PushNotification, Pus
     return notifications.filter!(n => n.appId == appId).array;
   }
   PushNotification[] findByApp(MobileAppId appId) {
-    return filterByApp(store.values.array, appId);
+    return filterByApp(findAll().array, appId);
   }
   void removeByApp(MobileAppId appId) {
     findByApp(appId).each!(n => remove(n));

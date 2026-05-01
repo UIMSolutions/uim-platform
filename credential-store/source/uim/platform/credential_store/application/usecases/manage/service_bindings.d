@@ -29,7 +29,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.initEntity(r.tenantId);
     binding.name = r.name;
     binding.description = r.description;
-    binding.clientId = randomUUID();
+    binding.clientId = randomUUID().toString;
     binding.clientSecret = randomUUID().to!string ~ randomUUID().to!string;
     binding.permission = parsePermission(r.permission);
     binding.status = BindingStatus.active;

@@ -33,7 +33,7 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
     return stores.filter!(s => s.appId == appId).array;
   }
   OfflineStore[] findByApp(MobileAppId appId) {
-    return store.values.filter!(s => s.appId == appId).array;
+    return findAll().filter!(s => s.appId == appId).array;
   }
   void removeByApp(MobileAppId appId) {
     findByApp(appId).each!(s => remove(s));

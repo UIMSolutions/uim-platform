@@ -53,7 +53,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace not found");
 
     ns.description = r.description;
-    ns.updatedAt = currentTimestamp();
+    ns.updatedAt = now();
     namespaces.update(ns);
     return CommandResult(true, ns.id.value, "");
   }

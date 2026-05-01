@@ -33,7 +33,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     return registrations.filter!(r => r.appId == appId).array;
   }
   DeviceRegistration[] findByApp(MobileAppId appId) {
-    return store.values.filter!(r => r.appId == appId).array;
+    return findAll().filter!(r => r.appId == appId).array;
   }
   void removeByApp(MobileAppId appId) {
     findByApp(appId).each!(r => remove(r));
@@ -46,7 +46,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     return registrations.filter!(r => r.userId == userId).array;
   }
   DeviceRegistration[] findByUser(string userId) {
-    return store.values.filter!(r => r.userId == userId).array;
+    return findAll().filter!(r => r.userId == userId).array;
   }
   void removeByUser(string userId) {
     findByUser(userId).each!(r => remove(r));
