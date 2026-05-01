@@ -263,3 +263,10 @@ T[] flat(T)(T[][] arrays) {
   }
   return result;
 }
+
+  // private static long currentTimestamp() {
+  //   import core.time : Duration;
+  //   import std.datetime.systime : Clock;
+
+  //   return Clock.currStdTime();
+  // }

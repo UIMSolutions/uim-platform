@@ -36,11 +36,11 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     auto existing = repo.findByName(r.namespaceId, r.name, credType);
 
     // If-None-Match: * means create only (fail if exists)
-    if (r.ifNoneMatch == "*" && existing.id.length > 0)
+    if (r.ifNoneMatch == "*" && !existing.isNull)
       return CommandResult(false, "", "Credential already exists");
 
     // Create or update
-    if (existing.id.length > 0) {
+    if (!existing.isNull) {
       existing.value = r.value;
       existing.metadata = r.metadata;
       existing.format = r.format;
@@ -76,7 +76,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   // Update with conditional support via ifMatch header
   CommandResult update(CredentialId id, UpdateCredentialRequest r) {
     auto cred = repo.findById(id);
-    if (cred.id.isEmpty)
+    if (cred.isNull)
       return CommandResult(false, "", "Credential not found");
 
     // If-Match: <id> means conditional update (only if version matches)

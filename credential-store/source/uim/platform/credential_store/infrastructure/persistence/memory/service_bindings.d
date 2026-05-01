@@ -18,22 +18,26 @@ mixin(ShowModule!());
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-  bool existsByClientId(string clientId) {
-    return findAll().any!(b => b.clientId == clientId);
+  size_t countByClientId(string clientId) {
+    return findByClientId(clientId).length;
   }
 
-  ServiceBinding findByClientId(string clientId) {
-    foreach (b; findAll) {
-      if (b.clientId == clientId)
-        return b;
-    }
-    return ServiceBinding.init;
+  ServiceBinding[] findByClientId(string clientId) {
+    return findAll.filter!(b => b.clientId == clientId).array; 
   }
 
   void removeByClientId(string clientId) {
-    ServiceBinding b = findByClientId(clientId);
-    if (b.id.value != "")
-      remove(b.id);
+    findByClientId(clientId).each!(b => remove(b));
   }
 
+    // ByStatus
+    size_t countByStatus(BindingStatus status) {
+        return findByStatus(status).length;
+    }
+    ServiceBinding[] findByStatus(BindingStatus status) {
+        return findAll.filter!(b => b.status == status).array;
+    }
+    void removeByStatus(BindingStatus status) {
+        findByStatus(status).each!(b => remove(b));
+    }
 }

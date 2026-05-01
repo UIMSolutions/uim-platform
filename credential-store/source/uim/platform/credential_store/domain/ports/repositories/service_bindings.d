@@ -14,10 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
-    // ByClient
-    size_t countByClient(string clientId);
-    ServiceBinding[] findByClient(string clientId);
-    void removeByClient(string clientId);
+    size_t countByClientId(string clientId);
+    ServiceBinding[] findByClientId(string clientId);
+    void removeByClientId(string clientId);
 
     // ByStatus
     size_t countByStatus(BindingStatus status);

@@ -14,11 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 interface KeyringVersionRepository {
-  KeyringVersion findById(KeyringVersionId id);
   KeyringVersion findActiveVersion(CredentialId keyringId);
   KeyringVersion findByVersion(CredentialId keyringId, long versionNumber);
   KeyringVersion[] findByKeyring(CredentialId keyringId);
-  void save(KeyringVersion ver);
   void deactivateAll(CredentialId keyringId);
   void remove(KeyringVersionId id);
   void removeByKeyring(CredentialId keyringId);

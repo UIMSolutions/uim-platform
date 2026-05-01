@@ -14,5 +14,4 @@ mixin(ShowModule!());
 @safe:
 interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
   Namespace findByName(TenantId tenantId, string name);
-  size_t countByTenant(TenantId tenantId);
 }
