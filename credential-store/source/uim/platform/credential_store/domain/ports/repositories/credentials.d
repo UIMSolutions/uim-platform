@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.ports.repositories.credentials;
 
-import uim.platform.credential_store.domain.entities.credential;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.credential;
+// import uim.platform.credential_store.domain.types;
 
+import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
 
   bool existsByName(NamespaceId namespaceId, string name, CredentialType type);

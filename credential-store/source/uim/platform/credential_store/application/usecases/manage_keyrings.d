@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.manage.keyrings;
 
-import uim.platform.credential_store.domain.ports.repositories.credentials;
-import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
-import uim.platform.credential_store.domain.entities.credential;
-import uim.platform.credential_store.domain.entities.keyring_version;
-import uim.platform.credential_store.domain.services.keyring_manager;
-import uim.platform.credential_store.domain.types;
-import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.domain.ports.repositories.credentials;
+// import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
+// import uim.platform.credential_store.domain.entities.credential;
+// import uim.platform.credential_store.domain.entities.keyring_version;
+// import uim.platform.credential_store.domain.services.keyring_manager;
+// import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageKeyringsUseCase { // TODO: UIMUseCase {
   private CredentialRepository credRepo;
   private KeyringVersionRepository versionRepo;

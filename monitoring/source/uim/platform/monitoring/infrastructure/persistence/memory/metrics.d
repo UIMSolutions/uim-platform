@@ -18,7 +18,10 @@ mixin(ShowModule!());
 @safe:
 class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
 
-
+  Metric findByName(TenantId tenantId, string metricName) {
+    return findByTenant(tenantId).filter!(m => m.name == metricName).array[0];
+  }
+  
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;
   }

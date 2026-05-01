@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.manage.credentials;
 
-import uim.platform.credential_store.domain.ports.repositories.credentials;
-import uim.platform.credential_store.domain.entities.credential;
-import uim.platform.credential_store.domain.services.credential_validator;
-import uim.platform.credential_store.domain.types;
-import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.domain.ports.repositories.credentials;
+// import uim.platform.credential_store.domain.entities.credential;
+// import uim.platform.credential_store.domain.services.credential_validator;
+// import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageCredentialsUseCase { // TODO: UIMUseCase {
   private CredentialRepository repo;
 

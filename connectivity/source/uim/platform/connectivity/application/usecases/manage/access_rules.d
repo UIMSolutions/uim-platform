@@ -26,6 +26,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createRule(CreateAccessRuleRequest req) {
+    auto tenantId = req.tenantId;
     // Validate connector exists
     if (!connectors.existsById(tenantId, req.connectorId))
       return CommandResult(false, "", "Connector not found");
@@ -33,7 +34,16 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     if (req.virtualHost.length == 0)
       return CommandResult(false, "", "Virtual host is required");
 
-    AccessRule rule = AccessRule.createFromRequest(req);
+    AccessRule rule;
+    rule.initEntity(tenantId);
+    rule.connectorId = req.connectorId;
+    rule.description = req.description;
+    rule.protocol = req.protocol.to!AccessProtocol;
+    rule.virtualHost = req.virtualHost;
+    rule.virtualPort = req.virtualPort;
+    rule.urlPathPrefix = req.urlPathPrefix;
+    rule.policy = req.policy.toLower().to!AccessPolicy;
+    rule.principalPropagation = req.principalPropagation;
 
     rules.save(rule);
     return CommandResult(true, rule.id.toString, "");
@@ -44,8 +54,24 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     if (rule.isEmpty)
       return CommandResult(false, "", "Access rule not found");
 
-    rules.update(rule);
-    return CommandResult(true, rule.id.toString, "");
+    AccessRule updated = rule;
+
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.protocol.length > 0)
+      updated.protocol = req.protocol.to!AccessProtocol;
+    if (req.virtualHost.length > 0)
+      updated.virtualHost = req.virtualHost;
+    if (req.virtualPort != 0)
+      updated.virtualPort = req.virtualPort;
+    if (req.urlPathPrefix.length > 0)
+      updated.urlPathPrefix = req.urlPathPrefix;
+    if (req.policy.length > 0)
+      updated.policy = req.policy.toLower().to!AccessPolicy;
+    updated.principalPropagation = req.principalPropagation;
+
+    rules.update(updated);
+    return CommandResult(true, updated.id.toString, "");
   }
 
   AccessRule getRule(RuleId id) {
@@ -65,7 +91,6 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Access rule not found");
 
     rules.remove(id);
-    return CommandResult(true, rule.id.toString, "");
+    return CommandResult(true, id.toString, "");
   }
 }
-

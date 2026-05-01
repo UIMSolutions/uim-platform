@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.ports.repositories.keyring_versions;
 
-import uim.platform.credential_store.domain.entities.keyring_version;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.keyring_version;
+// import uim.platform.credential_store.domain.types;
 
+import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 interface KeyringVersionRepository {
   KeyringVersion findById(KeyringVersionId id);
   KeyringVersion findActiveVersion(CredentialId keyringId);

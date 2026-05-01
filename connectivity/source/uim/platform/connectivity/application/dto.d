@@ -104,6 +104,8 @@ struct UpdateAccessRuleRequest {
   string description;
   string urlPathPrefix;
   string policy;
+  string virtualHost;
+  ushort virtualPort;
   bool principalPropagation;
 }
 

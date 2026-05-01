@@ -1,5 +1,10 @@
 module uim.platform.custom_domain.domain.types;
 
+import uim.platform.custom_domain;
+
+mixin(ShowModule!());
+
+@safe:
 // ID aliases
 struct CustomDomainId {
     string value;

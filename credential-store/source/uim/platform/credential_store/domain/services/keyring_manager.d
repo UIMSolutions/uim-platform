@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.services.keyring_manager;
 
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct KeyringManager {
   // Check if a keyring can be deleted (must be disabled for >= 7 days)
   static bool canDelete(long disabledAt, long currentTime) {

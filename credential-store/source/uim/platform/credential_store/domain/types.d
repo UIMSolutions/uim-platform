@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.types;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 // ID aliases
 struct NamespaceId {
   string value;
@@ -55,6 +59,3 @@ struct AuditLogEntryId {
 
   mixin DomainId;
 }
-
-
-

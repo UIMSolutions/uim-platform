@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.get_overview;
 
-import uim.platform.credential_store.domain.ports.repositories.namespaces;
-import uim.platform.credential_store.domain.ports.repositories.credentials;
-import uim.platform.credential_store.domain.ports.repositories.service_bindings;
-import uim.platform.credential_store.domain.ports.repositories.audit_logs;
-import uim.platform.credential_store.domain.types;
-import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.domain.ports.repositories.namespaces;
+// import uim.platform.credential_store.domain.ports.repositories.credentials;
+// import uim.platform.credential_store.domain.ports.repositories.service_bindings;
+// import uim.platform.credential_store.domain.ports.repositories.audit_logs;
+// import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.application.dto;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
   private NamespaceRepository nsRepo;
   private CredentialRepository credRepo;

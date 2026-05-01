@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.manage.namespaces;
 
-import uim.platform.credential_store.domain.ports.repositories.namespaces;
-import uim.platform.credential_store.domain.entities.namespace;
-import uim.platform.credential_store.domain.services.credential_validator;
-import uim.platform.credential_store.domain.types;
-import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.domain.ports.repositories.namespaces;
+// import uim.platform.credential_store.domain.entities.namespace;
+// import uim.platform.credential_store.domain.services.credential_validator;
+// import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageNamespacesUseCase { // TODO: UIMUseCase {
   private NamespaceRepository repo;
 

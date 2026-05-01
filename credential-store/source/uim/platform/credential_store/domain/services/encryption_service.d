@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.services.encryption_service;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct EncryptionService {
   // Generate a new Data Encryption Key (DEK)
   // In production, use proper AES-256 key generation
