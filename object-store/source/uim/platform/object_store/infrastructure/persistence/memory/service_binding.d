@@ -18,12 +18,15 @@ mixin(ShowModule!());
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
+  size_t countByBucket(BucketId bucketId) {
+    return findByBucket(bucketId).length;
+  }
   ServiceBinding[] findByBucket(BucketId bucketId) {
     return findAll().filter!(e => e.bucketId == bucketId).array;
   }
-
-  ServiceBinding[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId).array;
+  void removeByBucket(BucketId bucketId) {
+    foreach (e; findByBucket(bucketId))
+      e.remove();
   }
 
 }

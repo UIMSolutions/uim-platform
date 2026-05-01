@@ -9,7 +9,6 @@ import uim.platform.document_ai.application.usecases.manage.templates;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.template_ : Template;
-import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 

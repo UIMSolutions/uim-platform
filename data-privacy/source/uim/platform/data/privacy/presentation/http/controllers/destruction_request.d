@@ -9,7 +9,6 @@ module uim.platform.data.privacy.presentation.http.controllers.destruction_reque
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.destruction_request;
-// import uim.platform.data.privacy.presentation.http.json_utils;
 import uim.platform.data.privacy;
 
 mixin(ShowModule!());
