@@ -7,7 +7,6 @@ module uim.platform.mobile.presentation.http.controllers.client_log;
 
 import uim.platform.mobile.application.usecases.manage.client_logs;
 import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http.json_utils;
 
 import uim.platform.mobile;
 
@@ -22,6 +21,7 @@ class ClientLogController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/logs", &handleUpload);
     router.get("/api/v1/logs", &handleList);
     router.get("/api/v1/logs/*", &handleGet);

@@ -9,7 +9,6 @@ module uim.platform.logging.presentation.http.controllers.stream;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.log_stream;
 // import uim.platform.logging.domain.types;
-// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 

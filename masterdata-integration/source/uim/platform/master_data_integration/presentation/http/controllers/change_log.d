@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.application.usecases.query_change_lo
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class ChangeLogController : PlatformController {
   private QueryChangeLogUseCase uc;

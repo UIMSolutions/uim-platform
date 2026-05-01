@@ -31,7 +31,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing !is null && !existing.isNull)
+    if (!existing.isNull)
       return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
     auto bucket = new Bucket();

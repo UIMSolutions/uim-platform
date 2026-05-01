@@ -51,7 +51,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (!quotaResult.valid)
       return CommandResult(false, "", quotaResult.error);
 
-    auto obj = new StorageObject();
+    StorageObject obj;
     obj.id = randomUUID();
     obj.tenantId = req.tenantId;
     obj.bucketId = req.bucketId;

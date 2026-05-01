@@ -9,7 +9,6 @@ module uim.platform.logging.presentation.http.controllers.alert;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.alert;
 // import uim.platform.logging.domain.types;
-// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 

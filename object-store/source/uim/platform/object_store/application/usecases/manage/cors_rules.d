@@ -30,10 +30,10 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    auto rule = new CorsRule();
+    CorsRule rule;
     rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.bucketId = req.bucketId;

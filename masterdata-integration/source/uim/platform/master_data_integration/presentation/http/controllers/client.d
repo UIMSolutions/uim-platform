@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.application.usecases.manage.clients;
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class ClientController : PlatformController {
   private ManageClientsUseCase uc;

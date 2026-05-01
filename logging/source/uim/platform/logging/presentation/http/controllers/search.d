@@ -10,7 +10,6 @@ module uim.platform.logging.presentation.http.controllers.search;
 // import uim.platform.logging.domain.entities.log_entry;
 // import uim.platform.logging.domain.services.log_parser;
 // import uim.platform.logging.domain.types;
-// import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 

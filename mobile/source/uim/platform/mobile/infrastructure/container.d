@@ -145,7 +145,7 @@ Container buildContainer(AppConfig config) {
   c.userSessionController = new UserSessionController(c.manageSessions);
   c.clientLogController = new ClientLogController(c.manageLogs);
   c.overviewController = new OverviewController(c.getOverview);
-  c.healthController = new HealthController("mobile-services");
+  c.healthController = new HealthController("mobile");
 
   return c;
 }

@@ -14,7 +14,6 @@ import uim.platform.master_data_integration.application.usecases.manage.key_mapp
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.key_mapping;
 import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class KeyMappingController : PlatformController {
   private ManageKeyMappingsUseCase uc;
