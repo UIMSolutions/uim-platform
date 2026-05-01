@@ -171,7 +171,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "API rule not found");
 
     auto rule = ruleRepository.findById(id);
-    ruleRepository.remove(id);
+    ruleRepository.removeById(id);
     return CommandResult(true, rule.id.toString(), "");
   }
 

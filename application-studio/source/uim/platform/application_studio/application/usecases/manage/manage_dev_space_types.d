@@ -62,7 +62,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
     CommandResult remove(DevSpaceTypeId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Dev space type not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

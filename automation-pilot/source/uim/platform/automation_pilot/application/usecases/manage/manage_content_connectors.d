@@ -63,7 +63,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     CommandResult remove(ContentConnectorId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Content connector not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

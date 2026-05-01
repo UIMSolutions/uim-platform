@@ -86,7 +86,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     if (policy.isNull || policy.isNull)
       return CommandResult(false, "", "Policy not found");
 
-    policyRepo.remove(id);
+    policyRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

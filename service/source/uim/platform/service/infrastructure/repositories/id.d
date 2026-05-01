@@ -29,7 +29,7 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   }
 
   void removeById(TId id) {
-    store.remove(id);
+    store.removeById(id);
   }
   void removeAllById(TId[] ids) {
     ids.each!(id => removeById(id));

@@ -75,7 +75,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     if (!catalogRepo.existsById(id))
       return "Catalog not found";
 
-    catalogRepo.remove(id);
+    catalogRepo.removeById(id);
     return "";
   }
 }

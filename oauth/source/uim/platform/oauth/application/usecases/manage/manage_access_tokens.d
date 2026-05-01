@@ -66,7 +66,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     CommandResult remove(AccessTokenId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Access token not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

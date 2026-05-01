@@ -90,7 +90,7 @@ class ManageKeystoresUseCase {
     auto ks = repo.findById(id);
     if (ks.id.length == 0)
       return CommandResult(false, "", "Keystore not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id, "");
   }
 

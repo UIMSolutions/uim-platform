@@ -143,7 +143,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
-    packages.remove(id);
+    packages.removeById(id);
     recordActivity(pkg.tenantId, ActivityType.packageDeleted, id, pkg.name, "Package deleted", "");
 
     return CommandResult(true, id.toString, "");

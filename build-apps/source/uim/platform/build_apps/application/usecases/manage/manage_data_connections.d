@@ -71,7 +71,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     CommandResult remove(DataConnectionId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Data connection not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

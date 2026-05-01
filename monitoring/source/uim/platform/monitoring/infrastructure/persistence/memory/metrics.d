@@ -130,7 +130,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     auto metrics = findByTenant(tenantId).assocArray!(m => m.id);
     foreach (id, metric; metrics) {
       if (metric.timestamp < beforeTimestamp) {
-        metrics.remove(id);
+        metrics.removeById(id);
       }
     }
     store[tenantId] = metrics;

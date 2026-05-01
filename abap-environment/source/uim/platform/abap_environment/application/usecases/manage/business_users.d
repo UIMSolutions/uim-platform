@@ -117,7 +117,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Business user not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString(), "");
   }
 }

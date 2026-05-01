@@ -166,7 +166,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     } else {
       // Hard delete
       versionRepo.removeByObject(id);
-      objectRepo.remove(id);
+      objectRepo.removeById(id);
     }
 
     // Update bucket counters

@@ -66,7 +66,7 @@ class DataSourceHandler {
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
-    useCases.remove(id);
+    useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }

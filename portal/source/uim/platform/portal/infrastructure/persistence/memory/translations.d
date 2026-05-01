@@ -52,7 +52,7 @@ class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId)
   }
 
   void remove(TranslationId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 
   void removeByResource(string resourceType, string resourceId) {
@@ -62,6 +62,6 @@ class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId)
         toRemove ~= kv.key;
     }
     foreach (id; toRemove)
-      store.remove(id);
+      store.removeById(id);
   }
 }

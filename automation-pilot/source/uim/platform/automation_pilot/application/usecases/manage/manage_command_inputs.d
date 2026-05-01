@@ -63,7 +63,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     CommandResult remove(CommandInputId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Command input not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

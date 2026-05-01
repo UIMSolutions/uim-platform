@@ -143,7 +143,7 @@ class ResourceGroupController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto result = groups.remove(id);
+      auto result = groups.removeById(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

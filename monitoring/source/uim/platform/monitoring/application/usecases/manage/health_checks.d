@@ -176,7 +176,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     if (!checkRepo.existsById(id))
       return CommandResult(false, "", "Health check not found");
 
-    checkRepo.remove(id);
+    checkRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

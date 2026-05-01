@@ -79,7 +79,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
     if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
-    corsRepo.remove(id);
+    corsRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

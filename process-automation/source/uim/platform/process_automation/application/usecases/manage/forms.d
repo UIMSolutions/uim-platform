@@ -76,7 +76,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Form not found");
 
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.toString, "");
     }
 }

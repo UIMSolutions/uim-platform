@@ -67,7 +67,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     void remove(ServiceInstanceId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByTenant(TenantId tenantId) {

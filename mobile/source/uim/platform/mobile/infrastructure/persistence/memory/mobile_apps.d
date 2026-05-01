@@ -45,7 +45,7 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
   }
 
   void remove(MobileAppId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 
   size_t countByTenant(TenantId tenantId) {

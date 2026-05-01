@@ -82,7 +82,7 @@ class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId
     if (!existsById(tenantId, id))
       return;
 
-    store[tenantId].remove(id);
+    store[tenantId].removeById(id);
     if (store[tenantId].empty) {
       store.remove(tenantId);
     }

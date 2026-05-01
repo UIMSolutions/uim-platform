@@ -24,7 +24,7 @@ struct ServiceBinding {
   long expiresAt;
 
   Json toJson() const {
-    returnentityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("clientId", clientId)

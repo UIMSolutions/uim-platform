@@ -90,7 +90,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     if (!rules.existsById(id))
       return CommandResult(false, "", "Access rule not found");
 
-    rules.remove(id);
+    rules.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

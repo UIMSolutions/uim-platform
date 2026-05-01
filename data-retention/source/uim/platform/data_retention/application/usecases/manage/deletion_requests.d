@@ -55,7 +55,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(tenantId, status);
     }
     CommandResult remove(string id) { return remove(DeletionRequestId(id)); }
-    CommandResult remove(DeletionRequestId id) { repo.remove(id); return CommandResult(true, id.value, ""); }
+    CommandResult remove(DeletionRequestId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
 
     private static DeletionActionType parseDeletionActionType(string s) {
         switch (s) {

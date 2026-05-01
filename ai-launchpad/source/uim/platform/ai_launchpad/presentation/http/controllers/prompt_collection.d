@@ -124,7 +124,7 @@ class PromptCollectionController : PlatformController {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
 
-      auto result = uc.remove(id);
+      auto result = uc.removeById(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

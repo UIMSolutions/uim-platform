@@ -63,7 +63,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
     CommandResult remove(OAuthScopeId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "OAuth scope not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

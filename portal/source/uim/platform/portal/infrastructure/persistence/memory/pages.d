@@ -55,6 +55,6 @@ class MemoryPageRepository : PageRepository {
   }
 
   void remove(PageId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

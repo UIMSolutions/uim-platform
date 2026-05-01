@@ -107,7 +107,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
       
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

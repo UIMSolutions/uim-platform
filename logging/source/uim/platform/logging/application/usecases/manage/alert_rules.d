@@ -125,7 +125,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult removeRule(AlertRuleId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

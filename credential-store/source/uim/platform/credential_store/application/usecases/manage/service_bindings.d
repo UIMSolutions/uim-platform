@@ -79,7 +79,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   void remove(ServiceBindingId id) {
-    bindings.remove(id);
+    bindings.removeById(id);
   }
 
   size_t count(TenantId tenantId) {

@@ -70,6 +70,6 @@ class MemoryRoleRepository : RoleRepository {
   }
 
   void remove(RoleId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

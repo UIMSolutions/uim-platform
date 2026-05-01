@@ -78,7 +78,7 @@ class DashboardHandler {
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
-    useCases.remove(id);
+    useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }

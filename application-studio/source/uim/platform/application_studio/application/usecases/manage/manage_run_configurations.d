@@ -69,7 +69,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     CommandResult remove(RunConfigurationId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Run configuration not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

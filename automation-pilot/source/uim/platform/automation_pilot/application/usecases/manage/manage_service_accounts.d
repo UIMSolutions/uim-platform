@@ -61,7 +61,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     CommandResult remove(ServiceAccountId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Service account not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

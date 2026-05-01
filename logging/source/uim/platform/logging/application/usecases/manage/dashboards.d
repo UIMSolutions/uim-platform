@@ -130,7 +130,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(DashboardId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 

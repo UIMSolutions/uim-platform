@@ -143,7 +143,7 @@ class ChannelController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.remove(id);
+      uc.removeById(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

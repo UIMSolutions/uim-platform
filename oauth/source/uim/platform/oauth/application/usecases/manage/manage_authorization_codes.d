@@ -63,7 +63,7 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
     CommandResult remove(AuthorizationCodeId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Authorization code not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

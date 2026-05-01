@@ -63,7 +63,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   string deleteApplication(ApplicationId id) {
-    appRepo.remove(id);
+    appRepo.removeById(id);
     return "";
   }
 }

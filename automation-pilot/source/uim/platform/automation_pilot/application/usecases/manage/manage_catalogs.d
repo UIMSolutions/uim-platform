@@ -64,7 +64,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     CommandResult remove(CatalogId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Catalog not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

@@ -100,7 +100,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (!definitionRepo.existsById(id))
       return CommandResult(false, "", "Metric definition not found");
 
-    definitionRepo.remove(id);
+    definitionRepo.removeById(id);
     return CommandResult(true, id.toString(), "");
   }
 

@@ -93,7 +93,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(LogStreamId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 

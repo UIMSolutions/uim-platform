@@ -59,7 +59,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Key not found");
 
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.toString, "");
     }
 }

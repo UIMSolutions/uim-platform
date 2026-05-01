@@ -55,7 +55,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(ClientLogEntryId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByApp(MobileAppId appId) {

@@ -66,7 +66,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     CommandResult remove(AppBuildId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "App build not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

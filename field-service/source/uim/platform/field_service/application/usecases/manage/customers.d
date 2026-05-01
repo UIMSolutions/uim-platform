@@ -75,7 +75,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         auto existing = repo.findById(id);
         if (existing.isNull)
             return CommandResult(false, "", "Customer not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.toString, "");
     }
 }

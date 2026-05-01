@@ -69,7 +69,7 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
     CommandResult remove(DevSpaceId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Dev space not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

@@ -48,5 +48,5 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
 
     void save(ConsentRecord entity) { store[entity.id] = entity; }
     void update(ConsentRecord entity) { store[entity.id] = entity; }
-    void remove(ConsentRecordId id) { store.remove(id); }
+    void remove(ConsentRecordId id) { store.removeById(id); }
 }

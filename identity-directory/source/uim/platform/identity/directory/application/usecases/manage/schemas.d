@@ -87,7 +87,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     if (schema == Schema.init)
       return "Schema not found";
 
-    schemaRepo.remove(id);
+    schemaRepo.removeById(id);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), schema.tenantId,
         AuditEventType.schemaDeleted, "system", "System", id, "Schema",

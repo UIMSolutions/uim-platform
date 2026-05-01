@@ -50,7 +50,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Site
     + list(tenantId) : Site[]
     + update(req) : SiteResponse
-    + remove(id) : SiteResponse
+    + removeById(id) : SiteResponse
     + publish(id) : SiteResponse
   }
 
@@ -59,7 +59,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Page
     + list(tenantId) : Page[]
     + update(req) : PageResponse
-    + remove(id) : PageResponse
+    + removeById(id) : PageResponse
   }
 
   class ManageSectionsUseCase << (U,#CE93D8) >> {
@@ -67,7 +67,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Section
     + list(tenantId) : Section[]
     + update(req) : SectionResponse
-    + remove(id) : SectionResponse
+    + removeById(id) : SectionResponse
   }
 
   class ManageTilesUseCase << (U,#CE93D8) >> {
@@ -75,7 +75,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Tile
     + list(tenantId) : Tile[]
     + update(req) : TileResponse
-    + remove(id) : TileResponse
+    + removeById(id) : TileResponse
   }
 
   class ManageCatalogsUseCase << (U,#CE93D8) >> {
@@ -83,7 +83,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Catalog
     + list(tenantId) : Catalog[]
     + update(req) : CatalogResponse
-    + remove(id) : CatalogResponse
+    + removeById(id) : CatalogResponse
   }
 
   class ManageProvidersUseCase << (U,#CE93D8) >> {
@@ -91,7 +91,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : ContentProvider
     + list(tenantId) : ContentProvider[]
     + update(req) : ProviderResponse
-    + remove(id) : ProviderResponse
+    + removeById(id) : ProviderResponse
   }
 
   class ManageRolesUseCase << (U,#CE93D8) >> {
@@ -99,7 +99,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Role
     + list(tenantId) : Role[]
     + update(req) : RoleResponse
-    + remove(id) : RoleResponse
+    + removeById(id) : RoleResponse
   }
 
   class ManageThemesUseCase << (U,#CE93D8) >> {
@@ -107,7 +107,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Theme
     + list(tenantId) : Theme[]
     + update(req) : ThemeResponse
-    + remove(id) : ThemeResponse
+    + removeById(id) : ThemeResponse
   }
 
   class ManageMenuItemsUseCase << (U,#CE93D8) >> {
@@ -115,7 +115,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : MenuItem
     + list(tenantId) : MenuItem[]
     + update(req) : MenuItemResponse
-    + remove(id) : MenuItemResponse
+    + removeById(id) : MenuItemResponse
   }
 
   class ManageTranslationsUseCase << (U,#CE93D8) >> {
@@ -123,7 +123,7 @@ package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
     + getById(id) : Translation
     + list(tenantId) : Translation[]
     + update(req) : TranslationResponse
-    + remove(id) : TranslationResponse
+    + removeById(id) : TranslationResponse
   }
 }
 

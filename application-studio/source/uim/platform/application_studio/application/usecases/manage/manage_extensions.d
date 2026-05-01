@@ -66,7 +66,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         if (!extensions.existsById(id))
             return CommandResult(false, "", "Extension not found");
 
-        extensions.remove(id);
+        extensions.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

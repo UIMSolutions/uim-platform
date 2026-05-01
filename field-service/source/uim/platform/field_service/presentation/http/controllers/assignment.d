@@ -122,7 +122,7 @@ class AssignmentController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = usecase.remove(id);
+            auto result = usecase.removeById(id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["message"] = Json("Assignment deleted");

@@ -110,7 +110,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     auto model = repo.findById(id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

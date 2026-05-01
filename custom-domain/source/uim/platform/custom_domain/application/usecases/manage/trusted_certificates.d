@@ -62,7 +62,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Trusted certificate not found");
 
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.toString, "");
     }
 }

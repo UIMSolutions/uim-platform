@@ -77,7 +77,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
 
 
   void remove(NamespaceId id) {
-    namespaces.remove(id);
+    namespaces.removeById(id);
   }
 
 

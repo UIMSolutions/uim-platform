@@ -54,7 +54,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
     CommandResult remove(string id) { return remove(ResidenceRuleId(id)); }
-    CommandResult remove(ResidenceRuleId id) { repo.remove(id); return CommandResult(true, id.value, ""); }
+    CommandResult remove(ResidenceRuleId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
 
     private static PeriodUnit parsePeriodUnit(string s) {
         switch (s) {

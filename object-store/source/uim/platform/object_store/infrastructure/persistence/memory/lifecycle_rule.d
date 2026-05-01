@@ -40,6 +40,6 @@ class MemoryLifecycleRuleRepository : LifecycleRuleRepository {
   }
 
   void remove(LifecycleRuleId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

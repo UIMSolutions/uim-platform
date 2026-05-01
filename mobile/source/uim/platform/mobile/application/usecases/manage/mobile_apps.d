@@ -69,7 +69,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(MobileAppId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByTenant(TenantId tenantId) {

@@ -149,7 +149,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     if (tr.status != TransportStatus.modifiable)
       return CommandResult(false, "", "Only modifiable transport requests can be deleted");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

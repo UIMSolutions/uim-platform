@@ -89,7 +89,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     auto mapping = repo.findById(id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

@@ -50,13 +50,13 @@ class MemoryKeyEntryRepository : KeyEntryRepository {
   }
 
   void remove(KeyEntryId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 
   void removeByKeystore(KeystoreId keystoreId) {
     foreach (id, e; store) {
       if (e.keystoreId == keystoreId)
-        store.remove(id);
+        store.removeById(id);
     }
   }
 

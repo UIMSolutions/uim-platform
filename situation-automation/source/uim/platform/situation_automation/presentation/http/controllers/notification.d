@@ -151,7 +151,7 @@ class NotificationController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = notifications.remove(id);
+            auto result = notifications.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

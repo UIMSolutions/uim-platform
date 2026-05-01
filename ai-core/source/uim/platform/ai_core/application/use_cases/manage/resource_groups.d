@@ -85,7 +85,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Resource group not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

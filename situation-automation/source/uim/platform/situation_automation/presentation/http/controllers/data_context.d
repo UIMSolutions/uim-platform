@@ -121,7 +121,7 @@ class DataContextController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = dataContexts.remove(id);
+            auto result = dataContexts.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -67,7 +67,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
 
     versionRepo.save(ver);
 
-    return CommandResult(true, cred.id, "");
+    return CommandResult(true, cred.id.value, "");
   }
 
   CommandResult rotate(RotateKeyringRequest r) {
@@ -102,7 +102,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     cred.updatedAt = now;
     credRepo.update(cred);
 
-    return CommandResult(true, ver.id, "");
+    return CommandResult(true, ver.id.value, "");
   }
 
   Credential getById(CredentialId id) {
@@ -129,7 +129,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     cred.status = CredentialStatus.disabled;
     cred.updatedAt = currentTimestamp();
     credRepo.update(cred);
-    return CommandResult(true, cred.id, "");
+    return CommandResult(true, cred.id.value, "");
   }
 
   CommandResult remove(CredentialId id) {
@@ -145,8 +145,8 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Keyring must be disabled for at least 7 days before deletion");
 
     versionRepo.removeByKeyring(id);
-    credRepo.remove(id);
-    return CommandResult(true, id.toString, "");
+    credRepo.removeById(id);
+    return CommandResult(true, id.value, "");
   }
 
   private static long currentTimestamp() {

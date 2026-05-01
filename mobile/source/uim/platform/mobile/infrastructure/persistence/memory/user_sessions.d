@@ -44,7 +44,7 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
   }
 
   void remove(UserSessionId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 
   size_t countActive(MobileAppId appId) {

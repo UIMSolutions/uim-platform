@@ -216,7 +216,7 @@ class CertificateController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = certificates.remove(id);
+            auto result = certificates.removeById(id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

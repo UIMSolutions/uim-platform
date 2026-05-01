@@ -120,7 +120,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
-    repo.remove(id);
+    repo.removeById(id);
 
     recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id,
         "CloudConnector", "Connector unregistered: " ~ cc.locationId);

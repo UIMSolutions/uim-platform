@@ -85,7 +85,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(NotificationChannelId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

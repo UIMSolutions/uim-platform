@@ -67,7 +67,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     if (!translationRepo.existsById(id))
       return "Translation not found";
 
-    translationRepo.remove(id);
+    translationRepo.removeById(id);
     return "";
   }
 

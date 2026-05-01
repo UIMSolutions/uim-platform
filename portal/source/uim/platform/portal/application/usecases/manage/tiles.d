@@ -105,7 +105,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     if (!tileRepo.existsById(id))
       return "Tile not found";
 
-    tileRepo.remove(id);
+    tileRepo.removeById(id);
     return "";
   }
 }

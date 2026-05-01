@@ -93,7 +93,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult remove(ArchivingJobId id) {
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 

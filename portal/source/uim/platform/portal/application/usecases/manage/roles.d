@@ -119,7 +119,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     if (!roleRepo.existsById(id))
       return "Role not found";
 
-    roleRepo.remove(id);
+    roleRepo.removeById(id);
     return "";
   }
 }

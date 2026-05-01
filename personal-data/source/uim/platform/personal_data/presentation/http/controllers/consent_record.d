@@ -139,7 +139,7 @@ class ConsentRecordController : PlatformController {
             import std.conv : to;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(id);
+            auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

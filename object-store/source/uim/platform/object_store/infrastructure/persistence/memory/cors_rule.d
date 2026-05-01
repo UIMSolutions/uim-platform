@@ -40,6 +40,6 @@ class MemoryCorsRuleRepository : CorsRuleRepository {
   }
 
   void remove(CorsRuleId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

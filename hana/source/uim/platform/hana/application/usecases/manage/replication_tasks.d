@@ -79,7 +79,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Replication task not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

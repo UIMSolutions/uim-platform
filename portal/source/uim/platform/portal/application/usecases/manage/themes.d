@@ -96,7 +96,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (theme.isDefault)
       return "Cannot delete the default theme";
 
-    themeRepo.remove(id);
+    themeRepo.removeById(id);
     return "";
   }
 }

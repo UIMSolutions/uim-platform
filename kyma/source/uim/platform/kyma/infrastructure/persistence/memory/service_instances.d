@@ -61,6 +61,6 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   }
 
   void remove(ServiceInstanceId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

@@ -76,7 +76,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(HtmlAppId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByTenant(TenantId tenantId) {

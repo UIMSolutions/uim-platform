@@ -41,7 +41,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
   }
 
   string deletePolicy(PolicyId id) {
-    policyRepo.remove(id);
+    policyRepo.removeById(id);
     return "";
   }
 }

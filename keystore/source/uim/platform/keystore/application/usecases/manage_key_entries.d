@@ -64,7 +64,7 @@ class ManageKeyEntriesUseCase {
     auto entry = repo.findById(id);
     if (entry.id.length == 0)
       return CommandResult(false, "", "Key entry not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id, "");
   }
 }

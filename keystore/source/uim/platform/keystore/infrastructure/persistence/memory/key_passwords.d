@@ -46,7 +46,7 @@ class MemoryKeyPasswordRepository : KeyPasswordRepository {
   void removeByAlias(string accountId, string applicationId, string alias_) {
     foreach (id, kp; store) {
       if (kp.accountId == accountId && kp.applicationId == applicationId && kp.alias_ == alias_) {
-        store.remove(id);
+        store.removeById(id);
         return;
       }
     }

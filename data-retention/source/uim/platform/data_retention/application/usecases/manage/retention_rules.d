@@ -56,7 +56,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
     CommandResult remove(string id) { return remove(RetentionRuleId(id)); }
-    CommandResult remove(RetentionRuleId id) { repo.remove(id); return CommandResult(true, id.value, ""); }
+    CommandResult remove(RetentionRuleId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
 
     private static PeriodUnit parsePeriodUnit(string s) {
         switch (s) {

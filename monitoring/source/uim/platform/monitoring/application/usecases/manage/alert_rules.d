@@ -127,7 +127,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString(), "");
   }
 

@@ -72,7 +72,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
     CommandResult remove(BrandingConfigId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Branding config not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

@@ -66,7 +66,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
     CommandResult remove(UIComponentId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "UI component not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

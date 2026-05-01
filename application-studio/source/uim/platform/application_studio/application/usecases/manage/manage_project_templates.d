@@ -63,7 +63,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     CommandResult remove(ProjectTemplateId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Project template not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

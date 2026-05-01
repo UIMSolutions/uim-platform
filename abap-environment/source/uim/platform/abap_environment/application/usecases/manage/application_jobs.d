@@ -126,7 +126,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Application job not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

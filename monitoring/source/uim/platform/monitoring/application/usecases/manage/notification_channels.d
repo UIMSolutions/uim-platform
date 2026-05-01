@@ -98,7 +98,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (ch.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
-    channels.remove(id);
+    channels.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

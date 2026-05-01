@@ -126,7 +126,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     logChange(obj.tenantId, id, obj.dataModelId, obj.category,
         ChangeType.delete_, obj.objectType, [], (string[string]).init,
         (string[string]).init, obj.sourceSystem, obj.sourceClient, "",

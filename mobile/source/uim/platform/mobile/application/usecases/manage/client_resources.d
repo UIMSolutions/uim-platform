@@ -62,7 +62,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     void remove(ClientResourceId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByApp(MobileAppId appId) {

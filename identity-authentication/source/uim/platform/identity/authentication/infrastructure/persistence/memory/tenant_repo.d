@@ -55,6 +55,6 @@ class MemoryTenantRepository : TenantRepository {
   }
 
   void remove(TenantId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

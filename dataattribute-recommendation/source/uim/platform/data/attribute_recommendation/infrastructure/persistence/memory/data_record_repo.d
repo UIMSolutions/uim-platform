@@ -23,7 +23,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
   void remove(DataRecordId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
-        store.remove(id);
+        store.removeById(id);
   }
 
   void removeByDataset(DatasetId datasettenantId, id tenantId) {
@@ -32,7 +32,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         toRemove ~= e.id;
     foreach (id; toRemove)
-      store.remove(id);
+      store.removeById(id);
   }
 
   DataRecord* findById(DataRecordId tenantId, id tenantId) {

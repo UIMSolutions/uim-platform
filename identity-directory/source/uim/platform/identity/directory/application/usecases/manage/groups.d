@@ -175,7 +175,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    groupRepo.remove(id);
+    groupRepo.removeById(id);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
         AuditEventType.groupDeleted, "system", "System", id, "Group",

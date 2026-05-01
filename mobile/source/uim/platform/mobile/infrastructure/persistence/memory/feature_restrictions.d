@@ -52,7 +52,7 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   void remove(FeatureRestrictionId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 
   size_t countByApp(MobileAppId appId) {

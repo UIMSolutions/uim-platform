@@ -64,7 +64,7 @@ class StoryHandler {
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
-    useCases.remove(id);
+    useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }

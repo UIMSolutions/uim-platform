@@ -137,7 +137,7 @@ classDiagram
         +findById(id) BrokerService
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IQueueRepository {
@@ -148,7 +148,7 @@ classDiagram
         +findByBrokerServiceId(id) Queue[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class ITopicRepository {
@@ -159,7 +159,7 @@ classDiagram
         +findByBrokerServiceId(id) Topic[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class ISubscriptionRepository {
@@ -170,7 +170,7 @@ classDiagram
         +findByTopicId(id) EventSubscription[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IEventMessageRepository {
@@ -182,7 +182,7 @@ classDiagram
         +findByStatus(status) EventMessage[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IEventSchemaRepository {
@@ -192,7 +192,7 @@ classDiagram
         +findById(id) EventSchema
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IEventApplicationRepository {
@@ -203,7 +203,7 @@ classDiagram
         +findByBrokerServiceId(id) EventApplication[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IMeshBridgeRepository {
@@ -214,7 +214,7 @@ classDiagram
         +findByStatus(status) MeshBridge[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 ```
 

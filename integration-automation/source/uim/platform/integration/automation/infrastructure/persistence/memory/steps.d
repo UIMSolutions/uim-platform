@@ -63,7 +63,7 @@ class MemoryStepRepository : StepRepository {
   void remove(StepId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
-        store.remove(id);
+        store.removeById(id);
   }
 
   void removeByWorkflow(WorkflowId workflowtenantId, id tenantId) {
@@ -72,6 +72,6 @@ class MemoryStepRepository : StepRepository {
       if (kv.value.workflowId == workflowId && kv.value.tenantId == tenantId)
         toRemove ~= kv.key;
     foreach (id; toRemove)
-      store.remove(id);
+      store.removeById(id);
   }
 }

@@ -142,7 +142,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Software component not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

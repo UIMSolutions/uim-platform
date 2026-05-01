@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
   
   bool existsByName(NamespaceId namespaceId, string name, CredentialType type) {
-    return findByName(namespaceId, name, type).id.value != "";
+    return !findByName(namespaceId, name, type).isNull;
   }
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
     foreach (c; findAll) {
@@ -30,8 +30,8 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
   }
   void removeByName(NamespaceId namespaceId, string name, CredentialType type) {
     Credential c = findByName(namespaceId, name, type);
-    if (c.id.value != "")
-      remove(c.id);
+    if (!c.isNull)
+      remove(c);
   }
 
   size_t countByNamespace(NamespaceId namespaceId) {
@@ -41,7 +41,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
     return store.values.filter!(c => c.namespaceId == namespaceId).array;
   }
   void removeByNamespace(NamespaceId namespaceId) {
-    findByNamespace(namespaceId).each!(c => remove(c.id));
+    findByNamespace(namespaceId).each!(c => remove(c));
   }
 
   size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
@@ -51,7 +51,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
     return findByNamespace(namespaceId).filter!(c => c.type == type).array;
   }
   void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    findByNamespaceAndType(namespaceId, type).each!(c => remove(c.id));
+    findByNamespaceAndType(namespaceId, type).each!(c => remove(c));
   }
 
 }

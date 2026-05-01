@@ -121,7 +121,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (site == Site.init)
       return "Site not found";
 
-    siteRepo.remove(id);
+    siteRepo.removeById(id);
     return "";
   }
 }

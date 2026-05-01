@@ -77,7 +77,7 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
     if (!providerRepo.existsById(id))
       return "Content provider not found";
 
-    providerRepo.remove(id);
+    providerRepo.removeById(id);
     return "";
   }
 }

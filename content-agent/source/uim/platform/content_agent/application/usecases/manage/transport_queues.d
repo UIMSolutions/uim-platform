@@ -75,7 +75,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     if (queue.isNull)
       return CommandResult(false, "", "Queue not found");
 
-    queueRepo.remove(id);
+    queueRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

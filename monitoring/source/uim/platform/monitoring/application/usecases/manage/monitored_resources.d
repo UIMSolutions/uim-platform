@@ -120,7 +120,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource not found");
 
     auto resource = repo.findById(id);
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, resource.id.toString, "");
   }
 

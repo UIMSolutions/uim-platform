@@ -66,7 +66,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 
-    certificates.remove(id);
+    certificates.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

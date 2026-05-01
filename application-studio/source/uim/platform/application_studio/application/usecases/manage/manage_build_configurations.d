@@ -68,7 +68,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     CommandResult remove(BuildConfigurationId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Build configuration not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

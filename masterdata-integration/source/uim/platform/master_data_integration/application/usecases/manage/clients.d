@@ -119,7 +119,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     auto client = repo.findById(id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

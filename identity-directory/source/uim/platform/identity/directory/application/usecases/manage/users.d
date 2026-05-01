@@ -155,7 +155,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     if (user == User.init)
       return "User not found";
 
-    userRepo.remove(id);
+    userRepo.removeById(id);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
         AuditEventType.userDeleted, "system", "System", id, "User",

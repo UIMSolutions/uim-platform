@@ -69,7 +69,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
     CommandResult remove(ProjectId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Project not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

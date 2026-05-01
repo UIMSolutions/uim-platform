@@ -75,7 +75,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(FeatureRestrictionId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByApp(MobileAppId appId) {

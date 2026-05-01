@@ -128,7 +128,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     auto env = repo.findById(id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

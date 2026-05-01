@@ -72,7 +72,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     CommandResult remove(PageId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Page not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

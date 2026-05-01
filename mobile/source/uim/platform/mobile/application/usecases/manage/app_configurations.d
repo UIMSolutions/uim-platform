@@ -64,7 +64,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(AppConfigurationId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByApp(MobileAppId appId) {

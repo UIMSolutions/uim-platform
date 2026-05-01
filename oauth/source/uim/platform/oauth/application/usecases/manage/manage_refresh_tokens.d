@@ -63,7 +63,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
     CommandResult remove(RefreshTokenId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Refresh token not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

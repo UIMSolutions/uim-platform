@@ -41,6 +41,6 @@ class MemoryWidgetRepository : WidgetRepository {
   void remove(WidgetId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
-        store.remove(id);
+        store.removeById(id);
   }
 }

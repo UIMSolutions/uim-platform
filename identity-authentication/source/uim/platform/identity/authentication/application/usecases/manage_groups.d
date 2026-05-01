@@ -86,7 +86,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   string deleteGroup(GroupId id) {
-    groupRepo.remove(id);
+    groupRepo.removeById(id);
     return "";
   }
 }

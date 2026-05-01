@@ -56,7 +56,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
     CommandResult remove(string id) { return remove(LegalGroundId(id)); }
-    CommandResult remove(LegalGroundId id) { repo.remove(id); return CommandResult(true, id.value, ""); }
+    CommandResult remove(LegalGroundId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
 
     private static LegalGroundType parseLegalGroundType(string s) {
         switch (s) {

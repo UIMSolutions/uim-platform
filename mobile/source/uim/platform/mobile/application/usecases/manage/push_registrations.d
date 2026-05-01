@@ -56,7 +56,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(PushRegistrationId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByApp(MobileAppId appId) {

@@ -54,6 +54,6 @@ class MemoryBucketRepository : BucketRepository {
   }
 
   void remove(BucketId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

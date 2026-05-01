@@ -78,7 +78,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "HDI Container not found");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

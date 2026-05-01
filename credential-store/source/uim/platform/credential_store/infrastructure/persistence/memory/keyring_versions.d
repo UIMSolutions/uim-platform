@@ -32,22 +32,20 @@ class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, Keyring
     return KeyringVersion.init;
   }
 
+  size_t countByKeyring(CredentialId keyringId) {
+    return findByKeyring(keyringId).length;
+  }
+
   KeyringVersion[] findByKeyring(CredentialId keyringId) {
     return findAll().filter!(v => v.keyringId == keyringId).array;
   }
 
-  void deactivateAll(CredentialId keyringId) {
-    foreach (v; findAll) {
-      if (v.keyringId == keyringId)
-        v.isActive = false;
-    }
-  }
-
   void removeByKeyring(CredentialId keyringId) {
-    store = findAll().filter!(v => v.keyringId != keyringId).array;
+    findByKeyring(keyringId).each!(v => remove(v));
   }
 
-  size_t countByKeyring(CredentialId keyringId) {
-    return findAll().filter!(v => v.keyringId == keyringId).array.length;
+  void deactivateAll(CredentialId keyringId) {
+    findByKeyring(keyringId).each!(v => v.isActive = false);
   }
+
 }

@@ -74,7 +74,7 @@ class PlanningHandler {
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
-    useCases.remove(id);
+    useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }

@@ -66,7 +66,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     auto w = repo.findById(id);
     if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

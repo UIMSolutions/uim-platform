@@ -34,6 +34,17 @@ class TenantRepository(TEntity, TId) {
     return ids.filter!(id => existsById(id)).map!(id => findById(id)).array;
   }
 
+  void removeById(TId id, bool deleteTenantIfEmpty = false) {
+    auto entity = findById(id);
+    if (!entity.isNull) {
+      remove(entity, deleteTenantIfEmpty);
+    }
+  }
+
+  void removeAllById(TId[] ids, bool deleteTenantIfEmpty = false) {
+    ids.each!(id => removeById(id, deleteTenantIfEmpty));
+  }
+
   bool existsById(TenantId tenantId, TId id) {
     return existsByTenant(tenantId) && (id in store[tenantId]);
   }
@@ -52,7 +63,7 @@ class TenantRepository(TEntity, TId) {
 
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false) {
     if (existsById(tenantId, id)) {
-      store[tenantId].remove(id);
+      store[tenantId].removeById(id);
 
       if (deleteTenantIfEmpty && store[tenantId].empty) {
         store.remove(tenantId);

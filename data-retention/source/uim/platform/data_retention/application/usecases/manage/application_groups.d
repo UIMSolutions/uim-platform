@@ -86,7 +86,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult removeAppGroup(ApplicationGroupId id) {
-        appGroupRepository.remove(id);
+        appGroupRepository.removeById(id);
         return CommandResult(true, id.value, "");
     }
 

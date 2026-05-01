@@ -63,7 +63,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     CommandResult remove(ExecutionId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Execution not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

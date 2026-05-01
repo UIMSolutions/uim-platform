@@ -78,7 +78,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (binding.isNull || binding.isNull)
       return CommandResult(false, "", "Binding not found");
 
-    bindingRepo.remove(id);
+    bindingRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

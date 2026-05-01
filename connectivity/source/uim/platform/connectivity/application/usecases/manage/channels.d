@@ -113,7 +113,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
-    channels.remove(id);
+    channels.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 

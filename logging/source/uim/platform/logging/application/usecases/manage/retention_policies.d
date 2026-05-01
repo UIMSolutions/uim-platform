@@ -96,7 +96,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(RetentionPolicyId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 

@@ -52,5 +52,5 @@ class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId)
 
     void save(DataSubject entity) { store[entity.id] = entity; }
     void update(DataSubject entity) { store[entity.id] = entity; }
-    void remove(DataSubjectId id) { store.remove(id); }
+    void remove(DataSubjectId id) { store.removeById(id); }
 }

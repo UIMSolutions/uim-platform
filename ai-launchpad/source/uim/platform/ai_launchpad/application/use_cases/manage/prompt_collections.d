@@ -67,7 +67,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     if (!collectionRepository.existsById(id))
       return CommandResult(false, "", "Prompt collection not found");
 
-    collectionRepository.remove(id);
+    collectionRepository.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

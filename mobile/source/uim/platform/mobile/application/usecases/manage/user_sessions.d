@@ -61,7 +61,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     }
 
     void remove(UserSessionId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countActive(MobileAppId appId) {

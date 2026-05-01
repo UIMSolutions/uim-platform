@@ -180,7 +180,7 @@ classDiagram
         +findByName(name) Catalog
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class ICommandRepository {
@@ -192,7 +192,7 @@ classDiagram
         +findByCatalogId(id) Command[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class ICommandInputRepository {
@@ -204,7 +204,7 @@ classDiagram
         +findByCommandId(id) CommandInput[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IExecutionRepository {
@@ -217,7 +217,7 @@ classDiagram
         +findByStatus(status) Execution[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IScheduledExecutionRepository {
@@ -229,7 +229,7 @@ classDiagram
         +findByCommandId(id) ScheduledExecution[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class ITriggerRepository {
@@ -242,7 +242,7 @@ classDiagram
         +findByEventType(type) Trigger[]
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IServiceAccountRepository {
@@ -254,7 +254,7 @@ classDiagram
         +findByClientId(clientId) ServiceAccount
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 
     class IContentConnectorRepository {
@@ -265,7 +265,7 @@ classDiagram
         +existsById(id) bool
         +save(entity) void
         +update(entity) void
-        +remove(id) void
+        +removeById(id) void
     }
 ```
 

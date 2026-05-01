@@ -74,7 +74,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     CommandResult remove(LogicFlowId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Logic flow not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

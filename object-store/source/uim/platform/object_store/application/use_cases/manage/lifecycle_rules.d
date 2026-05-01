@@ -92,7 +92,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     if (rule.isNull || rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
-    ruleRepo.remove(id);
+    ruleRepo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

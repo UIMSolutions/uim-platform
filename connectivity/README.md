@@ -449,7 +449,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findByProxyType(tenantId, type) : Destination[]
       + save(entity) : void
       + update(entity) : void
-      + remove(id) : void
+      + removeById(id) : void
     }
 
     interface ConnectorRepository << (P,#42A5F5) >> {
@@ -459,7 +459,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findByTenant(tenantId) : CloudConnector[]
       + save(entity) : void
       + update(entity) : void
-      + remove(id) : void
+      + removeById(id) : void
     }
 
     interface ChannelRepository << (P,#42A5F5) >> {
@@ -469,7 +469,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findByStatus(tenantId, status) : ServiceChannel[]
       + save(entity) : void
       + update(entity) : void
-      + remove(id) : void
+      + removeById(id) : void
     }
 
     interface AccessRuleRepository << (P,#42A5F5) >> {
@@ -478,7 +478,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findByTenant(tenantId) : AccessRule[]
       + save(entity) : void
       + update(entity) : void
-      + remove(id) : void
+      + removeById(id) : void
     }
 
     interface CertificateRepository << (P,#42A5F5) >> {
@@ -488,7 +488,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findExpiring(tenantId, now, days) : Certificate[]
       + save(entity) : void
       + update(entity) : void
-      + remove(id) : void
+      + removeById(id) : void
     }
 
     interface ConnectivityLogRepository << (P,#42A5F5) >> {

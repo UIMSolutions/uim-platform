@@ -126,7 +126,7 @@ class ServiceCallController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(id);
+            auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service call deleted");

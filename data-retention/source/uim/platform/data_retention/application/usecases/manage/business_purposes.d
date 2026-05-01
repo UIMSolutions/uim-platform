@@ -78,7 +78,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         auto bp = repo.findById(id);
         if (bp.status == BusinessPurposeStatus.active)
             return CommandResult(false, "", "Cannot delete an active business purpose");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

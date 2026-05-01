@@ -78,7 +78,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     void remove(AppFileId id) {
-        repo.remove(id);
+        repo.removeById(id);
     }
 
     size_t countByVersion(AppVersionId versionId) {

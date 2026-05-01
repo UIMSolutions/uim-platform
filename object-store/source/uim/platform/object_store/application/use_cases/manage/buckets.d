@@ -93,7 +93,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
     if (bucket.objectCount > 0)
       return CommandResult(false, "", "Bucket is not empty");
 
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.toString, "");
   }
 }

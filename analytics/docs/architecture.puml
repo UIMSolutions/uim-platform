@@ -54,7 +54,7 @@ package "Application Layer  «use cases & ports»" as APP <<Rectangle>> {
     + list() : DashboardResponse[]
     + addPage(id, title)
     + publish(id)
-    + remove(id)
+    + removeById(id)
   }
 
   class StoryUseCases << (U,#CE93D8) >> {
@@ -63,34 +63,34 @@ package "Application Layer  «use cases & ports»" as APP <<Rectangle>> {
     + list() : StoryResponse[]
     + addSection(id, heading, narrative)
     + publish(id)
-    + remove(id)
+    + removeById(id)
   }
 
   class DatasetUseCases << (U,#CE93D8) >> {
     + create(req) : DatasetResponse
-    + getById(id) / list() / remove(id)
+    + getById(id) / list() / removeById(id)
   }
 
   class WidgetUseCases << (U,#CE93D8) >> {
     + create(req) : WidgetResponse
-    + getById(id) / list() / remove(id)
+    + getById(id) / list() / removeById(id)
   }
 
   class DataSourceUseCases << (U,#CE93D8) >> {
     + create(req) : DataSourceResponse
-    + getById(id) / list() / remove(id)
+    + getById(id) / list() / removeById(id)
     + testConnection(id) : bool
   }
 
   class PlanningUseCases << (U,#CE93D8) >> {
     + create(req) : PlanningModelResponse
-    + getById(id) / list() / remove(id)
+    + getById(id) / list() / removeById(id)
     + lock(id) / approve(id)
   }
 
   class PredictionUseCases << (U,#CE93D8) >> {
     + create(req) : PredictionResponse
-    + getById(id) / list() / remove(id)
+    + getById(id) / list() / removeById(id)
     + train(id)
   }
 

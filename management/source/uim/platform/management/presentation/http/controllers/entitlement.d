@@ -135,7 +135,7 @@ class EntitlementController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.remove(id);
+      auto result = uc.removeById(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

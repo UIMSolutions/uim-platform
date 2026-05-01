@@ -34,6 +34,6 @@ class MemoryConnectionRepository : IConnectionRepository {
   }
 
   void remove(ConnectionId id) {
-    store.remove(id);
+    store.removeById(id);
   }
 }

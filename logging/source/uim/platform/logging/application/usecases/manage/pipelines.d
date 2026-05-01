@@ -125,7 +125,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult remove(PipelineId id) {
-    repo.remove(id);
+    repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 

@@ -80,7 +80,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.toString, "");
     }
 }

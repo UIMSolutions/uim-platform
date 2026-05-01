@@ -134,7 +134,7 @@ class ClientResourceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.remove(id);
+      auto result = uc.removeById(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

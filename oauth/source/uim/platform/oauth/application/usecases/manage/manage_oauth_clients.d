@@ -76,7 +76,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
     CommandResult remove(OAuthClientId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "OAuth client not found");
-        repo.remove(id);
+        repo.removeById(id);
         return CommandResult(true, id.value, "");
     }
 }

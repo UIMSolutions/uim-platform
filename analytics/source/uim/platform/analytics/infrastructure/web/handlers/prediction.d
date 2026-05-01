@@ -67,7 +67,7 @@ class PredictionHandler {
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
-    useCases.remove(id);
+    useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }
