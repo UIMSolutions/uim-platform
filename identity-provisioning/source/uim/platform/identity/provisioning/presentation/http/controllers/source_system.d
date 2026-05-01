@@ -14,7 +14,6 @@ import uim.platform.identity.provisioning.application.usecases.manage.source_sys
 import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning.domain.entities.source_system;
 import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.presentation.http.json_utils;
 
 class SourceSystemController : PlatformController {
   private ManageSourceSystemsUseCase uc;

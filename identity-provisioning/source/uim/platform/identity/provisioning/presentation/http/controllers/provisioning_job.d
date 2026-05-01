@@ -14,7 +14,6 @@ import uim.platform.identity.provisioning.application.usecases.run_provisioning_
 import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.presentation.http.json_utils;
 
 class ProvisioningJobController : PlatformController {
   private RunProvisioningJobsUseCase uc;

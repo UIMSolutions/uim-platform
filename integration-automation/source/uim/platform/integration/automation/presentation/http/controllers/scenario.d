@@ -14,7 +14,6 @@ import uim.platform.integration.automation.application.usecases.manage.scenarios
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
-import uim.platform.integration.automation.presentation.http.json_utils;
 
 class ScenarioController : PlatformController {
   private ManageScenariosUseCase useCase;

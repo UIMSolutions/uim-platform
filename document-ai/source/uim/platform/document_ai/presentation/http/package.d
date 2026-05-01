@@ -6,6 +6,5 @@
 module uim.platform.document_ai.presentation.http;
 
 public {
-  import uim.platform.document_ai.presentation.http.json_utils;
   import uim.platform.document_ai.presentation.http.controllers;
 }

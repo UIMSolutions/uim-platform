@@ -14,7 +14,6 @@ import uim.platform.integration.automation.application.usecases.manage.destinati
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.destination;
-import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
 class DestinationController : PlatformController {

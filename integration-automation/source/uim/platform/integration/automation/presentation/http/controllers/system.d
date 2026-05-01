@@ -14,8 +14,6 @@ import uim.platform.integration.automation.application.usecases.manage.systems;
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.system_connection;
-import uim.platform.integration.automation.presentation.http.json_utils;
-import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
 class SystemController : PlatformController {
   private ManageSystemsUseCase useCase;

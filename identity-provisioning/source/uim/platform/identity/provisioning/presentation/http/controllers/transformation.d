@@ -14,7 +14,6 @@ import uim.platform.identity.provisioning.application.usecases.manage.transforma
 import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.presentation.http.json_utils;
 
 class TransformationController : PlatformController {
   private ManageTransformationsUseCase uc;

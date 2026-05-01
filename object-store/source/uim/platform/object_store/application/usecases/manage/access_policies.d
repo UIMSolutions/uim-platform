@@ -37,7 +37,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-     auto policy = new AccessPolicy();
+    AccessPolicy policy;
     policy.id = randomUUID();
     policy.tenantId = req.tenantId;
     policy.bucketId = req.bucketId;

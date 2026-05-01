@@ -13,7 +13,6 @@ module uim.platform.integration.automation.presentation.http.monitoring;
 import uim.platform.integration.automation.application.usecases.monitor_executions;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
-import uim.platform.integration.automation.presentation.http.json_utils;
 
 class MonitoringController : PlatformController {
   private MonitorExecutionsUseCase useCase;

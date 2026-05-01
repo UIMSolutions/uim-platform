@@ -11,7 +11,6 @@ module uim.platform.identity.directory.presentation.http.controllers.api_client;
 import uim.platform.identity.directory.application.usecases.manage.api_clients;
 import uim.platform.identity.directory.application.dto;
 import uim.platform.identity.directory.domain.entities.api_client;
-import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.
 class ApiClientController : PlatformController {

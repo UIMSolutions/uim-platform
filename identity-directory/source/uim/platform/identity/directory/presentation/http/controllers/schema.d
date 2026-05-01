@@ -11,7 +11,6 @@ module uim.platform.identity_authentication.presentation.http.schema;
 // import uim.platform.identity.directory.application.usecases.manage.schemas;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.schema;
-// import uim.platform.identity_authentication.presentation.http.json_utils;
 import uim.platform.identity.directory;
 
 mixin(ShowModule!());

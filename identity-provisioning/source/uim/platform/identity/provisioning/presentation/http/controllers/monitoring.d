@@ -14,7 +14,6 @@ import uim.platform.identity.provisioning.application.usecases.monitor_provision
 import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.presentation.http.json_utils;
 
 class MonitoringController : PlatformController {
   private MonitorProvisioningUseCase uc;

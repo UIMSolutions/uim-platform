@@ -14,7 +14,6 @@ import uim.platform.integration.automation.application.usecases.manage.workflows
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
-import uim.platform.integration.automation.presentation.http.json_utils;
 
 class WorkflowController : PlatformController {
   private ManageWorkflowsUseCase useCase;

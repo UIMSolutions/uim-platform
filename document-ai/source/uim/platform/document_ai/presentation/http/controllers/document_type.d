@@ -9,7 +9,6 @@ import uim.platform.document_ai.application.usecases.manage.document_types;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document_type : DocumentType;
-import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 

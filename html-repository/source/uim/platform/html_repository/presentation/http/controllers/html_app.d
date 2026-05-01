@@ -7,7 +7,6 @@ module uim.platform.html_repository.presentation.http.controllers.html_app;
 
 import uim.platform.html_repository.application.usecases.manage.html_apps;
 import uim.platform.html_repository.application.dto;
-import uim.platform.html_repository.presentation.http.json_utils;
 
 import uim.platform.htmls;
 
