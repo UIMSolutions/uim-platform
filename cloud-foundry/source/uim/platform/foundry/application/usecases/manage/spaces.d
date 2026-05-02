@@ -62,7 +62,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     space.updatedAt = now;
 
     repo.save(space);
-    return CommandResult(true, space.id.toString, "");
+    return CommandResult(true, space.id.value, "");
   }
 
   Space* getSpace(TenantId tenantId, SpaceId spaceId) {
@@ -95,7 +95,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
@@ -104,6 +104,6 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space not found");
 
     repo.remove(space);
-    return CommandResult(true, space.id.toString, "");
+    return CommandResult(true, space.id.value, "");
   }
 }

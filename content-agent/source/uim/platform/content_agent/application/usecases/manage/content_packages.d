@@ -67,7 +67,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     recordActivity(req.tenantId, ActivityType.packageCreated, id, req.name,
         "Package created", req.createdBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
@@ -90,7 +90,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
       pkg.status = PackageStatus.draft;
 
     packages.update(pkg);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult assemblePackage(AssemblePackageRequest req) {
@@ -146,7 +146,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     packages.removeById(id);
     recordActivity(pkg.tenantId, ActivityType.packageDeleted, id, pkg.name, "Package deleted", "");
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,

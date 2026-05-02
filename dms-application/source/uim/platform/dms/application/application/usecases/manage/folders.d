@@ -60,7 +60,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     entity.updatedAt = entity.createdAt;
 
     folders.save(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   Folder[] listFolders(TenantId tenantId) {
@@ -98,7 +98,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     entity.updatedAt = Clock.currStdTime();
 
     folders.update(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   CommandResult moveFolder(MoveFolderRequest r) {
@@ -121,7 +121,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     entity.updatedAt = Clock.currStdTime();
 
     folders.update(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
@@ -129,6 +129,6 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Folder not found");
 
     folders.removeById(tenantId, id);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, id.value(), "");
   }
 }

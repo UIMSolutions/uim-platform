@@ -50,10 +50,10 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.customProperties = req.customProperties;
 
     repo.save(globalAccount);
-    emitEvent(eventRepo, globalAccount.id.toString, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, globalAccount.id.value, "", PlatformEventCategory.globalAccountChange,
       "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, globalAccount.id.toString, "");
+    return CommandResult(true, globalAccount.id.value, "");
   }
 
   CommandResult update(string id, UpdateGlobalAccountRequest req) {
@@ -78,7 +78,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
 
     repo.update(globalAccount);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult suspend(string id) {
@@ -97,9 +97,9 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
 
-    emitEvent(eventRepo, accountId.toString, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, accountid.value, "", PlatformEventCategory.globalAccountChange,
       "globalAccount.suspended", "Global account suspended", UserId("system"));
-    return CommandResult(true, accountId.toString, "");
+    return CommandResult(true, accountid.value, "");
   }
 
   CommandResult reactivate(string id) {
@@ -117,7 +117,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.status = GlobalAccountStatus.active;
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
-    return CommandResult(true, accountId.toString, "");
+    return CommandResult(true, accountid.value, "");
   }
 
   bool existsById(string id) {
@@ -153,7 +153,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Global account not found");
 
     repo.removeById(accountId);
-    return CommandResult(true, accountId.toString, "");
+    return CommandResult(true, accountid.value, "");
   }
 
 }

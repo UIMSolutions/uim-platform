@@ -110,7 +110,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     sys.status = SystemStatus.active;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult deactivateSystem(ProxySystemId tenantId, id tenantId) {
@@ -121,7 +121,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     sys.status = SystemStatus.inactive;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult deleteProxySystem(ProxySystemId tenantId, id tenantId) {
@@ -130,6 +130,6 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Proxy system not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

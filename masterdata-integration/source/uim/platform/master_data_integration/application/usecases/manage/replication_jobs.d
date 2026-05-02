@@ -40,7 +40,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.createdBy = req.createdBy;
 
     repo.save(job);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult startJob(ReplicationJobId id) {
@@ -53,7 +53,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.status = ReplicationJobStatus.running;
     job.startedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult completeJob(ReplicationJobId id, long successRecords,
@@ -72,7 +72,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.lastDeltaToken = deltaToken;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult cancelJob(ReplicationJobId id) {
@@ -82,7 +82,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult pauseJob(ReplicationJobId id) {
@@ -93,7 +93,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Job can only be paused when running");
     job.status = ReplicationJobStatus.paused;
     repo.update(job);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ReplicationJob getJob(ReplicationJobId id) {
@@ -117,7 +117,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private ReplicationTrigger parseTrigger(string s) {

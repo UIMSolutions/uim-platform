@@ -56,7 +56,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         job.updatedAt = now;
 
         repo.save(job);
-        return CommandResult(true, job.id.toString, "");
+        return CommandResult(true, job.id.value, "");
     }
 
     Job getById(TenantId tenantId, JobId id) {
@@ -98,7 +98,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.toString, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(TenantId tenantId, JobId id) {
@@ -106,7 +106,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Job not found");
 
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     size_t count(TenantId tenantId) {

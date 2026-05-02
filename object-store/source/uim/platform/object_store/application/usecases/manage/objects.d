@@ -110,7 +110,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   StorageObject getObject(ObjectId id) {
@@ -181,7 +181,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       bucketRepo.update(bucket);
     }
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult copyObject(CopyObjectRequest req) {
@@ -218,7 +218,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     destBucket.updatedAt = copy.createdAt;
     bucketRepo.update(destBucket);
 
-    return CommandResult(true, copy.id.toString, "");
+    return CommandResult(true, copy.id.value, "");
   }
 }
 

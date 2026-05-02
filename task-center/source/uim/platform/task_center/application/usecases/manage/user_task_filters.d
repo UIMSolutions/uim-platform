@@ -59,11 +59,11 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Filter not found");
         f.isDefault = true;
         repo.update(tenantId, f);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult remove(string tenantId, string id) {
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

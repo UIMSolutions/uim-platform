@@ -68,7 +68,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       moduleRepository.update(mod);
     else
       moduleRepository.save(mod);
-    return CommandResult(true, mod.id.toString, "");
+    return CommandResult(true, mod.id.value, "");
   }
 
   CommandResult disableModule(string moduleId) {
@@ -95,7 +95,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     mod.status = ModuleStatus.uninstalling;
     mod.updatedAt = clockSeconds();
     moduleRepository.update(mod);
-    return CommandResult(true, moduleId.toString, "");
+    return CommandResult(true, moduleid.value, "");
   }
 
   CommandResult updateModule(string moduleId, UpdateModuleRequest request) {
@@ -118,7 +118,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     mod.updatedAt = clockSeconds();
 
     moduleRepository.update(mod);
-    return CommandResult(true, moduleId.toString, "");
+    return CommandResult(true, moduleid.value, "");
   }
 
   bool hasModule(string moduleId) {
@@ -154,7 +154,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Module not found");
 
     moduleRepository.remove(moduleId);
-    return CommandResult(true, moduleId.toString, "");
+    return CommandResult(true, moduleid.value, "");
   }
 
   private string[] getKnownDependencies(ModuleType type) {

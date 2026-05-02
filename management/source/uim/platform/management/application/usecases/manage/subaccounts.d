@@ -64,10 +64,10 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
 
-    emitEvent(req.globalAccountId.toString, subaccount.id.toString, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(req.globalAccountid.value, subaccount.id.value, PlatformEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, subaccount.id.toString, "");
+    return CommandResult(true, subaccount.id.value, "");
   }
 
   CommandResult update(string id, UpdateSubaccountRequest req) {
@@ -94,7 +94,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.updatedAt = clockSeconds();
 
     repository.update(subaccount);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult moveSubaccount(string id, MoveSubaccountRequest req) {
@@ -117,7 +117,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     // Complete move
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult suspend(string id) {
@@ -135,7 +135,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.suspended;
     subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult reactivate(string id) {
@@ -153,7 +153,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.active;
     subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   Subaccount getById(string id) {
@@ -198,9 +198,9 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
 
     auto subaccount = repository.findById(id);
     repository.removeById(id);
-    emitEvent(subaccount.globalAccountId.toString, id.toString, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(subaccount.globalAccountid.value, id.value, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, UserId("system"));
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,

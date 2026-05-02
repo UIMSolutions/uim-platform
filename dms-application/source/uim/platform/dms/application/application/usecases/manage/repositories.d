@@ -46,7 +46,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     entity.updatedAt = entity.createdAt;
 
     repo.save(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   Repository[] listRepositories(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     entity.updatedAt = Clock.currStdTime();
 
     repo.update(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   CommandResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -84,7 +84,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     entity.status = RepositoryStatus.archived;
     entity.updatedAt = Clock.currStdTime();
     repo.update(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   CommandResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -95,7 +95,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     entity.status = RepositoryStatus.active;
     entity.updatedAt = Clock.currStdTime();
     repo.update(entity);
-    return CommandResult(true, entity.id.toString(), "");
+    return CommandResult(true, entity.id.value(), "");
   }
 
   CommandResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -104,6 +104,6 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository not found");
 
     repo.removeById(tenantId, repositoryId);
-    return CommandResult(true, repositoryId.toString(), "");
+    return CommandResult(true, repositoryid.value(), "");
   }
 }

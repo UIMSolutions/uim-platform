@@ -48,7 +48,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     config.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
     
     configs.save(config);
-    return CommandResult(true, config.id.toString, "");
+    return CommandResult(true, config.id.value, "");
   }
 
   bool existsConfig(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
 
     cfg.updateFromRequest(req);
     configs.update(cfg);
-    return CommandResult(true, cfg.id.toString, "");
+    return CommandResult(true, cfg.id.value, "");
   }
 
   void deleteConfig(TenantId tenantId, AuditConfigId id) {

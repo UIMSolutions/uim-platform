@@ -161,7 +161,7 @@ enum BranchStrategy {
 
 /// Communication direction.
 enum CommunicationDirection {
-  inbound,
+  inbound, // default
   outbound,
 }
 
@@ -176,25 +176,25 @@ enum CommunicationProtocol {
 
 /// Authentication method used in communication arrangements.
 enum CommunicationAuthMethod {
-  basicAuthentication,
-  oauth2ClientCredentials,
-  oauth2SAMLBearerAssertion,
+  basicAuthentication, // default
+  oauth2ClientCredentials,    
+  oauth2SAMLBearerAssertion,  
   clientCertificate,
-  noAuthentication,
+  noAuthentication // 
 }
 
 /// Status of a communication arrangement.
 enum ArrangementStatus {
-  active,
-  inactive,
-  error,
+  active, // default
+  inactive, 
+  error
 }
 
 // ─── Service Binding ───
 
 /// Binding type for service exposure.
 enum BindingType {
-  odataV2,
+  odataV2, // default
   odataV4,
   soapHttp,
   restHttp,

@@ -50,7 +50,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Step dependencies are not yet met");
 
     if (executor.startStep(tenantId, id, userId))
-      return CommandResult(true, id.toString, "");
+      return CommandResult(true, id.value, "");
     return CommandResult(false, "", "Cannot start step — not found or not in pending state");
   }
 

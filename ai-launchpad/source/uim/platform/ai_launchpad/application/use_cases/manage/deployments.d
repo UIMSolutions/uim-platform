@@ -75,6 +75,6 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     auto d = repo.findById(id, connectionId);
     if (d.isNull) return CommandResult(false, "", "Deployment not found");
     repo.remove(id, connectionId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

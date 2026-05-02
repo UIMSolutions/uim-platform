@@ -110,6 +110,6 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Task not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

@@ -49,7 +49,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     buildpack.locked = false;
 
     buildpacks.save(buildpack);
-    return CommandResult(true, buildpack.id.toString, "");
+    return CommandResult(true, buildpack.id.value, "");
   }
 
   Buildpack getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
@@ -88,7 +88,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     buildpacks.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   CommandResult deleteBuildpack(TenantId tenantId, BuildpackId buildpackId) {
@@ -100,6 +100,6 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Cannot delete a locked buildpack");
 
     buildpacks.remove(buildpack);
-    return CommandResult(true, buildpack.id.toString, "");
+    return CommandResult(true, buildpack.id.value, "");
   }
 }

@@ -84,7 +84,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     docs.save(doc);
     versions.save(ver);
 
-    return CommandResult(true, doc.id.toString, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   Document[] listDocuments(TenantId tenantId) {
@@ -114,7 +114,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     auto doc = docs.findById(request.tenantId, request.id);
     doc = doc.updateFromRequest(request);
     docs.update(doc);
-    return CommandResult(true, doc.id.toString, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   CommandResult moveDocument(MoveDocumentRequest request) {
@@ -131,7 +131,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.folderId = request.newFolderId;
     doc.updatedAt = Clock.currStdTime();
     docs.update(doc);
-    return CommandResult(true, doc.id.toString, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
@@ -142,7 +142,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.status = DocumentStatus.archived;
     doc.updatedAt = Clock.currStdTime();
     docs.update(doc);
-    return CommandResult(true, doc.id.toString, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
@@ -153,6 +153,6 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     // Cascade delete versions
     versions.removeByDocument(tenantId, id);
     docs.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

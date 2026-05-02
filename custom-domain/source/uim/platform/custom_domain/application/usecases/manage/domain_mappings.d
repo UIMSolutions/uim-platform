@@ -73,6 +73,6 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Domain mapping not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

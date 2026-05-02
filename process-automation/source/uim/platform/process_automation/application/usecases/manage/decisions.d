@@ -76,6 +76,6 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Decision not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

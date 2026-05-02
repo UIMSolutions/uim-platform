@@ -76,7 +76,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
         existing.status = CertificateStatus.deactivated;
         repo.update(existing);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     Certificate getById(CertificateId id) {
@@ -101,6 +101,6 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Certificate not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

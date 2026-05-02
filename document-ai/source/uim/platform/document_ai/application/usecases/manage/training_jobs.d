@@ -116,7 +116,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Cannot delete running training job");
 
     jobRepo.remove(id, clientId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(ClientId clientId) {

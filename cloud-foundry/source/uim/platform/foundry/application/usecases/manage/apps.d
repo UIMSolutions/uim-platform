@@ -64,7 +64,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.updatedAt = now;
 
     apps.save(app);
-    return CommandResult(true, app.id.toString, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   Application getApp(TenantId tenantId, AppId id) {
@@ -116,7 +116,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     apps.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   /// Start an application (stage then start).
@@ -131,7 +131,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (!lifecycle.startApp(tenantId, id))
       return CommandResult(false, "", "Failed to start application");
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult stopApp(TenantId tenantId, AppId id) {
@@ -143,13 +143,13 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
     if (!lifecycle.stopApp(tenantId, id))
       return CommandResult(false, "", "Cannot stop application");
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult restartApp(TenantId tenantId, AppId id) {
     if (!lifecycle.restartApp(tenantId, id))
       return CommandResult(false, "", "Cannot restart application");
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult scaleApp(ScaleAppRequest req) {
@@ -158,7 +158,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
     if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))
       return CommandResult(false, "", "Cannot scale application — check quota limits");
-    return CommandResult(true, req.id.toString, "");
+    return CommandResult(true, req.id.value, "");
   }
 
   /// Get environment variables for an application.
@@ -179,7 +179,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.updatedAt = Clock.currStdTime();
     apps.update(app);
    
-    return CommandResult(true, app.id.toString, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   CommandResult deleteApp(TenantId tenantId, AppId appId) {
@@ -188,6 +188,6 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application not found");
 
     apps.remove(app);
-    return CommandResult(true, app.id.toString, "");
+    return CommandResult(true, app.id.value, "");
   }
 }

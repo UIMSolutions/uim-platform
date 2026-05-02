@@ -32,7 +32,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
 
     Directory directory = Directory.createFromRequest(request);
     directories.save(directory);
-    return CommandResult(true, directory.id.toString, "");
+    return CommandResult(true, directory.id.value, "");
   }
 
   CommandResult update(string id, UpdateDirectoryRequest request) {
@@ -55,7 +55,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     directory.updatedAt = clockSeconds();
 
     directories.update(directory);
-    return CommandResult(true, directory.id.toString, "");
+    return CommandResult(true, directory.id.value, "");
   }
 
   Directory getById(string id) {
@@ -93,7 +93,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
     directories.removeById(id);
-    return CommandResult(true, directory.id.toString, "");
+    return CommandResult(true, directory.id.value, "");
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {

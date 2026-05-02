@@ -40,7 +40,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateRule(FilterRuleId id, UpdateFilterRuleRequest req) {
@@ -60,7 +60,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   FilterRule getRule(FilterRuleId id) {
@@ -84,7 +84,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private FilterCondition[] toConditions(FilterConditionDto[] dtos) {

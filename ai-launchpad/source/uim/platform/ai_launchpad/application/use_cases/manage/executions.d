@@ -72,6 +72,6 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     auto e = repo.findById(id, connectionId);
     if (e.isNull) return CommandResult(false, "", "Execution not found");
     repo.remove(id, connectionId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

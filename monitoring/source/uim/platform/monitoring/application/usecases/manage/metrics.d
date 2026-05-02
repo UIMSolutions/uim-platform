@@ -52,7 +52,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     definition.createdAt = clockSeconds();
 
     definitionRepo.save(definition);
-    return CommandResult(true, definition.id.toString, "");
+    return CommandResult(true, definition.id.value, "");
   }
 
   CommandResult updateDefinition(string id, UpdateMetricDefinitionRequest req) {
@@ -73,7 +73,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     def.isEnabled = req.isEnabled;
 
     definitionRepo.update(def);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, id.value(), "");
   }
 
   MetricDefinition getDefinition(string id) {
@@ -101,7 +101,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Metric definition not found");
 
     definitionRepo.removeById(id);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, id.value(), "");
   }
 
   // --- Metric Data Points ---
@@ -125,7 +125,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     m.timestamp = clockSeconds();
 
     metricRepo.save(m);
-    return CommandResult(true, m.id.toString(), "");
+    return CommandResult(true, m.id.value(), "");
   }
 
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {

@@ -67,7 +67,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     }
 
     checkRepo.save(check);
-    return CommandResult(true, check.id.toString, "");
+    return CommandResult(true, check.id.value, "");
   }
 
   CommandResult updateCheck(string id, UpdateHealthCheckRequest req) {
@@ -97,7 +97,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     check.updatedAt = clockSeconds();
 
     checkRepo.update(check);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult recordResult(RecordCheckResultRequest req) {
@@ -117,7 +117,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     r.executedAt = clockSeconds();
 
     resultRepo.save(r);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   HealthCheck getCheck(string id) {
@@ -177,7 +177,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Health check not found");
 
     checkRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static CheckType parseCheckType(string checkType) {

@@ -86,6 +86,6 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Permission not found");
 
     permissions.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

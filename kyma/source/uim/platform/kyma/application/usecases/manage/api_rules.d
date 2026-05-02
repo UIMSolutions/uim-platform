@@ -75,7 +75,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
     rule.rules = entries;
 
     ruleRepository.save(rule);
-    return CommandResult(true, rule.id.toString, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateApiRule(string id, UpdateApiRuleRequest req) {
@@ -127,7 +127,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     ruleRepository.update(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool hasApiRule(string id) {
@@ -172,7 +172,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
 
     auto rule = ruleRepository.findById(id);
     ruleRepository.removeById(id);
-    return CommandResult(true, rule.id.toString(), "");
+    return CommandResult(true, rule.id.value(), "");
   }
 
   private AccessStrategy parseAccessStrategy(string strategyName) {

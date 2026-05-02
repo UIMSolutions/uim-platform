@@ -112,7 +112,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Test a system connection (simulated).
@@ -125,6 +125,6 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     sys.status = ConnectionStatus.active;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

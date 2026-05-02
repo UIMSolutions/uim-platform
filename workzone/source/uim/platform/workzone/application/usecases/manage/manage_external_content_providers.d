@@ -76,6 +76,6 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Provider not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

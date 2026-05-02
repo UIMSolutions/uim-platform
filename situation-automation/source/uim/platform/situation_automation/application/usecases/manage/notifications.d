@@ -88,6 +88,6 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Notification not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

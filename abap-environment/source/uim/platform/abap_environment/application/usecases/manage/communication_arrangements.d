@@ -57,7 +57,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     arr.updatedAt = arr.createdAt;
 
     repo.save(arr);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, arr.id.value, "");
   }
 
   CommandResult updateArrangement(CommunicationArrangementId id,
@@ -69,9 +69,9 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       arr.description = req.description;
     if (req.status.length > 0)
-      arr.status = parseArrangementStatus(req.status);
+      arr.status = req.status.to!ArrangementStatus;
     if (req.authMethod.length > 0)
-      arr.authMethod = parseAuthMethod(req.authMethod);
+      arr.authMethod = req.authMethod.to!CommunicationAuthMethod;
     if (req.communicationUser.length > 0)
       arr.communicationUser = req.communicationUser;
     if (req.communicationPassword.length > 0)
@@ -90,8 +90,8 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     arr.updatedAt = Clock.currStdTime();
 
-    repo.update(*arr);
-    return CommandResult(true, id.toString, "");
+    repo.update(arr);
+    return CommandResult(true, arr.id.value, "");
   }
 
   CommunicationArrangement* getArrangement(CommunicationArrangementId id) {
@@ -103,51 +103,13 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteArrangement(CommunicationArrangementId id) {
-    if (!repo.existsById(id))
+    auto arrangement = repo.findById(id);
+    if (arrangement.isNull)      
       return CommandResult(false, "", "Communication arrangement not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.toString(), "");
+    repo.remove(arrangement);
+    return CommandResult(true, arrangement.id.value, "");
   }
 }
 
-private CommunicationDirection parseDirection(string direction) {
-   switch (direction) {
-     case "inbound":
-       return CommunicationDirection.inbound;
-     case "outbound":
-       return CommunicationDirection.outbound;
-     default:
-       return CommunicationDirection.inbound;
-   }
-}
 
-private CommunicationAuthMethod parseAuthMethod(string method) {
-  switch (method) {
-  case "basicAuthentication":
-    return CommunicationAuthMethod.basicAuthentication;
-  case "oauth2ClientCredentials":
-    return CommunicationAuthMethod.oauth2ClientCredentials;
-  case "oauth2SAMLBearerAssertion":
-    return CommunicationAuthMethod.oauth2SAMLBearerAssertion;
-  case "clientCertificate":
-    return CommunicationAuthMethod.clientCertificate;
-  case "noAuthentication":
-    return CommunicationAuthMethod.noAuthentication;
-  default:
-    return CommunicationAuthMethod.basicAuthentication;
-  }
-}
-
-private ArrangementStatus parseArrangementStatus(string status) {
-  switch (status) {
-  case "active":
-    return ArrangementStatus.active;
-  case "inactive":
-    return ArrangementStatus.inactive;
-  case "error":
-    return ArrangementStatus.error;
-  default:
-    return ArrangementStatus.active;
-  }
-}

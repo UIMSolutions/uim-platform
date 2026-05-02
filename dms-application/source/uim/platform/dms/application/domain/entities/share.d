@@ -25,9 +25,9 @@ struct Share {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("id", id.toString)
-      .set("tenantId", tenantId.toString)
-      .set("documentId", documentId.toString)
+      .set("id", id.value)
+      .set("tenantId", tenantid.value)
+      .set("documentId", documentid.value)
       .set("shareType", shareType.toString)
       .set("sharedWith", sharedWith)
       .set("permissionLevel", permissionLevel.toString)

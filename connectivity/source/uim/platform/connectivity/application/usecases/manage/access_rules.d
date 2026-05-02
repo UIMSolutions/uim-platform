@@ -46,7 +46,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     rule.principalPropagation = req.principalPropagation;
 
     rules.save(rule);
-    return CommandResult(true, rule.id.toString, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
@@ -71,7 +71,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     updated.principalPropagation = req.principalPropagation;
 
     rules.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   AccessRule getRule(RuleId id) {
@@ -91,6 +91,6 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Access rule not found");
 
     rules.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

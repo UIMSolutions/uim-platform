@@ -73,7 +73,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
 
     secRepo.save(secEvent);
 
-    return CommandResult(true, entry.id.toString(), "");
+    return CommandResult(true, entry.id.value(), "");
   }
 
   private string buildSecurityMessage(WriteSecurityEventRequest req) {

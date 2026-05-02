@@ -52,7 +52,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     role.updatedAt = role.createdAt;
 
     repo.save(role);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req) {
@@ -73,7 +73,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     role.updatedAt = Clock.currStdTime();
 
     repo.update(*role);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   BusinessRole* getRole(BusinessRoleId id) {
@@ -89,6 +89,6 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Business role not found");
 
     repo.remove(roleId);
-    return CommandResult(true, roleId.toString(), "");
+    return CommandResult(true, roleid.value(), "");
   }
 }

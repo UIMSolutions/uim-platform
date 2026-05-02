@@ -53,7 +53,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     logChange(req.tenantId, id, req.dataModelId, obj.category,
         ChangeType.create_, obj.objectType, [], (string[string]).init,
         req.attributes, req.sourceSystem, req.sourceClient, req.createdBy, 0, 1);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
@@ -98,7 +98,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     logChange(obj.tenantId, id, obj.dataModelId, obj.category, ChangeType.update_,
         obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
         obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   MasterDataObject getObject(MasterDataObjectId id) {
@@ -131,7 +131,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
         ChangeType.delete_, obj.objectType, [], (string[string]).init,
         (string[string]).init, obj.sourceSystem, obj.sourceClient, "",
         obj.versionNumber, obj.versionNumber);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private void logChange(TenantId tenantId, MasterDataObjectId objectId,

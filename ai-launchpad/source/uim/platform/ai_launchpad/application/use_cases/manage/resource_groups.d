@@ -71,6 +71,6 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     auto rg = repo.findById(id, connectionId);
     if (rg.isNull) return CommandResult(false, "", "Resource group not found");
     repo.remove(id, connectionId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

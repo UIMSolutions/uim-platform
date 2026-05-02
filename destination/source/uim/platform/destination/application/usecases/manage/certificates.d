@@ -42,8 +42,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     certificate.subaccountId = req.subaccountId;
     certificate.name = req.name;
     certificate.description = req.description;
-    certificate.certificateType = parseCertType(req.certificateType);
-    certificate.format_ = parseCertFormat(req.format_);
+    certificate.certificateType = req.certificateType.to!CertificateType;
+    certificate.format_ = req.format_.to!CertificateFormat;
     certificate.content = req.content;
     certificate.password = req.password;
     certificate.subject = req.subject;
@@ -60,7 +60,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     certificate.status = validation.status;
 
     repo.save(certificate);
-    return CommandResult(true, certificate.id.toString, "");
+    return CommandResult(true, certificate.id.value, "");
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
@@ -84,7 +84,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     c.status = validation.status;
 
     repo.update(c);
-    return CommandResult(true, c.id.toString, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Certificate getCertificate(string id) {
@@ -128,7 +128,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Certificate not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
 

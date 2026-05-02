@@ -33,7 +33,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
     auto cert = Certificate.createFromRequest(req);
     certificates.save(cert);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
@@ -46,7 +46,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     cert.active = req.active;
 
     certificates.update(cert);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   Certificate getCertificate(CertificateId id) {
@@ -67,7 +67,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Certificate not found");
 
     certificates.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

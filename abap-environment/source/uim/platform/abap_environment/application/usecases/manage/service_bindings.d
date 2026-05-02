@@ -51,7 +51,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.updatedAt = binding.createdAt;
 
     repo.save(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   CommandResult updateBinding(string id, UpdateServiceBindingRequest req) {
@@ -74,7 +74,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.updatedAt = Clock.currStdTime();
 
     repo.update(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   ServiceBinding getBinding(ServiceBindingId id) {
@@ -90,7 +90,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service binding not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

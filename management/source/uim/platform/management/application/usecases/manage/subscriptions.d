@@ -57,14 +57,14 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     // Complete subscription (simulated)
     subscription.status = SubscriptionStatus.subscribed;
     subscription.isSubscriptionDone = true;
-    subscription.appUrl = "/apps/" ~ request.appName ~ "/" ~ subscription.id.toString;
-    subscription.tenantId = "tenant-" ~ subscription.id.toString[0 .. 8];
+    subscription.appUrl = "/apps/" ~ request.appName ~ "/" ~ subscription.id.value;
+    subscription.tenantId = "tenant-" ~ subscription.id.value[0 .. 8];
     repo.update(subscription);
 
-    emitEvent(eventRepo, request.globalAccountId.toString, request.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, request.globalAccountid.value, request.subaccountid.value, PlatformEventCategory.subscriptionLifecycle,
       "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
-    return CommandResult(true, subscription.id.toString, "");
+    return CommandResult(true, subscription.id.value, "");
   }
 
   CommandResult unsubscribe(string id) {
@@ -86,10 +86,10 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.status = SubscriptionStatus.unsubscribed;
     repo.update(subscription);
 
-    emitEvent(eventRepo, subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, subscription.globalAccountid.value, subscription.subaccountid.value, PlatformEventCategory.subscriptionLifecycle,
       "subscription.deleted", "Unsubscribed from " ~ subscription.appName, UserId("system"));
 
-    return CommandResult(true, subscription.id.toString, "");
+    return CommandResult(true, subscription.id.value, "");
   }
 
   CommandResult updatePlan(string id, UpdateSubscriptionRequest req) {
@@ -108,7 +108,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.updatedAt = clockSeconds();
 
     repo.update(subscription);
-    return CommandResult(true, subscription.id.toString, "");
+    return CommandResult(true, subscription.id.value, "");
   }
 
   Subscription getById(string id) {

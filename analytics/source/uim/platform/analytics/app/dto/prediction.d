@@ -47,7 +47,7 @@ struct PredictionResponse {
   }
 
   Json toJson() {
-    return Json.emptyObject.set("id", id.toString).set("name", name).set("description",
+    return Json.emptyObject.set("id", id.value).set("name", name).set("description",
         description).set("datasetId", datasetId).set("predictionType",
         predictionType).set("status", status).set("accuracy", accuracy)
       .set("rmse", rmse).set("modelSummary", modelSummary);

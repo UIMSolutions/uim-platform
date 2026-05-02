@@ -53,7 +53,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.toString(), "");
+    return CommandResult(true, rule.id.value(), "");
   }
 
   CommandResult updateRule(string id, UpdateAlertRuleRequest req) {
@@ -83,7 +83,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.toString(), "");
+    return CommandResult(true, rule.id.value(), "");
   }
 
   AlertRule getRule(string id) {
@@ -128,7 +128,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Alert rule not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, id.value(), "");
   }
 
   private static ThresholdOperator parseOperator(string thresholdOperator) {

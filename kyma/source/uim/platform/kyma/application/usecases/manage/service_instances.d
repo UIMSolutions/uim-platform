@@ -52,7 +52,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
-    return CommandResult(true, inst.id.toString, "");
+    return CommandResult(true, inst.id.value, "");
   }
 
   CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
@@ -74,7 +74,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     inst.updatedAt = clockSeconds();
 
     repo.update(inst);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool hasServiceInstance(string id) {
@@ -118,7 +118,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance not found");
       
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

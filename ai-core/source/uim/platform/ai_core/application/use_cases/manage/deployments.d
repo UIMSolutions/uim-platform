@@ -117,7 +117,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Deployment not found");
 
     deplRepo.remove(id, groupId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

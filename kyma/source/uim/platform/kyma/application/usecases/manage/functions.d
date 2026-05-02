@@ -66,7 +66,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.save(serverlessFunction);
-    return CommandResult(true, serverlessFunction.id.toString, "");
+    return CommandResult(true, serverlessFunction.id.value, "");
   }
 
   CommandResult updateFunction(string functionId, UpdateFunctionRequest req) {
@@ -114,7 +114,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.update(fn);
-    return CommandResult(true, fn.id.toString, "");
+    return CommandResult(true, fn.id.value, "");
   }
 
   bool hasFunction(string functionId) {
@@ -159,7 +159,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
 
     auto fn = functionRepository.findById(functionId);
     functionRepository.remove(functionId);
-    return CommandResult(true, fn.id.toString(), "");
+    return CommandResult(true, fn.id.value(), "");
   }
 
   private ScalingType parseScalingType(string scalingTypeName) {

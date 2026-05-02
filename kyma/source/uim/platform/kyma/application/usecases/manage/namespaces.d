@@ -55,7 +55,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     }
 
     namespaceRepository.save(ns);
-    return CommandResult(true, ns.id.toString, "");
+    return CommandResult(true, ns.id.value, "");
   }
 
   CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
@@ -85,7 +85,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     ns.updatedAt = clockSeconds();
 
     namespaceRepository.update(ns);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool hasNamespace(string namespaceId) {
@@ -121,7 +121,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace not found");
 
     namespaceRepository.remove(namespaceId);
-    return CommandResult(true, namespaceId.toString, "");
+    return CommandResult(true, namespaceid.value, "");
   }
 
   private QuotaEnforcement parseQuotaEnforcement(string s) {

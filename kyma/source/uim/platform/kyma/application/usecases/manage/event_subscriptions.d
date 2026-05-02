@@ -56,7 +56,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.updatedAt = sub.createdAt;
 
     subscriptionRepository.save(sub);
-    return CommandResult(true, sub.id.toString, "");
+    return CommandResult(true, sub.id.value, "");
   }
 
   CommandResult updateSubscription(string subscriptionId, UpdateEventSubscriptionRequest request) {
@@ -88,7 +88,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.updatedAt = clockSeconds();
 
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.toString(), "");
+    return CommandResult(true, subscriptionid.value(), "");
   }
 
   CommandResult pauseSubscription(string subscriptionId) {
@@ -103,7 +103,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.status = SubscriptionStatus.paused;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.toString(), "");
+    return CommandResult(true, subscriptionid.value(), "");
   }
 
   CommandResult resumeSubscription(string subscriptionId) {
@@ -118,7 +118,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.status = SubscriptionStatus.active;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.toString(), "");
+    return CommandResult(true, subscriptionid.value(), "");
   }
 
   bool hasSubscription(string subscriptionId) {
@@ -166,7 +166,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subscription not found");
 
     subscriptionRepository.remove(subscriptionId);
-    return CommandResult(true, subscriptionId.toString(), "");
+    return CommandResult(true, subscriptionid.value(), "");
   }
 
   private EventTypeEncoding parseTypeEncoding(string encoding) {

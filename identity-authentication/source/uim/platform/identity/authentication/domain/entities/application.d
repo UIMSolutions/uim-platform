@@ -29,7 +29,7 @@ struct Application {
   long updatedAt;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id.toString).set("tenantId", tenantId).set("name",
+    return Json.emptyObject.set("id", id.value).set("tenantId", tenantId).set("name",
         name).set("description", description).set("protocol", to!string(protocol))
       .set("clientId", clientId).set("redirectUris", redirectUris).set("allowedScopes", allowedScopes)
       .set("samlEntityId", samlEntityId).set("samlAcsUrl", samlAcsUrl).set("samlMetadataUrl",

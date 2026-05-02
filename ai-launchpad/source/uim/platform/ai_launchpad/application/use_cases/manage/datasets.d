@@ -70,6 +70,6 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (d.isNull)
       return CommandResult(false, "", "Dataset not found");
     repo.remove(id, connectionId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

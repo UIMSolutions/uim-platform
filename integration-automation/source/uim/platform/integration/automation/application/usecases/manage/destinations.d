@@ -135,6 +135,6 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Destination not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

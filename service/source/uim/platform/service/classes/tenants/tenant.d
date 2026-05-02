@@ -96,7 +96,7 @@ class UIMTenant : UIMEntity, IUIMTenant {
 
   override Json toJson() {
     return super.toJson()
-      .set("id", id.toString())
+      .set("id", id.value())
       .set("name", name)
       .set("description", description)
       .set("domain", domain)
@@ -107,7 +107,7 @@ class UIMTenant : UIMEntity, IUIMTenant {
   }
 
   override string toString() {
-    return "SAPTenant(id: " ~ id.toString() ~ ", name: " ~ name ~ ", domain: " ~ domain ~ ", owner: " ~ owner
+    return "SAPTenant(id: " ~ id.value() ~ ", name: " ~ name ~ ", domain: " ~ domain ~ ", owner: " ~ owner
       ~ ", createdAt: " ~ createdAt.toString() ~ ", updatedAt: " ~ updatedAt.toString() ~ ")";
   }
 }

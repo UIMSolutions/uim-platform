@@ -24,7 +24,7 @@ struct Token {
   bool revoked;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id.toString).set("userId", userId).set("tenantId",
+    return Json.emptyObject.set("id", id.value).set("userId", userId).set("tenantId",
         tenantId).set("applicationId", applicationId).set("tokenType",
         to!string(tokenType)).set("tokenValue", tokenValue).set("scopes", scopes)
       .set("issuedAt", issuedAt).set("expiresAt", expiresAt).set("revoked", revoked);

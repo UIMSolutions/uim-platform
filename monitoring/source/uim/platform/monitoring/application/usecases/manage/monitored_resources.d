@@ -49,7 +49,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     resource.lastSeenAt = resource.registeredAt;
 
     repo.save(resource);
-    return CommandResult(true, resource.id.toString, "");
+    return CommandResult(true, resource.id.value, "");
   }
 
   CommandResult updateResource(string id, UpdateResourceRequest req) {
@@ -76,7 +76,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     resource.lastSeenAt = clockSeconds();
 
     repo.update(resource);
-    return CommandResult(true, resource.id.toString, "");
+    return CommandResult(true, resource.id.value, "");
   }
 
   MonitoredResource existsResource(string id) {
@@ -121,7 +121,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
 
     auto resource = repo.findById(id);
     repo.removeById(id);
-    return CommandResult(true, resource.id.toString, "");
+    return CommandResult(true, resource.id.value, "");
   }
 
   private static ResourceType parseResourceType(string resourceType) {

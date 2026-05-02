@@ -89,7 +89,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult deactivate(CustomDomainId id) {
@@ -102,7 +102,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult remove(CustomDomainId id) {
@@ -111,6 +111,6 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Custom domain not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

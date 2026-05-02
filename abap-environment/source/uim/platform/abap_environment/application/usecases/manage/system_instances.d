@@ -67,7 +67,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req) {
@@ -97,7 +97,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     inst.updatedAt = Clock.currStdTime();
 
     repo.update(*inst);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   SystemInstance* getInstance(SystemInstanceId id) {
@@ -119,7 +119,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
 
     inst.status = SystemStatus.deleting;
     repo.update(*inst);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

@@ -44,7 +44,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.updatedAt = client.createdAt;
 
     repo.save(client);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateClient(ClientId id, UpdateClientRequest req) {
@@ -75,7 +75,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.updatedAt = clockSeconds();
 
     repo.update(client);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult connect(ClientId id) {
@@ -86,7 +86,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.lastSyncAt = clockSeconds();
     client.updatedAt = client.lastSyncAt;
     repo.update(client);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult disconnect(ClientId id) {
@@ -96,7 +96,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.status = ClientStatus.disconnected;
     client.updatedAt = clockSeconds();
     repo.update(client);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   Client getClient(ClientId id) {
@@ -120,7 +120,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private ClientType parseClientType(string s) {

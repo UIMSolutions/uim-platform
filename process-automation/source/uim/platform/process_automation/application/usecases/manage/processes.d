@@ -103,6 +103,6 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Process not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

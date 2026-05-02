@@ -82,6 +82,6 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Equipment not found");
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

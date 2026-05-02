@@ -86,6 +86,6 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
 
   CommandResult remove(MetricId id, ResourceGroupId rgId) {
     repo.remove(id, rgId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

@@ -49,7 +49,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     recordActivity(req.tenantId, ActivityType.queueConfigured, id, req.name,
         "Transport queue configured", req.createdBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req) {
@@ -67,7 +67,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     queue.updatedAt = clockSeconds();
 
     queueRepo.update(queue);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult deleteQueue(TransportQueueId id) {
@@ -76,7 +76,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Queue not found");
 
     queueRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   TransportQueue getQueue(TransportQueueId id) {

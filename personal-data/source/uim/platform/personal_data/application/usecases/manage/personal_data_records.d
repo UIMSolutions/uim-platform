@@ -69,6 +69,6 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Personal data record not found");
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

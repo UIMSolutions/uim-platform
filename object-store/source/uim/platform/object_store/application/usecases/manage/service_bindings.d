@@ -56,7 +56,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.createdAt = currentTimestamp();
 
     bindingRepo.save(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   ServiceBinding getBinding(ServiceBindingId id) {
@@ -74,7 +74,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
     binding.status = BindingStatus.revoked;
     bindingRepo.update(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   CommandResult deleteBinding(ServiceBindingId id) {
@@ -83,7 +83,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Binding not found");
 
     bindingRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

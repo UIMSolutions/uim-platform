@@ -58,7 +58,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.backendPort = req.backendPort;
 
     channels.save(ch);
-    return CommandResult(true, ch.id.toString, "");
+    return CommandResult(true, ch.id.value, "");
   }
 
   CommandResult openChannel(ChannelId id) {
@@ -79,7 +79,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     recordLog(ch.tenantId, ConnectivityEventType.channelOpened, id,
         "ServiceChannel", "Channel opened: " ~ ch.name);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult closeChannel(ChannelId id) {
@@ -93,7 +93,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id,
         "ServiceChannel", "Channel closed: " ~ channel.name);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ServiceChannel getChannel(ChannelId id) {
@@ -114,7 +114,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Channel not found");
 
     channels.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

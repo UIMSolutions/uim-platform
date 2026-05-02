@@ -31,7 +31,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     NotificationChannel channel = NotificationChannel.createFromRequest(request);
     channels.save(channel);
 
-    return CommandResult(true, channel.id.toString, "");
+    return CommandResult(true, channel.id.value, "");
   }
 
   CommandResult updateChannel(string id, UpdateNotificationChannelRequest request) {
@@ -46,7 +46,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     auto updated = ch.updateFromRequest(request);
     channels.update(updated);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool existsChannel(string id) {
@@ -99,7 +99,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Notification channel not found");
 
     channels.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static ChannelState parseChannelState(string state) {

@@ -83,6 +83,6 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Trigger not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

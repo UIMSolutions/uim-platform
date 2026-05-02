@@ -70,6 +70,6 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Topic not found");
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

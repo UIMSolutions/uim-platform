@@ -62,7 +62,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     srvInstance.tags = req.tags;
 
     instances.save(srvInstance);
-    return CommandResult(true, srvInstance.id.toString, "");
+    return CommandResult(true, srvInstance.id.value, "");
   }
 
   ServiceInstance* getInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
@@ -97,7 +97,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     instances.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
@@ -110,7 +110,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     instanceBindings.each!(b => bindings.removeById(tenantId, b.id));
 
     instances.remove(instance);
-    return CommandResult(true, serviceInstanceId.toString, "");
+    return CommandResult(true, serviceInstanceid.value, "");
   }
 
   // --- Service Bindings ---
@@ -138,7 +138,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     binding.bindingOptions = request.bindingOptions;
 
     bindings.save(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {
@@ -155,6 +155,6 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service binding not found");
 
     bindings.remove(binding);
-    return CommandResult(true, binding.id.toString, "");
+    return CommandResult(true, binding.id.value, "");
   }
 }

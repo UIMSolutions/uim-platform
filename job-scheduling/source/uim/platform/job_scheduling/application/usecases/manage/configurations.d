@@ -71,6 +71,6 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = now;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.toString, "");
+        return CommandResult(true, existing.id.value, "");
     }
 }

@@ -130,7 +130,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     workflowRepo.update(*wf);
 
     engine.advanceWorkflow(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Suspend an in-progress workflow.
@@ -144,7 +144,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.status = WorkflowStatus.suspended;
     wf.updatedAt = Clock.currStdTime();
     workflowRepo.update(*wf);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Resume a suspended workflow.
@@ -160,7 +160,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     workflowRepo.update(*wf);
 
     engine.advanceWorkflow(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Terminate a workflow.
@@ -175,7 +175,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.completedAt = Clock.currStdTime();
     wf.updatedAt = wf.completedAt;
     workflowRepo.update(*wf);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult deleteWorkflow(WorkflowId tenantId, id tenantId) {
@@ -185,6 +185,6 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     stepRepo.removeByWorkflow(tenantId, id);
     workflowRepo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

@@ -99,7 +99,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant mismatch");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ValidationRule* getById(RuleId id) {

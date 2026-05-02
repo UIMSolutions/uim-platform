@@ -107,6 +107,6 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Situation instance not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

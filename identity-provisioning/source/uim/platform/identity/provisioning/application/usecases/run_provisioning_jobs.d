@@ -92,7 +92,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     if (!engine.cancelJob(tenantId, id))
       return CommandResult(false, "", "Job cannot be cancelled");
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ProvisioningJob* getJob(ProvisioningJobId tenantId, id tenantId) {
@@ -118,6 +118,6 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     // Cascade delete logs
     logRepo.removeByJob(tenantId, id);
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

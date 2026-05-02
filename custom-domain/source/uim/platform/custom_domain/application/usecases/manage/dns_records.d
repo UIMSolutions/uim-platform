@@ -84,6 +84,6 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "DNS record not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

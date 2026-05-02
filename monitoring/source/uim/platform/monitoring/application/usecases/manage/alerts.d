@@ -81,7 +81,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     alert.acknowledgedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, req.alertId.toString, "");
+    return CommandResult(true, req.alertid.value, "");
   }
 
   CommandResult resolveAlert(ResolveAlertRequest req) {
@@ -97,7 +97,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     alert.resolvedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, req.alertId.toString, "");
+    return CommandResult(true, req.alertid.value, "");
   }
 
   CommandResult deleteAlert(string id) {
@@ -109,7 +109,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Alert not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Create an alert (used by the evaluate_metrics use case).
@@ -136,7 +136,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.triggeredAt = clockSeconds();
 
     repo.save(a);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static AlertState parseAlertState(string state) {

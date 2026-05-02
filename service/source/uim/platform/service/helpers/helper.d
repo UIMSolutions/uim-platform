@@ -210,7 +210,7 @@ bool matchesBasePath(string path, string basePath) {
 }
 
 bool startsWithTenant(string key, UUID tenantId) {
-  return startsWithTenant(key, tenantId.toString());
+  return startsWithTenant(key, tenantid.value());
 }
 
 bool startsWithTenant(string key, string tenantId) {

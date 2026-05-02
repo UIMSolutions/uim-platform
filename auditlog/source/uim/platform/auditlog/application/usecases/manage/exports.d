@@ -51,10 +51,10 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
     job.totalRecords = logs.length;
     job.status = ExportStatus.completed;
     job.completedAt = Clock.currStdTime();
-    job.downloadUrl = "/api/v1/exports/" ~ job.id.toString() ~ "/download";
+    job.downloadUrl = "/api/v1/exports/" ~ job.id.value() ~ "/download";
 
     jobs.save(job);
-    return CommandResult(true, job.id.toString(), "");
+    return CommandResult(true, job.id.value(), "");
   }
 
   bool hasExport(TenantId tenantId, ExportJobId id) {

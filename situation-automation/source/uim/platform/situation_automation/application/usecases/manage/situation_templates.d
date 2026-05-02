@@ -87,6 +87,6 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Situation template not found");
 
         repo.removeById(id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

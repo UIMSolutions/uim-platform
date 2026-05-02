@@ -78,7 +78,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   CommandResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
     if (favorites.existsByUserAndResource(r.tenantId, r.userId, r.resourceId))
-      return CommandResult(true, existing.id.toString(), "");
+      return CommandResult(true, existing.id.value(), "");
 
     auto fav = new Favorite();
     fav.id = randomUUID();
@@ -89,7 +89,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     fav.createdAt = Clock.currStdTime();
 
     favorites.save(fav);
-    return CommandResult(true, fav.id.toString(), "");
+    return CommandResult(true, fav.id.value(), "");
   }
 
   /// Get user favorites.
@@ -103,7 +103,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Favorite not found");
 
     favorites.removeById(tenantId, favoriteId);
-    return CommandResult(true, favoriteId.toString(), "");
+    return CommandResult(true, favoriteid.value(), "");
   }
 }
 

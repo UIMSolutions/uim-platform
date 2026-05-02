@@ -69,7 +69,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = user.createdAt;
 
     repo.save(user);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
@@ -102,7 +102,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = Clock.currStdTime();
 
     repo.update(*user);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   BusinessUser* getUser(BusinessUserId id) {
@@ -118,7 +118,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Business user not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, id.value(), "");
   }
 }
 

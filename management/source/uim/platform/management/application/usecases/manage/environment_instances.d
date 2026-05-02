@@ -71,11 +71,11 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
 
     // Transition to active (simulated provisioning)
     inst.status = EnvironmentStatus.active;
-    inst.dashboardUrl = "/environments/" ~ inst.id.toString ~ "/dashboard";
-    inst.technicalKey = "env-" ~ inst.id.toString[0 .. 8];
+    inst.dashboardUrl = "/environments/" ~ inst.id.value ~ "/dashboard";
+    inst.technicalKey = "env-" ~ inst.id.value[0 .. 8];
     repo.update(inst);
 
-    return CommandResult(true, inst.id.toString, "");
+    return CommandResult(true, inst.id.value, "");
   }
 
   CommandResult update(string id, UpdateEnvironmentInstanceRequest req) {
@@ -102,7 +102,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     instance.updatedAt = clockSeconds();
 
     repo.update(instance);
-    return CommandResult(true, instance.id.toString, "");
+    return CommandResult(true, instance.id.value, "");
   }
 
   CommandResult deprovision(string id) {
@@ -123,7 +123,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
 
     // Complete deletion
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   EnvironmentInstance getById(string id) {

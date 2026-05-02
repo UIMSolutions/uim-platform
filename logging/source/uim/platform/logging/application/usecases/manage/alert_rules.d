@@ -85,7 +85,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   bool hasRule(string id) {
@@ -126,7 +126,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult removeRule(AlertRuleId id) {
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static AlertCondition parseCondition(string condition) {

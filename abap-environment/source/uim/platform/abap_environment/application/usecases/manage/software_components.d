@@ -50,11 +50,11 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.systemInstanceId = req.systemInstanceId;
     comp.name = req.name;
     comp.description = req.description;
-    comp.componentType = parseComponentType(req.componentType);
+    comp.componentType = req.componentType.to!ComponentType;
     comp.status = ComponentStatus.notCloned;
     comp.repositoryUrl = req.repositoryUrl;
     comp.branch = req.branch.length > 0 ? req.branch : "main";
-    comp.branchStrategy = parseBranchStrategy(req.branchStrategy);
+    comp.branchStrategy = req.branchStrategy.to!BranchStrategy;
     comp.namespace = req.namespace;
 
     // import std.datetime.systime : Clock;
@@ -62,7 +62,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.updatedAt = comp.createdAt;
 
     repo.save(comp);
-    return CommandResult(true, comp.id.toString, "");
+    return CommandResult(true, comp.id.value, "");
   }
 
   CommandResult cloneComponent(string id, CloneSoftwareComponentRequest req) {
@@ -97,7 +97,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(comp);
-    return CommandResult(true, comp.id.toString, "");
+    return CommandResult(true, comp.id.value, "");
   }
 
   CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
@@ -127,7 +127,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(comp);
-    return CommandResult(true, comp.id.toString, "");
+    return CommandResult(true, comp.id.value, "");
   }
 
   SoftwareComponent* getComponent(SoftwareComponentId id) {
@@ -143,7 +143,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Software component not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

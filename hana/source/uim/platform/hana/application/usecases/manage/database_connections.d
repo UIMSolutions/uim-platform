@@ -89,7 +89,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Database connection not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(TenantId tenantId) {

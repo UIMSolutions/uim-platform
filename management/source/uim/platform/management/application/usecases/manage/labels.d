@@ -41,7 +41,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     label.updatedAt = label.createdAt;
 
     labels.save(label);
-    return CommandResult(true, label.id.toString, "");
+    return CommandResult(true, label.id.value, "");
   }
 
   CommandResult update(string id, UpdateLabelRequest req) {
@@ -56,7 +56,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     label.values = req.values;
     label.updatedAt = clockSeconds();
     labels.update(label);
-    return CommandResult(true, label.id.toString, "");
+    return CommandResult(true, label.id.value, "");
   }
 
   Label getById(string id) {
@@ -84,7 +84,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Label not found");
 
     labels.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult removeByResource(string resourceType, string resourceId) {

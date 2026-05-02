@@ -72,7 +72,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
       archiveRequest.completedAt = now;
 
     repo.update(archiveRequest);
-    return CommandResult(true, archiveRequest.id.toString, "");
+    return CommandResult(true, archiveRequest.id.value, "");
   }
 
   void deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {

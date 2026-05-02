@@ -85,6 +85,6 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Article not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

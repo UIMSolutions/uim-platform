@@ -78,7 +78,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     app.events = events;
 
     appRepository.save(app);
-    return CommandResult(true, app.id.toString, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   CommandResult updateApplication(string appId, UpdateApplicationRequest req) {
@@ -127,7 +127,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
 
     app.updatedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, app.id.toString(), "");
+    return CommandResult(true, app.id.value(), "");
   }
 
   CommandResult connectApplication(string appId) {
@@ -142,7 +142,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     app.status = AppConnectivityStatus.connected;
     app.updatedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, app.id.toString(), "");
+    return CommandResult(true, app.id.value(), "");
   }
 
   CommandResult disconnectApplication(string appId) {
@@ -157,7 +157,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     app.status = AppConnectivityStatus.disconnected;
     app.updatedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, appId.toString(), "");
+    return CommandResult(true, appid.value(), "");
   }
 
   bool hasApplication(string appId) {
@@ -202,7 +202,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
 
     auto app = appRepository.findById(appId);
     appRepository.remove(appId);
-    return CommandResult(true, appId.toString(), "");
+    return CommandResult(true, appid.value(), "");
   }
 
   private AppRegistrationType parseRegistrationType(string type) {

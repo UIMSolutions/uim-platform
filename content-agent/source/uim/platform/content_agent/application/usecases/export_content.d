@@ -71,7 +71,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     recordActivity(req.tenantId, ActivityType.exportCompleted, id, pkg.name,
       "Export completed for package: " ~ pkg.name, req.startedBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ExportJob getExportJob(string id) {

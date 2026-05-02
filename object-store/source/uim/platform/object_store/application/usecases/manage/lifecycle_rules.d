@@ -54,7 +54,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     ruleRepo.save(rule);
-    return CommandResult(true, rule.id.toString, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
@@ -79,7 +79,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = currentTimestamp();
 
     ruleRepo.update(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   LifecycleRule getRule(LifecycleRuleId id) {
@@ -96,7 +96,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Rule not found");
 
     ruleRepo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }
 

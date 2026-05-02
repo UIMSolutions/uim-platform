@@ -84,7 +84,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document type not found");
 
     repo.remove(id, clientId);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(ClientId clientId) {

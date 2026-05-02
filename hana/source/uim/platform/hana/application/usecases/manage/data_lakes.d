@@ -78,7 +78,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data lake not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   size_t count(TenantId tenantId) {

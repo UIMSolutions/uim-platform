@@ -51,7 +51,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     org.totalAppInstances = req.totalAppInstances;
 
     orgs.save(org);
-    return CommandResult(true, org.id.toString, "");
+    return CommandResult(true, org.id.value, "");
   }
 
   Organization getOrg(TenantId tenantId, OrgId id) {
@@ -88,7 +88,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     orgs.update(updated);
-    return CommandResult(true, updated.id.toString, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   CommandResult suspendOrg(TenantId tenantId, OrgId id) {
@@ -101,7 +101,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     org.status = OrgStatus.suspended;
     org.updatedAt = Clock.currStdTime();
     orgs.update(org);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult activateOrg(TenantId tenantId, OrgId id) {
@@ -115,7 +115,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     org.status = OrgStatus.active;
     org.updatedAt = Clock.currStdTime();
     orgs.update(org);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CommandResult deleteOrg(TenantId tenantId, OrgId orgId) {
@@ -126,6 +126,6 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     // Cascade: remove all spaces in this org
     spaces.removeByOrg(tenantId, orgId);
     orgs.remove(org);
-    return CommandResult(true, org.id.toString, "");
+    return CommandResult(true, org.id.value, "");
   }
 }

@@ -76,6 +76,6 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Survey not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

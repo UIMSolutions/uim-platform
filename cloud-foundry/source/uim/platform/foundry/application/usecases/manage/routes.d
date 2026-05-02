@@ -65,7 +65,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     route.protocol = req.protocol;
 
     routes.save(route);
-    return CommandResult(true, route.id.toString, "");
+    return CommandResult(true, route.id.value, "");
   }
 
   Route getRoute(TenantId tenantId, RouteId id) {
@@ -86,7 +86,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Route not found");
 
     routes.remove(route);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Map an application to a route.
@@ -99,7 +99,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.mapApp(req.tenantId, req.routeId, req.appId))
       return CommandResult(false, "", "Cannot map application to route");
 
-    return CommandResult(true, req.routeId.toString, "");
+    return CommandResult(true, req.routeid.value, "");
   }
 
   /// Unmap an application from a route.
@@ -112,7 +112,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.unmapApp(req.tenantId, req.routeId, req.appId))
       return CommandResult(false, "", "Cannot unmap application from route");
 
-    return CommandResult(true, req.routeId.toString, "");
+    return CommandResult(true, req.routeid.value, "");
   }
 
   // --- Domains ---
@@ -135,7 +135,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     d.isInternal = req.isInternal;
 
     domains.save(d);
-    return CommandResult(true, d.id.toString, "");
+    return CommandResult(true, d.id.value, "");
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
@@ -152,6 +152,6 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     routesOnDomain.each!(route => routes.remove(route));
 
     domains.remove(domain);
-    return CommandResult(true, domain.id.toString, "");
+    return CommandResult(true, domain.id.value, "");
   }
 }

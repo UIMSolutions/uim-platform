@@ -118,7 +118,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     config.status = ModelConfigStatus.ready;
     config.updatedAt = Clock.currStdTime();
     repo.update(*config);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   /// Start training on a model configuration.
@@ -145,6 +145,6 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Cannot delete a configuration that is currently training");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

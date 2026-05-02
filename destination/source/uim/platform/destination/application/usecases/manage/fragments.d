@@ -56,7 +56,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     f.updatedAt = f.createdAt;
 
     repo.save(f);
-    return CommandResult(true, f.id.toString, "");
+    return CommandResult(true, f.id.value, "");
   }
 
   CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {
@@ -93,7 +93,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     fragment.updatedAt = clockSeconds();
 
     repo.update(fragment);
-    return CommandResult(true, fragment.id.toString, "");
+    return CommandResult(true, fragment.id.value, "");
   }
 
   DestinationFragment getFragment(FragmentId id) {

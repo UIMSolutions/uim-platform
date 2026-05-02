@@ -49,7 +49,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.metadata = req.metadata;
 
     servicePlans.save(plan);
-    return CommandResult(true, plan.id.toString, "");
+    return CommandResult(true, plan.id.value, "");
   }
 
   CommandResult update(string id, UpdateServicePlanRequest req) {
@@ -76,7 +76,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.updatedAt = clockSeconds();
 
     servicePlans.update(plan);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   ServicePlan getById(string id) {
@@ -112,7 +112,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
     servicePlans.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private ServicePlanCategory parseCategory(string s) {

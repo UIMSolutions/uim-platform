@@ -118,6 +118,6 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     if (p.isNull)
       return CommandResult(false, "", "Prompt not found");
     repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 }

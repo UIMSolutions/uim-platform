@@ -76,6 +76,6 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
     entry.timestamp = Clock.currStdTime();
 
     logRepo.save(entry);
-    return CommandResult(true, entry.id.toString(), "");
+    return CommandResult(true, entry.id.value(), "");
   }
 }

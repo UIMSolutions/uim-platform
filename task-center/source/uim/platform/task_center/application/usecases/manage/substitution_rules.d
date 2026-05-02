@@ -69,7 +69,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Substitution rule not found");
         r.status = SubstitutionStatus.active;
         repo.update(tenantId, r);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult deactivate(string tenantId, string id) {
@@ -78,11 +78,11 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Substitution rule not found");
         r.status = SubstitutionStatus.inactive;
         repo.update(tenantId, r);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult remove(string tenantId, string id) {
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

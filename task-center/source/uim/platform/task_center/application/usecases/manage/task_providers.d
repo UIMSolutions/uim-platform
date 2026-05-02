@@ -68,7 +68,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Provider not found");
         p.status = ProviderStatus.active;
         repo.update(tenantId, p);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult deactivate(string tenantId, string id) {
@@ -77,7 +77,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Provider not found");
         p.status = ProviderStatus.inactive;
         repo.update(tenantId, p);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult sync(string tenantId, string id) {
@@ -86,11 +86,11 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Provider not found");
         p.status = ProviderStatus.syncing;
         repo.update(tenantId, p);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 
     CommandResult remove(string tenantId, string id) {
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }

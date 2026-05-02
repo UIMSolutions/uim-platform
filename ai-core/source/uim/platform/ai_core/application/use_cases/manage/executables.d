@@ -72,6 +72,6 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Executable not found");
 
         repo.remove(id, rgId);
-        return CommandResult(true, id.toString, "");
+        return CommandResult(true, id.value, "");
     }
 }
