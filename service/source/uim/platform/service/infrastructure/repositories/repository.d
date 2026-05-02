@@ -11,80 +11,51 @@ mixin(ShowModule!());
 
 @safe:
 
-class SAPRepository(T) {
-  // Placeholder for repository methods
-  // This class can be extended to implement specific data access logic for the service
+class PlatformRepository(TEntity) : IPlatformRepository!(TEntity) {
+  TEntity[] store;
 
-  void save(T item) {
-    // 
+  this() {
+    initialize();
   }
 
-  void update(T item) {
-    // 
-  }
-}
-
-class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId) {
-  private TEntity[TId][TenantId] store;
-
-  bool existsByTenant(TenantId tenantId) {
-    return (tenantId in store) && !store[tenantId].empty;
+  bool initialize(Json initData = Json(null)) {
+    return true;
   }
 
-  TEntity[] findByTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId))
-      return null;
-
-    return store[tenantId].byValue.array;
+  bool exists(TEntity entity) {
+    return store.any!(e => e == entity);
   }
 
-  bool existsById(TenantId tenantId, TId id) {
-    return (existsByTenant(tenantId) && (id in store[tenantId]));
-  }
-
-  TEntity findById(TenantId tenantId, TId id) {
-    if (!existsById(tenantId, id))
-      return TEntity.init;
-
-    return store[tenantId][id];
+  size_t indexOf(TEntity entity) {
+    return store.countUntil!(e => e == entity);
   }
 
   void save(TEntity entity) {
-    if (!existsByTenant(entity.tenantId)) {
-      TEntity[TId] entities;
-      store[entity.tenantId] = entities;
+    if (exists(entity)) {
+      store[store.indexOf(entity)] = entity;
     }
-    store[entity.tenantId][entity.id] = entity;
-  }
-
-  void save(TenantId tenantId, TEntity entity) {
-    entity.tenantId = tenantId;
-    save(entity);
-  }
-
-  void update(TEntity entity) {
-    if (existsById(entity.tenantId, entity.id)) {
-      store[entity.tenantId][entity.id] = entity;
+    else {
+      store ~= entity;
     }
   }
 
-  void remove(TenantId tenantId, bool onlyIfEmpty = true) {
-    if (!existsByTenant(tenantId))
-      return;
-
-    if (onlyIfEmpty && !store[tenantId].empty)
-      return;
-
-    store.remove(tenantId);
-  }
-  
-  void remove(TenantId tenantId, TId id) {
-    if (!existsById(tenantId, id))
-      return;
-
-    store[tenantId].removeById(id);
-    if (store[tenantId].empty) {
-      store.remove(tenantId);
+  void remove(TEntity entity) {
+    if (exists(entity)) {
+      store.remove(indexOf(entity));
     }
   }
+
+  void save(TEntity[] entities) {
+    entities.each!(entity => save(entity));
+  }
+
+  void update(TEntity[] entities) {
+    entities.each!(entity => update(entity));
+  }
+
+  void remove(TEntity[] entities) {
+    entities.each!(entity => remove(entity));
+  }
+
 }
+

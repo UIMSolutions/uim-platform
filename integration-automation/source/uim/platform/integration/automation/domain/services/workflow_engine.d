@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.services.workflow_engine;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.workflow;
-import uim.platform.integration.automation.domain.entities.workflow_step;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.workflow;
+// import uim.platform.integration.automation.domain.entities.workflow_step;
 
-// import uim.platform.integration.automation.domain.ports.repositories.workflows;
-// import uim.platform.integration.automation.domain.ports.repositories.steps;
-import uim.platform.integration.automation.domain.ports;
+// // import uim.platform.integration.automation.domain.ports.repositories.workflows;
+// // import uim.platform.integration.automation.domain.ports.repositories.steps;
+// import uim.platform.integration.automation.domain.ports;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service that orchestrates workflow progression —
 /// advances to the next step, checks dependencies, and updates status.
 class WorkflowEngine {

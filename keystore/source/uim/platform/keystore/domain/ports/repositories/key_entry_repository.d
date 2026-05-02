@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.ports.repositories.key_entry_repository;
 
-import uim.platform.keystore.domain.entities.key_entry;
-import uim.platform.keystore.domain.types;
+// import uim.platform.keystore.domain.entities.key_entry;
+// import uim.platform.keystore.domain.types;
+
+import uim.platform.keystore;
+
+mixin(ShowModule!());
 
 @safe:
 

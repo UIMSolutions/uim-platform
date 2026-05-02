@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.ports.repositories.destination;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.destination;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.destination;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying destinations.
 interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
 

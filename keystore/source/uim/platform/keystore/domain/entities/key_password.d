@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.entities.key_password;
 
-import uim.platform.keystore.domain.types;
+// import uim.platform.keystore.domain.types;
+
+import uim.platform.keystore.application.dto;
+
+mixin(ShowModule!());
 
 @safe:
 
@@ -13,11 +17,11 @@ import uim.platform.keystore.domain.types;
 /// Passwords are encrypted at rest and scoped per application/subscription.
 struct KeyPassword {
   KeyPasswordId id;
-  string        alias_;         // user-defined alias for this password
-  string        passwordValue;  // stored opaque/encrypted value
-  string        accountId;
-  string        applicationId;
-  string        tenantId;
-  long          createdAt;
-  long          updatedAt;
+  string alias_; // user-defined alias for this password
+  string passwordValue; // stored opaque/encrypted value
+  string accountId;
+  string applicationId;
+  string tenantId;
+  long createdAt;
+  long updatedAt;
 }

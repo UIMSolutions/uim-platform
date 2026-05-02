@@ -5,12 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.application.usecases.manage_key_entries;
 
-import uim.platform.keystore.domain.entities.key_entry;
-import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
-import uim.platform.keystore.domain.types;
+// import uim.platform.keystore.domain.entities.key_entry;
+// import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
+// import uim.platform.keystore.domain.types;
+// import uim.platform.keystore.application.dto;
+
 import uim.platform.keystore.application.dto;
 
-import std.uuid : randomUUID;
+mixin(ShowModule!());
 
 @safe:
 

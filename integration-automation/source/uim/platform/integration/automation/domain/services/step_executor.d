@@ -5,16 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.services.step_executor;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.workflow_step;
-import uim.platform.integration.automation.domain.entities.execution_log;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.workflow_step;
+// import uim.platform.integration.automation.domain.entities.execution_log;
 
-// import uim.platform.integration.automation.domain.ports.repositories.steps;
-// import uim.platform.integration.automation.domain.ports.repositories.execution_logs;
-import uim.platform.integration.automation.domain.ports;
+// // import uim.platform.integration.automation.domain.ports.repositories.steps;
+// // import uim.platform.integration.automation.domain.ports.repositories.execution_logs;
+// import uim.platform.integration.automation.domain.ports;
 
-// import std.uuid;
-// import std.datetime.systime : Clock;
+import uim.platform.integration.automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Domain service that handles step execution —
 /// completing manual steps, invoking automated steps, recording execution logs.

@@ -6,24 +6,20 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IIdRepository(TEntity, TId) {
-  TEntity[] findAll();  
-
+interface IIdRepository(TEntity, TId) : IPlatformRepository!(TEntity) {
   bool existsById(TId id);
-  bool existsAllById(TId[] ids);
-  
   TEntity findById(TId id);
-  TEntity[] findAllById(TId[] ids);
-
   void removeById(TId id);
+
+  bool existsAllById(TId[] ids);
+  TEntity[] findAllById(TId[] ids, bool onlyExisting = true);
   void removeAllById(TId[] ids);
 
-  void save(TEntity entity);
-  void saveAll(TEntity[] entities);
+  void save(TEntity item);
+  void update(TEntity item);
+  void remove(TEntity item);
 
-  void update(TEntity entity);
-  void updateAll(TEntity[] entities);
-
-  void remove(TEntity entity);
-  void removeAll(TEntity[] entities);
+  void updateAll(TEntity[] items);
+  void saveAll(TEntity[] items);
+  void removeAll(TEntity[] items);
 }

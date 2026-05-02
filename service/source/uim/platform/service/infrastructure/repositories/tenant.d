@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TenantRepository(TEntity, TId) {
+class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
   protected TEntity[TId][TenantId] store;
 
   this() {
@@ -15,6 +15,18 @@ class TenantRepository(TEntity, TId) {
 
   bool initialize(Json initData = Json(null)) {
     return true;
+  }
+
+  size_t countAll() {
+    return findAll().length;
+  }
+
+  TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
+    return store.byValue.array.skip(offset).limit(limit);
+  }
+
+  void removeAll() {
+    findAll().each!(e => remove(e));
   }
 
   // #region ById
@@ -165,34 +177,3 @@ class TenantRepository(TEntity, TId) {
     items.each!(item => remove(item, deleteTenantIfEmpty));
   }
 }
-/// TODO: 
-// unittest {  
-//   import uim.platform.service.domain.ports.repositories.tenant;
-//   import uim.platform.service.domain.entities.tenant;
-
-//   void testTenantRepository() {
-//     auto repo = new TenantRepository!(Tenant, TenantId)();
-
-//     auto tenant1 = Tenant(TenantId("tenant1"), "Tenant One");
-//     auto tenant2 = Tenant(TenantId("tenant2"), "Tenant Two");
-
-//     repo.save(tenant1);
-//     repo.save(tenant2);
-
-//     assert(repo.existsById(tenant1.tenantId, tenant1.id));
-//     assert(repo.existsById(tenant2.tenantId, tenant2.id));
-
-//     auto foundTenant1 = repo.findById(tenant1.tenantId, tenant1.id);
-//     assert(foundTenant1.name == "Tenant One");
-
-//     auto tenants = repo.findByTenant(tenant1.tenantId);
-//     assert(tenants.length == 1);
-//     assert(tenants[0].name == "Tenant One");
-
-//     repo.removeById(tenant1.tenantId, tenant1.id);
-//     assert(!repo.existsById(tenant1.tenantId, tenant1.id));
-
-//     repo.removeByTenant(tenant2.tenantId);
-//     assert(!repo.existsByTenant(tenant2.tenantId));
-//   }
-// }

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.ports.repositories.execution_log;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.execution_log;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.execution_log;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying execution logs.
 interface ExecutionLogRepository : ITenantRepository!(ExecutionLog, ExecutionLogId) {
 

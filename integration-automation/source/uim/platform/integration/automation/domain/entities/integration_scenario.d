@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.integration_scenario;
 
-import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// An integration scenario template — defines a reusable set of steps
 /// for integrating SAP cloud solutions with on-premise or other cloud systems.
 struct IntegrationScenario {
-  ScenarioId id;
-  TenantId tenantId;
+  mixin(TenantEntity!ScenarioId);
+
   string name; // e.g. "SAP S/4HANA Cloud Integration"
   string description;
   ScenarioCategory category;
@@ -21,9 +25,19 @@ struct IntegrationScenario {
   SystemType targetSystemType;
   string[] prerequisites; // prerequisite descriptions
   ScenarioStepTemplate[] stepTemplates; // ordered step definitions
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson()
+          .set("name", name)
+          .set("description", description)
+          .set("category", category.to!string)
+          .set("version", version_)
+          .set("status", status.to!string)
+          .set("sourceSystemType", sourceSystemType.to!string)
+          .set("targetSystemType", targetSystemType.to!string)
+          .set("prerequisites", prerequisites.array)
+          .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array);
+  }
 }
 
 /// Template for a step within a scenario — used to instantiate WorkflowSteps.

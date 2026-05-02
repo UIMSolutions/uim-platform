@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.workflow_step;
 
-import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).
 struct WorkflowStep {

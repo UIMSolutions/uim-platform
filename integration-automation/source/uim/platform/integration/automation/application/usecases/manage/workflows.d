@@ -8,19 +8,23 @@ module uim.platform.integration.automation.application.usecases.manage.workflows
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.workflow;
-import uim.platform.integration.automation.domain.entities.workflow_step;
-import uim.platform.integration.automation.domain.entities.integration_scenario;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.workflow;
+// import uim.platform.integration.automation.domain.entities.workflow_step;
+// import uim.platform.integration.automation.domain.entities.integration_scenario;
 
-// import uim.platform.integration.automation.domain.ports.repositories.workflows;
-// import uim.platform.integration.automation.domain.ports.repositories.steps;
-// import uim.platform.integration.automation.domain.ports.repositories.scenarios;
-import uim.platform.integration.automation.domain.ports;
+// // import uim.platform.integration.automation.domain.ports.repositories.workflows;
+// // import uim.platform.integration.automation.domain.ports.repositories.steps;
+// // import uim.platform.integration.automation.domain.ports.repositories.scenarios;
+// import uim.platform.integration.automation.domain.ports;
 
-import uim.platform.integration.automation.domain.services.workflow_engine;
-import uim.platform.integration.automation.application.dto;
+// import uim.platform.integration.automation.domain.services.workflow_engine;
+// import uim.platform.integration.automation.application.dto;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;

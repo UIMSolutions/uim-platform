@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.workflow;
 
-import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// A workflow instance — a running execution of an integration scenario
 /// for a specific tenant. Contains the current execution progress.
 struct Workflow {
-  WorkflowId id;
-  TenantId tenantId;
+  mixin(TenantEntity!WorkflowId);
+
   ScenarioId scenarioId;
   string name;
   string description;
@@ -21,9 +25,19 @@ struct Workflow {
   int completedSteps;
   SystemConnectionId sourceSystemConnectionId; // selected source system
   SystemConnectionId targetSystemConnectionId; // selected target system
-  UserId createdBy;
   long startedAt;
-  long completedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("scenarioId", scenarioId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("currentStepIndex", currentStepIndex)
+      .set("totalSteps", totalSteps)
+      .set("completedSteps", completedSteps)
+      .set("sourceSystemConnectionId", sourceSystemConnectionId.value)
+      .set("targetSystemConnectionId", targetSystemConnectionId.value)
+      .set("startedAt", startedAt);
+  }
 }

@@ -10,6 +10,7 @@ public {
 
   import uim.platform.integration.automation.application;
   import uim.platform.integration.automation.domain;
+  import uim.platform.integration.automation.helpers;
   import uim.platform.integration.automation.infrastructure;
   import uim.platform.integration.automation.presentation;
 }

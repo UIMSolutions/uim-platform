@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.destination;
 
-import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// A destination configuration — defines how to connect to a target system
 /// for automated step execution. Mirrors SAP BTP destination service concepts.
 struct Destination {
-  DestinationId id;
-  TenantId tenantId;
+  mixin TenantEntity!DestinationId;
+  
   string name; // unique destination name
   string description;
   SystemConnectionId systemId; // linked system connection
@@ -26,7 +31,4 @@ struct Destination {
   string audience;
   string scope_; // OAuth scope
   bool isEnabled = true;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
 }

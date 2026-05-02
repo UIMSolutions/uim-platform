@@ -6,43 +6,21 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ITenantRepository(TEntity, TId) {
-
-  bool existsById(TId id);
-  bool existsAllById(TId[] ids);  
+interface ITenantRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   
-  TEntity findById(TId id);
-  TEntity[] findAllById(TId[] ids);
-
-  void removeById(TId id, bool deleteTenantIfEmpty = false);
-  void removeAllById(TId[] ids, bool deleteTenantIfEmpty = false);
-
   bool existsById(TenantId tenantId, TId id);
-  bool existsAllById(TenantId tenantId, TId[] ids);  
-  
   TEntity findById(TenantId tenantId, TId id);
-  TEntity[] findAllById(TenantId tenantId, TId[] ids);
-  
   void removeById(TenantId tenantId, TId id, bool deleteTenantIfEmpty = false);
+  
+  bool existsAllById(TenantId tenantId, TId[] ids);  
+  TEntity[] findAllById(TenantId tenantId, TId[] ids);
   void removeAllById(TenantId tenantId, TId[] ids, bool deleteTenantIfEmpty = false);
-
-  size_t countAll();
-  TEntity[] findAll(size_t offset = 0, size_t limit = 0);
-
+  
+  bool isTenantEmpty(TenantId tenantId);
   bool existsByTenant(TenantId tenantId);
-
   size_t countByTenant(TenantId tenantId);
   TEntity[] filterByTenant(TEntity[] items, TenantId tenantId);
   TEntity[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 0);
   void removeByTenant(TenantId tenantId, bool deleteTenantIfEmpty = false);
-
-  void save(TEntity item);
-  void saveAll(TEntity[] items);
-
-  void update(TEntity item);
-  void updateAll(TEntity[] items);
-
-  void remove(TEntity item, bool deleteTenantIfEmpty = false);
-  void removeAll(TEntity[] items, bool deleteTenantIfEmpty = false);
 
 }

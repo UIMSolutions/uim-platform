@@ -5,37 +5,41 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.container;
 
-import uim.platform.integration.automation.infrastructure.config;
+// import uim.platform.integration.automation.infrastructure.config;
 
-// Repositories
-import uim.platform.integration.automation.infrastructure.persistence.memory.scenario;
-import uim.platform.integration.automation.infrastructure.persistence.memory.workflow;
-import uim.platform.integration.automation.infrastructure.persistence.memory.step;
-import uim.platform.integration.automation.infrastructure.persistence.memory.system;
-import uim.platform.integration.automation.infrastructure.persistence.memory.destination;
-import uim.platform.integration.automation.infrastructure.persistence.memory.execution_log;
+// // Repositories
+// import uim.platform.integration.automation.infrastructure.persistence.memory.scenario;
+// import uim.platform.integration.automation.infrastructure.persistence.memory.workflow;
+// import uim.platform.integration.automation.infrastructure.persistence.memory.step;
+// import uim.platform.integration.automation.infrastructure.persistence.memory.system;
+// import uim.platform.integration.automation.infrastructure.persistence.memory.destination;
+// import uim.platform.integration.automation.infrastructure.persistence.memory.execution_log;
 
-// Domain Services
-import uim.platform.integration.automation.domain.services.workflow_engine;
-import uim.platform.integration.automation.domain.services.step_executor;
+// // Domain Services
+// import uim.platform.integration.automation.domain.services.workflow_engine;
+// import uim.platform.integration.automation.domain.services.step_executor;
 
-// Use Cases
-import uim.platform.integration.automation.application.usecases.manage.scenarios;
-import uim.platform.integration.automation.application.usecases.manage.workflows;
-import uim.platform.integration.automation.application.usecases.manage.steps;
-import uim.platform.integration.automation.application.usecases.manage.systems;
-import uim.platform.integration.automation.application.usecases.manage.destinations;
-import uim.platform.integration.automation.application.usecases.monitor_executions;
+// // Use Cases
+// import uim.platform.integration.automation.application.usecases.manage.scenarios;
+// import uim.platform.integration.automation.application.usecases.manage.workflows;
+// import uim.platform.integration.automation.application.usecases.manage.steps;
+// import uim.platform.integration.automation.application.usecases.manage.systems;
+// import uim.platform.integration.automation.application.usecases.manage.destinations;
+// import uim.platform.integration.automation.application.usecases.monitor_executions;
 
-// Controllers
-import uim.platform.integration.automation.presentation.http.scenario;
-import uim.platform.integration.automation.presentation.http.workflow;
-import uim.platform.integration.automation.presentation.http.step;
-import uim.platform.integration.automation.presentation.http.system;
-import uim.platform.integration.automation.presentation.http.destination;
-import uim.platform.integration.automation.presentation.http.monitoring;
-import uim.platform.integration.automation.presentation.http.health;
+// // Controllers
+// import uim.platform.integration.automation.presentation.http.scenario;
+// import uim.platform.integration.automation.presentation.http.workflow;
+// import uim.platform.integration.automation.presentation.http.step;
+// import uim.platform.integration.automation.presentation.http.system;
+// import uim.platform.integration.automation.presentation.http.destination;
+// import uim.platform.integration.automation.presentation.http.monitoring;
+// import uim.platform.integration.automation.presentation.http.health;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)

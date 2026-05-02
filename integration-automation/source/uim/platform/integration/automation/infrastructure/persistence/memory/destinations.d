@@ -5,14 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.destinations;
 
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.destination;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.destination;
 
-// import uim.platform.integration.automation.domain.ports.repositories.destinations;
-import uim.platform.integration.automation.domain.ports;
+// // import uim.platform.integration.automation.domain.ports.repositories.destinations;
+// import uim.platform.integration.automation.domain.ports;
 
-// import std.algorithm : filter;
-// import std.array : array;
+import uim.platform.integration.automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
