@@ -61,8 +61,8 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.config = req.config;
     ch.updatedAt = Clock.currStdTime();
 
-    repo.update(*ch);
-    return CommandResult(ch.id, "");
+    repo.update(ch);
+    return CommandResult(true, ch.id, "");
   }
 
   void deleteChannel(ChannelId tenantId, id tenantId) {

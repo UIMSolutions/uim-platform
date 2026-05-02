@@ -157,7 +157,7 @@ private CardType parseCardType(string s) {
 private CardDataSource parseDataSource(Json j) {
   CardDataSource ds;
   auto v = "dataSource" in j;
-  if (v !is null && (*v).isObject) {
+  if (v !is null && (v).isObject) {
     auto d = *v;
     ds.url = d.getString("url");
     ds.method = d.getString("method");
@@ -172,7 +172,7 @@ private CardDataSource parseDataSource(Json j) {
 private CardManifest parseManifest(Json j) {
   CardManifest m;
   auto v = "manifest" in j;
-  if (v !is null && (*v).isObject) {
+  if (v !is null && (v).isObject) {
     auto d = *v;
     m.type = d.getString("type");
     m.version_ = d.getString("version");

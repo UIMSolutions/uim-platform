@@ -35,7 +35,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
     void remove(TenantId tenantId, ServiceInstanceId id) {
         if (auto items = tenantId.value in store) {
             import std.algorithm : remove;
-            *items = (*items).remove!(e => e.id == id);
+            *items = (items).remove!(e => e.id == id);
         }
     }
 

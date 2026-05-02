@@ -62,7 +62,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
     n.status = NotificationStatus.read_;
     n.readAt = Clock.currStdTime();
-    repo.update(*n);
+    repo.update(n);
     return CommandResult(n.id, "");
   }
 
@@ -72,7 +72,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.dismissed;
-    repo.update(*n);
+    repo.update(n);
     return CommandResult(n.id, "");
   }
 

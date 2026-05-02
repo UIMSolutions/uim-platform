@@ -166,7 +166,7 @@ private GroupMember[] parseMembers(Json j) {
   if (!j.isObject)
     return result;
   auto val = "members" in j;
-  if (val.isNull || !(*val).isArray)
+  if (val.isNull || !(val).isArray)
     return result;
   foreach (item; *val) {
     result ~= GroupMember(item.getString("value"), item.getString("type"),

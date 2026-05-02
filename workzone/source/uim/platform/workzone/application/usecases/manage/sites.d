@@ -64,7 +64,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     s.settings = req.settings;
     s.updatedAt = Clock.currStdTime();
 
-    repo.update(*s);
+    repo.update(s);
     return CommandResult(s.id, "");
   }
 

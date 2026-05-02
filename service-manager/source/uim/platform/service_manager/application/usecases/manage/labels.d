@@ -52,7 +52,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         if (dto.key.length > 0) existing.key = dto.key;
         if (dto.value.length > 0) existing.value = dto.value;
 
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

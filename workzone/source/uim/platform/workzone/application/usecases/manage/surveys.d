@@ -66,7 +66,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     s.status = req.status;
     s.updatedAt = Clock.currStdTime();
 
-    repo.update(*s);
+    repo.update(s);
     return CommandResult(s.id, "");
   }
 

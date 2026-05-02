@@ -64,7 +64,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     w.config = req.config;
     w.updatedAt = Clock.currStdTime();
 
-    repo.update(*w);
+    repo.update(w);
     return CommandResult(w.id, "");
   }
 

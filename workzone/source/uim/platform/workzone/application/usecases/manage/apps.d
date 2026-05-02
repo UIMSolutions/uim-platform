@@ -74,7 +74,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.appConfig = req.appConfig;
     app.updatedAt = Clock.currStdTime();
 
-    repo.update(*app);
+    repo.update(app);
     return CommandResult(app.id, "");
   }
 

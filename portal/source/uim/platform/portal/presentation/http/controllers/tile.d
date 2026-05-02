@@ -143,7 +143,7 @@ class TileController : PlatformController {
     import uim.platform.portal.domain.entities.tile : TileConfiguration;
 
     auto cfgJson = "configuration" in j;
-    if (cfgJson.isNull || (*cfgJson).type != Json.Type.object)
+    if (cfgJson.isNull || (cfgJson).type != Json.Type.object)
       return TileConfiguration.init;
     auto c = *cfgJson;
     return TileConfiguration(c.getString("serviceUrl"), c.getString("serviceRefreshInterval"),

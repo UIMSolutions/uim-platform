@@ -35,7 +35,7 @@ class MemoryServiceOfferingRepository :TenantRepository!(ServiceOffering, Servic
     void remove(TenantId tenantId, ServiceOfferingId id) {
         if (auto items = tenantId.value in store) {
             import std.algorithm : remove;
-            *items = (*items).remove!(e => e.id == id);
+            *items = (items).remove!(e => e.id == id);
         }
     }
 

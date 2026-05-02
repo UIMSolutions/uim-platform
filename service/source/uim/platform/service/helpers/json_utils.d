@@ -50,7 +50,7 @@ string[][] jsonPairArray(Json j, string key) {
       auto k = "key" in elem;
       auto val = "value" in elem;
       if (k !is null && val !is null) {
-        result ~= [(*k).get!string, (*val).get!string];
+        result ~= [(k).get!string, (val).get!string];
       }
     } else if (elem.isArray) {
       auto items = elem.toArray;
@@ -82,7 +82,7 @@ string[][] jsonMessageArray(Json j, string key) {
       auto role = "role" in elem;
       auto content = "content" in elem;
       if (role !is null && content !is null) {
-        result ~= [(*role).get!string, (content).get!string];
+        result ~= [(role).get!string, (content).get!string];
       }
     }
   }
@@ -568,8 +568,8 @@ string getString(Json j, string key) {
     auto v = key in j;
     if (v is null)
         return "";
-    if ((*v).isString)
-        return (*v).get!string;
+    if ((v).isString)
+        return (v).get!string;
     return "";
 }
 
@@ -579,8 +579,8 @@ bool getBoolean(Json j, string key, bool default_ = false) {
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).isBoolean)
-        return (*v).get!bool;
+    if ((v).isBoolean)
+        return (v).get!bool;
     return default_;
 }
 
@@ -591,8 +591,8 @@ long jsonLong(Json j, string key, long default_ = 0) {
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).isInteger)
-        return (*v).get!long;
+    if ((v).isInteger)
+        return (v).get!long;
     return default_;
 }
 */
@@ -603,8 +603,8 @@ long jsonLong(Json j, string key, long default_ = 0) {
 //     auto v = key in j;
 //     if (v is null)
 //         return default_;
-//     if ((*v).isInteger)
-//         return (*v).get!long;
+//     if ((v).isInteger)
+//         return (v).get!long;
 //     return default_;
 
 // string extractSegmentFromPath(string path, int segmentIndex) {

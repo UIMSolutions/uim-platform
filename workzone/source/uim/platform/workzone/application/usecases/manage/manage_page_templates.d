@@ -63,7 +63,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     t.isPublic = req.isPublic;
     t.updatedAt = Clock.currStdTime();
 
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 

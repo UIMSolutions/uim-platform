@@ -64,7 +64,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     t.locked = req.locked;
     t.updatedAt = Clock.currStdTime();
 
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 

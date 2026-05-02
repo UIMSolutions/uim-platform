@@ -68,7 +68,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.visible = req.visible;
     n.updatedAt = Clock.currStdTime();
 
-    repo.update(*n);
+    repo.update(n);
     return CommandResult(n.id, "");
   }
 

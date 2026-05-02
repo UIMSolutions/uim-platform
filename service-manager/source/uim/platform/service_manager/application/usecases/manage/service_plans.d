@@ -56,7 +56,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         existing.maxInstances = dto.maxInstances;
         existing.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

@@ -55,7 +55,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         if (dto.region.length > 0) existing.region = dto.region;
         existing.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

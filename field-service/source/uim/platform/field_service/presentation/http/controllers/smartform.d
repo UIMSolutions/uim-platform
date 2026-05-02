@@ -50,7 +50,7 @@ class SmartformController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Smartform not found"); return; }
-            res.writeJsonBody(smartformToJson(*e), 200);
+            res.writeJsonBody(smartformToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

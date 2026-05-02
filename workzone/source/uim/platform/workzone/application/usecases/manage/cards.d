@@ -72,7 +72,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.manifest = req.manifest;
     c.updatedAt = Clock.currStdTime();
 
-    repo.update(*c);
+    repo.update(c);
     return CommandResult(true, c.id, "");
   }
 

@@ -72,13 +72,13 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).length;
+      return (rg).length;
     return 0;
   }
 
   size_t countByStatus(DeploymentStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(d => d.status == status).array.length;
+      return (rg).filter!(d => d.status == status).array.length;
     return 0;
   }
 }

@@ -73,7 +73,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.settings = req.settings;
     ws.updatedAt = Clock.currStdTime();
 
-    repo.update(*ws);
+    repo.update(ws);
     return CommandResult(ws.id, "");
   }
 
@@ -89,7 +89,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
     ws.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
     ws.updatedAt = Clock.currStdTime();
-    repo.update(*ws);
+    repo.update(ws);
     return CommandResult(ws.id, "");
   }
 
@@ -110,7 +110,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
 
     ws.members = ws.members.remove(idx);
     ws.updatedAt = Clock.currStdTime();
-    repo.update(*ws);
+    repo.update(ws);
     return CommandResult(ws.id, "");
   }
 
@@ -120,7 +120,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workspace not found");
     ws.status = WorkspaceStatus.archived;
     ws.updatedAt = Clock.currStdTime();
-    repo.update(*ws);
+    repo.update(ws);
     return CommandResult(ws.id, "");
   }
 

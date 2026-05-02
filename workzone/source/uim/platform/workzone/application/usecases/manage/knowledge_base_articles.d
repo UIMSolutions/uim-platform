@@ -75,7 +75,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     a.version_ = a.version_ + 1;
     a.updatedAt = Clock.currStdTime();
 
-    repo.update(*a);
+    repo.update(a);
     return CommandResult(a.id, "");
   }
 

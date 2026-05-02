@@ -62,7 +62,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     if (req.color.length > 0)
       t.color = req.color;
 
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 

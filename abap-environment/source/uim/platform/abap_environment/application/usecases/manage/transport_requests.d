@@ -109,7 +109,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Transport request not found");
 
     auto tr = repo.findById(id);
-    auto validation = TransportReleaseValidator.validateRelease(*tr);
+    auto validation = TransportReleaseValidator.validateRelease(tr);
     if (!validation.valid) {
       string msg;
       foreach (i, e; validation.errors) {

@@ -73,7 +73,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.status = req.status;
     e.updatedAt = Clock.currStdTime();
 
-    repo.update(*e);
+    repo.update(e);
     return CommandResult(e.id, "");
   }
 

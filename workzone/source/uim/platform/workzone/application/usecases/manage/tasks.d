@@ -79,7 +79,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     if (t.status == TaskStatus.completed && t.completedAt == 0)
       t.completedAt = Clock.currStdTime();
 
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 
@@ -91,7 +91,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.status = TaskStatus.completed;
     t.completedAt = Clock.currStdTime();
     t.updatedAt = Clock.currStdTime();
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 

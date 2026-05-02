@@ -134,7 +134,7 @@ class ThemeController : PlatformController {
 
   private ThemeColors parseColors(Json j) {
     auto colorsJson = "colors" in j;
-    if (colorsJson.isNull || (*colorsJson).type != Json.Type.object)
+    if (colorsJson.isNull || (colorsJson).type != Json.Type.object)
       return ThemeColors.init;
     auto c = *colorsJson;
     return ThemeColors(c.getString("primary"), c.getString("secondary"),
@@ -145,7 +145,7 @@ class ThemeController : PlatformController {
 
   private ThemeFonts parseFonts(Json j) {
     auto fontsJson = "fonts" in j;
-    if (fontsJson.isNull || (*fontsJson).type != Json.Type.object)
+    if (fontsJson.isNull || (fontsJson).type != Json.Type.object)
       return ThemeFonts.init;
     auto f = *fontsJson;
     return ThemeFonts(getString(f, "headingFamily"), getString(f, "bodyFamily"),

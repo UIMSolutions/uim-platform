@@ -59,7 +59,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     r.permissions = req.permissions;
     r.updatedAt = Clock.currStdTime();
 
-    repo.update(*r);
+    repo.update(r);
     return CommandResult(r.id, "");
   }
 

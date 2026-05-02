@@ -66,7 +66,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     t.isDefault = req.isDefault;
     t.updatedAt = Clock.currStdTime();
 
-    repo.update(*t);
+    repo.update(t);
     return CommandResult(t.id, "");
   }
 

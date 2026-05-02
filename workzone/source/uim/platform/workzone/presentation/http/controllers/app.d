@@ -153,7 +153,7 @@ private AppConfig parseAppConfig(Json j) {
 
   AppConfig cfg;
   auto v = "appConfig" in j;
-  if (v !is null && (*v).isObject) {
+  if (v !is null && (v).isObject) {
     auto c = *v;
     cfg.authType = c.getString("authType");
     cfg.authEndpoint = c.getString("authEndpoint");

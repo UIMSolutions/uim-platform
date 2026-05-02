@@ -65,7 +65,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     p.status = req.status;
     p.updatedAt = Clock.currStdTime();
 
-    repo.update(*p);
+    repo.update(p);
     return CommandResult(p.id, "");
   }
 

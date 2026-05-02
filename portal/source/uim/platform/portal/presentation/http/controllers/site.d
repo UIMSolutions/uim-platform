@@ -158,7 +158,7 @@ class SiteController : PlatformController {
 
   private SiteSettings parseSiteSettings(Json j) {
     auto settingsJson = "settings" in j;
-    if (settingsJson.isNull || (*settingsJson).type != Json.Type.object)
+    if (settingsJson.isNull || (settingsJson).type != Json.Type.object)
       return SiteSettings.init;
     auto s = *settingsJson;
     return SiteSettings(getString(s, "logoUrl"), getString(s, "faviconUrl"),

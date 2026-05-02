@@ -52,7 +52,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         if (dto.brokerUrl.length > 0) existing.brokerUrl = dto.brokerUrl;
         existing.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

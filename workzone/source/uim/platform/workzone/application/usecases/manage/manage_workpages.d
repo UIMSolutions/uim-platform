@@ -61,7 +61,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     page.visible = req.visible;
     page.updatedAt = Clock.currStdTime();
 
-    repo.update(*page);
+    repo.update(page);
     return CommandResult(page.id, "");
   }
 

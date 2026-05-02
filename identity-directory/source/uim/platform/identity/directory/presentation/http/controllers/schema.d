@@ -128,7 +128,7 @@ private SchemaAttribute[] parseSchemaAttributes(Json j) {
   if (!j.isObject)
     return result;
   auto val = "attributes" in j;
-  if (val.isNull || (*val).type != Json.Type.array)
+  if (val.isNull || (val).type != Json.Type.array)
     return result;
   foreach (item; *val) {
     result ~= SchemaAttribute(item.getString("id"), item.getString("name"),

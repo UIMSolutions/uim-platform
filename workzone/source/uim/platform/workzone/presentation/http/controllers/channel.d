@@ -143,7 +143,7 @@ private ChannelConfig parseChannelConfig(Json j) {
 
   ChannelConfig cfg;
   auto v = "config" in j;
-  if (v !is null && (*v).isObject) {
+  if (v !is null && (v).isObject) {
     auto c = *v;
     cfg.sourceUrl = c.getString("sourceUrl");
     cfg.pollIntervalSec = jsonInt(c, "pollIntervalSec");

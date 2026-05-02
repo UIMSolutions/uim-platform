@@ -100,7 +100,7 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
   foreach (k, v; a) {
     if (auto bv = k in b) {
       total++;
-      if (*bv == v)
+      if (bv == v)
         matches++;
     } else {
       total++;

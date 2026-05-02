@@ -78,7 +78,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     if (item.status == ContentStatus.published && item.publishedAt == 0)
       item.publishedAt = Clock.currStdTime();
 
-    repo.update(*item);
+    repo.update(item);
     return CommandResult(item.id, "");
   }
 
@@ -90,7 +90,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     item.status = ContentStatus.published;
     item.publishedAt = Clock.currStdTime();
     item.updatedAt = Clock.currStdTime();
-    repo.update(*item);
+    repo.update(item);
     return CommandResult(item.id, "");
   }
 

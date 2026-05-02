@@ -59,7 +59,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     g.active = req.active;
     g.updatedAt = Clock.currStdTime();
 
-    repo.update(*g);
+    repo.update(g);
     return CommandResult(g.id, "");
   }
 
