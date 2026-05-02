@@ -104,7 +104,7 @@ class NotificationController : PlatformController {
         writeError(res, 404, "Notification not found");
         return;
       }
-      res.writeJsonBody(serializeNotification(*n), 200);
+      res.writeJsonBody(n.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

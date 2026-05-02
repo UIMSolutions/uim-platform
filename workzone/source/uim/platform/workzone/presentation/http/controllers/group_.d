@@ -78,7 +78,7 @@ class GroupController : PlatformController {
         writeError(res, 404, "Group not found");
         return;
       }
-      res.writeJsonBody(serializeGroup(*g), 200);
+      res.writeJsonBody(g.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

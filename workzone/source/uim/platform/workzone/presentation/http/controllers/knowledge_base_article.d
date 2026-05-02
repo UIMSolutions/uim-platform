@@ -86,7 +86,7 @@ class KnowledgeBaseArticleController {
         writeError(res, 404, "Article not found");
         return;
       }
-      res.writeJsonBody(serializeKBArticle(*a), 200);
+      res.writeJsonBody(a.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

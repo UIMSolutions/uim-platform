@@ -84,7 +84,7 @@ class CardController : PlatformController {
         writeError(res, 404, "Card not found");
         return;
       }
-      res.writeJsonBody(serializeCard(*c), 200);
+      res.writeJsonBody(c.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

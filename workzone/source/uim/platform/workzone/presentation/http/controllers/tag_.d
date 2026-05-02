@@ -83,7 +83,7 @@ class TagController : PlatformController {
         writeError(res, 404, "Tag not found");
         return;
       }
-      res.writeJsonBody(serializeTag(*t), 200);
+      res.writeJsonBody(t.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

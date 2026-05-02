@@ -96,7 +96,7 @@ class ReplicationController : PlatformController {
         writeError(res, 404, "Replication job not found");
         return;
       }
-      res.writeJsonBody(serializeJob(job), 200);
+      res.writeJsonBody(job.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

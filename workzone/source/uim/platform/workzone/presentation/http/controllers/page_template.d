@@ -82,7 +82,7 @@ class PageTemplateController : PageformController {
         writeError(res, 404, "Page template not found");
         return;
       }
-      res.writeJsonBody(serializePageTemplate(*t), 200);
+      res.writeJsonBody(t.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -86,7 +86,7 @@ class ExternalContentProviderController {
         writeError(res, 404, "Provider not found");
         return;
       }
-      res.writeJsonBody(serializeExternalProvider(*p), 200);
+      res.writeJsonBody(p.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

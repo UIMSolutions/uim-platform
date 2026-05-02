@@ -101,7 +101,7 @@ class TaskController : PlatformController {
         writeError(res, 404, "Task not found");
         return;
       }
-      res.writeJsonBody(serializeTask(*t), 200);
+      res.writeJsonBody(t.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

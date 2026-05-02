@@ -89,7 +89,7 @@ class ScenarioController : PlatformController {
         writeError(res, 404, "Scenario not found");
         return;
       }
-      res.writeJsonBody(serializeScenario(*scenario), 200);
+      res.writeJsonBody(scenario.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -87,7 +87,7 @@ class NavigationItemController : PlatformController {
         writeError(res, 404, "Navigation item not found");
         return;
       }
-      res.writeJsonBody(serializeNavigationItem(*n), 200);
+      res.writeJsonBody(n.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

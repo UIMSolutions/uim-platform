@@ -102,7 +102,7 @@ class WorkspaceController : PlatformController {
         writeError(res, 404, "Workspace not found");
         return;
       }
-      res.writeJsonBody(serializeWorkspace(*ws), 200);
+      res.writeJsonBody(ws.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

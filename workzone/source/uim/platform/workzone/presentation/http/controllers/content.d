@@ -107,7 +107,7 @@ class ContentController : PlatformController {
         writeError(res, 404, "Content not found");
         return;
       }
-      res.writeJsonBody(serializeContent(*item), 200);
+      res.writeJsonBody(item.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

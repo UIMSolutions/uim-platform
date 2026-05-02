@@ -103,7 +103,7 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      res.writeJsonBody(serializeInst(inst), 200);
+      res.writeJsonBody(inst.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

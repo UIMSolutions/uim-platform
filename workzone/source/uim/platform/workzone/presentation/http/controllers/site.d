@@ -87,7 +87,7 @@ class SiteController : PlatformController {
         writeError(res, 404, "Site not found");
         return;
       }
-      res.writeJsonBody(serializeSite(*s), 200);
+      res.writeJsonBody(s.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -71,7 +71,7 @@ class AlertController : PlatformController {
         writeError(res, 404, "Alert not found");
         return;
       }
-      res.writeJsonBody(serializeAlert(a), 200);
+      res.writeJsonBody(a.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

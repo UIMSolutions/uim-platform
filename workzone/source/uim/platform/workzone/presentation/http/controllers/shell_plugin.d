@@ -88,7 +88,7 @@ class ShellPluginController : PlatformController {
         writeError(res, 404, "Plugin not found");
         return;
       }
-      res.writeJsonBody(serializeShellPlugin(*p), 200);
+      res.writeJsonBody(p.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

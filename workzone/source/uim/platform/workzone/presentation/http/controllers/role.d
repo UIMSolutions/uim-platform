@@ -85,7 +85,7 @@ class RoleController : PlatformController {
         writeError(res, 404, "Role not found");
         return;
       }
-      res.writeJsonBody(serializeRole(*r), 200);
+      res.writeJsonBody(r.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

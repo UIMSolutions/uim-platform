@@ -77,7 +77,7 @@ class WidgetController : PlatformController {
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(tenantId, pageId);
       auto arr = widgets.map!(w => serializeWidget(w)).array.toJson;
-      
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", widgets.length)
@@ -98,7 +98,7 @@ class WidgetController : PlatformController {
         writeError(res, 404, "Widget not found");
         return;
       }
-      res.writeJsonBody(serializeWidget(*w), 200);
+      res.writeJsonBody(w.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

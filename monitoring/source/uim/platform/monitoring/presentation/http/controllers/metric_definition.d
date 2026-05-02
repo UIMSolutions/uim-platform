@@ -91,7 +91,7 @@ class MetricDefinitionController : PlatformController {
         writeError(res, 404, "Metric definition not found");
         return;
       }
-      res.writeJsonBody(serializeDefinition(d), 200);
+      res.writeJsonBody(d.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

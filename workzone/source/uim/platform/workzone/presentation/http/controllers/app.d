@@ -87,7 +87,7 @@ class AppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      res.writeJsonBody(serializeApp(*app), 200);
+      res.writeJsonBody(app.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

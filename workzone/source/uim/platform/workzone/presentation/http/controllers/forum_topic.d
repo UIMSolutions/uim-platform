@@ -83,7 +83,7 @@ class ForumTopicController : PlatformController {
         writeError(res, 404, "Forum topic not found");
         return;
       }
-      res.writeJsonBody(serializeForumTopic(*t), 200);
+      res.writeJsonBody(t.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

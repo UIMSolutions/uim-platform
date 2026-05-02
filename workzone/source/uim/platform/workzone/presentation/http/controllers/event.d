@@ -89,7 +89,7 @@ class EventController : PlatformController {
         writeError(res, 404, "Event not found");
         return;
       }
-      res.writeJsonBody(serializeEvent(*ev), 200);
+      res.writeJsonBody(ev.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -88,7 +88,7 @@ class SurveyController : PlatformController {
         writeError(res, 404, "Survey not found");
         return;
       }
-      res.writeJsonBody(serializeSurvey(*s), 200);
+      res.writeJsonBody(s.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

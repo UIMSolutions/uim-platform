@@ -90,7 +90,7 @@ class ExecutionController : PlatformController {
       }
 
       auto ex = uc.getById(id, connectionId);
-      res.writeJsonBody(serializeExecution(ex), 200);
+      res.writeJsonBody(ex.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

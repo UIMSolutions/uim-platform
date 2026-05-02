@@ -83,7 +83,7 @@ class WorkpageController : PlatformController {
         writeError(res, 404, "Page not found");
         return;
       }
-      res.writeJsonBody(serializePage(*page), 200);
+      res.writeJsonBody(page.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

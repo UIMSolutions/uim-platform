@@ -105,7 +105,7 @@ class ObjectController : PlatformController {
         writeError(res, 404, "Object not found");
         return;
       }
-      res.writeJsonBody(serializeObject(obj), 200);
+      res.writeJsonBody(obj.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

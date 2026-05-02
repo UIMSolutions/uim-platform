@@ -101,7 +101,7 @@ class ServiceBindingController : PlatformController {
         writeError(res, 404, "Service binding not found");
         return;
       }
-      res.writeJsonBody(serializeBinding(b), 200);
+      res.writeJsonBody(b.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

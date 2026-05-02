@@ -89,7 +89,7 @@ class AccessPolicyController : PlatformController {
         writeError(res, 404, "Access policy not found");
         return;
       }
-      res.writeJsonBody(serializePolicy(policy), 200);
+      res.writeJsonBody(policy.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
