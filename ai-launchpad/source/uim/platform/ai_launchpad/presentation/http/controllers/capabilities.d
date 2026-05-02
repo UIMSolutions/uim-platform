@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.capabilities;
 
-import uim.platform.ai_launchpad.application.usecases.get_capabilities;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.get_capabilities;
+// import uim.platform.ai_launchpad.application.dto;
 
+// import uim.platform.ai_launchpad;
 import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class CapabilitiesController : PlatformController {
   private GetCapabilitiesUseCase uc;
 

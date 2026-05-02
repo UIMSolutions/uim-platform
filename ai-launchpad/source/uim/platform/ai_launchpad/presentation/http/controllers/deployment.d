@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.deployment;
 
-import uim.platform.ai_launchpad.application.usecases.manage.deployments;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.manage.deployments;
+// import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DeploymentController : PlatformController {
   private ManageDeploymentsUseCase uc;
@@ -19,6 +23,7 @@ class DeploymentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/deployments", &handleCreate);
     router.get("/api/v1/deployments", &handleList);
     router.get("/api/v1/deployments/*", &handleGet);
@@ -30,7 +35,7 @@ class DeploymentController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateDeploymentRequest r;
       r.connectionId = connectionId;
@@ -55,7 +60,7 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = req.headers.get("X-Scenario-Id", "");
 
       typeof(uc.listByConnection(connectionId)) deployments;
@@ -79,7 +84,7 @@ class DeploymentController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto d = uc.getById(id, connectionId);
       if (d.isNull) {
@@ -99,7 +104,7 @@ class DeploymentController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchDeploymentRequest r;
       r.connectionId = connectionId;
@@ -126,7 +131,7 @@ class DeploymentController : PlatformController {
   private void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchDeploymentRequest r;
       r.connectionId = connectionId;
@@ -159,7 +164,7 @@ class DeploymentController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

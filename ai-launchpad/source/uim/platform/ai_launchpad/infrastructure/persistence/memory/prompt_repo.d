@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.prompts;
-import uim.platform.ai_launchpad.domain.entities.prompt : Prompt;
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.ports.repositories.prompts;
+// import uim.platform.ai_launchpad.domain.entities.prompt : Prompt;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryPromptRepository : IPromptRepository {
   private Prompt[string] store;
 

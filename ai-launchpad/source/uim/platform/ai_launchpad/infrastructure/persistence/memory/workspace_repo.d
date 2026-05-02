@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
-import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
+// import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
@@ -30,7 +34,7 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
       }
   }
 
-  size_t coundtByStatus(TenantId tenantId, WorkspaceStatus status) {
+  size_t countByStatus(TenantId tenantId, WorkspaceStatus status) {
     return findByStatus(tenantId, status).length;
   }
 

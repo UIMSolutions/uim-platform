@@ -7,55 +7,59 @@ module uim.platform.ai_launchpad.infrastructure.container;
 
 import uim.platform.ai_launchpad.infrastructure.config;
 
-// Domain services
-import uim.platform.ai_launchpad.domain.services.connection_validator;
-import uim.platform.ai_launchpad.domain.services.prompt_enricher;
+// // Domain services
+// import uim.platform.ai_launchpad.domain.services.connection_validator;
+// import uim.platform.ai_launchpad.domain.services.prompt_enricher;
 
-// Repositories
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.connections;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.scenarios;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.configurations;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.executions;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.deployments;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.models;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.datasets;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompts;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collections;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_groups;
-import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistics;
+// // Repositories
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.connections;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.scenarios;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.configurations;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.executions;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.deployments;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.models;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.datasets;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompts;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collections;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_groups;
+// import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistics;
 
-// Use Cases
-import uim.platform.ai_launchpad.application.usecases.manage.connections;
-import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
-import uim.platform.ai_launchpad.application.usecases.manage.scenarios;
-import uim.platform.ai_launchpad.application.usecases.manage.configurations;
-import uim.platform.ai_launchpad.application.usecases.manage.executions;
-import uim.platform.ai_launchpad.application.usecases.manage.deployments;
-import uim.platform.ai_launchpad.application.usecases.manage.models;
-import uim.platform.ai_launchpad.application.usecases.manage.datasets;
-import uim.platform.ai_launchpad.application.usecases.manage.prompts;
-import uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
-import uim.platform.ai_launchpad.application.usecases.manage.resource_groups;
-import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
-import uim.platform.ai_launchpad.application.usecases.get_capabilities;
+// // Use Cases
+// import uim.platform.ai_launchpad.application.usecases.manage.connections;
+// import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
+// import uim.platform.ai_launchpad.application.usecases.manage.scenarios;
+// import uim.platform.ai_launchpad.application.usecases.manage.configurations;
+// import uim.platform.ai_launchpad.application.usecases.manage.executions;
+// import uim.platform.ai_launchpad.application.usecases.manage.deployments;
+// import uim.platform.ai_launchpad.application.usecases.manage.models;
+// import uim.platform.ai_launchpad.application.usecases.manage.datasets;
+// import uim.platform.ai_launchpad.application.usecases.manage.prompts;
+// import uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
+// import uim.platform.ai_launchpad.application.usecases.manage.resource_groups;
+// import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
+// import uim.platform.ai_launchpad.application.usecases.get_capabilities;
 
-// Controllers
-import uim.platform.ai_launchpad.presentation.http.controllers.connection;
-import uim.platform.ai_launchpad.presentation.http.controllers.workspace;
-import uim.platform.ai_launchpad.presentation.http.controllers.scenario;
-import uim.platform.ai_launchpad.presentation.http.controllers.configuration;
-import uim.platform.ai_launchpad.presentation.http.controllers.execution;
-import uim.platform.ai_launchpad.presentation.http.controllers.deployment;
-import uim.platform.ai_launchpad.presentation.http.controllers.model;
-import uim.platform.ai_launchpad.presentation.http.controllers.dataset;
-import uim.platform.ai_launchpad.presentation.http.controllers.prompt;
-import uim.platform.ai_launchpad.presentation.http.controllers.prompt_collection;
-import uim.platform.ai_launchpad.presentation.http.controllers.resource_group;
-import uim.platform.ai_launchpad.presentation.http.controllers.statistics;
-import uim.platform.ai_launchpad.presentation.http.controllers.capabilities;
-import uim.platform.ai_launchpad.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.ai_launchpad.presentation.http.controllers.connection;
+// import uim.platform.ai_launchpad.presentation.http.controllers.workspace;
+// import uim.platform.ai_launchpad.presentation.http.controllers.scenario;
+// import uim.platform.ai_launchpad.presentation.http.controllers.configuration;
+// import uim.platform.ai_launchpad.presentation.http.controllers.execution;
+// import uim.platform.ai_launchpad.presentation.http.controllers.deployment;
+// import uim.platform.ai_launchpad.presentation.http.controllers.model;
+// import uim.platform.ai_launchpad.presentation.http.controllers.dataset;
+// import uim.platform.ai_launchpad.presentation.http.controllers.prompt;
+// import uim.platform.ai_launchpad.presentation.http.controllers.prompt_collection;
+// import uim.platform.ai_launchpad.presentation.http.controllers.resource_group;
+// import uim.platform.ai_launchpad.presentation.http.controllers.statistics;
+// import uim.platform.ai_launchpad.presentation.http.controllers.capabilities;
+// import uim.platform.ai_launchpad.presentation.http.controllers.health;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 struct Container {
   // Domain services
   ConnectionValidator connectionValidator;

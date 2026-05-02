@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.statistics;
 
-import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
+// import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 class StatisticsController : PlatformController {
   private GetUsageStatisticsUseCase uc;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.ai_launchpad.infrastructure.config;
-import uim.platform.ai_launchpad.infrastructure.container;
+// import uim.platform.ai_launchpad.infrastructure.config;
+// import uim.platform.ai_launchpad.infrastructure.container;
+
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
 
 @safe:
 

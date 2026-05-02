@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.prompt_collection;
 
-import uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
+// import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 class PromptCollectionController : PlatformController {
   private ManagePromptCollectionsUseCase uc;
@@ -19,6 +23,7 @@ class PromptCollectionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/genai/prompt-collections", &handleCreate);
     router.get("/api/v1/genai/prompt-collections", &handleList);
     router.get("/api/v1/genai/prompt-collections/*", &handleGet);
@@ -53,7 +58,7 @@ class PromptCollectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto workspaceId = req.headers.get("X-Workspace-Id", "");
+      auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto collections = workspaceId.length > 0
         ? uc.listByWorkspace(workspaceId)

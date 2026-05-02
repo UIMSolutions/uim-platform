@@ -5,10 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.workspace;
 
-import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
-import uim.platform.ai_launchpad.application.dto;
-
+// import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
+// import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 class WorkspaceController : PlatformController {
   private ManageWorkspacesUseCase uc;

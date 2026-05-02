@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.manage.deployments;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.deployments;
-import uim.platform.ai_launchpad.domain.entities.deployment : Deployment;
-import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.domain.ports.repositories.deployments;
+// import uim.platform.ai_launchpad.domain.entities.deployment : Deployment;
+// import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   private IDeploymentRepository repo;
 

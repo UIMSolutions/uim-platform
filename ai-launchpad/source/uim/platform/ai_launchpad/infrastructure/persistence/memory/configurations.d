@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.configurations;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.configurations;
-import uim.platform.ai_launchpad.domain.entities.configuration : Configuration;
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.ports.repositories.configurations;
+// import uim.platform.ai_launchpad.domain.entities.configuration : Configuration;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryConfigurationRepository : IConfigurationRepository {
   private Configuration[] store;
 

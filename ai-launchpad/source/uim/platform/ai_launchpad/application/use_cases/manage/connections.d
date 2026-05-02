@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.connections;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.connections;
-import uim.platform.ai_launchpad.domain.entities.connection : Connection;
-import uim.platform.ai_launchpad.domain.services.connection_validator;
-import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.domain.ports.repositories.connections;
+// import uim.platform.ai_launchpad.domain.entities.connection : Connection;
+// import uim.platform.ai_launchpad.domain.services.connection_validator;
+// import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageConnectionsUseCase { // TODO: UIMUseCase {
   private IConnectionRepository repo;
   private ConnectionValidator validator;

@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
-import uim.platform.ai_launchpad.domain.entities.prompt_collection : PromptCollection;
-import uim.platform.ai_launchpad.domain.types;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
+// import uim.platform.ai_launchpad.domain.entities.prompt_collection : PromptCollection;
+// import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   private IPromptCollectionRepository collectionRepository;
 

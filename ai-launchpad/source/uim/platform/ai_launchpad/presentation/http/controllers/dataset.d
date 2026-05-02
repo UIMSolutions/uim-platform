@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.dataset;
 
-import uim.platform.ai_launchpad.application.usecases.manage.datasets;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.manage.datasets;
+// import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DatasetController : PlatformController {
   private ManageDatasetsUseCase uc;
