@@ -69,7 +69,7 @@ class InferenceController : PlatformController {
       // Try as inference request
       auto requests = uc.listByDeployment(tenantId, id);
       if (requests.length > 0) {
-        auto arr = requests.map!(r => r.toJson).array;
+        auto arr = requests.map!(r => r.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("items", arr)
@@ -111,7 +111,7 @@ class InferenceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
-      auto arr = items.map!(r => serializeRequest(r)).array.toJson;
+      auto arr = items.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

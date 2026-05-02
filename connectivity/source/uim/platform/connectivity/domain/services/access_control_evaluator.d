@@ -25,7 +25,7 @@ struct AccessControlEvaluator {
   static AccessEvaluation evaluate(AccessRule[] rules, string virtualHost,
       ushort virtualPort, string urlPath,) {
     // Find the most specific matching rule (longest urlPathPrefix match).
-    AccessRule* bestMatch = null;
+    AccessRule bestMatch = null;
     size_t bestLen = 0;
 
     foreach (rule; rules) {

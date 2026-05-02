@@ -67,7 +67,7 @@ class DataSubjectController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto subjects = uc.list(tenantId);
 
-            auto jarr = subjects.map!(s => subjectToJson(s)).array.toJson;
+            auto jarr = subjects.map!(s => s.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", subjects.length)
@@ -97,7 +97,7 @@ class DataSubjectController : PlatformController {
                 results = uc.search(firstName, lastName);
             }
 
-            auto jarr = results.map!(s => subjectToJson(s)).array.toJson;
+            auto jarr = results.map!(s => s.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", results.length)
@@ -125,7 +125,7 @@ class DataSubjectController : PlatformController {
             }
 
             auto subject = uc.getDataSubject(id);
-            res.writeJsonBody(subjectToJson(subject), 200);
+            res.writeJsonBody(subject.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

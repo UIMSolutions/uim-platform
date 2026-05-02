@@ -66,7 +66,7 @@ class ProvisioningJobController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto items = uc.listJobs(tenantId);
-      auto arr = items.map!(j => j.toJson).array;
+      auto arr = items.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

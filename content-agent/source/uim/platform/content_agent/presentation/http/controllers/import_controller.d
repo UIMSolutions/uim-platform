@@ -65,7 +65,7 @@ class ImportController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listImportJobs(tenantId);
 
-      auto arr = jobs.map!(j => j.toJson).array;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

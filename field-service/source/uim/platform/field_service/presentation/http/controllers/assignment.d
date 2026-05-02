@@ -31,7 +31,7 @@ class AssignmentController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto assignments = usecase.list();
-            auto jsonAssignments = assignments.map!(assignment => assignment.toJson).array;
+            auto jsonAssignments = assignments.map!(assignment => assignment.toJson).array.toJson;
             auto response = Json.emptyObject
                 .set("count", assignments.length)
                 .set("resources", jsonAssignments);

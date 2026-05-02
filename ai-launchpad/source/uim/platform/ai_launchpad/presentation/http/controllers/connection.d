@@ -69,7 +69,7 @@ class ConnectionController : PlatformController {
       else
         connections = uc.listAll();
 
-      auto jarr = connections.map!(connection => connection.toJson).array;
+      auto jarr = connections.map!(connection => connection.toJson).array.toJson;
 
       auto resp = Json.emptyObject
       .set("count", connections.length)

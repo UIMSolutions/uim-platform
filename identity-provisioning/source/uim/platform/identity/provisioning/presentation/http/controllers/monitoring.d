@@ -70,7 +70,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto logs = uc.getJobLogs(tenantId, jobId);
-      auto arr = logs.map!(l => l.toJson).array;
+      auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -88,7 +88,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listProvisionedEntities(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

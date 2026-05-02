@@ -68,10 +68,13 @@ class AppController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
-      auto arr = apps.map!(a => serializeApp(a)).array.toJson;
-      auto response = Json.emptyObject;
-      response["items"] = arr;
-      response["totalCount"] = Json(apps.length);
+      auto arr = apps.map!(a => a.toJson).array.toJson;
+
+      auto response = Json.emptyObject
+      .set("items", arr);
+      .set("totalCount", Json(apps.length))
+      .set("message", "Apps retrieved successfully");
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

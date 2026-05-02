@@ -108,7 +108,7 @@ class MetricController : PlatformController {
       qr.metricName = metricName;
 
       auto metrics = uc.queryMetrics(qr);
-      auto arr = metrics.map!(m => serializeMetric(m)).array.toJson;
+      auto arr = metrics.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

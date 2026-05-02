@@ -78,7 +78,7 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
 
-      auto arr = items.map!(r => r.toJson).array;
+      auto arr = items.map!(r => r.toJson).array.toJson;
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(items.length));

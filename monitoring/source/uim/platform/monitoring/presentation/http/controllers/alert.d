@@ -50,7 +50,7 @@ class AlertController : PlatformController {
       else
         alerts = uc.listAlerts(tenantId);
 
-      auto arr = alerts.map!(a => serializeAlert(a)).array.toJson;
+      auto arr = alerts.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -131,7 +131,8 @@ class AlertController : PlatformController {
       auto result = uc.deleteAlert(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Alert deleted successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

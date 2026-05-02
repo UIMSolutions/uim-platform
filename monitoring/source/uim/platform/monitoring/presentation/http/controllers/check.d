@@ -168,7 +168,8 @@ class CheckController : PlatformController {
       auto result = usecase.recordResult(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Health check result recorded successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -185,11 +186,12 @@ class CheckController : PlatformController {
       auto checkId = extractIdFromPath(req.requestURI);
       auto results = usecase.getResults(tenantId, checkId);
 
-      auto arr = results.map!(result => serializeResult(r)).array.toJson;
+      auto arr = results.map!(result => result.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(results.length));
+        .set("totalCount", Json(results.length))
+        .set("message", "Health check results retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

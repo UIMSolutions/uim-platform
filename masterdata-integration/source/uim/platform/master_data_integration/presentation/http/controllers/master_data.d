@@ -75,7 +75,7 @@ class MasterDataController : PlatformController {
       else
         objs = uc.listByTenant(tenantId);
 
-      auto arr = objs.map!(o => serializeObj(o)).array.toJson;
+      auto arr = objs.map!(o => o.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

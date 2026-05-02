@@ -76,9 +76,9 @@ class DestinationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto dests = uc.listDestinations(tenantId);
-
-      auto arr = dests.map!(d => serializeDest(d)).array;
+      auto arr = dests.map!(d => serializeDest(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -93,7 +93,7 @@ class DestinationController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto dest = uc.getDestination(id);
       if (dest.isNull) {
         writeError(res, 404, "Destination not found");
@@ -107,7 +107,7 @@ class DestinationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateDestinationRequest();
       r.description = j.getString("description");
@@ -143,7 +143,7 @@ class DestinationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteDestination(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -199,10 +199,9 @@ class DestinationController : PlatformController {
 
   private static DestinationProperty[] parseProperties(Json j) {
     DestinationProperty[] result;
-    auto v = "properties" in j;
-    if (v.isNull || (v).type != Json.Type.array)
+    if (!j.isArray("properties"))
       return result;
-    foreach (item; *v) {
+    foreach (item; j["properties"].toArray) {
       if (item.isObject)
         result ~= DestinationProperty(item.getString("key"), item.getString("value"));
     }
@@ -211,10 +210,10 @@ class DestinationController : PlatformController {
 
   private static DestinationProperty[] parseHeaders(Json j) {
     DestinationProperty[] result;
-    auto v = "additionalHeaders" in j;
-    if (v.isNull || (v).type != Json.Type.array)
+    if (!j.isArray("additionalHeaders"))
       return result;
-    foreach (item; *v) {
+
+    foreach (item; j["additionalHeaders"].toArray) {
       if (item.isObject)
         result ~= DestinationProperty(item.getString("key"), item.getString("value"));
     }

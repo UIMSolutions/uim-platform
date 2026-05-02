@@ -69,7 +69,7 @@ class TransportController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto transports = uc.listTransportRequests(tenantId);
-      auto arr = transports.map!(t => t.toJson).array;
+      auto arr = transports.map!(t => t.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

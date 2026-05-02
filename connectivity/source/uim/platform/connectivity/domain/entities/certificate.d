@@ -54,23 +54,4 @@ struct Certificate {
 
     return j;
   }
-
-  Certificate createFromRequest(const CreateCertificateRequest req) {
-    Certificate cert;
-    
-    cert.id = randomUUID();
-    cert.tenantId = req.tenantId;
-    cert.name = req.name;
-    cert.description = req.description;
-    cert.certType = req.certType.to!CertificateType;
-    cert.usage = req.usage.to!CertificateUsage;
-    cert.subjectDN = req.subjectDN;
-    cert.issuerDN = req.issuerDN;
-    cert.serialNumber = req.serialNumber;
-    cert.fingerprint = req.fingerprint;
-    cert.validFrom = req.validFrom;
-    cert.validTo = req.validTo;
-
-    return cert;
-  }
 }

@@ -72,7 +72,7 @@ class RetentionRuleController : PlatformController {
       else
         items = uc.listRules(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

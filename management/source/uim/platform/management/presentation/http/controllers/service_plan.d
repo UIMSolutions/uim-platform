@@ -82,11 +82,12 @@ class ServicePlanController : PlatformController {
       else
         items = uc.listAll();
 
-      auto arr = items.map!(p => serializeServicePlan(p)).array.toJson;
+      auto arr = items.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Service plans retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -121,7 +122,7 @@ class ServicePlanController : PlatformController {
 
       auto result = uc.update(id, r);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
+        res.writeJsonBody(Json.emptyObject.set("message", "Service plan updated successfully"), 200);
       else
         writeError(res, 404, result.error);
     } catch (Exception e)
@@ -133,7 +134,7 @@ class ServicePlanController : PlatformController {
       auto id = extractId(req.requestURI);
       auto result = uc.removeById(id);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject, 204);
+        res.writeJsonBody(Json.emptyObject.set("message", "Service plan deleted successfully"), 204);
       else
         writeError(res, 404, result.error);
     } catch (Exception e)

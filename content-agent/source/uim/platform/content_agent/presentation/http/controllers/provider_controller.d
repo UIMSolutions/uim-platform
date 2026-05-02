@@ -68,7 +68,7 @@ class ProviderController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto providers = uc.listProviders(tenantId);
 
-      auto arr = providers.map!(p => p.toJson).array;
+      auto arr = providers.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

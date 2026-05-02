@@ -31,9 +31,22 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Certificate with name '" ~ req.name ~ "' already exists");
 
-    auto cert = Certificate.createFromRequest(req);
+    Certificate cert;
+    cert.id = randomUUID();
+    cert.tenantId = req.tenantId;
+    cert.name = req.name;
+    cert.description = req.description;
+    cert.certType = req.certType.to!CertificateType;
+    cert.usage = req.usage.to!CertificateUsage;
+    cert.subjectDN = req.subjectDN;
+    cert.issuerDN = req.issuerDN;
+    cert.serialNumber = req.serialNumber;
+    cert.fingerprint = req.fingerprint;
+    cert.validFrom = req.validFrom;
+    cert.validTo = req.validTo;
+
     certificates.save(cert);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, cert.id.value, "");
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
@@ -46,7 +59,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     cert.active = req.active;
 
     certificates.update(cert);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, cert.id.value, "");
   }
 
   Certificate getCertificate(CertificateId id) {
@@ -66,10 +79,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 
-    certificates.removeById(id);
+    certificates.remove(cert);
     return CommandResult(true, id.value, "");
   }
 }
-
-
-

@@ -76,7 +76,7 @@ class PersonalDataModelController : PlatformController {
         ? uc.listByCategory(tenantId, parseCategory(catParam))
         : uc.listModels(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -94,7 +94,7 @@ class PersonalDataModelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listSpecialCategories(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

@@ -74,11 +74,12 @@ class ChannelController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto channels = uc.listChannels(tenantId);
-      auto arr = channels.map!(channel => serializeChannel(channel)).array.toJson;
+      auto arr = channels.map!(channel => channel.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(channels.length));
+        .set("totalCount", Json(channels.length))
+        .set("message", "Notification channels retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -118,7 +119,8 @@ class ChannelController : PlatformController {
       auto result = uc.updateChannel(id, r);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Notification channel updated successfully");
 
         res.writeJsonBody(response, 200);
       } else {
@@ -135,7 +137,8 @@ class ChannelController : PlatformController {
       auto result = uc.deleteChannel(id);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("deleted", Json(true));
+          .set("deleted", Json(true))
+          .set("message", "Notification channel deleted successfully");
 
         res.writeJsonBody(response, 200);
       } else {

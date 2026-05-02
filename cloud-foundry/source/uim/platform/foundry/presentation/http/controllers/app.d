@@ -83,7 +83,7 @@ class AppController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
 
-      auto arr = apps.map!(a => a.toJson).array;
+      auto arr = apps.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
       .set("items", arr)

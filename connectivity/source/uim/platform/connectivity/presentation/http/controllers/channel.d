@@ -69,7 +69,7 @@ class ChannelController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto channels = uc.listByTenant(tenantId);
-      auto arr = channels.map!(ch => serializeChannel(ch)).array.toJson;
+      auto arr = channels.map!(ch => ch.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -84,7 +84,7 @@ class ChannelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ChannelId(extractIdFromPath(req.requestURI));
       auto ch = uc.getChannel(id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
@@ -128,7 +128,7 @@ class ChannelController : PlatformController {
         writeError(res, 400, "Invalid path");
         return;
       }
-      auto channelId = parts[$ - 2];
+      auto channelId = ChannelId(parts[$ - 2]);
 
       auto result = uc.closeChannel(channelId);
       if (result.success) {
@@ -148,7 +148,7 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ChannelId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteChannel(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -163,24 +163,6 @@ class ChannelController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeChannel(const ServiceChannel ch) {
-    return Json.emptyObject
-      .set("id", ch.id)
-      .set("connectorId", ch.connectorId)
-      .set("tenantId", ch.tenantId)
-      .set("name", ch.name)
-      .set("type", ch.channelType.to!string)
-      .set("status", ch.status.to!string)
-      .set("virtualHost", ch.virtualHost)
-      .set("virtualPort", ch.virtualPort)
-      .set("backendHost", ch.backendHost)
-      .set("backendPort", ch.backendPort)
-      .set("openedAt", ch.openedAt)
-      .set("closedAt", ch.closedAt)
-      .set("createdAt", ch.createdAt)
-      .set("updatedAt", ch.updatedAt);
   }
 
   private static string[] splitPath(string uri) {

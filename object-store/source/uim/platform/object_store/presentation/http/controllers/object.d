@@ -187,11 +187,11 @@ class ObjectController : PlatformController {
 
       auto versions = uc.listVersions(objectId);
 
-      auto arr = versions.map!(v => serializeVersion(v)).array.toJson;
+      auto arr = versions.map!(v => v.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", versions.length);
+        .set("totalCount", versions.length)
         .set("message", "Object versions retrieved successfully");
         
       res.writeJsonBody(resp, 200);

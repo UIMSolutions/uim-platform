@@ -63,7 +63,7 @@ class TargetSystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto items = uc.listTargetSystems(tenantId);
-      auto arr = items.map!(s => s.toJson).array;
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

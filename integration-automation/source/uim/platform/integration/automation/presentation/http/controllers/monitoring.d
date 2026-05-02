@@ -40,7 +40,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto logs = useCase.getAllLogs(tenantId);
 
-      auto arr = logs.map!(l => l.toJson).array;
+      auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -59,7 +59,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto logs = useCase.getWorkflowLogs(workflowtenantId, id);
 
-      auto arr = logs.map!(l => l.toJson).array;
+      auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -78,7 +78,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto logs = useCase.getStepLogs(steptenantId, id);
 
-      auto arr = logs.map!(l => l.toJson).array;
+      auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

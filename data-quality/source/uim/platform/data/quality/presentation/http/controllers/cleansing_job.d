@@ -63,7 +63,7 @@ class CleansingJobController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listByTenant(tenantId);
-      auto arr = jobs.map!(j => j.toJson).array;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

@@ -39,7 +39,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listTrainingJobs(tenantId);
 
-      auto arr = jobs.map!(j => j.toJson).array;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)
@@ -72,7 +72,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto deps = uc.listDeploymentSummaries(tenantId);
 
-      auto arr = deps.map!(d => d.toJson).array;
+      auto arr = deps.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -31,7 +31,7 @@ class UIComponentController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = components.list();
-            auto jarr = items.map!(e => e.uiComponentToJson).array;
+            auto jarr = items.map!(e => e.uiComponenttoJson).array.toJson;
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr)

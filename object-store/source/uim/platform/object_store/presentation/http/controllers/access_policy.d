@@ -52,7 +52,8 @@ class AccessPolicyController : PlatformController {
       auto result = uc.createPolicy(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Access policy created successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -68,7 +69,7 @@ class AccessPolicyController : PlatformController {
       auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
       auto policies = uc.listPolicies(bucketId);
 
-      auto arr = policies.map!(p => serializePolicy(p)).array.toJson;
+      auto arr = policies.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

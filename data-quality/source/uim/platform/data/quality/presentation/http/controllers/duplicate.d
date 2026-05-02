@@ -56,7 +56,7 @@ class DuplicateController : PlatformController {
       }
 
       auto groups = uc.detect(r);
-      auto arr = groups.map!(g => g.toJson).array;
+      auto arr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("matchGroups", arr)
@@ -97,7 +97,7 @@ class DuplicateController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto groups = uc.getUnresolved(tenantId);
-      auto arr = groups.map!(g => g.toJson).array;
+      auto arr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

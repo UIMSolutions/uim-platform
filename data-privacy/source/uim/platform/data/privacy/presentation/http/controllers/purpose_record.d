@@ -63,7 +63,7 @@ class PurposeRecordController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto items = uc.listRecords(tenantId);
-      auto arr = items.map!(record => record.toJson).array;
+      auto arr = items.map!(record => record.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

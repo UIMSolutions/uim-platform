@@ -67,7 +67,8 @@ class DataModelController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Data model created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -85,11 +86,12 @@ class DataModelController : PlatformController {
       DataModel[] models = category.length > 0
         ? uc.listByCategory(tenantId, category) : uc.listByTenant(tenantId);
 
-      auto arr = models.map!(m => serializeModel(m)).array.toJson;
+      auto arr = models.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(models.length));
+        .set("totalCount", Json(models.length))
+        .set("message", "Data models retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

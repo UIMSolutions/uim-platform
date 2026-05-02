@@ -67,7 +67,7 @@ class ConnectorController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto conns = usecase.listByTenant(tenantId);
 
-      auto arr = conns.map!(c => c.toJson).array;
+      auto arr = conns.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -80,7 +80,7 @@ class ConnectorController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ConnectorId(extractIdFromPath(req.requestURI));
       auto cc = usecase.getConnector(id);
       if (cc.isNull) {
         writeError(res, 404, "Connector not found");
@@ -123,7 +123,7 @@ class ConnectorController : PlatformController {
 
   private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ConnectorId(extractIdFromPath(req.requestURI));
       auto result = usecase.unregister(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -136,24 +136,6 @@ class ConnectorController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeConnector(const CloudConnector c) {
-    return Json.emptyObject
-      .set("id", c.id)
-      .set("subaccountId", c.subaccountId)
-      .set("tenantId", c.tenantId)
-      .set("locationId", c.locationId)
-      .set("description", c.description)
-      .set("connectorVersion", c.connectorVersion)
-      .set("host", c.host)
-      .set("port", c.port)
-      .set("status", c.status.to!string)
-      .set("tunnelEndpoint", c.tunnelEndpoint)
-      .set("lastHeartbeat", c.lastHeartbeat)
-      .set("connectedSince", c.connectedSince)
-      .set("createdAt", c.createdAt)
-      .set("updatedAt", c.updatedAt);
   }
 
   private static string[] splitPath(string uri) {

@@ -15,6 +15,7 @@ import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;
 
+import uim.platform.identity.provisioning;
 class TransformationController : PlatformController {
   private ManageTransformationsUseCase uc;
 
@@ -63,7 +64,7 @@ class TransformationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listTransformations(tenantId);
 
-      auto arr = items.map!(t => t.toJson).array;
+      auto arr = items.map!(t => t.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

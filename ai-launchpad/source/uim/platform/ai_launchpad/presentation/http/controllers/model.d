@@ -72,7 +72,7 @@ class ModelController : PlatformController {
       else
         models = uc.listByConnection(connectionId);
 
-      auto jarr = models.map!(m => m.toJson).array;
+      auto jarr = models.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(models.length))

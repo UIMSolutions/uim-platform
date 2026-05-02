@@ -67,9 +67,10 @@ class OrgController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto orgs = useCase.listOrgs(tenantId);
 
-      auto arr = orgs.map!(o => o.toJson).array;
+    auto orgs = useCase.listOrgs(tenantId);
+
+      auto arr = orgs.map!(o => o.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

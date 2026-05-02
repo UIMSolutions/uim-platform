@@ -50,7 +50,8 @@ class SubscriptionController : PlatformController {
       auto result = uc.subscribe(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Subscription successful");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -66,11 +67,12 @@ class SubscriptionController : PlatformController {
       if (subId.length > 0)
         items = uc.listBySubaccount(subId);
 
-      auto arr = items.map!(s => serializeSubscription(s)).array.toJson;
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Subscriptions retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)

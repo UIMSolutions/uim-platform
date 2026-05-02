@@ -39,7 +39,7 @@ struct BusinessRole {
     }
 
     if (assignedCatalogs.length > 0) {
-      auto cats = assignedCatalogs.map!(c => c.toJson).array;
+      auto cats = assignedCatalogs.map!(c => c.toJson).array.toJson;
       j["assignedCatalogs"] = cats;
     }
 

@@ -65,7 +65,7 @@ class ProxySystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listProxySystems(tenantId);
 
-      auto arr = items.map!(s => s.toJson).array;
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

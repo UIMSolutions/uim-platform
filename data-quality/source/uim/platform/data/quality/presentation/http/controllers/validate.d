@@ -69,7 +69,7 @@ class ValidateController : PlatformController {
       }
 
       auto results = uc.validateBatch(r);
-      auto arr = results.map!(res_ => res_.toJson).array;
+      auto arr = results.map!(res_ => res_.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("results", arr)

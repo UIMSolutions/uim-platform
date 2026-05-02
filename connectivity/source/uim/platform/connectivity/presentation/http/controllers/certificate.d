@@ -69,9 +69,9 @@ class CertificateController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto certs = uc.listCertificates(tenantId);
-
-      auto arr = certs.map!(c => c.toJson).array;
+      auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -86,7 +86,7 @@ class CertificateController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto cert = uc.getCertificate(id);
       if (cert.isNull) {
         writeError(res, 404, "Certificate not found");
@@ -100,7 +100,7 @@ class CertificateController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateCertificateRequest();
       r.description = j.getString("description");
@@ -123,7 +123,7 @@ class CertificateController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject

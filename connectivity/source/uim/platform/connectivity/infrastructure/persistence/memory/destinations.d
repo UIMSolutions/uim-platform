@@ -20,7 +20,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
-    findByTenant(tenantId).any!(e => e.name == name);
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
 
   Destination findByName(TenantId tenantId, string name) {

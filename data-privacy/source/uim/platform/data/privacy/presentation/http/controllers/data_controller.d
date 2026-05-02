@@ -64,7 +64,7 @@ class DataControllerController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto items = uc.listControllers(tenantId);
-      auto arr = items.map!(controller => controller.toJson).array;
+      auto arr = items.map!(controller => controller.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

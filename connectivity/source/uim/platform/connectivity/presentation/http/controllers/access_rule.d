@@ -69,9 +69,9 @@ class AccessRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      
+
       auto rules = uc.listByTenant(tenantId);
-      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
+      auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -39,7 +39,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto logs = uc.listLogs(tenantId);
-      auto arr = logs.map!(l => serializeLog(l)).array.toJson;
+      auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -70,17 +70,4 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private static Json serializeLog(const ConnectivityLog l) {
-    return Json.emptyObject
-      .set("id", l.id)
-      .set("tenantId", l.tenantId)
-      .set("eventType", l.eventType.to!string)
-      .set("severity", l.severity.to!string)
-      .set("sourceId", l.sourceId)
-      .set("sourceType", l.sourceType)
-      .set("message", l.message)
-      .set("remoteHost", l.remoteHost)
-      .set("remotePort", l.remotePort)
-      .set("timestamp", l.timestamp);
-  }
 }

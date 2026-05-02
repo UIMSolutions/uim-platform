@@ -62,7 +62,7 @@ class DestructionRequestController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

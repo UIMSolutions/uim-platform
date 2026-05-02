@@ -49,7 +49,8 @@ class FilterRuleController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Filter rule created successfully");
           
         res.writeJsonBody(resp, 201);
       } else
@@ -73,7 +74,7 @@ class FilterRuleController : PlatformController {
       else
         rules = uc.listByTenant(tenantId);
 
-      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
+      auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

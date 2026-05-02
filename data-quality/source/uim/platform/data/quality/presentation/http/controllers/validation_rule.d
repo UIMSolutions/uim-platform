@@ -79,7 +79,7 @@ class ValidationRuleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
-      auto arr = rules.map!(r => r.toJson).array;
+      auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

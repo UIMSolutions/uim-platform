@@ -185,7 +185,7 @@ class DestinationController : PlatformController {
   }
 
   private static Json serializeDestination(const ref Destination d) {
-    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array;
+    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array.toJson;
 
     auto propsJson = Json.emptyObject;
     foreach (k, v; d.properties)

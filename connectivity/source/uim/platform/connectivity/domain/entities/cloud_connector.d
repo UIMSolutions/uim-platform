@@ -27,16 +27,16 @@ struct CloudConnector {
   string tunnelEndpoint; // internal tunnel address
 
   Json toJson() const {
-      return entityToJson
-          .set("subaccountId", subaccountId.value)
-          .set("locationId", locationId)
-          .set("description", description)
-          .set("connectorVersion", connectorVersion)
-          .set("host", host)
-          .set("port", port)
-          .set("status", status.to!string)
-          .set("lastHeartbeat", lastHeartbeat)
-          .set("connectedSince", connectedSince)
-          .set("tunnelEndpoint", tunnelEndpoint);
+    return entityToJson
+      .set("subaccountId", subaccountId.value)
+      .set("locationId", locationId)
+      .set("description", description)
+      .set("connectorVersion", connectorVersion)
+      .set("host", host)
+      .set("port", port)
+      .set("status", status.to!string)
+      .set("lastHeartbeat", lastHeartbeat)
+      .set("connectedSince", connectedSince)
+      .set("tunnelEndpoint", tunnelEndpoint);
   }
 }

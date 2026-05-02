@@ -61,7 +61,7 @@ class DeploymentController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
       auto deploys = deployments.list(rgId);
 
-      auto jDeploys = deploys.map!(deployment => deployment.toJson).array;
+      auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", deploys.length)

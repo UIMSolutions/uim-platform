@@ -80,11 +80,12 @@ class SubaccountController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = items.map!(s => serializeSubaccount(s)).array.toJson;
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", Json(items.length))
+        .set("message", "Subaccounts retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -197,5 +198,6 @@ private Json serializeSubaccount(Subaccount subaccount) {
     .set("updatedAt", subaccount.updatedAt)
     .set("createdBy", subaccount.createdBy)
     .set("labels", subaccount.labels)
-    .set("customProperties", subaccount.customProperties);
+    .set("customProperties", subaccount.customProperties)
+    .set("message", "Subaccount retrieved successfully");
 }

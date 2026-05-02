@@ -60,7 +60,7 @@ class WorkspaceController : PlatformController {
         ? uc.listByTenant(tenantId)
         : uc.listAll();
 
-      auto jarr = workspaces.map!(w => w.toJson).array;
+      auto jarr = workspaces.map!(w => w.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", workspaces.length)
