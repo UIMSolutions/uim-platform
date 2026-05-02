@@ -80,9 +80,7 @@ class SubaccountController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeSubaccount(s);
+      auto arr = items.map!(s => serializeSubaccount(s)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

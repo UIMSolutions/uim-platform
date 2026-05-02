@@ -66,9 +66,7 @@ class SubscriptionController : PlatformController {
       if (subId.length > 0)
         items = uc.listBySubaccount(subId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeSubscription(s);
+      auto arr = items.map!(s => serializeSubscription(s)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

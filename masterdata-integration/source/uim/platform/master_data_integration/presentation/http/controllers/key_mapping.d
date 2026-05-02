@@ -70,13 +70,12 @@ class KeyMappingController : PlatformController {
       else
         mappings = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (m; mappings)
-        arr ~= serializeMapping(m);
+      auto arr = mappings.map!(m => serializeMapping(m)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", mappings.length);
+        .set("totalCount", mappings.length)
+        .set("message", "Key mappings retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

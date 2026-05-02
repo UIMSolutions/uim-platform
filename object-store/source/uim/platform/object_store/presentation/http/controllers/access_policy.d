@@ -68,13 +68,12 @@ class AccessPolicyController : PlatformController {
       auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
       auto policies = uc.listPolicies(bucketId);
 
-      auto arr = Json.emptyArray;
-      foreach (p; policies)
-        arr ~= serializePolicy(p);
+      auto arr = policies.map!(p => serializePolicy(p)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", policies.length);
+        .set("totalCount", policies.length)
+        .set("message", "Access policies retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -47,9 +47,7 @@ class EventController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = Json.emptyArray;
-      foreach (ev; items)
-        arr ~= serializeEvent(ev);
+      auto arr = items.map!(ev => serializeEvent(ev)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

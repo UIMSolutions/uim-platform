@@ -70,13 +70,12 @@ class LabelController : PlatformController {
       else if (resourceType.length > 0 && key.length > 0)
         items = uc.listByKey(resourceType, key);
 
-      auto arr = Json.emptyArray;
-      foreach (l; items)
-        arr ~= serializeLabel(l);
+      auto arr = items.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Labels retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     }

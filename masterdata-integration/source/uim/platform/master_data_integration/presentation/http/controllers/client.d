@@ -82,9 +82,7 @@ class ClientController : PlatformController {
       else
         clients = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (c; clients)
-        arr ~= serializeClient(c);
+      auto arr = clients.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

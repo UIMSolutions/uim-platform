@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
 
 class ChangeLogController : PlatformController {
-  private QueryChangeLogUseCase uc;
+  private QueryChangeLogUseCase changeLogs;
 
-  this(QueryChangeLogUseCase uc) {
-    this.uc = uc;
+  this(QueryChangeLogUseCase changeLogs) {
+    this.changeLogs = changeLogs;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,15 +46,14 @@ class ChangeLogController : PlatformController {
         }
       }
 
-      auto entries = uc.query(r);
+      auto entries = changeLogs.query(r);
 
-      auto arr = Json.emptyArray;
-      foreach (e; entries)
-        arr ~= serializeEntry(e);
+      auto arr = entries.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(entries.length));
+        .set("totalCount", Json(entries.length))
+        .set("message", "Change log entries retrieved successfully");
 
       // Provide the last delta token for incremental polling
       if (entries.length > 0)
@@ -69,7 +68,7 @@ class ChangeLogController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto entry = uc.getEntry(id);
+      auto entry = changeLogs.getEntry(id);
       if (entry.isNull) {
         writeError(res, 404, "Change log entry not found");
         return;

@@ -90,15 +90,13 @@ class MonitoringController : PlatformController {
   private void handleGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getFailures(tenantId);
-
-      auto arr = Json.emptyArray;
-      foreach (l; logs)
-        arr ~= serializeLog(l);
+      
+      auto items = useCase.getFailures(tenantId);
+      auto arr = items.map!(l => serializeLog(l)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", logs.length);
+        .set("totalCount", items.length);
         
       res.writeJsonBody(resp, 200);
     }

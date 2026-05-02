@@ -73,13 +73,12 @@ class BucketController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto buckets = uc.listBuckets(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (b; buckets)
-        arr ~= serializeBucket(b);
+      auto arr = buckets.map!(b => serializeBucket(b)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", buckets.length);
+        .set("totalCount", buckets.length)
+        .set("message", "Buckets retrieved successfully");
       
       res.writeJsonBody(resp, 200);
     }
@@ -102,7 +101,7 @@ class BucketController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeBucket(bucket), 200);
+      res.writeJsonBody(bucket.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

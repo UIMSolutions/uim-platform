@@ -72,11 +72,9 @@ class ChannelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto channels = uc.listChannels(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (channel; channels)
-        arr ~= serializeChannel(channel);
+      auto channels = uc.listChannels(tenantId);
+      auto arr = channels.map!(channel => serializeChannel(channel)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

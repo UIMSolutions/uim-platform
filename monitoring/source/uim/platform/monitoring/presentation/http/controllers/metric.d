@@ -108,14 +108,12 @@ class MetricController : PlatformController {
       qr.metricName = metricName;
 
       auto metrics = uc.queryMetrics(qr);
-
-      auto arr = Json.emptyArray;
-      foreach (m; metrics)
-        arr ~= serializeMetric(m);
+      auto arr = metrics.map!(m => serializeMetric(m)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(metrics.length));
+        .set("totalCount", Json(metrics.length))
+        .set("message", "Metrics retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

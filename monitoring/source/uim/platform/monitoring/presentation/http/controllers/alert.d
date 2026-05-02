@@ -50,9 +50,7 @@ class AlertController : PlatformController {
       else
         alerts = uc.listAlerts(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (a; alerts)
-        arr ~= serializeAlert(a);
+      auto arr = alerts.map!(a => serializeAlert(a)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

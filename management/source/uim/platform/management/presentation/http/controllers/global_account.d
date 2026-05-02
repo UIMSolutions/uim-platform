@@ -74,13 +74,12 @@ class GlobalAccountController : PlatformController {
       else
         items = uc.listAll();
 
-      auto arr = Json.emptyArray;
-      foreach (ga; items)
-        arr ~= serializeGlobalAccount(ga);
+      auto arr = items.map!(ga => ga.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Global accounts retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)

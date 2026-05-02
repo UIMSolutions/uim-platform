@@ -64,15 +64,14 @@ class WorkflowController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto workflows = useCase.listWorkflows(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (w; workflows)
-        arr ~= serializeWorkflow(w);
+      auto items = useCase.listWorkflows(tenantId);
+      auto arr = items.map!(w => serializeWorkflow(w)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", workflows.length);
+        .set("totalCount", items.length)
+        .set("message", "Workflows retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

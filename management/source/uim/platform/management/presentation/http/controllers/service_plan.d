@@ -82,9 +82,7 @@ class ServicePlanController : PlatformController {
       else
         items = uc.listAll();
 
-      auto arr = Json.emptyArray;
-      foreach (p; items)
-        arr ~= serializeServicePlan(p);
+      auto arr = items.map!(p => serializeServicePlan(p)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

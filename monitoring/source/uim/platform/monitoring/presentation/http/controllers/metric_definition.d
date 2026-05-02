@@ -70,9 +70,7 @@ class MetricDefinitionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto defs = uc.listDefinitions(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; defs)
-        arr ~= serializeDefinition(d);
+      auto arr = defs.map!(d => serializeDefinition(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

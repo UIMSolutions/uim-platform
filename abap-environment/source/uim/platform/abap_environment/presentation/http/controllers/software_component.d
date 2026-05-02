@@ -70,13 +70,13 @@ class SoftwareComponentController : PlatformController {
       auto systemId = req.json.getString("systemInstanceId");
       if (systemId.isEmpty)
         systemId = req.headers.get("X-System-Id", "");
-      auto components = uc.listComponents(systemId);
-      auto arr = Json.emptyArray;
-      foreach (comp; components)
-        arr ~= serializeComponent(comp);
+      auto items = uc.listComponents(systemId);
+      auto arr = items.map!(comp => serializeComponent(comp)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", components.length);
+        .set("totalCount", items.length)
+        .set("message", "Software components retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

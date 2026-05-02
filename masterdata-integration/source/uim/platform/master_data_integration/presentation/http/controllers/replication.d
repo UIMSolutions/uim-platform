@@ -76,9 +76,7 @@ class ReplicationController : PlatformController {
       else
         jobs = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (j; jobs)
-        arr ~= serializeJob(j);
+      auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
