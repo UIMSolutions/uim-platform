@@ -85,12 +85,12 @@ class ContentController : PlatformController {
       else
         items = useCase.listByWorkspace(workspacetenantId, id);
 
-      auto arr = Json.emptyArray;
-      foreach (c; items)
-        arr ~= serializeContent(c);
+      auto arr = items.map!(c => serializeContent(c)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Content items retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

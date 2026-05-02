@@ -75,10 +75,9 @@ class WidgetController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto pageId = req.params.get("pageId", "");
-      auto widgets = useCase.listByPage(pagetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (w; widgets)
-        arr ~= serializeWidget(w);
+      auto widgets = useCase.listByPage(tenantId, pageId);
+      auto arr = widgets.map!(w => serializeWidget(w)).array.toJson;
+      
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", widgets.length)

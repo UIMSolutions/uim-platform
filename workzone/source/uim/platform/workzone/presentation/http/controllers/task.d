@@ -79,9 +79,8 @@ class TaskController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto assigneeId = AssigneeId(req.params.get("assigneeId", ""));
       auto tasks = useCase.listByAssignee(tenantId, assigneeId);
-      auto arr = Json.emptyArray;
-      foreach (t; tasks)
-        arr ~= serializeTask(t);
+      auto arr = tasks.map!(t => serializeTask(t)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(tasks.length))

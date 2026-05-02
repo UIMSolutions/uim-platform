@@ -71,9 +71,8 @@ class ChannelController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto channels = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = Json.emptyArray;
-      foreach (c; channels)
-        arr ~= serializeChannel(c);
+      auto arr = channels.map!(c => serializeChannel(c)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", channels.length)

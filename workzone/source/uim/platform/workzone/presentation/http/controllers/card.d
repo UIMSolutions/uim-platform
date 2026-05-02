@@ -62,12 +62,12 @@ class CardController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto cards = useCase.listCards(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (c; cards)
-        arr ~= serializeCard(c);
+      auto arr = cards.map!(c => serializeCard(c)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("count", cards.length)
-        .set("items", arr);
+        .set("items", arr)
+        .set("message", "Cards retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

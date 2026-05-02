@@ -61,9 +61,8 @@ class ForumTopicController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto topics = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (t; topics)
-        arr ~= serializeForumTopic(t);
+      auto arr = topics.map!(t => serializeForumTopic(t)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", topics.length)

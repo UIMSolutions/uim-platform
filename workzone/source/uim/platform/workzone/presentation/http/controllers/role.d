@@ -62,9 +62,8 @@ class RoleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (r; roles)
-        arr ~= serializeRole(r);
+      auto arr = roles.map!(r => serializeRole(r)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(roles.length))

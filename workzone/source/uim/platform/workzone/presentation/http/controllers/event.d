@@ -67,12 +67,12 @@ class EventController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto events = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (e; events)
-        arr ~= serializeEvent(e);
+      auto arr = events.map!(e => serializeEvent(e)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", events.length);
+        .set("totalCount", events.length)
+        .set("message", "Events retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

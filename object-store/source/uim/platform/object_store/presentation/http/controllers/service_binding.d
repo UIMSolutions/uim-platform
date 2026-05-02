@@ -64,9 +64,7 @@ class ServiceBindingController : PlatformController {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
       auto bindings = uc.listBindings(bucketId);
 
-      auto arr = Json.emptyArray;
-      foreach (b; bindings)
-        arr ~= serializeBinding(b);
+      auto arr = bindings.map!(b => serializeBinding(b)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

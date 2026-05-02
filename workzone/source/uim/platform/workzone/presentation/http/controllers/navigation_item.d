@@ -65,9 +65,8 @@ class NavigationItemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(tenantId, siteId);
-      auto arr = Json.emptyArray;
-      foreach (n; items)
-        arr ~= serializeNavigationItem(n);
+      auto arr = items.map!(n => serializeNavigationItem(n)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", items.length)

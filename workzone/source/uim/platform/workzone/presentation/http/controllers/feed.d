@@ -67,9 +67,8 @@ class FeedController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto entries = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (e; entries)
-        arr ~= serializeFeed(e);
+      auto arr = entries.map!(e => serializeFeed(e)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(entries.length))

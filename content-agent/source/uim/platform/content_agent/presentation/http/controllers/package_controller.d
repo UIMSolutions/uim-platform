@@ -71,9 +71,7 @@ class PackageController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto packages = uc.listPackages(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (p; packages)
-        arr ~= serializePackage(p);
+      auto arr = packages.map!(p => serializePackage(p)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

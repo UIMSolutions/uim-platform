@@ -64,9 +64,8 @@ class SiteController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (s; sites)
-        arr ~= serializeSite(s);
+      auto arr = sites.map!(s => serializeSite(s)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(sites.length))

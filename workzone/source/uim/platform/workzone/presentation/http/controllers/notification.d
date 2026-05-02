@@ -82,9 +82,8 @@ class NotificationController : PlatformController {
       else
         items = useCase.listByRecipient(recipienttenantId, id);
 
-      auto arr = Json.emptyArray;
-      foreach (n; items)
-        arr ~= serializeNotification(n);
+      auto arr = items.map!(n => serializeNotification(n)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", items.length)

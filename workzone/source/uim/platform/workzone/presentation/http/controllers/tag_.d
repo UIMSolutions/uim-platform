@@ -60,9 +60,8 @@ class TagController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto tags = useCase.listTags(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (t; tags)
-        arr ~= serializeTag(t);
+      auto arr = tags.map!(t => serializeTag(t)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", tags.length)

@@ -69,9 +69,8 @@ class TransportRequestController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto requests = uc.listRequests(systemId);
-      auto arr = Json.emptyArray;
-      foreach (tr; requests)
-        arr ~= serializeRequest(tr);
+      auto arr = requests.map!(tr => serializeRequest(tr)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", requests.length);

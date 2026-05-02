@@ -85,9 +85,7 @@ class DataModelController : PlatformController {
       DataModel[] models = category.length > 0
         ? uc.listByCategory(tenantId, category) : uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (m; models)
-        arr ~= serializeModel(m);
+      auto arr = models.map!(m => serializeModel(m)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

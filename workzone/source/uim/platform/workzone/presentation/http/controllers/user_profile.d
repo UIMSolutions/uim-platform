@@ -64,12 +64,12 @@ class UserProfileController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (p; profiles)
-        arr ~= serializeUserProfile(p);
+      auto arr = profiles.map!(p => serializeUserProfile(p)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(profiles.length));
+        .set("totalCount", Json(profiles.length))
+        .set("message", "User profiles retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

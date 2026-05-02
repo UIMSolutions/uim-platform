@@ -12,7 +12,7 @@ import uim.platform.workzone.application.usecases.manage.surveys;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.survey;
-import uim.platform.identity_authentication.presentation.http
+import uim.platform.identity_authentication.presentation.http;
 
 class SurveyController : PlatformController {
   private ManageSurveysUseCase useCase;
@@ -65,10 +65,9 @@ class SurveyController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto surveys = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (s; surveys)
-        arr ~= serializeSurvey(s);
+      auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
+      auto arr = surveys.map!(s => serializeSurvey(s)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", surveys.length)

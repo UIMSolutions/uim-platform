@@ -60,10 +60,9 @@ class WorkpageController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto pages = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = Json.emptyArray;
-      foreach (p; pages)
-        arr ~= serializePage(p);
+      auto pages = useCase.listByWorkspace(tenantId, workspaceId);
+      auto arr = pages.map!(p => serializePage(p)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(pages.length))

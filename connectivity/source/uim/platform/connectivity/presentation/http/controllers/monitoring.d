@@ -37,11 +37,9 @@ class MonitoringController : PlatformController {
   private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto logs = uc.listLogs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (l; logs)
-        arr ~= serializeLog(l);
+      auto logs = uc.listLogs(tenantId);
+      auto arr = logs.map!(l => serializeLog(l)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -57,9 +57,8 @@ class GroupController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (g; groups)
-        arr ~= serializeGroup(g);
+      auto arr = groups.map!(g => serializeGroup(g)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", groups.length);

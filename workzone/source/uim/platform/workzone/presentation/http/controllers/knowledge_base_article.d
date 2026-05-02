@@ -61,11 +61,11 @@ class KnowledgeBaseArticleController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto workspaceId = req.params.get("workspaceId", "");
+      auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
+
       auto articles = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = Json.emptyArray;
-      foreach (a; articles)
-        arr ~= serializeKBArticle(a);
+      auto arr = articles.map!(a => serializeKBArticle(a)).array.toJson;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", articles.length)

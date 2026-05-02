@@ -65,10 +65,7 @@ class ConfigurationController : PlatformController {
       else
         configs = configurations.listByConnection(connectionId);
 
-      auto jarr = Json.emptyArray;
-      foreach (c; configs) {
-        jarr ~= serializeConfiguration(c);
-      }
+      auto jarr = configs.map!(c => serializeConfiguration(c)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", configs.length)
@@ -128,12 +125,9 @@ class ConfigurationController : PlatformController {
         .set("value", p.value);
     }
 
-    auto artifacts = Json.emptyArray;
-    foreach (a; c.inputArtifacts) {
-      artifacts ~= Json.emptyObject
-        .set("key", a.key)
-        .set("artifactId", a.artifactId);
-    }
+    auto artifacts = c.inputArtifacts.map!(a => Json.emptyObject
+      .set("key", a.key)
+      .set("artifactId", a.artifactId)).array.toJson;
 
     return Json.emptyObject
       .set("id", c.id)
