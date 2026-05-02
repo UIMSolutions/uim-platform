@@ -69,7 +69,7 @@ class ApplicationJobController : PlatformController {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto jobs = uc.listJobs(systemId);
-      auto arr = jobs.map!(job => job.toJson).array;
+      auto arr = jobs.map!(job => job.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

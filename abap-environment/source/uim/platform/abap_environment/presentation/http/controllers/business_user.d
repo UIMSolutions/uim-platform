@@ -67,7 +67,7 @@ class BusinessUserController : PlatformController {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto users = uc.listUsers(systemId);
-      auto arr = users.map!(user => serializeUser(u)).array.toJson;
+      auto arr = users.map!(user => user.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

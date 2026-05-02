@@ -48,7 +48,7 @@ bool existsByName(SystemInstanceId systemId, string name) {
   }
 
   BusinessRole[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filterBySystem(systemId);
+    return filterBySystem(findAll(), systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {

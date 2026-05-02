@@ -19,31 +19,36 @@ mixin(ShowModule!());
 class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 
   bool existsByName(SystemInstanceId systemId, string name) {
-    return findAll().any!(e => e.systemInstanceId == systemId && e.name == name);
+    return findBySystem(systemId).any!(e => e.name == name);
   }
 
   SoftwareComponent findByName(SystemInstanceId systemId, string name) {
-    foreach (e; findAll())
-      if (e.systemInstanceId == systemId && e.name == name)
-        return store[e.id];
+    foreach (e; findBySystem(systemId))
+      if (e.name == name)
+        return e;
     return SoftwareComponent.init;
   }
 
   void removeByName(SystemInstanceId systemId, string name) {
-    foreach (e; findAll())
-      if (e.systemInstanceId == systemId && e.name == name)
-        remove(e.id);
+    foreach (e; findBySystem(systemId))
+      if (e.name == name)
+        remove(e);
   }
 
   size_t countBySystem(SystemInstanceId systemId) {
     return findBySystem(systemId).length;
   }
 
+  SoftwareComponent[] filterBySystem(SoftwareComponent[] components, string nameFilter) {
+    return components
+      .filter!(e => e.name.contains(nameFilter, "i"))
+      .array;
+  }
   SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+    return filterBySystem(findAll(), systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e.id));
+    findBySystem(systemId).each!(e => remove(e));
   }
 }

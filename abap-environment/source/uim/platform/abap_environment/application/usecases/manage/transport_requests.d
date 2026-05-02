@@ -72,7 +72,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     tr.tasks ~= task;
     repo.update(tr);
-    return CommandResult(true, taskId.value, "");
+    return CommandResult(true, task.id.value, "");
   }
 
   CommandResult releaseTask(TransportRequestId requestId, string taskId) {

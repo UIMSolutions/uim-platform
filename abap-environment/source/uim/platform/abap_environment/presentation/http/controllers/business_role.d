@@ -95,7 +95,7 @@ class BusinessRoleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-      if (!uv.existsByRole(id)) {
+      if (!uc.existsRole(id)) {
         writeError(res, 404, "Business role not found");
         return;
       }

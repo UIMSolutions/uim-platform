@@ -52,7 +52,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     inst.subaccountId = req.subaccountId;
     inst.name = req.name;
     inst.description = req.description;
-    inst.plan = parsePlan(req.plan);
+    inst.plan = req.plan.to!SystemPlan;
     inst.status = SystemStatus.provisioning;
     inst.region = req.region;
     inst.sapSystemId = req.sapSystemId;

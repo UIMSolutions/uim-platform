@@ -67,7 +67,7 @@ class SoftwareComponentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.json.getString("systemInstanceId");
+      auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
       if (systemId.isEmpty)
         systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto items = uc.listComponents(systemId);

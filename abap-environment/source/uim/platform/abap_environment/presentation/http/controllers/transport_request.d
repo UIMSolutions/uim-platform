@@ -142,7 +142,7 @@ class TransportRequestController : PlatformController {
     try {
       auto j = req.json;
       auto requestId = TransportRequestId(j.getString("requestId"));
-      auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
+      auto taskId = extractIdFromPath(req.requestURI);
 
       auto result = uc.releaseTask(requestId, taskId);
       if (result.isSuccess()) {

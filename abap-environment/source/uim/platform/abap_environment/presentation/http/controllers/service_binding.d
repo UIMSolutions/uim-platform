@@ -67,7 +67,7 @@ class ServiceBindingController : PlatformController {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto bindings = uc.listBindings(systemId);
-      auto arr = bindings.map!(b => b.toJson).array;
+      auto arr = bindings.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
