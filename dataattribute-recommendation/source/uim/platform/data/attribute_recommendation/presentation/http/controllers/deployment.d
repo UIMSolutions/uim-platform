@@ -91,7 +91,7 @@ class DeploymentController : PlatformController {
         writeError(res, 404, "Deployment not found");
         return;
       }
-      res.writeJsonBody(serializeDeployment(*dep), 200);
+      res.writeJsonBody(dep.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

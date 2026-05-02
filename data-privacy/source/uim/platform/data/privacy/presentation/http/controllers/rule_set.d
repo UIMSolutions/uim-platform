@@ -81,7 +81,7 @@ class RuleSetController : PlatformController {
         writeError(res, 404, "Rule set not found");
         return;
       }
-      res.writeJsonBody(serialize(*entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

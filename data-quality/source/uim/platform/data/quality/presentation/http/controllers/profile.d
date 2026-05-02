@@ -57,7 +57,7 @@ class ProfileController : PlatformController {
       }
 
       auto profile = uc.profile(r);
-      res.writeJsonBody(serializeProfile(profile), 200);
+      res.writeJsonBody(profile.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

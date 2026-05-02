@@ -94,7 +94,7 @@ class ModelController : PlatformController {
         writeError(res, 404, "Model configuration not found");
         return;
       }
-      res.writeJsonBody(serializeConfig(*config), 200);
+      res.writeJsonBody(config.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

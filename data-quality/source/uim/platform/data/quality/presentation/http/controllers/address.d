@@ -48,7 +48,7 @@ class AddressController : PlatformController {
       r.country = j.getString("country");
 
       auto result = uc.cleanse(r);
-      res.writeJsonBody(serializeAddress(result), 200);
+      res.writeJsonBody(result.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

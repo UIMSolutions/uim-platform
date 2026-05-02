@@ -41,7 +41,7 @@ class DashboardController : PlatformController {
       r.datasetName = j.getString("datasetName");
 
       auto dashboard = uc.compute(r);
-      res.writeJsonBody(serializeDashboard(dashboard), 200);
+      res.writeJsonBody(dashboard.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

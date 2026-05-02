@@ -96,7 +96,7 @@ class CommunicationArrangementController : PlatformController {
         writeError(res, 404, "Communication arrangement not found");
         return;
       }
-      res.writeJsonBody(serializeArrangement(*arrangement), 200);
+      res.writeJsonBody(arrangement.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

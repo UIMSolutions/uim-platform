@@ -73,7 +73,7 @@ class DataRecordController : PlatformController {
         writeError(res, 404, "Record not found");
         return;
       }
-      res.writeJsonBody(serializeRecord(*record), 200);
+      res.writeJsonBody(record.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -61,7 +61,7 @@ class MonitoringController : PlatformController {
         writeError(res, 404, "Training job not found");
         return;
       }
-      res.writeJsonBody(serializeJobSummary(job), 200);
+      res.writeJsonBody(job.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

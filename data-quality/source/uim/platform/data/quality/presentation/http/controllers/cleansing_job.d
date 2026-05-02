@@ -85,7 +85,7 @@ class CleansingJobController : PlatformController {
         writeError(res, 404, "Cleansing job not found");
         return;
       }
-      res.writeJsonBody(serializeJob(*job), 200);
+      res.writeJsonBody(job.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -90,7 +90,7 @@ class TransportController : PlatformController {
         writeError(res, 404, "Transport request not found");
         return;
       }
-      res.writeJsonBody(serializeTransport(tr), 200);
+      res.writeJsonBody(tr.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

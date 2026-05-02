@@ -86,7 +86,7 @@ class ConnectorController : PlatformController {
         writeError(res, 404, "Connector not found");
         return;
       }
-      res.writeJsonBody(serializeConnector(cc), 200);
+      res.writeJsonBody(cc.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

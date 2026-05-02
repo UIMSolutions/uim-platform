@@ -122,7 +122,7 @@ class DuplicateController : PlatformController {
         writeError(res, 404, "Match group not found");
         return;
       }
-      res.writeJsonBody(serializeGroup(*group), 200);
+      res.writeJsonBody(group.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

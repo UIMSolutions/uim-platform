@@ -120,7 +120,7 @@ class DestinationController : PlatformController {
         writeError(res, 404, "Destination not found");
         return;
       }
-      res.writeJsonBody(serializeDestination(d), 200);
+      res.writeJsonBody(d.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -88,7 +88,7 @@ class DatasetController : PlatformController {
         writeError(res, 404, "Dataset not found");
         return;
       }
-      res.writeJsonBody(serializeDataset(*ds), 200);
+      res.writeJsonBody(ds.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

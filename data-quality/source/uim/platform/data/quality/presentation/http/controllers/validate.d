@@ -44,7 +44,7 @@ class ValidateController : PlatformController {
       r.fieldValues = jsonStrMap(j, "fieldValues");
 
       auto result = uc.validateRecord(r);
-      res.writeJsonBody(serializeResult(result), 200);
+      res.writeJsonBody(result.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -87,12 +87,12 @@ class ValidateController : PlatformController {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.getResultByRecord(recordtenantId, id);
+      auto result = uc.getResultByRecord(tenantId, recordId);
       if (result is null) {
         writeError(res, 404, "Validation result not found");
         return;
       }
-      res.writeJsonBody(serializeResult(*result), 200);
+      res.writeJsonBody(result.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

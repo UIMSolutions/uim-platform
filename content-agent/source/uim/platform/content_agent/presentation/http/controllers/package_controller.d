@@ -92,7 +92,7 @@ class PackageController : PlatformController {
         writeError(res, 404, "Package not found");
         return;
       }
-      res.writeJsonBody(serializePackage(pkg), 200);
+      res.writeJsonBody(pkg.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

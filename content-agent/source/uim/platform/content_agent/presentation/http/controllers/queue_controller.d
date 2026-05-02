@@ -94,7 +94,7 @@ class QueueController : PlatformController {
         writeError(res, 404, "Queue not found");
         return;
       }
-      res.writeJsonBody(serializeQueue(queue), 200);
+      res.writeJsonBody(queue.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

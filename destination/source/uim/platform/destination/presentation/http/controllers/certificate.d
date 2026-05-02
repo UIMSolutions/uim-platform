@@ -129,7 +129,7 @@ class CertificateController : PlatformController {
         writeError(res, 404, "Certificate not found");
         return;
       }
-      res.writeJsonBody(serializeCertificate(c), 200);
+      res.writeJsonBody(c.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

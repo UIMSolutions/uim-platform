@@ -100,7 +100,7 @@ class InferenceController : PlatformController {
         writeError(res, 404, "Inference result not found");
         return;
       }
-      res.writeJsonBody(serializeResult(*result), 200);
+      res.writeJsonBody(result.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
