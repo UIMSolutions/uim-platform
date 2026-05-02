@@ -9,9 +9,13 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.abap_environment.infrastructure.config;
-import uim.platform.abap_environment.infrastructure.container;
+// import uim.platform.abap_environment.infrastructure.config;
+// import uim.platform.abap_environment.infrastructure.container;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.stdio : writefln;
 
 void main() {

@@ -76,7 +76,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  BusinessRole* getRole(BusinessRoleId id) {
+  BusinessRole getRole(BusinessRoleId id) {
     return repo.findById(id);
   }
 

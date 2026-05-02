@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.transport_request;
 
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Individual task within a transport request.
 struct TransportTask {
   string taskId;

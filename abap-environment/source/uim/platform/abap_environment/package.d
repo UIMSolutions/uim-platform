@@ -6,6 +6,8 @@
 module uim.platform.abap_environment;
 
 public {
+  import uim.platform.service;  
+  
   import uim.platform.abap_environment.application;
   import uim.platform.abap_environment.domain;
   import uim.platform.abap_environment.helpers;

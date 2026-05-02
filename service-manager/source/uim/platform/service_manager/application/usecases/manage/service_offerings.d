@@ -55,7 +55,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         if (dto.metadata.length > 0) existing.metadata = dto.metadata;
         existing.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

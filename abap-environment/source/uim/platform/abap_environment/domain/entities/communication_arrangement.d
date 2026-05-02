@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.communication_arrangement;
 
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.types;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Inbound/outbound communication endpoint configuration.
 struct CommunicationEndpoint {
   string url;

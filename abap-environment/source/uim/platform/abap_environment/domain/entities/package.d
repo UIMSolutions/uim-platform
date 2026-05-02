@@ -9,6 +9,7 @@ public {
     import uim.platform.abap_environment.domain.entities.application_job;
     import uim.platform.abap_environment.domain.entities.business_role;
     import uim.platform.abap_environment.domain.entities.business_user;
+    import uim.platform.abap_environment.domain.entities.catalog_assignment;
     import uim.platform.abap_environment.domain.entities.communication_arrangement;
     import uim.platform.abap_environment.domain.entities.execution_log;
     import uim.platform.abap_environment.domain.entities.service_binding;
