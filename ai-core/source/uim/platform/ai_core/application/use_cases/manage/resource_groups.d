@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.manage.resource_groups;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.resource_group;
-import uim.platform.ai_core.domain.ports.repositories.resource_groups;
-import uim.platform.ai_core.application.dto;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.resource_group;
+// import uim.platform.ai_core.domain.ports.repositories.resource_groups;
+// import uim.platform.ai_core.application.dto;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   private ResourceGroupRepository repo;
 

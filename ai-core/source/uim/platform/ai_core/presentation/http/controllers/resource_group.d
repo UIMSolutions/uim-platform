@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.resource_group;
 
-import uim.platform.ai_core.application.usecases.manage.resource_groups;
-import uim.platform.ai_core.application.dto;
+// import uim.platform.ai_core.application.usecases.manage.resource_groups;
+// import uim.platform.ai_core.application.dto;
 
+// import uim.platform.ai_core;
 import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ResourceGroupController : PlatformController {
   private ManageResourceGroupsUseCase groups;
 

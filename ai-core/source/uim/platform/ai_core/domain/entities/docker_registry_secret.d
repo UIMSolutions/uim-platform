@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.docker_registry_secret;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct DockerRegistrySecret {
   mixin TenantEntity!(DockerRegistrySecretId);
 
@@ -16,12 +20,10 @@ struct DockerRegistrySecret {
   string username;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("resourceGroupId", resourceGroupId)
       .set("name", name)
       .set("server", server)
       .set("username", username);
-
-    return j;
   }
 }

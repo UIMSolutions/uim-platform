@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.manage.deployments;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.deployment;
-import uim.platform.ai_core.domain.ports.repositories.deployments;
-import uim.platform.ai_core.domain.ports.repositories.configurations;
-import uim.platform.ai_core.domain.services.execution_scheduler;
-import uim.platform.ai_core.application.dto;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.deployment;
+// import uim.platform.ai_core.domain.ports.repositories.deployments;
+// import uim.platform.ai_core.domain.ports.repositories.configurations;
+// import uim.platform.ai_core.domain.services.execution_scheduler;
+// import uim.platform.ai_core.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   private DeploymentRepository deplRepo;
   private ConfigurationRepository confRepo;

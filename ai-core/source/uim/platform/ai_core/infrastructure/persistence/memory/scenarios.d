@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.scenario;
-import uim.platform.ai_core.domain.ports.repositories.scenarios;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.scenario;
+// import uim.platform.ai_core.domain.ports.repositories.scenarios;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), ScenarioRepository {
 
   // TODO: Implement methods for finding and removing scenarios by tenant, if needed. 

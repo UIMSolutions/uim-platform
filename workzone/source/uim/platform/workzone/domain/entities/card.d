@@ -21,32 +21,16 @@ struct Card {
   bool active = true;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("title", title)
       .set("subtitle", subtitle)
       .set("description", description)
       .set("icon", icon)
       .set("cardType", cardType.toString())
-      .set("dataSource", Json.init
-        .set("url", dataSource.url)
-        .set("method", dataSource.method)
-        .set("path", dataSource.path)
-        .set("refreshIntervalSec", dataSource.refreshIntervalSec)
-        .set("authType", dataSource.authType)
-        .set("authToken", dataSource.authToken))
-      .set("manifest", Json.init
-        .set("type", manifest.type)
-        .set("version", manifest.version_)
-        .set("minVersion", manifest.minVersion)
-        .set("headerTitle", manifest.headerTitle)
-        .set("headerSubtitle", manifest.headerSubtitle)
-        .set("headerIcon", manifest.headerIcon)
-        .set("headerStatus", manifest.headerStatus)
-        .set("maxItems", manifest.maxItems))
+      .set("dataSource", dataSource.toJson())
+      .set("manifest", manifest.toJson())
       .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
       .set("active", active);
-
-    return j;
   }
 }
 

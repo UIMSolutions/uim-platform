@@ -5,40 +5,44 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.infrastructure.container;
 
-import uim.platform.ai_core.infrastructure.config;
+// import uim.platform.ai_core.infrastructure.config;
 
-// Repositories
-import uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
-import uim.platform.ai_core.infrastructure.persistence.memory.executables;
-import uim.platform.ai_core.infrastructure.persistence.memory.configurations;
-import uim.platform.ai_core.infrastructure.persistence.memory.executions;
-import uim.platform.ai_core.infrastructure.persistence.memory.deployments;
-import uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
-import uim.platform.ai_core.infrastructure.persistence.memory.resource_groups;
-import uim.platform.ai_core.infrastructure.persistence.memory.metrics;
+// // Repositories
+// import uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
+// import uim.platform.ai_core.infrastructure.persistence.memory.executables;
+// import uim.platform.ai_core.infrastructure.persistence.memory.configurations;
+// import uim.platform.ai_core.infrastructure.persistence.memory.executions;
+// import uim.platform.ai_core.infrastructure.persistence.memory.deployments;
+// import uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
+// import uim.platform.ai_core.infrastructure.persistence.memory.resource_groups;
+// import uim.platform.ai_core.infrastructure.persistence.memory.metrics;
 
-// Use Cases
-import uim.platform.ai_core.application.usecases.manage.scenarios;
-import uim.platform.ai_core.application.usecases.manage.executables;
-import uim.platform.ai_core.application.usecases.manage.configurations;
-import uim.platform.ai_core.application.usecases.manage.executions;
-import uim.platform.ai_core.application.usecases.manage.deployments;
-import uim.platform.ai_core.application.usecases.manage.artifacts;
-import uim.platform.ai_core.application.usecases.manage.resource_groups;
-import uim.platform.ai_core.application.usecases.get_metrics;
+// // Use Cases
+// import uim.platform.ai_core.application.usecases.manage.scenarios;
+// import uim.platform.ai_core.application.usecases.manage.executables;
+// import uim.platform.ai_core.application.usecases.manage.configurations;
+// import uim.platform.ai_core.application.usecases.manage.executions;
+// import uim.platform.ai_core.application.usecases.manage.deployments;
+// import uim.platform.ai_core.application.usecases.manage.artifacts;
+// import uim.platform.ai_core.application.usecases.manage.resource_groups;
+// import uim.platform.ai_core.application.usecases.get_metrics;
 
-// Controllers
-import uim.platform.ai_core.presentation.http.controllers.scenario;
-import uim.platform.ai_core.presentation.http.controllers.executable;
-import uim.platform.ai_core.presentation.http.controllers.configuration;
-import uim.platform.ai_core.presentation.http.controllers.execution;
-import uim.platform.ai_core.presentation.http.controllers.deployment;
-import uim.platform.ai_core.presentation.http.controllers.artifact;
-import uim.platform.ai_core.presentation.http.controllers.resource_group;
-import uim.platform.ai_core.presentation.http.controllers.metric;
-import uim.platform.ai_core.presentation.http.controllers.meta;
-import uim.platform.ai_core.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.ai_core.presentation.http.controllers.scenario;
+// import uim.platform.ai_core.presentation.http.controllers.executable;
+// import uim.platform.ai_core.presentation.http.controllers.configuration;
+// import uim.platform.ai_core.presentation.http.controllers.execution;
+// import uim.platform.ai_core.presentation.http.controllers.deployment;
+// import uim.platform.ai_core.presentation.http.controllers.artifact;
+// import uim.platform.ai_core.presentation.http.controllers.resource_group;
+// import uim.platform.ai_core.presentation.http.controllers.metric;
+// import uim.platform.ai_core.presentation.http.controllers.meta;
+// import uim.platform.ai_core.presentation.http.controllers.health;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct Container {
   // Repositories (driven adapters)
   MemoryScenarioRepository scenarioRepo;

@@ -5,16 +5,32 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.configuration;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ParameterValue {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct InputArtifactRef {
   string key;
   ArtifactId artifactId;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("artifactId", artifactId);
+  }
 }
 
 struct Configuration {
@@ -35,12 +51,12 @@ struct Configuration {
       .set("name", name);
 
     if (parameterValues.length > 0) {
-      auto pvs = parameterValues.map!(p => Json.emptyObject.set("key", p.key).set("value", p.value)).array.toJson;
+      auto pvs = parameterValues.map!(p => p.toJson()).array.toJson;
       j["parameterValues"] = pvs;
     }
 
     if (inputArtifacts.length > 0) {
-      auto iars = inputArtifacts.map!(i => Json.emptyObject.set("key", i.key).set("artifactId", i.artifactId)).array.toJson;
+      auto iars = inputArtifacts.map!(i => i.toJson()).array.toJson;
       j["inputArtifacts"] = iars;
     }
 

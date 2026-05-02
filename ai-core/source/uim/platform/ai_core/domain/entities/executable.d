@@ -5,18 +5,36 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.executable;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct InputArtifactBinding {
   string key;
   ArtifactKind kind;
   string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("kind", kind.to!string)
+      .set("description", description);
+  }
 }
 
 struct OutputArtifactBinding {
   string key;
   ArtifactKind kind;
   string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("kind", kind.to!string)
+      .set("description", description);
+  }
 }
 
 struct ParameterBinding {
@@ -24,6 +42,14 @@ struct ParameterBinding {
   string type;
   string default_;
   string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("type", type)
+      .set("default", default_)
+      .set("description", description);
+  }
 }
 
 struct Executable {
@@ -49,9 +75,9 @@ struct Executable {
       .set("description", description)
       .set("type", type.to!string)
       .set("versionId", versionId)
-      .set("inputArtifacts", inputArtifacts)
-      .set("outputArtifacts", outputArtifacts)
-      .set("parameters", parameters)
+      .set("inputArtifacts", inputArtifacts.map!(i => i.toJson()).array.toJson)
+      .set("outputArtifacts", outputArtifacts.map!(o => o.toJson()).array.toJson)
+      .set("parameters", parameters.map!(p => p.toJson()).array.toJson)
       .set("labels", labels)
       .set("deployable", deployable);
 

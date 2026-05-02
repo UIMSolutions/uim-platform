@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.manage.artifacts;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.artifact;
-import uim.platform.ai_core.domain.ports.repositories.artifacts;
-import uim.platform.ai_core.application.dto;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.artifact;
+// import uim.platform.ai_core.domain.ports.repositories.artifacts;
+// import uim.platform.ai_core.application.dto;
 
-import std.uuid : randomUUID;
-import std.conv : to;
+// import std.uuid : randomUUID;
+// import std.conv : to;
 
+import uim.platform.ai_core;
+
+mixin(ShowModule!()); 
+
+@safe:
 class ManageArtifactsUseCase { // TODO: UIMUseCase {
   private ArtifactRepository repo;
 

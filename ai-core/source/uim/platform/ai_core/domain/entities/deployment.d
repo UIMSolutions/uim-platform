@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.deployment;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct Deployment {
   mixin TenantEntity!(DeploymentId);
 
@@ -24,7 +28,7 @@ struct Deployment {
   long completedAt;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("resourceGroupId", resourceGroupId)
       .set("configurationId", configurationId)
       .set("scenarioId", scenarioId)
@@ -36,7 +40,5 @@ struct Deployment {
       .set("ttl", ttl)
       .set("lastOperation", lastOperation)
       .set("completedAt", completedAt);
-
-    return j;
   }
 }

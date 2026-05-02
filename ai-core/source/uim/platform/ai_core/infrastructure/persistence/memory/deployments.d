@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.infrastructure.persistence.memory.deployment;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.deployment;
-import uim.platform.ai_core.domain.ports.repositories.deployments;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.deployment;
+// import uim.platform.ai_core.domain.ports.repositories.deployments;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class MemoryDeploymentRepository : DeploymentRepository {
   private Deployment[][string] store;
 

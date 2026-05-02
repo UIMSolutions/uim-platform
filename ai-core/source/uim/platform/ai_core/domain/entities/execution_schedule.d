@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.execution_schedule;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ExecutionSchedule {
   string id;
   TenantId tenantId;
@@ -19,4 +23,19 @@ struct ExecutionSchedule {
   long end;
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("resourceGroupId", resourceGroupId)
+      .set("configurationId", configurationId)
+      .set("name", name)
+      .set("cron", cron)
+      .set("status", status.to!string)
+      .set("start", start)
+      .set("end", end)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }

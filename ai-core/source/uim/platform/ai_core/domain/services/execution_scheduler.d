@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.services.execution_scheduler;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ExecutionScheduler {
   static bool isValidCron(string cron) {
     import std.array : split;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.ai_core.infrastructure.config;
-import uim.platform.ai_core.infrastructure.container;
+// import uim.platform.ai_core.infrastructure.config;
+// import uim.platform.ai_core.infrastructure.container;
+
+import uim.platform.ai_core;
+
+mixin(ShowModule!()); 
 
 @safe:
 

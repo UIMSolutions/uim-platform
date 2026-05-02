@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.scenario;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct Scenario {
   mixin TenantEntity!(ScenarioId);
 
@@ -20,6 +24,6 @@ struct Scenario {
           .set("resourceGroupId", resourceGroupId.value)
           .set("name", name)
           .set("description", description)
-          .set("labels", labels.array);
+          .set("labels", labels.map!(l => l.toJson()).array.toJson);
   }
 }

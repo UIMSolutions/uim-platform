@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.ports.repositories.configurations;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.configuration;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.configuration;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface ConfigurationRepository {
   Configuration findById(ConfigurationId id, ResourceGroupId rgId);
   Configuration[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);

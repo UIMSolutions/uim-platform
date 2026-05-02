@@ -5,11 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.resource_group;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ResourceGroupLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct ResourceGroup {
@@ -21,7 +31,7 @@ struct ResourceGroup {
   Json toJson() const {
     auto j = entityToJson
       .set("status", status)
-      .set("labels", labels);
+      .set("labels", labels.map!(l => l.toJson()).array.toJson);
 
     return j;
   }

@@ -5,16 +5,32 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.metric;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct MetricLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct MetricTag {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct MetricValue {
@@ -22,11 +38,25 @@ struct MetricValue {
   string value;
   MetricValueType type;
   long timestamp;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("value", value)
+      .set("type", type.to!string)
+      .set("timestamp", timestamp);
+  }
 }
 
 struct CustomInfo {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct Metric {
@@ -43,10 +73,10 @@ struct Metric {
     auto j = entityToJson
       .set("resourceGroupId", resourceGroupId)
       .set("executionId", executionId)
-      .set("labels", labels)
-      .set("tags", tags)
-      .set("metrics", metrics)
-      .set("customInfo", customInfo);
+      .set("labels", labels.map!(l => l.toJson()).array.toJson)
+      .set("tags", tags.map!(t => t.toJson()).array.toJson)
+      .set("metrics", metrics.map!(m => m.toJson()).array.toJson)
+      .set("customInfo", customInfo.map!(c => c.toJson()).array.toJson);
 
     return j;
   }

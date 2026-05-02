@@ -5,11 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.artifact;
 
-import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 struct ArtifactLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct Artifact {
@@ -35,7 +45,7 @@ struct Artifact {
       .set("url", url);
 
     if (labels.length > 0) {
-      auto lbls = labels.map!(l => Json.emptyObject.set("key", l.key).set("value", l.value)).array.toJson;
+      auto lbls = labels.map!(l => l.toJson()).array.toJson;
       j["labels"] = lbls;
     }
 

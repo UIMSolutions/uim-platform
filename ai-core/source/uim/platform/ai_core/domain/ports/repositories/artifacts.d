@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.ports.repositories.artifacts;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.artifact;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.artifact;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface ArtifactRepository {
   Artifact findById(ArtifactId id, ResourceGroupId rgId);
   Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.manage.executables;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.executable;
-import uim.platform.ai_core.domain.ports.repositories.executables;
-import uim.platform.ai_core.application.dto;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.executable;
+// import uim.platform.ai_core.domain.ports.repositories.executables;
+// import uim.platform.ai_core.application.dto;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 class ManageExecutablesUseCase { // TODO: UIMUseCase {
     private ExecutableRepository repo;
 
@@ -51,7 +55,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         e.updatedAt = now;
 
         repo.save(e);
-        return CommandResult(true, e.id, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     Executable getById(ExecutableId id, ResourceGroupId rgId) {

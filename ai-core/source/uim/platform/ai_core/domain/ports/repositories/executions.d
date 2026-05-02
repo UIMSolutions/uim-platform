@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.ports.repositories.executions;
 
-import uim.platform.ai_core.domain.types;
-import uim.platform.ai_core.domain.entities.execution;
+// import uim.platform.ai_core.domain.types;
+// import uim.platform.ai_core.domain.entities.execution;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 interface ExecutionRepository {
   Execution findById(ExecutionId id, ResourceGroupId rgId);
   Execution[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId);
