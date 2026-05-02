@@ -21,22 +21,24 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
     return store.byValue.any!(e => e == entity);
   }
 
-  @disable
-  size_t indexOf(TEntity entity);
+  // @disable
+  size_t indexOf(TEntity entity) {
+    return store.byValue.countUntil!(e => e == entity);
+  }
 
   size_t countAll() {
     return findAll().length;
   }
 
   TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
-    return store.byValue.array.skip(offset).limit(limit);
+    return limit == 0
+      ? store.byValue.array.skip(offset).array : store.byValue.array.skip(offset).take(limit).array;
   }
 
   void removeAll() {
     store.clear();
   }
 
-  
   bool existsById(TId id) {
     return (id in store) ? true : false;
   }
@@ -95,4 +97,44 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   void removeAll(TEntity[] entities) {
     entities.each!(entity => remove(entity));
   }
+}
+///
+
+struct TestEntityId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TestEntity {
+  TestEntityId id;
+  string name;
+
+  bool opEquals(TestEntity other) const {
+    return id == other.id && name == other.name;
+  }
+}
+
+class TestRepository : IdRepository!(TestEntity, TestEntityId) {
+}
+
+unittest {
+  TestEntity entity1 = TestEntity(TestEntityId("1"), "Entity 1");
+  TestEntity entity2 = TestEntity(TestEntityId("2"), "Entity 2");
+
+  auto repo = new TestRepository();
+  repo.save(entity1);
+  repo.save(entity2);
+
+  assert(repo.existsById(TestEntityId("1")));
+  assert(repo.findById(TestEntityId("1")) == entity1);
+  assert(repo.countAll() == 2);
+
+  repo.removeById(TestEntityId("1"));
+  assert(!repo.existsById(TestEntityId("1")));
+  assert(repo.countAll() == 1);
 }

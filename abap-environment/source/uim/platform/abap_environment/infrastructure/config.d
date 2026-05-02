@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.infrastructure.config;
+import std.process : environment;
 import uim.platform.abap_environment;
 
 mixin(ShowModule!());

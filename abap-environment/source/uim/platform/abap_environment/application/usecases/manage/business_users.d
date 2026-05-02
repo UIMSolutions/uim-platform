@@ -57,10 +57,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
 
     // Assign roles
     foreach (roleId; req.roleIds) {
-      if (roleRepo.existsById(roleId)) {
-        auto role = roleRepo.findById(roleId);
+      auto roleIdObj = BusinessRoleId(roleId);
+      if (roleRepo.existsById(roleIdObj)) {
+        auto role = roleRepo.findById(roleIdObj);
         // import std.datetime.systime : Clock;
-        user.roleAssignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
+        user.roleAssignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
       }
     }
 
@@ -69,7 +70,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = user.createdAt;
 
     repo.save(user);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, user.id.value, "");
   }
 
   CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
@@ -90,9 +91,10 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     if (req.roleIds.length > 0) {
       RoleAssignment[] assignments;
       foreach (roleId; req.roleIds) {
-        if (roleRepo.existsById(roleId)) {
-          auto role = roleRepo.findById(roleId);
-          assignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
+        auto roleIdObj = BusinessRoleId(roleId);
+        if (roleRepo.existsById(roleIdObj)) {
+          auto role = roleRepo.findById(roleIdObj);
+          assignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
         }
       }
       user.roleAssignments = assignments;

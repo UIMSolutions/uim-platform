@@ -88,7 +88,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(roleId))
       return CommandResult(false, "", "Business role not found");
 
-    repo.remove(roleId);
+    repo.removeById(roleId);
     return CommandResult(true, roleId.value, "");
   }
 }

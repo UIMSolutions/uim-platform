@@ -21,33 +21,37 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
   
   // #region BySystem
   size_t countBySystem(SystemInstanceId systemId) {
-    return findAll().count!(e => e.systemInstanceId == systemId);
+    return findBySystem(systemId).length;
   }
 
+  CommunicationArrangement[] filterBySystem(CommunicationArrangement[] arrangements, SystemInstanceId systemId) {
+    return arrangements.filter!(e => e.systemInstanceId == systemId).array;
+  }
+  
   CommunicationArrangement[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filterBySystem(systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {
-    foreach (ca; findBySystem(systemId)) {
-      remove(ca.id);
-    }
+    findBySystem(systemId).each!(ca => remove(ca));
   }
   // #endregion BySystem
 
   // #region ByDirection
   size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return findAll().count!(e => e.systemInstanceId == systemId && e.direction == dir);
+    return findBySystem(systemId).count!(e => e.direction == dir);
+  }
+
+  CommunicationArrangement[] filterByDirection(CommunicationArrangement[] arrangements, CommunicationDirection dir) {
+    return arrangements.filter!(e => e.direction == dir).array;
   }
 
   CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return findAll().filter!(e => e.systemInstanceId == systemId && e.direction == dir).array;
+    return findBySystem(systemId).filterByDirection(dir);
   }
 
   void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    foreach (ca; findByDirection(systemId, dir)) {
-      remove(ca.id);
-    }
+    findByDirection(systemId, dir).each!(ca => remove(ca));
   }
   // #endregion ByDirection
 

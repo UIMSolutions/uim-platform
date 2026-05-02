@@ -19,10 +19,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for application job scheduling and management.
 class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
-  private ApplicationJobRepository repo;
+  private ApplicationJobRepository jobs;
 
-  this(ApplicationJobRepository repo) {
-    this.repo = repo;
+  this(ApplicationJobRepository jobs) {
+    this.jobs = jobs;
   }
 
   CommandResult createJob(CreateApplicationJobRequest request) {
@@ -52,7 +52,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.createdAt = Clock.currStdTime();
     job.updatedAt = job.createdAt;
 
-    repo.save(job);
+    jobs.save(job);
     return CommandResult(true, job.id.value, "");
   }
 
@@ -61,10 +61,10 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest request) {
-    if (!repo.existsById(id))
+    if (!jobs.existsById(id))
       return CommandResult(false, "", "Application job not found");
 
-    auto job = repo.findById(id);
+    auto job = jobs.findById(id);
     if (request.description.length > 0)
       job.description = request.description;
     if (request.frequency.length > 0)
@@ -80,7 +80,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     job.updatedAt = Clock.currStdTime();
 
-    repo.update(job);
+    jobs.update(job);
     return CommandResult(true, job.id.value, "");
   }
 
@@ -89,10 +89,10 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult cancelJob(ApplicationJobId id) {
-    if (!repo.existsById(id))
+    if (!jobs.existsById(id))
       return CommandResult(false, "", "Application job not found");
 
-    auto job = repo.findById(id);
+    auto job = jobs.findById(id);
     if (job.status != JobStatus.scheduled && job.status != JobStatus.running)
       return CommandResult(false, "", "Job can only be canceled when scheduled or running");
 
@@ -102,7 +102,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     job.updatedAt = Clock.currStdTime();
 
-    repo.update(job);
+    jobs.update(job);
     return CommandResult(true, job.id.value, "");
   }
 
@@ -111,7 +111,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ApplicationJob getJob(ApplicationJobId id) {
-    return repo.findById(id);
+    return jobs.findById(id);
   }
 
   ApplicationJob[] listJobs(string systemId) {
@@ -119,7 +119,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ApplicationJob[] listJobs(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+    return jobs.findBySystem(systemId);
   }
 
   CommandResult deleteJob(string id) {
@@ -127,10 +127,10 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteJob(ApplicationJobId id) {
-    if (!repo.existsById(id))
+    if (!jobs.existsById(id))
       return CommandResult(false, "", "Application job not found");
 
-    repo.removeById(id);
+    jobs.removeById(id);
     return CommandResult(true, id.value, "");
   }
 }

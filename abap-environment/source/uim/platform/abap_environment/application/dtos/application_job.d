@@ -23,6 +23,11 @@ struct CreateApplicationJobRequest {
   string[string] jobParameters;
 
   Json toJson() const {
+    auto jobParams = Json.emptyObject;
+    foreach (key, value; jobParameters) {
+      jobParams.set(key, value);
+    }
+
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("systemInstanceId", systemInstanceId.value)
@@ -32,7 +37,7 @@ struct CreateApplicationJobRequest {
       .set("frequency", frequency)
       .set("scheduledAt", scheduledAt)
       .set("cronExpression", cronExpression)
-      .set("jobParameters", jobParameters.toJson);
+      .set("jobParameters", jobParams);
   }
 }
 
@@ -45,12 +50,16 @@ struct UpdateApplicationJobRequest {
   string[string] jobParameters;
 
   Json toJson() const {
+    auto jobParams = Json.emptyObject;
+    foreach (key, value; jobParameters) {
+      jobParams.set(key, value);
+    }
     return Json.emptyObject
       .set("description", description)
       .set("frequency", frequency)
       .set("scheduledAt", scheduledAt)
       .set("cronExpression", cronExpression)
       .set("active", active)
-      .set("jobParameters", jobParameters.toJson);
+      .set("jobParameters", jobParams);
   }
 }

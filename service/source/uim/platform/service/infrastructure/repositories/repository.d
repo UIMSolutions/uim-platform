@@ -30,32 +30,98 @@ class PlatformRepository(TEntity) : IPlatformRepository!(TEntity) {
     return store.countUntil!(e => e == entity);
   }
 
+  size_t countAll() {
+    return store.length;
+  }
+  TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
+    if (limit == 0) {
+      return store.skip(offset);
+    }
+    return store.skip(offset).take(limit);
+  }
+  void removeAll() {
+    store = null;
+  }
+  
   void save(TEntity entity) {
     if (exists(entity)) {
-      store[store.indexOf(entity)] = entity;
+      store[indexOf(entity)] = entity;
     }
     else {
       store ~= entity;
     }
   }
 
-  void remove(TEntity entity) {
+  void update(TEntity entity) {
     if (exists(entity)) {
-      store.remove(indexOf(entity));
+      store[indexOf(entity)] = entity;
     }
   }
 
-  void save(TEntity[] entities) {
+  void remove(TEntity entity) {
+    if (exists(entity)) {
+      auto index = indexOf(entity);
+      if (index < store.length) {
+        store = store[0..index] ~ store[index + 1 .. $];
+      }
+      else {
+        store = store[0..index];
+      }
+    }
+  }
+
+  void saveAll(TEntity[] entities) {
     entities.each!(entity => save(entity));
   }
 
-  void update(TEntity[] entities) {
+  void updateAll(TEntity[] entities) {
     entities.each!(entity => update(entity));
   }
 
-  void remove(TEntity[] entities) {
+  void removeAll(TEntity[] entities) {
     entities.each!(entity => remove(entity));
   }
 
 }
 
+///
+
+struct TestEntityId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TestEntity {
+  TestEntityId id;
+  string name;
+
+  bool opEquals(TestEntity other) const {
+    return id == other.id && name == other.name;
+  }
+}
+
+class TestRepository : PlatformRepository!(TestEntity) {
+}
+
+unittest {
+  TestEntity entity1 = TestEntity(TestEntityId("1"), "Entity 1");
+  TestEntity entity2 = TestEntity(TestEntityId("2"), "Entity 2");
+
+  auto repo = new TestRepository();
+  repo.save(entity1);
+  repo.save(entity2);
+
+  assert(repo.exists(entity1));
+  assert(repo.findAll().canFind(entity1));
+  assert(repo.countAll() == 2);
+
+  repo.remove(entity1);
+  assert(!repo.exists(entity1));
+  // writeln("Count after removal: ", repo.countAll());
+  assert(repo.countAll() == 1);
+}

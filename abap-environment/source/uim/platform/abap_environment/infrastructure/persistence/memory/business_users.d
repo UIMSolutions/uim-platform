@@ -22,35 +22,43 @@ class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUse
   bool existsByUsername(SystemInstanceId systemId, string username) {
     return findBySystem(systemId).any!(e => e.username == username);
   }
+
   BusinessUser findByUsername(SystemInstanceId systemId, string username) {
     foreach (e; findBySystem(systemId))
       if (e.username == username)
-        return store[e.id];
+        return e;
     return BusinessUser.init;
   }
+
   void removeByUsername(SystemInstanceId systemId, string username) {
-    findByUsername(systemId, username).remove(e);
+    findByUsername(systemId, username).remove();
   }
 
   bool existsByEmail(SystemInstanceId systemId, string email) {
     return findBySystem(systemId).any!(e => e.email == email);
   }
+
   BusinessUser findByEmail(SystemInstanceId systemId, string email) {
     foreach (e; findBySystem(systemId))
       if (e.email == email)
-        return store[e.id];
+        return e;
     return BusinessUser.init;
   }
+
   void removeByEmail(SystemInstanceId systemId, string email) {
-    findByEmail(systemId, email).remove(e);
+    findByEmail(systemId, email).remove();
   }
 
   size_t countBySystem(SystemInstanceId systemId) {
     return findBySystem(systemId).length;
   }
 
+  BusinessUser[] filterBySystem(BusinessUser[] users, SystemInstanceId systemId) {
+    return users.filter!(e => e.systemInstanceId == systemId).array;
+  }
+
   BusinessUser[] findBySystem(SystemInstanceId systemId) {
-    return findAll.filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filterBySystem(systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {

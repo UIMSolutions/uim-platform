@@ -6,7 +6,7 @@
 module uim.platform.abap_environment.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.abap_environment.infrastructure.persistence.memory.applications;
+  import uim.platform.abap_environment.infrastructure.persistence.memory.application_jobs;
   import uim.platform.abap_environment.infrastructure.persistence.memory.business_roles;
   import uim.platform.abap_environment.infrastructure.persistence.memory.business_users;
   import uim.platform.abap_environment.infrastructure.persistence.memory.communication_arrangements;

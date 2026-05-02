@@ -72,8 +72,8 @@ struct TransportRequest {
         .set("description", t.description)
         .set("objectList", t.objectList.array.toJson())
         .set("createdAt", t.createdAt)
-        .set("releasedAt", t.releasedAt))();
-      j["tasks"] = ts;
+        .set("releasedAt", t.releasedAt)).array;
+      j["tasks"] = ts.toJson;
     }
 
     return j;
