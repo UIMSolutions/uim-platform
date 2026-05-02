@@ -10,7 +10,7 @@ module uim.platform.datasphere.presentation.http.controllers.remote_table;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -23,7 +23,7 @@ class RemoteTableController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/remoteTables", &handleList);
     router.get("/api/v1/datasphere/remoteTables/*", &handleGet);
     router.post("/api/v1/datasphere/remoteTables", &handleCreate);
@@ -46,8 +46,8 @@ class RemoteTableController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Remote table created"));
+          .set("id", Json(result.id))
+          .set("message", Json("Remote table created"));
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -65,22 +65,22 @@ class RemoteTableController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (rt; tables) {
-        jarr ~=  Json.emptyObject
-        .set("id", rt.id)
-        .set("name", rt.name)
-        .set("description", rt.description)
-        .set("connectionId", rt.connectionId)
-        .set("remoteSchema", rt.remoteSchema)
-        .set("remoteObjectName", rt.remoteObjectName)
-        .set("rowCount", rt.rowCount)
-        .set("lastReplicatedAt", rt.lastReplicatedAt)
-        .set("createdAt", rt.createdAt);
+        jarr ~= Json.emptyObject
+          .set("id", rt.id)
+          .set("name", rt.name)
+          .set("description", rt.description)
+          .set("connectionId", rt.connectionId)
+          .set("remoteSchema", rt.remoteSchema)
+          .set("remoteObjectName", rt.remoteObjectName)
+          .set("rowCount", rt.rowCount)
+          .set("lastReplicatedAt", rt.lastReplicatedAt)
+          .set("createdAt", rt.createdAt);
       }
 
       auto resp = Json.emptyObject
-            .set("count", Json(tables.length))
-            .set("resources", jarr)
-            .set("message", "Remote tables retrieved successfully");
+        .set("count", Json(tables.length))
+        .set("resources", jarr)
+        .set("message", "Remote tables retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -91,28 +91,29 @@ class RemoteTableController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto rt = uc.getById(id, spaceId);
+      auto rt = uc.getById(spaceId, id);
       if (rt.isNull) {
         writeError(res, 404, "Remote table not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", rt.id)
-            .set("name", rt.name)
-            .set("description", rt.description)
-            .set("connectionId", rt.connectionId)
-            .set("remoteSchema", rt.remoteSchema)
-            .set("remoteObjectName", rt.remoteObjectName)
-            .set("rowCount", rt.rowCount)
-            .set("lastReplicatedAt", rt.lastReplicatedAt)
-            .set("createdAt", rt.createdAt)
-            .set("updatedAt", rt.updatedAt)
-            .set("message", "Remote table retrieved successfully");
-            
+        .set("id", rt.id)
+        .set("name", rt.name)
+        .set("description", rt.description)
+        .set("connectionId", rt.connectionId)
+        .set("remoteSchema", rt.remoteSchema)
+        .set("remoteObjectName", rt.remoteObjectName)
+        .set("rowCount", rt.rowCount)
+        .set("lastReplicatedAt", rt.lastReplicatedAt)
+        .set("createdAt", rt.createdAt)
+        .set("updatedAt", rt.updatedAt)
+        .set("message", "Remote table retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -122,6 +123,7 @@ class RemoteTableController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

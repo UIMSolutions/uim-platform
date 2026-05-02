@@ -93,7 +93,7 @@ class TaskChainController : PlatformController {
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto tc = uc.getById(id, spaceId);
+      auto tc = uc.getById(spaceId, id);
       if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;
@@ -124,7 +124,7 @@ class TaskChainController : PlatformController {
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = uc.remove(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

@@ -148,20 +148,4 @@ class VersionController : PlatformController {
     }
   }
 
-  private static Json serializeVersion(const DocumentVersion v) {
-    return Json.emptyObject
-      .set("id", Json(v.id))
-      .set("tenantId", Json(v.tenantId))
-      .set("documentId", Json(v.documentId))
-      .set("versionNumber", Json(v.versionNumber))
-      .set("isMajor", v.isMajor ? Json(true) : Json(false))
-      .set("fileName", Json(v.fileName))
-      .set("mimeType", Json(v.mimeType))
-      .set("fileSize", Json(v.fileSize))
-      .set("status", Json(v.status.to!string))
-      .set("comment", Json(v.comment))
-      .set("checksum", Json(v.checksum))
-      .set("createdBy", Json(v.createdBy))
-      .set("createdAt", Json(v.createdAt));
-  }
 }

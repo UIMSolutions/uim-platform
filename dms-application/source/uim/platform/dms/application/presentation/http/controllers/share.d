@@ -66,15 +66,13 @@ class ShareController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listShares(tenantId);
+      auto shares = uc.listShares(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeShare(s);
+      auto arr = shares.map!(share => share.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", shares.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

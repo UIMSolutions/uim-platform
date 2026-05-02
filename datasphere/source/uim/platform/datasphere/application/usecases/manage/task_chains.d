@@ -34,7 +34,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     auto id = randomUUID();
 
     TaskChain tc;
-    tc.id = randomUUID();
+    tc.id = id;
     tc.tenantId = r.tenantId;
     tc.spaceId = r.spaceId;
     tc.name = r.name;
@@ -51,8 +51,8 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tc.id.value, "");
   }
 
-  TaskChain getById(TaskChainId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+  TaskChain getById(SpaceId spaceId, TaskChainId id) {
+    return repo.findById(spaceId, id);
   }
 
   TaskChain[] list(SpaceId spaceId) {
@@ -60,7 +60,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patch(PatchTaskChainRequest r) {
-    auto existing = repo.findById(r.taskChainId, r.spaceId);
+    auto existing = repo.findById(r.spaceId, r.taskChainId);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
@@ -71,12 +71,12 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(TaskChainId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+  CommandResult remove(SpaceId spaceId, TaskChainId id) {
+    auto existing = repo.findById(spaceId, id);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
-    repo.remove(id, spaceId);
+    repo.remove(spaceId, id);
     return CommandResult(true, id.value, "");
   }
 }

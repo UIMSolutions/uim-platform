@@ -31,7 +31,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     DataAccessControl dac;
-    dac.id = randomUUID;
+    dac.id = r.controlId;
     dac.tenantId = r.tenantId;
     dac.spaceId = r.spaceId;
     dac.name = r.name;
@@ -49,8 +49,8 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dac.id.value, "");
   }
 
-  DataAccessControl getById(DataAccessControlId id, SpaceId spaceId) {
-    return repo.findById(id, spaceId);
+  DataAccessControl getById(SpaceId spaceId, DataAccessControlId id) {
+    return repo.findById(spaceId, id);
   }
 
   DataAccessControl[] list(SpaceId spaceId) {
@@ -58,7 +58,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(UpdateDataAccessControlRequest r) {
-    auto existing = repo.findById(r.controlId, r.spaceId);
+    auto existing = repo.findById(r.spaceId, r.controlId);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Data access control not found");
 
@@ -75,12 +75,12 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DataAccessControlId id, SpaceId spaceId) {
-    auto existing = repo.findById(id, spaceId);
+  CommandResult remove(SpaceId spaceId, DataAccessControlId id) {
+    auto existing = repo.findById(spaceId, id);
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Data access control not found");
 
-    repo.remove(id, spaceId);
+    repo.remove(spaceId, id);
     return CommandResult(true, id.value, "");
   }
 }

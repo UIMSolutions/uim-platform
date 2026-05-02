@@ -178,15 +178,4 @@ class PermissionController : PlatformController {
     }
   }
 
-  private static Json serializePerm(const Permission p) {
-    return Json.emptyObject
-    .set("id", p.id)
-    .set("tenantId", p.tenantId)
-    .set("resourceId", p.resourceId)
-    .set("resourceType", p.resourceType.to!string)
-    .set("userId", p.userId)
-    .set("level", p.level.to!string)
-    .set("createdBy", p.createdBy)
-    .set("createdAt", p.createdAt);
-  }
 }

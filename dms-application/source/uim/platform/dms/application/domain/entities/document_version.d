@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct DocumentVersion {
-  DocumentVersionId id;
-  TenantId tenantId;
+  mixin TenantEntity!DocumentVersionId;
+  
   DocumentId documentId;
   int versionNumber;
   bool isMajor; // major vs minor version
@@ -23,6 +23,18 @@ struct DocumentVersion {
   VersionStatus status = VersionStatus.current;
   string comment;
   string checksum; // SHA-256 hash of content
-  UserId createdBy;
-  long createdAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("documentId", documentId)
+      .set("versionNumber", versionNumber)
+      .set("isMajor", isMajor)
+      .set("fileName", fileName)
+      .set("mimeType", mimeType)
+      .set("fileSize", fileSize)
+      .set("status", status.to!string)
+      .set("comment", comment)
+      .set("checksum", checksum);
+  }
+
 }
