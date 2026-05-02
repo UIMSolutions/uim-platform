@@ -30,6 +30,7 @@ struct CreateDestinationRequest {
   string clientSecret;
   string tokenServiceUrl;
   string tokenServiceUser;
+  string token;
   string tokenServicePassword;
   string certificateId;
   string cloudConnectorLocationId;
@@ -104,6 +105,7 @@ struct UpdateAccessRuleRequest {
   string description;
   string urlPathPrefix;
   string policy;
+  string protocol;
   string virtualHost;
   ushort virtualPort;
   bool principalPropagation;

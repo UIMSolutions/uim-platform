@@ -22,7 +22,7 @@ struct LogStream {
   UserId createdBy;
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("sourceType", sourceType.to!string)

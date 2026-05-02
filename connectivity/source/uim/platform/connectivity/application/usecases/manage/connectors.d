@@ -50,10 +50,10 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     repo.save(cc);
 
     // Record connection event
-    recordLog(req.tenantId, ConnectivityEventType.connectionEstablished, id,
+    recordLog(req.tenantId, ConnectivityEventType.connectionEstablished, cc.id.value,
         "CloudConnector", "Connector registered: " ~ req.locationId);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, cc.id.value, "");
   }
 
   CommandResult heartbeat(ConnectorId id, HeartbeatRequest req) {
@@ -66,7 +66,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
       cc.connectorVersion = req.connectorVersion;
 
     repo.update(cc);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, cc.id.value, "");
   }
 
   CommandResult disconnect(string id) {
@@ -84,7 +84,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id,
         "CloudConnector", "Connector disconnected: " ~ cc.locationId);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   CloudConnector getConnector(string id) {
@@ -122,10 +122,10 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
     repo.removeById(id);
 
-    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id,
+    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id.value,
         "CloudConnector", "Connector unregistered: " ~ cc.locationId);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

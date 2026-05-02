@@ -45,7 +45,7 @@ struct Alert {
   long resolvedAt;
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("instanceId", instanceId)
       .set("name", name)
       .set("description", description)

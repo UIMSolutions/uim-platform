@@ -34,7 +34,7 @@ struct MeshBridge {
     string downlinkThroughput;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("sourceBrokerId", sourceBrokerId)
             .set("targetBrokerId", targetBrokerId)
             .set("name", name)

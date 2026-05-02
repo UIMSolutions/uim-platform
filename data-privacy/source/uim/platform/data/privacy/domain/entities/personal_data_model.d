@@ -26,7 +26,7 @@ struct PersonalDataModel {
   string legalReference; // e.g. "GDPR Art. 9(2)(a)"
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("fieldName", fieldName)
       .set("fieldDescription", fieldDescription)
       .set("category", category.to!string)

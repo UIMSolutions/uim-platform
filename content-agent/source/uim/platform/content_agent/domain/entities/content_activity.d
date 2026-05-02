@@ -25,7 +25,7 @@ struct ContentActivity {
   string details;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("activityType", activityType.to!string)
       .set("severity", severity.to!string)
       .set("entityId", entityId)

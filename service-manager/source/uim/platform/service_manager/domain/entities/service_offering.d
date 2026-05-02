@@ -23,7 +23,7 @@ struct ServiceOffering {
     string tags;
 
     Json toJson() const {
-        return Json.entityToJson()
+        return entityToJson()
             .set("brokerId", brokerId.value)
             .set("name", name)
             .set("description", description)

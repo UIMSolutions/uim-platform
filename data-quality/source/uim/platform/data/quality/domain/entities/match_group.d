@@ -24,7 +24,7 @@ struct MatchGroup {
   long resolvedAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("datasetId", datasetId)
       .set("strategy", strategy.to!string)
       .set("resolved", resolved)

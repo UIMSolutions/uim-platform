@@ -37,7 +37,7 @@ struct ServiceInstance {
   int bindingCount;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("namespaceId", namespaceId)
       .set("environmentId", environmentId)
       .set("name", name)

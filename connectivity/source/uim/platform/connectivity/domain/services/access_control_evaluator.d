@@ -46,9 +46,9 @@ struct AccessControlEvaluator {
       return AccessEvaluation(false, "", "No matching access rule found");
 
     if (bestMatch.policy == AccessPolicy.allow)
-      return AccessEvaluation(true, bestMatch.id, "Allowed by rule: " ~ bestMatch.description);
+      return AccessEvaluation(true, bestMatch.id.value, "Allowed by rule: " ~ bestMatch.description);
 
-    return AccessEvaluation(false, bestMatch.id, "Denied by rule: " ~ bestMatch.description);
+    return AccessEvaluation(false, bestMatch.id.value, "Denied by rule: " ~ bestMatch.description);
   }
 
   /// Check if a path starts with the given prefix.

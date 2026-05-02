@@ -27,7 +27,7 @@ struct Event {
   string recurrenceRule; // iCal RRULE
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("workspaceId", workspaceId.value)
       .set("title", title)
       .set("description", description)

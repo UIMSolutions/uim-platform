@@ -24,7 +24,7 @@ struct CommandInput {
     string commandId;
 
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("inputType", inputType.to!string)

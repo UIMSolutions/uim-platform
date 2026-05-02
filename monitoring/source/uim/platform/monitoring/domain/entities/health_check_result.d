@@ -25,7 +25,7 @@ struct HealthCheckResult {
   long executedAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("checkId", checkId)
       .set("resourceId", resourceId)
       .set("status", status.to!string)

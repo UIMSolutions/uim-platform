@@ -26,7 +26,7 @@ struct LegalGround {
   long validUntil; // 0 = indefinite
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("dataSubjectId", dataSubjectId)
       .set("basis", basis.to!string)
       .set("purpose", purpose.to!string)

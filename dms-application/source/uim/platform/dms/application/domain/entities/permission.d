@@ -20,7 +20,7 @@ struct Permission {
   PermissionLevel level = PermissionLevel.read;
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("resourceId", resourceId)
       .set("resourceType", resourceType.to!string)
       .set("userId", userId)

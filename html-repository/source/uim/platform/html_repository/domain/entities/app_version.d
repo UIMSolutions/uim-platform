@@ -23,7 +23,7 @@ struct AppVersion {
   long deployedAt;
   
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("appId", appId)
       .set("versionCode", versionCode)
       .set("description", description)

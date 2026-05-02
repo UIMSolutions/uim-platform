@@ -65,7 +65,7 @@ class RetentionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
-      auto arr = policies.map!(p => serializePolicy(p)).array;
+      auto arr = policies.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

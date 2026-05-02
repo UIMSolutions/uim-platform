@@ -20,7 +20,7 @@ struct KeyMapping {
   KeyMappingEntry[] entries;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("masterDataObjectId", masterDataObjectId)
       .set("category", category.to!string)
       .set("objectType", objectType)

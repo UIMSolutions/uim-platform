@@ -23,7 +23,7 @@ struct DnsRecord {
     long lastValidatedAt;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("customDomainId", customDomainId)
             .set("recordType", recordType.toString())
             .set("hostname", hostname)

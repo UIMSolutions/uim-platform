@@ -20,7 +20,7 @@ struct OAuthScope {
     ScopeStatus status = ScopeStatus.active;
 
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("applicationId", applicationId)
             .set("name", name)
             .set("description", description)

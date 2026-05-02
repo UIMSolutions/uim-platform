@@ -33,7 +33,7 @@ struct EventApplication {
     string currentConnections;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("brokerServiceId", brokerServiceId)
             .set("name", name)
             .set("description", description)

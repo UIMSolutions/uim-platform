@@ -24,7 +24,7 @@ struct UserSession {
   long endedAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("userId", userId)

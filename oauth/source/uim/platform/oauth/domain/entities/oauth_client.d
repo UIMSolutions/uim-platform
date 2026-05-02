@@ -29,7 +29,7 @@ struct OAuthClient {
 
     Json oauthClientToJson() {
         import std.conv : to;
-        return Json.entityToJson
+        return entityToJson
             .set("clientId", clientId)
             .set("name", name)
             .set("description", description)

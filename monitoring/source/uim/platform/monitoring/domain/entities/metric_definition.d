@@ -25,7 +25,7 @@ struct MetricDefinition {
   bool isEnabled = true;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("name", name)
       .set("displayName", displayName)
       .set("description", description)

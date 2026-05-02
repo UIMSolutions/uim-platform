@@ -51,7 +51,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
     auto rule = rules.findById(id);
-    if (rule.isEmpty)
+    if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");
 
     AccessRule updated = rule;

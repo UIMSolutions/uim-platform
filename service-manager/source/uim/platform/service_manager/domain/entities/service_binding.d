@@ -19,7 +19,7 @@ struct ServiceBinding {
     string labels;
     
     Json toJson() const {
-        return Json.entityToJson()
+        return entityToJson()
             .set("name", name)
             .set("instanceId", instanceId.value)
             .set("status", status.toString())

@@ -27,7 +27,7 @@ struct Trigger {
     string lastTriggeredAt;
 
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("commandId", commandId)
             .set("name", name)
             .set("description", description)

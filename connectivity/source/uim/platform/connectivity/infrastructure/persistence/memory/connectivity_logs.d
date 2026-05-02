@@ -24,8 +24,12 @@ class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, Conne
     return findBySeverity(tenantId, severity).length;
   }
 
+  ConnectivityLog[] filterBySeverity(ConnectivityLog[] logs, LogSeverity severity) {
+    return logs.filter!(e => e.severity == severity).array;
+  }
+
   ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity) {
-    return logs.filter!(e => e.tenantId == tenantId && e.severity == severity).array;
+    return filterBySeverity(findByTenant(tenantId), severity);
   }
 
   void removeBySeverity(TenantId tenantId, LogSeverity severity) {

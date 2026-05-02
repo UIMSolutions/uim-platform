@@ -41,7 +41,7 @@ struct Span {
   string[string] resourceAttributes;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("traceId", traceId)
       .set("parentSpanId", parentSpanId)
       .set("operationName", operationName)

@@ -52,15 +52,15 @@ struct Destination {
   DestinationProperty[] additionalHeaders;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
         .set("name", name)
         .set("description", description)
         .set("url", url)
         .set("destinationType", destinationType.to!string)
         .set("authType", authType.to!string)
         .set("proxyType", proxyType.to!string)
-        .set("properties", properties.map!(p => p.toJson()).array)
-        .set("additionalHeaders", additionalHeaders.map!(h => h.toJson()).array)
+        .set("properties", properties.map!(p => p.toJson()).array.toJson)
+        .set("additionalHeaders", additionalHeaders.map!(h => h.toJson()).array.toJson)
         .set("certificateId", certificateId.value)
         .set("cloudConnectorLocationId", cloudConnectorLocationId)
         .set("hasCredentials", user.length > 0 || password.length > 0 || clientId.length > 0 || clientSecret.length > 0)

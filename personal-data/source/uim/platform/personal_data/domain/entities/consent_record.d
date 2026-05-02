@@ -27,7 +27,7 @@ struct ConsentRecord {
     string source;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("dataSubjectId", dataSubjectId)
             .set("purposeId", purposeId)
             .set("status", status.to!string)

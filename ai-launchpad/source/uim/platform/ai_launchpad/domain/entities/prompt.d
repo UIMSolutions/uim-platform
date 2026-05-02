@@ -56,7 +56,7 @@ struct Prompt {
   string updatedAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("collection_id", collectionId)
       .set("name", name)
       .set("model_name", modelName)

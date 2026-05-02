@@ -20,17 +20,17 @@ mixin(ShowModule!());
 @safe:
 /// Application service for destination CRUD and lookup.
 class ManageDestinationsUseCase { // TODO: UIMUseCase {
-  private DestinationRepository repo;
-  private ConnectivityLogRepository logRepo;
+  private DestinationRepository destinations;
+  private ConnectivityLogRepository logs;
 
-  this(DestinationRepository repo, ConnectivityLogRepository logRepo) {
-    this.repo = repo;
-    this.logRepo = logRepo;
+  this(DestinationRepository destinations, ConnectivityLogRepository logs) {
+    this.destinations = destinations;
+    this.logs = logs;
   }
 
   CommandResult createDestination(CreateDestinationRequest req) {
     // Validate unique name within tenant
-    auto existing = repo.findByName(req.tenantId, req.name);
+    auto existing = destinations.findByName(req.tenantId, req.name);
     if (!existing.isNull)
       return CommandResult(false, "", "Destination with name '" ~ req.name ~ "' already exists");
 
@@ -74,12 +74,12 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", msg);
     }
 
-    repo.save(dest);
-    return CommandResult(true, id.toString, "");
+    destinations.save(dest);
+    return CommandResult(true, dest.id.value, "");
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
-    auto dest = repo.findById(id);
+    auto dest = destinations.findById(id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -125,29 +125,29 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", msg);
     }
 
-    repo.update(dest);
-    return CommandResult(true, id.toString, "");
+    destinations.update(dest);
+    return CommandResult(true, dest.id.value, "");
   }
 
   Destination getDestination(DestinationId id) {
-    return repo.findById(id);
+    return destinations.findById(id);
   }
 
   Destination getByName(TenantId tenantId, string name) {
-    return repo.findByName(tenantId, name);
+    return destinations.findByName(tenantId, name);
   }
 
   Destination[] listDestinations(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return destinations.findByTenant(tenantId);
   }
 
   CommandResult deleteDestination(DestinationId id) {
-    auto dest = repo.findById(id);
+    auto dest = destinations.findById(id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.toString, "");
+    destinations.removeById(id);
+    return CommandResult(true, dest.id.value, "");
   }
 }
 

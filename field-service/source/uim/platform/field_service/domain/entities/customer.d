@@ -29,7 +29,7 @@ struct Customer {
     string accountNumber;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("customerType", customerType.to!string)

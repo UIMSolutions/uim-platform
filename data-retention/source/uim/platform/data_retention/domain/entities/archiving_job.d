@@ -20,7 +20,7 @@ struct ArchivingJob {
     string errorMessage;
     
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("applicationGroupId", applicationGroupId)
             .set("operationType", operationType.to!string)
             .set("status", status.to!string)

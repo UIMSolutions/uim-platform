@@ -138,23 +138,4 @@ class CertificateController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeCert(const Certificate c) {
-    return Json.emptyObject
-      .set("id", Json(c.id))
-      .set("tenantId", Json(c.tenantId))
-      .set("name", Json(c.name))
-      .set("description", Json(c.description))
-      .set("type", Json(c.certType.to!string))
-      .set("usage", Json(c.usage.to!string))
-      .set("subjectDN", Json(c.subjectDN))
-      .set("issuerDN", Json(c.issuerDN))
-      .set("serialNumber", Json(c.serialNumber))
-      .set("fingerprint", Json(c.fingerprint))
-      .set("validFrom", Json(c.validFrom))
-      .set("validTo", Json(c.validTo))
-      .set("active", Json(c.active))
-      .set("createdAt", Json(c.createdAt))
-      .set("updatedAt", Json(c.updatedAt));
-  }
 }

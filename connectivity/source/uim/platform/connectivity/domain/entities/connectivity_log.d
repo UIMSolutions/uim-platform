@@ -25,7 +25,7 @@ struct ConnectivityLog {
   long timestamp;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("eventType", eventType.to!string)
       .set("severity", severity.to!string)
       .set("sourceId", sourceId)

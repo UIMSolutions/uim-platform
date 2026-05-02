@@ -21,7 +21,7 @@ struct ProvisionedEntity {
   long lastSyncAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("externalId", externalId)
       .set("entityType", entityType.to!string)
       .set("sourceSystemId", sourceSystemId)

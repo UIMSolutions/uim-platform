@@ -26,7 +26,7 @@ struct ContentConnector {
     BackupStatus backupStatus = BackupStatus.pending;
 
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("connectorType", connectorType.to!string)

@@ -20,7 +20,7 @@ struct Channel {
   ChannelConfig config;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("workspaceId", workspaceId.value)
       .set("name", name)
       .set("description", description)

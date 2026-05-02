@@ -26,7 +26,7 @@ struct CustomDomain {
     bool clientAuthEnabled;
 
     Json toJson() const {
-        return Json.entityToJson
+        return entityToJson
             .set("domainName", domainName)
             .set("organizationId", organizationId)
             .set("spaceId", spaceId)

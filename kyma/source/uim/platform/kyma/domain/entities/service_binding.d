@@ -37,7 +37,7 @@ struct ServiceBinding {
   string[string] labels;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("serviceInstanceId", serviceInstanceId)
       .set("namespaceId", namespaceId)
       .set("environmentId", environmentId)

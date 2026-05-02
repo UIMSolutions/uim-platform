@@ -25,7 +25,7 @@ struct Survey {
   long endsAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("workspaceId", workspaceId.value)
       .set("title", title)
       .set("description", description)

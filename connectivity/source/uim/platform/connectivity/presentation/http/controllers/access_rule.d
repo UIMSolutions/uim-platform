@@ -86,7 +86,7 @@ class AccessRuleController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RuleId(extractIdFromPath(req.requestURI));
       auto rule = uc.getRule(id);
       if (rule.isNull) {
         writeError(res, 404, "Access rule not found");
@@ -100,7 +100,7 @@ class AccessRuleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateAccessRuleRequest();
       r.description = j.getString("description");
@@ -125,7 +125,7 @@ class AccessRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RuleId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject

@@ -25,7 +25,7 @@ struct ProcessingPurpose {
     bool requiresConsent;
 
     Json toJson() const {
-        return Json.entityToJson()
+        return entityToJson()
             .set("name", name)
             .set("description", description)
             .set("legalBasis", legalBasis.toString())

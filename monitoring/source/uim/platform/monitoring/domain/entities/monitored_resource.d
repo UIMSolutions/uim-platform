@@ -30,7 +30,7 @@ struct MonitoredResource {
   long lastSeenAt;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("subaccountId", subaccountId)
       .set("name", name)
       .set("description", description)

@@ -19,7 +19,7 @@ struct Platform {
     string subaccountId;
     
     Json toJson() const {
-        return Json.entityToJson()
+        return entityToJson()
             .set("name", name)
             .set("description", description)
             .set("type", type.toString())

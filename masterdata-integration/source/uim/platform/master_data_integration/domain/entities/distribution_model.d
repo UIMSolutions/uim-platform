@@ -32,7 +32,7 @@ struct DistributionModel {
   string cronSchedule; // e.g. "0 */6 * * *"
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("status", status.to!string)

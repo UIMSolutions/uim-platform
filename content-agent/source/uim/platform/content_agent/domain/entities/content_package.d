@@ -22,7 +22,7 @@ struct ContentItem {
   string[] dependencies;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("id", id)
       .set("name", name)
       .set("category", category.to!string)
@@ -49,7 +49,7 @@ struct ContentPackage {
   long packageSizeBytes;
 
   Json toJson() const {
-    return Json.entityToJson
+    return entityToJson
       .set("subaccountId", subaccountId)
       .set("name", name)
       .set("description", description)
