@@ -4,3 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain;
+
+public {
+    import uim.platform.abap_environment.domain.types;
+    import uim.platform.abap_environment.domain.entities;
+    import uim.platform.abap_environment.domain.ports;
+    import uim.platform.abap_environment.domain.services;
+}

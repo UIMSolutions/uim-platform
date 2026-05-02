@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application;
+
+public {
+  import uim.platform.abap_environment.application.dtos;
+  import uim.platform.abap_environment.application.usecases;
+}
