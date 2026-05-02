@@ -15,5 +15,4 @@ public {
   import uim.platform.ai_core.presentation.http.controllers.resource_group;
   import uim.platform.ai_core.presentation.http.controllers.metric;
   import uim.platform.ai_core.presentation.http.controllers.meta;
-  import uim.platform.ai_core.presentation.http.controllers.health;
 }

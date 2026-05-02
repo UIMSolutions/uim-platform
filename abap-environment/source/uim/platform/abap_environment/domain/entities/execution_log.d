@@ -14,7 +14,7 @@ struct JobExecutionLog {
     string message;
     int returnCode;
 
-    Json toJson() {
+    Json toJson() const {
         return Json.emptyObject
             .set("executionId", executionId)
             .set("status", status.to!string)

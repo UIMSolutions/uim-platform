@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// Individual task within a transport request.
 struct TransportTask {
-  string taskId;
+  string id;
   string owner;
   TransportStatus status = TransportStatus.modifiable;
   string description;
@@ -23,7 +23,7 @@ struct TransportTask {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("taskId", taskId)
+      .set("taskId", id)
       .set("owner", owner)
       .set("status", status.to!string)
       .set("description", description)
@@ -66,7 +66,7 @@ struct TransportRequest {
 
     if (tasks.length > 0) {
       auto ts = tasks.map!(t => Json.emptyObject
-        .set("taskId", t.taskId)
+        .set("taskId", t.id)
         .set("owner", t.owner)
         .set("status", t.status.to!string)
         .set("description", t.description)

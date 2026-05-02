@@ -194,9 +194,8 @@ class TransportRequestController : PlatformController {
     if (tr.tasks.length > 0) {
       auto tasks = Json.emptyArray;
       foreach (t; tr.tasks) {
-        auto tj = Json.emptyObject;
-        
-        .set("taskId", t.taskId)
+        auto tj = Json.emptyObject
+          .set("taskId", t.id)
           .set("owner", t.owner)
           .set("status", t.status.to!string)
           .set("description", t.description)
@@ -204,9 +203,7 @@ class TransportRequestController : PlatformController {
           .set("releasedAt", t.releasedAt);
 
         if (t.objectList.length > 0) {
-          auto ol = Json.emptyArray;
-          foreach (o; t.objectList)
-            ol ~= Json(o);
+          auto ol = t.objectList.map!(o => o.toJson).array.toJson;
           tj["objectList"] = ol;
         }
 

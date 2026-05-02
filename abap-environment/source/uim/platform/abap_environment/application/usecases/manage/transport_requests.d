@@ -48,7 +48,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.createdAt = Clock.currStdTime();
 
     repo.save(tr);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, tr.id.value, "");
   }
 
   CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
@@ -61,7 +61,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     auto taskId = randomUUID().toString()[0 .. 8];
     TransportTask task;
-    task.taskId = taskId;
+    task.id = taskId;
     task.owner = req.owner;
     task.status = TransportStatus.modifiable;
     task.description = req.description;
@@ -72,7 +72,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     tr.tasks ~= task;
     repo.update(tr);
-    return CommandResult(true, task.id.value, "");
+    return CommandResult(true, task.id, "");
   }
 
   CommandResult releaseTask(TransportRequestId requestId, string taskId) {
@@ -81,7 +81,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     auto tr = repo.findById(requestId);
     foreach (task; tr.tasks) {
-      if (task.taskId == taskId) {
+      if (task.id == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
         if (!validation.valid) {
           string msg;
@@ -98,7 +98,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         task.releasedAt = Clock.currStdTime();
 
         repo.update(tr);
-        return CommandResult(true, taskId.value, "");
+        return CommandResult(true, task.id, "");
       }
     }
     return CommandResult(false, "", "Task not found");

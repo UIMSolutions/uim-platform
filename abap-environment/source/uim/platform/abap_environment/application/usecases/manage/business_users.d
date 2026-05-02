@@ -120,6 +120,6 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Business user not found");
 
     repo.removeById(id);
-    return CommandResult(true, id.value(), "");
+    return CommandResult(true, id.value, "");
   }
 }

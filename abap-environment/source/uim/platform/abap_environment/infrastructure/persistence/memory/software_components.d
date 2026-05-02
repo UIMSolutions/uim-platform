@@ -39,9 +39,9 @@ class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, S
     return findBySystem(systemId).length;
   }
 
-  SoftwareComponent[] filterBySystem(SoftwareComponent[] components, string nameFilter) {
+  SoftwareComponent[] filterBySystem(SoftwareComponent[] components, SystemInstanceId systemId) {
     return components
-      .filter!(e => e.name.contains(nameFilter, "i"))
+      .filter!(e => e.systemInstanceId == systemId)
       .array;
   }
   SoftwareComponent[] findBySystem(SystemInstanceId systemId) {

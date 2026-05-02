@@ -42,7 +42,7 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
   }
 
   void removeByStatus(TenantId tenantId, SystemStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
 }

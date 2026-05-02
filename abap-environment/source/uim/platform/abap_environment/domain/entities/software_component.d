@@ -66,7 +66,7 @@ struct SoftwareComponent {
         .set("commitId", c.commitId)
         .set("message", c.message)
         .set("author", c.author)
-        .set("timestamp", c.timestamp).array)();
+        .set("timestamp", c.timestamp)).array.toJson;
       j["commitHistory"] = history;
     }
 

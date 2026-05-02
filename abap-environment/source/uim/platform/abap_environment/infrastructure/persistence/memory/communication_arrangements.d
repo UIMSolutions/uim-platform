@@ -29,7 +29,7 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
   }
   
   CommunicationArrangement[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filterBySystem(systemId);
+    return filterBySystem(findAll(), systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {
@@ -39,7 +39,7 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
 
   // #region ByDirection
   size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return findBySystem(systemId).count!(e => e.direction == dir);
+    return findByDirection(systemId, dir).length;
   }
 
   CommunicationArrangement[] filterByDirection(CommunicationArrangement[] arrangements, CommunicationDirection dir) {
@@ -47,7 +47,7 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
   }
 
   CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return findBySystem(systemId).filterByDirection(dir);
+    return filterByDirection(findBySystem(systemId), dir);
   }
 
   void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
