@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application.usecases.manage.application_jobs;
 
-import uim.platform.abap_environment.application.dto;
-import uim.platform.abap_environment.domain.entities.application_job;
-import uim.platform.abap_environment.domain.ports.repositories.application_jobs;
-import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.application.dto;
+// import uim.platform.abap_environment.domain.entities.application_job;
+// import uim.platform.abap_environment.domain.ports.repositories.application_jobs;
+// import uim.platform.abap_environment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for application job scheduling and management.
 class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   private ApplicationJobRepository repo;

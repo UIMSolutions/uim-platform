@@ -6,7 +6,9 @@
 module uim.platform.abap_environment;
 
 public {
+  import uim.platform.abap_environment.application;
   import uim.platform.abap_environment.domain;
+  import uim.platform.abap_environment.helpers;
   import uim.platform.abap_environment.infrastructure;
-  import uim.platform.abap_environment.http.controllers;
+  import uim.platform.abap_environment.presentation;
 }

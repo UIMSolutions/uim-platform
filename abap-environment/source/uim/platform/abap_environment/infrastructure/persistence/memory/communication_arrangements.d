@@ -4,15 +4,19 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.infrastructure.persistence.memory
-  .communication_arrangement;
+  .communication_arrangements;
 
-import uim.platform.abap_environment.domain.types;
-import uim.platform.abap_environment.domain.entities.communication_arrangement;
-import uim.platform.abap_environment.domain.ports.repositories.communication_arrangements;
+// import uim.platform.abap_environment.domain.types;
+// import uim.platform.abap_environment.domain.entities.communication_arrangement;
+// import uim.platform.abap_environment.domain.ports.repositories.communication_arrangements;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.abap_environment;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryCommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
   
   // #region BySystem

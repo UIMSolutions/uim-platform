@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_environment.presentation.http.transport_request;
+module uim.platform.abap_environment.presentation.http.controllers.transport_request;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -73,7 +73,8 @@ class TransportRequestController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", requests.length);
+        .set("totalCount", requests.length)
+        .set("message", "Transport requests retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
