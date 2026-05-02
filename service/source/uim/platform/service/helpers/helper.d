@@ -98,15 +98,15 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
   size_t matches = 0;
   size_t total = 0;
   foreach (k, v; a) {
-    if (auto bv = k in b) {
+    if (k in b) {
       total++;
-      if (bv == v)
+      if (b[k] == v)
         matches++;
     } else {
       total++;
     }
   }
-  foreach (k, _; b) {
+  foreach (k, v; b) {
     if (k !in a)
       total++;
   }

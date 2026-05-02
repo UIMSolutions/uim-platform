@@ -152,9 +152,8 @@ private AppConfig parseAppConfig(Json j) {
   import uim.platform.workzone.domain.entities.app_registration : AppConfig;
 
   AppConfig cfg;
-  auto v = "appConfig" in j;
-  if (v !is null && (v).isObject) {
-    auto c = *v;
+  if ("appConfig" in j && j["appConfig"].isObject) {
+    auto c = j["appConfig"];
     cfg.authType = c.getString("authType");
     cfg.authEndpoint = c.getString("authEndpoint");
     cfg.enableSso = getBoolean(c, "enableSso");
@@ -165,29 +164,4 @@ private AppConfig parseAppConfig(Json j) {
   return cfg;
 }
 
-private Json serializeApp(AppRegistration a) {
-  auto platforms = a.supportedPlatforms.map!(p => Json(p)).array.toJson;
-  auto tags = a.tags.map!(t => Json(t)).array.toJson;
 
-  auto cfg = Json.emptyObject
-    .set("authType", a.appConfig.authType)
-    .set("enableSso", a.appConfig.enableSso)
-    .set("sapSystemAlias", a.appConfig.sapSystemAlias)
-    .set("componentId", a.appConfig.componentId);
-
-  return Json.emptyObject
-    .set("id", a.id)
-    .set("tenantId", a.tenantId)
-    .set("name", a.name)
-    .set("description", a.description)
-    .set("launchUrl", a.launchUrl)
-    .set("icon", a.icon)
-    .set("vendor", a.vendor)
-    .set("version", a.version_)
-    .set("status", a.status.to!string)
-    .set("createdAt", a.createdAt)
-    .set("updatedAt", a.updatedAt)
-    .set("supportedPlatforms", platforms)
-    .set("tags", tags)
-    .set("appConfig", cfg);
-}

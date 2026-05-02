@@ -122,7 +122,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     s.completedAt = job.completedAt;
 
     auto config = configRepo.findById(job.modelConfigtenantId, id);
-    if (config !is null)
+    if (!config.isNull)
       s.modelName = config.name;
 
     return s;
@@ -137,7 +137,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     s.replicas = dep.replicas;
 
     auto config = configRepo.findById(dep.modelConfigtenantId, id);
-    if (config !is null)
+    if (!config.isNull)
       s.modelName = config.name;
 
     auto reqs = inferenceRepo.findByDeployment(dep.tenantId, id);

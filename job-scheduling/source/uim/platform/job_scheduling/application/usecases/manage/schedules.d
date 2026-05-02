@@ -42,7 +42,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
     Schedule getById(TenantId tenantId, ScheduleId id, JobId jobId) {
-        return schedules.findById(id, jobId, tenantId);
+        return schedules.findById(tenantId, id, jobId);
     }
 
     Schedule[] list(TenantId tenantId, JobId jobId) {

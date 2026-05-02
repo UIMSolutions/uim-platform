@@ -41,7 +41,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Dataset not found");
 
     auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Model configuration with this name already exists");
 
     auto now = Clock.currStdTime();

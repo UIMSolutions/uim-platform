@@ -23,7 +23,7 @@ struct CreateServiceBindingRequest {
       .set("name", name)
       .set("description", description)
       .set("bindingType", bindingType)
-      .set("endpoints", endpoints.map!(e => e.toJson()).array);
+      .set("endpoints", endpoints.map!(e => e.toJson()).array.toJson);
   }
 }
 
@@ -36,6 +36,6 @@ struct UpdateServiceBindingRequest {
     return Json.emptyObject
       .set("description", description)
       .set("status", status)
-      .set("endpoints", endpoints.map!(e => e.toJson()).array);
+      .set("endpoints", endpoints.map!(e => e.toJson()).array.toJson);
   }
 }

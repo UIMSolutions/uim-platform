@@ -8,12 +8,16 @@ module uim.platform.identity.provisioning.application.usecases.manage.transforma
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.transformation;
-import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
-import uim.platform.identity.provisioning.domain.services.transformation_engine;
-import uim.platform.identity.provisioning.application.dto;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.transformation;
+// import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
+// import uim.platform.identity.provisioning.domain.services.transformation_engine;
+// import uim.platform.identity.provisioning.application.dto;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageTransformationsUseCase { // TODO: UIMUseCase {
   private TransformationRepository repo;
   private TransformationEngine engine;

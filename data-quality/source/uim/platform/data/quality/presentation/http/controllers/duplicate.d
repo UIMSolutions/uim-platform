@@ -46,15 +46,12 @@ class DuplicateController : PlatformController {
       r.strategy = parseStrategy(j.getString("strategy"));
       r.threshold = getDouble(j, "threshold", 70.0);
 
-      auto recordsJson = "records" in j;
-      if (recordsJson !is null && (recordsJson).isArray) {
-        foreach (item; *recordsJson) {
-          if (item.isObject) {
-            DuplicateRecordInput dri;
-            dri.recordId = item.getString("recordId");
-            dri.fieldValues = jsonStrMap(item, "fieldValues");
-            r.records ~= dri;
-          }
+      foreach (item; j.getArray("records")) {
+        if (item.isObject) {
+          DuplicateRecordInput dri;
+          dri.recordId = item.getString("recordId");
+          dri.fieldValues = jsonStrMap(item, "fieldValues");
+          r.records ~= dri;
         }
       }
 
@@ -62,9 +59,9 @@ class DuplicateController : PlatformController {
       auto arr = groups.map!(g => g.toJson).array;
 
       auto resp = Json.emptyObject
-          .set("matchGroups", arr)
-          .set("totalGroups", Json(groups.length))
-          .set("message", "Duplicate groups detected successfully");
+        .set("matchGroups", arr)
+        .set("totalGroups", Json(groups.length))
+        .set("message", "Duplicate groups detected successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -83,9 +80,9 @@ class DuplicateController : PlatformController {
       auto result = uc.resolve(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("resolved", Json(true))
-            .set("message", "Duplicate group resolved successfully");
+          .set("id", Json(result.id))
+          .set("resolved", Json(true))
+          .set("message", "Duplicate group resolved successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -103,9 +100,9 @@ class DuplicateController : PlatformController {
       auto arr = groups.map!(g => g.toJson).array;
 
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(groups.length))
-            .set("message", "Duplicate groups retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", Json(groups.length))
+        .set("message", "Duplicate groups retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -141,10 +138,10 @@ class DuplicateController : PlatformController {
     auto candidates = Json.emptyArray;
     foreach (c; g.candidates) {
       candidates ~= Json.emptyObject
-      .set("recordId", c.recordId)
-      .set("score", c.score)
-      .set("confidence", c.confidence.to!string)
-      .set("isSurvivor", c.isSurvivor);
+        .set("recordId", c.recordId)
+        .set("score", c.score)
+        .set("confidence", c.confidence.to!string)
+        .set("isSurvivor", c.isSurvivor);
     }
     json["candidates"] = candidates;
 

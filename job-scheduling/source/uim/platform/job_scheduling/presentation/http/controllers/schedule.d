@@ -163,7 +163,7 @@ class ScheduleController : PlatformController {
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.remove(ids[1], ids[0], tenantId);
+            auto result = uc.remove(tenantId, ids[1], ids[0]);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
@@ -214,7 +214,8 @@ class ScheduleController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("total", schedules.length)
-                .set("results", jarr);
+                .set("results", jarr)
+                .set("message", "Search completed");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

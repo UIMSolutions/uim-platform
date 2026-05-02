@@ -25,7 +25,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tag name is required");
 
     auto existing = repo.findByName(req.name, req.tenantId);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Tag with this name already exists");
 
     auto now = Clock.currStdTime();

@@ -57,9 +57,8 @@ class ValidateController : PlatformController {
       r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
 
-      auto recordsJson = "records" in j;
-      if (recordsJson !is null && (recordsJson).isArray) {
-        foreach (item; *recordsJson) {
+      if ("records" in j && j["records"].isArray) {
+        foreach (item; j["records"].toArray) {
           if (item.isObject) {
             RecordFieldValues rfv;
             rfv.recordId = item.getString("recordId");
@@ -73,9 +72,9 @@ class ValidateController : PlatformController {
       auto arr = results.map!(res_ => res_.toJson).array;
 
       auto resp = Json.emptyObject
-            .set("results", arr)
-            .set("totalCount", Json(results.length))
-            .set("message", "Validation results retrieved successfully");
+        .set("results", arr)
+        .set("totalCount", Json(results.length))
+        .set("message", "Validation results retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -122,7 +121,7 @@ class ValidateController : PlatformController {
 
         if (v.suggestedValue.length > 0)
           vj = vj.set("suggestedValue", v.suggestedValue);
-        
+
         violations ~= vj;
       }
       j["violations"] = violations;

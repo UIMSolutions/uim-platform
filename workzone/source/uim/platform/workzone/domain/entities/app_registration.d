@@ -9,8 +9,8 @@ import uim.platform.workzone.domain.types;
 
 /// A registered business application — SAP or third-party app entry.
 struct AppRegistration {
-  AppId id;
-  TenantId tenantId;
+  mixin TenantEntity!AppId;
+
   string name;
   string description;
   string launchUrl;
@@ -22,8 +22,29 @@ struct AppRegistration {
   string[] tags;
   RoleId[] allowedRoleIds;
   AppConfig appConfig;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto platforms = supportedPlatforms.map!(p => p.toJson).array.toJson;
+    auto tags = tags.map!(t => t.toJson).array.toJson;
+
+    auto cfg = Json.emptyObject
+      .set("authType", appConfig.authType)
+      .set("enableSso", appConfig.enableSso)
+      .set("sapSystemAlias", appConfig.sapSystemAlias)
+      .set("componentId", appConfig.componentId);
+
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("launchUrl", launchUrl)
+      .set("icon", icon)
+      .set("vendor", vendor)
+      .set("version", version_)
+      .set("status", status.to!string)
+      .set("supportedPlatforms", platforms)
+      .set("tags", tags)
+      .set("appConfig", cfg);
+  }
 }
 
 /// App-specific configuration.
@@ -36,12 +57,12 @@ struct AppConfig {
   string componentId;
 
   Json toJson() const {
-      return Json()
-          .set("authType", authType)
-          .set("authEndpoint", authEndpoint)
-          .set("enableSso", enableSso)
-          .set("sapSystemAlias", sapSystemAlias)
-          .set("oDataServiceUrl", oDataServiceUrl)
-          .set("componentId", componentId);
+    return Json()
+      .set("authType", authType)
+      .set("authEndpoint", authEndpoint)
+      .set("enableSso", enableSso)
+      .set("sapSystemAlias", sapSystemAlias)
+      .set("oDataServiceUrl", oDataServiceUrl)
+      .set("componentId", componentId);
   }
 }

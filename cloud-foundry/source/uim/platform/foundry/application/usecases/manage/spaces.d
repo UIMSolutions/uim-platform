@@ -46,7 +46,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
 
     // Unique name within org
     auto existing = repo.findByName(req.orgId, req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Space with this name already exists in org");
 
     auto now = Clock.currStdTime();

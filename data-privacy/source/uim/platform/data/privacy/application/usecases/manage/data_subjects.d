@@ -33,7 +33,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     // Check for duplicate external ID
     if (req.externalId.length > 0) {
       auto existing = repo.findByExternalId(req.externalId, req.tenantId);
-      if (existing !is null)
+      if (!existing.isNull)
         return CommandResult(false, "", "Data subject with this external ID already exists");
     }
 

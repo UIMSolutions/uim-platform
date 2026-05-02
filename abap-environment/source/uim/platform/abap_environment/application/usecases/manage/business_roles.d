@@ -34,7 +34,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System instance ID is required");
 
     auto existing = repo.findByName(req.systemInstanceId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Business role '" ~ req.name ~ "' already exists");
 
     BusinessRole role;

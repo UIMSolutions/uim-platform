@@ -30,7 +30,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findByName(r.name, r.tenantId);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Repository with this name already exists");
 
     auto entity = new Repository();

@@ -35,7 +35,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     // Ensure unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Destination with this name already exists");
 
     // Validate linked system if provided

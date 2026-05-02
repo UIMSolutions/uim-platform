@@ -43,7 +43,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
 
     // Unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "System instance '" ~ req.name ~ "' already exists");
 
     SystemInstance inst;

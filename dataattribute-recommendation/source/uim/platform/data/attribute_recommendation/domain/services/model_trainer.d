@@ -100,7 +100,7 @@ class ModelTrainer {
 
     // Update model config to trained
     auto config = configRepo.findById(job.modelConfigtenantId, id);
-    if (config !is null) {
+    if (!config.isNull) {
       config.status = ModelConfigStatus.trained;
       config.updatedAt = now;
       configRepo.update(config);
@@ -110,7 +110,7 @@ class ModelTrainer {
   /// Cancel a running training job.
   bool cancelTraining(TrainingJobId jobtenantId, id tenantId) {
     auto job = jobRepo.findById(jobtenantId, id);
-    if (job is null || job.status != JobStatus.running)
+    if (job.isNull || job.status != JobStatus.running)
       return false;
 
     auto now = Clock.currStdTime();
@@ -120,7 +120,7 @@ class ModelTrainer {
 
     // Revert config status
     auto config = configRepo.findById(job.modelConfigtenantId, id);
-    if (config !is null) {
+    if (!config.isNull) {
       config.status = ModelConfigStatus.ready;
       config.updatedAt = now;
       configRepo.update(config);

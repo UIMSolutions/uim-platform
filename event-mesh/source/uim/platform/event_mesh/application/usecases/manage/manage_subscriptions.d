@@ -68,7 +68,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
         if (dto.topicFilter.length > 0) existing.topicFilter = dto.topicFilter;
         if (dto.selector.length > 0) existing.selector = dto.selector;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

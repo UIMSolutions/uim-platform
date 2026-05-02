@@ -8,11 +8,15 @@ module uim.platform.identity.provisioning.application.usecases.manage.target_sys
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.target_system;
-import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
-import uim.platform.identity.provisioning.application.dto;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.target_system;
+// import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
+// import uim.platform.identity.provisioning.application.dto;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   private TargetSystemRepository repo;
 
@@ -27,7 +31,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing !is null)
+    if (!existing.isNull)
       return CommandResult(false, "", "Target system with this name already exists");
 
     auto now = Clock.currStdTime();

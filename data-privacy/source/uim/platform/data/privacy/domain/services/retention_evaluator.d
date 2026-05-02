@@ -43,25 +43,20 @@ class RetentionEvaluator {
     if (rules.length == 0) {
       // Try default rule
       auto defaultRule = ruleRepo.findDefault(tenantId);
-      if (defaultRule !is null) {
+      if (!defaultRule.isNull) {
         result.maxRetentionDays = defaultRule.retentionDays;
         result.applicableRule = defaultRule.name;
-      }
-      else
-      {
+      } else {
         result.maxRetentionDays = 365; // fallback: 1 year
         result.applicableRule = "default (no rule configured)";
         result.warnings ~= "No retention rule found; using default 365 days";
       }
-    }
-    else
-    {
+    } else {
       // Use the longest applicable retention rule
       int maxDays = 0;
       string ruleName;
       foreach (r; rules) {
-        if (r.status == RetentionRuleStatus.active && r.retentionDays > maxDays)
-        {
+        if (r.status == RetentionRuleStatus.active && r.retentionDays > maxDays) {
           maxDays = r.retentionDays;
           ruleName = r.name;
         }
@@ -69,9 +64,7 @@ class RetentionEvaluator {
       if (maxDays > 0) {
         result.maxRetentionDays = maxDays;
         result.applicableRule = ruleName;
-      }
-      else
-      {
+      } else {
         result.maxRetentionDays = 365;
         result.applicableRule = "default (all rules inactive)";
         result.warnings ~= "All matching rules inactive; using default 365 days";

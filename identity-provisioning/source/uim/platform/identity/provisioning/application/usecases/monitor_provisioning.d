@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.entities.provisioning_log;
-import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
-import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
-import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+// import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+// import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+// import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Summary of a provisioning job for monitoring dashboards.
 struct JobSummary {
   ProvisioningJobId jobId;
