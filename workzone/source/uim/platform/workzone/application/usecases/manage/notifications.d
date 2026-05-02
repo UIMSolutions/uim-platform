@@ -43,7 +43,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  Notification* getNotification(NotificationId tenantId, id tenantId) {
+  Notification getNotification(NotificationId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

@@ -72,7 +72,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  ProxySystem* getProxySystem(ProxySystemId tenantId, id tenantId) {
+  ProxySystem getProxySystem(ProxySystemId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

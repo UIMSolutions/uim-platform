@@ -39,7 +39,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  Role* getRole(RoleId tenantId, id tenantId) {
+  Role getRole(RoleId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

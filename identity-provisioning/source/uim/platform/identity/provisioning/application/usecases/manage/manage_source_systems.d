@@ -51,7 +51,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SourceSystem* getSourceSystem(SourceSystemId tenantId, id tenantId) {
+  SourceSystem getSourceSystem(SourceSystemId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

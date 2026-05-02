@@ -40,7 +40,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(ch.id, "");
   }
 
-  Channel* getChannel(ChannelId tenantId, id tenantId) {
+  Channel getChannel(ChannelId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

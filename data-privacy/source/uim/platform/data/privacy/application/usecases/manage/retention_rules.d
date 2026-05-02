@@ -51,7 +51,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  RetentionRule* getRule(RetentionRuleId tenantId, id tenantId) {
+  RetentionRule getRule(RetentionRuleId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

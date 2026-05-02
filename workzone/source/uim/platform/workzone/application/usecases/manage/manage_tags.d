@@ -42,7 +42,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Tag* getTag(TagId tenantId, id tenantId) {
+  Tag getTag(TagId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

@@ -99,7 +99,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  ProvisioningJob* getJob(ProvisioningJobId tenantId, id tenantId) {
+  ProvisioningJob getJob(ProvisioningJobId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

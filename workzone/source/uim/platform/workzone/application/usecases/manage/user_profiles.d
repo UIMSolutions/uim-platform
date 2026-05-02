@@ -45,11 +45,11 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  UserProfile* getUserProfile(UserProfileId tenantId, id tenantId) {
+  UserProfile getUserProfile(UserProfileId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 
-  UserProfile* getUserProfileByUserId(UserId usertenantId, id tenantId) {
+  UserProfile getUserProfileByUserId(UserId usertenantId, id tenantId) {
     return repo.findByUserId(usertenantId, id);
   }
 

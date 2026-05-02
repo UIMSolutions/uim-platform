@@ -41,7 +41,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  BusinessProcess* getProcess(BusinessProcessId tenantId, id tenantId) {
+  BusinessProcess getProcess(BusinessProcessId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

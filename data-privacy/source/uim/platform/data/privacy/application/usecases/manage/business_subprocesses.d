@@ -43,7 +43,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     return CommandResult(sp.id, "");
   }
 
-  BusinessSubprocess* getSubprocess(BusinessSubprocessId tenantId, id tenantId) {
+  BusinessSubprocess getSubprocess(BusinessSubprocessId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

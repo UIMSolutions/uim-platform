@@ -47,7 +47,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  InformationReport* getReport(InformationReportId tenantId, id tenantId) {
+  InformationReport getReport(InformationReportId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

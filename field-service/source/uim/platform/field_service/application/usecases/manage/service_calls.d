@@ -18,7 +18,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceCall* getById(ServiceCallId id) {
+    ServiceCall getById(ServiceCallId id) {
         return repo.findById(id);
     }
 

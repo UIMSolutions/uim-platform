@@ -57,7 +57,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Transformation* getTransformation(TransformationId tenantId, id tenantId) {
+  Transformation getTransformation(TransformationId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

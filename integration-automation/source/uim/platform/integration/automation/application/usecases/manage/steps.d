@@ -37,7 +37,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     return repo.findByWorkflow(tenantId, workflowId);
   }
 
-  WorkflowStep* getStep(TenantId tenantId, StepId stepId) {
+  WorkflowStep getStep(TenantId tenantId, StepId stepId) {
     return repo.findById(tenantId, stepId);
   }
 

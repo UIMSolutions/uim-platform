@@ -107,7 +107,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  BusinessUser* getUser(BusinessUserId id) {
+  BusinessUser getUser(BusinessUserId id) {
     return repo.findById(id);
   }
 

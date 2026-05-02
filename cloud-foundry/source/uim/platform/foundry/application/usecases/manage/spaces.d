@@ -65,7 +65,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, space.id.value, "");
   }
 
-  Space* getSpace(TenantId tenantId, SpaceId spaceId) {
+  Space getSpace(TenantId tenantId, SpaceId spaceId) {
     return repo.findById(tenantId, spaceId);
   }
 

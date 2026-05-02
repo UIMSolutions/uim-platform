@@ -42,7 +42,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  Card* getCard(TenantId tenantId, CardId id) {
+  Card getCard(TenantId tenantId, CardId id) {
     return repo.findById(tenantId, id);
   }
 

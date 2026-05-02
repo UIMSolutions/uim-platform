@@ -52,7 +52,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(scenario.id, "");
   }
 
-  IntegrationScenario* getScenario(ScenarioId tenantId, id tenantId) {
+  IntegrationScenario getScenario(ScenarioId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

@@ -108,7 +108,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     return CommandResult(wf.id, "");
   }
 
-  Workflow* getWorkflow(WorkflowId tenantId, id tenantId) {
+  Workflow getWorkflow(WorkflowId tenantId, id tenantId) {
     return workflowRepo.findById(tenantId, id);
   }
 

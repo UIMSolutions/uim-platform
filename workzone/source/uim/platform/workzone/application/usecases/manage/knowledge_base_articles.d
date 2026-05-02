@@ -46,7 +46,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  KnowledgeBaseArticle* getArticle(TenantId tenantId, KBArticleId id) {
+  KnowledgeBaseArticle getArticle(TenantId tenantId, KBArticleId id) {
     return repo.findById(tenantId, id);
   }
 

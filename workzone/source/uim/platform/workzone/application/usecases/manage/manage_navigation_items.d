@@ -46,7 +46,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  NavigationItem* getNavigationItem(NavigationItemId tenantId, id tenantId) {
+  NavigationItem getNavigationItem(NavigationItemId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

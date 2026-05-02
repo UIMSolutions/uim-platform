@@ -86,7 +86,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
 
     // Status transition
     if (req.status.length > 0) {
-      auto newStatus = parseStatus(req.status);
+      auto newStatus = req.status.to!SystemStatus;
       auto validation = SystemLifecycleValidator.validateTransition(inst.status, newStatus);
       if (!validation.valid)
         return CommandResult(false, "", validation.error);
@@ -100,7 +100,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, inst.id.value, "");
   }
 
-  SystemInstance* getInstance(SystemInstanceId id) {
+  SystemInstance getInstance(SystemInstanceId id) {
     return repo.findById(id);
   }
 

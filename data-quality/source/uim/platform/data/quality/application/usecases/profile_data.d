@@ -68,12 +68,12 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
   }
 
   /// Get latest profile for a dataset.
-  DataProfile* getLatest(TenantId tenantId, DatasetId datasetId) {
+  DataProfile getLatest(TenantId tenantId, DatasetId datasetId) {
     return repo.findLatestByDataset(tenantId, datasetId);
   }
 
   /// Get profile by ID.
-  DataProfile* getById(DataProfileId tenantId, id tenantId) {
+  DataProfile getById(DataProfileId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

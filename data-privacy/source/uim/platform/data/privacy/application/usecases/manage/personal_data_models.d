@@ -52,7 +52,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(model.id, "");
   }
 
-  PersonalDataModel* getModel(PersonalDataModelId tenantId, id tenantId) {
+  PersonalDataModel getModel(PersonalDataModelId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

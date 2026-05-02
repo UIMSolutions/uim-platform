@@ -65,7 +65,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, srvInstance.id.value, "");
   }
 
-  ServiceInstance* getInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
+  ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
     return instances.findById(tenantId, serviceInstanceId);
   }
 

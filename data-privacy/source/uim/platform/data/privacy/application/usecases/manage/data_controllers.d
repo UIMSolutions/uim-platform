@@ -44,7 +44,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  DataController* getController(DataControllerId tenantId, id tenantId) {
+  DataController getController(DataControllerId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

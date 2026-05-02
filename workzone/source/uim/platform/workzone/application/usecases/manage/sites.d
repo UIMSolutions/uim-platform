@@ -42,7 +42,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Site* getSite(SiteId tenantId, id tenantId) {
+  Site getSite(SiteId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

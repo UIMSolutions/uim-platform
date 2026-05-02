@@ -43,7 +43,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  PurposeRecord* getRecord(PurposeRecordId tenantId, id tenantId) {
+  PurposeRecord getRecord(PurposeRecordId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

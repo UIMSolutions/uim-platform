@@ -45,7 +45,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     return CommandResult(cp.id, "");
   }
 
-  ConsentPurpose* getPurpose(ConsentPurposeId tenantId, id tenantId) {
+  ConsentPurpose getPurpose(ConsentPurposeId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

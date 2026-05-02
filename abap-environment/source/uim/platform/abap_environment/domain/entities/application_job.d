@@ -48,7 +48,7 @@ struct ApplicationJob {
       .set("status", status.to!string);
 
     if (executionHistory.length > 0) {
-      auto history = executionHistory.map!(e => e.toJson)();
+      auto history = executionHistory.map!(e => e.toJson).array.toJson();
       j = j.set("executionHistory", history);
     }
 

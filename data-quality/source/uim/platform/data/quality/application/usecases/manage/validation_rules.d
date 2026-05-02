@@ -102,7 +102,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  ValidationRule* getById(RuleId id) {
+  ValidationRule getById(RuleId id) {
     return repo.findById(id);
   }
 

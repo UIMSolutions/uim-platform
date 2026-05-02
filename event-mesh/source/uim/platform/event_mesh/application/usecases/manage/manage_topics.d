@@ -18,7 +18,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Topic* getById(TopicId id) {
+    Topic getById(TopicId id) {
         return repo.findById(id);
     }
 

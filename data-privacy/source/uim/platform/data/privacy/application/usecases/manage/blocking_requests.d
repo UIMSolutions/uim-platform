@@ -54,7 +54,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  BlockingRequest* getRequest(BlockingRequestId tenantId, id tenantId) {
+  BlockingRequest getRequest(BlockingRequestId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

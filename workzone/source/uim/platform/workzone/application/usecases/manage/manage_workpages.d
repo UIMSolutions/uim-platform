@@ -40,7 +40,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     return CommandResult(page.id, "");
   }
 
-  Workpage* getWorkpage(WorkpageId tenantId, id tenantId) {
+  Workpage getWorkpage(WorkpageId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

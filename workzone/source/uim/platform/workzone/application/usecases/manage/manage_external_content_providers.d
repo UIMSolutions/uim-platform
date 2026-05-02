@@ -44,7 +44,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ExternalContentProvider* getProvider(ExternalContentProviderId tenantId, id tenantId) {
+  ExternalContentProvider getProvider(ExternalContentProviderId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

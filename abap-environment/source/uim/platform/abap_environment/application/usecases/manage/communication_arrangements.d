@@ -94,7 +94,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommunicationArrangement* getArrangement(CommunicationArrangementId id) {
+  CommunicationArrangement getArrangement(CommunicationArrangementId id) {
     return repo.findById(id);
   }
 

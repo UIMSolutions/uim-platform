@@ -17,7 +17,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    Label* getById(TenantId tenantId, LabelId id) {
+    Label getById(TenantId tenantId, LabelId id) {
         return repo.findById(tenantId, id);
     }
 

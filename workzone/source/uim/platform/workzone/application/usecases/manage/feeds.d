@@ -38,7 +38,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     return CommandResult(entry.id, "");
   }
 
-  FeedEntry* getEntry(FeedEntryId tenantId, id tenantId) {
+  FeedEntry getEntry(FeedEntryId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

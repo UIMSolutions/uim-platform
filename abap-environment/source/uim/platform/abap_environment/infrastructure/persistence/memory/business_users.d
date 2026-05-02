@@ -31,7 +31,10 @@ class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUse
   }
 
   void removeByUsername(SystemInstanceId systemId, string username) {
-    findByUsername(systemId, username).remove();
+    auto user = findByUsername(systemId, username);
+    if (!user.isNull) {
+      remove(user);
+    }
   }
 
   bool existsByEmail(SystemInstanceId systemId, string email) {
@@ -46,7 +49,7 @@ class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUse
   }
 
   void removeByEmail(SystemInstanceId systemId, string email) {
-    findByEmail(systemId, email).remove();
+    remove(findByEmail(systemId, email));
   }
 
   size_t countBySystem(SystemInstanceId systemId) {

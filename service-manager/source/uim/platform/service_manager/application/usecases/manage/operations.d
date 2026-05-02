@@ -17,7 +17,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    Operation* getById(TenantId tenantId, OperationId id) {
+    Operation getById(TenantId tenantId, OperationId id) {
         return repo.findById(tenantId, id);
     }
 

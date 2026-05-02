@@ -60,7 +60,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DeletionRequest* getRequest(DeletionRequestId tenantId, id tenantId) {
+  DeletionRequest getRequest(DeletionRequestId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

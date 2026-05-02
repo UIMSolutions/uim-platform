@@ -58,7 +58,7 @@ struct BusinessUser {
       auto roles = roleAssignments.map!(r => Json.emptyObject
         .set("roleId", r.roleId)
         .set("roleName", r.roleName)
-        .set("assignedAt", r.assignedAt))();
+        .set("assignedAt", r.assignedAt)).array.toJson();
       j = j.set("roleAssignments", roles);
     }
 

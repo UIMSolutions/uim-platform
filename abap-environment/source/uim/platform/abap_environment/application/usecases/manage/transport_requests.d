@@ -72,7 +72,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     tr.tasks ~= task;
     repo.update(tr);
-    return CommandResult(taskId, "");
+    return CommandResult(true, taskId.value, "");
   }
 
   CommandResult releaseTask(TransportRequestId requestId, string taskId) {
@@ -98,7 +98,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         task.releasedAt = Clock.currStdTime();
 
         repo.update(tr);
-        return CommandResult(taskId, "");
+        return CommandResult(true, taskId.value, "");
       }
     }
     return CommandResult(false, "", "Task not found");
@@ -129,7 +129,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  TransportRequest* getRequest(TransportRequestId id) {
+  TransportRequest getRequest(TransportRequestId id) {
     return repo.findById(id);
   }
 

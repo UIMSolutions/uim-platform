@@ -39,7 +39,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     return CommandResult(rs.id, "");
   }
 
-  RuleSet* getRuleSet(RuleSetId tenantId, id tenantId) {
+  RuleSet getRuleSet(RuleSetId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

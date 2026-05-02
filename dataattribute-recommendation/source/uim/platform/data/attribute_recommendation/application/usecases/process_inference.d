@@ -59,11 +59,11 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     return CommandResult(result.id, "");
   }
 
-  InferenceResult* getResult(InferenceResultId tenantId, id tenantId) {
+  InferenceResult getResult(InferenceResultId tenantId, id tenantId) {
     return resultRepo.findById(tenantId, id);
   }
 
-  InferenceResult* getResultByRequest(InferenceRequestId requesttenantId, id tenantId) {
+  InferenceResult getResultByRequest(InferenceRequestId requesttenantId, id tenantId) {
     return resultRepo.findByRequest(requesttenantId, id);
   }
 

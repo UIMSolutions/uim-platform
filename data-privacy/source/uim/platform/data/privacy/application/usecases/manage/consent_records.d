@@ -59,7 +59,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  ConsentRecord* getConsent(ConsentRecordId tenantId, id tenantId) {
+  ConsentRecord getConsent(ConsentRecordId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

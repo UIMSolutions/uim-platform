@@ -17,7 +17,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceBroker* getById(TenantId tenantId, ServiceBrokerId id) {
+    ServiceBroker getById(TenantId tenantId, ServiceBrokerId id) {
         return repo.findById(tenantId, id);
     }
 

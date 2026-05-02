@@ -46,7 +46,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  ContentItem* getContent(ContentId tenantId, id tenantId) {
+  ContentItem getContent(ContentId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

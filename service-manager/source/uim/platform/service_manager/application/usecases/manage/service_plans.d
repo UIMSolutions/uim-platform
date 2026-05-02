@@ -17,7 +17,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    ServicePlan* getById(TenantId tenantId, ServicePlanId id) {
+    ServicePlan getById(TenantId tenantId, ServicePlanId id) {
         return repo.findById(tenantId, id);
     }
 

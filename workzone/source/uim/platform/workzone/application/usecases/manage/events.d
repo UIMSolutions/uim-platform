@@ -49,7 +49,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  Event* getEvent(EventId tenantId, id tenantId) {
+  Event getEvent(EventId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

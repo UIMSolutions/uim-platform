@@ -46,7 +46,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Survey* getSurvey(SurveyId tenantId, id tenantId) {
+  Survey getSurvey(SurveyId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

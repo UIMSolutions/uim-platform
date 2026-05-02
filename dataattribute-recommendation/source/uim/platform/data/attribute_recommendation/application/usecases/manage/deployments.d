@@ -69,7 +69,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(dep.id, "");
   }
 
-  ModelDeployment* getDeployment(DeploymentId tenantId, id tenantId) {
+  ModelDeployment getDeployment(DeploymentId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

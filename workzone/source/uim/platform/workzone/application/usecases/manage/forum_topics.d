@@ -42,7 +42,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  ForumTopic* getForumTopic(ForumTopicId tenantId, id tenantId) {
+  ForumTopic getForumTopic(ForumTopicId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

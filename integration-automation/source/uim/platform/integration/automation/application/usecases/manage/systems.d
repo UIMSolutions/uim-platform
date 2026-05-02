@@ -59,7 +59,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SystemConnection* getSystem(SystemConnectionId tenantId, id tenantId) {
+  SystemConnection getSystem(SystemConnectionId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

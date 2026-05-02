@@ -45,7 +45,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  AppRegistration* getApp(TenantId tenantId, AppId id) {
+  AppRegistration getApp(TenantId tenantId, AppId id) {
     return repo.findById(tenantId, id);
   }
 

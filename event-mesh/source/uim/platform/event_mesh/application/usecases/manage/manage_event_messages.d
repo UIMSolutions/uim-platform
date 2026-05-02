@@ -18,7 +18,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    EventMessage* getById(EventMessageId id) {
+    EventMessage getById(EventMessageId id) {
         return repo.findById(id);
     }
 

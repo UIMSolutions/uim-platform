@@ -33,7 +33,10 @@ bool existsByName(SystemInstanceId systemId, string name) {
     return BusinessRole.init;
   }
   void removeByName(SystemInstanceId systemId, string name) {
-    findByName(systemId, name).remove();
+    auto role = findByName(systemId, name);
+    if (!role.isNull) {
+      remove(role);
+    }
   }
 
   size_t countBySystem(SystemInstanceId systemId) {
@@ -45,13 +48,12 @@ bool existsByName(SystemInstanceId systemId, string name) {
   }
 
   BusinessRole[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+    return findAll().filterBySystem(systemId);
   }
 
   void removeBySystem(SystemInstanceId systemId) {
     findBySystem(systemId).each!(e => remove(e));
   }
-
-  
+ 
 
 }

@@ -46,7 +46,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  DestructionRequest* getRequest(DestructionRequestId tenantId, id tenantId) {
+  DestructionRequest getRequest(DestructionRequestId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

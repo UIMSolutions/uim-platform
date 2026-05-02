@@ -83,7 +83,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DataRetrievalRequest* getRequest(DataRetrievalRequestId tenantId, id tenantId) {
+  DataRetrievalRequest getRequest(DataRetrievalRequestId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

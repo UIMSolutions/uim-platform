@@ -18,7 +18,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Equipment* getById(EquipmentId id) {
+    Equipment getById(EquipmentId id) {
         return repo.findById(id);
     }
 

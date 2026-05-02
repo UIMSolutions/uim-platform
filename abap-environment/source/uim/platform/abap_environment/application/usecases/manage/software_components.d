@@ -130,7 +130,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  SoftwareComponent* getComponent(SoftwareComponentId id) {
+  SoftwareComponent getComponent(SoftwareComponentId id) {
     return repo.findById(id);
   }
 

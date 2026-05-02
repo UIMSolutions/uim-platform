@@ -47,7 +47,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  Workspace* getWorkspace(WorkspaceId tenantId, id tenantId) {
+  Workspace getWorkspace(WorkspaceId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

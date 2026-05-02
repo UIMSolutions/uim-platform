@@ -39,7 +39,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  Group* getGroup(GroupId tenantId, id tenantId) {
+  Group getGroup(GroupId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

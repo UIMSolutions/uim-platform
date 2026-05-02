@@ -49,7 +49,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Task* getTask(TaskId tenantId, id tenantId) {
+  Task getTask(TaskId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

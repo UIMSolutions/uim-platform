@@ -55,7 +55,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(subject.id, "");
   }
 
-  DataSubject* getSubject(DataSubjectId tenantId, id tenantId) {
+  DataSubject getSubject(DataSubjectId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

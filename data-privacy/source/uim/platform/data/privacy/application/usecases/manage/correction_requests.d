@@ -50,7 +50,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  CorrectionRequest* getRequest(CorrectionRequestId tenantId, id tenantId) {
+  CorrectionRequest getRequest(CorrectionRequestId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

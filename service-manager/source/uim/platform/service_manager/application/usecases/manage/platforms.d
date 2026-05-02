@@ -17,7 +17,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    Platform* getById(TenantId tenantId, PlatformId id) {
+    Platform getById(TenantId tenantId, PlatformId id) {
         return repo.findById(tenantId, id);
     }
 

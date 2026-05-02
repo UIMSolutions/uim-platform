@@ -53,7 +53,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  DataRecord* getRecord(DataRecordId tenantId, id tenantId) {
+  DataRecord getRecord(DataRecordId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

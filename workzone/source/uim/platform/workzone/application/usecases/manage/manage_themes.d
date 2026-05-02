@@ -43,7 +43,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Theme* getTheme(ThemeId tenantId, id tenantId) {
+  Theme getTheme(ThemeId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

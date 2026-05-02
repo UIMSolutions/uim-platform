@@ -72,7 +72,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return CommandResult(dest.id, "");
   }
 
-  Destination* getDestination(DestinationId tenantId, id tenantId) {
+  Destination getDestination(DestinationId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

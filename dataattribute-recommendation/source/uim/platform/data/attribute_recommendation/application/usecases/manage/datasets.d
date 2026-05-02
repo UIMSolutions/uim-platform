@@ -50,7 +50,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     return CommandResult(ds.id, "");
   }
 
-  Dataset* getDataset(DatasetId tenantId, id tenantId) {
+  Dataset getDataset(DatasetId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

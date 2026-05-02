@@ -43,7 +43,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ShellPlugin* getPlugin(ShellPluginId tenantId, id tenantId) {
+  ShellPlugin getPlugin(ShellPluginId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

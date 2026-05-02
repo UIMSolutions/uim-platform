@@ -64,7 +64,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(config.id, "");
   }
 
-  ModelConfiguration* getModelConfig(ModelConfigId tenantId, id tenantId) {
+  ModelConfiguration getModelConfig(ModelConfigId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

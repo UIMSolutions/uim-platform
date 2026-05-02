@@ -52,7 +52,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     return CommandResult(ground.id, "");
   }
 
-  LegalGround* getGround(LegalGroundId tenantId, id tenantId) {
+  LegalGround getGround(LegalGroundId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

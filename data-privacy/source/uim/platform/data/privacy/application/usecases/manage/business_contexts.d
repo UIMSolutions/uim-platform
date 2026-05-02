@@ -43,7 +43,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     return CommandResult(ctx.id, "");
   }
 
-  BusinessContext* getContext(BusinessContextId tenantId, id tenantId) {
+  BusinessContext getContext(BusinessContextId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 

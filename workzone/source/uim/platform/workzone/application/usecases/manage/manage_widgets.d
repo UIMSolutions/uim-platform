@@ -41,7 +41,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  Widget* getWidget(WidgetId tenantId, id tenantId) {
+  Widget getWidget(WidgetId tenantId, id tenantId) {
     return repo.findById(tenantId, id);
   }
 
