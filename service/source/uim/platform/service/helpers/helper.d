@@ -209,13 +209,10 @@ bool matchesBasePath(string path, string basePath) {
   return path == basePath ? true : path.startsWith(basePath ~ "/");
 }
 
-bool startsWithTenant(string key, UUID tenantId) {
-  return startsWithTenant(key, tenantid.value());
-}
-
-bool startsWithTenant(string key, string tenantId) {
-  return key.length > tenantId.length + 1 && key[0 .. tenantId.length] == tenantId
-    && key[tenantId.length] == ':';
+bool startsWithTenantId(string key, TenantId tenantId) {
+  auto id = tenantId.value;
+  return key.length > id.length + 1 && key[0 .. id.length] == id
+    && key[id.length] == ':';
 }
 
 size_t indexOfSeparator(string key) {

@@ -26,7 +26,7 @@ struct Share {
   Json toJson() const {
     return Json.emptyObject
       .set("id", id.value)
-      .set("tenantId", tenantid.value)
+      .set("tenantId", tenantId.value)
       .set("documentId", documentid.value)
       .set("shareType", shareType.toString)
       .set("sharedWith", sharedWith)

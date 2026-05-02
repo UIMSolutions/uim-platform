@@ -38,14 +38,14 @@ class UIMTenantEntity : UIMEntity {
 
   override Json toJson() {
     return super.toJson()
-      .set("tenantId", _tenantid.value());
+      .set("tenantId", _tenantId.toString());
   }
   ///
   unittest {
     UUID id = randomUUID();
     UIMTenantEntity obj = new UIMTenantEntity(id);
     Json json = obj.toJson();
-    assert(json["tenantId"].get!string == obj.tenantid.value());
+    assert(json["tenantId"].get!string == obj.tenantId.toString());
   }
 
   // #region tenantId

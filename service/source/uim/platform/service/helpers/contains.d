@@ -11,15 +11,19 @@ mixin(ShowModule!());
 
 @safe:
 
-bool containsTenant(string[] values, string tenantId) {
+bool containsTenantId(TenantId[] values, TenantId tenantId) {
   return values.any!(v => v == tenantId);
 }
 
-bool containsTenant(string[] values, UUID tenantId) {
-  auto id = tenantid.value;
+bool containsTenantId(string[] values, TenantId tenantId) {
+  auto id = tenantId.value;
   return values.any!(v => v == id);
 }
 
-bool containsTenant(UUID[] ids, UUID tenantId) {
-  return ids.any!(id => id == tenantId);
+bool containsTenant(UUID[] ids, TenantId tenantId) {
+  if (!tenantId.value.isUUID) {
+    return false;
+  }
+  auto id = UUID(tenantId.value);
+  return ids.any!(i => i == id);
 }
