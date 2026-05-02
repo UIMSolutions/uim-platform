@@ -62,9 +62,7 @@ class CorrectionRequestController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => e.toJson).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)

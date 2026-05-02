@@ -68,9 +68,7 @@ class ProviderController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto providers = uc.listProviders(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (p; providers)
-        arr ~= serializeProvider(p);
+      auto arr = providers.map!(p => p.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -91,7 +89,7 @@ class ProviderController : PlatformController {
         writeError(res, 404, "Provider not found");
         return;
       }
-      res.writeJsonBody(serializeProvider(provider), 200);
+      res.writeJsonBody(provider.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

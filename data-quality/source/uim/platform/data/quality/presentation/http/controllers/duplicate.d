@@ -59,9 +59,7 @@ class DuplicateController : PlatformController {
       }
 
       auto groups = uc.detect(r);
-      auto arr = Json.emptyArray;
-      foreach (g; groups)
-        arr ~= serializeGroup(g);
+      auto arr = groups.map!(g => g.toJson).array;
 
       auto resp = Json.emptyObject
           .set("matchGroups", arr)

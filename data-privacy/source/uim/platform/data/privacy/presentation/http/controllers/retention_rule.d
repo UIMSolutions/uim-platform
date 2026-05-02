@@ -72,9 +72,7 @@ class RetentionRuleController : PlatformController {
       else
         items = uc.listRules(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => e.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -95,7 +93,7 @@ class RetentionRuleController : PlatformController {
         writeError(res, 404, "Retention rule not found");
         return;
       }
-      res.writeJsonBody(serialize(*entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

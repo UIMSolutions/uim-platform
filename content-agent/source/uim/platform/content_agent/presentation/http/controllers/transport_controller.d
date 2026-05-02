@@ -67,11 +67,9 @@ class TransportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto transports = uc.listTransportRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (t; transports)
-        arr ~= serializeTransport(t);
+      auto transports = uc.listTransportRequests(tenantId);
+      auto arr = transports.map!(t => t.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

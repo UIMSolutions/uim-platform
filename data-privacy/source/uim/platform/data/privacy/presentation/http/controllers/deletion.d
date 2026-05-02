@@ -73,9 +73,7 @@ class DeletionController : PlatformController {
       else
         items = uc.listRequests(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto arr = items.map!(e => e.toJson).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -96,7 +94,7 @@ class DeletionController : PlatformController {
         writeError(res, 404, "Deletion request not found");
         return;
       }
-      res.writeJsonBody(serialize(*entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

@@ -64,11 +64,9 @@ class ProvisioningJobController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listJobs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (j; items)
-        arr ~= serializeJob(j);
+      auto items = uc.listJobs(tenantId);
+      auto arr = items.map!(j => j.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

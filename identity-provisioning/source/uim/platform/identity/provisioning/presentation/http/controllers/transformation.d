@@ -63,9 +63,7 @@ class TransformationController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listTransformations(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (t; items)
-        arr ~= serializeTransformation(t);
+      auto arr = items.map!(t => t.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -86,7 +84,7 @@ class TransformationController : PlatformController {
         writeError(res, 404, "Transformation not found");
         return;
       }
-      res.writeJsonBody(serializeTransformation(*t), 200);
+      res.writeJsonBody(t.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -130,7 +128,7 @@ class TransformationController : PlatformController {
         return;
       }
 
-      auto output = uc.testTransformation(inputAttributes, systemtenantId, id);
+      auto output = uc.testTransformation(tenantId, inputAttributes, systemId);
       auto resp = Json.emptyObject
       .set("output", output);
       res.writeJsonBody(resp, 200);

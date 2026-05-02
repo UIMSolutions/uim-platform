@@ -68,11 +68,9 @@ class MonitoringController : PlatformController {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = uc.getJobLogs(jobtenantId, id);
+      auto logs = uc.getJobLogs(tenantId, jobId);
 
-      auto arr = Json.emptyArray;
-      foreach (l; logs)
-        arr ~= serializeLog(l);
+      auto arr = logs.map!(l => l.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -89,9 +87,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listProvisionedEntities(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serializeEntity(e);
+      auto arr = items.map!(e => e.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

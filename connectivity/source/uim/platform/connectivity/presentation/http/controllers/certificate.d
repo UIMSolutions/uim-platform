@@ -71,13 +71,12 @@ class CertificateController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto certs = uc.listCertificates(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (c; certs)
-        arr ~= serializeCert(c);
+      auto arr = certs.map!(c => c.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(certs.length));
+        .set("totalCount", Json(certs.length))
+        .set("message", "Certificates retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -39,9 +39,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listTrainingJobs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (j; jobs)
-        arr ~= serializeJobSummary(j);
+      auto arr = jobs.map!(j => j.toJson).array;
 
       auto resp = Json.emptyObject
             .set("items", arr)
@@ -74,9 +72,7 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto deps = uc.listDeploymentSummaries(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; deps)
-        arr ~= serializeDeploymentSummary(d);
+      auto arr = deps.map!(d => d.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

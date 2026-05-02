@@ -86,9 +86,7 @@ class DataRecordController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listByDataset(datasettenantId, id);
 
-      auto arr = Json.emptyArray;
-      foreach (r; items)
-        arr ~= serializeRecord(r);
+      auto arr = items.map!(r => serializeRecord(r)).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)

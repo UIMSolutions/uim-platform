@@ -35,11 +35,9 @@ class ActivityController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto activities = uc.listActivities(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (a; activities)
-        arr ~= serializeActivity(a);
+      auto activities = uc.listActivities(tenantId);
+      auto arr = activities.map!(a => serializeActivity(a)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

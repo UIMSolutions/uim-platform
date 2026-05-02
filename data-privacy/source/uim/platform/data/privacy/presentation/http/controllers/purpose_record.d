@@ -61,11 +61,9 @@ class PurposeRecordController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRecords(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto items = uc.listRecords(tenantId);
+      auto arr = items.map!(record => record.toJson).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -81,12 +79,12 @@ class PurposeRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRecord(tenantId, id);
-      if (entry.isNull) {
+      auto record = uc.getRecord(tenantId, id);
+      if (record.isNull) {
         writeError(res, 404, "Purpose record not found");
         return;
       }
-      res.writeJsonBody(serialize(*entry), 200);
+      res.writeJsonBody(record.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

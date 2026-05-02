@@ -65,9 +65,7 @@ class ProxySystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listProxySystems(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeSystem(s);
+      auto arr = items.map!(s => s.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -88,7 +86,7 @@ class ProxySystemController : PlatformController {
         writeError(res, 404, "Proxy system not found");
         return;
       }
-      res.writeJsonBody(serializeSystem(*sys), 200);
+      res.writeJsonBody(sys.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -129,6 +127,7 @@ class ProxySystemController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "active");
+
         res.writeJsonBody(resp, 200);
       } else {
         auto status = result.error == "Proxy system not found" ? 404 : 400;

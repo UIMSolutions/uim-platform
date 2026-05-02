@@ -24,7 +24,7 @@ class TargetSystemController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/target-systems", &handleCreate);
     router.get("/api/v1/target-systems", &handleList);
     router.get("/api/v1/target-systems/*", &handleGetById);
@@ -51,11 +51,9 @@ class TargetSystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,19 +61,16 @@ class TargetSystemController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listTargetSystems(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= serializeSystem(s);
+      auto items = uc.listTargetSystems(tenantId);
+      auto arr = items.map!(s => s.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -89,9 +84,8 @@ class TargetSystemController : PlatformController {
         writeError(res, 404, "Target system not found");
         return;
       }
-      res.writeJsonBody(serializeSystem(*sys), 200);
-    }
-    catch (Exception e) {
+      res.writeJsonBody(sys.toJson, 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,14 +107,11 @@ class TargetSystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Target system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -136,14 +127,11 @@ class TargetSystemController : PlatformController {
           .set("status", "active");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Target system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -159,11 +147,9 @@ class TargetSystemController : PlatformController {
           .set("status", "inactive");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -176,13 +162,11 @@ class TargetSystemController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

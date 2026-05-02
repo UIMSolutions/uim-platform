@@ -72,9 +72,7 @@ class QueueController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto queues = uc.listQueues(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (q; queues)
-        arr ~= serializeQueue(q);
+      auto arr = queues.map!(q => serializeQueue(q)).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -67,9 +67,8 @@ class ServiceBindingController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto bindings = uc.listBindings(systemId);
-      auto arr = Json.emptyArray;
-      foreach (b; bindings)
-        arr ~= serializeBinding(b);
+      auto arr = bindings.map!(b => b.toJson).array;
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", bindings.length);

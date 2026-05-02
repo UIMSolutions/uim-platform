@@ -69,9 +69,7 @@ class OrgController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto orgs = useCase.listOrgs(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (o; orgs)
-        arr ~= serializeOrg(o);
+      auto arr = orgs.map!(o => o.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

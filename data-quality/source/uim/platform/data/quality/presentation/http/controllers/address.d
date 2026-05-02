@@ -96,9 +96,7 @@ class AddressController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto records = uc.getByTenant(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (r; records)
-        arr ~= serializeAddress(r);
+      auto arr = records.map!(r => serializeAddress(r)).array;
 
       auto resp = Json.emptyObject
             .set("items", arr)

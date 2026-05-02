@@ -62,11 +62,9 @@ class DataControllerController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listControllers(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serialize(e);
+      auto items = uc.listControllers(tenantId);
+      auto arr = items.map!(controller => controller.toJson).array;
 
       auto resp = Json.emptyObject
             .set("items", arr)
