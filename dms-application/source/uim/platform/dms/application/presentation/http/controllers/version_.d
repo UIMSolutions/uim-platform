@@ -141,7 +141,7 @@ class VersionController : PlatformController {
         writeError(res, 404, "No current version found");
         return;
       }
-      res.writeJsonBody(serializeVersion(ver), 200);
+      res.writeJsonBody(ver.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

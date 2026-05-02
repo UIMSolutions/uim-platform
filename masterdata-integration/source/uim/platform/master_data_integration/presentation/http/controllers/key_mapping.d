@@ -123,7 +123,7 @@ class KeyMappingController : PlatformController {
         writeError(res, 404, "Key mapping not found");
         return;
       }
-      res.writeJsonBody(serializeMapping(mapping), 200);
+      res.writeJsonBody(mapping.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

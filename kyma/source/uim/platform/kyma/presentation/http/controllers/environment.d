@@ -102,7 +102,7 @@ class EnvironmentController : PlatformController {
       }
 
       auto env = uc.getEnvironment(KymaEnvironmentId(id));
-      res.writeJsonBody(serializeEnv(env), 200);
+      res.writeJsonBody(env.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

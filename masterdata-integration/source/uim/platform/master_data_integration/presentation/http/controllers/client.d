@@ -103,7 +103,7 @@ class ClientController : PlatformController {
         writeError(res, 404, "Client not found");
         return;
       }
-      res.writeJsonBody(serializeClient(client), 200);
+      res.writeJsonBody(client.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

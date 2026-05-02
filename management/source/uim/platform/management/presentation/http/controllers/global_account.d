@@ -95,7 +95,7 @@ class GlobalAccountController : PlatformController {
       }
       
       auto ga = uc.getById(id);
-      res.writeJsonBody(serializeGlobalAccount(ga), 200);
+      res.writeJsonBody(ga.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

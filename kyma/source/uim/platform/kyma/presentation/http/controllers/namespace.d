@@ -94,7 +94,7 @@ class NamespaceController : PlatformController {
         writeError(res, 404, "Namespace not found");
         return;
       }
-      res.writeJsonBody(serializeNs(ns), 200);
+      res.writeJsonBody(ns.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

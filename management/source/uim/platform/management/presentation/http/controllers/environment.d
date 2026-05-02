@@ -73,7 +73,7 @@ class EnvironmentController : PlatformController {
       else if (subId.length > 0)
         items = uc.listBySubaccount(subId);
 
-      auto arr = items.map!(inst => serializeEnvironment(inst)).array.toJson;
+      auto arr = items.map!(inst => inst.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -93,7 +93,7 @@ class EnvironmentController : PlatformController {
         writeError(res, 404, "Environment instance not found");
         return;
       }
-      res.writeJsonBody(serializeEnvironment(inst), 200);
+      res.writeJsonBody(inst.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

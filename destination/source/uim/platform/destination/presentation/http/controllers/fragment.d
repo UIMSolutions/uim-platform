@@ -97,7 +97,7 @@ class FragmentController : PlatformController {
         writeError(res, 404, "Fragment not found");
         return;
       }
-      res.writeJsonBody(serializeFragment(f), 200);
+      res.writeJsonBody(f.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

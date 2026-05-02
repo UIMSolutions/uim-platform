@@ -94,7 +94,8 @@ class ApiRuleController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", items.length);
+          .set("totalCount", items.length)
+          .set("message", "API rules retrieved successfully");
       
       res.writeJsonBody(resp, 200);
     }
@@ -111,7 +112,7 @@ class ApiRuleController : PlatformController {
         writeError(res, 404, "API rule not found");
         return;
       }
-      res.writeJsonBody(serializeRule(rule), 200);
+      res.writeJsonBody(rule.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

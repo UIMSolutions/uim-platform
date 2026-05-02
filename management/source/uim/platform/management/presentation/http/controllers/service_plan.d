@@ -101,7 +101,7 @@ class ServicePlanController : PlatformController {
         writeError(res, 404, "Service plan not found");
         return;
       }
-      res.writeJsonBody(serializeServicePlan(p), 200);
+      res.writeJsonBody(p.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

@@ -111,7 +111,7 @@ class EventSubscriptionController : PlatformController {
         writeError(res, 404, "Subscription not found");
         return;
       }
-      res.writeJsonBody(serializeSub(sub), 200);
+      res.writeJsonBody(sub.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

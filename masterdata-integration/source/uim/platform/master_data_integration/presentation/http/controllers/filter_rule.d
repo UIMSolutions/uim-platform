@@ -94,7 +94,7 @@ class FilterRuleController : PlatformController {
         writeError(res, 404, "Filter rule not found");
         return;
       }
-      res.writeJsonBody(serializeRule(rule), 200);
+      res.writeJsonBody(rule.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

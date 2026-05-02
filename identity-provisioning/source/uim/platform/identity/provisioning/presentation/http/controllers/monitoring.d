@@ -58,7 +58,7 @@ class MonitoringController : PlatformController {
         writeError(res, 404, "Job not found");
         return;
       }
-      res.writeJsonBody(serializeJobSummary(summary), 200);
+      res.writeJsonBody(summary.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -68,13 +68,14 @@ class MonitoringController : PlatformController {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = uc.getJobLogs(tenantId, jobId);
 
+      auto logs = uc.getJobLogs(tenantId, jobId);
       auto arr = logs.map!(l => l.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", logs.length);
+        .set("totalCount", logs.length)
+        .set("jobId", jobId);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -96,7 +96,7 @@ class EntitlementController : PlatformController {
         writeError(res, 404, "Entitlement not found");
         return;
       }
-      res.writeJsonBody(serializeEntitlement(ent), 200);
+      res.writeJsonBody(ent.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

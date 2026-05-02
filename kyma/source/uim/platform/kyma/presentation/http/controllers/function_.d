@@ -110,7 +110,7 @@ class FunctionController : PlatformController {
         return;
       }
       auto fn = uc.getFunction(ServerlessFunctionId(id));
-      res.writeJsonBody(serializeFn(fn), 200);
+      res.writeJsonBody(fn.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

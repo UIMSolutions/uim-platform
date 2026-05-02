@@ -24,7 +24,7 @@ class SystemController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/systems", &handleCreate);
     router.get("/api/v1/systems", &handleList);
     router.get("/api/v1/systems/*", &handleGetById);
@@ -57,13 +57,10 @@ class SystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -77,11 +74,11 @@ class SystemController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", systems.length);
+        .set("totalCount", systems.length)
+        .set("message", "Systems retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -95,9 +92,8 @@ class SystemController : PlatformController {
         writeError(res, 404, "System not found");
         return;
       }
-      res.writeJsonBody(serializeSystem(*sys), 200);
-    }
-    catch (Exception e) {
+      res.writeJsonBody(sys.toJson, 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,13 +124,10 @@ class SystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -149,13 +142,10 @@ class SystemController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -169,38 +159,35 @@ class SystemController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("connectionStatus", "active");
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeSystem(const SystemConnection s) {
     return Json.emptyObject
-     .set("id", s.id)
-     .set("tenantId", s.tenantId)
-     .set("name", s.name)
-     .set("description", s.description)
-     .set("systemType", s.systemType.to!string)
-     .set("host", s.host)
-     .set("port", s.port)
-     .set("client", s.client)
-     .set("protocol", s.protocol)
-     .set("status", s.status.to!string)
-     .set("environment", s.environment)
-     .set("region", s.region)
-     .set("systemId", s.systemId)
-     .set("tenant", s.tenant)
-     .set("createdBy", s.createdBy)
-     .set("createdAt", s.createdAt)
-     .set("updatedAt", s.updatedAt);
+      .set("id", s.id)
+      .set("tenantId", s.tenantId)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("systemType", s.systemType.to!string)
+      .set("host", s.host)
+      .set("port", s.port)
+      .set("client", s.client)
+      .set("protocol", s.protocol)
+      .set("status", s.status.to!string)
+      .set("environment", s.environment)
+      .set("region", s.region)
+      .set("systemId", s.systemId)
+      .set("tenant", s.tenant)
+      .set("createdBy", s.createdBy)
+      .set("createdAt", s.createdAt)
+      .set("updatedAt", s.updatedAt);
   }
 }
 

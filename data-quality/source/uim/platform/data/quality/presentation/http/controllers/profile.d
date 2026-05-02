@@ -91,7 +91,7 @@ class ProfileController : PlatformController {
         writeError(res, 404, "Data profile not found");
         return;
       }
-      res.writeJsonBody(serializeProfile(*profile), 200);
+      res.writeJsonBody(profile.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

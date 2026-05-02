@@ -66,7 +66,7 @@ class WorkflowController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto items = useCase.listWorkflows(tenantId);
-      auto arr = items.map!(w => serializeWorkflow(w)).array.toJson;
+      auto arr = items.map!(w => w.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -88,7 +88,7 @@ class WorkflowController : PlatformController {
         writeError(res, 404, "Workflow not found");
         return;
       }
-      res.writeJsonBody(serializeWorkflow(*wf), 200);
+      res.writeJsonBody(wf.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

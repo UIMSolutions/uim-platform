@@ -45,7 +45,8 @@ class StepController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", steps.length);
+          .set("totalCount", steps.length)
+          .set("workflowId", workflowId);
           
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -62,7 +63,7 @@ class StepController : PlatformController {
         writeError(res, 404, "Step not found");
         return;
       }
-      res.writeJsonBody(serializeStep(*step), 200);
+      res.writeJsonBody(step.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

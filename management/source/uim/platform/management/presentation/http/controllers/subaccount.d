@@ -99,7 +99,7 @@ class SubaccountController : PlatformController {
         writeError(res, 404, "Subaccount not found");
         return;
       }
-      res.writeJsonBody(serializeSubaccount(s), 200);
+      res.writeJsonBody(s.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

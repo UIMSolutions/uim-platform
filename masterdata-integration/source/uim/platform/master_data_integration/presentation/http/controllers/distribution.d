@@ -95,7 +95,7 @@ class DistributionController : PlatformController {
         writeError(res, 404, "Distribution model not found");
         return;
       }
-      res.writeJsonBody(serializeModel(model), 200);
+      res.writeJsonBody(model.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

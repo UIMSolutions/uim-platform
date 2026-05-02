@@ -85,7 +85,7 @@ class SubscriptionController : PlatformController {
         writeError(res, 404, "Subscription not found");
         return;
       }
-      res.writeJsonBody(serializeSubscription(s), 200);
+      res.writeJsonBody(s.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

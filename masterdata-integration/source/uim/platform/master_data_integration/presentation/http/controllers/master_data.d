@@ -102,7 +102,7 @@ class MasterDataController : PlatformController {
         writeError(res, 404, "Master data object not found");
         return;
       }
-      res.writeJsonBody(serializeObj(obj), 200);
+      res.writeJsonBody(obj.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

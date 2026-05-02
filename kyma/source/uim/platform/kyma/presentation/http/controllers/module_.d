@@ -94,7 +94,7 @@ class ModuleController : PlatformController {
         writeError(res, 404, "Module not found");
         return;
       }
-      res.writeJsonBody(serializeModule(m), 200);
+      res.writeJsonBody(m.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -102,7 +102,7 @@ class ApplicationController : PlatformController {
       }
 
       auto app = uc.getApplication(id);
-      res.writeJsonBody(serializeApp(app), 200);
+      res.writeJsonBody(app.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

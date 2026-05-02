@@ -58,7 +58,7 @@ class DataControllerGroupController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listGroups(tenantId);
 
-      auto arr = items,.map!(e => serialize(e)).array;
+      auto arr = items.map!(e => e.toJson).array;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -79,7 +79,7 @@ class DataControllerGroupController : PlatformController {
         writeError(res, 404, "Controller group not found");
         return;
       }
-      res.writeJsonBody(serialize(*entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

@@ -73,7 +73,7 @@ class ChangeLogController : PlatformController {
         writeError(res, 404, "Change log entry not found");
         return;
       }
-      res.writeJsonBody(serializeEntry(entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
