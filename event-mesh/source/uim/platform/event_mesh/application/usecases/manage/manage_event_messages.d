@@ -64,7 +64,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Event message not found");
         existing.status = MessageStatus.acknowledged;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 

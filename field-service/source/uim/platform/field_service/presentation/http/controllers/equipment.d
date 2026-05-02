@@ -50,7 +50,7 @@ class EquipmentController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Equipment not found"); return; }
-            res.writeJsonBody(equipmentToJson(*e), 200);
+            res.writeJsonBody(equipmentToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

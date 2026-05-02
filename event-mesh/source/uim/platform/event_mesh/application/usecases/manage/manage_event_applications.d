@@ -69,7 +69,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         if (dto.publishTopics.length > 0) existing.publishTopics = dto.publishTopics;
         if (dto.subscribeTopics.length > 0) existing.subscribeTopics = dto.subscribeTopics;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

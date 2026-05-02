@@ -81,7 +81,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.status = req.status;
     rule.updatedAt = Clock.currStdTime();
 
-    repo.update(*rule);
+    repo.update(rule);
     return CommandResult(rule.id, "");
   }
 

@@ -46,7 +46,7 @@ class InferenceEngine {
 
     if (!isDeploymentReady(request.deploymenttenantId, id)) {
       request.status = InferenceStatus.failed;
-      requestRepo.update(*request);
+      requestRepo.update(request);
       return null;
     }
 
@@ -54,7 +54,7 @@ class InferenceEngine {
 
     // Mark request as processing
     request.status = InferenceStatus.processing;
-    requestRepo.update(*request);
+    requestRepo.update(request);
 
     // Simulate prediction
     auto result = InferenceResult();
@@ -70,7 +70,7 @@ class InferenceEngine {
 
     // Mark request as completed
     request.status = InferenceStatus.completed;
-    requestRepo.update(*request);
+    requestRepo.update(request);
 
     return resultRepo.findById(result.tenantId, id);
   }

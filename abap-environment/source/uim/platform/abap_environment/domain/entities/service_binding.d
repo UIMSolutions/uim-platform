@@ -17,6 +17,14 @@ struct ExposedEndpoint {
   string serviceName;
   string serviceVersion;
   bool requiresAuth = true;
+
+  Json toJson() const {
+    return Json()
+      .set("path", path)
+      .set("serviceName", serviceName)
+      .set("serviceVersion", serviceVersion)
+      .set("requiresAuth", requiresAuth);
+  }
 }
 
 /// Service binding that exposes CDS/RAP services via OData/REST/SOAP.

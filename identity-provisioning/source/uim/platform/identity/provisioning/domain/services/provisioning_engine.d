@@ -67,7 +67,7 @@ class ProvisioningEngine {
     // Mark running
     job.status = JobStatus.running;
     job.startedAt = now;
-    jobRepo.update(*job);
+    jobRepo.update(job);
 
     auto src = sourceRepo.findById(tenantId, job.sourceSystemId);
     auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
@@ -84,16 +84,16 @@ class ProvisioningEngine {
     job.failedEntities = 0;
     job.status = JobStatus.completed;
     job.completedAt = Clock.currStdTime();
-    jobRepo.update(*job);
+    jobRepo.update(job);
 
     // Update system sync timestamps
     if (src !is null) {
       src.lastSyncAt = job.completedAt;
-      sourceRepo.update(*src);
+      sourceRepo.update(src);
     }
     if (tgt !is null) {
       tgt.lastSyncAt = job.completedAt;
-      targetRepo.update(*tgt);
+      targetRepo.update(tgt);
     }
 
     return job;
@@ -109,7 +109,7 @@ class ProvisioningEngine {
 
     job.status = JobStatus.cancelled;
     job.completedAt = Clock.currStdTime();
-    jobRepo.update(*job);
+    jobRepo.update(job);
     return true;
   }
 

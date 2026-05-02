@@ -127,7 +127,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.status = WorkflowStatus.inProgress;
     wf.startedAt = Clock.currStdTime();
     wf.updatedAt = wf.startedAt;
-    workflowRepo.update(*wf);
+    workflowRepo.update(wf);
 
     engine.advanceWorkflow(tenantId, id);
     return CommandResult(true, id.value, "");
@@ -143,7 +143,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     wf.status = WorkflowStatus.suspended;
     wf.updatedAt = Clock.currStdTime();
-    workflowRepo.update(*wf);
+    workflowRepo.update(wf);
     return CommandResult(true, id.value, "");
   }
 
@@ -157,7 +157,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     wf.status = WorkflowStatus.inProgress;
     wf.updatedAt = Clock.currStdTime();
-    workflowRepo.update(*wf);
+    workflowRepo.update(wf);
 
     engine.advanceWorkflow(tenantId, id);
     return CommandResult(true, id.value, "");
@@ -174,7 +174,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.status = WorkflowStatus.terminated;
     wf.completedAt = Clock.currStdTime();
     wf.updatedAt = wf.completedAt;
-    workflowRepo.update(*wf);
+    workflowRepo.update(wf);
     return CommandResult(true, id.value, "");
   }
 

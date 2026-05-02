@@ -49,7 +49,7 @@ class MeshBridgeController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(MeshBridgeId(id));
             if (e.isNull) { writeError(res, 404, "Mesh bridge not found"); return; }
-            res.writeJsonBody(meshBridgeToJson(*e), 200);
+            res.writeJsonBody(meshBridgeToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

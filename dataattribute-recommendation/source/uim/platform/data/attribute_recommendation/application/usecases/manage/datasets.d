@@ -102,7 +102,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     ds.validationMessage = "Validation successful";
     ds.updatedAt = now;
 
-    repo.update(*ds);
+    repo.update(ds);
     return CommandResult(true, id.value, "");
   }
 
@@ -119,7 +119,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     ds.status = DatasetStatus.completed;
     ds.updatedAt = now;
 
-    repo.update(*ds);
+    repo.update(ds);
     return CommandResult(true, id.value, "");
   }
 

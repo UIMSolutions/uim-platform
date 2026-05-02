@@ -88,7 +88,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
       model.legalReference = req.legalReference;
     model.updatedAt = Clock.currStdTime();
 
-    repo.update(*model);
+    repo.update(model);
     return CommandResult(model.id, "");
   }
 

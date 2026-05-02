@@ -63,7 +63,7 @@ class ModelTrainer {
     // Update config status to training
     config.status = ModelConfigStatus.training;
     config.updatedAt = now;
-    configRepo.update(*config);
+    configRepo.update(config);
 
     // Create training job
     auto job = TrainingJob();
@@ -96,14 +96,14 @@ class ModelTrainer {
     job.completedAt = now;
     job.metrics = `{"accuracy":0.92,"precision":0.89,"recall":0.91,"f1Score":0.90}`;
 
-    jobRepo.update(*job);
+    jobRepo.update(job);
 
     // Update model config to trained
     auto config = configRepo.findById(job.modelConfigtenantId, id);
     if (config !is null) {
       config.status = ModelConfigStatus.trained;
       config.updatedAt = now;
-      configRepo.update(*config);
+      configRepo.update(config);
     }
   }
 
@@ -116,14 +116,14 @@ class ModelTrainer {
     auto now = Clock.currStdTime();
     job.status = JobStatus.cancelled;
     job.completedAt = now;
-    jobRepo.update(*job);
+    jobRepo.update(job);
 
     // Revert config status
     auto config = configRepo.findById(job.modelConfigtenantId, id);
     if (config !is null) {
       config.status = ModelConfigStatus.ready;
       config.updatedAt = now;
-      configRepo.update(*config);
+      configRepo.update(config);
     }
     return true;
   }

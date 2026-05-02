@@ -37,13 +37,13 @@ class MemorySchemaRepository : SchemaRepository {
 
   Schema[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
     if (auto cl = clientId in store)
-      return (*cl).filter!(s => s.documentTypeId == typeId).array;
+      return (cl).filter!(s => s.documentTypeId == typeId).array;
     return null;
   }
 
   Schema[] findByStatus(SchemaStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
-      return (*cl).filter!(s => s.status == status).array;
+      return (cl).filter!(s => s.status == status).array;
     return null;
   }
 
@@ -64,13 +64,13 @@ class MemorySchemaRepository : SchemaRepository {
 
   void remove(SchemaId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(s => s.id != id).array;
+      *cl = (cl).filter!(s => s.id != id).array;
     }
   }
 
   size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
-      return (*cl).length;
+      return (cl).length;
     return 0;
   }
 }

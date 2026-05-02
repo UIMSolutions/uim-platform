@@ -58,7 +58,7 @@ class ValidateController : PlatformController {
       r.datasetId = j.getString("datasetId");
 
       auto recordsJson = "records" in j;
-      if (recordsJson !is null && (*recordsJson).isArray) {
+      if (recordsJson !is null && (recordsJson).isArray) {
         foreach (item; *recordsJson) {
           if (item.isObject) {
             RecordFieldValues rfv;

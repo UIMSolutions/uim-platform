@@ -87,7 +87,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == DeletionStatus.completed)
       request.completedAt = Clock.currStdTime();
 
-    repo.update(*request);
+    repo.update(request);
     return CommandResult(request.id, "");
   }
 

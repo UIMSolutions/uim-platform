@@ -168,7 +168,7 @@ class PackageController : PlatformController {
   private static ContentItem[] parseContentItems(Json j) {
     ContentItem[] items;
     auto v = "items" in j;
-    if (v.isNull|| (*v).type != Json.Type.array)
+    if (v.isNull|| (v).type != Json.Type.array)
       return items;
 
     foreach (itemJson; *v) {

@@ -68,7 +68,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (dto.topicSubscriptions.length > 0) existing.topicSubscriptions = dto.topicSubscriptions;
         if (dto.queueBindings.length > 0) existing.queueBindings = dto.queueBindings;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

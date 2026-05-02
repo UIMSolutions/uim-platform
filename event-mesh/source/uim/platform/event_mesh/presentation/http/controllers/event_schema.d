@@ -50,7 +50,7 @@ class EventSchemaController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventSchemaId(id));
             if (e.isNull) { writeError(res, 404, "Event schema not found"); return; }
-            res.writeJsonBody(eventSchemaToJson(*e), 200);
+            res.writeJsonBody(eventSchemaToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

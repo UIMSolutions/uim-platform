@@ -39,7 +39,7 @@ struct SystemInstance {
   string stackVersion;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("subaccountId", subaccountId)
       .set("name", name)
       .set("description", description)
@@ -55,7 +55,5 @@ struct SystemInstance {
       .set("sapClient", sapClient)
       .set("softwareVersion", softwareVersion)
       .set("stackVersion", stackVersion);
-
-    return j;
   }
 }

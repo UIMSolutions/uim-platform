@@ -27,19 +27,19 @@ class MemoryArtifactRepository : ArtifactRepository {
 
   Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(a => a.scenarioId == scenarioId).array;
+      return (rg).filter!(a => a.scenarioId == scenarioId).array;
     return null;
   }
 
   Artifact[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(a => a.executionId == execId).array;
+      return (rg).filter!(a => a.executionId == execId).array;
     return null;
   }
 
   Artifact[] findByKind(ArtifactKind kind, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(a => a.kind == kind).array;
+      return (rg).filter!(a => a.kind == kind).array;
     return null;
   }
 
@@ -66,13 +66,13 @@ class MemoryArtifactRepository : ArtifactRepository {
 
   void remove(ArtifactId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(a => a.id != id).array;
+      *rg = (rg).filter!(a => a.id != id).array;
     }
   }
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).length;
+      return (rg).length;
     return 0;
   }
 }

@@ -72,7 +72,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
       r.expiresAt = r.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
     }
 
-    repo.update(*r);
+    repo.update(r);
     return CommandResult(r.id, "");
   }
 

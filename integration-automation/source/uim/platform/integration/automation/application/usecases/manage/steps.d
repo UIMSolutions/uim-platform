@@ -46,7 +46,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
 
   /// Start a step (mark as in-progress).
   CommandResult startStep(StepId tenantId, id tenantId, UserId userId) {
-    if (!engine.areDependenciesMet(*repo.findById(tenantId, id), tenantId))
+    if (!engine.areDependenciesMet(repo.findById(tenantId, id), tenantId))
       return CommandResult(false, "", "Step dependencies are not yet met");
 
     if (executor.startStep(tenantId, id, userId))
@@ -100,7 +100,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     step.assignedTo = req.assignedTo;
     if (req.assignedRole.length > 0)
       step.assignedRole = req.assignedRole;
-    repo.update(*step);
+    repo.update(step);
     return CommandResult(req.id, "");
   }
 }

@@ -58,7 +58,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     if (req.targetSystems.length > 0) c.targetSystems = req.targetSystems;
     c.updatedAt = Clock.currStdTime();
 
-    repo.update(*c);
+    repo.update(c);
     return CommandResult(c.id, "");
   }
 
@@ -70,7 +70,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     c.status = AnonymizationConfigStatus.active;
     c.updatedAt = Clock.currStdTime();
 
-    repo.update(*c);
+    repo.update(c);
     return CommandResult(c.id, "");
   }
 

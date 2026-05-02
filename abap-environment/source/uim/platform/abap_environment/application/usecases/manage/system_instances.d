@@ -67,7 +67,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, inst.id.value, "");
   }
 
   CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req) {
@@ -96,8 +96,8 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     inst.updatedAt = Clock.currStdTime();
 
-    repo.update(*inst);
-    return CommandResult(true, id.value, "");
+    repo.update(inst);
+    return CommandResult(true, inst.id.value, "");
   }
 
   SystemInstance* getInstance(SystemInstanceId id) {
@@ -118,45 +118,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System must be in active, suspended, or error status to delete");
 
     inst.status = SystemStatus.deleting;
-    repo.update(*inst);
-    return CommandResult(true, id.value, "");
-  }
-}
-
-private SystemPlan parsePlan(string s) {
-  switch (s) {
-  case "standard":
-    return SystemPlan.standard;
-  case "free_":
-    return SystemPlan.free_;
-  case "development":
-    return SystemPlan.development;
-  case "test":
-    return SystemPlan.test;
-  case "production":
-    return SystemPlan.production;
-  default:
-    return SystemPlan.standard;
-  }
-}
-
-private SystemStatus parseStatus(string s) {
-  switch (s) {
-  case "provisioning":
-    return SystemStatus.provisioning;
-  case "active":
-    return SystemStatus.active;
-  case "updating":
-    return SystemStatus.updating;
-  case "suspended":
-    return SystemStatus.suspended;
-  case "deleting":
-    return SystemStatus.deleting;
-  case "deleted":
-    return SystemStatus.deleted;
-  case "error":
-    return SystemStatus.error;
-  default:
-    return SystemStatus.active;
+    repo.update(inst);
+    return CommandResult(true, inst.id.value, "");
   }
 }

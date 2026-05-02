@@ -27,19 +27,19 @@ class MemoryExecutionRepository : ExecutionRepository {
 
   Execution[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.configurationId == confId).array;
+      return (rg).filter!(e => e.configurationId == confId).array;
     return null;
   }
 
   Execution[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.scenarioId == scenarioId).array;
+      return (rg).filter!(e => e.scenarioId == scenarioId).array;
     return null;
   }
 
   Execution[] findByStatus(ExecutionStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.status == status).array;
+      return (rg).filter!(e => e.status == status).array;
     return null;
   }
 
@@ -66,19 +66,19 @@ class MemoryExecutionRepository : ExecutionRepository {
 
   void remove(ExecutionId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(e => e.id != id).array;
+      *rg = (rg).filter!(e => e.id != id).array;
     }
   }
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).length;
+      return (rg).length;
     return 0;
   }
 
   size_t countByStatus(ExecutionStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.status == status).array.length;
+      return (rg).filter!(e => e.status == status).array.length;
     return 0;
   }
 }

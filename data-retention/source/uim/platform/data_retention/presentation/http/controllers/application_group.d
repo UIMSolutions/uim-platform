@@ -30,7 +30,7 @@ class ApplicationGroupController : PlatformController {
             r.createdBy = j.getString("createdBy");
 
             auto appIdsVal = "applicationIds" in j;
-            if (appIdsVal !is null && (*appIdsVal).isArray) {
+            if (appIdsVal !is null && (appIdsVal).isArray) {
                 foreach (item; *appIdsVal) {
                     r.applicationIds ~= getString(item, "");
                 }

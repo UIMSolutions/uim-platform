@@ -49,7 +49,7 @@ class TopicController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(TopicId(id));
             if (e.isNull) { writeError(res, 404, "Topic not found"); return; }
-            res.writeJsonBody(topicToJson(*e), 200);
+            res.writeJsonBody(topicToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

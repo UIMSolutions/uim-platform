@@ -124,7 +124,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     // Simulate connection test — in production, would actually ping the system
     sys.status = ConnectionStatus.active;
     sys.updatedAt = Clock.currStdTime();
-    repo.update(*sys);
+    repo.update(sys);
     return CommandResult(true, id.value, "");
   }
 }

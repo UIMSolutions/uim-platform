@@ -89,7 +89,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.status = ConsentStatus.revoked;
     record.revokedAt = Clock.currStdTime();
 
-    repo.update(*record);
+    repo.update(record);
     return CommandResult(record.id, "");
   }
 

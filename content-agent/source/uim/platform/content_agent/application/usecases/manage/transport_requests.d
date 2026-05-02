@@ -63,7 +63,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.sourceSubaccount = req.sourceSubaccount;
     tr.targetSubaccount = req.targetSubaccount;
     tr.description = req.description;
-    tr.mode = parseTransportMode(req.mode);
+    tr.mode = req.mode.to!TransportMode;
     tr.packageIds = req.packageIds;
     tr.queueId = queue.id;
     tr.status = TransportStatus.created;
@@ -130,7 +130,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   TransportRequest[] listByStatus(TenantId tenantId, string statusStr) {
-    auto status = parseTransportStatus(statusStr);
+    auto status = statusStr.to!TransportStatus;
     return requestRepo.findByStatus(tenantId, status);
   }
 
@@ -150,45 +150,4 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     activityRepo.save(activity);
   }
 
-  
-
-  private static TransportMode parseTransportMode(string s) {
-    switch (s) {
-    case "ctsPlus":
-      return TransportMode.ctsPlus;
-    case "directExport":
-      return TransportMode.directExport;
-    case "fileDownload":
-      return TransportMode.fileDownload;
-    default:
-      return TransportMode.cloudTransportManagement;
-    }
-  }
-
-  private static TransportStatus parseTransportStatus(string s) {
-    switch (s) {
-    case "created":
-      return TransportStatus.created;
-    case "readyForExport":
-      return TransportStatus.readyForExport;
-    case "exporting":
-      return TransportStatus.exporting;
-    case "exported":
-      return TransportStatus.exported;
-    case "inQueue":
-      return TransportStatus.inQueue;
-    case "importing":
-      return TransportStatus.importing;
-    case "imported":
-      return TransportStatus.imported;
-    case "released":
-      return TransportStatus.released;
-    case "failed":
-      return TransportStatus.failed;
-    case "cancelled":
-      return TransportStatus.cancelled;
-    default:
-      return TransportStatus.created;
-    }
-  }
 }

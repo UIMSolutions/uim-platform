@@ -37,7 +37,7 @@ class StepExecutor {
 
     step.status = StepStatus.inProgress;
     step.startedAt = Clock.currStdTime();
-    stepRepo.update(*step);
+    stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.started",
         ExecutionOutcome.success, "Step started", executedBy);
@@ -58,7 +58,7 @@ class StepExecutor {
     step.status = StepStatus.completed;
     step.result = result;
     step.completedAt = endTime;
-    stepRepo.update(*step);
+    stepRepo.update(step);
 
     long durationMs = (endTime - startTime) / 10_000; // hnsecs to ms
     recordLog(step.workflowId, steptenantId, id, "step.completed",
@@ -75,7 +75,7 @@ class StepExecutor {
     step.status = StepStatus.failed;
     step.errorMessage = errorMessage;
     step.completedAt = Clock.currStdTime();
-    stepRepo.update(*step);
+    stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.failed",
         ExecutionOutcome.failure, errorMessage, executedBy);
@@ -91,7 +91,7 @@ class StepExecutor {
     step.status = StepStatus.skipped;
     step.result = reason;
     step.completedAt = Clock.currStdTime();
-    stepRepo.update(*step);
+    stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.skipped",
         ExecutionOutcome.skipped, reason, executedBy);

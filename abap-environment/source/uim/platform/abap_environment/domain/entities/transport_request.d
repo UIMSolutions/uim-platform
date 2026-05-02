@@ -20,6 +20,17 @@ struct TransportTask {
   string[] objectList;
   long createdAt;
   long releasedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("taskId", taskId)
+      .set("owner", owner)
+      .set("status", status.to!string)
+      .set("description", description)
+      .set("objectList", objectList.array.toJson())
+      .set("createdAt", createdAt)
+      .set("releasedAt", releasedAt);
+  }
 }
 
 /// Transport request for managing changes between systems (CTS-like).

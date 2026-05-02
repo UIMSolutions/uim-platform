@@ -40,9 +40,9 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     arr.scenarioId = req.scenarioId;
     arr.name = req.name;
     arr.description = req.description;
-    arr.direction = parseDirection(req.direction);
+    arr.direction = req.direction.to!CommunicationDirection;
     arr.status = ArrangementStatus.active;
-    arr.authMethod = parseAuthMethod(req.authMethod);
+    arr.authMethod = req.authMethod.to!CommunicationAuthMethod;
     arr.communicationUser = req.communicationUser;
     arr.communicationPassword = req.communicationPassword;
     arr.clientId = req.clientId;

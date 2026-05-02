@@ -109,7 +109,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
     sys.status = SystemStatus.active;
     sys.updatedAt = Clock.currStdTime();
-    repo.update(*sys);
+    repo.update(sys);
     return CommandResult(true, id.value, "");
   }
 
@@ -120,7 +120,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
 
     sys.status = SystemStatus.inactive;
     sys.updatedAt = Clock.currStdTime();
-    repo.update(*sys);
+    repo.update(sys);
     return CommandResult(true, id.value, "");
   }
 

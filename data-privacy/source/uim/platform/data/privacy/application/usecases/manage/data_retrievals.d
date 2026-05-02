@@ -108,7 +108,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (req.status == RetrievalStatus.completed)
       request.completedAt = Clock.currStdTime();
 
-    repo.update(*request);
+    repo.update(request);
     return CommandResult(request.id, "");
   }
 

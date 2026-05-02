@@ -27,7 +27,7 @@ class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), Scenar
 
   void removeByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      (*rg).each!(e => remove(e));
+      (rg).each!(e => remove(e));
   }
 
 }

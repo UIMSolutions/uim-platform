@@ -27,7 +27,7 @@ class MemoryExecutableRepository : ExecutableRepository {
 
   Executable[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.scenarioId == scenarioId).array;
+      return (rg).filter!(e => e.scenarioId == scenarioId).array;
     return null;
   }
 
@@ -54,13 +54,13 @@ class MemoryExecutableRepository : ExecutableRepository {
 
   void remove(ExecutableId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(e => e.id != id).array;
+      *rg = (rg).filter!(e => e.id != id).array;
     }
   }
 
   size_t countByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(e => e.scenarioId == scenarioId).array.length;
+      return (rg).filter!(e => e.scenarioId == scenarioId).array.length;
     return 0;
   }
 }

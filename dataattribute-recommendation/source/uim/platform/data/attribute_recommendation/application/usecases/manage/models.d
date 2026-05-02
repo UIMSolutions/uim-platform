@@ -117,7 +117,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
     config.status = ModelConfigStatus.ready;
     config.updatedAt = Clock.currStdTime();
-    repo.update(*config);
+    repo.update(config);
     return CommandResult(true, id.value, "");
   }
 

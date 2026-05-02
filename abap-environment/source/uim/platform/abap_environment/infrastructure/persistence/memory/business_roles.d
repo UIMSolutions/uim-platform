@@ -32,6 +32,9 @@ bool existsByName(SystemInstanceId systemId, string name) {
         return e;
     return BusinessRole.init;
   }
+  void removeByName(SystemInstanceId systemId, string name) {
+    findByName(systemId, name).remove(e);
+  }
 
   size_t countBySystem(SystemInstanceId systemId) {
     return findBySystem(systemId).length;

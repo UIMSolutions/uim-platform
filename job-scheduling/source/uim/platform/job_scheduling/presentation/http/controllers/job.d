@@ -57,7 +57,7 @@ class JobController : PlatformController {
 
             // Create inline schedules if provided
             auto schedulesJson = "schedules" in j;
-            if (schedulesJson !is null && (*schedulesJson).isArray) {
+            if (schedulesJson !is null && (schedulesJson).isArray) {
                 foreach (sj; *schedulesJson) {
                     CreateScheduleRequest sr;
                     sr.tenantId = r.tenantId;

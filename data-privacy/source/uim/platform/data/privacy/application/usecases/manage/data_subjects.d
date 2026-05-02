@@ -84,7 +84,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     subject.isActive = req.isActive;
     subject.updatedAt = Clock.currStdTime();
 
-    repo.update(*subject);
+    repo.update(subject);
     return CommandResult(subject.id, "");
   }
 

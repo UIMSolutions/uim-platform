@@ -23,7 +23,7 @@ struct CreateBusinessUserRequest {
       .set("firstName", firstName)
       .set("lastName", lastName)
       .set("email", email)
-      .set("roleIds", roleIds.array);
+      .set("roleIds", roleIds.toJson);
   }
 }
 
@@ -40,6 +40,6 @@ struct UpdateBusinessUserRequest {
       .set("lastName", lastName)
       .set("email", email)
       .set("status", status)
-      .set("roleIds", roleIds.array);
+      .set("roleIds", roleIds.toJson);
   }
 }

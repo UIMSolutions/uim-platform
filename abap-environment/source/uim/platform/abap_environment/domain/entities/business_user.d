@@ -15,6 +15,13 @@ struct RoleAssignment {
   BusinessRoleId roleId;
   string roleName;
   long assignedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("roleId", roleId)
+      .set("roleName", roleName)
+      .set("assignedAt", assignedAt);
+  }
 }
 
 /// Business user in the ABAP environment.

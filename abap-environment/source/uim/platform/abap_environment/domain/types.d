@@ -123,8 +123,8 @@ enum SystemPlan {
 
 /// Lifecycle status of an ABAP system instance.
 enum SystemStatus {
-  provisioning,
   active,
+  provisioning,
   updating,
   suspended,
   deleting,

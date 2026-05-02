@@ -84,7 +84,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     if (req.email.length > 0)
       user.email = req.email;
     if (req.status.length > 0)
-      user.status = parseUserStatus(req.status);
+      user.status = req.status.to!UserStatus;
 
     // Re-assign roles if provided
     if (req.roleIds.length > 0) {
@@ -101,7 +101,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     user.updatedAt = Clock.currStdTime();
 
-    repo.update(*user);
+    repo.update(user);
     return CommandResult(true, id.value, "");
   }
 
@@ -119,20 +119,5 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
 
     repo.removeById(id);
     return CommandResult(true, id.value(), "");
-  }
-}
-
-private UserStatus parseUserStatus(string status) {
-  switch (status) {
-  case "active":
-    return UserStatus.active;
-  case "inactive":
-    return UserStatus.inactive;
-  case "locked":
-    return UserStatus.locked;
-  case "passwordLocked":
-    return UserStatus.passwordLocked;
-  default:
-    return UserStatus.active;
   }
 }

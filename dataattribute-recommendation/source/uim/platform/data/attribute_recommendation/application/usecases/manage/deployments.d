@@ -88,7 +88,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
     dep.status = DeploymentStatus.active;
     dep.updatedAt = Clock.currStdTime();
-    repo.update(*dep);
+    repo.update(dep);
     return CommandResult(true, id.value, "");
   }
 
@@ -103,7 +103,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
     dep.status = DeploymentStatus.inactive;
     dep.updatedAt = Clock.currStdTime();
-    repo.update(*dep);
+    repo.update(dep);
     return CommandResult(true, id.value, "");
   }
 

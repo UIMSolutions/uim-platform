@@ -19,18 +19,30 @@ mixin(ShowModule!());
 
 class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {
 
+  bool existsByUsername(SystemInstanceId systemId, string username) {
+    return findBySystem(systemId).any!(e => e.username == username);
+  }
   BusinessUser findByUsername(SystemInstanceId systemId, string username) {
     foreach (e; findBySystem(systemId))
       if (e.username == username)
         return store[e.id];
     return BusinessUser.init;
   }
+  void removeByUsername(SystemInstanceId systemId, string username) {
+    findByUsername(systemId, username).remove(e);
+  }
 
+  bool existsByEmail(SystemInstanceId systemId, string email) {
+    return findBySystem(systemId).any!(e => e.email == email);
+  }
   BusinessUser findByEmail(SystemInstanceId systemId, string email) {
     foreach (e; findBySystem(systemId))
       if (e.email == email)
         return store[e.id];
     return BusinessUser.init;
+  }
+  void removeByEmail(SystemInstanceId systemId, string email) {
+    findByEmail(systemId, email).remove(e);
   }
 
   size_t countBySystem(SystemInstanceId systemId) {

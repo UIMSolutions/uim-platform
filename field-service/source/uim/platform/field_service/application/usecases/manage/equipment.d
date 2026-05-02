@@ -73,7 +73,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         if (dto.lastServiceDate.length > 0) existing.lastServiceDate = dto.lastServiceDate;
         if (dto.nextServiceDate.length > 0) existing.nextServiceDate = dto.nextServiceDate;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

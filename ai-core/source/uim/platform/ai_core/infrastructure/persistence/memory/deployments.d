@@ -27,19 +27,19 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   Deployment[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(d => d.configurationId == confId).array;
+      return (rg).filter!(d => d.configurationId == confId).array;
     return null;
   }
 
   Deployment[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(d => d.scenarioId == scenarioId).array;
+      return (rg).filter!(d => d.scenarioId == scenarioId).array;
     return null;
   }
 
   Deployment[] findByStatus(DeploymentStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(d => d.status == status).array;
+      return (rg).filter!(d => d.status == status).array;
     return null;
   }
 
@@ -66,7 +66,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   void remove(DeploymentId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(d => d.id != id).array;
+      *rg = (rg).filter!(d => d.id != id).array;
     }
   }
 

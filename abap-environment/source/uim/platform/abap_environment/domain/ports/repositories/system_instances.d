@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// Port: outgoing - system instance persistence.
 interface SystemInstanceRepository : ITenantRepository!(SystemInstance, SystemInstanceId) {
   
-  bool existsName(TenantId tenantId, string name);
+  bool existsByName(TenantId tenantId, string name);
   SystemInstance findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 

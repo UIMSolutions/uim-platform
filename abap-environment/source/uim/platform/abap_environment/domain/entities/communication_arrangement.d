@@ -17,6 +17,14 @@ struct CommunicationEndpoint {
   CommunicationProtocol protocol = CommunicationProtocol.httpRest;
   ushort port;
   bool active = true;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("url", url)
+      .set("protocol", protocol.to!string)
+      .set("port", port)
+      .set("active", active);
+  }
 }
 
 /// Communication arrangement linking scenario, system, and credentials.

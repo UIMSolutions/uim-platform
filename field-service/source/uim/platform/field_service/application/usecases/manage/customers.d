@@ -67,7 +67,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         if (dto.phone.length > 0) existing.phone = dto.phone;
         if (dto.address.length > 0) existing.address = dto.address;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

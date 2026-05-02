@@ -49,7 +49,7 @@ class ServiceCallController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Service call not found"); return; }
-            res.writeJsonBody(serviceCallToJson(*e), 200);
+            res.writeJsonBody(serviceCallToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

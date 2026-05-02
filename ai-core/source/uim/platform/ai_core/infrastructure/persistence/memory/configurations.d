@@ -27,13 +27,13 @@ class MemoryConfigurationRepository : ConfigurationRepository {
 
   Configuration[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(c => c.scenarioId == scenarioId).array;
+      return (rg).filter!(c => c.scenarioId == scenarioId).array;
     return null;
   }
 
   Configuration[] findByExecutable(ExecutableId execId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).filter!(c => c.executableId == execId).array;
+      return (rg).filter!(c => c.executableId == execId).array;
     return null;
   }
 
@@ -49,13 +49,13 @@ class MemoryConfigurationRepository : ConfigurationRepository {
 
   void remove(ConfigurationId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      *rg = (*rg).filter!(c => c.id != id).array;
+      *rg = (rg).filter!(c => c.id != id).array;
     }
   }
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return (*rg).length;
+      return (rg).length;
     return 0;
   }
 }

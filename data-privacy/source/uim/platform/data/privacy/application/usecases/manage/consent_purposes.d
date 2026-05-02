@@ -69,7 +69,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.requiresExplicitConsent = req.requiresExplicitConsent;
     cp.updatedAt = Clock.currStdTime();
 
-    repo.update(*cp);
+    repo.update(cp);
     return CommandResult(cp.id, "");
   }
 

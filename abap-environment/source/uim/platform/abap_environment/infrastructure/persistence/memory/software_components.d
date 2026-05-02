@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 
-  bool existsName(SystemInstanceId systemId, string name) {
+  bool existsByName(SystemInstanceId systemId, string name) {
     return findAll().any!(e => e.systemInstanceId == systemId && e.name == name);
   }
 

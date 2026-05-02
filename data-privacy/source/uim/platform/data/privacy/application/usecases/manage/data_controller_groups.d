@@ -56,7 +56,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (req.controllerIds.length > 0) g.controllerIds = req.controllerIds;
     g.updatedAt = Clock.currStdTime();
 
-    repo.update(*g);
+    repo.update(g);
     return CommandResult(g.id, "");
   }
 

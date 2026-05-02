@@ -70,7 +70,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     r.deactivatedAt = Clock.currStdTime();
     r.updatedAt = r.deactivatedAt;
 
-    repo.update(*r);
+    repo.update(r);
     return CommandResult(r.id, "");
   }
 

@@ -49,7 +49,7 @@ class QueueController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(QueueId(id));
             if (e.isNull) { writeError(res, 404, "Queue not found"); return; }
-            res.writeJsonBody(queueToJson(*e), 200);
+            res.writeJsonBody(queueToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

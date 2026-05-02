@@ -71,7 +71,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == CorrectionStatus.completed)
       r.completedAt = Clock.currStdTime();
 
-    repo.update(*r);
+    repo.update(r);
     return CommandResult(r.id, "");
   }
 

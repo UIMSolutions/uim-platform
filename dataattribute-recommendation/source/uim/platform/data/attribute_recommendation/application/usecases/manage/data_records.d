@@ -67,7 +67,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.validated;
-    repo.update(*record);
+    repo.update(record);
     return CommandResult(true, id.value, "");
   }
 
@@ -77,7 +77,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.rejected;
-    repo.update(*record);
+    repo.update(record);
     return CommandResult(true, id.value, "");
   }
 

@@ -47,7 +47,7 @@ class DuplicateController : PlatformController {
       r.threshold = getDouble(j, "threshold", 70.0);
 
       auto recordsJson = "records" in j;
-      if (recordsJson !is null && (*recordsJson).isArray) {
+      if (recordsJson !is null && (recordsJson).isArray) {
         foreach (item; *recordsJson) {
           if (item.isObject) {
             DuplicateRecordInput dri;

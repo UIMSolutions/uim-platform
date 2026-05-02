@@ -68,7 +68,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     if (req.dpoEmail.length > 0) c.dpoEmail = req.dpoEmail;
     c.updatedAt = Clock.currStdTime();
 
-    repo.update(*c);
+    repo.update(c);
     return CommandResult(c.id, "");
   }
 

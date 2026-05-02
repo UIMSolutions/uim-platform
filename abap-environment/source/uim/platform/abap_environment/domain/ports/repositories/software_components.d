@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// Port: outgoing - software component persistence.
 interface SoftwareComponentRepository : ITenantRepository!(SoftwareComponent, SoftwareComponentId) {
 
-  bool existsName(SystemInstanceId systemId, string name);
+  bool existsByName(SystemInstanceId systemId, string name);
   SoftwareComponent findByName(SystemInstanceId systemId, string name);
   void removeByName(SystemInstanceId systemId, string name);
 

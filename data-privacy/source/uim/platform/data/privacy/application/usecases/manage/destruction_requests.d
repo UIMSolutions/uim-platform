@@ -70,7 +70,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == DestructionStatus.completed)
       r.completedAt = now;
 
-    repo.update(*r);
+    repo.update(r);
     return CommandResult(r.id, "");
   }
 

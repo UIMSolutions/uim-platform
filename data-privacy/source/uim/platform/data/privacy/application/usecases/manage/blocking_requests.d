@@ -77,7 +77,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == BlockingStatus.released)
       request.releasedAt = Clock.currStdTime();
 
-    repo.update(*request);
+    repo.update(request);
     return CommandResult(request.id, "");
   }
 

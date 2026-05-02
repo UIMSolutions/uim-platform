@@ -61,7 +61,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     if (req.priority > 0) rs.priority = req.priority;
     rs.updatedAt = Clock.currStdTime();
 
-    repo.update(*rs);
+    repo.update(rs);
     return CommandResult(rs.id, "");
   }
 
@@ -74,7 +74,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     rs.activatedAt = Clock.currStdTime();
     rs.updatedAt = rs.activatedAt;
 
-    repo.update(*rs);
+    repo.update(rs);
     return CommandResult(rs.id, "");
   }
 

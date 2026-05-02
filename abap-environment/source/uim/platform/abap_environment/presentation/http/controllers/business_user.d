@@ -15,7 +15,7 @@ module uim.platform.abap_environment.presentation.http.controllers.business_user
 // import uim.platform.abap_environment.domain.entities.business_user;
 // import uim.platform.abap_environment.domain.types;
 
-import uim.platform.abap_environment.presentation.http;
+import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 

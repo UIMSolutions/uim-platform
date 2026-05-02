@@ -60,7 +60,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
         if (dto.schemaContent.length > 0) existing.schemaContent = dto.schemaContent;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

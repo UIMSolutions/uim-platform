@@ -82,7 +82,7 @@ string[][] jsonMessageArray(Json j, string key) {
       auto role = "role" in elem;
       auto content = "content" in elem;
       if (role !is null && content !is null) {
-        result ~= [(*role).get!string, (*content).get!string];
+        result ~= [(*role).get!string, (content).get!string];
       }
     }
   }

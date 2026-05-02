@@ -21,8 +21,8 @@ struct CreateBusinessRoleRequest {
       .set("name", name)
       .set("description", description)
       .set("roleType", roleType)
-      .set("restrictionTypes", restrictionTypes.array)
-      .set("assignedCatalogs", assignedCatalogs.map!(c => c.toJson()).array);
+      .set("restrictionTypes", restrictionTypes.toJson())
+      .set("assignedCatalogs", assignedCatalogs.map!(c => c.toJson()).array.toJson());
 
   }
 }

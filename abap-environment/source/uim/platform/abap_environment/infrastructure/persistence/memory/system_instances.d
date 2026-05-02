@@ -17,6 +17,19 @@ mixin(ShowModule!());
 @safe:
 class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
 
+  bool existsByName(TenantId tenantId, string name) {
+    return findAll().any!(e => e.tenantId == tenantId && e.name == name);
+  }
+  SystemInstance findByName(TenantId tenantId, string name) {
+    foreach (e; findAll())
+      if (e.tenantId == tenantId && e.name == name)
+        return e;
+    return SystemInstance.init;
+  }
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).remove(e);
+  }
+  
   size_t countByStatus(TenantId tenantId, SystemStatus status) {
     return findByStatus(tenantId, status).length;
   }

@@ -68,7 +68,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
     ctx.updatedAt = Clock.currStdTime();
 
-    repo.update(*ctx);
+    repo.update(ctx);
     return CommandResult(ctx.id, "");
   }
 
@@ -83,7 +83,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.activatedAt = Clock.currStdTime();
     ctx.updatedAt = ctx.activatedAt;
 
-    repo.update(*ctx);
+    repo.update(ctx);
     return CommandResult(ctx.id, "");
   }
 

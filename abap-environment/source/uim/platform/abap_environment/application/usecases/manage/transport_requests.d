@@ -71,7 +71,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     task.createdAt = Clock.currStdTime();
 
     tr.tasks ~= task;
-    repo.update(*tr);
+    repo.update(tr);
     return CommandResult(taskId, "");
   }
 
@@ -97,7 +97,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         // import std.datetime.systime : Clock;
         task.releasedAt = Clock.currStdTime();
 
-        repo.update(*tr);
+        repo.update(tr);
         return CommandResult(taskId, "");
       }
     }
@@ -125,7 +125,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     // import std.datetime.systime : Clock;
     tr.releasedAt = Clock.currStdTime();
 
-    repo.update(*tr);
+    repo.update(tr);
     return CommandResult(true, id.value, "");
   }
 

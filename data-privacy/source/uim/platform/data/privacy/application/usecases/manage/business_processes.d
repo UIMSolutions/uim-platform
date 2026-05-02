@@ -61,7 +61,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     if (req.owner.length > 0) p.owner = req.owner;
     p.updatedAt = Clock.currStdTime();
 
-    repo.update(*p);
+    repo.update(p);
     return CommandResult(p.id, "");
   }
 

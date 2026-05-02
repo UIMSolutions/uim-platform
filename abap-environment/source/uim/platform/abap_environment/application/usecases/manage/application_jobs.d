@@ -53,7 +53,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.updatedAt = job.createdAt;
 
     repo.save(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   CommandResult updateJob(string id, UpdateApplicationJobRequest request) {
@@ -81,7 +81,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.updatedAt = Clock.currStdTime();
 
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   CommandResult cancelJob(string id) {
@@ -103,7 +103,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.updatedAt = Clock.currStdTime();
 
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   ApplicationJob getJob(string id) {

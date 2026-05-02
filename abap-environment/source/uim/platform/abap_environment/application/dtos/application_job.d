@@ -32,7 +32,7 @@ struct CreateApplicationJobRequest {
       .set("frequency", frequency)
       .set("scheduledAt", scheduledAt)
       .set("cronExpression", cronExpression)
-      .set("jobParameters", jobParameters);
+      .set("jobParameters", jobParameters.toJson);
   }
 }
 
@@ -51,6 +51,6 @@ struct UpdateApplicationJobRequest {
       .set("scheduledAt", scheduledAt)
       .set("cronExpression", cronExpression)
       .set("active", active)
-      .set("jobParameters", jobParameters);
+      .set("jobParameters", jobParameters.toJson);
   }
 }

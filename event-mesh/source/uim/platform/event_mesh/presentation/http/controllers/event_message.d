@@ -51,7 +51,7 @@ class EventMessageController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventMessageId(id));
             if (e.isNull) { writeError(res, 404, "Event message not found"); return; }
-            res.writeJsonBody(eventMessageToJson(*e), 200);
+            res.writeJsonBody(eventMessageToJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

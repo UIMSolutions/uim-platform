@@ -65,7 +65,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         if (dto.maxQueueDepth.length > 0) existing.maxQueueDepth = dto.maxQueueDepth;
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
-        repo.update(*existing);
+        repo.update(existing);
         return CommandResult(true, dto.id, "");
     }
 

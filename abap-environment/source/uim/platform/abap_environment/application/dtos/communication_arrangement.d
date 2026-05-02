@@ -37,8 +37,8 @@ struct CreateCommunicationArrangementRequest {
       .set("clientSecret", clientSecret)
       .set("tokenEndpoint", tokenEndpoint)
       .set("certificateId", certificateId)
-      .set("inboundServices", inboundServices.map!(s => s.toJson()).array)
-      .set("outboundServices", outboundServices.map!(s => s.toJson()).array);
+      .set("inboundServices", inboundServices.map!(s => s.toJson()).array.toJson)
+      .set("outboundServices", outboundServices.map!(s => s.toJson()).array.toJson);
   }
 }
 
@@ -64,7 +64,7 @@ struct UpdateCommunicationArrangementRequest {
       .set("clientId", clientId)
       .set("clientSecret", clientSecret)
       .set("tokenEndpoint", tokenEndpoint)
-      .set("inboundServices", inboundServices.map!(s => s.toJson()).array)
-      .set("outboundServices", outboundServices.map!(s => s.toJson()).array);
+      .set("inboundServices", inboundServices.map!(s => s.toJson()).array.toJson)
+      .set("outboundServices", outboundServices.map!(s => s.toJson()).array.toJson);
   }
 }

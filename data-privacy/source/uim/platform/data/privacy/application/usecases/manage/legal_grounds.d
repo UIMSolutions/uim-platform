@@ -87,7 +87,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.validUntil > 0)
       ground.validUntil = req.validUntil;
 
-    repo.update(*ground);
+    repo.update(ground);
     return CommandResult(ground.id, "");
   }
 

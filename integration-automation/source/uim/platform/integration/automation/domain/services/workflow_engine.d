@@ -60,7 +60,7 @@ class WorkflowEngine {
       // import std.datetime.systime : Clock;
       wf.status = WorkflowStatus.completed;
       wf.completedAt = Clock.currStdTime();
-      workflowRepo.update(*wf);
+      workflowRepo.update(wf);
       return true;
     }
 
@@ -73,12 +73,12 @@ class WorkflowEngine {
     foreach (s; sorted) {
       if (s.status == StepStatus.pending && areDependenciesMet(tenantId, s)) {
         wf.currentStepIndex = s.sequenceNumber;
-        workflowRepo.update(*wf);
+        workflowRepo.update(wf);
         return true;
       }
     }
 
-    workflowRepo.update(*wf);
+    workflowRepo.update(wf);
     return false;
   }
 
