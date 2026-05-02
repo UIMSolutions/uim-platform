@@ -74,9 +74,7 @@ class NamespaceController : PlatformController {
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
       auto items = uc.listByEnvironment(KymaEnvironmentId(envId));
-      auto arr = Json.emptyArray;
-      foreach (ns; items)
-        arr ~= serializeNs(ns);
+      auto arr = items.map!(ns => ns.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

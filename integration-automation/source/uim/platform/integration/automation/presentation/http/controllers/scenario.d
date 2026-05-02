@@ -65,15 +65,13 @@ class ScenarioController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto scenarios = useCase.listScenarios(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; scenarios)
-        arr ~= serializeScenario(s);
+      auto items = useCase.listScenarios(tenantId);
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", scenarios.length)
+        .set("totalCount", items.length)
         .set("message", "Scenarios retrieved successfully");
         
       res.writeJsonBody(resp, 200);

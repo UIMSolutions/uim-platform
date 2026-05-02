@@ -68,9 +68,7 @@ class DeploymentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listDeployments(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (d; items)
-        arr ~= serializeDeployment(d);
+      auto arr = items.map!(d => d.toJson).array;
 
       auto resp = Json.emptyObject
             .set("items", arr)

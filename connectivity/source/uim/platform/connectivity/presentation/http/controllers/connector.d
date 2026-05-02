@@ -67,9 +67,7 @@ class ConnectorController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto conns = usecase.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (c; conns)
-        arr ~= serializeConnector(c);
+      auto arr = conns.map!(c => c.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -81,9 +81,7 @@ class ApplicationController : PlatformController {
       else
         items = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (app; items)
-        arr ~= serializeApp(app);
+      auto arr = items.map!(app => app.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

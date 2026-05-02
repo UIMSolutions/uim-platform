@@ -39,11 +39,9 @@ class StepController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workflowId = req.headers.get("X-Workflow-Id", "");
-      auto steps = useCase.listSteps(workflowtenantId, id);
+      auto steps = useCase.listSteps(tenantId, workflowId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; steps)
-        arr ~= serializeStep(s);
+      auto arr = steps.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -76,9 +74,7 @@ class StepController : PlatformController {
       auto userId = req.headers.get("X-User-Id", "");
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; tasks)
-        arr ~= serializeStep(s);
+      auto arr = tasks.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -143,7 +139,7 @@ class StepController : PlatformController {
       auto r = FailStepRequest();
       r.id = id;
       r.tenantId = req.getTenantId;
-      r.reportedBy = req.headers.get("X-User-Id", "");
+      r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
       r.errorMessage = j.getString("errorMessage");
 
       auto result = useCase.failStep(r);
@@ -168,7 +164,7 @@ class StepController : PlatformController {
       auto r = SkipStepRequest();
       r.id = id;
       r.tenantId = req.getTenantId;
-      r.skippedBy = req.headers.get("X-User-Id", "");
+      r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
       r.reason = j.getString("reason");
 
       auto result = useCase.skipStep(r);
@@ -193,7 +189,7 @@ class StepController : PlatformController {
       auto r = AssignStepRequest();
       r.id = id;
       r.tenantId = req.getTenantId;
-      r.assignedTo = j.getString("assignedTo");
+      r.assignedTo = UserId(j.getString("assignedTo"));
       r.assignedRole = j.getString("assignedRole");
 
       auto result = useCase.assignStep(r);

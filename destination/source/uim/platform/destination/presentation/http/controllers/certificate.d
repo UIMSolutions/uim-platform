@@ -85,9 +85,7 @@ class CertificateController : PlatformController {
       else
         certs = uc.listBySubaccount(tenantId, subaccountId);
 
-      auto arr = Json.emptyArray;
-      foreach (c; certs)
-        arr ~= serializeCertificate(c);
+      auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -110,9 +108,7 @@ class CertificateController : PlatformController {
 
       auto certs = uc.listExpiring(tenantId, thirtyDays);
 
-      auto arr = Json.emptyArray;
-      foreach (c; certs)
-        arr ~= serializeCertificate(c);
+        auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

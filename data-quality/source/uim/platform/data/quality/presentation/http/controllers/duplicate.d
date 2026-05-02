@@ -100,9 +100,7 @@ class DuplicateController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto groups = uc.getUnresolved(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (g; groups)
-        arr ~= serializeGroup(g);
+      auto arr = groups.map!(g => g.toJson).array;
 
       auto resp = Json.emptyObject
             .set("items", arr)

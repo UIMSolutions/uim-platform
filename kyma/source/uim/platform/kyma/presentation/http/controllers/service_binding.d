@@ -80,9 +80,7 @@ class ServiceBindingController : PlatformController {
       else
         items = [];
 
-      auto arr = Json.emptyArray;
-      foreach (b; items)
-        arr ~= serializeBinding(b);
+      auto arr = items.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

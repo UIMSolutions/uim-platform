@@ -90,9 +90,7 @@ class ApiRuleController : PlatformController {
       else
         items = [];
 
-      auto arr = Json.emptyArray;
-      foreach (rule; items)
-        arr ~= serializeRule(rule);
+      auto arr = items.map!(rule => rule.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

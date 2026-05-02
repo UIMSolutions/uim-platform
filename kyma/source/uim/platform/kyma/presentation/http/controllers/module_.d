@@ -73,9 +73,7 @@ class ModuleController : PlatformController {
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
       auto items = uc.listByEnvironment(envId);
-      auto arr = Json.emptyArray;
-      foreach (m; items)
-        arr ~= serializeModule(m);
+      auto arr = items.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -73,13 +73,12 @@ class EnvironmentController : PlatformController {
       else if (subId.length > 0)
         items = uc.listBySubaccount(subId);
 
-      auto arr = Json.emptyArray;
-      foreach (inst; items)
-        arr ~= serializeEnvironment(inst);
+      auto arr = items.map!(inst => serializeEnvironment(inst)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Environment instances retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)

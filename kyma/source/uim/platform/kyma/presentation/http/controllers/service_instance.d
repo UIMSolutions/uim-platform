@@ -81,13 +81,12 @@ class ServiceInstanceController : PlatformController {
       else
         items = [];
 
-      auto arr = Json.emptyArray;
-      foreach (inst; items)
-        arr ~= serializeInst(inst);
+      auto arr = items.map!(inst => serializeInst(inst)).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", items.length);
+          .set("totalCount", items.length)
+          .set("message", "Service instances retrieved successfully");
           
       res.writeJsonBody(resp, 200);
     }

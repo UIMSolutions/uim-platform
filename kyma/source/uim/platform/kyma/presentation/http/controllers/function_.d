@@ -89,9 +89,7 @@ class FunctionController : PlatformController {
       else
         items = [];
 
-      auto arr = Json.emptyArray;
-      foreach (fn; items)
-        arr ~= serializeFn(fn);
+      auto arr = items.map!(fn => fn.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

@@ -81,9 +81,7 @@ class EnvironmentController : PlatformController {
       else
         envs = uc.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; envs)
-        arr ~= serializeEnv(e);
+      auto arr = envs.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

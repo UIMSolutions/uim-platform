@@ -69,9 +69,7 @@ class RepositoryController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listRepositories(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; items)
-        arr ~= serializeRepo(r);
+      auto arr = items.map!(item => item.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

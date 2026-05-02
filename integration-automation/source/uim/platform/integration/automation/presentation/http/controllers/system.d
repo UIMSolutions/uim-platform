@@ -73,9 +73,7 @@ class SystemController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto systems = useCase.listSystems(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; systems)
-        arr ~= serializeSystem(s);
+      auto arr = systems.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

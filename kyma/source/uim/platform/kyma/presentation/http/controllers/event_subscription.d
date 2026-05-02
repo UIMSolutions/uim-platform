@@ -90,9 +90,7 @@ class EventSubscriptionController : PlatformController {
       else
         items = [];
 
-      auto arr = Json.emptyArray;
-      foreach (sub; items)
-        arr ~= serializeSub(sub);
+      auto arr = items.map!(sub => sub.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

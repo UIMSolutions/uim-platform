@@ -76,13 +76,12 @@ class EntitlementController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items)
-        arr ~= serializeEntitlement(e);
-
+      auto arr = items.map!(e => e.toJson).array.toJson;
+  
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Entitlements retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
