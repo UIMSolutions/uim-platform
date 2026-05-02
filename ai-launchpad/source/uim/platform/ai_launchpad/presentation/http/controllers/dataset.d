@@ -90,7 +90,7 @@ class DatasetController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeDataset(d), 200);
+      res.writeJsonBody(d.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

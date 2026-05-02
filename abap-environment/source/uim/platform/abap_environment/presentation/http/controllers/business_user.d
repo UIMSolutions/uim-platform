@@ -87,7 +87,7 @@ class BusinessUserController : PlatformController {
         writeError(res, 404, "Business user not found");
         return;
       }
-      res.writeJsonBody(serializeUser(*user), 200);
+      res.writeJsonBody(user.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

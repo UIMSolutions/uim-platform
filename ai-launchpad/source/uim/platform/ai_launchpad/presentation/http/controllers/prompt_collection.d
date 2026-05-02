@@ -82,7 +82,7 @@ class PromptCollectionController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeCollection(c), 200);
+      res.writeJsonBody(c.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

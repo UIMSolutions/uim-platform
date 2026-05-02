@@ -62,7 +62,7 @@ class DeploymentController : PlatformController {
       deployments = scenarioId.length > 0
         ? uc.listByScenario(scenarioId, connectionId) : uc.listByConnection(connectionId);
 
-      auto jarr = deployments.map!(deploy => serializeDeployment(d)).array.toJson;
+      auto jarr = deployments.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(deployments.length))
@@ -87,7 +87,7 @@ class DeploymentController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeDeployment(d), 200);
+      res.writeJsonBody(d.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

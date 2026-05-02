@@ -92,7 +92,7 @@ class SoftwareComponentController : PlatformController {
         writeError(res, 404, "Software component not found");
         return;
       }
-      res.writeJsonBody(serializeComponent(*comp), 200);
+      res.writeJsonBody(comp.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

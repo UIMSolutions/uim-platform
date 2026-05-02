@@ -59,13 +59,11 @@ class ConfigurationController : PlatformController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
       auto scenarioId = req.headers.get("X-Scenario-Id", "");
 
-      typeof(configurations.listByConnection(connectionId)) configs;
-      if (scenarioId.length > 0)
-        configs = configurations.listByScenario(scenarioId, connectionId);
-      else
-        configs = configurations.listByConnection(connectionId);
+      auto configs = scenarioId.length > 0
+        ? configurations.listByScenario(scenarioId, connectionId)
+        : configurations.listByConnection(connectionId);
 
-      auto jarr = configs.map!(c => serializeConfiguration(c)).array.toJson;
+      auto jarr = configs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", configs.length)
@@ -91,7 +89,7 @@ class ConfigurationController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeConfiguration(c), 200);
+      res.writeJsonBody(c.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

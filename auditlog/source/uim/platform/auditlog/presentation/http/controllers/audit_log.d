@@ -117,7 +117,7 @@ class AuditLogController : PlatformController {
       }
 
       auto entry = retrieveUsecase.getById(tenantId, AuditLogId(id));
-      res.writeJsonBody(serializeEntry(entry), 200);
+      res.writeJsonBody(entry.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

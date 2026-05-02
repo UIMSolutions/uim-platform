@@ -84,7 +84,7 @@ class ResourceGroupController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeResourceGroup(g), 200);
+      res.writeJsonBody(g.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

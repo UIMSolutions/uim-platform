@@ -90,7 +90,7 @@ class PromptController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializePrompt(p), 200);
+      res.writeJsonBody(p.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

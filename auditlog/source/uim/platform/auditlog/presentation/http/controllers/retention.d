@@ -86,7 +86,7 @@ class RetentionController : PlatformController {
         return;
       }
       auto policy = useCase.getPolicy(tenantId, policyId);
-      res.writeJsonBody(serializePolicy(policy), 200);
+      res.writeJsonBody(policy.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

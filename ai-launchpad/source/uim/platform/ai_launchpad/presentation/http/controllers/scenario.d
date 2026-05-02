@@ -85,7 +85,7 @@ class ScenarioController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeScenario(s), 200);
+      res.writeJsonBody(s.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -57,7 +57,7 @@ class WorkspaceController : PlatformController {
         ? uc.listByTenant(tenantId)
         : uc.listAll();
 
-      auto jarr = workspaces.map!(w => serializeWorkspace(w)).array;
+      auto jarr = workspaces.map!(w => w.toJson).array;
 
       auto resp = Json.emptyObject
         .set("count", workspaces.length)
@@ -80,7 +80,7 @@ class WorkspaceController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeWorkspace(w), 200);
+      res.writeJsonBody(w.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

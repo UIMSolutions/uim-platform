@@ -100,7 +100,7 @@ class AuditConfigController : PlatformController {
         return;
       }
       auto cfg = useCase.getConfig(tenantId);
-      res.writeJsonBody(serializeConfig(cfg), 200);
+      res.writeJsonBody(cfg.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

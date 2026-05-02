@@ -92,7 +92,7 @@ class OrgController : PlatformController {
         writeError(res, 404, "Organization not found");
         return;
       }
-      res.writeJsonBody(serializeOrg(*org), 200);
+      res.writeJsonBody(org.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

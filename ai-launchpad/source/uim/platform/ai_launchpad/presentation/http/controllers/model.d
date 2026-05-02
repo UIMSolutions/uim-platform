@@ -97,7 +97,7 @@ class ModelController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(serializeModel(model), 200);
+      res.writeJsonBody(model.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

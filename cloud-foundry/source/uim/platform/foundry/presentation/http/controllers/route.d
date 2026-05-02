@@ -98,7 +98,7 @@ class RouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      res.writeJsonBody(serializeRoute(*r), 200);
+      res.writeJsonBody(r.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
