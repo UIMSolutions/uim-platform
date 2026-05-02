@@ -12,11 +12,13 @@ import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
+
 @safe:
 struct CreateDashboardRequest {
   string name;
   string description;
   string ownerId;
+  
 }
 
 struct DashboardResponse {
@@ -46,3 +48,4 @@ struct PageResponse {
   string id;
   string title;
 }
+ 

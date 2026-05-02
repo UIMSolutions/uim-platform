@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.repositories.story;
 
-import uim.platform.analytics.domain.entities.story;
-import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.entities.story;
+// import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

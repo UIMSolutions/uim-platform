@@ -5,16 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.story;
 
-import uim.platform.analytics.domain.entities.story;
-import uim.platform.analytics.domain.repositories.story;
+// import uim.platform.analytics.domain.entities.story;
+// import uim.platform.analytics.domain.repositories.story;
 import uim.platform.analytics.domain.values.common;
 
 class MemoryStoryRepository : StoryRepository {
   private Story[string] store;
 
   Story findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
+    if (id.value in store)
+      return store[id.value];
     return null;
   }
 
@@ -35,6 +35,6 @@ class MemoryStoryRepository : StoryRepository {
   }
 
   void remove(EntityId id) {
-    store.remove(id.value);
+    store.remove(id);
   }
 }

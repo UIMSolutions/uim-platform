@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.entities.widget;
 
-import uim.platform.analytics.domain.values.common;
-import uim.platform.analytics.domain.values.chart_type;
-import uim.platform.analytics.domain.values.aggregation;
+// import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.values.chart_type;
+// import uim.platform.analytics.domain.values.aggregation;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
@@ -85,4 +85,13 @@ struct WidgetStyle {
   int posX = 0;
   int posY = 0;
   string colorPalette = "default";
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("width", width)
+      .set("height", height)
+      .set("posX", posX)
+      .set("posY", posY)
+      .set("colorPalette", colorPalette);
+  }
 }
