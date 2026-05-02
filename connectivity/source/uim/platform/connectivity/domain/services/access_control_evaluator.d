@@ -38,7 +38,7 @@ struct AccessControlEvaluator {
 
       if (rule.urlPathPrefix.length >= bestLen) {
         bestLen = rule.urlPathPrefix.length;
-        bestMatch = &rule;
+        bestMatch = rule;
       }
     }
 

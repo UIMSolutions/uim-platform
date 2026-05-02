@@ -56,13 +56,10 @@ class ChannelController : PlatformController {
           .set("message", "Channel created");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,9 +67,9 @@ class ChannelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto channels = uc.listByTenant(tenantId);
 
-      auto arr = channels.map!(ch => serializeChannel(ch)).array;
+      auto channels = uc.listByTenant(tenantId);
+      auto arr = channels.map!(ch => serializeChannel(ch)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -80,8 +77,7 @@ class ChannelController : PlatformController {
         .set("message", "Channels retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -95,8 +91,7 @@ class ChannelController : PlatformController {
         return;
       }
       res.writeJsonBody(ch.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -108,7 +103,7 @@ class ChannelController : PlatformController {
         writeError(res, 400, "Invalid path");
         return;
       }
-      auto channelId = parts[$ - 2];
+      auto channelId = ChannelId(parts[$ - 2]);
 
       auto result = uc.openChannel(channelId);
       if (result.success) {
@@ -118,13 +113,10 @@ class ChannelController : PlatformController {
           .set("message", "Channel opened successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -146,13 +138,10 @@ class ChannelController : PlatformController {
           .set("message", "Channel closed successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -166,15 +155,12 @@ class ChannelController : PlatformController {
           .set("id", result.id)
           .set("deleted", true)
           .set("message", "Channel deleted successfully");
-          
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

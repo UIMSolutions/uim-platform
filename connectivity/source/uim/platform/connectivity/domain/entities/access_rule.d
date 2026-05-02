@@ -25,4 +25,15 @@ struct AccessRule {
   AccessPolicy policy = AccessPolicy.allow;
   bool principalPropagation; // allow user context forwarding
 
+  Json toJson() const {
+    return entityToJson
+      .set("connectorId", connectorId.value)
+      .set("description", description)
+      .set("protocol", protocol.to!string)
+      .set("virtualHost", virtualHost)
+      .set("virtualPort", virtualPort)
+      .set("urlPathPrefix", urlPathPrefix)
+      .set("policy", policy.to!string)
+      .set("principalPropagation", principalPropagation);
+  }
 }

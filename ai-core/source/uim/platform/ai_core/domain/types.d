@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
 
+mixin(ShowModule!()); 
+
+@safe:
 // ID aliases
 struct ScenarioId {
   string value;
@@ -104,6 +108,15 @@ struct ObjectStoreSecretId  {
   mixin DomainId;
 }
 
+struct ScheduleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 // Executable types: workflow (batch), serving (inference)
 enum ExecutableType {
   workflow,

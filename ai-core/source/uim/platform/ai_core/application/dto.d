@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.dto;
 
-import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
+
+mixin(ShowModule!()); 
+
+@safe:
 
 // --- Scenario ---
 
@@ -24,7 +28,7 @@ struct CreateScenarioRequest {
       .set("id", id)
       .set("name", name)
       .set("description", description)
-      .set("labels", labels);
+      .set("labels", labels.toJson());
   }
 }
 
@@ -34,7 +38,7 @@ struct CreateExecutableRequest {
   TenantId tenantId;
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
-  string id;
+  ExecutableId executableId;
   string name;
   string description;
   string type;
@@ -73,8 +77,8 @@ struct CreateConfigurationRequest {
       .set("scenarioId", scenarioId.value)
       .set("executableId", executableId.value)
       .set("name", name)
-      .set("parameterValues", parameterValues)
-      .set("inputArtifacts", inputArtifacts);
+      .set("parameterValues", parameterValues.toJson())
+      .set("inputArtifacts", inputArtifacts.toJson());
   }
 }
 
@@ -118,7 +122,7 @@ struct BulkPatchExecutionRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("executionIds", executionIds.map!(e => e.value).array)
+      .set("executionIds", executionIds.map!(e => e.value).array.toJson())
       .set("targetStatus", targetStatus);
   }
 }
@@ -169,7 +173,7 @@ struct BulkPatchDeploymentRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("deploymentIds", deploymentIds.map!(d => d.value).array)
+      .set("deploymentIds", deploymentIds.map!(d => d.value).array.toJson())
       .set("targetStatus", targetStatus);
   }
 }
@@ -195,7 +199,7 @@ struct CreateArtifactRequest {
       .set("description", description)
       .set("kind", kind)
       .set("url", url)
-      .set("labels", labels);
+      .set("labels", labels.toJson());
   }
 }
 
@@ -210,7 +214,7 @@ struct CreateResourceGroupRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("labels", labels);
+      .set("labels", labels.toJson());
   }
 }
 
@@ -223,7 +227,7 @@ struct PatchResourceGroupRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("labels", labels);
+      .set("labels", labels.toJson());
   }
 }
 
@@ -293,10 +297,10 @@ struct PatchMetricsRequest {
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
       .set("executionId", executionId.value)
-      .set("metrics", metrics)
-      .set("tags", tags)
-      .set("customInfo", customInfo)
-      .set("labels", labels);
+      .set("metrics", metrics.toJson())
+      .set("tags", tags.toJson())
+      .set("customInfo", customInfo.toJson())
+      .set("labels", labels.toJson());
   }
 }
 

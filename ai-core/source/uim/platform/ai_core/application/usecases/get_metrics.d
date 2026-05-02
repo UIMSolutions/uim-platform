@@ -77,7 +77,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     m.createdAt = MonoTime.currTime.ticks;
 
     repo.save(m);
-    return CommandResult(true, m.id, "");
+    return CommandResult(true,  m.id.value, "");
   }
 
   Metric[] listByExecution(ExecutionId execId, ResourceGroupId rgId) {

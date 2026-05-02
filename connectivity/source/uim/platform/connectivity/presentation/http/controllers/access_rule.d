@@ -69,9 +69,9 @@ class AccessRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto rules = uc.listByTenant(tenantId);
-
-      auto arr = rules.map!(r => serializeRule(r)).array;
+      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -139,21 +139,5 @@ class AccessRuleController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeRule(const AccessRule r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("connectorId", r.connectorId)
-      .set("tenantId", r.tenantId)
-      .set("description", r.description)
-      .set("protocol", r.protocol.to!string)
-      .set("virtualHost", r.virtualHost)
-      .set("virtualPort", r.virtualPort)
-      .set("urlPathPrefix", r.urlPathPrefix)
-      .set("policy", r.policy.to!string)
-      .set("principalPropagation", r.principalPropagation)
-      .set("createdAt", r.createdAt)
-      .set("updatedAt", r.updatedAt);
   }
 }

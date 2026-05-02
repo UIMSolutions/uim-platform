@@ -54,7 +54,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.updatedAt = now;
 
     execRepo.save(e);
-    return CommandResult(true, e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   CommandResult patch(PatchExecutionRequest r) {
@@ -84,7 +84,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.updatedAt = MonoTime.currTime.ticks;
 
     execRepo.update(e);
-    return CommandResult(true, e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   Execution getById(ExecutionId id, ResourceGroupId rgId) {

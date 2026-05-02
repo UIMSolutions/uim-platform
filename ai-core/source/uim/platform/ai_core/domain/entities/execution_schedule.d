@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct ExecutionSchedule {
-  string id;
-  TenantId tenantId;
+  mixin Tenanttity!ScheduleId;
+
   ResourceGroupId resourceGroupId;
   ConfigurationId configurationId;
   string name;
@@ -21,21 +21,15 @@ struct ExecutionSchedule {
   ScheduleStatus status;
   long start;
   long end;
-  long createdAt;
-  long updatedAt;
 
   Json toJson() const {
     return entityToJson
-      .set("id", id)
-      .set("tenantId", tenantId)
       .set("resourceGroupId", resourceGroupId)
       .set("configurationId", configurationId)
       .set("name", name)
       .set("cron", cron)
       .set("status", status.to!string)
       .set("start", start)
-      .set("end", end)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("end", end);
   }
 }

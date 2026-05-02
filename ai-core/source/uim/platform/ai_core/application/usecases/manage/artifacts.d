@@ -77,7 +77,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     a.updatedAt = now;
 
     repo.save(a);
-    return CommandResult(true, a.id, "");
+    return CommandResult(true, a.id.value, "");
   }
 
   Artifact getById(ArtifactId id, ResourceGroupId rgId) {

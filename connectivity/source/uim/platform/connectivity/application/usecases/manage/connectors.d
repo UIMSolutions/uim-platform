@@ -81,7 +81,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     cc.status = ConnectorStatus.disconnected;
     repo.update(cc);
 
-    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id,
+    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id.value,
         "CloudConnector", "Connector disconnected: " ~ cc.locationId);
 
     return CommandResult(true, id.value, "");

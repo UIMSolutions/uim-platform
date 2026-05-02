@@ -90,7 +90,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     channel.status = ChannelStatus.closed;
     channels.update(channel);
 
-    recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id,
+    recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id.value,
         "ServiceChannel", "Channel closed: " ~ channel.name);
 
     return CommandResult(true, id.value, "");

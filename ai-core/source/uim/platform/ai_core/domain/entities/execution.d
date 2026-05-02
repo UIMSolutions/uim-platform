@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.execution;
 
-import uim.platform.ai_core.domain.types;
+import uim.platform.ai_core;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct OutputArtifactRef {
   string key;

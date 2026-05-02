@@ -78,7 +78,7 @@ struct Executable {
       .set("inputArtifacts", inputArtifacts.map!(i => i.toJson()).array.toJson)
       .set("outputArtifacts", outputArtifacts.map!(o => o.toJson()).array.toJson)
       .set("parameters", parameters.map!(p => p.toJson()).array.toJson)
-      .set("labels", labels)
+      .set("labels", labels.toJson)
       .set("deployable", deployable);
 
     return j;

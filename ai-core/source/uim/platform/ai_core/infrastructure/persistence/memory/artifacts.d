@@ -20,8 +20,8 @@ class MemoryArtifactRepository : ArtifactRepository {
   private Artifact[][string] store;
 
   Artifact findById(ArtifactId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      foreach (a; *rg) {
+    if (rgId in store) {
+      foreach (a; store[rgId]) {
         if (a.id == id)
           return a;
       }
@@ -30,26 +30,26 @@ class MemoryArtifactRepository : ArtifactRepository {
   }
 
   Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(a => a.scenarioId == scenarioId).array;
+    if (rgId in store)
+      return (store[rgId]).filter!(a => a.scenarioId == scenarioId).array;
     return null;
   }
 
   Artifact[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(a => a.executionId == execId).array;
+    if (rgId in store)
+      return (store[rgId]).filter!(a => a.executionId == execId).array;
     return null;
   }
 
   Artifact[] findByKind(ArtifactKind kind, ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(a => a.kind == kind).array;
+    if (rgId in store)
+      return (store[rgId]).filter!(a => a.kind == kind).array;
     return null;
   }
 
   Artifact[] findByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return *rg;
+    if (rgId in store)
+      return store[rgId];
     return null;
   }
 
@@ -58,8 +58,8 @@ class MemoryArtifactRepository : ArtifactRepository {
   }
 
   void update(Artifact a) {
-    if (auto rg = a.resourceGroupId in store) {
-      foreach (existing; *rg) {
+    if (a.resourceGroupId in store) {
+      foreach (existing; store[a.resourceGroupId]) {
         if (existing.id == a.id) {
           existing = a;
           return;
@@ -69,14 +69,14 @@ class MemoryArtifactRepository : ArtifactRepository {
   }
 
   void remove(ArtifactId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      *rg = (rg).filter!(a => a.id != id).array;
+    if (rgId in store) {
+      store[rgId] = (store[rgId]).filter!(a => a.id != id).array;
     }
   }
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).length;
+    if (rgId in store)
+      return (store[rgId]).length;
     return 0;
   }
 }

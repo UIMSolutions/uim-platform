@@ -13,9 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// Tunnel / service channel between cloud and on-premise.
 struct ServiceChannel {
-  ChannelId id;
+  mixin TenantEntity!ChannelId;
+
   ConnectorId connectorId;
-  TenantId tenantId;
   string name;
   ChannelType channelType = ChannelType.http;
   ChannelStatus status = ChannelStatus.closed;
@@ -30,6 +30,18 @@ struct ServiceChannel {
 
   long openedAt;
   long closedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("connectorId", connectorId.value)
+      .set("name", name)
+      .set("channelType", channelType.to!string)
+      .set("status", status.to!string)
+      .set("virtualHost", virtualHost)
+      .set("virtualPort", virtualPort)
+      .set("backendHost", backendHost)
+      .set("backendPort", backendPort)
+      .set("openedAt", openedAt)
+      .set("closedAt", closedAt);
+  }
 }

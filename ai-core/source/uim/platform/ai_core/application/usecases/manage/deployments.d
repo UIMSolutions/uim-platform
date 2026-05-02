@@ -55,7 +55,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.updatedAt = now;
 
     deplRepo.save(d);
-    return CommandResult(true, d.id, "");
+    return CommandResult(true, d.id.value, "");
   }
 
   CommandResult patch(PatchDeploymentRequest request) {
@@ -97,7 +97,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.updatedAt = MonoTime.currTime.ticks;
 
     deplRepo.update(d);
-    return CommandResult(true, d.id, "");
+    return CommandResult(true, d.id.value, "");
   }
 
   Deployment getById(DeploymentId id, ResourceGroupId groupId) {

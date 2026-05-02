@@ -53,7 +53,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     rg.createdAt = MonoTime.currTime.ticks;
 
     repo.save(rg);
-    return CommandResult(true, rg.id, "");
+    return CommandResult(true, rg.id.value, "");
   }
 
   CommandResult patch(PatchResourceGroupRequest r) {
@@ -73,7 +73,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     rg.labels = labels;
 
     repo.update(rg);
-    return CommandResult(true, rg.id, "");
+    return CommandResult(true, rg.id.value, "");
   }
 
   ResourceGroup getById(ResourceGroupId id) {
