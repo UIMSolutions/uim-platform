@@ -89,7 +89,7 @@ class ShareController : PlatformController {
         writeError(res, 404, "Share not found");
         return;
       }
-      res.writeJsonBody(serializeShare(share), 200);
+      res.writeJsonBody(share.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

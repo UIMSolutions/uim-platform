@@ -10,8 +10,8 @@ import uim.platform.identity.provisioning.domain.types;
 /// An audit record for a single entity operation within a
 /// provisioning job run.
 struct ProvisioningLog {
-  ProvisioningLogId id;
-  TenantId tenantId;
+  mixin TenantEntity!ProvisioningLogId;
+
   ProvisioningJobId jobId;
   EntityType entityType = EntityType.user;
   string entityId;
@@ -20,5 +20,16 @@ struct ProvisioningLog {
   string sourceSystem;
   string targetSystem;
   string details; // JSON: error message, attribute diff, etc.
-  long createdAt;
+
+  Json toJson() {
+    return entityToJson()
+      .set("jobId", jobId)
+      .set("entityType", entityType.to!string)
+      .set("entityId", entityId)
+      .set("operation", operation.to!string)
+      .set("status", status.to!string)
+      .set("sourceSystem", sourceSystem)
+      .set("targetSystem", targetSystem)
+      .set("details", details);
+  }
 }

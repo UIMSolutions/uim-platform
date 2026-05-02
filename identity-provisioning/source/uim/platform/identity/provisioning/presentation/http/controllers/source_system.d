@@ -67,7 +67,7 @@ class SourceSystemController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (s; items)
-        arr ~= serializeSystem(s);
+        arr ~= s.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -89,7 +89,7 @@ class SourceSystemController : PlatformController {
         writeError(res, 404, "Source system not found");
         return;
       }
-      res.writeJsonBody(serializeSystem(*sys), 200);
+      res.writeJsonBody(sys.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -187,18 +187,4 @@ class SourceSystemController : PlatformController {
     }
   }
 
-  private static Json serializeSystem(const SourceSystem s) {
-    return Json.emptyObject
-    .set("id", s.id)
-    .set("tenantId", s.tenantId)
-    .set("name", s.name)
-    .set("description", s.description)
-    .set("systemType", s.systemType.to!string)
-    .set("status", s.status.to!string)
-    .set("connectionConfig", s.connectionConfig)
-    .set("lastSyncAt", s.lastSyncAt)
-    .set("createdBy", s.createdBy)
-    .set("createdAt", s.createdAt)
-    .set("updatedAt", s.updatedAt);
-  }
 }

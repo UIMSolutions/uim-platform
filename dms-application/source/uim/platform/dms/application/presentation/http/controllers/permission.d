@@ -20,10 +20,10 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class PermissionController : PlatformController {
-  private ManagePermissionsUseCase uc;
+  private ManagePermissionsUseCase permissions;
 
-  this(ManagePermissionsUseCase uc) {
-    this.uc = uc;
+  this(ManagePermissionsUseCase permissions) {
+    this.permissions = permissions;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class PermissionController : PlatformController {
       r.level = parsePermissionLevel(j.getString("level"));
       r.createdBy = req.headers.get("X-User-Id", "system");
 
-      auto result = uc.grantPermission(r);
+      auto result = permissions.grantPermission(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
           .set("id", Json(result.id))
@@ -71,8 +71,8 @@ class PermissionController : PlatformController {
       auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
       auto resourceType = parseResourceType(resourceTypeStr);
 
-      auto items = uc.listByResource(resourceId, resourceType, tenantId);
-      auto arr = items.map!(p => serializePerm(p)).array.toJson;
+      auto items = permissions.listByResource(resourceId, resourceType, tenantId);
+      auto arr = items.map!(item => item.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -90,11 +90,9 @@ class PermissionController : PlatformController {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByUser(tenantId, userId);
 
-      auto arr = Json.emptyArray;
-      foreach (p; items)
-        arr ~= serializePerm(p);
+      auto items = permissions.listByUser(tenantId, userId);
+      auto arr = items.map!(item => item.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -117,7 +115,7 @@ class PermissionController : PlatformController {
       auto userId = j.getString("userId");
       auto required = parsePermissionLevel(j.getString("requiredLevel"));
 
-      auto allowed = uc.checkAccess(resourceId, resourceType, userId, required, tenantId);
+      auto allowed = permissions.checkAccess(resourceId, resourceType, userId, required, tenantId);
 
       auto resp = Json.emptyObject
         .set("allowed", allowed ? Json(true) : Json(false))
@@ -142,7 +140,7 @@ class PermissionController : PlatformController {
       r.tenantId = req.getTenantId;
       r.level = parsePermissionLevel(j.getString("level"));
 
-      auto result = uc.updatePermission(r);
+      auto result = permissions.updatePermission(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
@@ -162,7 +160,7 @@ class PermissionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.revokePermission(tenantId, id);
+      auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", Json(true))

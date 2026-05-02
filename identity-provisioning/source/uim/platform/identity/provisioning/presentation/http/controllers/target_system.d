@@ -187,18 +187,4 @@ class TargetSystemController : PlatformController {
     }
   }
 
-  private static Json serializeSystem(const TargetSystem s) {
-    return Json.emptyObject
-    .set("id", s.id)
-    .set("tenantId", s.tenantId)
-    .set("name", s.name)
-    .set("description", s.description)
-    .set("systemType", s.systemType.to!string)
-    .set("status", s.status.to!string)
-    .set("connectionConfig", s.connectionConfig)
-    .set("lastSyncAt", s.lastSyncAt)
-    .set("createdBy", s.createdBy)
-    .set("createdAt", s.createdAt)
-    .set("updatedAt", s.updatedAt);
-  }
 }

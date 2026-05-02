@@ -85,17 +85,21 @@ class FolderController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto f = uc.getFolder(tenantId, id);
-      if (f.isNull) {
+      auto folder = uc.getFolder(tenantId, id);
+      if (folder.isNull) {
         writeError(res, 404, "Folder not found");
         return;
       }
-      res.writeJsonBody(serializeFolder(f), 200);
+      res.writeJsonBody(folder.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  /**
+    * Handles updating folder metadata (name, description).
+    * The folder ID is extracted from the URL path.
+    */
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);

@@ -88,12 +88,12 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto repo = uc.getRepository(tenantId, id);
-      if (repo.isNull) {
+      auto repository = uc.getRepository(tenantId, id);
+      if (repository.isNull) {
         writeError(res, 404, "Repository not found");
         return;
       }
-      res.writeJsonBody(serializeRepo(repo), 200);
+      res.writeJsonBody(repository.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

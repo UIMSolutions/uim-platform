@@ -90,7 +90,7 @@ class ProvisioningJobController : PlatformController {
         writeError(res, 404, "Provisioning job not found");
         return;
       }
-      res.writeJsonBody(serializeJob(*job), 200);
+      res.writeJsonBody(job.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,6 +101,7 @@ class ProvisioningJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
+
       auto result = uc.runJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
