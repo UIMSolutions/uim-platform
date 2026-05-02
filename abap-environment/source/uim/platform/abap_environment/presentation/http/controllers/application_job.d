@@ -67,7 +67,7 @@ class ApplicationJobController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto jobs = uc.listJobs(systemId);
       auto arr = jobs.map!(job => job.toJson).array;
 
@@ -83,7 +83,7 @@ class ApplicationJobController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
       auto job = uc.getJob(id);
       if (job.isNull) {
         writeError(res, 404, "Application job not found");
@@ -97,7 +97,7 @@ class ApplicationJobController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateApplicationJobRequest r;
       r.description = j.getString("description");
@@ -122,7 +122,7 @@ class ApplicationJobController : PlatformController {
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
       auto result = uc.cancelJob(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -139,7 +139,7 @@ class ApplicationJobController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteJob(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

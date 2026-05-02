@@ -87,7 +87,7 @@ class SystemInstanceController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto inst = uc.getInstance(id);
       if (inst.isNull) {
         writeError(res, 404, "System instance not found");
@@ -101,7 +101,7 @@ class SystemInstanceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateSystemInstanceRequest r;
       r.description = j.getString("description");
@@ -127,7 +127,7 @@ class SystemInstanceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteInstance(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

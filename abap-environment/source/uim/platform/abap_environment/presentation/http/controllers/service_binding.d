@@ -65,7 +65,7 @@ class ServiceBindingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto bindings = uc.listBindings(systemId);
       auto arr = bindings.map!(b => b.toJson).array;
 
@@ -81,7 +81,7 @@ class ServiceBindingController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
       auto binding = uc.getBinding(id);
       if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
@@ -95,7 +95,7 @@ class ServiceBindingController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateServiceBindingRequest r;
       r.description = j.getString("description");
@@ -118,7 +118,7 @@ class ServiceBindingController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteBinding(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

@@ -77,7 +77,7 @@ class BusinessRoleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto roles = uc.listRoles(systemId);
       auto arr = roles.map!(r => r.toJson).array.toJson;
 
@@ -94,7 +94,7 @@ class BusinessRoleController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
       if (!uv.existsByRole(id)) {
         writeError(res, 404, "Business role not found");
         return;
@@ -109,7 +109,7 @@ class BusinessRoleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateBusinessRoleRequest r;
       r.description = j.getString("description");
@@ -133,7 +133,7 @@ class BusinessRoleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteRole(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

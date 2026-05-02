@@ -67,7 +67,7 @@ class TransportRequestController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto requests = uc.listRequests(systemId);
       auto arr = requests.map!(tr => serializeRequest(tr)).array.toJson;
 
@@ -84,7 +84,7 @@ class TransportRequestController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = TransportRequestId(extractIdFromPath(req.requestURI));
       auto tr = uc.getRequest(id);
       if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
@@ -98,7 +98,7 @@ class TransportRequestController : PlatformController {
 
   private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto requestId = extractIdFromPath(req.requestURI);
+      auto requestId = TransportRequestId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       AddTransportTaskRequest r;
       r.owner = j.getString("owner");
@@ -122,7 +122,7 @@ class TransportRequestController : PlatformController {
 
   private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = TransportRequestId(extractIdFromPath(req.requestURI));
       auto result = uc.releaseRequest(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -141,8 +141,8 @@ class TransportRequestController : PlatformController {
   private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto requestId = j.getString("requestId");
-      auto taskId = extractIdFromPath(req.requestURI);
+      auto requestId = TransportRequestId(j.getString("requestId"));
+      auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
 
       auto result = uc.releaseTask(requestId, taskId);
       if (result.isSuccess()) {
@@ -161,7 +161,7 @@ class TransportRequestController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = TransportRequestId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteRequest(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

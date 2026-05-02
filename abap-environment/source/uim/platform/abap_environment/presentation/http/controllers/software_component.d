@@ -69,7 +69,7 @@ class SoftwareComponentController : PlatformController {
     try {
       auto systemId = req.json.getString("systemInstanceId");
       if (systemId.isEmpty)
-        systemId = req.headers.get("X-System-Id", "");
+        systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto items = uc.listComponents(systemId);
       auto arr = items.map!(comp => serializeComponent(comp)).array.toJson;
 
@@ -86,7 +86,7 @@ class SoftwareComponentController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto comp = uc.getComponent(id);
       if (comp.isNull) {
         writeError(res, 404, "Software component not found");
@@ -100,7 +100,7 @@ class SoftwareComponentController : PlatformController {
 
   private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       CloneSoftwareComponentRequest r;
       r.branch = j.getString("branch");
@@ -122,7 +122,7 @@ class SoftwareComponentController : PlatformController {
 
   private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       PullSoftwareComponentRequest r;
       r.commitId = j.getString("commitId");
@@ -143,7 +143,7 @@ class SoftwareComponentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteComponent(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

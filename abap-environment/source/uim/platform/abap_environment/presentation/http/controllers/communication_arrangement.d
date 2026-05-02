@@ -73,7 +73,7 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto arrangements = uc.listArrangements(systemId);
       auto arr = arrangements.map!(a => a.toJson).array;
 
@@ -90,7 +90,7 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
       auto arrangement = uc.getArrangement(id);
       if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
@@ -105,7 +105,7 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateCommunicationArrangementRequest r;
       r.description = j.getString("description");
@@ -136,7 +136,7 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteArrangement(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

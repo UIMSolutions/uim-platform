@@ -65,7 +65,7 @@ class BusinessUserController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto systemId = req.headers.get("X-System-Id", "");
+      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       auto users = uc.listUsers(systemId);
       auto arr = users.map!(user => serializeUser(u)).array.toJson;
 
@@ -81,7 +81,7 @@ class BusinessUserController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
       auto user = uc.getUser(id);
       if (user.isNull) {
         writeError(res, 404, "Business user not found");
@@ -95,7 +95,7 @@ class BusinessUserController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateBusinessUserRequest r;
       r.firstName = j.getString("firstName");
@@ -121,7 +121,7 @@ class BusinessUserController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteUser(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

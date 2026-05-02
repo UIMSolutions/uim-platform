@@ -27,7 +27,7 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
     return SystemInstance.init;
   }
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).remove(e);
+    findByName(tenantId, name).remove();
   }
   
   size_t countByStatus(TenantId tenantId, SystemStatus status) {
