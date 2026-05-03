@@ -24,5 +24,6 @@ public {
     import uim.platform.workzone.domain.ports.repositories.user_profiles;
     import uim.platform.workzone.domain.ports.repositories.widgets;
     import uim.platform.workzone.domain.ports.repositories.workpages;
-    import uim.platform.workzone.domain.ports.repositories.workzones;
+    import uim.platform.workzone.domain.ports.repositories.workspaces;
+    // import uim.platform.workzone.domain.ports.repositories.workzones;
 }

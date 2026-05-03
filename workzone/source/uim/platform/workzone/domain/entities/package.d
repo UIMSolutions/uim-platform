@@ -4,10 +4,10 @@ public {
     import uim.platform.workzone.domain.entities.app_registration;
     import uim.platform.workzone.domain.entities.card;
     import uim.platform.workzone.domain.entities.channel;
-    import uim.platform.workzone.domain.entities.content;
+    import uim.platform.workzone.domain.entities.content_item;
     import uim.platform.workzone.domain.entities.event;
     import uim.platform.workzone.domain.entities.external_content_provider;
-    import uim.platform.workzone.domain.entities.feed;
+    import uim.platform.workzone.domain.entities.feed_entry;
     import uim.platform.workzone.domain.entities.forum_topic;
     import uim.platform.workzone.domain.entities.group;
     import uim.platform.workzone.domain.entities.knowledge_base_article;

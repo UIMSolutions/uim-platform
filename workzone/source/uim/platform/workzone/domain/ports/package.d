@@ -1,5 +1,5 @@
 module uim.platform.workzone.domain.ports;
 
 public {
-    import uim.platform.workzone.domain.ports.repository;
+    import uim.platform.workzone.domain.ports.repositories;
 }

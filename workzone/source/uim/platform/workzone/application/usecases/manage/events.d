@@ -53,16 +53,16 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  Event getEvent(EventId tenantId, id tenantId) {
+  Event getEvent(TenantId tenantId, EventId id) {
     return repo.findById(tenantId, id);
   }
 
-  Event[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return repo.findByWorkspace(workspacetenantId, id);
+  Event[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return repo.findByWorkspace(tenantId, workspaceId);
   }
 
   CommandResult updateEvent(UpdateEventRequest req) {
-    auto e = repo.findById(req.id, req.tenantId);
+    auto e = repo.findById(req.tenantId, req.id);
     if (e.isNull)
       return CommandResult(false, "", "Event not found");
 
@@ -81,7 +81,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  CommandResult deleteEvent(EventId tenantId, id tenantId) {
+  CommandResult deleteEvent(TenantId tenantId, EventId id) {
     auto e = repo.findById(tenantId, id);
     if (e.isNull)
       return CommandResult(false, "", "Event not found");

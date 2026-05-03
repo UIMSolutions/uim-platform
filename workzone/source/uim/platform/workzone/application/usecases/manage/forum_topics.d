@@ -46,16 +46,16 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  ForumTopic getForumTopic(ForumTopicId tenantId, id tenantId) {
+  ForumTopic getForumTopic(TenantId tenantId, ForumTopicId id) {
     return repo.findById(tenantId, id);
   }
 
-  ForumTopic[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return repo.findByWorkspace(workspacetenantId, id);
+  ForumTopic[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return repo.findByWorkspace(tenantId, workspaceId);
   }
 
   CommandResult updateForumTopic(UpdateForumTopicRequest req) {
-    auto t = repo.findById(req.id, req.tenantId);
+    auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
 
@@ -72,7 +72,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteForumTopic(ForumTopicId tenantId, id tenantId) {
+  CommandResult deleteForumTopic(TenantId tenantId, ForumTopicId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
