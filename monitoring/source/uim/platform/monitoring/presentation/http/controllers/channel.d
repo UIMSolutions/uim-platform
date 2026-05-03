@@ -137,7 +137,7 @@ class ChannelController : PlatformController {
       auto result = uc.deleteChannel(id);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("deleted", Json(true))
+          .set("deleted", true)
           .set("message", "Notification channel deleted successfully");
 
         res.writeJsonBody(response, 200);

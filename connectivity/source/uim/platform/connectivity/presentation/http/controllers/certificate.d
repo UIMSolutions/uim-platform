@@ -127,7 +127,7 @@ class CertificateController : PlatformController {
       auto result = uc.deleteCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", Json(true))
+          .set("deleted", true)
           .set("message", "Certificate deleted successfully");
           
         res.writeJsonBody(resp, 200);

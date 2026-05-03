@@ -173,7 +173,7 @@ class DestinationController : PlatformController {
       auto result = uc.removeDestination(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", Json(true));
+          .set("deleted", true);
 
         res.writeJsonBody(resp, 200);
       } else {

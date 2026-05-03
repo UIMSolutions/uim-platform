@@ -77,11 +77,12 @@ class FragmentController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto fragments = uc.listBySubaccount(tenantId, subaccountId);
-      auto arr = fragments.map!(f => serializeFragment(f)).array.toJson;
+      auto arr = fragments.map!(f => f.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(fragments.length));
+        .set("totalCount", Json(fragments.length))
+        .set("message", "Fragments retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -126,7 +127,7 @@ class FragmentController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Fragment updated"));
+          .set("message", "Fragment updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -143,8 +144,8 @@ class FragmentController : PlatformController {
       auto result = uc.removeFragment(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", Json(true))
-          .set("message", Json("Fragment deleted"));
+          .set("deleted", true)
+          .set("message", "Fragment deleted successfully");
           
         res.writeJsonBody(resp, 200);
       } else {

@@ -67,7 +67,9 @@ class AuditConfigController : PlatformController {
       auto result = useCase.createConfig(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", Json(result.id))
+          .set("message", "Audit config created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -80,11 +82,13 @@ class AuditConfigController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto configs = useCase.listConfigs();
-      auto arr = configs.map!(c => serializeConfig(c)).array.toJson;
+      auto arr = configs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", configs.length);
+        .set("totalCount", configs.length)
+        .set("message", "Audit configs retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -143,7 +147,8 @@ class AuditConfigController : PlatformController {
       auto result = useCase.updateConfig(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "updated");
+          .set("status", "updated")
+          .set("message", "Audit config updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

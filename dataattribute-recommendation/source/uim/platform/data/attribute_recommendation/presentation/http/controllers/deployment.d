@@ -154,7 +154,7 @@ class DeploymentController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", Json(result.id))
-            .set("deleted", Json(true))
+            .set("deleted", true)
             .set("message", "Deployment deleted successfully");
             
         res.writeJsonBody(resp, 200);

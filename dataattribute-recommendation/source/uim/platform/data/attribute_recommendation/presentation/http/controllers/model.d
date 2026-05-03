@@ -70,7 +70,7 @@ class ModelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      
+
       auto items = uc.listModelConfigs(tenantId);
       auto arr = items.map!(c => c.toJson).array.toJson;
 
@@ -191,7 +191,7 @@ class ModelController : PlatformController {
       auto result = uc.deleteModelConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("deleted", Json(true))
+            .set("deleted", true)
             .set("message", "Model configuration deleted successfully");
             
         res.writeJsonBody(resp, 200);

@@ -81,7 +81,7 @@ class DuplicateController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("resolved", Json(true))
+          .set("resolved", true)
           .set("message", "Duplicate group resolved successfully");
 
         res.writeJsonBody(resp, 200);

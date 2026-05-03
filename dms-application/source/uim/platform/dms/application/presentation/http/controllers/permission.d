@@ -163,7 +163,7 @@ class PermissionController : PlatformController {
       auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("deleted", Json(true))
+          .set("deleted", true)
           .set("message", Json("Permission revoked"));
 
         res.writeJsonBody(resp, 200);
