@@ -80,7 +80,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  LogStream[] list(string tenantId) {
+  LogStream[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 

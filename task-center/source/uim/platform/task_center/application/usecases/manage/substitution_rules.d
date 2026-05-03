@@ -18,19 +18,19 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    SubstitutionRule getById(string tenantId, string id) {
+    SubstitutionRule getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    SubstitutionRule[] listByUser(string tenantId, string userId) {
+    SubstitutionRule[] listByUser(TenantId tenantId, string userId) {
         return repo.findByUser(tenantId, userId);
     }
 
-    SubstitutionRule[] listBySubstitute(string tenantId, string substituteId) {
+    SubstitutionRule[] listBySubstitute(TenantId tenantId, string substituteId) {
         return repo.findBySubstitute(tenantId, substituteId);
     }
 
-    SubstitutionRule[] listByStatus(string tenantId, SubstitutionStatus status) {
+    SubstitutionRule[] listByStatus(TenantId tenantId, SubstitutionStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
@@ -63,7 +63,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult activate(string tenantId, string id) {
+    CommandResult activate(TenantId tenantId, string id) {
         auto r = repo.findById(tenantId, id);
         if (r == SubstitutionRule.init)
             return CommandResult(false, "", "Substitution rule not found");
@@ -72,7 +72,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivate(string tenantId, string id) {
+    CommandResult deactivate(TenantId tenantId, string id) {
         auto r = repo.findById(tenantId, id);
         if (r == SubstitutionRule.init)
             return CommandResult(false, "", "Substitution rule not found");
@@ -81,7 +81,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

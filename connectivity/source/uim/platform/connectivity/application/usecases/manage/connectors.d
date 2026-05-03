@@ -103,7 +103,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(subaccountId);
   }
 
-  CloudConnector[] listByTenant(string tenantId) {
+  CloudConnector[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 

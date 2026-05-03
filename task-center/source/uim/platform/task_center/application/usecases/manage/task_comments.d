@@ -18,11 +18,11 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskComment getById(string tenantId, string id) {
+    TaskComment getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskComment[] listByTask(string tenantId, string taskId) {
+    TaskComment[] listByTask(TenantId tenantId, string taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
@@ -46,7 +46,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

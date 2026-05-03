@@ -18,15 +18,15 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAction getById(string tenantId, string id) {
+    TaskAction getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskAction[] listByTask(string tenantId, string taskId) {
+    TaskAction[] listByTask(TenantId tenantId, string taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
-    TaskAction[] listByPerformer(string tenantId, string performerId) {
+    TaskAction[] listByPerformer(TenantId tenantId, string performerId) {
         return repo.findByPerformer(tenantId, performerId);
     }
 
@@ -42,7 +42,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

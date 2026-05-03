@@ -11,30 +11,35 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
-    private Notification[] store;
 
-    Notification findById(NotificationId id) {
-        foreach (n; findAll) {
-            if (n.id == id)
-                return n;
-        }
-        return Notification.init;
+    size_t countByRecipient(TenantId tenantId, string recipientId) {
+        return findByRecipient(tenantId, recipientId).length;
     }
-
-    Notification[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(n => n.tenantId == tenantId).array;
-    }
-
     Notification[] findByRecipient(TenantId tenantId, string recipientId) {
         return findAll().filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
     }
+    void removeByRecipient(TenantId tenantId, string recipientId) {
+        findByRecipient(tenantId, recipientId).each!(n => remove(n.id));
+    }
 
+    size_t countByInstance(SituationInstanceId instanceId) {
+        return findByInstance(instanceId).length;
+    }
     Notification[] findByInstance(SituationInstanceId instanceId) {
         return findAll().filter!(n => n.instanceId == instanceId).array;
     }
+    void removeByInstance(SituationInstanceId instanceId) {
+        findByInstance(instanceId).each!(n => remove(n.id));
+    }
 
+    size_t countByStatus(TenantId tenantId, NotificationStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
         return findAll().filter!(n => n.tenantId == tenantId && n.status == status).array;
+    }
+    void removeByStatus(TenantId tenantId, NotificationStatus status) {
+        findByStatus(tenantId, status).each!(n => remove(n.id));
     }
 
 }

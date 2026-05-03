@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
     private Task[][string] store;
 
-    Task findById(string tenantId, string id) {
+    Task findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (t; *arr)
                 if (t.id == id) return t;
         return Task.init;
     }
 
-    Task[] findByTenant(string tenantId) {
+    Task[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    Task[] findByAssignee(string tenantId, string assignee) {
+    Task[] findByAssignee(TenantId tenantId, string assignee) {
         Task[] result;
         if (auto arr = tenantId in store)
             foreach (t; *arr)
@@ -34,7 +34,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
         return result;
     }
 
-    Task[] findByStatus(string tenantId, TaskStatus status) {
+    Task[] findByStatus(TenantId tenantId, TaskStatus status) {
         Task[] result;
         if (auto arr = tenantId in store)
             foreach (t; *arr)
@@ -42,7 +42,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
         return result;
     }
 
-    Task[] findByProvider(string tenantId, string providerId) {
+    Task[] findByProvider(TenantId tenantId, string providerId) {
         Task[] result;
         if (auto arr = tenantId in store)
             foreach (t; *arr)
@@ -50,7 +50,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
         return result;
     }
 
-    Task[] findByCategory(string tenantId, TaskCategory category) {
+    Task[] findByCategory(TenantId tenantId, TaskCategory category) {
         Task[] result;
         if (auto arr = tenantId in store)
             foreach (t; *arr)
@@ -58,7 +58,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
         return result;
     }
 
-    Task[] findByPriority(string tenantId, TaskPriority priority) {
+    Task[] findByPriority(TenantId tenantId, TaskPriority priority) {
         Task[] result;
         if (auto arr = tenantId in store)
             foreach (t; *arr)
@@ -66,17 +66,17 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
         return result;
     }
 
-    void save(string tenantId, Task entity) {
+    void save(TenantId tenantId, Task entity) {
         store[tenantId] ~= entity;
     }
 
-    void update(string tenantId, Task entity) {
+    void update(TenantId tenantId, Task entity) {
         if (auto arr = tenantId in store)
             foreach (t; *arr)
                 if (t.id == entity.id) { t = entity; return; }
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             Task[] filtered;
             foreach (t; *arr)

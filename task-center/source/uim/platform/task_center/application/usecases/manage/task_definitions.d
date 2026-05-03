@@ -18,19 +18,19 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskDefinition getById(string tenantId, string id) {
+    TaskDefinition getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskDefinition[] list(string tenantId) {
+    TaskDefinition[] list(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    TaskDefinition[] listByProvider(string tenantId, string providerId) {
+    TaskDefinition[] listByProvider(TenantId tenantId, string providerId) {
         return repo.findByProvider(tenantId, providerId);
     }
 
-    TaskDefinition[] listByCategory(string tenantId, TaskCategory category) {
+    TaskDefinition[] listByCategory(TenantId tenantId, TaskCategory category) {
         return repo.findByCategory(tenantId, category);
     }
 
@@ -61,7 +61,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult activate(string tenantId, string id) {
+    CommandResult activate(TenantId tenantId, string id) {
         auto d = repo.findById(tenantId, id);
         if (d == TaskDefinition.init)
             return CommandResult(false, "", "Task definition not found");
@@ -70,7 +70,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivate(string tenantId, string id) {
+    CommandResult deactivate(TenantId tenantId, string id) {
         auto d = repo.findById(tenantId, id);
         if (d == TaskDefinition.init)
             return CommandResult(false, "", "Task definition not found");
@@ -79,7 +79,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

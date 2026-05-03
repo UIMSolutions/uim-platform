@@ -18,19 +18,19 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskProvider getById(string tenantId, string id) {
+    TaskProvider getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskProvider[] list(string tenantId) {
+    TaskProvider[] list(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    TaskProvider[] listByStatus(string tenantId, ProviderStatus status) {
+    TaskProvider[] listByStatus(TenantId tenantId, ProviderStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    TaskProvider[] listByType(string tenantId, ProviderType ptype) {
+    TaskProvider[] listByType(TenantId tenantId, ProviderType ptype) {
         return repo.findByType(tenantId, ptype);
     }
 
@@ -62,7 +62,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult activate(string tenantId, string id) {
+    CommandResult activate(TenantId tenantId, string id) {
         auto p = repo.findById(tenantId, id);
         if (p == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
@@ -71,7 +71,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivate(string tenantId, string id) {
+    CommandResult deactivate(TenantId tenantId, string id) {
         auto p = repo.findById(tenantId, id);
         if (p == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
@@ -80,7 +80,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult sync(string tenantId, string id) {
+    CommandResult sync(TenantId tenantId, string id) {
         auto p = repo.findById(tenantId, id);
         if (p == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
@@ -89,7 +89,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

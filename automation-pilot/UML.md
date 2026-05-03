@@ -6,7 +6,7 @@
 classDiagram
     class Catalog {
         +CatalogId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +CatalogStatus status
@@ -22,7 +22,7 @@ classDiagram
 
     class Command {
         +CommandId id
-        +string tenantId
+        +TenantId tenantId
         +string catalogId
         +string name
         +string description
@@ -44,7 +44,7 @@ classDiagram
 
     class CommandInput {
         +CommandInputId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +InputType inputType
@@ -62,7 +62,7 @@ classDiagram
 
     class Execution {
         +ExecutionId id
-        +string tenantId
+        +TenantId tenantId
         +string commandId
         +ExecutionStatus status
         +ExecutionPriority priority
@@ -82,7 +82,7 @@ classDiagram
 
     class ScheduledExecution {
         +ScheduledExecutionId id
-        +string tenantId
+        +TenantId tenantId
         +string commandId
         +ScheduleType scheduleType
         +ScheduleStatus status
@@ -103,7 +103,7 @@ classDiagram
 
     class Trigger {
         +TriggerId id
-        +string tenantId
+        +TenantId tenantId
         +string commandId
         +TriggerType triggerType
         +TriggerStatus status
@@ -123,7 +123,7 @@ classDiagram
 
     class ServiceAccount {
         +ServiceAccountId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +ServiceAccountStatus status
@@ -140,7 +140,7 @@ classDiagram
 
     class ContentConnector {
         +ContentConnectorId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +ConnectorType connectorType

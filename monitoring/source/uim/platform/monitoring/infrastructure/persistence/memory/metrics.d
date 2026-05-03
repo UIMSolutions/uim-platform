@@ -30,7 +30,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     return metrics.filter!(m => m.resourceId == resourceId).array;
   }
 
-  Metric[] findByResource(string tenantId, MonitoredResourceId resourceId) {
+  Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return filterByResource(findByTenant(TenantId(tenantId)), resourceId);
   }
 
@@ -79,7 +79,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
         .timestamp <= endTime).array;
   }
 
-  Metric[] findByName(string tenantId, string metricName) {
+  Metric[] findByName(TenantId tenantId, string metricName) {
     return findByName(TenantId(tenantId), metricName);
   }
 

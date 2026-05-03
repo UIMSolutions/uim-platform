@@ -18,15 +18,15 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UserTaskFilter getById(string tenantId, string id) {
+    UserTaskFilter getById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    UserTaskFilter[] listByUser(string tenantId, string userId) {
+    UserTaskFilter[] listByUser(TenantId tenantId, string userId) {
         return repo.findByUser(tenantId, userId);
     }
 
-    UserTaskFilter getDefault(string tenantId, string userId) {
+    UserTaskFilter getDefault(TenantId tenantId, string userId) {
         return repo.findDefault(tenantId, userId);
     }
 
@@ -53,7 +53,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id, "");
     }
 
-    CommandResult setDefault(string tenantId, string id) {
+    CommandResult setDefault(TenantId tenantId, string id) {
         auto f = repo.findById(tenantId, id);
         if (f == UserTaskFilter.init)
             return CommandResult(false, "", "Filter not found");
@@ -62,7 +62,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(string tenantId, string id) {
+    CommandResult remove(TenantId tenantId, string id) {
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }

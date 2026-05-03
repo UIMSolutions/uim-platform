@@ -50,7 +50,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
     bool hasById(LegalEntityId id) { return repo.existsById(id); }
     LegalEntity getById(string id) { return getById(LegalEntityId(id)); }
     LegalEntity getById(LegalEntityId id) { return repo.findById(id); }
-    LegalEntity[] list(string tenantId) { return list(TenantId(tenantId)); }
+    LegalEntity[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     LegalEntity[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     CommandResult remove(string id) { return remove(LegalEntityId(id)); }
     CommandResult remove(LegalEntityId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }

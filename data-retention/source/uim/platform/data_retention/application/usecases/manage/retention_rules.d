@@ -50,7 +50,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     bool hasById(RetentionRuleId id) { return repo.existsById(id); }
     RetentionRule getById(string id) { return getById(RetentionRuleId(id)); }
     RetentionRule getById(RetentionRuleId id) { return repo.findById(id); }
-    RetentionRule[] list(string tenantId) { return list(TenantId(tenantId)); }
+    RetentionRule[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     RetentionRule[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     RetentionRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);

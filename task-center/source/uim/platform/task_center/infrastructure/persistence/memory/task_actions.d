@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), TaskActionRepository {
     private TaskAction[][string] store;
 
-    TaskAction findById(string tenantId, string id) {
+    TaskAction findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (a; *arr)
                 if (a.id == id) return a;
         return TaskAction.init;
     }
 
-    TaskAction[] findByTenant(string tenantId) {
+    TaskAction[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    TaskAction[] findByTask(string tenantId, string taskId) {
+    TaskAction[] findByTask(TenantId tenantId, string taskId) {
         TaskAction[] result;
         if (auto arr = tenantId in store)
             foreach (a; *arr)
@@ -34,7 +34,7 @@ class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), 
         return result;
     }
 
-    TaskAction[] findByPerformer(string tenantId, string performerId) {
+    TaskAction[] findByPerformer(TenantId tenantId, string performerId) {
         TaskAction[] result;
         if (auto arr = tenantId in store)
             foreach (a; *arr)
@@ -42,11 +42,11 @@ class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), 
         return result;
     }
 
-    void save(string tenantId, TaskAction entity) {
+    void save(TenantId tenantId, TaskAction entity) {
         store[tenantId] ~= entity;
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskAction[] filtered;
             foreach (a; *arr)

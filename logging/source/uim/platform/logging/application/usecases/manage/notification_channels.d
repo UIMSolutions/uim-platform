@@ -72,7 +72,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  NotificationChannel[] list(string tenantId) {
+  NotificationChannel[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 

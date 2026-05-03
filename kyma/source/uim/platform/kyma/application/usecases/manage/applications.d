@@ -184,7 +184,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return appRepository.findByEnvironment(envId);
   }
 
-  Application[] listByTenant(string tenantId) {
+  Application[] listByTenant(TenantId tenantId) {
     return listByTenant(TenantId(tenantId));
   }
 

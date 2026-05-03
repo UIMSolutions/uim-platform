@@ -84,7 +84,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     return definitionRepo.findById(id);
   }
 
-  MetricDefinition[] listDefinitions(string tenantId) {
+  MetricDefinition[] listDefinitions(TenantId tenantId) {
     return listDefinitions(TenantId(tenantId));
   }
 
@@ -149,7 +149,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, "", "");
   }
 
-  Metric[] getMetrics(string tenantId, string resourceId) {
+  Metric[] getMetrics(TenantId tenantId, string resourceId) {
     return getMetrics(TenantId(tenantId), MonitoredResourceId(resourceId));
   }
 

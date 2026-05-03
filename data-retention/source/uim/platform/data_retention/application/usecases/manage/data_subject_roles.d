@@ -46,7 +46,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     bool hasById(DataSubjectRoleId id) { return repo.existsById(id); }
     DataSubjectRole getById(string id) { return getById(DataSubjectRoleId(id)); }
     DataSubjectRole getById(DataSubjectRoleId id) { return repo.findById(id); }
-    DataSubjectRole[] list(string tenantId) { return list(TenantId(tenantId)); }
+    DataSubjectRole[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     DataSubjectRole[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     CommandResult remove(string id) { return remove(DataSubjectRoleId(id)); }
     CommandResult remove(DataSubjectRoleId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }

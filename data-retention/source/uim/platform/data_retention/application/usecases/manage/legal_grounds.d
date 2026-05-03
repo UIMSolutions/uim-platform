@@ -50,7 +50,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     bool hasById(LegalGroundId id) { return repo.existsById(id); }
     LegalGround getById(string id) { return getById(LegalGroundId(id)); }
     LegalGround getById(LegalGroundId id) { return repo.findById(id); }
-    LegalGround[] list(string tenantId) { return list(TenantId(tenantId)); }
+    LegalGround[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     LegalGround[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     LegalGround[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);

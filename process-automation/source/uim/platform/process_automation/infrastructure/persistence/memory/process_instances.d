@@ -10,47 +10,26 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryProcessInstanceRepository : ProcessInstanceRepository {
-    private ProcessInstance[] store;
+class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, ProcessInstanceId), ProcessInstanceRepository {
 
-    ProcessInstance findById(ProcessInstanceId id) {
-        foreach (i; findAll) {
-            if (i.id == id)
-                return i;
-        }
-        return ProcessInstance.init;
+    size_t countByProcess(ProcessId processId) {
+        return findByProcess(processId).length;
     }
-
-    ProcessInstance[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(i => i.tenantId == tenantId).array;
-    }
-
     ProcessInstance[] findByProcess(ProcessId processId) {
         return findAll().filter!(i => i.processId == processId).array;
     }
+    void removeByProcess(ProcessId processId) {
+        findByProcess(processId).each!(i => remove(i.id));
+    }
 
+    size_t countByStatus(TenantId tenantId, InstanceStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
         return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
     }
-
-    void save(ProcessInstance i) {
-        store ~= i;
+    void removeByStatus(TenantId tenantId, InstanceStatus status) {
+        findByStatus(tenantId, status).each!(i => remove(i.id));
     }
 
-    void update(ProcessInstance i) {
-        foreach (existing; findAll) {
-            if (existing.id == i.id) {
-                existing = i;
-                return;
-            }
-        }
-    }
-
-    void remove(ProcessInstanceId id) {
-        store = findAll().filter!(i => i.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(i => i.tenantId == tenantId).array.length;
-    }
 }

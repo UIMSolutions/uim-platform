@@ -83,7 +83,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  RetentionPolicy[] list(string tenantId) {
+  RetentionPolicy[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 

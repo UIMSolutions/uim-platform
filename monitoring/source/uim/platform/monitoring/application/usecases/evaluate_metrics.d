@@ -32,7 +32,7 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
   }
 
   /// Evaluate all enabled alert rules for a tenant. Returns number of alerts triggered.
-  int evaluateAll(string tenantId) {
+  int evaluateAll(TenantId tenantId) {
     return evaluateAll(TenantId(tenantId));
   }
 
@@ -65,7 +65,7 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
   }
 
   /// Evaluate a single rule by ID. Returns whether an alert was triggered.
-  bool evaluateRule(string tenantId, string ruleId) {
+  bool evaluateRule(TenantId tenantId, string ruleId) {
     return evaluateRule(TenantId(tenantId), AlertRuleId(ruleId));
   }
 

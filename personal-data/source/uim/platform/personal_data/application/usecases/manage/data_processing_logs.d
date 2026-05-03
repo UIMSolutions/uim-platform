@@ -62,7 +62,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    DataProcessingLog[] listByTenant(string tenantId) {
+    DataProcessingLog[] listByTenant(TenantId tenantId) {
         return listByTenant(TenantId(tenantId));
     }
 

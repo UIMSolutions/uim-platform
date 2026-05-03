@@ -31,7 +31,7 @@ class MonitorConnectivityUseCase { // TODO: UIMUseCase {
     this.logRepo = logRepo;
   }
 
-  ConnectivityLog[] listLogs(string tenantId) {
+  ConnectivityLog[] listLogs(TenantId tenantId) {
     return listLogs(TenantId(tenantId));
   }
 
@@ -39,7 +39,7 @@ class MonitorConnectivityUseCase { // TODO: UIMUseCase {
     return logRepo.findByTenant(tenantId);
   }
 
-  ConnectivityLog[] listBySeverity(string tenantId, LogSeverity severity) {
+  ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) {
     return listBySeverity(TenantId(tenantId), severity);
   }
 
@@ -55,7 +55,7 @@ class MonitorConnectivityUseCase { // TODO: UIMUseCase {
     return logRepo.findBySource(sourceId);
   }
 
-  ConnectivitySummary getSummary(string tenantId) {
+  ConnectivitySummary getSummary(TenantId tenantId) {
     return getSummary(TenantId(tenantId));
   }
 

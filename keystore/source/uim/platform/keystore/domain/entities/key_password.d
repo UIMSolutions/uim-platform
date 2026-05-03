@@ -21,7 +21,7 @@ struct KeyPassword {
   string passwordValue; // stored opaque/encrypted value
   string accountId;
   string applicationId;
-  string tenantId;
+  TenantId tenantId;
   long createdAt;
   long updatedAt;
 }

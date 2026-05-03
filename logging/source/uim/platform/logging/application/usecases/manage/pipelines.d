@@ -104,7 +104,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  Pipeline[] list(string tenantId) {
+  Pipeline[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 
@@ -112,7 +112,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Pipeline[] listActive(string tenantId) {
+  Pipeline[] listActive(TenantId tenantId) {
     return listActive(TenantId(tenantId));
   }
 

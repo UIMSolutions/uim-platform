@@ -97,7 +97,7 @@ erDiagram
 
     APPLICATION {
         string id PK
-        string tenantId
+        TenantId tenantId
         string name
         string type
         string status

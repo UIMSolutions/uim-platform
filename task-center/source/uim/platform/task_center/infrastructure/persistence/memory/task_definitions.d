@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
     private TaskDefinition[][string] store;
 
-    TaskDefinition findById(string tenantId, string id) {
+    TaskDefinition findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (d; *arr)
                 if (d.id == id) return d;
         return TaskDefinition.init;
     }
 
-    TaskDefinition[] findByTenant(string tenantId) {
+    TaskDefinition[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    TaskDefinition[] findByProvider(string tenantId, string providerId) {
+    TaskDefinition[] findByProvider(TenantId tenantId, string providerId) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
             foreach (d; *arr)
@@ -34,7 +34,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
         return result;
     }
 
-    TaskDefinition[] findByCategory(string tenantId, TaskCategory category) {
+    TaskDefinition[] findByCategory(TenantId tenantId, TaskCategory category) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
             foreach (d; *arr)
@@ -42,7 +42,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
         return result;
     }
 
-    TaskDefinition[] findByName(string tenantId, string name) {
+    TaskDefinition[] findByName(TenantId tenantId, string name) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
             foreach (d; *arr)
@@ -50,17 +50,17 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
         return result;
     }
 
-    void save(string tenantId, TaskDefinition entity) {
+    void save(TenantId tenantId, TaskDefinition entity) {
         store[tenantId] ~= entity;
     }
 
-    void update(string tenantId, TaskDefinition entity) {
+    void update(TenantId tenantId, TaskDefinition entity) {
         if (auto arr = tenantId in store)
             foreach (d; *arr)
                 if (d.id == entity.id) { d = entity; return; }
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskDefinition[] filtered;
             foreach (d; *arr)

@@ -10,51 +10,36 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTaskRepository : TaskRepository {
-    private Task[] store;
+class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
 
-    Task findById(TaskId id) {
-        foreach (t; findAll) {
-            if (t.id == id)
-                return t;
-        }
-        return Task.init;
+    size_t countByAssignee(TenantId tenantId, string assignee) {
+        return findByAssignee(tenantId, assignee).length;
     }
-
-    Task[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array;
-    }
-
     Task[] findByAssignee(TenantId tenantId, string assignee) {
         return findAll().filter!(t => t.tenantId == tenantId && t.assignee == assignee).array;
     }
+    void removeByAssignee(TenantId tenantId, string assignee) {
+        findByAssignee(tenantId, assignee).each!(t => remove(t.id));
+    }
 
+    size_t countByProcessInstance(ProcessInstanceId instanceId) {
+        return findByProcessInstance(instanceId).length;
+    }
     Task[] findByProcessInstance(ProcessInstanceId instanceId) {
         return findAll().filter!(t => t.processInstanceId == instanceId).array;
     }
+    void removeByProcessInstance(ProcessInstanceId instanceId) {
+        findByProcessInstance(instanceId).each!(t => remove(t.id));
+    }
 
+    size_t countByStatus(TenantId tenantId, TaskStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
     Task[] findByStatus(TenantId tenantId, TaskStatus status) {
         return findAll().filter!(t => t.tenantId == tenantId && t.status == status).array;
     }
-
-    void save(Task t) {
-        store ~= t;
+    void removeByStatus(TenantId tenantId, TaskStatus status) {
+        findByStatus(tenantId, status).each!(t => remove(t.id));
     }
 
-    void update(Task t) {
-        foreach (existing; findAll) {
-            if (existing.id == t.id) {
-                existing = t;
-                return;
-            }
-        }
-    }
-
-    void remove(TaskId id) {
-        store = findAll().filter!(t => t.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array.length;
-    }
 }

@@ -104,7 +104,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  KymaEnvironment[] listByTenant(string tenantId) {
+  KymaEnvironment[] listByTenant(TenantId tenantId) {
     return listByTenant(TenantId(tenantId));
   }
 
@@ -112,7 +112,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  KymaEnvironment[] listBySubaccount(string tenantId, string subId) {
+  KymaEnvironment[] listBySubaccount(TenantId tenantId, string subId) {
     return listBySubaccount(TenantId(tenantId), SubaccountId(subId));
   }
 

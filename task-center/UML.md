@@ -6,7 +6,7 @@
 classDiagram
     class Task {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string taskDefinitionId
         +string providerId
         +string externalTaskId
@@ -28,7 +28,7 @@ classDiagram
 
     class TaskDefinition {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string providerId
         +string name
         +string description
@@ -41,7 +41,7 @@ classDiagram
 
     class TaskProvider {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +ProviderType providerType
@@ -57,7 +57,7 @@ classDiagram
 
     class SubstitutionRule {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string userId
         +string substituteId
         +string taskDefinitionId
@@ -69,7 +69,7 @@ classDiagram
 
     class TaskComment {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string taskId
         +string author
         +string content
@@ -78,7 +78,7 @@ classDiagram
 
     class TaskAttachment {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string taskId
         +string fileName
         +string fileSize
@@ -89,7 +89,7 @@ classDiagram
 
     class TaskAction {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string taskId
         +ActionType actionType
         +string performedBy
@@ -100,7 +100,7 @@ classDiagram
 
     class UserTaskFilter {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string userId
         +string name
         +string description

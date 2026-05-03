@@ -57,7 +57,7 @@ struct ImportKeyEntryRequest {
 struct SetPasswordRequest {
   string accountId;
   string applicationId;
-  string tenantId;
+  TenantId tenantId;
   string alias_;
   string passwordValue;
 }

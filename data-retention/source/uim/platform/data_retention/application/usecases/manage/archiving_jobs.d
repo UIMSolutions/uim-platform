@@ -76,7 +76,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return repo.findById(id);
     }
 
-    ArchivingJob[] list(string tenantId) {
+    ArchivingJob[] list(TenantId tenantId) {
         return list(TenantId(tenantId));
     }
 

@@ -109,7 +109,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  Dashboard[] list(string tenantId) {
+  Dashboard[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 
@@ -117,7 +117,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Dashboard getDefault(string tenantId) {
+  Dashboard getDefault(TenantId tenantId) {
     return getDefault(TenantId(tenantId));
   }
 

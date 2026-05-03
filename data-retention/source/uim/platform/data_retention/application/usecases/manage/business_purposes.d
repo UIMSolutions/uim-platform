@@ -66,7 +66,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     bool hasById(BusinessPurposeId id) { return repo.existsById(id); }
     BusinessPurpose getById(string id) { return getById(BusinessPurposeId(id)); }
     BusinessPurpose getById(BusinessPurposeId id) { return repo.findById(id); }
-    BusinessPurpose[] list(string tenantId) { return list(TenantId(tenantId)); }
+    BusinessPurpose[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     BusinessPurpose[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     BusinessPurpose[] listByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
         return repo.findByApplicationGroup(tenantId, groupId);

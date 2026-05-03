@@ -11,42 +11,15 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
-    private Dashboard[] store;
 
-    Dashboard findById(DashboardId id) {
-        foreach (d; findAll) {
-            if (d.id == id)
-                return d;
-        }
-        return Dashboard.init;
+    size_t countByType(TenantId tenantId, DashboardType type) {
+        return findByType(tenantId, type).length;
     }
-
-    Dashboard[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array;
-    }
-
     Dashboard[] findByType(TenantId tenantId, DashboardType type) {
-        return findAll().filter!(d => d.tenantId == tenantId && d.type == type).array;
+        return findByTenant(tenantId).filter!(d => d.type == type).array;
+    }
+    void removeByType(TenantId tenantId, DashboardType type) {
+        findByType(tenantId, type).each!(d => remove(d.id));
     }
 
-    void save(Dashboard d) {
-        store ~= d;
-    }
-
-    void update(Dashboard d) {
-        foreach (existing; findAll) {
-            if (existing.id == d.id) {
-                existing = d;
-                return;
-            }
-        }
-    }
-
-    void remove(DashboardId id) {
-        store = findAll().filter!(d => d.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array.length;
-    }
 }

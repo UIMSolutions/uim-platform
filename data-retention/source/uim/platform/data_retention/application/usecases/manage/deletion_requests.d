@@ -49,7 +49,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     bool hasById(DeletionRequestId id) { return repo.existsById(id); }
     DeletionRequest getById(string id) { return getById(DeletionRequestId(id)); }
     DeletionRequest getById(DeletionRequestId id) { return repo.findById(id); }
-    DeletionRequest[] list(string tenantId) { return list(TenantId(tenantId)); }
+    DeletionRequest[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     DeletionRequest[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     DeletionRequest[] listByStatus(TenantId tenantId, DeletionRequestStatus status) {
         return repo.findByStatus(tenantId, status);

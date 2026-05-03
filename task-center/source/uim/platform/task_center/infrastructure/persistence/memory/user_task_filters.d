@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
     private UserTaskFilter[][string] store;
 
-    UserTaskFilter findById(string tenantId, string id) {
+    UserTaskFilter findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.id == id) return f;
         return UserTaskFilter.init;
     }
 
-    UserTaskFilter[] findByTenant(string tenantId) {
+    UserTaskFilter[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    UserTaskFilter[] findByUser(string tenantId, string userId) {
+    UserTaskFilter[] findByUser(TenantId tenantId, string userId) {
         UserTaskFilter[] result;
         if (auto arr = tenantId in store)
             foreach (f; *arr)
@@ -34,24 +34,24 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
         return result;
     }
 
-    UserTaskFilter findDefault(string tenantId, string userId) {
+    UserTaskFilter findDefault(TenantId tenantId, string userId) {
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.userId == userId && f.isDefault) return f;
         return UserTaskFilter.init;
     }
 
-    void save(string tenantId, UserTaskFilter entity) {
+    void save(TenantId tenantId, UserTaskFilter entity) {
         store[tenantId] ~= entity;
     }
 
-    void update(string tenantId, UserTaskFilter entity) {
+    void update(TenantId tenantId, UserTaskFilter entity) {
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.id == entity.id) { f = entity; return; }
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             UserTaskFilter[] filtered;
             foreach (f; *arr)

@@ -48,7 +48,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     bool hasById(ResidenceRuleId id) { return repo.existsById(id); }
     ResidenceRule getById(string id) { return getById(ResidenceRuleId(id)); }
     ResidenceRule getById(ResidenceRuleId id) { return repo.findById(id); }
-    ResidenceRule[] list(string tenantId) { return list(TenantId(tenantId)); }
+    ResidenceRule[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     ResidenceRule[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     ResidenceRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);

@@ -94,7 +94,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  AlertRule[] listRules(string tenantId) {
+  AlertRule[] listRules(TenantId tenantId) {
     return listRules(TenantId(tenantId));
   }
 
@@ -102,7 +102,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  AlertRule[] listByResource(string tenantId, string resourceId) {
+  AlertRule[] listByResource(TenantId tenantId, string resourceId) {
     return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
   }
 
@@ -110,7 +110,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findByResource(tenantId, resourceId);
   }
 
-  AlertRule[] listEnabled(string tenantId) {
+  AlertRule[] listEnabled(TenantId tenantId) {
     return listEnabled(TenantId(tenantId));
   }
   

@@ -128,7 +128,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return checkRepo.findById(id);
   }
 
-  HealthCheck[] listChecks(string tenantId) {
+  HealthCheck[] listChecks(TenantId tenantId) {
     return listChecks(TenantId(tenantId));
   }
 
@@ -136,7 +136,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return checkRepo.findByTenant(tenantId);
   }
 
-  HealthCheck[] listByResource(string tenantId, string resourceId) {
+  HealthCheck[] listByResource(TenantId tenantId, string resourceId) {
     return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
   }
 
@@ -144,7 +144,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return checkRepo.findByResource(tenantId, resourceId);
   }
 
-  HealthCheck[] listByType(string tenantId, string typeStr) {
+  HealthCheck[] listByType(TenantId tenantId, string typeStr) {
     return listByType(TenantId(tenantId), typeStr);
   }
 
@@ -152,7 +152,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return checkRepo.findByType(tenantId, parseCheckType(typeStr));
   }
 
-  HealthCheckResult[] getResults(string tenantId, string checkId) {
+  HealthCheckResult[] getResults(TenantId tenantId, string checkId) {
     return getResults(TenantId(tenantId), HealthCheckId(checkId));
   }
 
@@ -160,7 +160,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return resultRepo.findByCheck(tenantId, checkId);
   }
 
-  HealthCheckResult getLatestResult(string tenantId, string checkId) {
+  HealthCheckResult getLatestResult(TenantId tenantId, string checkId) {
     return getLatestResult(TenantId(tenantId), HealthCheckId(checkId));
   }
 

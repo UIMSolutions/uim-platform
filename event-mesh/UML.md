@@ -6,7 +6,7 @@
 classDiagram
     class BrokerService {
         +BrokerServiceId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +BrokerType brokerType
@@ -21,7 +21,7 @@ classDiagram
 
     class Queue {
         +QueueId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +BrokerServiceId brokerServiceId
@@ -36,7 +36,7 @@ classDiagram
 
     class Topic {
         +TopicId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +BrokerServiceId brokerServiceId
@@ -49,7 +49,7 @@ classDiagram
 
     class EventSubscription {
         +SubscriptionId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +TopicId topicId
@@ -63,7 +63,7 @@ classDiagram
 
     class EventMessage {
         +EventMessageId id
-        +string tenantId
+        +TenantId tenantId
         +TopicId topicId
         +EventSchemaId schemaId
         +string payload
@@ -76,7 +76,7 @@ classDiagram
 
     class EventSchema {
         +EventSchemaId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +SchemaFormat format
@@ -89,7 +89,7 @@ classDiagram
 
     class EventApplication {
         +EventApplicationId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +BrokerServiceId brokerServiceId
@@ -102,7 +102,7 @@ classDiagram
 
     class MeshBridge {
         +MeshBridgeId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +BrokerServiceId sourceBrokerId

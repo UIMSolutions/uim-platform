@@ -58,7 +58,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     bool hasById(DataSubjectId id) { return repo.existsById(id); }
     DataSubject getById(string id) { return getById(DataSubjectId(id)); }
     DataSubject getById(DataSubjectId id) { return repo.findById(id); }
-    DataSubject[] list(string tenantId) { return list(TenantId(tenantId)); }
+    DataSubject[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     DataSubject[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     DataSubject[] listByStatus(TenantId tenantId, DataLifecycleStatus status) {
         return repo.findByLifecycleStatus(tenantId, status);

@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
     private SubstitutionRule[][string] store;
 
-    SubstitutionRule findById(string tenantId, string id) {
+    SubstitutionRule findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (r; *arr)
                 if (r.id == id) return r;
         return SubstitutionRule.init;
     }
 
-    SubstitutionRule[] findByTenant(string tenantId) {
+    SubstitutionRule[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    SubstitutionRule[] findByUser(string tenantId, string userId) {
+    SubstitutionRule[] findByUser(TenantId tenantId, string userId) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
             foreach (r; *arr)
@@ -34,7 +34,7 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
         return result;
     }
 
-    SubstitutionRule[] findBySubstitute(string tenantId, string substituteId) {
+    SubstitutionRule[] findBySubstitute(TenantId tenantId, string substituteId) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
             foreach (r; *arr)
@@ -42,7 +42,7 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
         return result;
     }
 
-    SubstitutionRule[] findByStatus(string tenantId, SubstitutionStatus status) {
+    SubstitutionRule[] findByStatus(TenantId tenantId, SubstitutionStatus status) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
             foreach (r; *arr)
@@ -50,17 +50,17 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
         return result;
     }
 
-    void save(string tenantId, SubstitutionRule entity) {
+    void save(TenantId tenantId, SubstitutionRule entity) {
         store[tenantId] ~= entity;
     }
 
-    void update(string tenantId, SubstitutionRule entity) {
+    void update(TenantId tenantId, SubstitutionRule entity) {
         if (auto arr = tenantId in store)
             foreach (r; *arr)
                 if (r.id == entity.id) { r = entity; return; }
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             SubstitutionRule[] filtered;
             foreach (r; *arr)

@@ -6,7 +6,7 @@
 classDiagram
     class CustomDomain {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string domainName
         +DomainStatus status
         +DomainEnvironment environment
@@ -25,7 +25,7 @@ classDiagram
 
     class PrivateKey {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string subject
         +string[] domains
         +KeyAlgorithm algorithm
@@ -39,7 +39,7 @@ classDiagram
 
     class Certificate {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string keyId
         +CertificateType type
         +CertificateStatus status
@@ -59,7 +59,7 @@ classDiagram
 
     class TlsConfiguration {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +TlsProtocolVersion minProtocolVersion
@@ -77,7 +77,7 @@ classDiagram
 
     class DomainMapping {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string customDomainId
         +string standardRoute
         +string customRoute
@@ -93,7 +93,7 @@ classDiagram
 
     class TrustedCertificate {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string customDomainId
         +string certificatePem
         +string subjectDn
@@ -110,7 +110,7 @@ classDiagram
 
     class DnsRecord {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +string customDomainId
         +DnsRecordType recordType
         +string hostname
@@ -125,7 +125,7 @@ classDiagram
 
     class DomainDashboard {
         +string id
-        +string tenantId
+        +TenantId tenantId
         +long totalDomains
         +long activeDomains
         +long totalCertificates

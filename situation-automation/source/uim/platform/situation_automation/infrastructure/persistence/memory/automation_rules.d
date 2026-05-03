@@ -11,46 +11,24 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, AutomationRuleId), AutomationRuleRepository {
-    private AutomationRule[] store;
 
-    AutomationRule findById(AutomationRuleId id) {
-        foreach (r; findAll) {
-            if (r.id == id)
-                return r;
-        }
-        return AutomationRule.init;
+    size_t countByTemplate(SituationTemplateId templateId) {
+        return findByTemplate(templateId).length;
     }
-
-    AutomationRule[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(r => r.tenantId == tenantId).array;
-    }
-
     AutomationRule[] findByTemplate(SituationTemplateId templateId) {
         return findAll().filter!(r => r.templateId == templateId).array;
     }
+    void removeByTemplate(SituationTemplateId templateId) {
+        findByTemplate(templateId).each!(r => remove(r.id));
+    }
 
+    size_t countActive(TenantId tenantId) {
+        return findActive(tenantId).length;
+    }
     AutomationRule[] findActive(TenantId tenantId) {
-        return findAll().filter!(r => r.tenantId == tenantId && r.enabled && r.status == RuleStatus.active).array;
+        return findByTenant(tenantId).filter!(r => r.enabled && r.status == RuleStatus.active).array;
     }
-
-    void save(AutomationRule r) {
-        store ~= r;
-    }
-
-    void update(AutomationRule r) {
-        foreach (existing; findAll) {
-            if (existing.id == r.id) {
-                existing = r;
-                return;
-            }
-        }
-    }
-
-    void remove(AutomationRuleId id) {
-        store = findAll().filter!(r => r.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(r => r.tenantId == tenantId).array.length;
+    void removeActive(TenantId tenantId) {
+        findActive(tenantId).each!(r => remove(r.id));
     }
 }

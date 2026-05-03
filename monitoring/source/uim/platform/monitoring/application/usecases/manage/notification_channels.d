@@ -65,7 +65,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return getChannel(NotificationChannelId(id));
   }
 
-  NotificationChannel[] listChannels(string tenantId) {
+  NotificationChannel[] listChannels(TenantId tenantId) {
     return listChannels(TenantId(tenantId));
   }
 
@@ -77,7 +77,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return channels.findByType(tenantId, parseChannelType(typeStr));
   }
 
-  NotificationChannel[] listByType(string tenantId, string typeStr) {
+  NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
     return listByType(TenantId(tenantId), typeStr);
   }
 
@@ -85,7 +85,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return channels.findActive(tenantId);
   }
 
-  NotificationChannel[] listActive(string tenantId) {
+  NotificationChannel[] listActive(TenantId tenantId) {
     return listActive(TenantId(tenantId));
   }
 

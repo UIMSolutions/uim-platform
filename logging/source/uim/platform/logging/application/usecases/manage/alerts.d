@@ -39,7 +39,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  Alert[] list(string tenantId) {
+  Alert[] list(TenantId tenantId) {
     return list(TenantId(tenantId));
   }
 
@@ -47,7 +47,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Alert[] listByState(string tenantId, AlertState state) {
+  Alert[] listByState(TenantId tenantId, AlertState state) {
     return listByState(TenantId(tenantId), state);
   }
 
@@ -55,7 +55,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return repo.findByState(tenantId, state);
   }
 
-  Alert[] listBySeverity(string tenantId, AlertSeverity severity) {
+  Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
     return listBySeverity(TenantId(tenantId), severity);
   }
 

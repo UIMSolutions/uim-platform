@@ -95,7 +95,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  Certificate[] listBySubaccount(string tenantId, string subaccountId) {
+  Certificate[] listBySubaccount(TenantId tenantId, string subaccountId) {
     return listBySubaccount(TenantId(tenantId), SubaccountId(subaccountId));
   }
 

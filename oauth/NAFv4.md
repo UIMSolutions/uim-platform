@@ -83,7 +83,7 @@ erDiagram
 
     OAUTH_CLIENT {
         string id PK
-        string tenantId
+        TenantId tenantId
         string clientId
         string clientSecret
         string name
@@ -98,7 +98,7 @@ erDiagram
 
     OAUTH_SCOPE {
         string id PK
-        string tenantId
+        TenantId tenantId
         string applicationId
         string name
         string description
@@ -107,7 +107,7 @@ erDiagram
 
     ACCESS_TOKEN {
         string id PK
-        string tenantId
+        TenantId tenantId
         string tokenValue
         string tokenType
         string status
@@ -119,7 +119,7 @@ erDiagram
 
     REFRESH_TOKEN {
         string id PK
-        string tenantId
+        TenantId tenantId
         string tokenValue
         string status
         string clientId FK
@@ -131,7 +131,7 @@ erDiagram
 
     AUTHORIZATION_CODE {
         string id PK
-        string tenantId
+        TenantId tenantId
         string code
         string clientId FK
         string userId
@@ -143,7 +143,7 @@ erDiagram
 
     BRANDING_CONFIG {
         string id PK
-        string tenantId
+        TenantId tenantId
         string name
         string logoUrl
         string primaryColor

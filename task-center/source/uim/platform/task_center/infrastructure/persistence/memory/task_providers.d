@@ -14,19 +14,19 @@ mixin(ShowModule!());
 class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProviderId), TaskProviderRepository {
     private TaskProvider[][string] store;
 
-    TaskProvider findById(string tenantId, string id) {
+    TaskProvider findById(TenantId tenantId, string id) {
         if (auto arr = tenantId in store)
             foreach (p; *arr)
                 if (p.id == id) return p;
         return TaskProvider.init;
     }
 
-    TaskProvider[] findByTenant(string tenantId) {
+    TaskProvider[] findByTenant(TenantId tenantId) {
         if (auto arr = tenantId in store) return *arr;
         return null;
     }
 
-    TaskProvider[] findByName(string tenantId, string name) {
+    TaskProvider[] findByName(TenantId tenantId, string name) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
             foreach (p; *arr)
@@ -34,7 +34,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         return result;
     }
 
-    TaskProvider[] findByStatus(string tenantId, ProviderStatus status) {
+    TaskProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
             foreach (p; *arr)
@@ -42,7 +42,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         return result;
     }
 
-    TaskProvider[] findByType(string tenantId, ProviderType ptype) {
+    TaskProvider[] findByType(TenantId tenantId, ProviderType ptype) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
             foreach (p; *arr)
@@ -50,17 +50,17 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         return result;
     }
 
-    void save(string tenantId, TaskProvider entity) {
+    void save(TenantId tenantId, TaskProvider entity) {
         store[tenantId] ~= entity;
     }
 
-    void update(string tenantId, TaskProvider entity) {
+    void update(TenantId tenantId, TaskProvider entity) {
         if (auto arr = tenantId in store)
             foreach (p; *arr)
                 if (p.id == entity.id) { p = entity; return; }
     }
 
-    void remove(string tenantId, string id) {
+    void remove(TenantId tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskProvider[] filtered;
             foreach (p; *arr)

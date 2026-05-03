@@ -73,7 +73,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         return appGroupRepository.findById(id);
     }
 
-    ApplicationGroup[] list(string tenantId) {
+    ApplicationGroup[] list(TenantId tenantId) {
         return list(TenantId(tenantId));
     }
 
