@@ -12,76 +12,55 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
-    private Task[][string] store;
 
-    Task findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.id == id) return t;
-        return Task.init;
+    size_t countByAssignee(TenantId tenantId, string assignee) {
+        return findByAssignee(tenantId, assignee).length;
     }
-
-    Task[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
-    }
-
     Task[] findByAssignee(TenantId tenantId, string assignee) {
-        Task[] result;
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.assignee == assignee) result ~= t;
-        return result;
+        return findByTenant(tenantId).filter!(t => t.assignee == assignee).array;
+    }
+    void removeByAssignee(TenantId tenantId, string assignee) {
+        findByAssignee(tenantId, assignee).each!(t => remove(t));
     }
 
+    size_t countByStatus(TenantId tenantId, TaskStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
     Task[] findByStatus(TenantId tenantId, TaskStatus status) {
-        Task[] result;
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.status == status) result ~= t;
-        return result;
+        return findByTenant(tenantId).filter!(t => t.status == status).array;
+    }
+    void removeByStatus(TenantId tenantId, TaskStatus status) {
+        findByStatus(tenantId, status).each!(t => remove(t));
     }
 
+    size_t countByProvider(TenantId tenantId, string providerId) {
+        return findByProvider(tenantId, providerId).length;
+    }
     Task[] findByProvider(TenantId tenantId, string providerId) {
-        Task[] result;
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.providerId == providerId) result ~= t;
-        return result;
+        return findByTenant(tenantId).filter!(t => t.providerId == providerId).array;
+    }
+    void removeByProvider(TenantId tenantId, string providerId) {
+        findByProvider(tenantId, providerId).each!(t => remove(t));
     }
 
+    size_t countByCategory(TenantId tenantId, TaskCategory category) {
+        return findByCategory(tenantId, category).length;
+    }
     Task[] findByCategory(TenantId tenantId, TaskCategory category) {
-        Task[] result;
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.category == category) result ~= t;
-        return result;
+        return findByTenant(tenantId).filter!(t => t.category == category).array;
+    }
+    void removeByCategory(TenantId tenantId, TaskCategory category) {
+        findByCategory(tenantId, category).each!(t => remove(t));
     }
 
+    size_t countByPriority(TenantId tenantId, TaskPriority priority) {
+        return findByPriority(tenantId, priority).length;
+    }
     Task[] findByPriority(TenantId tenantId, TaskPriority priority) {
-        Task[] result;
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.priority == priority) result ~= t;
-        return result;
+        return findByTenant(tenantId).filter!(t => t.priority == priority).array;
+    }
+    void removeByPriority(TenantId tenantId, TaskPriority priority) {
+        findByPriority(tenantId, priority).each!(t => remove(t));
     }
 
-    void save(TenantId tenantId, Task entity) {
-        store[tenantId] ~= entity;
-    }
-
-    void update(TenantId tenantId, Task entity) {
-        if (auto arr = tenantId in store)
-            foreach (t; *arr)
-                if (t.id == entity.id) { t = entity; return; }
-    }
-
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            Task[] filtered;
-            foreach (t; *arr)
-                if (t.id != id) filtered ~= t;
-            store[tenantId] = filtered;
-        }
-    }
 }

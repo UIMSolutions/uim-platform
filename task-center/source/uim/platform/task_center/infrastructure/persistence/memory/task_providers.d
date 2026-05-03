@@ -12,60 +12,35 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProviderId), TaskProviderRepository {
-    private TaskProvider[][string] store;
 
-    TaskProvider findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (p; *arr)
-                if (p.id == id) return p;
-        return TaskProvider.init;
+    size_t countByName(TenantId tenantId, string name) {
+        return findByName(tenantId, name).length;
     }
-
-    TaskProvider[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
-    }
-
     TaskProvider[] findByName(TenantId tenantId, string name) {
-        TaskProvider[] result;
-        if (auto arr = tenantId in store)
-            foreach (p; *arr)
-                if (p.name == name) result ~= p;
-        return result;
+        return findByTenant(tenantId).filter!(p => p.name == name).array;
+    }
+    void removeByName(TenantId tenantId, string name) {
+        findByName(tenantId, name).each!(p => remove(p));
+    }
+
+    size_t countByStatus(TenantId tenantId, ProviderStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
     TaskProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
-        TaskProvider[] result;
-        if (auto arr = tenantId in store)
-            foreach (p; *arr)
-                if (p.status == status) result ~= p;
-        return result;
+        return findByTenant(tenantId).filter!(p => p.status == status).array;
+    }
+
+    void removeByStatus(TenantId tenantId, ProviderStatus status) {
+        findByStatus(tenantId, status).each!(p => remove(p));
     }
 
     TaskProvider[] findByType(TenantId tenantId, ProviderType ptype) {
-        TaskProvider[] result;
-        if (auto arr = tenantId in store)
-            foreach (p; *arr)
-                if (p.providerType == ptype) result ~= p;
-        return result;
+        return findByTenant(tenantId).filter!(p => p.providerType == ptype).array;
     }
 
-    void save(TenantId tenantId, TaskProvider entity) {
-        store[tenantId] ~= entity;
+    void removeByType(TenantId tenantId, ProviderType ptype) {
+        findByType(tenantId, ptype).each!(p => remove(p));
     }
 
-    void update(TenantId tenantId, TaskProvider entity) {
-        if (auto arr = tenantId in store)
-            foreach (p; *arr)
-                if (p.id == entity.id) { p = entity; return; }
-    }
-
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            TaskProvider[] filtered;
-            foreach (p; *arr)
-                if (p.id != id) filtered ~= p;
-            store[tenantId] = filtered;
-        }
-    }
 }

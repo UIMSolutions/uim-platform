@@ -11,27 +11,26 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
-    private UserTaskFilter[][string] store;
+class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
-    UserTaskFilter findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (f; *arr)
-                if (f.id == id) return f;
-        return UserTaskFilter.init;
+
+    size_t countByUser(TenantId tenantId, string userId) {
+        return findByUser(tenantId, userId).length;
     }
-
-    UserTaskFilter[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
-    }
-
     UserTaskFilter[] findByUser(TenantId tenantId, string userId) {
         UserTaskFilter[] result;
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.userId == userId) result ~= f;
         return result;
+    }
+    void removeByUser(TenantId tenantId, string userId) {
+        if (auto arr = tenantId in store) {
+            UserTaskFilter[] filtered;
+            foreach (f; *arr)
+                if (f.userId != userId) filtered ~= f;
+            store[tenantId] = filtered;
+        }
     }
 
     UserTaskFilter findDefault(TenantId tenantId, string userId) {
@@ -41,22 +40,4 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
         return UserTaskFilter.init;
     }
 
-    void save(TenantId tenantId, UserTaskFilter entity) {
-        store[tenantId] ~= entity;
-    }
-
-    void update(TenantId tenantId, UserTaskFilter entity) {
-        if (auto arr = tenantId in store)
-            foreach (f; *arr)
-                if (f.id == entity.id) { f = entity; return; }
-    }
-
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            UserTaskFilter[] filtered;
-            foreach (f; *arr)
-                if (f.id != id) filtered ~= f;
-            store[tenantId] = filtered;
-        }
-    }
 }

@@ -12,60 +12,41 @@ mixin(ShowModule!());
 @safe:
 
 class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
-    private SubstitutionRule[][string] store;
 
-    SubstitutionRule findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (r; *arr)
-                if (r.id == id) return r;
-        return SubstitutionRule.init;
-    }
-
-    SubstitutionRule[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
+    size_t countByUser(TenantId tenantId, string userId) {
+        return findByUser(tenantId, userId).length;
     }
 
     SubstitutionRule[] findByUser(TenantId tenantId, string userId) {
-        SubstitutionRule[] result;
-        if (auto arr = tenantId in store)
-            foreach (r; *arr)
-                if (r.userId == userId) result ~= r;
-        return result;
+        return findByTenant(tenantId).filter!(r => r.userId == userId).array;
+    }
+
+    void removeByUser(TenantId tenantId, string userId) {
+        findByUser(tenantId, userId).each!(r => remove(r));
+    }
+
+    size_t countBySubstitute(TenantId tenantId, string substituteId) {
+        return findBySubstitute(tenantId, substituteId).length;
     }
 
     SubstitutionRule[] findBySubstitute(TenantId tenantId, string substituteId) {
-        SubstitutionRule[] result;
-        if (auto arr = tenantId in store)
-            foreach (r; *arr)
-                if (r.substituteId == substituteId) result ~= r;
-        return result;
+        return findByTenant(tenantId).filter!(r => r.substituteId == substituteId).array;
+    }
+
+    void removeBySubstitute(TenantId tenantId, string substituteId) {
+        findBySubstitute(tenantId, substituteId).each!(r => remove(r));
+    }
+
+    size_t countByStatus(TenantId tenantId, SubstitutionStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
     SubstitutionRule[] findByStatus(TenantId tenantId, SubstitutionStatus status) {
-        SubstitutionRule[] result;
-        if (auto arr = tenantId in store)
-            foreach (r; *arr)
-                if (r.status == status) result ~= r;
-        return result;
+        return findByTenant(tenantId).filter!(r => r.status == status).array;
     }
 
-    void save(TenantId tenantId, SubstitutionRule entity) {
-        store[tenantId] ~= entity;
+    void removeByStatus(TenantId tenantId, SubstitutionStatus status) {
+        findByStatus(tenantId, status).each!(r => remove(r));
     }
 
-    void update(TenantId tenantId, SubstitutionRule entity) {
-        if (auto arr = tenantId in store)
-            foreach (r; *arr)
-                if (r.id == entity.id) { r = entity; return; }
-    }
-
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            SubstitutionRule[] filtered;
-            foreach (r; *arr)
-                if (r.id != id) filtered ~= r;
-            store[tenantId] = filtered;
-        }
-    }
 }

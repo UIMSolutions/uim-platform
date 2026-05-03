@@ -17,14 +17,10 @@ class MemoryTaskCommentRepository : TenantRepository!(TaskComment, TaskCommentId
         return findByTask(tenantId, taskId).length;
     }
     TaskComment[] findByTask(TenantId tenantId, string taskId) {
-        TaskComment[] result;
-        if (auto arr = tenantId in store)
-            foreach (c; *arr)
-                if (c.taskId == taskId) result ~= c;
-        return result;
+        return findByTenant(tenantId).filter!(c => c.taskId == taskId).array;
     }
     void removeByTask(TenantId tenantId, string taskId) {
-        if (auto arr = tenantId in store)
-            store[tenantId] = (*arr).filter!(c => c.taskId != taskId).array;
+        findByTask(tenantId, taskId).each!(c => remove(c));
     }
+    
 }

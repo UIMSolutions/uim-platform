@@ -11,46 +11,25 @@ mixin(ShowModule!());
 
 @safe:
 class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, SituationTemplateId), SituationTemplateRepository {
-    private SituationTemplate[] store;
 
-    SituationTemplate findById(SituationTemplateId id) {
-        foreach (t; findAll) {
-            if (t.id == id)
-                return t;
-        }
-        return SituationTemplate.init;
+size_t countByCategory(TenantId tenantId, SituationCategory category) {
+        return findByCategory(tenantId, category).length;
     }
-
-    SituationTemplate[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array;
-    }
-
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category) {
         return findAll().filter!(t => t.tenantId == tenantId && t.category == category).array;
     }
+    void removeByCategory(TenantId tenantId, SituationCategory category) {
+        findByCategory(tenantId, category).each!(t => remove(t));
+    }
 
+    size_t countByPriority(TenantId tenantId, SituationPriority priority) {
+        return findByPriority(tenantId, priority).length;
+    }
     SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId) {
         return findAll().filter!(t => t.tenantId == tenantId && t.entityTypeId == entityTypeId).array;
     }
-
-    void save(SituationTemplate t) {
-        store ~= t;
+    void removeByEntityType(TenantId tenantId, string entityTypeId) {
+        findByEntityType(tenantId, entityTypeId).each!(t => remove(t));
     }
 
-    void update(SituationTemplate t) {
-        foreach (existing; findAll) {
-            if (existing.id == t.id) {
-                existing = t;
-                return;
-            }
-        }
-    }
-
-    void remove(SituationTemplateId id) {
-        store = findAll().filter!(t => t.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array.length;
-    }
 }

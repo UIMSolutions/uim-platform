@@ -11,61 +11,42 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
-    private TaskDefinition[][string] store;
+class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDefinitionId), TaskDefinitionRepository {
 
-    TaskDefinition findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (d; *arr)
-                if (d.id == id) return d;
-        return TaskDefinition.init;
-    }
-
-    TaskDefinition[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
+    size_t countByProvider(TenantId tenantId, string providerId) {
+        return findByProvider(tenantId, providerId).length;
     }
 
     TaskDefinition[] findByProvider(TenantId tenantId, string providerId) {
-        TaskDefinition[] result;
-        if (auto arr = tenantId in store)
-            foreach (d; *arr)
-                if (d.providerId == providerId) result ~= d;
-        return result;
+        return findByTenant(tenantId).filter!(d => d.providerId == providerId).array;
+    }
+
+    void removeByProvider(TenantId tenantId, string providerId) {
+        findByProvider(tenantId, providerId).each!(d => remove(d));
+    }
+
+    size_t countByCategory(TenantId tenantId, TaskCategory category) {
+        return findByCategory(tenantId, category).length;
     }
 
     TaskDefinition[] findByCategory(TenantId tenantId, TaskCategory category) {
-        TaskDefinition[] result;
-        if (auto arr = tenantId in store)
-            foreach (d; *arr)
-                if (d.category == category) result ~= d;
-        return result;
+        return findByTenant(tenantId).filter!(d => d.category == category).array;
     }
 
-    TaskDefinition[] findByName(TenantId tenantId, string name) {
-        TaskDefinition[] result;
-        if (auto arr = tenantId in store)
-            foreach (d; *arr)
-                if (d.name == name) result ~= d;
-        return result;
+    void removeByCategory(TenantId tenantId, TaskCategory category) {
+        findByCategory(tenantId, category).each!(d => remove(d));
     }
 
-    void save(TenantId tenantId, TaskDefinition entity) {
-        store[tenantId] ~= entity;
+    size_t countByPriority(TenantId tenantId, TaskPriority priority) {
+        return findByPriority(tenantId, priority).length;
     }
 
-    void update(TenantId tenantId, TaskDefinition entity) {
-        if (auto arr = tenantId in store)
-            foreach (d; *arr)
-                if (d.id == entity.id) { d = entity; return; }
+    TaskDefinition[] findByPriority(TenantId tenantId, TaskPriority priority) {
+        return findByTenant(tenantId).filter!(d => d.priority == priority).array;
     }
 
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            TaskDefinition[] filtered;
-            foreach (d; *arr)
-                if (d.id != id) filtered ~= d;
-            store[tenantId] = filtered;
-        }
+    void removeByPriority(TenantId tenantId, TaskPriority priority) {
+        findByPriority(tenantId, priority).each!(d => remove(d));
     }
+
 }

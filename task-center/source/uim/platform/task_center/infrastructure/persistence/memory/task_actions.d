@@ -12,46 +12,24 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), TaskActionRepository {
-    private TaskAction[][string] store;
 
-    TaskAction findById(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store)
-            foreach (a; *arr)
-                if (a.id == id) return a;
-        return TaskAction.init;
+    size_t countByTask(TenantId tenantId, string taskId) {
+        return findByTask(tenantId, taskId).length;
     }
-
-    TaskAction[] findByTenant(TenantId tenantId) {
-        if (auto arr = tenantId in store) return *arr;
-        return null;
-    }
-
     TaskAction[] findByTask(TenantId tenantId, string taskId) {
-        TaskAction[] result;
-        if (auto arr = tenantId in store)
-            foreach (a; *arr)
-                if (a.taskId == taskId) result ~= a;
-        return result;
+        return findByTenant(tenantId).filter!(a => a.taskId == taskId).array;
+    }
+    void removeByTask(TenantId tenantId, string taskId) {
+        findByTask(tenantId, taskId).each!(a => remove(a));
     }
 
+    size_t countByPerformer(TenantId tenantId, string performerId) {
+        return findByPerformer(tenantId, performerId).length;
+    }
     TaskAction[] findByPerformer(TenantId tenantId, string performerId) {
-        TaskAction[] result;
-        if (auto arr = tenantId in store)
-            foreach (a; *arr)
-                if (a.performedBy == performerId) result ~= a;
-        return result;
+        return findByTenant(tenantId).filter!(a => a.performedBy == performerId).array;
     }
-
-    void save(TenantId tenantId, TaskAction entity) {
-        store[tenantId] ~= entity;
-    }
-
-    void remove(TenantId tenantId, string id) {
-        if (auto arr = tenantId in store) {
-            TaskAction[] filtered;
-            foreach (a; *arr)
-                if (a.id != id) filtered ~= a;
-            store[tenantId] = filtered;
-        }
+    void removeByPerformer(TenantId tenantId, string performerId) {
+        findByPerformer(tenantId, performerId).each!(a => remove(a));
     }
 }

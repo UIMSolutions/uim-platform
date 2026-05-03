@@ -16,10 +16,10 @@ bool validateTenant(TenantId tenantId) {
     throw new UIMValidationException("Tenant ID cannot be empty");
   }
 
-  return validateTenant(UUID(tenantId));
+  return validateTenant(tenantId.value);
 }
 
-bool validateTenant(UUID tenantId) {
+bool validateTenant(string tenantId) {
   return validateId(tenantId, "Tenant ID");
 }
 
