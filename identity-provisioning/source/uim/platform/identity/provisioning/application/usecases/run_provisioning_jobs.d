@@ -47,10 +47,10 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Target system ID is required");
 
     // Verify systems exist
-    auto src = sourceRepo.findById(req.sourceSystemId, req.tenantId);
+    auto src = sourceRepo.findById(req.tenantId, req.sourceSystemId);
     if (src.isNull)
       return CommandResult(false, "", "Source system not found");
-    auto tgt = targetRepo.findById(req.targetSystemId, req.tenantId);
+    auto tgt = targetRepo.findById(req.tenantId, req.targetSystemId);
     if (tgt.isNull)
       return CommandResult(false, "", "Target system not found");
 
@@ -67,20 +67,19 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     job.createdAt = now;
 
     repo.save(job);
-    return CommandResult(job.id, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   /// Run a previously created job.
-  CommandResult runJob(ProvisioningJobId tenantId, id tenantId) {
+  CommandResult runJob(TenantId tenantId, ProvisioningJobId id) {
     if (!engine.canRun(tenantId, id))
-      return CommandResult("",
-          "Job cannot be started - verify systems are active and job is scheduled");
+      return CommandResult(false, "", "Job cannot be started - verify systems are active and job is scheduled");
 
     auto result = engine.runJob(tenantId, id);
     if (result.isNull)
       return CommandResult(false, "", "Failed to execute provisioning job");
 
-    return CommandResult(result.id, "");
+    return CommandResult(true, result.id.value, "");
   }
 
   /// Create and immediately run a job.
@@ -89,17 +88,17 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     if (!createResult.isSuccess)
       return createResult;
 
-    return runJob(createResult.id, req.tenantId);
+    return runJob(req.tenantId, createResult.id);
   }
 
-  CommandResult cancelJob(ProvisioningJobId tenantId, id tenantId) {
+  CommandResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
     if (!engine.cancelJob(tenantId, id))
       return CommandResult(false, "", "Job cannot be cancelled");
 
     return CommandResult(true, id.value, "");
   }
 
-  ProvisioningJob getJob(ProvisioningJobId tenantId, id tenantId) {
+  ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -111,7 +110,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult deleteJob(ProvisioningJobId tenantId, id tenantId) {
+  CommandResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Provisioning job not found");

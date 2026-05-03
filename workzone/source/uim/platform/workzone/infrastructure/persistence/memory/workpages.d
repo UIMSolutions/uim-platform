@@ -16,32 +16,17 @@ mixin(ShowModule!());
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryWorkpageRepository : WorkpageRepository {
-  private Workpage[WorkpageId] store;
+class MemoryWorkpageRepository : TenantRepository!(Workpage, WorkpageId), WorkpageRepository {
 
-  Workpage[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return findAll().filter!(p => p.tenantId == tenantId && p.workspaceId == workspaceId)
-      .array;
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  Workpage findById(WorkpageId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  Workpage[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(p => p.workspaceId == workspaceId).array;
   }
 
-  void save(Workpage page) {
-    store[page.id] = page;
-  }
-
-  void update(Workpage page) {
-    store[page.id] = page;
-  }
-
-  void remove(WorkpageId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.removeById(id);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    findByWorkspace(tenantId, workspaceId).each!(p => remove(p));
   }
 }

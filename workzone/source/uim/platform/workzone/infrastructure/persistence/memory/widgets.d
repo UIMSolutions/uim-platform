@@ -16,31 +16,26 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class MemoryWidgetRepository : WidgetRepository {
-  private Widget[WidgetId] store;
+class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetRepository {
 
-  Widget[] findByPage(WorkpageId pagetenantId, id tenantId) {
+  size_t countByPage(TenantId tenantId, WorkpageId pageId) {
+    return findByPage(tenantId, pageId).length;
+  }
+  Widget[] findByPage(TenantId tenantId, WorkpageId pageId) {
     return findAll().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
-
-  Widget findById(WidgetId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  void removeByPage(TenantId tenantId, WorkpageId pageId) {
+    findByPage(tenantId, pageId).each!(w => remove(w));
   }
 
-  void save(Widget widget) {
-    store[widget.id] = widget;
+  size_t countBySite(TenantId tenantId, SiteId siteId) {
+    return findBySite(tenantId, siteId).length;
+  }
+   Widget[] findBySite(TenantId tenantId, SiteId siteId) {
+    return findAll().filter!(w => w.tenantId == tenantId && w.siteId == siteId).array;
+  }
+  void removeBySite(TenantId tenantId, SiteId siteId) {
+    findBySite(tenantId, siteId).each!(w => remove(w));
   }
 
-  void update(Widget widget) {
-    store[widget.id] = widget;
-  }
-
-  void remove(WidgetId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.removeById(id);
-  }
 }

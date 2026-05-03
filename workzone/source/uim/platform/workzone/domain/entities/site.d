@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.site;
 
-import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// A site — the top-level portal / launchpad that users access.
 struct Site {

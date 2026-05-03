@@ -69,10 +69,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     dest.updatedAt = now;
 
     repo.save(dest);
-    return CommandResult(dest.id, "");
+    return CommandResult(true, dest.id.value, "");
   }
 
-  Destination getDestination(DestinationId tenantId, id tenantId) {
+  Destination getDestination(TenantId tenantId, DestinationId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -94,7 +94,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -126,10 +126,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteDestination(DestinationId tenantId, id tenantId) {
+  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Destination not found");

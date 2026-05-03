@@ -17,7 +17,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class KnowledgeBaseArticleController {
+class KnowledgeBaseArticleController : PlatformController {
   private ManageKnowledgeBaseArticlesUseCase useCase;
 
   this(ManageKnowledgeBaseArticlesUseCase useCase) {
@@ -25,6 +25,8 @@ class KnowledgeBaseArticleController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/kb-articles", &handleCreate);
     router.get("/api/v1/kb-articles", &handleList);
     router.get("/api/v1/kb-articles/*", &handleGet);

@@ -41,7 +41,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.updatedAt = now;
 
     repo.save(ch);
-    return CommandResult(ch.id, "");
+    return CommandResult(true, ch.id.value, "");
   }
 
   Channel getChannel(TenantId tenantId, ChannelId id) {
@@ -66,7 +66,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.updatedAt = Clock.currStdTime();
 
     repo.update(ch);
-    return CommandResult(true, ch.id, "");
+    return CommandResult(true, ch.id.value, "");
   }
 
   void deleteChannel(TenantId tenantId, ChannelId id) {

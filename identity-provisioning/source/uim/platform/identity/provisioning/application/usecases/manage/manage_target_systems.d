@@ -48,10 +48,10 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     sys.updatedAt = now;
 
     repo.save(sys);
-    return CommandResult(sys.id, "");
+    return CommandResult(true, sys.id.value, "");
   }
 
-  TargetSystem getTargetSystem(TargetSystemId tenantId, id tenantId) {
+  TargetSystem getTargetSystem(TenantId tenantId, TargetSystemId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -65,7 +65,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return CommandResult(false, "", "Target system not found");
 
@@ -79,10 +79,10 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
-  CommandResult activateSystem(TargetSystemId tenantId, id tenantId) {
+  CommandResult activateSystem(TenantId tenantId, TargetSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Target system not found");
@@ -96,7 +96,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult deactivateSystem(TargetSystemId tenantId, id tenantId) {
+  CommandResult deactivateSystem(TenantId tenantId, TargetSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Target system not found");

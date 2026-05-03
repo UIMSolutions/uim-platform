@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.knowledge_base_articles;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.knowledge_base_article;
-import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.knowledge_base_article;
+// import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : filter;
 // import std.array : array;
 

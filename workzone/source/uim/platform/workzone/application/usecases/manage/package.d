@@ -24,5 +24,6 @@ public {
     import uim.platform.workzone.application.usecases.manage.user_profiles;
     import uim.platform.workzone.application.usecases.manage.widgets;
     import uim.platform.workzone.application.usecases.manage.workpages;
+    import uim.platform.workzone.application.usecases.manage.workspaces;
     // import uim.platform.workzone.application.usecases.manage.workzones;
 }

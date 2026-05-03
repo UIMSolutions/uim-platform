@@ -41,7 +41,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       // Update existing
       existing.level = r.level;
       permissions.update(existing);
-      return CommandResult(existing.id, "");
+      return CommandResult(true, existing.id.value, "");
     }
 
     auto entity = new Permission();
@@ -55,7 +55,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
     entity.createdAt = Clock.currStdTime();
 
     permissions.save(entity);
-    return CommandResult(entity.id, "");
+    return CommandResult(true, entity.id.value, "");
   }
 
   Permission[] listByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
@@ -78,7 +78,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
     auto entity = permissions.findById(r.tenantId, r.id);
     entity.level = r.level;
     permissions.update(entity);
-    return CommandResult(entity.id, "");
+    return CommandResult(true, entity.id.value, "");
   }
 
   CommandResult revokePermission(TenantId tenantId, PermissionId id) {

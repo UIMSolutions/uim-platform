@@ -36,10 +36,10 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     rs.updatedAt = now;
 
     repo.save(rs);
-    return CommandResult(rs.id, "");
+    return CommandResult(true, rs.id.value, "");
   }
 
-  RuleSet getRuleSet(RuleSetId tenantId, id tenantId) {
+  RuleSet getRuleSet(TenantId tenantId, RuleSetId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -62,10 +62,10 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     rs.updatedAt = Clock.currStdTime();
 
     repo.update(rs);
-    return CommandResult(rs.id, "");
+    return CommandResult(true, rs.id.value, "");
   }
 
-  CommandResult activateRuleSet(RuleSetId tenantId, id tenantId) {
+  CommandResult activateRuleSet(TenantId tenantId, RuleSetId id) {
     auto rs = repo.findById(tenantId, id);
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
@@ -75,10 +75,15 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     rs.updatedAt = rs.activatedAt;
 
     repo.update(rs);
-    return CommandResult(rs.id, "");
+    return CommandResult(true, rs.id.value, "");
   }
 
-  void deleteRuleSet(RuleSetId tenantId, id tenantId) {
+  CommandResult deleteRuleSet(TenantId tenantId, RuleSetId id) {
+    auto rs = repo.findById(tenantId, id);
+    if (rs.isNull)
+      return CommandResult(false, "", "Rule set not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

@@ -25,7 +25,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -44,10 +44,10 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     r.requestedAt = now;
 
     repo.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
-  InformationReport getReport(InformationReportId tenantId, id tenantId) {
+  InformationReport getReport(TenantId tenantId, InformationReportId id ) {
     return repo.findById(tenantId, id);
   }
 
@@ -60,7 +60,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateInformationReportStatusRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
+    auto r = repo.findById(req.tenantId, req.id);
     if (r.isNull)
       return CommandResult(false, "", "Information report not found");
 
@@ -73,11 +73,16 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     }
 
     repo.update(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
-  void deleteReport(InformationReportId tenantId, id tenantId) {
+  CommandResult deleteReport(TenantId tenantId, InformationReportId id) {
+    auto report = repo.findById(tenantId, id);
+    if (report.isNull)
+      return CommandResult(false, "", "Information report not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 
   private ExportFormat parseExportFormat(string s) {

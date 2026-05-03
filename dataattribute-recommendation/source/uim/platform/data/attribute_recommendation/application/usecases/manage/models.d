@@ -61,10 +61,10 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     config.updatedAt = now;
 
     repo.save(config);
-    return CommandResult(config.id, "");
+    return CommandResult(true, config.id.value, "");
   }
 
-  ModelConfiguration getModelConfig(ModelConfigId tenantId, id tenantId) {
+  ModelConfiguration getModelConfig(TenantId tenantId, ModelConfigId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -100,11 +100,11 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   /// Mark a model configuration as ready for training.
-  CommandResult activateConfig(ModelConfigId tenantId, id tenantId) {
+  CommandResult activateConfig(TenantId tenantId, ModelConfigId id) {
     auto config = repo.findById(tenantId, id);
     if (config.isNull)
       return CommandResult(false, "", "Model configuration not found");
@@ -130,13 +130,12 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
     auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);
     if (job.isNull)
-      return CommandResult("",
-          "Cannot start training - verify dataset is completed and config is ready");
+      return CommandResult(false, "", "Cannot start training - verify dataset is completed and config is ready");
 
-    return CommandResult(job.id, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult deleteModelConfig(ModelConfigId tenantId, id tenantId) {
+  CommandResult deleteModelConfig(TenantId tenantId, ModelConfigId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");

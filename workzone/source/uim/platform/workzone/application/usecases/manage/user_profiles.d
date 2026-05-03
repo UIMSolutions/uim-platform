@@ -49,12 +49,12 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  UserProfile getUserProfile(UserProfileId tenantId, id tenantId) {
+  UserProfile getUserProfile(TenantId tenantId, UserProfileId id) {
     return repo.findById(tenantId, id);
   }
 
-  UserProfile getUserProfileByUserId(UserId usertenantId, id tenantId) {
-    return repo.findByUserId(usertenantId, id);
+  UserProfile getUserProfileByUserId(TenantId tenantId, UserId id) {
+    return repo.findByUserId(tenantId, id);
   }
 
   UserProfile[] listProfiles(TenantId tenantId) {
@@ -62,7 +62,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateUserProfile(UpdateUserProfileRequest req) {
-    auto p = repo.findById(req.id, req.tenantId);
+    auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
       return CommandResult(false, "", "User profile not found");
 
@@ -80,7 +80,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deleteUserProfile(UserProfileId tenantId, id tenantId) {
+  CommandResult deleteUserProfile(TenantId tenantId, UserProfileId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "User profile not found");

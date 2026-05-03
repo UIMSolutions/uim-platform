@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.contents;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.content_item;
-import uim.platform.workzone.domain.ports.repositories.contents;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.content_item;
+// import uim.platform.workzone.domain.ports.repositories.contents;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.algorithm : canFind, filter;
 // import std.array : array;
 
@@ -43,7 +47,8 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.contentType == contentType).array;
+    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.contentType == contentType)
+      .array;
   }
 
   void removeByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
@@ -62,4 +67,16 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
     return findByTag(tenantId, tag).each!(c => remove(c));
   }
 
+  size_t countByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
+    return findByStatus(tenantId, status, workspaceId).length;
+  }
+
+  ContentItem[] findByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.status == status)
+      .array;
+  }
+
+  void removeByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
+    return findByStatus(tenantId, status, workspaceId).each!(c => remove(c));
+  }
 }

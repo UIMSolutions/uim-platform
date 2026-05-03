@@ -12,10 +12,10 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface ChannelRepository {
-  Channel[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Channel findById(ChannelId tenantId, id tenantId);
-  void save(Channel channel);
-  void update(Channel channel);
-  void remove(ChannelId tenantId, id tenantId);
+interface ChannelRepository : ITenantRepository!(Channel, ChannelId) {
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  Channel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  
 }

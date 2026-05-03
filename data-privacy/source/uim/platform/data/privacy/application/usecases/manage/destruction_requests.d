@@ -43,10 +43,10 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
 
     repo.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id, "");
   }
 
-  DestructionRequest getRequest(DestructionRequestId tenantId, id tenantId) {
+  DestructionRequest getRequest(TenantId tenantId, DestructionRequestId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -59,7 +59,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateDestructionStatusRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
+    auto r = repo.findById(req.tenantId, req.id);
     if (r.isNull)
       return CommandResult(false, "", "Destruction request not found");
 
@@ -71,10 +71,15 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
       r.completedAt = now;
 
     repo.update(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id, "");
   }
 
-  void deleteRequest(DestructionRequestId tenantId, id tenantId) {
+  CommandResult deleteRequest(TenantId tenantId, DestructionRequestId id) {
+    auto r = repo.findById(tenantId, id);
+    if (r.isNull)
+      return CommandResult(false, "", "Destruction request not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

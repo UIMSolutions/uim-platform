@@ -47,7 +47,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     item.updatedAt = now;
 
     repo.save(item);
-    return CommandResult(item.id, "");
+    return CommandResult(true, item.id.value, "");
   }
 
   ContentItem getContent(TenantId tenantId, ContentId id) {
@@ -83,7 +83,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
       item.publishedAt = Clock.currStdTime();
 
     repo.update(item);
-    return CommandResult(item.id, "");
+    return CommandResult(true, item.id.value, "");
   }
 
   CommandResult publishContent(TenantId tenantId, ContentId id) {
@@ -95,10 +95,15 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     item.publishedAt = Clock.currStdTime();
     item.updatedAt = Clock.currStdTime();
     repo.update(item);
-    return CommandResult(item.id, "");
+    return CommandResult(true, item.id.value, "");
   }
 
-  void deleteContent(TenantId tenantId, ContentId id) {
+  CommandResult deleteContent(TenantId tenantId, ContentId id) {
+    auto item = repo.findById(tenantId, id);
+    if (item.isNull)
+      return CommandResult(false, "", "Content not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

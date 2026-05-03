@@ -74,14 +74,14 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (step !is null)
       engine.advanceWorkflow(step.workflowId, req.tenantId);
 
-    return CommandResult(req.id, "");
+    return CommandResult(true, req.id.value, "");
   }
 
   /// Mark a step as failed.
   CommandResult failStep(FailStepRequest req) {
     if (!executor.failStep(req.tenantId, req.id, req.reportedBy, req.errorMessage))
       return CommandResult(false, "", "Cannot fail step — not found");
-    return CommandResult(req.id, "");
+    return CommandResult(true, req.id.value, "");
   }
 
   /// Skip a step and advance the workflow.
@@ -93,7 +93,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (step !is null)
       engine.advanceWorkflow(step.workflowId, req.tenantId);
 
-    return CommandResult(req.id, "");
+    return CommandResult(true, req.id.value, "");
   }
 
   /// Assign a step to a user.
@@ -106,6 +106,6 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (req.assignedRole.length > 0)
       step.assignedRole = req.assignedRole;
     repo.update(step);
-    return CommandResult(req.id, "");
+    return CommandResult(true, req.id.value, "");
   }
 }

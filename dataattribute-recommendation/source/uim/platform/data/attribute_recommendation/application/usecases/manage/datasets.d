@@ -47,10 +47,10 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     ds.updatedAt = now;
 
     repo.save(ds);
-    return CommandResult(ds.id, "");
+    return CommandResult(true, ds.id.value, "");
   }
 
-  Dataset getDataset(DatasetId tenantId, id tenantId) {
+  Dataset getDataset(TenantId tenantId, DatasetId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -81,11 +81,11 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   /// Validate a dataset and transition it to 'ready' status.
-  CommandResult validateDataset(DatasetId tenantId, id tenantId) {
+  CommandResult validateDataset(TenantId tenantId, DatasetId id) {
     auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
@@ -107,7 +107,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   /// Process a dataset (simulate data preparation).
-  CommandResult processDataset(DatasetId tenantId, id tenantId) {
+  CommandResult processDataset(TenantId tenantId, DatasetId id) {
     auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
@@ -123,7 +123,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult deleteDataset(DatasetId tenantId, id tenantId) {
+  CommandResult deleteDataset(TenantId tenantId, DatasetId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Dataset not found");

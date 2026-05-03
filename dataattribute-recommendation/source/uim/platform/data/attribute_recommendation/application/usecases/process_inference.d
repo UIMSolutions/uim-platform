@@ -37,7 +37,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     if (req.inputData.length == 0)
       return CommandResult(false, "", "Input data is required");
 
-    if (!engine.isDeploymentReady(req.deploymentId, req.tenantId))
+    if (!engine.isDeploymentReady(req.tenantId, req.deploymentId))
       return CommandResult(false, "", "Deployment is not active");
 
     auto now = Clock.currStdTime();
@@ -56,22 +56,22 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     if (result is null)
       return CommandResult(false, "", "Inference processing failed");
 
-    return CommandResult(result.id, "");
+    return CommandResult(true, result.id.value, "");
   }
 
-  InferenceResult getResult(InferenceResultId tenantId, id tenantId) {
+  InferenceResult getResult(TenantId tenantId, InferenceResultId id) {
     return resultRepo.findById(tenantId, id);
   }
 
-  InferenceResult getResultByRequest(InferenceRequestId requesttenantId, id tenantId) {
-    return resultRepo.findByRequest(requesttenantId, id);
+  InferenceResult getResultByRequest(TenantId tenantId, InferenceRequestId requestId) {
+    return resultRepo.findByRequest(tenantId, requestId);
   }
 
   InferenceRequest[] listRequests(TenantId tenantId) {
     return requestRepo.findByTenant(tenantId);
   }
 
-  InferenceRequest[] listByDeployment(DeploymentId deploymenttenantId, id tenantId) {
-    return requestRepo.findByDeployment(deploymenttenantId, id);
+  InferenceRequest[] listByDeployment(DeploymentId deploymentId, TenantId tenantId) {
+    return requestRepo.findByDeployment(deploymentId, tenantId);
   }
 }

@@ -17,7 +17,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class PageTemplateController : PageformController {
+class PageTemplateController : PlatformController {
   private ManagePageTemplatesUseCase useCase;
 
   this(ManagePageTemplatesUseCase useCase) {

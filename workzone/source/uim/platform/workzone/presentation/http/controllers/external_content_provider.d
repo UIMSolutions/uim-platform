@@ -18,7 +18,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ExternalContentProviderController {
+class ExternalContentProviderController : PlatformController {
   private ManageExternalContentProvidersUseCase useCase;
 
   this(ManageExternalContentProvidersUseCase useCase) {

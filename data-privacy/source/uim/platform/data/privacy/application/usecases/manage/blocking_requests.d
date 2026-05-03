@@ -51,10 +51,10 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     request.requestedAt = now;
 
     repo.save(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  BlockingRequest getRequest(BlockingRequestId tenantId, id tenantId) {
+  BlockingRequest getRequest(TenantId tenantId, BlockingRequestId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -67,7 +67,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateBlockingStatusRequest req) {
-    auto request = repo.findById(req.id, req.tenantId);
+    auto request = repo.findById(req.tenantId, req.id);
     if (request.isNull)
       return CommandResult(false, "", "Blocking request not found");
 
@@ -78,10 +78,14 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
       request.releasedAt = Clock.currStdTime();
 
     repo.update(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  void deleteRequest(BlockingRequestId tenantId, id tenantId) {
+  CommandResult deleteRequest(TenantId tenantId, BlockingRequestId id) {
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
+      return CommandResult(false, "", "Blocking request not found");
+
     repo.removeById(tenantId, id);
   }
 }

@@ -43,7 +43,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   ForumTopic getForumTopic(TenantId tenantId, ForumTopicId id) {
@@ -69,7 +69,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     t.updatedAt = Clock.currStdTime();
 
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult deleteForumTopic(TenantId tenantId, ForumTopicId id) {

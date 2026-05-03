@@ -12,5 +12,6 @@ public {
     import uim.platform.workzone.presentation.http.controllers.task;
     import uim.platform.workzone.presentation.http.controllers.widget;
     import uim.platform.workzone.presentation.http.controllers.workspace;
+    import uim.platform.workzone.presentation.http.controllers.workpage;
 
 }

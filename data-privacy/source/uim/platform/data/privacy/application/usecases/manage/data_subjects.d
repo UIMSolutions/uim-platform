@@ -52,7 +52,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     subject.updatedAt = now;
 
     repo.save(subject);
-    return CommandResult(subject.id, "");
+    return CommandResult(true, subject.id, "");
   }
 
   DataSubject getSubject(DataSubjectId tenantId, id tenantId) {
@@ -85,10 +85,15 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     subject.updatedAt = Clock.currStdTime();
 
     repo.update(subject);
-    return CommandResult(subject.id, "");
+    return CommandResult(true, subject.id.value, "");
   }
 
-  void deleteSubject(DataSubjectId tenantId, id tenantId) {
+  CommandResult deleteSubject(TenantId tenantId, DataSubjectId id) {
+    auto subject = repo.findById(tenantId, id);
+    if (subject.isNull)
+      return CommandResult(false, "", "Data subject not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, ""); // TODO: Consider using a soft delete approach instead of hard delete
   }
 }

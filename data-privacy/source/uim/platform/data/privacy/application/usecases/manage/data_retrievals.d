@@ -80,10 +80,10 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     request.downloadUrl = "/api/v1/data-retrievals/" ~ request.id ~ "/download";
 
     repo.save(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  DataRetrievalRequest getRequest(DataRetrievalRequestId tenantId, id tenantId) {
+  DataRetrievalRequest getRequest(TenantId tenantId, DataRetrievalRequestId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -96,7 +96,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
-    auto request = repo.findById(req.id, req.tenantId);
+    auto request = repo.findById(req.tenantId, req.id);
     if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 
@@ -109,10 +109,15 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
       request.completedAt = Clock.currStdTime();
 
     repo.update(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  void deleteRequest(DataRetrievalRequestId tenantId, id tenantId) {
+  CommandResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id) {
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
+      return CommandResult(false, "", "Data retrieval request not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, ""); 
   }
 }

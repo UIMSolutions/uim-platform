@@ -43,7 +43,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Card getCard(TenantId tenantId, CardId id) {
@@ -77,7 +77,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.updatedAt = Clock.currStdTime();
 
     repo.update(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   void deleteCard(TenantId tenantId, CardId id) {

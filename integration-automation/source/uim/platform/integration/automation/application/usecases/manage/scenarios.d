@@ -49,10 +49,10 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     scenario.updatedAt = scenario.createdAt;
 
     repo.save(scenario);
-    return CommandResult(scenario.id, "");
+    return CommandResult(true, scenario.id.value, "");
   }
 
-  IntegrationScenario getScenario(ScenarioId tenantId, id tenantId) {
+  IntegrationScenario getScenario(TenantId tenantId, ScenarioId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -74,7 +74,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 
@@ -96,10 +96,10 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteScenario(ScenarioId tenantId, id tenantId) {
+  CommandResult deleteScenario(TenantId tenantId, ScenarioId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");

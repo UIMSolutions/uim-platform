@@ -40,10 +40,10 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.updatedAt = now;
 
     repo.save(ctx);
-    return CommandResult(ctx.id, "");
+    return CommandResult(true, ctx.id.value, "");
   }
 
-  BusinessContext getContext(BusinessContextId tenantId, id tenantId) {
+  BusinessContext getContext(TenantId tenantId, BusinessContextId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -56,7 +56,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateContext(UpdateBusinessContextRequest req) {
-    auto ctx = repo.findById(req.id, req.tenantId);
+    auto ctx = repo.findById(req.tenantId, req.id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 
@@ -73,7 +73,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateContext(ActivateBusinessContextRequest req) {
-    auto ctx = repo.findById(req.id, req.tenantId);
+    auto ctx = repo.findById(req.tenantId, req.id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
     if (ctx.status == BusinessContextStatus.active)
@@ -84,10 +84,15 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.updatedAt = ctx.activatedAt;
 
     repo.update(ctx);
-    return CommandResult(ctx.id, "");
+    return CommandResult(true, ctx.id.value, "");
   }
 
-  void deleteContext(BusinessContextId tenantId, id tenantId) {
+  CommandResult deleteContext(TenantId tenantId, BusinessContextId id) {
+    auto ctx = repo.findById(tenantId, id);
+    if (ctx.isNull)
+      return CommandResult(false, "", "Business context not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

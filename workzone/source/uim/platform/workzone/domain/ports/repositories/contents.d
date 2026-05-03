@@ -14,20 +14,20 @@ mixin(ShowModule!());
 @safe:
 interface ContentRepository : ITenantRepository!(ContentItem, ContentId) {
 
-  size_t countByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
-  ContentItem[] findByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
-  void removeByWorkspace(TenantID tenantId, WorkspaceId workspaceId);
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  ContentItem[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
 
-  size_t countByAuthor(TenantID tenantId, UserId authorId);
-  ContentItem[] findByAuthor(TenantID tenantId, UserId authorId);
-  void removeByAuthor(TenantID tenantId, UserId authorId);
+  size_t countByAuthor(TenantId tenantId, UserId authorId);
+  ContentItem[] findByAuthor(TenantId tenantId, UserId authorId);
+  void removeByAuthor(TenantId tenantId, UserId authorId);
 
-  size_t countByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
-  ContentItem[] findByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
-  void removeByType(TenantID tenantId, ContentType contentType, WorkspaceId workspaceId);
+  size_t countByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId);
+  ContentItem[] findByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId);
+  void removeByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId);
 
-  size_t countByStatus(TenantID tenantId, ContentStatus status, WorkspaceId workspaceId);
-  ContentItem[] findByTag(TenantID tenantId, string tag);
-  void removeByTag(TenantID tenantId, string tag);
+  size_t countByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId);
+  ContentItem[] findByTag(TenantId tenantId, string tag);
+  void removeByTag(TenantId tenantId, string tag);
   
 }

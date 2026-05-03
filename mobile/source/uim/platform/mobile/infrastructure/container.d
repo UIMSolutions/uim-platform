@@ -99,7 +99,7 @@ struct Container {
   HealthController healthController;
 }
 
-Container buildContainer(AppConfig config) {
+Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters

@@ -56,10 +56,10 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.createdAt = now;
 
     repo.save(record);
-    return CommandResult(record.id, "");
+    return CommandResult(true, record.id.value, "");
   }
 
-  ConsentRecord getConsent(ConsentRecordId tenantId, id tenantId) {
+  ConsentRecord getConsent(TenantId tenantId, ConsentRecordId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -80,7 +80,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokeConsent(RevokeConsentRequest req) {
-    auto record = repo.findById(req.id, req.tenantId);
+    auto record = repo.findById(req.tenantId, req.id);
     if (record.isNull)
       return CommandResult(false, "", "Consent record not found");
     if (record.status == ConsentStatus.revoked)
@@ -90,10 +90,15 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.revokedAt = Clock.currStdTime();
 
     repo.update(record);
-    return CommandResult(record.id, "");
+    return CommandResult(true, record.id.value, "");
   }
 
-  void deleteConsent(ConsentRecordId tenantId, id tenantId) {
+  CommandResult deleteConsent(TenantId tenantId, ConsentRecordId id) {
+    auto record = repo.findById(tenantId, id);
+    if (record.isNull)
+      return CommandResult(false, "", "Consent record not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

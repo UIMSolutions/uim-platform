@@ -12,11 +12,14 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface NotificationRepository {
+interface NotificationRepository : ITenantRepository!(Notification, NotificationId) {
+
+  size_t countByRecipient(TenantId tenantId, UserId recipientId);
   Notification[] findByRecipient(TenantId tenantId, UserId recipientId);
-  Notification findById(NotificationId notificationId, TenantId tenantId);
+  void removeByRecipient(TenantId tenantId, UserId recipientId);
+
+  size_t countUnread(TenantId tenantId, UserId recipientId);
   Notification[] findUnread(TenantId tenantId, UserId recipientId);
-  void save(Notification notification);
-  void update(Notification notification);
-  void remove(NotificationId notificationId, TenantId tenantId);
+  void removeUnread(TenantId tenantId, UserId recipientId);
+  
 }

@@ -40,7 +40,7 @@ class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
     job.createdAt = Clock.currStdTime();
 
     repo.save(job);
-    return CommandResult(job.id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   CleansingJob getById(TenantId tenantId, CleansingJobId jobId) {

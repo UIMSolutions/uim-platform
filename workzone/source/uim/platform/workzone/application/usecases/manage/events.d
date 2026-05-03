@@ -50,7 +50,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.updatedAt = now;
 
     repo.save(e);
-    return CommandResult(e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   Event getEvent(TenantId tenantId, EventId id) {
@@ -78,7 +78,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.updatedAt = Clock.currStdTime();
 
     repo.update(e);
-    return CommandResult(e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   CommandResult deleteEvent(TenantId tenantId, EventId id) {

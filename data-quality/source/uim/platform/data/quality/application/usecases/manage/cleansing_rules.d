@@ -56,7 +56,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult update(UpdateCleansingRuleRequest req) {
@@ -90,7 +90,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = Clock.currStdTime();
 
     repo.update(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult remove(TenantId tenantId, RuleId id) {

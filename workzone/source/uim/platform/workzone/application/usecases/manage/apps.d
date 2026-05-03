@@ -46,7 +46,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.updatedAt = now;
 
     repo.save(app);
-    return CommandResult(app.id, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   AppRegistration getApp(TenantId tenantId, AppId id) {
@@ -79,7 +79,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.updatedAt = Clock.currStdTime();
 
     repo.update(app);
-    return CommandResult(app.id, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   void deleteApp(TenantId tenantId, AppId id) {

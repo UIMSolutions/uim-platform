@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.widget;
 
-import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// A widget instance placed on a workspace page.
 struct Widget {

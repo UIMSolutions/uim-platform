@@ -36,7 +36,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   AnonymizationConfig getConfig(TenantId tenantId, AnonymizationConfigId id) {
@@ -59,7 +59,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     c.updatedAt = Clock.currStdTime();
 
     repo.update(c);
-    return CommandResult(c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId id) {
@@ -71,10 +71,15 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     c.updatedAt = Clock.currStdTime();
 
     repo.update(c);
-    return CommandResult(c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
-  void deleteConfig(TenantId tenantId, AnonymizationConfigId id) {
+  CommandResult deleteConfig(TenantId tenantId, AnonymizationConfigId id) {
+    auto c = repo.findById(tenantId, id);
+    if (c.isNull)
+      return CommandResult(false, "", "Anonymization config not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

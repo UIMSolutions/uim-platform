@@ -16,32 +16,26 @@ mixin(ShowModule!());
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryFeedRepository : FeedRepository {
-  private FeedEntry[FeedEntryId] store;
+class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepository {
 
-  FeedEntry[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId)
-      .array;
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
+  }
+  FeedEntry[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
+  }
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
   }
 
-  FeedEntry findById(FeedEntryId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  size_t countByActor(TenantId tenantId, UserId actorId) {
+    return findByActor(tenantId, actorId).length;
+  }
+  FeedEntry[] findByActor(TenantId tenantId, UserId actorId) {
+    return findByTenant(tenantId).filter!(e => e.actorId == actorId).array;
+  }
+  void removeByActor(TenantId tenantId, UserId actorId) {
+    return findByActor(tenantId, actorId).each!(e => remove(e));
   }
 
-  FeedEntry[] findByActor(UserId actortenantId, id tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.actorId == actorId).array;
-  }
-
-  void save(FeedEntry entry) {
-    store[entry.id] = entry;
-  }
-
-  void remove(FeedEntryId tenantId, id tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        store.removeById(id);
-  }
 }

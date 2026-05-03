@@ -35,7 +35,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject ID is required");
 
     // Verify data subject exists
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -57,10 +57,10 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     request.deadline = deadline;
 
     repo.save(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  DeletionRequest getRequest(DeletionRequestId tenantId, id tenantId) {
+  DeletionRequest getRequest(TenantId tenantId, DeletionRequestId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -88,10 +88,15 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
       request.completedAt = Clock.currStdTime();
 
     repo.update(request);
-    return CommandResult(request.id, "");
+    return CommandResult(true, request.id.value, "");
   }
 
-  void deleteRequest(DeletionRequestId tenantId, id tenantId) {
+  CommandResult deleteRequest(TenantId tenantId, DeletionRequestId id) {
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
+      return CommandResult(false, "", "Deletion request not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

@@ -63,7 +63,7 @@ class DetectDuplicatesUseCase { // TODO: UIMUseCase {
       c.isSurvivor = (c.recordId == req.survivorRecordId);
 
     repo.update(g);
-    return CommandResult(g.id, "");
+    return CommandResult(true, g.id.value, "");
   }
 
   /// Get all match groups for a dataset.
@@ -77,7 +77,7 @@ class DetectDuplicatesUseCase { // TODO: UIMUseCase {
   }
 
   /// Get a single match group by ID.
-  MatchGroup getById(MatchGroupId tenantId, id tenantId) {
+  MatchGroup getById(TenantId tenantId, MatchGroupId id) {
     return repo.findById(tenantId, id);
   }
 }

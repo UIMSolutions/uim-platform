@@ -93,7 +93,7 @@ struct Container {
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
+Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters

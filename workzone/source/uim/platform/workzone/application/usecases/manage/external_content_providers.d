@@ -45,7 +45,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     p.updatedAt = now;
 
     repo.save(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   ExternalContentProvider getProvider(TenantId tenantId, ExternalContentProviderId id) {
@@ -71,7 +71,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   CommandResult deleteProvider(TenantId tenantId, ExternalContentProviderId id) {

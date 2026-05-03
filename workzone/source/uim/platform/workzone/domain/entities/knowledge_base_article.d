@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.knowledge_base_article;
 
-import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// A knowledge base article — structured documentation within a workspace.
 struct KnowledgeBaseArticle {

@@ -14,12 +14,12 @@ mixin(ShowModule!());
 @safe:
 interface UserProfileRepository : ITenantRepository!(UserProfile, UserProfileId) {
 
-  bool existsByUserId(UserId usertenantId, id tenantId);
-  UserProfile findByUserId(UserId usertenantId, id tenantId);
-  void removeByUserId(UserId usertenantId, id tenantId);
+  bool existsByUserId(TenantId tenantId, UserId userId);
+  UserProfile findByUserId(TenantId tenantId, UserId userId);
+  void removeByUserId(TenantId tenantId, UserId userId);
 
-  size_t countByGroup(GroupId grouptenantId, id tenantId);
-  UserProfile[] findByGroup(GroupId grouptenantId, id tenantId);
-  void removeByGroup(GroupId grouptenantId, id tenantId);
+  size_t countByGroup(TenantId tenantId, GroupId groupId);
+  UserProfile[] findByGroup(TenantId tenantId, GroupId groupId);
+  void removeByGroup(TenantId tenantId, GroupId groupId);
 
 }

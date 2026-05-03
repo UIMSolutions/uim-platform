@@ -48,10 +48,10 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     sys.updatedAt = now;
 
     repo.save(sys);
-    return CommandResult(sys.id, "");
+    return CommandResult(true, sys.id.value, "");
   }
 
-  SourceSystem getSourceSystem(SourceSystemId tenantId, id tenantId) {
+  SourceSystem getSourceSystem(TenantId tenantId, SourceSystemId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -65,7 +65,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.id, req.tenantId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return CommandResult(false, "", "Source system not found");
 
@@ -79,11 +79,11 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(true, updated.id.value, "");
   }
 
   /// Activate a source system for provisioning.
-  CommandResult activateSystem(SourceSystemId tenantId, id tenantId) {
+  CommandResult activateSystem(TenantId tenantId, SourceSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
@@ -98,7 +98,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   }
 
   /// Deactivate a source system.
-  CommandResult deactivateSystem(SourceSystemId tenantId, id tenantId) {
+  CommandResult deactivateSystem(TenantId tenantId, SourceSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
@@ -109,7 +109,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult deleteSourceSystem(SourceSystemId tenantId, id tenantId) {
+  CommandResult deleteSourceSystem(TenantId tenantId, SourceSystemId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Source system not found");

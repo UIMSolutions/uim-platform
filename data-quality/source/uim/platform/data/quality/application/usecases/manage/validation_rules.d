@@ -55,7 +55,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult update(UpdateValidationRuleRequest req) {
@@ -88,10 +88,10 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = Clock.currStdTime();
 
     repo.update(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult remove(RuleId tenantId, id tenantId) {
+  CommandResult remove(TenantId tenantId, RuleId id) {
     auto existing = repo.findById(id);
     if (existing.isNull)
       return CommandResult(false, "", "Validation rule not found");
@@ -102,7 +102,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  ValidationRule getById(RuleId id) {
+  ValidationRule getById(TenantId tenantId, RuleId id) {
     return repo.findById(id);
   }
 
