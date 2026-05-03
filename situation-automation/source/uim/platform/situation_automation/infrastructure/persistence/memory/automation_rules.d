@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAutomationRuleRepository :TenantRepository!(AutomationRule, AutomationRuleId), AutomationRuleRepository {
+class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, AutomationRuleId), AutomationRuleRepository {
     private AutomationRule[] store;
 
     AutomationRule findById(AutomationRuleId id) {

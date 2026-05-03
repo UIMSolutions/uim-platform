@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemorySituationTemplateRepository :TenantRepository!(SituationTemplate, SituationTemplateId), SituationTemplateRepository {
+class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, SituationTemplateId), SituationTemplateRepository {
     private SituationTemplate[] store;
 
     SituationTemplate findById(SituationTemplateId id) {

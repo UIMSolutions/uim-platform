@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDashboardRepository :TenantRepository!(Dashboard, DashboardId), DashboardRepository {
+class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
     private Dashboard[] store;
 
     Dashboard findById(DashboardId id) {

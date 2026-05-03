@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository :TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
     private ServiceBinding[][string] store;
 
     ServiceBinding[] findByTenant(TenantId tenantId) {

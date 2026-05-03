@@ -10,43 +10,16 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryFormRepository : FormRepository {
-    private Form[] store;
+class MemoryFormRepository : TenantRepository!(Form, FormId), FormRepository {
 
-    Form findById(FormId id) {
-        foreach (f; findAll) {
-            if (f.id == id)
-                return f;
-        }
-        return Form.init;
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
     }
-
-    Form[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(f => f.tenantId == tenantId).array;
-    }
-
     Form[] findByProject(ProjectId projectId) {
         return findAll().filter!(f => f.projectId == projectId).array;
     }
-
-    void save(Form f) {
-        store ~= f;
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(f => remove(f));
     }
 
-    void update(Form f) {
-        foreach (existing; findAll) {
-            if (existing.id == f.id) {
-                existing = f;
-                return;
-            }
-        }
-    }
-
-    void remove(FormId id) {
-        store = findAll().filter!(f => f.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(f => f.tenantId == tenantId).array.length;
-    }
 }

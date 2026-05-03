@@ -17,7 +17,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryJobRepository :TenantRepository!(Job, JobId), JobRepository {
+class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
 
     size_t countByStatus(TenantId tenantId, JobStatus status) {
         return findByStatus(tenantId, status).length;

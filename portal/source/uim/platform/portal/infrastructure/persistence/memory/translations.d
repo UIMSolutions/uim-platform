@@ -13,11 +13,14 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId), TranslationRepository {
+class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId), TranslationRepository {
 
+  size_t countByResource(string resourceType, string resourceId) {
+    return findByResource(resourceType, resourceId).length;
+  }
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;
-    foreach (t; findAll()
+    foreach (t; findAll())
       if (t.resourceType == resourceType && t.resourceId == resourceId) {
         if (language.length == 0 || t.language == language)
           result ~= t;
@@ -25,11 +28,13 @@ class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId)
     }
     return result;
   }
-
-  Translation[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(t => t.tenantId == tenantId).array;
+  void removeByResource(string resourceType, string resourceId) {
+    findByResource(resourceType, resourceId).each!(t => remove(t));
   }
 
+  size_t countByLanguage(TenantId tenantId, string language) {
+    return findByLanguage(tenantId, language).length;
+  }
   Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {
     Translation[] result;
     uint idx;
@@ -43,25 +48,8 @@ class MemoryTranslationRepository :TenantRepository!(Translation, TranslationId)
     return result;
   }
 
-  void save(Translation translation) {
-    store[translation.id] = translation;
+  void removeByLanguage(TenantId tenantId, string language) {
+    findByLanguage(tenantId, language).each!(t => remove(t));
   }
 
-  void update(Translation translation) {
-    store[translation.id] = translation;
-  }
-
-  void remove(TranslationId id) {
-    store.removeById(id);
-  }
-
-  void removeByResource(string resourceType, string resourceId) {
-    TranslationId[] toRemove;
-    foreach (kv; store.byKeyValue()) {
-      if (kv.value.resourceType == resourceType && kv.value.resourceId == resourceId)
-        toRemove ~= kv.key;
-    }
-    foreach (id; toRemove)
-      store.removeById(id);
-  }
 }

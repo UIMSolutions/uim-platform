@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRequestRepository :TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
+class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
     
     size_t countByDataSubject(DataSubjectId dataSubjectId) {
         return findByDataSubject(dataSubjectId).length;

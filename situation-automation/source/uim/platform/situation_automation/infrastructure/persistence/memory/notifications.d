@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationRepository :TenantRepository!(Notification, NotificationId), NotificationRepository {
+class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
     private Notification[] store;
 
     Notification findById(NotificationId id) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
     // #region ByEmail
     bool existsByEmail(string email) {
@@ -66,5 +66,5 @@ class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId)
         findByOrganization(organizationId).each!(v => store.remove(v.id));
     }
     // #endregion ByOrganization
-    
+
 }
