@@ -64,7 +64,7 @@ class UserProfileController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
-      auto arr = profiles.map!(p => serializeUserProfile(p)).array.toJson;
+      auto arr = profiles.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

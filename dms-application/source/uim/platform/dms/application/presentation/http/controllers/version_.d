@@ -119,11 +119,12 @@ class VersionController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto versions = uc.getAllVersions(doctenantId, id);
-      auto arr = versions.map!(v => serializeVersion(v)).array.toJson;
+      auto arr = versions.map!(v => v.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(versions.length));
+        .set("totalCount", Json(versions.length))
+        .set("message", Json("Document versions retrieved successfully"));
         
       res.writeJsonBody(resp, 200);
     }

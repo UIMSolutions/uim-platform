@@ -62,7 +62,7 @@ class ThemeController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
-      auto arr = themes.map!(t => serializeTheme(t)).array;
+      auto arr = themes.map!(t => t.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)

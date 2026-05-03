@@ -45,7 +45,8 @@ class ForumTopicController : PlatformController {
       auto result = useCase.createForumTopic(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Forum topic created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -60,8 +61,8 @@ class ForumTopicController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto topics = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = topics.map!(t => serializeForumTopic(t)).array.toJson;
+      auto topics = useCase.listByWorkspace(tenantId, workspaceId);
+      auto arr = topics.map!(t => t.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -102,10 +103,14 @@ class ForumTopicController : PlatformController {
       r.locked = j.getBoolean("locked");
 
       auto result = useCase.updateForumTopic(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Forum topic updated successfully");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -116,10 +121,14 @@ class ForumTopicController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteForumTopic(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Forum topic deleted successfully");
+
+        res.writeJsonBody(resp, 204);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

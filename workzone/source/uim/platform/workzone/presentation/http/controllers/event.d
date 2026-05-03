@@ -51,7 +51,8 @@ class EventController : PlatformController {
       auto result = useCase.createEvent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Event created successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -66,8 +67,9 @@ class EventController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto events = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = events.map!(e => serializeEvent(e)).array.toJson;
+
+      auto events = useCase.listByWorkspace(tenantId, workspaceId);
+      auto arr = events.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -110,10 +112,14 @@ class EventController : PlatformController {
       r.endTime = jsonLong(j, "endTime");
 
       auto result = useCase.updateEvent(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Event updated successfully");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -124,10 +130,14 @@ class EventController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteEvent(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Event deleted successfully");
+
+        res.writeJsonBody(resp, 204);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

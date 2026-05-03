@@ -22,7 +22,7 @@ class RoleController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/roles", &handleCreate);
     router.get("/api/v1/roles", &handleList);
     router.get("/api/v1/roles/*", &handleGet);
@@ -47,13 +47,10 @@ class RoleController : PlatformController {
           .set("message", "Role created");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -62,16 +59,15 @@ class RoleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
-      auto arr = roles.map!(r => serializeRole(r)).array.toJson;
+      auto arr = roles.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(roles.length))
         .set("message", "Roles retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -86,8 +82,7 @@ class RoleController : PlatformController {
         return;
       }
       res.writeJsonBody(r.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -96,7 +91,8 @@ class RoleController : PlatformController {
     try {
       auto j = req.json;
       auto r = UpdateRoleRequest();
-      r.id = extractIdFromPath(req.requestURI);;
+      r.id = extractIdFromPath(req.requestURI);
+      ;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -107,8 +103,7 @@ class RoleController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -122,8 +117,7 @@ class RoleController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

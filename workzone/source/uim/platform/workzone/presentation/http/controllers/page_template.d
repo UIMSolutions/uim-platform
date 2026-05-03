@@ -60,7 +60,7 @@ class PageTemplateController : PageformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto templates = useCase.listPageTemplates(tenantId);
-      auto arr = templates.map!(t => serializePageTemplate(t)).array;
+      auto arr = templates.map!(t => t.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -101,10 +101,14 @@ class PageTemplateController : PageformController {
       r.isPublic = j.getBoolean("isPublic");
 
       auto result = useCase.updatePageTemplate(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Page template updated successfully");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -115,10 +119,14 @@ class PageTemplateController : PageformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deletePageTemplate(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Page template deleted successfully");
+
+        res.writeJsonBody(resp, 204);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

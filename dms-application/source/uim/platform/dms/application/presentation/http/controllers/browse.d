@@ -46,13 +46,14 @@ class BrowseController : PlatformController {
       auto contents = uc.browseFolderContents(tenantId, folderId);
 
       auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
-      auto dArr = contents.documents.map!(d => serializeDoc(d)).array.toJson;
+      auto dArr = contents.documents.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("subfolders", fArr)
         .set("documents", dArr)
         .set("totalSubfolders", contents.subfolders.length)
-        .set("totalDocuments", contents.documents.length);
+        .set("totalDocuments", contents.documents.length)
+        .set("message", "Folder contents retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -76,7 +77,8 @@ class BrowseController : PlatformController {
         .set("name", summary.name)
         .set("totalDocuments", summary.totalDocuments)
         .set("totalFolders", summary.totalFolders)
-        .set("status", summary.status.to!string);
+        .set("status", summary.status.to!string)
+        .set("message", "Repository summary retrieved successfully");
 
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
@@ -96,7 +98,8 @@ class BrowseController : PlatformController {
       auto result = uc.addFavorite(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Favorite added successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -116,7 +119,8 @@ class BrowseController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Favorites retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -131,7 +135,8 @@ class BrowseController : PlatformController {
       auto result = uc.removeFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Favorite removed successfully");
           
         res.writeJsonBody(resp, 200);
       } else

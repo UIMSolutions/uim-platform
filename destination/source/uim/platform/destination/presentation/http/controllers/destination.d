@@ -79,7 +79,8 @@ class DestinationController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", Json(result.id))
+          .set("message", "Destination created successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -100,11 +101,12 @@ class DestinationController : PlatformController {
         ? uc.listByServiceInstance(tenantId, ServiceInstanceId(instanceId))
         : uc.listBySubaccount(tenantId, subaccountId);
 
-      auto arr = destinations.map!(d => serializeDestination(d)).array.toJson;
+      auto arr = destinations.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", destinations.length);
+        .set("totalCount", destinations.length)
+        .set("message", "Destinations retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -156,7 +158,8 @@ class DestinationController : PlatformController {
       auto result = uc.updateDestination(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", Json(result.id))
+          .set("message", "Destination updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

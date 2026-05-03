@@ -66,7 +66,7 @@ class SurveyController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
-      auto arr = surveys.map!(s => serializeSurvey(s)).array.toJson;
+      auto arr = surveys.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -99,16 +99,20 @@ class SurveyController : PlatformController {
       auto j = req.json;
       auto r = UpdateSurveyRequest();
       r.id = extractIdFromPath(req.requestURI);
-      ;
       r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
 
       auto result = useCase.updateSurvey(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Survey updated successfully");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -119,9 +123,13 @@ class SurveyController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Survey deleted successfully");
+
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

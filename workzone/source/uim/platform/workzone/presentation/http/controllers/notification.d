@@ -78,11 +78,11 @@ class NotificationController : PlatformController {
 
       Notification[] items;
       if (unreadOnly)
-        items = useCase.listUnread(recipienttenantId, id);
+        items = useCase.listUnread(tenantId, recipientId);
       else
-        items = useCase.listByRecipient(recipienttenantId, id);
+        items = useCase.listByRecipient(tenantId, recipientId);
 
-      auto arr = items.map!(n => serializeNotification(n)).array.toJson;
+      auto arr = items.map!(n => n.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -136,7 +136,8 @@ class NotificationController : PlatformController {
       auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-        .set("status", "dismissed");
+        .set("status", "dismissed")
+        .set("message", "Notification dismissed successfully");
         
         res.writeJsonBody(resp, 200);
       } else {

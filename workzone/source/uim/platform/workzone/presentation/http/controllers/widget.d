@@ -76,7 +76,7 @@ class WidgetController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(tenantId, pageId);
-      auto arr = widgets.map!(w => serializeWidget(w)).array.toJson;
+      auto arr = widgets.map!(w => w.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -130,7 +130,8 @@ class WidgetController : PlatformController {
       auto result = useCase.updateWidget(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "updated");
+          .set("status", "updated")
+          .set("message", "Widget updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -145,8 +146,14 @@ class WidgetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteWidget(tenantId, id);
-      res.writeBody("", 204);
+      auto result = useCase.deleteWidget(tenantId, id);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Widget deleted successfully");
+        res.writeJsonBody(resp, 204);
+      } else {
+        writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -157,12 +164,11 @@ private WidgetConfig parseWidgetConfig(Json j) {
   import uim.platform.workzone.domain.entities.widget : WidgetConfig;
 
   WidgetConfig cfg;
-  auto v = "config" in j;
-  if (v !is null && (v).isObject) {
-    auto c = *v;
+  if (j.isObject("config")) {
+    auto c = j["config"];
     cfg.customTitle = c.getString("customTitle");
-    cfg.maxItems = jsonInt(c, "maxItems");
-    cfg.refreshIntervalSec = jsonInt(c, "refreshIntervalSec");
+    cfg.maxItems = c.getInteger("maxItems");
+    cfg.refreshIntervalSec = c.getInteger("refreshIntervalSec");
     cfg.filterExpression = c.getString("filterExpression");
   }
   return cfg;

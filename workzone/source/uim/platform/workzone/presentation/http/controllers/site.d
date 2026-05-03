@@ -12,7 +12,7 @@ import uim.platform.workzone.application.usecases.manage.sites;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.site;
-import uim.platform.identity_authentication.presentation.http
+import uim.platform.identity_authentication.presentation.http;
 
 class SiteController : PlatformController {
   private ManageSitesUseCase useCase;
@@ -23,7 +23,7 @@ class SiteController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/sites", &handleCreate);
     router.get("/api/v1/sites", &handleList);
     router.get("/api/v1/sites/*", &handleGet);
@@ -49,13 +49,10 @@ class SiteController : PlatformController {
           .set("message", "Site created");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -64,16 +61,15 @@ class SiteController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
-      auto arr = sites.map!(s => serializeSite(s)).array.toJson;
+      auto arr = sites.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(sites.length))
         .set("message", "Sites retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -88,8 +84,7 @@ class SiteController : PlatformController {
         return;
       }
       res.writeJsonBody(s.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,8 +104,7 @@ class SiteController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -124,8 +118,7 @@ class SiteController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
