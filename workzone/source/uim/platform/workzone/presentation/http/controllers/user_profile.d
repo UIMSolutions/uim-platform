@@ -8,11 +8,15 @@ module uim.platform.workzone.presentation.http.controllers.user_profile;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.user_profiles;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.user_profile;
+// import uim.platform.workzone.application.usecases.manage.user_profiles;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.user_profile;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class UserProfileController : PlatformController {
   private ManageUserProfilesUseCase useCase;
 

@@ -8,12 +8,16 @@ module uim.platform.workzone.presentation.http.controllers.group_;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.manage.groups;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.group;
-import uim.platform.identity_authentication.presentation.http
+// import uim.platform.workzone.application.usecases.manage.manage.groups;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.group;
+// import uim.platform.identity_authentication.presentation.http
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class GroupController : PlatformController {
   private ManageGroupsUseCase useCase;
 

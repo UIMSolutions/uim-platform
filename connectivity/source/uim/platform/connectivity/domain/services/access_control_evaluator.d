@@ -51,12 +51,5 @@ struct AccessControlEvaluator {
     return AccessEvaluation(false, bestMatch.id.value, "Denied by rule: " ~ bestMatch.description);
   }
 
-  /// Check if a path starts with the given prefix.
-  private static bool pathStartsWith(string path, string prefix) {
-    if (prefix.length == 0)
-      return true;
-    if (path.length < prefix.length)
-      return false;
-    return path[0 .. prefix.length] == prefix;
-  }
+
 }

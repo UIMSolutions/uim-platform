@@ -267,3 +267,12 @@ T[] flat(T)(T[][] arrays) {
 
   //   return Clock.currStdTime();
   // }
+
+    /// Check if a path starts with the given prefix.
+  bool pathStartsWith(string path, string prefix) {
+    if (prefix.length == 0)
+      return true;
+    if (path.length < prefix.length)
+      return false;
+    return path[0 .. prefix.length] == prefix;
+  }

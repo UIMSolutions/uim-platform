@@ -8,11 +8,15 @@ module uim.platform.identity_authentication.presentation.http.forum_topic;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.forum_topics;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.forum_topic;
+// import uim.platform.workzone.application.usecases.manage.forum_topics;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.forum_topic;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ForumTopicController : PlatformController {
   private ManageForumTopicsUseCase useCase;
 

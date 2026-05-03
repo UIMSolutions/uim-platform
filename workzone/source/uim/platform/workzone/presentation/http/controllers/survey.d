@@ -8,12 +8,16 @@ module uim.platform.identity_authentication.presentation.http.survey;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.surveys;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.survey;
-import uim.platform.identity_authentication.presentation.http;
+// import uim.platform.workzone.application.usecases.manage.surveys;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.survey;
+// import uim.platform.identity_authentication.presentation.http;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class SurveyController : PlatformController {
   private ManageSurveysUseCase useCase;
 
@@ -64,7 +68,7 @@ class SurveyController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto workspaceId = req.params.get("workspaceId", "");
+      auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
       auto arr = surveys.map!(s => s.toJson).array.toJson;
 
@@ -81,7 +85,7 @@ class SurveyController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SurveyId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto s = useCase.getSurvey(tenantId, id);
       if (s.isNull) {
@@ -120,7 +124,7 @@ class SurveyController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SurveyId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
       if (result.isSuccess()) {

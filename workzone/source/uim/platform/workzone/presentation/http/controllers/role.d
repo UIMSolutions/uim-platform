@@ -8,11 +8,15 @@ module uim.platform.identity_authentication.presentation.http.role;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.roles;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.role;
+// import uim.platform.workzone.application.usecases.manage.roles;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.role;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class RoleController : PlatformController {
   private ManageRolesUseCase useCase;
 

@@ -8,12 +8,16 @@ module uim.platform.identity_authentication.presentation.http.site;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.sites;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.site;
-import uim.platform.identity_authentication.presentation.http;
+// import uim.platform.workzone.application.usecases.manage.sites;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.site;
+// import uim.platform.identity_authentication.presentation.http;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class SiteController : PlatformController {
   private ManageSitesUseCase useCase;
 
