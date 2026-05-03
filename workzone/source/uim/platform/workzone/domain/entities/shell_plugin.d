@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.shell_plugin;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A shell plugin — extensibility plugin for the shell / framework.
 struct ShellPlugin {
   mixin TenantEntity!(ShellPluginId);

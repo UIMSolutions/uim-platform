@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.event;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A calendar event within a workspace.
 struct Event {
   mixin TenantEntity!(EventId);

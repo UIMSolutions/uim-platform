@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.task;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A unified task — aggregated from multiple backend systems into a single inbox.
 struct Task {
   mixin TenantEntity!(TaskId);

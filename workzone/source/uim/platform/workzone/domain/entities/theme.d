@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.theme;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A theme / branding configuration for a site.
 struct Theme {
   mixin TenantEntity!(ThemeId);

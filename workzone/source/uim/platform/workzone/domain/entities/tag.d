@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.tag;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A tag / category — for content tagging and categorization.
 struct Tag {
   mixin TenantEntity!(TagId);

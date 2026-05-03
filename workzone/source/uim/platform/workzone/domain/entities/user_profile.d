@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.user_profile;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A user profile — workspace membership and user information.
 struct UserProfile {
-  UserProfileId id;
+  mixin TenantEntity!(UserProfileId);
+  
   UserId userId;
-  TenantId tenantId;
   string displayName;
   string email;
   string firstName;
@@ -27,6 +31,24 @@ struct UserProfile {
   WorkspaceId[] workspaceIds;
   bool active = true;
   long lastLoginAt;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("userId", userId.value)
+      .set("displayName", displayName)
+      .set("email", email)
+      .set("firstName", firstName)
+      .set("lastName", lastName)
+      .set("avatarUrl", avatarUrl)
+      .set("jobTitle", jobTitle)
+      .set("department", department)
+      .set("phone", phone)
+      .set("timezone", timezone)
+      .set("language", language)
+      .set("roleIds", roleIds.map!(r => r.value).array)
+      .set("groupIds", groupIds.map!(g => g.value).array)
+      .set("workspaceIds", workspaceIds.map!(w => w.value).array)
+      .set("active", active)
+      .set("lastLoginAt", lastLoginAt);
+  }
 }

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.content_item;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A content item within a workspace — blog, wiki, KB article, forum post, etc.
 struct ContentItem {
   mixin TenantEntity!(ContentId);

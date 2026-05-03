@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.application.dto;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workspace : WorkspaceMember, WorkspaceSettings;
-import uim.platform.workzone.domain.entities.card : CardDataSource, CardManifest;
-import uim.platform.workzone.domain.entities.channel : ChannelConfig;
-import uim.platform.workzone.domain.entities.app_registration : AppConfig;
-import uim.platform.workzone.domain.entities.widget : WidgetConfig;
-import uim.platform.workzone.domain.entities.site : SiteSettings;
-import uim.platform.workzone.domain.entities.survey : SurveyQuestion;
-import uim.platform.workzone.domain.entities.theme : ThemeColors;
-import uim.platform.workzone.domain.entities.page_template : TemplateSection;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.workspace : WorkspaceMember, WorkspaceSettings;
+// import uim.platform.workzone.domain.entities.card : CardDataSource, CardManifest;
+// import uim.platform.workzone.domain.entities.channel : ChannelConfig;
+// import uim.platform.workzone.domain.entities.app_registration : AppConfig;
+// import uim.platform.workzone.domain.entities.widget : WidgetConfig;
+// import uim.platform.workzone.domain.entities.site : SiteSettings;
+// import uim.platform.workzone.domain.entities.survey : SurveyQuestion;
+// import uim.platform.workzone.domain.entities.theme : ThemeColors;
+// import uim.platform.workzone.domain.entities.page_template : TemplateSection;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 // ──────────────── Workspace DTOs ────────────────
 
 struct CreateWorkspaceRequest {

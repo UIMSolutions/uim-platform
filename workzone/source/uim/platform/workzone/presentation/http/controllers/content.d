@@ -8,11 +8,15 @@ module uim.platform.identity_authentication.presentation.http.content;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.content;
-import uim.platform.workzone.application.dto;
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.content_item;
+// import uim.platform.workzone.application.usecases.manage.content;
+// import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.content_item;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ContentController : PlatformController {
   private ManageContentUseCase useCase;
 

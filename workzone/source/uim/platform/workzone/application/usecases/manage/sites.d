@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.sites;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.site;
-import uim.platform.workzone.domain.ports.repositories.sites;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.site;
+// import uim.platform.workzone.domain.ports.repositories.sites;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSitesUseCase { // TODO: UIMUseCase {
   private SiteRepository repo;
 

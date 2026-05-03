@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.workpage;
 
-import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 /// A page within a workspace — containers for widgets and content.
 struct Workpage {
-  WorkpageId id;
+  mixin TenantEntity!(WorkpageId);
+
   WorkspaceId workspaceId;
-  TenantId tenantId;
   string title;
   string description;
   WidgetId[] widgetIds;
@@ -19,6 +23,16 @@ struct Workpage {
   int sortOrder;
   bool visible = true;
   bool isDefault;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("workspaceId", workspaceId.value)
+      .set("title", title)
+      .set("description", description)
+      .set("widgetIds", widgetIds.map!(w => w.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("sortOrder", sortOrder)
+      .set("visible", visible)
+      .set("isDefault", isDefault);
+  }
 }

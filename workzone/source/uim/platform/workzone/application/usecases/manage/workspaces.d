@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.workspaces;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workspace;
-import uim.platform.workzone.domain.ports.repositories.workspaces;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.workspace;
+// import uim.platform.workzone.domain.ports.repositories.workspaces;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   private WorkspaceRepository repo;
 

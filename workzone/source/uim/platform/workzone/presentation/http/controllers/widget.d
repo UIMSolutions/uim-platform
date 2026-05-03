@@ -165,8 +165,7 @@ class WidgetController : PlatformController {
 }
 
 private WidgetConfig parseWidgetConfig(Json j) {
-  import uim.platform.workzone.domain.entities.widget : WidgetConfig;
-
+  
   WidgetConfig cfg;
   if (j.isObject("config")) {
     auto c = j["config"];
