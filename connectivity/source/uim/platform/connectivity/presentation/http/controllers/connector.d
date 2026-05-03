@@ -101,7 +101,7 @@ class ConnectorController : PlatformController {
         writeError(res, 400, "Invalid path");
         return;
       }
-      auto connectorId = parts[$ - 2]; // second-to-last segment before "heartbeat"
+      auto connectorId = ConnectorId(parts[$ - 2]); // second-to-last segment before "heartbeat"
 
       auto j = req.json;
       auto r = HeartbeatRequest();

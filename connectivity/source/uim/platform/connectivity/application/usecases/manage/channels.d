@@ -76,7 +76,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     ch.status = ChannelStatus.open;
     channels.update(ch);
 
-    recordLog(ch.tenantId, ConnectivityEventType.channelOpened, id,
+    recordLog(ch.tenantId, ConnectivityEventType.channelOpened, id.value,
         "ServiceChannel", "Channel opened: " ~ ch.name);
 
     return CommandResult(true, id.value, "");

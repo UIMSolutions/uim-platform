@@ -75,7 +75,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, task.id, "");
   }
 
-  CommandResult releaseTask(TransportRequestId requestId, string taskId) {
+  CommandResult releaseTask(TransportRequestId requestId, TransportTaskId taskId) {
     if (!repo.existsById(requestId))
       return CommandResult(false, "", "Transport request not found");
 

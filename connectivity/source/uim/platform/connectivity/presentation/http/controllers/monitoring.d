@@ -20,6 +20,14 @@ mixin(ShowModule!());
 
 @safe:
 
+/** 
+ * Controller for connectivity monitoring endpoints, such as retrieving logs and summaries.
+ *
+ * TODO:
+ * - Implement filtering, pagination, and other query parameters for log retrieval.  
+ * - ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) 
+ * - ConnectivityLog[] listBySource(TenantId tenantId, SourceId sourceId) 
+ */
 class MonitoringController : PlatformController {
   private MonitorConnectivityUseCase uc;
 
@@ -62,7 +70,8 @@ class MonitoringController : PlatformController {
         .set("info", summary.infoCount)
         .set("warning", summary.warningCount)
         .set("error", summary.errorCount)
-        .set("critical", summary.criticalCount);
+        .set("critical", summary.criticalCount)
+        .set("message", "Connectivity summary retrieved successfully");
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

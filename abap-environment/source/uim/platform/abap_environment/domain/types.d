@@ -73,6 +73,15 @@ struct TransportRequestId  {
 
   mixin DomainId;
 }
+struct TransportTaskId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 struct ApplicationJobId  {
   string value;
 
