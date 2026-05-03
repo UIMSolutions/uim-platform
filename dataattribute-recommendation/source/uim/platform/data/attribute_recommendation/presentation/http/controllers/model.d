@@ -70,8 +70,9 @@ class ModelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto items = uc.listModelConfigs(tenantId);
-      auto arr = items.map!(c => serializeConfig(c)).array.toJson;
+      auto arr = items.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

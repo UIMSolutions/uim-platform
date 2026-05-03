@@ -72,7 +72,7 @@ class DataSubjectController : PlatformController {
         ? uc.listByType(tenantId, parseSubjectType(typeParam))
         : uc.listSubjects(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
             .set("items", arr)

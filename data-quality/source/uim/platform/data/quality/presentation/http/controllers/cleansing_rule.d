@@ -61,17 +61,14 @@ class CleansingRuleController : PlatformController {
       auto result = uc.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Cleansing rule created successfully");
+          .set("id", Json(result.id))
+          .set("message", "Cleansing rule created successfully");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,16 +77,15 @@ class CleansingRuleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
-      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
+      auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(rules.length))
-          .set("message", "Cleansing rules retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", Json(rules.length))
+        .set("message", "Cleansing rules retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -103,8 +99,7 @@ class CleansingRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(rule.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -136,17 +131,14 @@ class CleansingRuleController : PlatformController {
       auto result = uc.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Cleansing rule updated successfully");
-            
+          .set("id", Json(result.id))
+          .set("message", "Cleansing rule updated successfully");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -160,64 +152,51 @@ class CleansingRuleController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRule(const CleansingRule r) {
     return Json.emptyObject
-    .set("id", r.id)
-    .set("tenantId", r.tenantId)
-    .set("name", r.name)
-    .set("description", r.description)
-    .set("datasetPattern", r.datasetPattern)
-    .set("fieldName", r.fieldName)
-    .set("action", Json(r.to!string)
-    .set("status", Json(r.to!string)
-    .set("findPattern", r.findPattern)
-    .set("replaceWith", r.replaceWith)
-    .set("defaultValue", r.defaultValue)
-    .set("trimWhitespace", r.trimWhitespace)
-    .set("normalizeCase", r.normalizeCase)
-    .set("caseMode", r.caseMode)
-    .set("removeDiacritics", r.removeDiacritics)
-    .set("category", r.category)
-    .set("priority", r.priority)
-    .set("createdAt", r.createdAt)
-    .set("updatedAt", r.updatedAt);
-  }
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("name", r.name)
+      .set("description", r.description)
+      .set("datasetPattern", r.datasetPattern)
+      .set("fieldName", r.fieldName)
+      .set("action", Json(r.to!string)
+          .set("status", Json(r.to!string)
+            .set("findPattern", r.findPattern)
+            .set("replaceWith", r.replaceWith)
+            .set("defaultValue", r.defaultValue)
+            .set("trimWhitespace", r.trimWhitespace)
+            .set("normalizeCase", r.normalizeCase)
+            .set("caseMode", r.caseMode)
+            .set("removeDiacritics", r.removeDiacritics)
+            .set("category", r.category)
+            .set("priority", r.priority)
+            .set("createdAt", r.createdAt)
+            .set("updatedAt", r.updatedAt);}
 
-  private static CleansingAction parseCleansingAction(string s) {
-    switch (s) {
-    case "trimmed":
-      return CleansingAction.trimmed;
-    case "normalized":
-      return CleansingAction.normalized;
-    case "corrected":
-      return CleansingAction.corrected;
-    case "standardized":
-      return CleansingAction.standardized;
-    case "enriched":
-      return CleansingAction.enriched;
-    case "removed":
-      return CleansingAction.removed;
-    case "defaulted":
-      return CleansingAction.defaulted;
-    default:
-      return CleansingAction.none;
-    }
-  }
+    private static CleansingAction parseCleansingAction(string s) {
+      switch (s) {
+      case "trimmed":
+        return CleansingAction.trimmed; case "normalized":
+        return CleansingAction.normalized; case "corrected":
+        return CleansingAction.corrected; case "standardized":
+        return CleansingAction.standardized; case "enriched":
+        return CleansingAction.enriched; case "removed":
+        return CleansingAction.removed; case "defaulted":
+        return CleansingAction.defaulted; default:
+        return CleansingAction.none;}
+      }
 
-  private static RuleStatus parseRuleStatus(string s) {
-    switch (s) {
-    case "active":
-      return RuleStatus.active;
-    case "inactive":
-      return RuleStatus.inactive;
-    default:
-      return RuleStatus.draft;
-    }
-  }
-}
+      private static RuleStatus parseRuleStatus(string s) {
+        switch (s) {
+        case "active":
+          return RuleStatus.active; case "inactive":
+          return RuleStatus.inactive; default:
+          return RuleStatus.draft;}
+        }
+      }

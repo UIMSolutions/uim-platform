@@ -84,9 +84,9 @@ class DataRecordController : PlatformController {
     try {
       auto datasetId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByDataset(datasettenantId, id);
-
-      auto arr = items.map!(r => serializeRecord(r)).array;
+      
+      auto items = uc.listByDataset(tenantId, datasetId);
+      auto arr = items.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

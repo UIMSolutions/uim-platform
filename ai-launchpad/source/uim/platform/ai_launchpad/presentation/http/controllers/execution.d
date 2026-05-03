@@ -69,11 +69,12 @@ class ExecutionController : PlatformController {
       else
         executions = uc.listByConnection(connectionId);
 
-      auto jarr = executions.map!(e => serializeExecution(e)).array;
+      auto jarr = executions.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", executions.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Executions retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -94,7 +95,10 @@ class ExecutionController : PlatformController {
       }
 
       auto ex = uc.getById(id, connectionId);
-      res.writeJsonBody(ex.toJson, 200);
+      auto resp = ex.toJson
+        .set("message", "Execution retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

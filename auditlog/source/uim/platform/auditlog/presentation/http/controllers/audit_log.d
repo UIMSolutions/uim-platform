@@ -64,7 +64,8 @@ class AuditLogController : PlatformController {
       auto result = writeUsecase.writeLog(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id);
+            .set("id", result.id)
+            .set("message", "Audit log entry created successfully");
             
         res.writeJsonBody(resp, 201);
       } else {
@@ -96,11 +97,13 @@ class AuditLogController : PlatformController {
       queryReq.offset = 0;
 
       auto entries = retrieveUsecase.query(queryReq);
-      auto arr = entries.map!(e => serializeEntry(e)).array.toJson;
+      auto arr = entries.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", Json(entries.length));
+      .set("totalCount", Json(entries.length))
+      .set("message", "Audit log entries retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -117,7 +120,10 @@ class AuditLogController : PlatformController {
       }
 
       auto entry = retrieveUsecase.getById(tenantId, AuditLogId(id));
-      res.writeJsonBody(entry.toJson, 200);
+      auto resp = entry.toJson
+        .set("message", "Audit log entry retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

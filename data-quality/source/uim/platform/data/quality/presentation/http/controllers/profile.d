@@ -44,10 +44,8 @@ class ProfileController : PlatformController {
 
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (recordsJson).isArray) {
-        foreach (item; *recordsJson)
-        {
-          if (item.isObject)
-          {
+        foreach (item; *recordsJson) {
+          if (item.isObject) {
             ProfileRecordInput pri;
             pri.recordId = item.getString("recordId");
             pri.fieldValues = jsonStrMap(item, "fieldValues");
@@ -58,8 +56,7 @@ class ProfileController : PlatformController {
 
       auto profile = uc.profile(r);
       res.writeJsonBody(profile.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -67,17 +64,17 @@ class ProfileController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+
       auto profiles = uc.listByTenant(tenantId);
-      auto arr = profiles.map!(p => serializeProfile(p)).array.toJson;
+      auto arr = profiles.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(profiles.length))
-          .set("message", "Data profiles retrieved successfully");
-          
+        .set("items", arr)
+        .set("totalCount", Json(profiles.length))
+        .set("message", "Data profiles retrieved successfully");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -92,41 +89,40 @@ class ProfileController : PlatformController {
         return;
       }
       res.writeJsonBody(profile.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeProfile(const DataProfile p) {
     auto j = Json.emptyObject
-    .set("id", p.id)
-    .set("tenantId", p.tenantId)
-    .set("datasetId", p.datasetId)
-    .set("datasetName", p.datasetName)
-    .set("totalRecords", p.totalRecords)
-    .set("profiledRecords", p.profiledRecords)
-    .set("overallQualityScore", p.overallQualityScore)
-    .set("rating", p.rating.to!string)
-    .set("profiledAt", p.profiledAt)
-    .set("duration", p.duration);
+      .set("id", p.id)
+      .set("tenantId", p.tenantId)
+      .set("datasetId", p.datasetId)
+      .set("datasetName", p.datasetName)
+      .set("totalRecords", p.totalRecords)
+      .set("profiledRecords", p.profiledRecords)
+      .set("overallQualityScore", p.overallQualityScore)
+      .set("rating", p.rating.to!string)
+      .set("profiledAt", p.profiledAt)
+      .set("duration", p.duration);
 
     auto cols = Json.emptyArray;
     foreach (c; p.columns) {
       auto cj = Json.emptyObject
-      .set("fieldName", c.fieldName)
-      .set("detectedType", c.detectedType.to!string)
-      .set("totalValues", c.totalValues)
-      .set("nullCount", c.nullCount)
-      .set("emptyCount", c.emptyCount)
-      .set("uniqueCount", c.uniqueCount)
-      .set("duplicateCount", c.duplicateCount)
-      .set("completeness", c.completeness)
-      .set("uniqueness", c.uniqueness)
-      .set("validity", c.validity)
-      .set("minLength", c.minLength)
-      .set("maxLength", c.maxLength)
-      .set("avgLength", c.avgLength);
+        .set("fieldName", c.fieldName)
+        .set("detectedType", c.detectedType.to!string)
+        .set("totalValues", c.totalValues)
+        .set("nullCount", c.nullCount)
+        .set("emptyCount", c.emptyCount)
+        .set("uniqueCount", c.uniqueCount)
+        .set("duplicateCount", c.duplicateCount)
+        .set("completeness", c.completeness)
+        .set("uniqueness", c.uniqueness)
+        .set("validity", c.validity)
+        .set("minLength", c.minLength)
+        .set("maxLength", c.maxLength)
+        .set("avgLength", c.avgLength);
 
       if (c.topValues.length > 0) {
         auto tv = Json.emptyArray;

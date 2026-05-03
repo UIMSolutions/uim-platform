@@ -71,7 +71,7 @@ class PackageController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto packages = uc.listPackages(tenantId);
 
-      auto arr = packages.map!(p => serializePackage(p)).array.toJson;
+      auto arr = packages.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -92,7 +92,10 @@ class PackageController : PlatformController {
         writeError(res, 404, "Package not found");
         return;
       }
-      res.writeJsonBody(pkg.toJson, 200);
+      auto resp = pkg.toJson
+        .set("message", "Package retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
