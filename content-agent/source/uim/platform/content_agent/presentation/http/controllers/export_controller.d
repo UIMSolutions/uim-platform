@@ -65,7 +65,7 @@ class ExportController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listExportJobs(tenantId);
 
-      auto arr = jobs.map!(j => serializeExportJob(j)).array;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -86,7 +86,10 @@ class ExportController : PlatformController {
         writeError(res, 404, "Export job not found");
         return;
       }
-      res.writeJsonBody(job.toJson, 200);
+      auto resp = job.toJson
+        .set("message", "Export job retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

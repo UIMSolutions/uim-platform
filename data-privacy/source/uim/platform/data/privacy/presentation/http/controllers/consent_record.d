@@ -77,7 +77,7 @@ class ConsentController : PlatformController {
       else
         items = uc.listConsents(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -100,7 +100,7 @@ class ConsentController : PlatformController {
       else
         items = uc.listConsents(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
@@ -121,7 +121,10 @@ class ConsentController : PlatformController {
         writeError(res, 404, "Consent record not found");
         return;
       }
-      res.writeJsonBody(entry.toJson, 200);
+      auto resp = entry.toJson
+        .set("message", "Consent record retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

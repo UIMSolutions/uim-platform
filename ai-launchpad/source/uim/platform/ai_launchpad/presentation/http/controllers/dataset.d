@@ -69,11 +69,12 @@ class DatasetController : PlatformController {
         ? uc.listByScenario(scenarioId, connectionId)
         : uc.listByConnection(connectionId);
 
-      auto jarr = Json.datasets.map(ds => serializeDataset(d)).array.toJson;
+      auto jarr = datasets.map!(ds => ds.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(datasets.length))
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Datasets retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -94,7 +95,10 @@ class DatasetController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(d.toJson, 200);
+      auto resp = d.toJson
+        .set("message", "Dataset retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -117,7 +121,7 @@ class DatasetController : PlatformController {
       auto result = uc.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("message", "Dataset updated");
+          .set("message", "Dataset updated successfully");
           
         res.writeJsonBody(resp, 200);
       } else {

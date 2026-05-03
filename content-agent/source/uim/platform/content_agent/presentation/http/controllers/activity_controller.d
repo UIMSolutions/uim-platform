@@ -37,7 +37,7 @@ class ActivityController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto activities = uc.listActivities(tenantId);
-      auto arr = activities.map!(a => serializeActivity(a)).array;
+      auto arr = activities.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -56,10 +56,12 @@ class ActivityController : PlatformController {
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject
-        .set("totalCount", summary.totalCount)
-        .set("infoCount", summary.infoCount)
-        .set("warningCount", summary.warningCount)
-        .set("errorCount", summary.errorCount);
+        .set("totalCount", Json(summary.totalCount))
+        .set("infoCount", Json(summary.infoCount))
+        .set("warningCount", Json(summary.warningCount))
+        .set("errorCount", Json(summary.errorCount))
+        .set("message", "Activity summary retrieved successfully");
+        
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

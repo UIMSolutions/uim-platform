@@ -70,12 +70,13 @@ class PromptController : PlatformController {
         ? uc.listByCollection(collectionId)
         : uc.listAll();
 
-      auto jarr = prompts.map!(p => serializePrompt(p)).array;
+      auto jarr = prompts.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", prompts.length)
-        .set("resources", jarr);
-
+        .set("resources", jarr)
+        .set("message", "Prompts retrieved");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

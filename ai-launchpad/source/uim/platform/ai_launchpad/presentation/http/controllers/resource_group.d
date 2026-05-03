@@ -63,11 +63,12 @@ class ResourceGroupController : PlatformController {
         ? uc.listByConnection(connectionId)
         : uc.listAll();
 
-      auto jarr = groups.map!(g => serializeResourceGroup(g)).array;
+      auto jarr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", groups.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Resource groups retrieved");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -98,7 +99,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -126,7 +127,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto result = uc.remove(id, connectionId);

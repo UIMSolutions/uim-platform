@@ -70,8 +70,9 @@ class SoftwareComponentController : PlatformController {
       auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
       if (systemId.isEmpty)
         systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
+        
       auto items = uc.listComponents(systemId);
-      auto arr = items.map!(comp => serializeComponent(comp)).array.toJson;
+      auto arr = items.map!(comp => comp.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

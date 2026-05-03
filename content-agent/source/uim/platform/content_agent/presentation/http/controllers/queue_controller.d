@@ -70,9 +70,9 @@ class QueueController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto queues = uc.listQueues(tenantId);
 
-      auto arr = queues.map!(q => serializeQueue(q)).array;
+      auto queues = uc.listQueues(tenantId);
+      auto arr = queues.map!(q => q.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

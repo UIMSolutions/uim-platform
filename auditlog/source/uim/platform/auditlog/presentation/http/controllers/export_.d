@@ -59,7 +59,9 @@ class ExportController : PlatformController {
       auto result = useCase.createExport(jobRequest);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Export job created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -72,11 +74,15 @@ class ExportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto jobs = useCase.listExports(tenantId);
-      auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
+      
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(jobs.length));
+        .set("totalCount", Json(jobs.length))
+        .set("message", "Export jobs retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -105,7 +111,9 @@ class ExportController : PlatformController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteExport(tenantId, jobId);
       auto resp = Json.emptyObject
-        .set("status", "deleted");
+        .set("status", "deleted")
+        .set("message", "Export job deleted successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

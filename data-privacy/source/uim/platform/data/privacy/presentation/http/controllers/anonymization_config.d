@@ -45,7 +45,8 @@ class AnonymizationConfigController : PlatformController {
       auto result = uc.createConfig(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id));
+            .set("id", Json(result.id))
+            .set("message", "Anonymization config created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -57,13 +58,14 @@ class AnonymizationConfigController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listConfigs(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array.toJson;
+      auto items = uc.listConfigs(tenantId);
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length));
+          .set("totalCount", Json(items.length))
+          .set("message", "Anonymization configs retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)

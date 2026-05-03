@@ -50,7 +50,7 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     }
 
     policyRepo.save(policy);
-    return CommandResult(true, policy.id.value(), "");
+    return CommandResult(true, policy.id.value, "");
   }
 
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
@@ -82,7 +82,7 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     policy.updatedAt = Clock.currStdTime();
 
     policyRepo.update(policy);
-    return CommandResult(true, policy.id.value(), "");
+    return CommandResult(true, policy.id.value, "");
   }
 
   void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {

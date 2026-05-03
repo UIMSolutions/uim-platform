@@ -66,9 +66,9 @@ class SpaceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto spaces = useCase.listSpaces(tenantId);
 
-      auto arr = spaces.map!(s => serializeSpace(s)).array;
+      auto spaces = useCase.listSpaces(tenantId);
+      auto arr = spaces.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

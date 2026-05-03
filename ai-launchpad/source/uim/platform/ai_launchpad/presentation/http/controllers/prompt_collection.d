@@ -64,11 +64,12 @@ class PromptCollectionController : PlatformController {
         ? uc.listByWorkspace(workspaceId)
         : uc.listAll();
 
-      auto jarr = collections.map!(c => serializeCollection(c)).array;
+      auto jarr = collections.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(collections.length))
         .set("resources", jarr);
+        .set("message", "Prompt collections retrieved");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

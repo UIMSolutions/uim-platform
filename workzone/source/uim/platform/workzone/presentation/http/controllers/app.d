@@ -52,8 +52,8 @@ class AppController : PlatformController {
       auto result = useCase.createApp(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "App created");
+          .set("id", result.id)
+          .set("message", "App created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -71,9 +71,10 @@ class AppController : PlatformController {
       auto arr = apps.map!(a => a.toJson).array.toJson;
 
       auto response = Json.emptyObject
-      .set("items", arr);
+        .set("items", arr);
+      
       .set("totalCount", Json(apps.length))
-      .set("message", "Apps retrieved successfully");
+        .set("message", "Apps retrieved successfully");
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -119,8 +120,8 @@ class AppController : PlatformController {
       auto result = useCase.updateApp(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "App updated");
+          .set("id", result.id)
+          .set("message", "App updated");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -138,13 +139,13 @@ class AppController : PlatformController {
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "App deleted");
+          .set("id", result.id)
+          .set("message", "App deleted");
 
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
-      } 
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -166,5 +167,3 @@ private AppConfig parseAppConfig(Json j) {
   }
   return cfg;
 }
-
-

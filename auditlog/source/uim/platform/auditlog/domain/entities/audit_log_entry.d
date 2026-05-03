@@ -42,9 +42,9 @@ struct AuditLogEntry {
     ).array.toJson;
 
     return entityToJson
-      .set("userId", userid.value)
+      .set("userId", userId.value)
       .set("userName", userName)
-      .set("serviceId", serviceid.value)
+      .set("serviceId", serviceId.value)
       .set("serviceName", serviceName)
       .set("category", category.to!string)
       .set("severity", severity.to!string)

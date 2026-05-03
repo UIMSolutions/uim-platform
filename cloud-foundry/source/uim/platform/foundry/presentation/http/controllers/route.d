@@ -180,7 +180,8 @@ class RouteController : PlatformController {
       auto result = useCase.createDomain(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Domain created successfully")  ;
 
         res.writeJsonBody(resp, 201);
       } else
@@ -195,11 +196,12 @@ class RouteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);
 
-      auto arr = items.map!(d => serializeDomain(d)).toArray;
+      auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", Json(items.length))
+        .set("message", "Domains retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -214,8 +216,9 @@ class RouteController : PlatformController {
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
-          
+          .set("id", result.id)
+          .set("message", "Domain deleted successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);

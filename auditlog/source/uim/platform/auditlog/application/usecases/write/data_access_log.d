@@ -65,6 +65,6 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     daLog.timestamp = entry.timestamp;
     dalRepo.save(daLog);
 
-    return CommandResult(true, entry.id.value(), "");
+    return CommandResult(true, entry.id.value, "");
   }
 }

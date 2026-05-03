@@ -64,6 +64,6 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
     ccLog.timestamp = entry.timestamp;
     cclRepo.save(ccLog);
 
-    return CommandResult(true, entry.id.value(), "");
+    return CommandResult(true, entry.id.value, "");
   }
 }

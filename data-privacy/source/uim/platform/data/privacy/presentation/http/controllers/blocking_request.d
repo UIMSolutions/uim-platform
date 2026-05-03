@@ -49,7 +49,8 @@ class BlockingController : PlatformController {
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id));
+            .set("id", Json(result.id))
+            .set("message", "Blocking request created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -67,11 +68,12 @@ class BlockingController : PlatformController {
         ? uc.listByStatus(tenantId, parseBlockingStatus(statusParam)) 
         : uc.listRequests(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array;
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length));
+          .set("totalCount", Json(items.length))
+          .set("message", "Blocking requests retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -103,7 +105,8 @@ class BlockingController : PlatformController {
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id));
+            .set("id", Json(result.id))
+            .set("message", "Blocking request status updated successfully");
             
         res.writeJsonBody(resp, 200);
       } else

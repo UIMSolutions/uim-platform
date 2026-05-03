@@ -64,7 +64,7 @@ class ScenarioController : PlatformController {
         ? uc.listByConnection(connectionId)
         : uc.listAll();
 
-      auto jarr = scenarios.map!(s => serializeScenario(s)).array;
+      auto jarr = scenarios.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", scenarios.length)

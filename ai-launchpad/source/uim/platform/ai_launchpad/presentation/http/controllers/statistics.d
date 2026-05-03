@@ -41,11 +41,13 @@ class StatisticsController : PlatformController {
       else
         stats = uc.getAll();
 
-      auto jarr = stats.map!(s => serializeStatistic(s)).array;
+      auto jarr = stats.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", stats.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Usage statistics retrieved");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

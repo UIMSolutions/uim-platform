@@ -46,7 +46,8 @@ class InformationReportController : PlatformController {
       auto result = uc.createReport(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Information report created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -58,13 +59,14 @@ class InformationReportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listReports(tenantId);
 
-      auto arr = items.map!(e => serialize(e)).array;
+      auto items = uc.listReports(tenantId);
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", Json(items.length))
+        .set("message", "Information reports retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -80,7 +82,10 @@ class InformationReportController : PlatformController {
         writeError(res, 404, "Information report not found");
         return;
       }
-      res.writeJsonBody(entry.toJson, 200);
+      auto resp = entry.toJson
+        .set("message", "Information report retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

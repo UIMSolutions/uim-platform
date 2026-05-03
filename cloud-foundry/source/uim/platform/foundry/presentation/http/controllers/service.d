@@ -99,7 +99,10 @@ class ServiceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      res.writeJsonBody(si.toJson, 200);
+      auto resp = si.toJson
+        .set("message", "Service instance retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -180,11 +183,12 @@ class ServiceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);
 
-      auto arr = items.map!(b => serializeBinding(b)).array.toJson;
+      auto arr = items.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", Json(items.length))
+        .set("message", "Service bindings retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
