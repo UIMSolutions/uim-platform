@@ -27,10 +27,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
     return latest;
   }
 
-  HealthCheckResult[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
-  }
-
+  // #region ByCheck
   size_t countByCheck(TenantId tenantId, HealthCheckId checkId) {
     return findByCheck(tenantId, checkId).length;
   }
@@ -46,7 +43,9 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   void removeByCheck(TenantId tenantId, HealthCheckId checkId) {
     findByCheck(tenantId, checkId).each!(r => remove(r));
   }
+  // #endregion ByCheck
 
+  // #region ByResource
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;
   }
@@ -62,6 +61,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     findByResource(tenantId, resourceId).each!(r => remove(r));
   }
+  // #endregion ByResource
 
   size_t countInTimeRange(TenantId tenantId, HealthCheckId checkId, long startTime, long endTime) {
     return findInTimeRange(tenantId, checkId, startTime, endTime).length;

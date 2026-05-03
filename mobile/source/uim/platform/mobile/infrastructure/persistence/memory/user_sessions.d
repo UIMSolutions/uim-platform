@@ -14,44 +14,44 @@ import std.array : array;
 
 class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId), UserSessionRepository {
   
-
+  size_t countByUser(string userId) {
+    return findByUser(userId).length;
+  }
   UserSession[] findByUser(string userId) {
     return findAll().filter!(s => s.userId == userId).array;
   }
+  void removeByUser(string userId) {
+    findByUser(userId).each!(s => store.remove(s));
+  }
 
+  size_t countByDevice(DeviceRegistrationId deviceId) {
+    return findByDevice(deviceId).length;
+  }
   UserSession[] findByDevice(DeviceRegistrationId deviceId) {
     return findAll().filter!(s => s.deviceId == deviceId).array;
   }
+  void removeByDevice(DeviceRegistrationId deviceId) {
+    findByDevice(deviceId).each!(s => store.remove(s));
+  }
 
+  size_t countByApp(MobileAppId appId) {
+    return findByApp(appId).length;
+  }
   UserSession[] findByApp(MobileAppId appId) {
     return findAll().filter!(s => s.appId == appId).array;
   }
-
-  UserSession[] findActive(MobileAppId appId) {
-    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
-  }
-
-  UserSession[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array;
-  }
-
-  void save(UserSession session) {
-    store[session.id] = session;
-  }
-
-  void update(UserSession session) {
-    store[session.id] = session;
-  }
-
-  void remove(UserSessionId id) {
-    store.removeById(id);
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(s => store.remove(s));
   }
 
   size_t countActive(MobileAppId appId) {
-    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
+    return findActive(appId).length;
+  }
+  UserSession[] findActive(MobileAppId appId) {
+    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
+  }
+  void removeActive(MobileAppId appId) {
+    findActive(appId).each!(s => store.remove(s));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array.length;
-  }
 }

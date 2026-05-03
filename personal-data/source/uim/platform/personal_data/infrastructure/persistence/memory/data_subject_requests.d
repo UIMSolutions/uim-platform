@@ -13,35 +13,43 @@ mixin(ShowModule!());
 
 class MemoryDataSubjectRequestRepository :TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
     
-    DataSubjectRequest[] findByTenant(TenantId tenantId) {
-        DataSubjectRequest[] result;
-        foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+    size_t countByDataSubject(DataSubjectId dataSubjectId) {
+        return findByDataSubject(dataSubjectId).length;
     }
-
     DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId) {
         DataSubjectRequest[] result;
         foreach (v; findAll)
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
+    void removeByDataSubject(DataSubjectId dataSubjectId) {
+        findByDataSubject(dataSubjectId).each!(v => store.remove(v));
+    }
 
+    size_t countByStatus(RequestStatus status) {
+        return findByStatus(status).length;
+    }
     DataSubjectRequest[] findByStatus(RequestStatus status) {
         DataSubjectRequest[] result;
         foreach (v; findAll)
             if (v.status == status) result ~= v;
         return result;
     }
+    void removeByStatus(RequestStatus status) {
+        findByStatus(status).each!(v => store.remove(v));
+    }
 
+    size_t countByAssignee(string assignedTo) {
+        return findByAssignee(assignedTo).length;
+    }
     DataSubjectRequest[] findByAssignee(string assignedTo) {
         DataSubjectRequest[] result;
         foreach (v; findAll)
             if (v.assignedTo == assignedTo) result ~= v;
         return result;
     }
+    void removeByAssignee(string assignedTo) {
+        findByAssignee(assignedTo).each!(v => store.remove(v));
+    }
 
-    void save(DataSubjectRequest entity) { store[entity.id] = entity; }
-    void update(DataSubjectRequest entity) { store[entity.id] = entity; }
-    void remove(DataSubjectRequestId id) { store.removeById(id); }
 }

@@ -35,7 +35,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
       store.removeById(id);
   }
 
-  DataRecord* findById(DataRecordId tenantId, id tenantId) {
+  DataRecord findById(DataRecordId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

@@ -24,7 +24,7 @@ class MemoryWorkpageRepository : WorkpageRepository {
       .array;
   }
 
-  Workpage* findById(WorkpageId tenantId, id tenantId) {
+  Workpage findById(WorkpageId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

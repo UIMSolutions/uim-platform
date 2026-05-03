@@ -23,7 +23,7 @@ class MemoryWidgetRepository : WidgetRepository {
     return findAll().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
 
-  Widget* findById(WidgetId tenantId, id tenantId) {
+  Widget findById(WidgetId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

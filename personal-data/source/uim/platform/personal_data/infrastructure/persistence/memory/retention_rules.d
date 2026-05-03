@@ -11,16 +11,11 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRetentionRuleRepository :TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
-
-    RetentionRule[] findByTenant(TenantId tenantId) {
-        RetentionRule[] result;
-        foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+    size_t countByApplication(RegisteredApplicationId applicationId) {
+        return findByApplication(applicationId).length;
     }
-
     RetentionRule[] findByApplication(RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         RetentionRule[] result;
@@ -28,12 +23,21 @@ class MemoryRetentionRuleRepository :TenantRepository!(RetentionRule, RetentionR
             if (v.applicationIds.canFind(applicationId)) result ~= v;
         return result;
     }
+    void removeByApplication(RegisteredApplicationId applicationId) {
+        findByApplication(applicationId).each!(v => store.remove(v));
+    }
 
+    size_t countByStatus(RetentionRuleStatus status) {
+        return findByStatus(status).length;
+    }
     RetentionRule[] findByStatus(RetentionRuleStatus status) {
         RetentionRule[] result;
         foreach (v; findAll)
             if (v.status == status) result ~= v;
         return result;
+    }
+    void removeByStatus(RetentionRuleStatus status) {
+        findByStatus(status).each!(v => store.remove(v));
     }
 
 }

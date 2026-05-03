@@ -6,40 +6,20 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceOfferingRepository :TenantRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
-    private ServiceOffering[][string] store;
+class MemoryServiceOfferingRepository : TenantRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
 
-    ServiceOffering[] findByTenant(TenantId tenantId) {
-        return store.get(tenantId.value, []);
+    bool existsById(ServiceOfferingId id) {
+        return findById(TenantId.init, id) !is null;
     }
 
-    ServiceOffering* findById(TenantId tenantId, ServiceOfferingId id) @trusted {
-        if (auto items = tenantId.value in store) {
-            foreach (ref e; *items)
-                if (e.id == id) return &e;
-        }
-        return null;
+    ServiceOffering findById(TenantId tenantId, ServiceOfferingId id) @trusted {
+        foreach (e; findByTenant(tenantId))
+                if (e.id == id)
+                    return e;
+        return ServiceOffering.init;
     }
 
-    void save(ServiceOffering entity) {
-        store[entity.tenantId.value] ~= entity;
-    }
-
-    void update(ServiceOffering entity) {
-        if (auto items = entity.tenantId.value in store) {
-            foreach (ref e; *items)
-                if (e.id == entity.id) { e = entity; return; }
-        }
-    }
-
-    void remove(TenantId tenantId, ServiceOfferingId id) {
-        if (auto items = tenantId.value in store) {
-            import std.algorithm : remove;
-            *items = (items).remove!(e => e.id == id);
-        }
-    }
-
-    ulong countByTenant(TenantId tenantId) {
-        return store.get(tenantId.value, []).length;
+    void removeById(TenantId tenantId, ServiceOfferingId id) {
+        remove(findById(tenantId, id));
     }
 }

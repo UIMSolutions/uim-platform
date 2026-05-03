@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 interface ChannelRepository {
   Channel[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
-  Channel* findById(ChannelId tenantId, id tenantId);
+  Channel findById(ChannelId tenantId, id tenantId);
   void save(Channel channel);
   void update(Channel channel);
   void remove(ChannelId tenantId, id tenantId);

@@ -12,15 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
-
-    PersonalDataRecord[] findByTenant(TenantId tenantId) {
-        PersonalDataRecord[] result;
-        foreach (v; findAll)
-            if (v.tenantId == tenantId)
-                result ~= v;
-        return result;
-    }
-
+    
+    // #region ByDataSubject
     size_t countByDataSubject(DataSubjectId dataSubjectId) {
         return findByDataSubject(dataSubjectId).length;
     }
@@ -39,7 +32,9 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     void removeByDataSubject(DataSubjectId dataSubjectId) {
         findByDataSubject(dataSubjectId).each!(v => remove(v));
     }
+    // #endregion ByDataSubject
 
+    // #region ByApplication
     size_t countByApplication(RegisteredApplicationId applicationId) {
         return findByApplication(applicationId).length;
     }
@@ -58,7 +53,9 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     void removeByApplication(RegisteredApplicationId applicationId) {
         findByApplication(applicationId).each!(v => remove(v));
     }
+    // #endregion ByApplication
 
+    // #region ByDataSubjectAndApplication
     size_t countByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
         return findByDataSubjectAndApplication(dataSubjectId, applicationId).length;
     }
@@ -78,5 +75,6 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     void removeByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
         findByDataSubjectAndApplication(dataSubjectId, applicationId).each!(v => remove(v));
     }
+    // #endregion ByDataSubjectAndApplication
 
 }

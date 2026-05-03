@@ -10,43 +10,16 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTriggerRepository : TriggerRepository {
-    private Trigger[] store;
+class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
-    Trigger findById(TriggerId id) {
-        foreach (t; findAll) {
-            if (t.id == id)
-                return t;
-        }
-        return Trigger.init;
+    size_t countByProcess(ProcessId processId) {
+        return findByProcess(processId).length;
     }
-
-    Trigger[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array;
-    }
-
     Trigger[] findByProcess(ProcessId processId) {
         return findAll().filter!(t => t.processId == processId).array;
     }
-
-    void save(Trigger t) {
-        store ~= t;
+    void removeByProcess(ProcessId processId) {
+        findByProcess(processId).each!(t => remove(t));
     }
 
-    void update(Trigger t) {
-        foreach (existing; findAll) {
-            if (existing.id == t.id) {
-                existing = t;
-                return;
-            }
-        }
-    }
-
-    void remove(TriggerId id) {
-        store = findAll().filter!(t => t.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(t => t.tenantId == tenantId).array.length;
-    }
 }

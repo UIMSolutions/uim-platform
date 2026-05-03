@@ -13,35 +13,41 @@ mixin(ShowModule!());
 
 class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
 
+    bool existsByCode(string code) {
+        return findByCode(code).id != AuthorizationCodeId.init;
+    }
     AuthorizationCode findByCode(string code) {
         foreach (e; findAll)
             if (e.code == code) return e;
         return AuthorizationCode.init;
     }
-
-    AuthorizationCode[] findAll() { return store; }
-
-    AuthorizationCode[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    void removeByCode(string code) {
+        import std.algorithm : remove;
+        store = store.remove!(e => e.code == code);
     }
 
+    // #region ByClientId
+    size_t countByClientId(string clientId) {
+        return findByClientId(clientId).length;
+    }
     AuthorizationCode[] findByClientId(string clientId) {
         return findAll().filter!(e => e.clientId == clientId).array;
     }
+    void removeByClientId(string clientId) {
+        findByClientId(clientId).each!(e => store.remove(e));
+    }
+    // #endregion ByClientId
 
+    // #region ByStatus
+    size_t countByStatus(AuthCodeStatus status) {
+        return findByStatus(status).length;
+    }
     AuthorizationCode[] findByStatus(AuthCodeStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(AuthorizationCode entity) { store ~= entity; }
-
-    void update(AuthorizationCode entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByStatus(AuthCodeStatus status) {
+        findByStatus(status).each!(e => store.remove(e));
     }
+    // #endregion ByStatus
 
-    void remove(AuthorizationCodeId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

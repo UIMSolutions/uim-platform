@@ -10,39 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryVisibilityRepository : VisibilityRepository {
-    private Visibility[] store;
+class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), VisibilityRepository {
 
-    Visibility findById(VisibilityId id) {
-        foreach (v; findAll) {
-            if (v.id == id)
-                return v;
-        }
-        return Visibility.init;
-    }
-
-    Visibility[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(v => v.tenantId == tenantId).array;
-    }
-
-    void save(Visibility v) {
-        store ~= v;
-    }
-
-    void update(Visibility v) {
-        foreach (existing; findAll) {
-            if (existing.id == v.id) {
-                existing = v;
-                return;
-            }
-        }
-    }
-
-    void remove(VisibilityId id) {
-        store = findAll().filter!(v => v.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(v => v.tenantId == tenantId).array.length;
-    }
+    // TODO: 
 }

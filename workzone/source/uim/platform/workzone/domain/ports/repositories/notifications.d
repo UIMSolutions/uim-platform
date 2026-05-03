@@ -10,7 +10,7 @@ import uim.platform.workzone.domain.entities.notification;
 
 interface NotificationRepository {
   Notification[] findByRecipient(TenantId tenantId, UserId recipientId);
-  Notification* findById(NotificationId notificationId, TenantId tenantId);
+  Notification findById(NotificationId notificationId, TenantId tenantId);
   Notification[] findUnread(TenantId tenantId, UserId recipientId);
   void save(Notification notification);
   void update(Notification notification);

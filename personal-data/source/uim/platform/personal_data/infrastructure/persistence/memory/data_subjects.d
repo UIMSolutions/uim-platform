@@ -12,26 +12,31 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
-    private DataSubject[DataSubjectId] store;
 
-    DataSubject findById(DataSubjectId id) {
-        if (auto p = id in store) return *p;
-        return DataSubject.init;
-    }
-
-    DataSubject[] findByTenant(TenantId tenantId) {
-        DataSubject[] result;
+    // #region ByEmail
+    bool existsByEmail(string email) {
         foreach (v; findAll)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+            if (v.email == email) return true;
+        return false;
     }
-
     DataSubject findByEmail(string email) {
         foreach (v; findAll)
             if (v.email == email) return v;
         return DataSubject.init;
     }
+    void removeByEmail(string email) {
+        foreach (v; findAll)
+            if (v.email == email) {
+                store.remove(v.id);
+                return;
+            }
+    }
+    // #endregion ByEmail
 
+    // #region ByName
+    size_t countByName(string firstName, string lastName) {
+        return findByName(firstName, lastName).length;
+    }
     DataSubject[] findByName(string firstName, string lastName) {
         DataSubject[] result;
         foreach (v; findAll) {
@@ -42,15 +47,24 @@ class MemoryDataSubjectRepository :TenantRepository!(DataSubject, DataSubjectId)
         }
         return result;
     }
+    size_t countByOrganization(string organizationId) {
+        return findByOrganization(organizationId).length;
+    }
+    // #endregion ByName
 
+    // #region ByOrganization
+    size_t countByOrganization(string organizationId) {
+        return findByOrganization(organizationId).length;
+    }
     DataSubject[] findByOrganization(string organizationId) {
         DataSubject[] result;
         foreach (v; findAll)
             if (v.organizationId == organizationId) result ~= v;
         return result;
     }
-
-    void save(DataSubject entity) { store[entity.id] = entity; }
-    void update(DataSubject entity) { store[entity.id] = entity; }
-    void remove(DataSubjectId id) { store.removeById(id); }
+    void removeByOrganization(string organizationId) {
+        findByOrganization(organizationId).each!(v => store.remove(v.id));
+    }
+    // #endregion ByOrganization
+    
 }

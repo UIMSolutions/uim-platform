@@ -15,52 +15,47 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTileRepository : TileRepository {
+class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
+
+  size_t countByCatalog(CatalogId catalogId) {
+    return findByCatalog(catalogId).length;
+  }
 
   Tile[] findByCatalog(CatalogId catalogId) {
     return findAll().filter!(t => t.catalogId == catalogId).array;
   }
 
-  Tile[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Tile[] result;
-    uint idx;
-    foreach (t; findAll()
-      if (t.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= t;
-        idx++;
-      }
-    }
-    return result;
+  void removeByCatalog(CatalogId catalogId) {
+    findByCatalog(catalogId).each!(t => store.remove(t));
   }
 
   Tile[] search(TenantId tenantId, string query, uint offset = 0, uint limit = 100) {
     Tile[] result;
     auto lowerQuery = query.toLower();
     uint idx;
-    foreach (t; findAll()
+    foreach (t; findAll())
       if (t.tenantId != tenantId)
         continue;
 
-      bool matches = t.title.toLower().indexOf(lowerQuery) >= 0
-        || t.description.toLower().indexOf(lowerQuery) >= 0;
+    bool matches = t.title.toLower().indexOf(lowerQuery) >= 0
+      || t.description.toLower().indexOf(lowerQuery) >= 0;
 
-      if (!matches) {
-        foreach (kw; t.keywords) {
-          if (kw.toLower().indexOf(lowerQuery) >= 0) {
-            matches = true;
-            break;
-          }
+    if (!matches) {
+      foreach (kw; t.keywords) {
+        if (kw.toLower().indexOf(lowerQuery) >= 0) {
+          matches = true;
+          break;
         }
       }
-
-      if (matches) {
-        if (idx >= offset && result.length < limit)
-          result ~= t;
-        idx++;
-      }
     }
-    return result;
-  }
 
+    if (matches) {
+      if (idx >= offset && result.length < limit)
+        result ~= t;
+      idx++;
+    }
+
+
+  return result;
 }
+

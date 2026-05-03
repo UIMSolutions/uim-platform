@@ -16,16 +16,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRoleRepository : RoleRepository {
-  private Role[RoleId] store;
-
-  bool existsById(RoleId id) {
-    return id in store ? true : false;
-  }
-
-  Role findById(RoleId id) {
-    return existsById(id) ? store[id] : Role.init;
-  }
+class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(r => r.name == name);
@@ -38,17 +29,16 @@ class MemoryRoleRepository : RoleRepository {
     return Role.init;
   }
 
-  Role[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-    Role[] result;
-    uint idx;
-    foreach (r; findAll())
-      if (r.tenantId == tenantId) {
-        if (idx >= offset && result.length < limit)
-          result ~= r;
-        idx++;
+  void removeByName(TenantId tenantId, string name) {
+    foreach (r; findByTenant(tenantId))
+      if (r.name == name) {
+        store.remove(r.id);
+        return;
       }
-    }
-    return result;
+  }
+
+  size_t countByUser(string userId) {
+    return findByUser(userId).length;
   }
 
   Role[] findByUser(string userId) {
@@ -59,15 +49,10 @@ class MemoryRoleRepository : RoleRepository {
     return result;
   }
 
-  void save(Role role) {
-    store[role.id] = role;
+  void removeByUser(string userId) {
+    foreach (r; findAll())
+      if (r.userIds.canFind(userId))
+        store.remove(r.id);
   }
 
-  void update(Role role) {
-    store[role.id] = role;
-  }
-
-  void remove(RoleId id) {
-    store.removeById(id);
-  }
 }

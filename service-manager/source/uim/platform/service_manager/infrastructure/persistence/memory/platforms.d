@@ -13,7 +13,7 @@ class MemoryPlatformRepository :TenantRepository!(Platform, PlatformId), Platfor
         return store.get(tenantId.value, []);
     }
 
-    Platform* findById(TenantId tenantId, PlatformId id) @trusted {
+    Platform findById(TenantId tenantId, PlatformId id) @trusted {
         if (auto items = tenantId.value in store) {
             foreach (ref e; *items)
                 if (e.id == id) return &e;

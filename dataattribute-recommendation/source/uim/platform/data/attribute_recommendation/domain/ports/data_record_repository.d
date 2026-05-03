@@ -10,7 +10,7 @@ import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 
 interface DataRecordRepository {
   DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId);
-  DataRecord* findById(DataRecordId tenantId, id tenantId);
+  DataRecord findById(DataRecordId tenantId, id tenantId);
   DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status);
   size_t countByDataset(DatasetId datasettenantId, id tenantId);
   void save(DataRecord record);

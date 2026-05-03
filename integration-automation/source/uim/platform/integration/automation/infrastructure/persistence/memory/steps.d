@@ -53,7 +53,7 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
         && e.tenantId == tenantId && e.status == status).array;
   }
 
-  WorkflowStep* findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
+  WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
     foreach (s; findAll())
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;

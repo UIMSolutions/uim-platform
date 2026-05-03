@@ -13,7 +13,7 @@ class MemoryServiceBindingRepository :TenantRepository!(ServiceBinding, ServiceB
         return store.get(tenantId.value, []);
     }
 
-    ServiceBinding* findById(TenantId tenantId, ServiceBindingId id) @trusted {
+    ServiceBinding findById(TenantId tenantId, ServiceBindingId id) @trusted {
         if (auto items = tenantId.value in store) {
             foreach (ref e; *items)
                 if (e.id == id) return &e;

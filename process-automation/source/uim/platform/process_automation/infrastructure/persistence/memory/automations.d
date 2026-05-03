@@ -11,23 +11,33 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAutomationRepository : TenantRepository!(Automation, AutomationId), AutomationRepository {
-    private Automation[] store;
-
+    bool existsById(AutomationId id) {
+        return findAll().any!(a => a.id == id);
+    }
     Automation findById(AutomationId id) {
-        foreach (a; findAll) {
+        foreach (a; findAll()) {
             if (a.id == id)
                 return a;
         }
         return Automation.init;
     }
-
-    Automation[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array;
+    void removeById(AutomationId id) {
+        foreach (a; findAll()   ) {
+            if (a.id == id) {
+                remove(a);
+                return;
+            }
+        }
     }
 
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
+    }
     Automation[] findByProject(ProjectId projectId) {
         return findAll().filter!(a => a.projectId == projectId).array;
     }
-
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(a => store.remove(a));
+    }
 
 }

@@ -24,7 +24,7 @@ class MemoryFeedRepository : FeedRepository {
       .array;
   }
 
-  FeedEntry* findById(FeedEntryId tenantId, id tenantId) {
+  FeedEntry findById(FeedEntryId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

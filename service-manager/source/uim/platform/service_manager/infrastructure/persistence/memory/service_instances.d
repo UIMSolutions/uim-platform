@@ -13,7 +13,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
         return store.get(tenantId.value, []);
     }
 
-    ServiceInstance* findById(TenantId tenantId, ServiceInstanceId id) @trusted {
+    ServiceInstance findById(TenantId tenantId, ServiceInstanceId id) @trusted {
         if (auto items = tenantId.value in store) {
             foreach (ref e; *items)
                 if (e.id == id) return &e;

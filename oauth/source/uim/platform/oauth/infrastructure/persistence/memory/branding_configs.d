@@ -11,34 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBrandingConfigRepository : BrandingConfigRepository {
-    private BrandingConfig[] store;
+class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, BrandingConfigId), BrandingConfigRepository {
 
-    bool existsById(BrandingConfigId id) {
-        return store.any!(e => e.id == id);
-    }
-
-    BrandingConfig findById(BrandingConfigId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return BrandingConfig.init;
-    }
-
-    BrandingConfig[] findAll() { return store; }
-
-    BrandingConfig[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
-    void save(BrandingConfig entity) { store ~= entity; }
-
-    void update(BrandingConfig entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
-    }
-
-    void remove(BrandingConfigId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
+    // TODO: Implement query methods for clientId and other relevant fields as needed.
 }
