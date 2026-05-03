@@ -47,7 +47,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ShellPlugin getPlugin(ShellPluginId tenantId, id tenantId) {
+  ShellPlugin getPlugin(TenantId tenantId, ShellPluginId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -56,7 +56,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePlugin(UpdateShellPluginRequest req) {
-    auto p = repo.findById(req.id, req.tenantId);
+    auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
       return CommandResult(false, "", "Plugin not found");
 
@@ -73,7 +73,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deletePlugin(ShellPluginId tenantId, id tenantId) {
+  CommandResult deletePlugin(TenantId tenantId, ShellPluginId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "Plugin not found");

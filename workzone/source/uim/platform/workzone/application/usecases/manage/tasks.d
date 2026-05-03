@@ -53,20 +53,20 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Task getTask(TaskId tenantId, id tenantId) {
+  Task getTask(TenantId tenantId, TaskId id) {
     return repo.findById(tenantId, id);
   }
 
-  Task[] listByAssignee(UserId assigneetenantId, id tenantId) {
-    return repo.findByAssignee(assigneetenantId, id);
+  Task[] listByAssignee(TenantId tenantId, UserId assigneeId) {
+    return repo.findByAssignee(tenantId, assigneeId);
   }
 
-  Task[] listByStatus(TaskStatus status, UserId assigneetenantId, id tenantId) {
-    return repo.findByStatus(status, assigneetenantId, id);
+  Task[] listByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+    return repo.findByStatus(tenantId, status, assigneeId);
   }
 
   CommandResult updateTask(UpdateTaskRequest req) {
-    auto t = repo.findById(req.id, req.tenantId);
+    auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
       return CommandResult(false, "", "Task not found");
 
@@ -87,7 +87,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult completeTask(TaskId tenantId, id tenantId) {
+  CommandResult completeTask(TenantId tenantId, TaskId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Task not found");
@@ -99,7 +99,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  void deleteTask(TaskId tenantId, id tenantId) {
+  void deleteTask(TenantId tenantId, TaskId id) {
     repo.removeById(tenantId, id);
   }
 }

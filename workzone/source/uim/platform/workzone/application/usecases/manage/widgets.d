@@ -45,16 +45,16 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  Widget getWidget(WidgetId tenantId, id tenantId) {
+  Widget getWidget(TenantId tenantId, WidgetId id) {
     return repo.findById(tenantId, id);
   }
 
-  Widget[] listByPage(WorkpageId pagetenantId, id tenantId) {
-    return repo.findByPage(pagetenantId, id);
+  Widget[] listByPage(TenantId tenantId, WorkpageId pageId) {
+    return repo.findByPage(tenantId, pageId);
   }
 
   CommandResult updateWidget(UpdateWidgetRequest req) {
-    auto w = repo.findById(req.id, req.tenantId);
+    auto w = repo.findById(req.tenantId, req.id);
     if (w.isNull)
       return CommandResult(false, "", "Widget not found");
 
@@ -72,7 +72,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  void deleteWidget(WidgetId tenantId, id tenantId) {
+  void deleteWidget(TenantId tenantId, WidgetId id) {
     repo.removeById(tenantId, id);
   }
 }

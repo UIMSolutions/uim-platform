@@ -45,7 +45,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  PageTemplate getPageTemplate(PageTemplateId tenantId, id tenantId) {
+  PageTemplate getPageTemplate(TenantId tenantId, PageTemplateId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -54,7 +54,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePageTemplate(UpdatePageTemplateRequest req) {
-    auto t = repo.findById(req.id, req.tenantId);
+    auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
       return CommandResult(false, "", "Page template not found");
 
@@ -71,7 +71,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deletePageTemplate(PageTemplateId tenantId, id tenantId) {
+  CommandResult deletePageTemplate(TenantId tenantId, PageTemplateId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Page template not found");

@@ -47,19 +47,19 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  Notification getNotification(NotificationId tenantId, id tenantId) {
+  Notification getNotification(TenantId tenantId, NotificationId id) {
     return repo.findById(tenantId, id);
   }
 
-  Notification[] listByRecipient(UserId recipienttenantId, id tenantId) {
-    return repo.findByRecipient(recipienttenantId, id);
+  Notification[] listByRecipient(TenantId tenantId, UserId recipientId) {
+    return repo.findByRecipient(tenantId, recipientId);
   }
 
-  Notification[] listUnread(UserId recipienttenantId, id tenantId) {
-    return repo.findUnread(recipienttenantId, id);
+  Notification[] listUnread(TenantId tenantId, UserId recipientId) {
+    return repo.findUnread(tenantId, recipientId);
   }
 
-  CommandResult markAsRead(NotificationId tenantId, id tenantId) {
+  CommandResult markAsRead(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
       return CommandResult(false, "", "Notification not found");
@@ -70,7 +70,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  CommandResult dismiss(NotificationId tenantId, id tenantId) {
+  CommandResult dismiss(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
       return CommandResult(false, "", "Notification not found");
@@ -80,7 +80,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  void deleteNotification(NotificationId tenantId, id tenantId) {
+  void deleteNotification(TenantId tenantId, NotificationId id) {
     repo.removeById(tenantId, id);
   }
 }

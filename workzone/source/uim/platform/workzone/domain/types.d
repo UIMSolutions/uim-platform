@@ -396,7 +396,7 @@ enum KBArticleStatus {
   archived,
 }
 
-/// Group type.
+/// WZGroup type.
 enum GroupType {
   security,
   distribution,

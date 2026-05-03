@@ -47,7 +47,7 @@ class GroupController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "Group created");
+          .set("message", "WZGroup created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -81,7 +81,7 @@ class GroupController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto g = useCase.getGroup(tenantId, id);
       if (g.isNull) {
-        writeError(res, 404, "Group not found");
+        writeError(res, 404, "WZGroup not found");
         return;
       }
       res.writeJsonBody(g.toJson, 200);
@@ -104,7 +104,7 @@ class GroupController : PlatformController {
       auto result = useCase.updateGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("message", "Group updated");
+          .set("message", "WZGroup updated");
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -121,7 +121,7 @@ class GroupController : PlatformController {
       auto result = useCase.deleteGroup(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("message", "Group deleted");
+          .set("message", "WZGroup deleted");
         res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);

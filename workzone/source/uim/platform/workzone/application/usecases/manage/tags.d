@@ -46,7 +46,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Tag getTag(TagId tenantId, id tenantId) {
+  Tag getTag(TenantId tenantId, TagId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -55,7 +55,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateTag(UpdateTagRequest req) {
-    auto t = repo.findById(req.id, req.tenantId);
+    auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
       return CommandResult(false, "", "Tag not found");
 
@@ -70,7 +70,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteTag(TagId tenantId, id tenantId) {
+  CommandResult deleteTag(TenantId tenantId, TagId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Tag not found");

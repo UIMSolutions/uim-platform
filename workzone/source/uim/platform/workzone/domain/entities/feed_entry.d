@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.feed_entry;
 
-import uim.platform.workzone.domain.types;
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// An activity feed entry — records actions and events in a workspace.
 struct FeedEntry {

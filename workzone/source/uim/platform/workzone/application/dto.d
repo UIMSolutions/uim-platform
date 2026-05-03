@@ -416,7 +416,7 @@ struct UpdateUserProfileRequest {
   string avatarUrl;
 }
 
-// ──────────────── Group DTOs ────────────────
+// ──────────────── WZGroup DTOs ────────────────
 
 struct CreateGroupRequest {
   TenantId tenantId;

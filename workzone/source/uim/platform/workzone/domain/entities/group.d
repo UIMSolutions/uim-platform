@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.entities.group;
 import uim.platform.workzone.domain.types;
 
 /// A user group — for role and content assignment.
-struct Group {
+struct WZGroup {
   mixin TenantEntity!(GroupId);
 
   string name;

@@ -50,16 +50,16 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Survey getSurvey(SurveyId tenantId, id tenantId) {
+  Survey getSurvey(TenantId tenantId, SurveyId id) {
     return repo.findById(tenantId, id);
   }
 
-  Survey[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
-    return repo.findByWorkspace(workspacetenantId, id);
+  Survey[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return repo.findByWorkspace(tenantId, workspaceId);
   }
 
   CommandResult updateSurvey(UpdateSurveyRequest req) {
-    auto s = repo.findById(req.id, req.tenantId);
+    auto s = repo.findById(req.tenantId, req.id);
     if (s.isNull)
       return CommandResult(false, "", "Survey not found");
 
@@ -74,7 +74,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  CommandResult deleteSurvey(SurveyId tenantId, id tenantId) {
+  CommandResult deleteSurvey(TenantId tenantId, SurveyId id) {
     auto s = repo.findById(tenantId, id);
     if (s.isNull)
       return CommandResult(false, "", "Survey not found");

@@ -16,14 +16,14 @@ mixin(ShowModule!());
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository {
+class MemoryGroupRepository : TenantRepository!(WZGroup, GroupId), GroupRepository {
 
   size_t countByMember(TenantId tenantId, UserId userId) {
     return findByMember(tenantId, userId).length;
   }
 
-  Group[] findByMember(TenantId tenantId, UserId userId) {
-    Group[] result;
+  WZGroup[] findByMember(TenantId tenantId, UserId userId) {
+    WZGroup[] result;
     foreach (g; findByTenant(tenantId)) {
       foreach (mid; g.memberIds)
         if (mid == userId) {

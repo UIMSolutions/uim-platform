@@ -26,10 +26,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult createGroup(CreateGroupRequest req) {
     if (req.name.length == 0)
-      return CommandResult(false, "", "Group name is required");
+      return CommandResult(false, "", "WZGroup name is required");
 
     auto now = Clock.currStdTime();
-    auto g = Group();
+    auto g = WZGroup();
     g.id = randomUUID();
     g.tenantId = req.tenantId;
     g.name = req.name;
@@ -43,18 +43,18 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  Group getGroup(TenantId tenantId, GroupId id) {
+  WZGroup getGroup(TenantId tenantId, GroupId id) {
     return repo.findById(tenantId, id);
   }
 
-  Group[] listGroups(TenantId tenantId) {
+  WZGroup[] listGroups(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
   CommandResult updateGroup(UpdateGroupRequest req) {
     auto g = repo.findById(req.tenantId, req.id);
     if (g.isNull)
-      return CommandResult(false, "", "Group not found");
+      return CommandResult(false, "", "WZGroup not found");
 
     if (req.name.length > 0)
       g.name = req.name;
@@ -70,7 +70,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
     auto g = repo.findById(tenantId, id);
     if (g.isNull)
-      return CommandResult(false, "", "Group not found");
+      return CommandResult(false, "", "WZGroup not found");
 
     repo.removeById(tenantId, id);
     return CommandResult(true, id.value, "");
