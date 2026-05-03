@@ -15,112 +15,106 @@ import uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.identity_authentication.presentation.http
 
 class FeedController : PlatformController {
-  private ManageFeedsUseCase useCase;
+    private ManageFeedsUseCase useCase;
 
-  this(ManageFeedsUseCase useCase) {
-    this.useCase = useCase;
-  }
+    this(ManageFeedsUseCase useCase) {
+      this.useCase = useCase;
+    }
 
-  override void registerRoutes(URLRouter router) {
-    super.registerRoutes(router);
-    
-    router.post("/api/v1/feeds", &handleCreate);
-    router.get("/api/v1/feeds", &handleList);
-    router.get("/api/v1/feeds/*", &handleGet);
-    router.delete_("/api/v1/feeds/*", &handleDelete);
-  }
+    override void registerRoutes(URLRouter router) {
+      super.registerRoutes(router);
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto j = req.json;
-      auto r = CreateFeedEntryRequest();
-      r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.getTenantId;
-      r.actorId = j.getString("actorId");
-      r.actorName = j.getString("actorName");
-      r.action = j.getString("action");
-      r.objectType = j.getString("objectType");
-      r.objectId = j.getString("objectId");
-      r.objectTitle = j.getString("objectTitle");
-      r.message = j.getString("message");
+      router.post("/api/v1/feeds", &handleCreate);
+      router.get("/api/v1/feeds", &handleList);
+      router.get("/api/v1/feeds/*", &handleGet);
+      router.delete_("/api/v1/feeds/*", &handleDelete);
+    }
 
-      auto result = useCase.createEntry(r);
-      if (result.isSuccess()) {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto j = req.json;
+        auto r = CreateFeedEntryRequest();
+        r.workspaceId = j.getString("workspaceId");
+        r.tenantId = req.getTenantId;
+        r.actorId = j.getString("actorId");
+        r.actorName = j.getString("actorName");
+        r.action = j.getString("action");
+        r.objectType = j.getString("objectType");
+        r.objectId = j.getString("objectId");
+        r.objectTitle = j.getString("objectTitle");
+        r.message = j.getString("message");
+
+        auto result = useCase.createEntry(r);
+        if (result.isSuccess()) {
+          auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Feed entry created");
+
+          res.writeJsonBody(resp, 201);
+        } else {
+          writeError(res, 400, result.error);
+        }
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        TenantId tenantId = req.getTenantId;
+        auto workspaceId = req.params.get("workspaceId", "");
+        auto entries = useCase.listByWorkspace(workspacetenantId, id);
+        auto arr = entries.map!(e => e.toJson).array.toJson;
+
         auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Feed entry created");
+          .set("items", arr)
+          .set("totalCount", Json(entries.length))
+          .set("message", "Feed entries retrieved successfully");
 
-        res.writeJsonBody(resp, 201);
+        res.writeJsonBody(resp, 200);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
       }
-      else
-      {
-        writeError(res, 400, result.error);
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto id = extractIdFromPath(req.requestURI);
+        TenantId tenantId = req.getTenantId;
+        auto entry = useCase.getEntry(tenantId, id);
+        if (entry.isNull) {
+          writeError(res, 404, "Feed entry not found");
+          return;
+        }
+        res.writeJsonBody(entry.toJson, 200);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
       }
     }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      TenantId tenantId = req.getTenantId;
-      auto workspaceId = req.params.get("workspaceId", "");
-      auto entries = useCase.listByWorkspace(workspacetenantId, id);
-      auto arr = entries.map!(e => serializeFeed(e)).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(entries.length))
-        .set("message", "Feed entries retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto entry = useCase.getEntry(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Feed entry not found");
-        return;
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto id = extractIdFromPath(req.requestURI);
+        TenantId tenantId = req.getTenantId;
+        useCase.deleteEntry(tenantId, id);
+        res.writeBody("", 204);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
       }
-      res.writeJsonBody(entry.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
   }
-
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      useCase.deleteEntry(tenantId, id);
-      res.writeBody("", 204);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-}
 
 private Json serializeFeed(FeedEntry e) {
   return Json.emptyObject
-  .set("id", e.id)
-  .set("workspaceId", e.workspaceId)
-  .set("tenantId", e.tenantId)
-  .set("actorId", e.actorId)
-  .set("actorName", e.actorName)
-  .set("action", e.action)
-  .set("objectType", e.objectType)
-  .set("objectId", e.objectId)
-  .set("objectTitle", e.objectTitle)
-  .set("message", e.message)
-  .set("createdAt", e.createdAt);
+    .set("id", e.id)
+    .set("workspaceId", e.workspaceId)
+    .set("tenantId", e.tenantId)
+    .set("actorId", e.actorId)
+    .set("actorName", e.actorName)
+    .set("action", e.action)
+    .set("objectType", e.objectType)
+    .set("objectId", e.objectId)
+    .set("objectTitle", e.objectTitle)
+    .set("message", e.message)
+    .set("createdAt", e.createdAt);
 }

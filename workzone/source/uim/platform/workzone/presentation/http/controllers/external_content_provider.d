@@ -12,7 +12,7 @@ import uim.platform.workzone.application.usecases.manage.manage.external_content
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.external_content_provider;
-import uim.platform.identity_authentication.presentation.http
+import uim.platform.identity_authentication.presentation.http;
 
 class ExternalContentProviderController {
   private ManageExternalContentProvidersUseCase useCase;
@@ -48,13 +48,10 @@ class ExternalContentProviderController {
           .set("message", "External content provider created");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,16 +60,15 @@ class ExternalContentProviderController {
     try {
       TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
-      auto arr = providers.map!(p => serializeExternalProvider(p)).array.toJson;
+      auto arr = providers.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", providers.length)
         .set("message", "External content providers retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +83,7 @@ class ExternalContentProviderController {
         return;
       }
       res.writeJsonBody(p.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,12 +100,14 @@ class ExternalContentProviderController {
       r.endpointUrl = j.getString("endpointUrl");
 
       auto result = useCase.updateProvider(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "External content provider updated successfully");
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+      }
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -124,8 +121,7 @@ class ExternalContentProviderController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

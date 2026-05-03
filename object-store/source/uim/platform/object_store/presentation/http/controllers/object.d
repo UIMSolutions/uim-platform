@@ -80,7 +80,7 @@ class ObjectController : PlatformController {
       else
         objects = uc.listObjects(bucketId);
 
-      auto arr = objects.map!(o => serializeObject(o)).array.toJson;
+      auto arr = objects.map!(o => o.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -193,7 +193,7 @@ class ObjectController : PlatformController {
         .set("items", arr)
         .set("totalCount", versions.length)
         .set("message", "Object versions retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

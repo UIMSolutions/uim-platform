@@ -70,7 +70,7 @@ class KeyMappingController : PlatformController {
       else
         mappings = uc.listByTenant(tenantId);
 
-      auto arr = mappings.map!(m => serializeMapping(m)).array.toJson;
+      auto arr = mappings.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

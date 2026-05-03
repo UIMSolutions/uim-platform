@@ -62,7 +62,7 @@ class CardController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto cards = useCase.listCards(tenantId);
-      auto arr = cards.map!(c => serializeCard(c)).array.toJson;
+      auto arr = cards.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", cards.length)
@@ -79,6 +79,7 @@ class CardController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
+      
       auto c = useCase.getCard(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Card not found");

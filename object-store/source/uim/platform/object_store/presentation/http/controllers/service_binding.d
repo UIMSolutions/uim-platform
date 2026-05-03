@@ -62,13 +62,14 @@ class ServiceBindingController : PlatformController {
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
-      auto bindings = uc.listBindings(bucketId);
 
-      auto arr = bindings.map!(b => serializeBinding(b)).array.toJson;
+      auto bindings = uc.listBindings(bucketId);
+      auto arr = bindings.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", bindings.length);
+        .set("totalCount", bindings.length)
+        .set("message", "Service bindings retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -83,11 +84,13 @@ class ServiceBindingController : PlatformController {
         return;
 
       auto binding = uc.getBinding(id);
-      if (binding.isNull || binding.isNull) {
+      if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
       }
-      res.writeJsonBody(binding.toJson, 200);
+      auto resp = binding.toJson
+        .set("message", "Service binding retrieved successfully");
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

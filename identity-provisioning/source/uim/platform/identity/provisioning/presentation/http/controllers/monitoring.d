@@ -37,11 +37,12 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto items = uc.listJobSummaries(tenantId);
 
-      auto arr = items.map!(s => serializeJobSummary(s)).array;
+      auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Job summaries retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -75,7 +76,8 @@ class MonitoringController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", logs.length)
-        .set("jobId", jobId);
+        .set("jobId", jobId)
+        .set("message", "Job execution logs retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -92,7 +94,8 @@ class MonitoringController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", items.length)
+        .set("message", "Provisioned entities retrieved successfully");
       
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -114,7 +117,8 @@ class MonitoringController : PlatformController {
         .set("completedJobs", summary.completedJobs)
         .set("failedJobs", summary.failedJobs)
         .set("runningJobs", summary.runningJobs)
-        .set("totalProvisionedEntities", summary.totalProvisionedEntities);
+        .set("totalProvisionedEntities", summary.totalProvisionedEntities)
+        .set("message", "Pipeline summary retrieved successfully");
 
       res.writeJsonBody(j, 200);
     } catch (Exception e) {

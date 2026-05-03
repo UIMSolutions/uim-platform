@@ -85,7 +85,7 @@ class ContentController : PlatformController {
       else
         items = useCase.listByWorkspace(workspacetenantId, id);
 
-      auto arr = items.map!(c => serializeContent(c)).array.toJson;
+      auto arr = items.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

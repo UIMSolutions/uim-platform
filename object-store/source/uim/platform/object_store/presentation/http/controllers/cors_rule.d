@@ -68,7 +68,7 @@ class CorsRuleController : PlatformController {
       auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
       auto rules = uc.listRules(bucketId);
 
-      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
+      auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
