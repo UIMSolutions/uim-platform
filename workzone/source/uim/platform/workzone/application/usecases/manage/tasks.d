@@ -50,7 +50,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   WZTask getTask(TenantId tenantId, TaskId id) {
@@ -84,7 +84,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
       t.completedAt = Clock.currStdTime();
 
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult completeTask(TenantId tenantId, TaskId id) {
@@ -96,10 +96,15 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.completedAt = Clock.currStdTime();
     t.updatedAt = Clock.currStdTime();
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
-  void deleteTask(TenantId tenantId, TaskId id) {
+  CommandResult deleteTask(TenantId tenantId, TaskId id) {
+    auto t = repo.findById(tenantId, id);
+    if (t.isNull)
+      return CommandResult(false, "", "WZTask not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

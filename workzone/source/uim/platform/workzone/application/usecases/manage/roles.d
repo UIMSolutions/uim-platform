@@ -40,7 +40,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     r.updatedAt = now;
 
     repo.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   Role getRole(TenantId tenantId, RoleId id) {
@@ -64,7 +64,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     r.updatedAt = Clock.currStdTime();
 
     repo.update(r);
-    return CommandResult(r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   CommandResult deleteRole(TenantId tenantId, RoleId id) {

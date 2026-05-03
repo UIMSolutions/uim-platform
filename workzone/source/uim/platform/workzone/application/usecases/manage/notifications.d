@@ -44,7 +44,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     n.expiresAt = req.expiresAt;
 
     repo.save(n);
-    return CommandResult(n.id, "");
+    return CommandResult(true, n.id.value, "");
   }
 
   Notification getNotification(TenantId tenantId, NotificationId id) {
@@ -67,7 +67,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     n.status = NotificationStatus.read_;
     n.readAt = Clock.currStdTime();
     repo.update(n);
-    return CommandResult(n.id, "");
+    return CommandResult(true, n.id.value, "");
   }
 
   CommandResult dismiss(TenantId tenantId, NotificationId id) {
@@ -77,7 +77,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
     n.status = NotificationStatus.dismissed;
     repo.update(n);
-    return CommandResult(n.id, "");
+    return CommandResult(true, n.id.value, "");
   }
 
   void deleteNotification(TenantId tenantId, NotificationId id) {

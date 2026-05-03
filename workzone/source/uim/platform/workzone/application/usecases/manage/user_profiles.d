@@ -46,7 +46,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     p.updatedAt = now;
 
     repo.save(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   UserProfile getUserProfile(TenantId tenantId, UserProfileId id) {
@@ -77,7 +77,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   CommandResult deleteUserProfile(TenantId tenantId, UserProfileId id) {

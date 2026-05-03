@@ -47,7 +47,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     a.updatedAt = now;
 
     repo.save(a);
-    return CommandResult(a.id, "");
+    return CommandResult(true, a.id.value, "");
   }
 
   KnowledgeBaseArticle getArticle(TenantId tenantId, KBArticleId id) {
@@ -80,7 +80,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     a.updatedAt = Clock.currStdTime();
 
     repo.update(a);
-    return CommandResult(a.id, "");
+    return CommandResult(true, a.id.value, "");
   }
 
   CommandResult deleteArticle(TenantId tenantId, KBArticleId id) {

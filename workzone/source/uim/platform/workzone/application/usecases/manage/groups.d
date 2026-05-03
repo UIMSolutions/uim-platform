@@ -40,7 +40,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     g.updatedAt = now;
 
     repo.save(g);
-    return CommandResult(g.id, "");
+    return CommandResult(true, g.id.value, "");
   }
 
   WZGroup getGroup(TenantId tenantId, GroupId id) {
@@ -64,7 +64,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     g.updatedAt = Clock.currStdTime();
 
     repo.update(g);
-    return CommandResult(g.id, "");
+    return CommandResult(true, g.id.value, "");
   }
 
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {

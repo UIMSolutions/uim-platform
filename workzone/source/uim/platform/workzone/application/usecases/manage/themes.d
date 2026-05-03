@@ -44,7 +44,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   Theme getTheme(TenantId tenantId, ThemeId id) {
@@ -71,7 +71,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     t.updatedAt = Clock.currStdTime();
 
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult deleteTheme(TenantId tenantId, ThemeId id) {

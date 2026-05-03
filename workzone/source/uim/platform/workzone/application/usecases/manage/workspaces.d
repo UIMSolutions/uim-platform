@@ -48,7 +48,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     }
 
     repo.save(ws);
-    return CommandResult(ws.id, "");
+    return CommandResult(true, ws.id.value, "");
   }
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
@@ -78,7 +78,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.updatedAt = Clock.currStdTime();
 
     repo.update(ws);
-    return CommandResult(ws.id, "");
+    return CommandResult(true, ws.id.value, "");
   }
 
   CommandResult addMember(AddMemberRequest req) {
@@ -94,7 +94,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
     ws.updatedAt = Clock.currStdTime();
     repo.update(ws);
-    return CommandResult(ws.id, "");
+    return CommandResult(true, ws.id.value, "");
   }
 
   CommandResult removeMember(TenantId tenantId, WorkspaceId workspaceId, UserId userId) {
@@ -115,7 +115,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.members = ws.members.remove(idx);
     ws.updatedAt = Clock.currStdTime();
     repo.update(ws);
-    return CommandResult(ws.id, "");
+    return CommandResult(true, ws.id.value, "");
   }
 
   CommandResult archiveWorkspace(TenantId tenantId, WorkspaceId id) {
@@ -125,10 +125,15 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.status = WorkspaceStatus.archived;
     ws.updatedAt = Clock.currStdTime();
     repo.update(ws);
-    return CommandResult(ws.id, "");
+    return CommandResult(true, ws.id.value, "");
   }
 
-  void deleteWorkspace(TenantId tenantId, WorkspaceId id) {
+  CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
+    auto ws = repo.findById(tenantId, id);
+    if (ws.isNull)
+      return CommandResult(false, "", "Workspace not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

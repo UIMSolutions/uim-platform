@@ -47,7 +47,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.updatedAt = now;
 
     repo.save(n);
-    return CommandResult(n.id, "");
+    return CommandResult(true, n.id.value, "");
   }
 
   NavigationItem getNavigationItem(TenantId tenantId, NavigationItemId id) {
@@ -73,7 +73,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.updatedAt = Clock.currStdTime();
 
     repo.update(n);
-    return CommandResult(n.id, "");
+    return CommandResult(true, n.id.value, "");
   }
 
   CommandResult deleteNavigationItem(TenantId tenantId, NavigationItemId id) {

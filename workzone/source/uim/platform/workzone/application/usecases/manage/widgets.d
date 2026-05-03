@@ -42,7 +42,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     w.updatedAt = now;
 
     repo.save(w);
-    return CommandResult(w.id, "");
+    return CommandResult(true, w.id.value, "");
   }
 
   Widget getWidget(TenantId tenantId, WidgetId id) {
@@ -69,10 +69,15 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     w.updatedAt = Clock.currStdTime();
 
     repo.update(w);
-    return CommandResult(w.id, "");
+    return CommandResult(true, w.id.value, "");
   }
 
-  void deleteWidget(TenantId tenantId, WidgetId id) {
+  CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
+    auto w = repo.findById(tenantId, id);
+    if (w.isNull)
+      return CommandResult(false, "", "Widget not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

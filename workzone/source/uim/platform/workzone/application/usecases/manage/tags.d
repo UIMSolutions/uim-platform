@@ -43,7 +43,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     t.createdAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   Tag getTag(TenantId tenantId, TagId id) {
@@ -67,7 +67,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
       t.color = req.color;
 
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult deleteTag(TenantId tenantId, TagId id) {

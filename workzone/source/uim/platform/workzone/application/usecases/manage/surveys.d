@@ -47,7 +47,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     s.updatedAt = now;
 
     repo.save(s);
-    return CommandResult(s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   Survey getSurvey(TenantId tenantId, SurveyId id) {
@@ -71,7 +71,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     s.updatedAt = Clock.currStdTime();
 
     repo.update(s);
-    return CommandResult(s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   CommandResult deleteSurvey(TenantId tenantId, SurveyId id) {

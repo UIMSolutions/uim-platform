@@ -44,7 +44,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     p.updatedAt = now;
 
     repo.save(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   ShellPlugin getPlugin(TenantId tenantId, ShellPluginId id) {
@@ -70,7 +70,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);
-    return CommandResult(p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   CommandResult deletePlugin(TenantId tenantId, ShellPluginId id) {

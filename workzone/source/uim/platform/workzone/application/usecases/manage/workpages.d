@@ -41,7 +41,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     page.updatedAt = now;
 
     repo.save(page);
-    return CommandResult(page.id, "");
+    return CommandResult(true, page.id.value, "");
   }
 
   Workpage getWorkpage(TenantId tenantId, WorkpageId id) {
@@ -66,7 +66,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     page.updatedAt = Clock.currStdTime();
 
     repo.update(page);
-    return CommandResult(page.id, "");
+    return CommandResult(true, page.id.value, "");
   }
 
   void deleteWorkpage(TenantId tenantId, WorkpageId id) {

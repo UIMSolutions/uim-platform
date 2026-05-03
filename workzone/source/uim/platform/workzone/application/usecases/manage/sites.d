@@ -43,7 +43,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     s.createdBy = req.createdBy;
 
     repo.save(s);
-    return CommandResult(s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   Site getSite(TenantId tenantId, SiteId id) {
@@ -69,7 +69,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     s.updatedAt = Clock.currStdTime();
 
     repo.update(s);
-    return CommandResult(s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   CommandResult deleteSite(TenantId tenantId, SiteId id) {
