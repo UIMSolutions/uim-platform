@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.channels;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.channel;
-import uim.platform.workzone.domain.ports.repositories.channels;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.channel;
+// import uim.platform.workzone.domain.ports.repositories.channels;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageChannelsUseCase { // TODO: UIMUseCase {
   private ChannelRepository repo;
 

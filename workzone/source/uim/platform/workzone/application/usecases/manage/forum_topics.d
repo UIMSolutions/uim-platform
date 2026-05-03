@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.forum_topics;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.forum_topic;
-import uim.platform.workzone.domain.ports.repositories.forum_topics;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.forum_topic;
+// import uim.platform.workzone.domain.ports.repositories.forum_topics;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageForumTopicsUseCase { // TODO: UIMUseCase {
   private ForumTopicRepository repo;
 

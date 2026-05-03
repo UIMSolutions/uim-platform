@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.knowledge_base_articles
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.knowledge_base_article;
-import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.knowledge_base_article;
+// import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
   private KnowledgeBaseArticleRepository repo;
 

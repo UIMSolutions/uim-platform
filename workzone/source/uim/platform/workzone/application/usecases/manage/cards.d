@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.cards;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.card;
-import uim.platform.workzone.domain.ports.repositories.cards;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.card;
+// import uim.platform.workzone.domain.ports.repositories.cards;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageCardsUseCase { // TODO: UIMUseCase {
   private CardRepository repo;
 

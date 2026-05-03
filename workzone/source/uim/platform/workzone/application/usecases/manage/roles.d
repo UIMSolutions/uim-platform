@@ -8,11 +8,15 @@ module uim.platform.workzone.application.usecases.manage.roles;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.role;
-import uim.platform.workzone.domain.ports.repositories.roles;
-import uim.platform.workzone.application.dto;
+// import uim.platform.workzone.domain.types;
+// import uim.platform.workzone.domain.entities.role;
+// import uim.platform.workzone.domain.ports.repositories.roles;
+// import uim.platform.workzone.application.dto;
+import uim.platform.workzone;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageRolesUseCase { // TODO: UIMUseCase {
   private RoleRepository repo;
 
