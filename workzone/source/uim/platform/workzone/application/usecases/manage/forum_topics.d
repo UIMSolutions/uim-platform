@@ -63,7 +63,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
       t.title = req.title;
     if (req.body_.length > 0)
       t.body_ = req.body_;
-    t.status = req.status;
+    // TODO: t.status = req.status;
     t.pinned = req.pinned;
     t.locked = req.locked;
     t.updatedAt = Clock.currStdTime();

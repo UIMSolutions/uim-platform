@@ -39,7 +39,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     entry.createdAt = Clock.currStdTime();
 
     repo.save(entry);
-    return CommandResult(entry.id, "");
+    return CommandResult(true, entry.id.value, "");
   }
 
   FeedEntry getEntry(TenantId tenantId, FeedEntryId id) {
@@ -50,7 +50,12 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  void deleteEntry(TenantId tenantId, FeedEntryId id) {
+  CommandResult deleteEntry(TenantId tenantId, FeedEntryId id) {
+    auto entry = repo.findById(tenantId, id);
+    if (entry.isNull)
+      return CommandResult(false, "", "Feed entry not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

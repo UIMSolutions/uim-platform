@@ -35,7 +35,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.tenantId = req.tenantId;
     n.title = req.title;
     n.icon = req.icon;
-    n.itemType = req.itemType;
+    // TODO: n.itemType = req.itemType;
     n.targetUrl = req.targetUrl;
     n.targetAppId = req.targetAppId;
     n.targetPageId = req.targetPageId;

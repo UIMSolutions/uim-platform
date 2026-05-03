@@ -73,7 +73,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
       a.body_ = req.body_;
     if (req.summary.length > 0)
       a.summary = req.summary;
-    a.status = req.status;
+    // TODO: a.status = req.status;
     a.category = req.category;
     a.tags = req.tags;
     a.version_ = a.version_ + 1;

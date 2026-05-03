@@ -43,7 +43,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     ws.createdBy = req.createdBy;
 
     // Creator becomes owner
-    if (req.createdBy.length > 0) {
+    if (!req.createdBy.isEmpty) {
       ws.members = [WorkspaceMember(req.createdBy, "", MemberRole.owner, now)];
     }
 

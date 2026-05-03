@@ -67,7 +67,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
       s.title = req.title;
     if (req.description.length > 0)
       s.description = req.description;
-    s.status = req.status;
+    // TODO: s.status = req.status;
     s.updatedAt = Clock.currStdTime();
 
     repo.update(s);

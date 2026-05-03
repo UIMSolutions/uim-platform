@@ -34,12 +34,12 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;
-    p.providerType = req.providerType;
+    // TODO: p.providerType = req.providerType;
     p.status = ProviderStatus.disconnected;
     p.endpointUrl = req.endpointUrl;
     p.authType = req.authType;
     p.authConfig = req.authConfig;
-    p.contentTypes = req.contentTypes;
+    // TODO: p.contentTypes = req.contentTypes;
     p.refreshIntervalSec = req.refreshIntervalSec;
     p.createdAt = now;
     p.updatedAt = now;
@@ -67,7 +67,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
       p.description = req.description;
     if (req.endpointUrl.length > 0)
       p.endpointUrl = req.endpointUrl;
-    p.status = req.status;
+    // TODO: p.status = req.status;
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);

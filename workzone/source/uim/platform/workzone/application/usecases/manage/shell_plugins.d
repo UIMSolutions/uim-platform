@@ -66,7 +66,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
       p.description = req.description;
     if (req.scriptUrl.length > 0)
       p.scriptUrl = req.scriptUrl;
-    p.status = req.status;
+    // TODO: p.status = req.status;
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);

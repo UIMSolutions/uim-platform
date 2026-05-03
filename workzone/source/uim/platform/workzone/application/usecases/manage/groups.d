@@ -34,7 +34,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     g.tenantId = req.tenantId;
     g.name = req.name;
     g.description = req.description;
-    g.groupType = req.groupType;
+    // TODO: g.groupType = req.groupType;
     g.active = true;
     g.createdAt = now;
     g.updatedAt = now;

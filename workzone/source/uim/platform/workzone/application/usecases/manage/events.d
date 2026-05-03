@@ -39,7 +39,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.meetingUrl = req.meetingUrl;
     e.organizerId = req.organizerId;
     e.organizerName = req.organizerName;
-    e.attendeeIds = req.attendeeIds;
+    // TODO: e.attendeeIds = req.attendeeIds;
     e.status = EventStatus.scheduled;
     e.allDay = req.allDay;
     e.startTime = req.startTime;
@@ -74,7 +74,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.meetingUrl = req.meetingUrl;
     e.startTime = req.startTime;
     e.endTime = req.endTime;
-    e.status = req.status;
+    // TODO: e.status = req.status;
     e.updatedAt = Clock.currStdTime();
 
     repo.update(e);

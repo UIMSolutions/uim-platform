@@ -42,7 +42,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   PageTemplate getPageTemplate(TenantId tenantId, PageTemplateId id) {
@@ -68,7 +68,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     t.updatedAt = Clock.currStdTime();
 
     repo.update(t);
-    return CommandResult(t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult deletePageTemplate(TenantId tenantId, PageTemplateId id) {

@@ -60,7 +60,8 @@ class ManageContentUseCase { // TODO: UIMUseCase {
 
   ContentItem[] searchContent(TenantId tenantId, WorkspaceId workspaceId, string query) {
     auto items = repo.findByWorkspace(tenantId, workspaceId);
-    return ContentSearchService.search(items, query);
+    // TODO: return ContentSearchService.search(items, query);
+    return null;
   }
 
   CommandResult updateContent(UpdateContentRequest req) {
