@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 10001;
   string serviceName = "AI Core Service";

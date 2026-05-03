@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct AppConfig {
+struct SrvConfig {
     string host = "0.0.0.0";
     ushort port = 8101;
     string serviceName = "Custom Domain Service";

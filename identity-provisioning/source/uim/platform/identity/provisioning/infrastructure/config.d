@@ -6,7 +6,7 @@
 module uim.platform.identity.provisioning.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8093;
   string serviceName = "Identity Provisioning Service";

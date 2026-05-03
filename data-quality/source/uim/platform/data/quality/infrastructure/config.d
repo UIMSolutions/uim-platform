@@ -6,7 +6,7 @@
 module uim.platform.data.quality.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8086;
   string serviceName = "Data Quality Management Service";

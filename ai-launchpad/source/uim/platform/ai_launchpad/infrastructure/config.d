@@ -8,7 +8,7 @@ module uim.platform.ai_launchpad.infrastructure.config;
 import std.process : environment;
 import std.conv : to;
 
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 10002;
   string serviceName = "AI Launchpad Service";

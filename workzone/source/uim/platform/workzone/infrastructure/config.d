@@ -10,17 +10,17 @@ mixin(ShowModule!());
 
 @safe:
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8084;
   string serviceName = "Workzone Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
   // import std.process : environment;
 
-  AppConfig config;
+  SrvConfig config;
 
   auto host = environment.get("WZ_HOST", "");
   if (host.length > 0)

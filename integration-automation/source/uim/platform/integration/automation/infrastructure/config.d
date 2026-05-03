@@ -6,7 +6,7 @@
 module uim.platform.integration.automation.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8090;
   string serviceName = "Integration Automation Service";

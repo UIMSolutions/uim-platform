@@ -8,7 +8,7 @@ module uim.platform.keystore.infrastructure.config;
 import std.process : environment;
 import std.conv : to;
 
-struct AppConfig {
+struct SrvConfig {
   string host        = "0.0.0.0";
   ushort port        = 8115;
   string serviceName = "Keystore Service";

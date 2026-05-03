@@ -149,7 +149,7 @@ struct CreateNotificationRequest {
   long expiresAt;
 }
 
-// ──────────────── Task DTOs ────────────────
+// ──────────────── WZTask DTOs ────────────────
 
 struct CreateTaskRequest {
   TenantId tenantId;

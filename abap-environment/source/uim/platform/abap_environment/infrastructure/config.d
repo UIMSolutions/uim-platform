@@ -10,7 +10,7 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 10000;
   string serviceName = "ABAP Environment Service";

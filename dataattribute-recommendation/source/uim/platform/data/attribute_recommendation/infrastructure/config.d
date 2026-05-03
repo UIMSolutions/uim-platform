@@ -6,7 +6,7 @@
 module uim.platform.data.attribute_recommendation.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8092;
   string serviceName = "Data Attribute Recommendation Service";

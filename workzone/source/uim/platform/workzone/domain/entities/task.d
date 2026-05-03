@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// A unified task — aggregated from multiple backend systems into a single inbox.
-struct Task {
+struct WZTask {
   mixin TenantEntity!(TaskId);
 
   UserId assigneeId;

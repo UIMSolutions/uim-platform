@@ -16,14 +16,14 @@ mixin(ShowModule!());
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
+class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
 
   // #region ByAssignee
   size_t countByAssignee(TenantId tenantId, UserId assigneeId) {
     return findByAssignee(tenantId, assigneeId).length;
   }
 
-  Task[] findByAssignee(TenantId tenantId, UserId assigneeId) {
+  WZTask[] findByAssignee(TenantId tenantId, UserId assigneeId) {
     return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId).array;
   }
 
@@ -37,7 +37,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
     return findByStatus(tenantId, status, assigneeId).length;
   }
 
-  Task[] findByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+  WZTask[] findByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
     return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId && t.status == status).array;
   }
 

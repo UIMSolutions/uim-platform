@@ -67,7 +67,7 @@ class TaskController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "Task created");
+          .set("message", "WZTask created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -102,7 +102,7 @@ class TaskController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto t = useCase.getTask(tenantId, id);
       if (t.isNull) {
-        writeError(res, 404, "Task not found");
+        writeError(res, 404, "WZTask not found");
         return;
       }
       res.writeJsonBody(t.toJson, 200);
@@ -145,7 +145,7 @@ class TaskController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
-          .set("message", "Task updated successfully");
+          .set("message", "WZTask updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -164,7 +164,7 @@ class TaskController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "completed")
-          .set("message", "Task completed successfully");
+          .set("message", "WZTask completed successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -182,7 +182,7 @@ class TaskController : PlatformController {
       auto result = useCase.deleteTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("message", "Task deleted successfully");
+          .set("message", "WZTask deleted successfully");
         res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
@@ -193,7 +193,7 @@ class TaskController : PlatformController {
   }
 }
 
-private Json serializeTask(Task t) {
+private Json serializeTask(WZTask t) {
   auto tags = t.tags.map!(tag => Json(tag)).array.toJson;
 
   return Json.emptyObject

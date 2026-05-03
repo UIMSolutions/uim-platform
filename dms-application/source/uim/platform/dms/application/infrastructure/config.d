@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8094;
   string serviceName = "DMS Application Service";

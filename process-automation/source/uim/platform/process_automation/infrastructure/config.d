@@ -12,7 +12,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-struct AppConfig {
+struct SrvConfig {
     string host = "0.0.0.0";
     ushort port = 8099;
     string serviceName = "Process Automation Service";

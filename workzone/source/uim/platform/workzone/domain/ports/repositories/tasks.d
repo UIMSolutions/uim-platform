@@ -12,14 +12,14 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface TaskRepository : ITenantRepository!(Task, TaskId) {
+interface TaskRepository : ITenantRepository!(WZTask, TaskId) {
 
   size_t countByAssignee(TenantId tenantId, UserId assignee);
-  Task[] findByAssignee(TenantId tenantId, UserId assignee);
+  WZTask[] findByAssignee(TenantId tenantId, UserId assignee);
   void removeByAssignee(TenantId tenantId, UserId assignee);
 
   size_t countByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
-  Task[] findByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
+  WZTask[] findByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
   void removeByStatus(TenantId tenantId, TaskStatus status, UserId assignee);
 
 }

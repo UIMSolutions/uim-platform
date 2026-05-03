@@ -26,10 +26,10 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
   CommandResult createTask(CreateTaskRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Task title is required");
+      return CommandResult(false, "", "WZTask title is required");
 
     auto now = Clock.currStdTime();
-    auto t = Task();
+    auto t = WZTask();
     t.id = randomUUID();
     t.tenantId = req.tenantId;
     t.assigneeId = req.assigneeId;
@@ -53,22 +53,22 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Task getTask(TenantId tenantId, TaskId id) {
+  WZTask getTask(TenantId tenantId, TaskId id) {
     return repo.findById(tenantId, id);
   }
 
-  Task[] listByAssignee(TenantId tenantId, UserId assigneeId) {
+  WZTask[] listByAssignee(TenantId tenantId, UserId assigneeId) {
     return repo.findByAssignee(tenantId, assigneeId);
   }
 
-  Task[] listByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
+  WZTask[] listByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
     return repo.findByStatus(tenantId, status, assigneeId);
   }
 
   CommandResult updateTask(UpdateTaskRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "Task not found");
+      return CommandResult(false, "", "WZTask not found");
 
     if (req.title.length > 0)
       t.title = req.title;
@@ -90,7 +90,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   CommandResult completeTask(TenantId tenantId, TaskId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "Task not found");
+      return CommandResult(false, "", "WZTask not found");
 
     t.status = TaskStatus.completed;
     t.completedAt = Clock.currStdTime();

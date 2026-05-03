@@ -299,7 +299,7 @@ enum NotificationStatus {
   actionRequired,
 }
 
-/// Task status.
+/// WZTask status.
 enum TaskStatus {
   open,
   inProgress,
@@ -308,7 +308,7 @@ enum TaskStatus {
   overdue,
 }
 
-/// Task priority.
+/// WZTask priority.
 enum TaskPriority {
   low,
   medium,

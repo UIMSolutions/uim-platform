@@ -11,7 +11,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 /// Service configuration.
-struct AppConfig {
+struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8098;
   string serviceName = "Cloud Management Service";
