@@ -177,41 +177,4 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private static Json serializeRequest(const TransportRequest tr) {
-    auto j = Json.emptyObject
-      .set("id", tr.id)
-      .set("tenantId", tr.tenantId)
-      .set("sourceSystemId", tr.sourceSystemId)
-      .set("targetSystemId", tr.targetSystemId)
-      .set("description", tr.description)
-      .set("owner", tr.owner)
-      .set("transportType", tr.transportType.to!string)
-      .set("status", tr.status.to!string)
-      .set("createdAt", tr.createdAt)
-      .set("releasedAt", tr.releasedAt)
-      .set("importedAt", tr.importedAt);
-
-    if (tr.tasks.length > 0) {
-      auto tasks = Json.emptyArray;
-      foreach (t; tr.tasks) {
-        auto tj = Json.emptyObject
-          .set("taskId", t.id)
-          .set("owner", t.owner)
-          .set("status", t.status.to!string)
-          .set("description", t.description)
-          .set("createdAt", t.createdAt)
-          .set("releasedAt", t.releasedAt);
-
-        if (t.objectList.length > 0) {
-          auto ol = t.objectList.map!(o => o.toJson).array.toJson;
-          tj["objectList"] = ol;
-        }
-
-        tasks ~= tj;
-      }
-      j["tasks"] = tasks;
-    }
-
-    return j;
-  }
 }

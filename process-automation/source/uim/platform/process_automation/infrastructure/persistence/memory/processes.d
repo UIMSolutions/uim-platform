@@ -11,27 +11,25 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryProcessRepository :TenantRepository!(Process, ProcessId), ProcessRepository {
-    private Process[] store;
-
-    Process findById(ProcessId id) {
-        foreach (p; findAll) {
-            if (p.id == id)
-                return p;
-        }
-        return Process.init;
-    }
-
-    Process[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(p => p.tenantId == tenantId).array;
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
     }
 
     Process[] findByProject(ProjectId projectId) {
         return findAll().filter!(p => p.projectId == projectId).array;
     }
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(p => remove(p));
+    }
 
+    size_t countByCategory(TenantId tenantId, ProcessCategory category) {
+        return findByCategory(tenantId, category).length;
+    }
     Process[] findByCategory(TenantId tenantId, ProcessCategory category) {
         return findAll().filter!(p => p.tenantId == tenantId && p.category == category).array;
     }
-
+    void removeByCategory(TenantId tenantId, ProcessCategory category) {
+        findByCategory(tenantId, category).each!(p => remove(p));
+    }
 
 }

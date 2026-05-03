@@ -28,21 +28,20 @@ class MemoryRoleRepository : RoleRepository {
   }
 
   bool existsByName(TenantId tenantId, string name) {
-    return findAll()r => r.tenantId == tenantId && r.name == name);
+    return findByTenant(tenantId).any!(r => r.name == name);
   }
 
   Role findByName(TenantId tenantId, string name) {
-    foreach (r; findAll()
-      if (r.tenantId == tenantId && r.name == name)
+    foreach (r; findByTenant(tenantId))
+      if (r.name == name)
         return r;
-    }
     return Role.init;
   }
 
   Role[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Role[] result;
     uint idx;
-    foreach (r; findAll()
+    foreach (r; findAll())
       if (r.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= r;
@@ -54,10 +53,9 @@ class MemoryRoleRepository : RoleRepository {
 
   Role[] findByUser(string userId) {
     Role[] result;
-    foreach (r; findAll()
+    foreach (r; findAll())
       if (r.userIds.canFind(userId))
         result ~= r;
-    }
     return result;
   }
 

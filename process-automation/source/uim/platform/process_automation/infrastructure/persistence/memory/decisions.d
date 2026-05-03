@@ -11,23 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDecisionRepository : TenantRepository!(Decision, DecisionId), DecisionRepository {
-    private Decision[] store;
-
-    Decision findById(DecisionId id) {
-        foreach (d; findAll) {
-            if (d.id == id)
-                return d;
-        }
-        return Decision.init;
-    }
-
-    Decision[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId).array;
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
     }
 
     Decision[] findByProject(ProjectId projectId) {
         return findAll().filter!(d => d.projectId == projectId).array;
     }
 
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(d => remove(d));
+    }
 
 }

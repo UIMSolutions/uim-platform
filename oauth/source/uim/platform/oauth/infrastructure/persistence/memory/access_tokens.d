@@ -27,10 +27,6 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
         return AccessToken.init;
     }
 
-    AccessToken[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
-    }
-
     size_t countByClientId(string clientId) {
         return findByClientId(clientId).length;
     }

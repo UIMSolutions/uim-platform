@@ -13,44 +13,34 @@ module uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
 // import std.array : array;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class MemoryArtifactRepository : ArtifactRepository {
   private Artifact[][string] store;
 
   Artifact findById(ArtifactId id, ResourceGroupId rgId) {
-    if (rgId in store) {
-      foreach (a; store[rgId]) {
-        if (a.id == id)
-          return a;
-      }
+    foreach (a; findByResourceGroup(rgId)) {
+      if (a.id == id)
+        return a;
     }
     return Artifact.init;
   }
 
-  Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    if (rgId in store)
-      return (store[rgId]).filter!(a => a.scenarioId == scenarioId).array;
-    return null;
+  Artifact[] findByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
+    return findByResourceGroup(rgId).filter!(a => a.scenarioId == scenarioId).array;
   }
 
-  Artifact[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    if (rgId in store)
-      return (store[rgId]).filter!(a => a.executionId == execId).array;
-    return null;
+  Artifact[] findByExecution(ResourceGroupId rgId, ExecutionId execId) {
+    return findByResourceGroup(rgId).filter!(a => a.executionId == execId).array;
   }
 
-  Artifact[] findByKind(ArtifactKind kind, ResourceGroupId rgId) {
-    if (rgId in store)
-      return (store[rgId]).filter!(a => a.kind == kind).array;
-    return null;
+  Artifact[] findByKind(ResourceGroupId rgId, ArtifactKind kind) {
+    return findByResourceGroup(rgId).filter!(a => a.kind == kind).array;
   }
 
   Artifact[] findByResourceGroup(ResourceGroupId rgId) {
-    if (rgId in store)
-      return store[rgId];
-    return null;
+    return rgId in store ? store[rgId] : null;
   }
 
   void save(Artifact a) {
@@ -58,12 +48,10 @@ class MemoryArtifactRepository : ArtifactRepository {
   }
 
   void update(Artifact a) {
-    if (a.resourceGroupId in store) {
-      foreach (existing; store[a.resourceGroupId]) {
-        if (existing.id == a.id) {
-          existing = a;
-          return;
-        }
+    foreach (existing; findByResourceGroup(a.resourceGroupId)) {
+      if (existing.id == a.id) {
+        existing = a;
+        return;
       }
     }
   }
@@ -75,8 +63,6 @@ class MemoryArtifactRepository : ArtifactRepository {
   }
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
-    if (rgId in store)
-      return (store[rgId]).length;
-    return 0;
+    return findByResourceGroup(rgId).length;
   }
 }

@@ -12,17 +12,11 @@ import uim.platform.mobile.domain.types;
 import std.algorithm : filter;
 import std.array : array;
 
-class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
-  private FeatureRestriction[FeatureRestrictionId] store;
+class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,FeatureRestrictionId), FeatureRestrictionRepository {
 
-  bool existsById(FeatureRestrictionId id) {
-    return id in store ? true : false;
+  bool existsByKey(MobileAppId appId, string featureKey) {
+    return findByApp(appId).any!(r => r.featureKey == featureKey);
   }
-
-  FeatureRestriction findById(FeatureRestrictionId id) {
-    return existsById(id) ? store[id] : FeatureRestriction.init;
-  }
-
   FeatureRestriction findByKey(MobileAppId appId, string featureKey) {
     foreach (r; findByApp(appId)) {
       if (r.featureKey == featureKey)
@@ -31,31 +25,25 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
     return FeatureRestriction.init;
   }
 
+  size_t countByApp(MobileAppId appId) {
+    return findByApp(appId).length;
+  }
+
   FeatureRestriction[] findByApp(MobileAppId appId) {
     return findAll().filter!(r => r.appId == appId).array;
   }
+  void removeByApp(MobileAppId appId) {
+    findByApp(appId).each!(r => remove(r));
+  }
 
+  size_t countEnabled(MobileAppId appId) {
+    return findEnabled(appId).length;
+  }
   FeatureRestriction[] findEnabled(MobileAppId appId) {
     return findByApp(appId).filter!(r => r.enabled).array;
   }
-
-  FeatureRestriction[] findByTenant(TenantId tenantId) {
-    return findAll().filter!(r => r.tenantId == tenantId).array;
+  void removeEnabled(MobileAppId appId) {
+    findEnabled(appId).each!(r => remove(r));
   }
 
-  void save(FeatureRestriction restriction) {
-    store[restriction.id] = restriction;
-  }
-
-  void update(FeatureRestriction restriction) {
-    store[restriction.id] = restriction;
-  }
-
-  void remove(FeatureRestrictionId id) {
-    store.removeById(id);
-  }
-
-  size_t countByApp(MobileAppId appId) {
-    return findAll().filter!(r => r.appId == appId).array.length;
-  }
 }

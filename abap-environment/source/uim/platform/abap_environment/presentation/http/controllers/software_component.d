@@ -70,7 +70,7 @@ class SoftwareComponentController : PlatformController {
       auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
       if (systemId.isEmpty)
         systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-        
+
       auto items = uc.listComponents(systemId);
       auto arr = items.map!(comp => comp.toJson).array.toJson;
 
@@ -159,37 +159,4 @@ class SoftwareComponentController : PlatformController {
     }
   }
 
-  private static Json serializeComponent(const SoftwareComponent comp) {
-    auto j = Json.emptyObject
-      .set("id", comp.id)
-      .set("tenantId", comp.tenantId)
-      .set("systemInstanceId", comp.systemInstanceId)
-      .set("name", comp.name)
-      .set("description", comp.description)
-      .set("componentType", comp.componentType.to!string)
-      .set("status", comp.status.to!string)
-      .set("repositoryUrl", comp.repositoryUrl)
-      .set("branch", comp.branch)
-      .set("branchStrategy", comp.branchStrategy.to!string)
-      .set("currentCommitId", comp.currentCommitId)
-      .set("namespace", comp.namespace)
-      .set("clonedAt", comp.clonedAt)
-      .set("lastPulledAt", comp.lastPulledAt)
-      .set("createdAt", comp.createdAt)
-      .set("updatedAt", comp.updatedAt);
-
-    if (comp.commitHistory.length > 0) {
-      auto hist = Json.emptyArray;
-      foreach (c; comp.commitHistory) {
-        hist ~= Json.emptyObject
-          .set("commitId", c.commitId)
-          .set("message", c.message)
-          .set("author", c.author)
-          .set("timestamp", c.timestamp);
-      }
-      j["commitHistory"] = hist;
-    }
-
-    return j;
-  }
 }

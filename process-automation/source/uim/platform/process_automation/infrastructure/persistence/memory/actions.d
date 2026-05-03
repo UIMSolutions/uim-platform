@@ -10,43 +10,16 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryActionRepository : ActionRepository {
-    private Action[] store;
-
-    Action findById(ActionId id) {
-        foreach (a; findAll) {
-            if (a.id == id)
-                return a;
-        }
-        return Action.init;
-    }
-
-    Action[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array;
+class MemoryActionRepository : TenantRepository!(Action, ActionId), ActionRepository {
+    size_t countByProject(ProjectId projectId) {
+        return findByProject(projectId).length;
     }
 
     Action[] findByProject(ProjectId projectId) {
         return findAll().filter!(a => a.projectId == projectId).array;
     }
 
-    void save(Action a) {
-        store ~= a;
-    }
-
-    void update(Action a) {
-        foreach (existing; findAll) {
-            if (existing.id == a.id) {
-                existing = a;
-                return;
-            }
-        }
-    }
-
-    void remove(ActionId id) {
-        store = findAll().filter!(a => a.id != id).array;
-    }
-
-    size_t countByTenant(TenantId tenantId) {
-        return findAll().filter!(a => a.tenantId == tenantId).array.length;
+    void removeByProject(ProjectId projectId) {
+        findByProject(projectId).each!(a => remove(a));
     }
 }

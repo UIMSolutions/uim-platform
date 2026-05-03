@@ -65,14 +65,7 @@ struct TransportRequest {
       .set("importedAt", importedAt);
 
     if (tasks.length > 0) {
-      auto ts = tasks.map!(t => Json.emptyObject
-        .set("taskId", t.id)
-        .set("owner", t.owner)
-        .set("status", t.status.to!string)
-        .set("description", t.description)
-        .set("objectList", t.objectList.array.toJson())
-        .set("createdAt", t.createdAt)
-        .set("releasedAt", t.releasedAt)).array;
+      auto ts = tasks.map!(t => t.toJson).array;
       j["tasks"] = ts.toJson;
     }
 

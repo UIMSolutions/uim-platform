@@ -11,44 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthClientRepository : OAuthClientRepository {
-    private OAuthClient[] store;
+class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
 
-    bool existsById(OAuthClientId id) {
-        return store.any!(e => e.id == id);
+    bool existsByClientId(string clientId) {
+        return findAll().any!(e => e.clientId == clientId);
     }
-
-    OAuthClient findById(OAuthClientId id) {
-        foreach (e; findAll)
-            if (e.id == id) return e;
-        return OAuthClient.init;
-    }
-
     OAuthClient findByClientId(string clientId) {
         foreach (e; findAll)
             if (e.clientId == clientId) return e;
         return OAuthClient.init;
     }
-
-    OAuthClient[] findAll() { return store; }
-
-    OAuthClient[] findByTenant(TenantId tenantId) {
-        return findAll().filter!(e => e.tenantId == tenantId).array;
+    void removeByClientId(string clientId) {
+        foreach (e; findAll)
+            if (e.clientId == clientId) {
+                remove(e);
+                return;
+            }
     }
 
+    size_t countByStatus(ClientStatus status) {
+        return findByStatus(status).length;
+    }
     OAuthClient[] findByStatus(ClientStatus status) {
         return findAll().filter!(e => e.status == status).array;
     }
-
-    void save(OAuthClient entity) { store ~= entity; }
-
-    void update(OAuthClient entity) {
-        foreach (ref e; findAll)
-            if (e.id == entity.id) { e = entity; return; }
+    void removeByStatus(ClientStatus status) {
+        findByStatus(status).each!(e => remove(e.id));
     }
 
-    void remove(OAuthClientId id) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.id == id);
-    }
 }

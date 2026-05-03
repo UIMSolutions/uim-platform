@@ -17,11 +17,20 @@ struct ComponentCommit {
   string message;
   string author;
   long timestamp;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("commitId", commitId)
+      .set("message", message)
+      .set("author", author)
+      .set("timestamp", timestamp);
+  }
 }
 
 /// ABAP software component (git-managed development object container).
 struct SoftwareComponent {
   mixin TenantEntity!(SoftwareComponentId);
+
   SystemInstanceId systemInstanceId;
   string name;
   string description;
@@ -62,11 +71,7 @@ struct SoftwareComponent {
       .set("lastPulledAt", lastPulledAt);
 
     if (commitHistory.length > 0) {
-      auto history = commitHistory.map!(c => Json.emptyObject
-        .set("commitId", c.commitId)
-        .set("message", c.message)
-        .set("author", c.author)
-        .set("timestamp", c.timestamp)).array.toJson;
+      auto history = commitHistory.map!(c => c.toJson).array.toJson;
       j["commitHistory"] = history;
     }
 
