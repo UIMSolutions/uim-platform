@@ -27,7 +27,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
+    findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
   }
 
   size_t countByAuthor(TenantId tenantId, UserId authorId) {
@@ -39,7 +39,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   void removeByAuthor(TenantId tenantId, UserId authorId) {
-    return findByAuthor(tenantId, authorId).each!(c => remove(c));
+    findByAuthor(tenantId, authorId).each!(c => remove(c));
   }
 
   size_t countByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
@@ -52,7 +52,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   void removeByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
-    return findByType(tenantId, contentType, workspaceId).each!(c => remove(c));
+    findByType(tenantId, contentType, workspaceId).each!(c => remove(c));
   }
 
   size_t countByTag(TenantId tenantId, string tag) {
@@ -64,7 +64,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   void removeByTag(TenantId tenantId, string tag) {
-    return findByTag(tenantId, tag).each!(c => remove(c));
+    findByTag(tenantId, tag).each!(c => remove(c));
   }
 
   size_t countByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
@@ -77,6 +77,6 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   void removeByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
-    return findByStatus(tenantId, status, workspaceId).each!(c => remove(c));
+    findByStatus(tenantId, status, workspaceId).each!(c => remove(c));
   }
 }

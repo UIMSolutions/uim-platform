@@ -35,7 +35,7 @@ class MemoryGroupRepository : TenantRepository!(WZGroup, GroupId), GroupReposito
   }
 
   void removeByMember(TenantId tenantId, UserId userId) {
-    return findByMember(tenantId, userId).each!(g => remove(g));
+    findByMember(tenantId, userId).each!(g => remove(g));
   }
 
 }

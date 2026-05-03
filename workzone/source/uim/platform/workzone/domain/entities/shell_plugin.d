@@ -34,8 +34,8 @@ struct ShellPlugin {
       .set("vendor", vendor)
       .set("scriptUrl", scriptUrl)
       .set("configSchemaUrl", configSchemaUrl)
-      .set("status", status.toString())
-      .set("assignedSiteIds", assignedSiteIds.map!(s => s.value).array)
-      .set("hookPoints", hookPoints.array);
+      .set("status", status.to!string)
+      .set("assignedSiteIds", assignedSiteIds.map!(s => s.value).array.toJson())
+      .set("hookPoints", hookPoints.toJson());
   }
 }

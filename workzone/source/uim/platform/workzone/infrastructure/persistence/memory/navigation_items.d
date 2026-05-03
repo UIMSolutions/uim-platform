@@ -28,7 +28,7 @@ class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, Navigat
   }
 
   void removeBySite(TenantId tenantId, SiteId siteId) {
-    return findBySite(tenantId, siteId).each!(n => remove(n));
+    findBySite(tenantId, siteId).each!(n => remove(n));
   }
   // #endregion bySite
 
@@ -42,7 +42,7 @@ class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, Navigat
   }
 
   void removeByParent(TenantId tenantId, NavigationItemId parentId) {
-    return findByParent(tenantId, parentId).each!(n => remove(n));
+    findByParent(tenantId, parentId).each!(n => remove(n));
   }
   // #endregion byParent
 }

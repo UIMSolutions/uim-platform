@@ -27,7 +27,7 @@ class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), 
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(t => remove(t));
+    findByWorkspace(tenantId, workspaceId).each!(t => remove(t));
   }
 
   size_t countByAuthor(TenantId tenantId, UserId authorId) {
@@ -39,7 +39,7 @@ class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), 
   }
 
   void removeByAuthor(TenantId tenantId, UserId authorId) {
-    return findByAuthor(tenantId, authorId).each!(t => remove(t));
+    findByAuthor(tenantId, authorId).each!(t => remove(t));
   }
 
 }

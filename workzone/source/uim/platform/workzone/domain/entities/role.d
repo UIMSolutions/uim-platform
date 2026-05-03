@@ -26,9 +26,9 @@ struct Role {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("permissions", permissions.array)
-      .set("assignedUserIds", assignedUserIds.map!(u => u.value).array)
-      .set("assignedGroupIds", assignedGroupIds.map!(g => g.value).array)
+      .set("permissions", permissions.toJson)
+      .set("assignedUserIds", assignedUserIds.map!(u => u.value).array.toJson)
+      .set("assignedGroupIds", assignedGroupIds.map!(g => g.value).array.toJson)
       .set("isDefault", isDefault);
   }
 }

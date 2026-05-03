@@ -28,7 +28,7 @@ class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
+    findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
   }
   // #endregion ByWorkspace
 
@@ -42,7 +42,7 @@ class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository
   }
 
   void removeByOrganizer(TenantId tenantId, UserId organizerId) {
-    return findByOrganizer(tenantId, organizerId).each!(e => remove(e));
+    findByOrganizer(tenantId, organizerId).each!(e => remove(e));
   }
   // #endregion ByOrganizer
 

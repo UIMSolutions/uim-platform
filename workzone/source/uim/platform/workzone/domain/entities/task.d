@@ -39,13 +39,13 @@ struct WZTask {
       .set("creatorName", creatorName)
       .set("title", title)
       .set("description", description)
-      .set("status", status.toString())
-      .set("priority", priority.toString())
+      .set("status", status.to!string())
+      .set("priority", priority.to!string())
       .set("sourceApp", sourceApp)
       .set("sourceTaskId", sourceTaskId)
       .set("actionUrl", actionUrl)
       .set("category", category)
-      .set("tags", tags.array)
+      .set("tags", tags.toJson)
       .set("dueDate", dueDate)
       .set("completedAt", completedAt);
 

@@ -25,7 +25,7 @@ class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepo
     return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
   }
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
+    findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
   }
 
   size_t countByActor(TenantId tenantId, UserId actorId) {
@@ -35,7 +35,7 @@ class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepo
     return findByTenant(tenantId).filter!(e => e.actorId == actorId).array;
   }
   void removeByActor(TenantId tenantId, UserId actorId) {
-    return findByActor(tenantId, actorId).each!(e => remove(e));
+    findByActor(tenantId, actorId).each!(e => remove(e));
   }
 
 }

@@ -37,7 +37,7 @@ struct ForumTopic {
           .set("authorId", authorId.value)
           .set("authorName", authorName)
           .set("status", status.to!string())
-          .set("tags", tags.array)
+          .set("tags", tags.toJson)
           .set("replyCount", replyCount)
           .set("viewCount", viewCount)
           .set("likeCount", likeCount)

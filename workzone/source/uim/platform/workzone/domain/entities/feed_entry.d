@@ -35,6 +35,6 @@ struct FeedEntry {
       .set("objectId", objectId)
       .set("objectTitle", objectTitle)
       .set("message", message)
-      .set("mentionedUserIds", mentionedUserIds.array);
+      .set("mentionedUserIds", mentionedUserIds.toJson);
   }
 }

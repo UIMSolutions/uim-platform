@@ -27,7 +27,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
   }
 
   void removeByRecipient(TenantId tenantId, UserId recipientId) {
-    return findByRecipient(tenantId, recipientId).each!(n => remove(n));
+    findByRecipient(tenantId, recipientId).each!(n => remove(n));
   }
 
   size_t countUnread(TenantId tenantId, UserId recipientId) {
@@ -39,7 +39,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
   }
 
   void removeUnread(TenantId tenantId, UserId recipientId) {
-    return findUnread(tenantId, recipientId).each!(n => remove(n));
+    findUnread(tenantId, recipientId).each!(n => remove(n));
   }
 
 }
