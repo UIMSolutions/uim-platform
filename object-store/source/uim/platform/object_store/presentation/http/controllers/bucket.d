@@ -55,15 +55,12 @@ class BucketController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-        
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -71,18 +68,17 @@ class BucketController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto buckets = uc.listBuckets(tenantId);
 
-      auto arr = buckets.map!(b => serializeBucket(b)).array.toJson;
+      auto buckets = uc.listBuckets(tenantId);
+      auto arr = buckets.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", buckets.length)
         .set("message", "Buckets retrieved successfully");
-      
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -102,8 +98,7 @@ class BucketController : PlatformController {
       }
 
       res.writeJsonBody(bucket.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -122,16 +117,14 @@ class BucketController : PlatformController {
       auto result = uc.updateBucket(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Bucket updated successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Bucket not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -143,37 +136,35 @@ class BucketController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
+          .set("id", result.id)
           .set("message", "Bucket deleted successfully");
-            
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto code = result.error == "Bucket not found" ? 404 : 409;
         writeError(res, code, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeBucket(Bucket b) {
     return Json.emptyObject
-    .set("id", b.id)
-    .set("tenantId", b.tenantId)
-    .set("name", b.name)
-    .set("region", b.region)
-    .set("storageClass", b.storageClass.to!string)
-    .set("versioningEnabled", b.versioningEnabled)
-    .set("encryptionType", b.encryptionType.to!string)
-    .set("encryptionKeyId", b.encryptionKeyId)
-    .set("status", b.status.to!string)
-    .set("quotaBytes", b.quotaBytes)
-    .set("usedBytes", b.usedBytes)
-    .set("objectCount", b.objectCount)
-    .set("createdBy", b.createdBy)
-    .set("createdAt", b.createdAt)
-    .set("updatedAt", b.updatedAt);
+      .set("id", b.id)
+      .set("tenantId", b.tenantId)
+      .set("name", b.name)
+      .set("region", b.region)
+      .set("storageClass", b.storageClass.to!string)
+      .set("versioningEnabled", b.versioningEnabled)
+      .set("encryptionType", b.encryptionType.to!string)
+      .set("encryptionKeyId", b.encryptionKeyId)
+      .set("status", b.status.to!string)
+      .set("quotaBytes", b.quotaBytes)
+      .set("usedBytes", b.usedBytes)
+      .set("objectCount", b.objectCount)
+      .set("createdBy", b.createdBy)
+      .set("createdAt", b.createdAt)
+      .set("updatedAt", b.updatedAt);
   }
 }

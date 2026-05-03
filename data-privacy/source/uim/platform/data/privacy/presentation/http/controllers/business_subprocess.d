@@ -59,13 +59,13 @@ class BusinessSubprocessController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listSubprocesses(tenantId);
 
+      auto items = uc.listSubprocesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Business subprocesses retrieved successfully");
 
       res.writeJsonBody(resp, 200);

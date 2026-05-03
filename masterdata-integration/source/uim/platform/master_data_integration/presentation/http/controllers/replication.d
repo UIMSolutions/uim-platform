@@ -52,7 +52,8 @@ class ReplicationController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Replication job created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -76,11 +77,12 @@ class ReplicationController : PlatformController {
       else
         jobs = uc.listByTenant(tenantId);
 
-      auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
+      auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", jobs.length);
+        .set("totalCount", jobs.length)
+        .set("message", "Replication jobs retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -106,9 +108,13 @@ class ReplicationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.startJob(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication job started");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -119,9 +125,13 @@ class ReplicationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.pauseJob(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication job paused");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -132,9 +142,13 @@ class ReplicationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.cancelJob(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication job canceled");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -145,9 +159,13 @@ class ReplicationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteJob(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Replication job deleted");
+
+        res.writeJsonBody(resp, 204);
+      } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

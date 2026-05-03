@@ -34,7 +34,7 @@ class MonitoringController : PlatformController {
         TenantId tenantId = req.getTenantId;
       auto items = useCase.listAppHealth(tenantId);
 
-      auto arr = items.map!(h => serializeHealth(h)).array;
+      auto arr = items.map!(h => h)).array;
 
       auto resp = Json.emptyObject
         .set("message", "Application health summaries retrieved successfully")

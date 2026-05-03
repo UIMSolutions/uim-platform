@@ -51,8 +51,8 @@ class DatasetController : PlatformController {
       auto result = uc.createDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Dataset created successfully");
+          .set("id", Json(result.id))
+          .set("message", "Dataset created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -65,13 +65,14 @@ class DatasetController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
+      
       auto items = uc.listDatasets(tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(items.length))
-            .set("message", "Datasets retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Datasets retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -108,8 +109,8 @@ class DatasetController : PlatformController {
       auto result = uc.updateDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", "Dataset updated successfully");
+          .set("id", Json(result.id))
+          .set("message", "Dataset updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -128,9 +129,9 @@ class DatasetController : PlatformController {
       auto result = uc.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("status", Json("ready"))
-            .set("message", "Dataset validated successfully");
+          .set("id", Json(result.id))
+          .set("status", Json("ready"))
+          .set("message", "Dataset validated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -149,9 +150,9 @@ class DatasetController : PlatformController {
       auto result = uc.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("status", Json("completed"))
-            .set("message", "Dataset processed successfully");
+          .set("id", Json(result.id))
+          .set("status", Json("completed"))
+          .set("message", "Dataset processed successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -170,9 +171,9 @@ class DatasetController : PlatformController {
       auto result = uc.deleteDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("deleted", true)
-            .set("message", "Dataset deleted successfully");
+          .set("id", result.id)
+          .set("deleted", true)
+          .set("message", "Dataset deleted successfully");
 
         res.writeJsonBody(resp, 200);
       } else

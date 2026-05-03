@@ -160,5 +160,5 @@ struct User {
 }
 
 Json serializeUsers(User[] users) {
-  return users.map!(u => serializeUser(u)).array.toJson;
+  return users.map!(u => u).array.toJson;
 }

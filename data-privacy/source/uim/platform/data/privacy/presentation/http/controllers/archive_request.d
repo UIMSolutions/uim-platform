@@ -48,7 +48,7 @@ class ArchiveRequestController : PlatformController {
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Archive request created");
 
         res.writeJsonBody(resp, 201);
@@ -61,13 +61,13 @@ class ArchiveRequestController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRequests(tenantId);
 
-      auto arr = items.MAP!(e => serialize(e)).array.toJson;
+      auto items = uc.listRequests(tenantId);
+      auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Archive requests retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -100,7 +100,7 @@ class ArchiveRequestController : PlatformController {
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Archive request status updated");
 
         res.writeJsonBody(resp, 200);

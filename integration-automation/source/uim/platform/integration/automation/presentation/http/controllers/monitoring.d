@@ -38,13 +38,14 @@ class MonitoringController : PlatformController {
   private void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getAllLogs(tenantId);
 
+      auto logs = useCase.getAllLogs(tenantId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", logs.length);
+        .set("totalCount", logs.length)
+        .set("message", "Execution logs retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     }
@@ -57,13 +58,14 @@ class MonitoringController : PlatformController {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getWorkflowLogs(workflowtenantId, id);
 
+      auto logs = useCase.getWorkflowLogs(tenantId, workflowId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", logs.length);
+        .set("totalCount", logs.length)
+        .set("message", "Workflow execution logs retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     }
@@ -76,13 +78,14 @@ class MonitoringController : PlatformController {
     try {
       auto stepId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getStepLogs(steptenantId, id);
+      auto logs = useCase.getStepLogs(tenantId, stepId);
 
       auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", logs.length);
+        .set("totalCount", logs.length)
+        .set("message", "Step logs retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     }
@@ -96,11 +99,12 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       
       auto items = useCase.getFailures(tenantId);
-      auto arr = items.map!(l => serializeLog(l)).array.toJson;
+      auto arr = items.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Failures retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     }
@@ -113,7 +117,7 @@ class MonitoringController : PlatformController {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = useCase.getWorkflowSummary(workflowtenantId, id);
+      auto summary = useCase.getWorkflowSummary(tenantId, workflowId);
 
       auto j = Json.emptyObject
       .set("workflowId", summary.workflowId)

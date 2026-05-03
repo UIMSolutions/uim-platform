@@ -54,7 +54,8 @@ class DistributionController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Distribution model created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -75,11 +76,12 @@ class DistributionController : PlatformController {
       else
         models = uc.listByTenant(tenantId);
 
-      auto arr = models.map!(m => serializeModel(m)).array;
+      auto arr = models.map!(m => m.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", models.length);
+        .set("totalCount", models.length)
+        .set("message", "Distribution models retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -117,9 +119,13 @@ class DistributionController : PlatformController {
       r.cronSchedule = j.getString("cronSchedule");
 
       auto result = uc.updateModel(id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Distribution model updated");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -130,9 +136,13 @@ class DistributionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteModel(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Distribution model deleted");
+
+        res.writeJsonBody(resp, 204);
+      } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -143,9 +153,13 @@ class DistributionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.activate(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Distribution model activated");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

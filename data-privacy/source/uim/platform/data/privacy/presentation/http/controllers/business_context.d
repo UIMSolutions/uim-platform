@@ -61,13 +61,13 @@ class BusinessContextController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listContexts(tenantId);
 
+      auto items = uc.listContexts(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Business contexts retrieved successfully");
 
       res.writeJsonBody(resp, 200);

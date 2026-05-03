@@ -81,7 +81,7 @@ class ServiceInstanceController : PlatformController {
       else
         items = [];
 
-      auto arr = items.map!(inst => serializeInst(inst)).array.toJson;
+      auto arr = items.map!(inst =inst).array.toJson;
 
       auto resp = Json.emptyObject
           .set("items", arr)

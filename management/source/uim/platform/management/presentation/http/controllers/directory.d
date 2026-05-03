@@ -52,7 +52,8 @@ class DirectoryController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Directory created");
           
         res.writeJsonBody(resp, 201);
       } else
@@ -72,11 +73,12 @@ class DirectoryController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = items.map!(d => serializeDirectory(d)).array.toJson;
+      auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Directories retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -107,9 +109,13 @@ class DirectoryController : PlatformController {
       request.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = uc.update(id, request);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Directory updated");
+
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 404, result.error);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -118,9 +124,13 @@ class DirectoryController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto result = uc.remove(extractId(req.requestURI));
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Directory deleted");
+
+        res.writeJsonBody(resp, 204);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

@@ -166,7 +166,9 @@ class AuditConfigController : PlatformController {
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
       useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
-        .set("status", "deleted");
+        .set("status", "deleted")
+        .set("message", "Audit config deleted successfully");
+        
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

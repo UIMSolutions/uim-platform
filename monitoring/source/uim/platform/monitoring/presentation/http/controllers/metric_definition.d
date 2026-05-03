@@ -70,7 +70,7 @@ class MetricDefinitionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto defs = uc.listDefinitions(tenantId);
 
-      auto arr = defs.map!(d => serializeDefinition(d)).array.toJson;
+      auto arr = defs.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -110,7 +110,8 @@ class MetricDefinitionController : PlatformController {
       auto result = uc.updateDefinition(id, request);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Metric definition updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -127,7 +128,9 @@ class MetricDefinitionController : PlatformController {
       auto result = uc.removeDefinition(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("id", result.id)
+          .set("message", "Metric definition deleted successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
