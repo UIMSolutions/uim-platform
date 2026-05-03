@@ -42,7 +42,8 @@ class GroupController : PlatformController {
       auto result = useCase.createGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Group created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -57,11 +58,12 @@ class GroupController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
-      auto arr = groups.map!(g => serializeGroup(g)).array.toJson;
+      auto arr = groups.map!(g => g.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", groups.length);
+        .set("totalCount", Json(groups.length))
+        .set("message", "Groups retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -96,10 +98,13 @@ class GroupController : PlatformController {
       r.active = j.getBoolean("active", true);
 
       auto result = useCase.updateGroup(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Group updated");
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -110,10 +115,13 @@ class GroupController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteGroup(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Group deleted");
+        res.writeJsonBody(resp, 204);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

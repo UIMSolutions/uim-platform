@@ -62,20 +62,12 @@ struct CommunicationArrangement {
       .set("authMethod", authMethod.to!string);
 
     if (inboundServices.length > 0) {
-      auto services = inboundServices.map!(e => Json.emptyObject
-          .set("url", e.url)
-          .set("protocol", e.protocol.to!string)
-          .set("port", e.port)
-          .set("active", e.active)).array.toJson;
+      auto services = inboundServices.map!(e => e.toJson).array.toJson;
       j = j.set("inboundServices", services);
     }
 
     if (outboundServices.length > 0) {
-      auto services = outboundServices.map!(e => Json.emptyObject
-          .set("url", e.url)
-          .set("protocol", e.protocol.to!string)
-          .set("port", e.port)
-          .set("active", e.active)).array.toJson;
+      auto services = outboundServices.map!(e => e.toJson).array.toJson;
       j = j.set("outboundServices", services);
     }
 

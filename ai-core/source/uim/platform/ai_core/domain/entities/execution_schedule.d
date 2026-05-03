@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 struct ExecutionSchedule {
-  mixin Tenanttity!ScheduleId;
+  mixin TenantEntity!ScheduleId;
 
   ResourceGroupId resourceGroupId;
   ConfigurationId configurationId;

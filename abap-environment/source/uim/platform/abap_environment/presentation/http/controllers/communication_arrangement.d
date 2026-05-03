@@ -152,20 +152,4 @@ class CommunicationArrangementController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeArrangement(const CommunicationArrangement a) {
-    return Json.emptyObject
-    .set("id", a.id)
-    .set("tenantId", a.tenantId)
-    .set("systemInstanceId", a.systemInstanceId)
-    .set("scenarioId", a.scenarioId)
-    .set("name", a.name)
-    .set("description", a.description)
-    .set("direction", a.direction.to!string)
-    .set("status", a.status.to!string)
-    .set("authMethod", a.authMethod.to!string)
-    .set("communicationUser", a.communicationUser)
-    .set("createdAt", a.createdAt)
-    .set("updatedAt", a.updatedAt);
-  }
 }

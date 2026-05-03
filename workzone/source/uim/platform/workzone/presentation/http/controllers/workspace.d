@@ -74,11 +74,11 @@ class WorkspaceController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
-      auto arr = workspaces.map!(w => serializeWorkspace(w)).array.toJson;
+      auto arr = workspaces.map!(w => w.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", workspaces.length)
+        .set("totalCount", Json(workspaces.length))
         .set("message", "Workspaces retrieved successfully");
 
       res.writeJsonBody(resp, 200);

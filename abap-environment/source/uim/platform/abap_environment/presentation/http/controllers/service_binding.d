@@ -134,33 +134,4 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private static Json serializeBinding(const ServiceBinding b) {
-    auto j = Json.emptyObject
-      .set("id", b.id)
-      .set("tenantId", b.tenantId)
-      .set("systemInstanceId", b.systemInstanceId)
-      .set("serviceDefinitionId", b.serviceDefinitionId)
-      .set("name", b.name)
-      .set("description", b.description)
-      .set("bindingType", b.bindingType.to!string)
-      .set("status", b.status.to!string)
-      .set("serviceUrl", b.serviceUrl)
-      .set("metadataUrl", b.metadataUrl)
-      .set("createdAt", b.createdAt)
-      .set("updatedAt", b.updatedAt);
-
-    if (b.endpoints.length > 0) {
-      auto eps = Json.emptyArray;
-      foreach (ep; b.endpoints) {
-        eps ~= Json.emptyObject
-        .set("path", ep.path)
-        .set("serviceName", ep.serviceName)
-        .set("serviceVersion", ep.serviceVersion)
-        .set("requiresAuth", ep.requiresAuth);
-      }
-      j["endpoints"] = eps;
-    }
-
-    return j;
-  }
 }

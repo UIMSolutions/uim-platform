@@ -137,32 +137,4 @@ class BusinessUserController : PlatformController {
     }
   }
 
-  private static Json serializeUser(const BusinessUser u) {
-    auto j = Json.emptyObject
-      .set("id", u.id)
-      .set("tenantId", u.tenantId)
-      .set("systemInstanceId", u.systemInstanceId)
-      .set("username", u.username)
-      .set("firstName", u.firstName)
-      .set("lastName", u.lastName)
-      .set("email", u.email)
-      .set("status", u.status.to!string)
-      .set("passwordChangeRequired", u.passwordChangeRequired)
-      .set("lastLoginAt", u.lastLoginAt)
-      .set("createdAt", u.createdAt)
-      .set("updatedAt", u.updatedAt);
-
-    if (u.roleAssignments.length > 0) {
-      auto roles = Json.emptyArray;
-      foreach (ra; u.roleAssignments) {
-        roles ~= Json.emptyObject
-        .set("roleId", ra.roleId)
-        .set("roleName", ra.roleName)
-        .set("assignedAt", ra.assignedAt);
-      }
-      j["roleAssignments"] = roles;
-    }
-
-    return j;
-  }
 }

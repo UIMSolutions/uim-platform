@@ -64,11 +64,11 @@ class KnowledgeBaseArticleController {
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
 
       auto articles = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = articles.map!(a => serializeKBArticle(a)).array.toJson;
+      auto arr = articles.map!(a => a.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", articles.length)
+        .set("totalCount", Json(articles.length))
         .set("message", "Knowledge base articles retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -106,10 +106,13 @@ class KnowledgeBaseArticleController {
       r.tags = getStringArray(j, "tags");
 
       auto result = useCase.updateArticle(r);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Knowledge base article updated");
+        res.writeJsonBody(resp, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

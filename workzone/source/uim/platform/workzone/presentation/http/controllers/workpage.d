@@ -61,7 +61,7 @@ class WorkpageController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = pages.map!(p => serializePage(p)).array.toJson;
+      auto arr = pages.map!(p => p.toJson).array;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -103,7 +103,7 @@ class WorkpageController : PlatformController {
       auto result = useCase.updateWorkpage(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "updated");
+          .set("message", "Workpage updated");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -118,8 +118,14 @@ class WorkpageController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteWorkpage(tenantId, id);
-      res.writeBody("", 204);
+      auto result = useCase.deleteWorkpage(tenantId, id);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("message", "Workpage deleted");
+        res.writeJsonBody(resp, 204);
+      } else {
+        writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -55,11 +55,8 @@ struct BusinessUser {
       .set("failedLoginAttempts", failedLoginAttempts);
 
     if (roleAssignments.length > 0) {
-      auto roles = roleAssignments.map!(r => Json.emptyObject
-        .set("roleId", r.roleId)
-        .set("roleName", r.roleName)
-        .set("assignedAt", r.assignedAt)).array.toJson();
-      j = j.set("roleAssignments", roles);
+      auto roles = roleAssignments.map!(r => r.toJson).array.toJson();
+      j["roleAssignments"] = roles;
     }
 
     return j;
