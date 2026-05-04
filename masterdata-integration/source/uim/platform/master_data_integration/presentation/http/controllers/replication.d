@@ -47,7 +47,7 @@ class ReplicationController : PlatformController {
       r.sourceClientId = j.getString("sourceClientId");
       r.targetClientIds = getStringArray(j, "targetClientIds");
       r.isInitialLoad = j.getBoolean("isInitialLoad");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

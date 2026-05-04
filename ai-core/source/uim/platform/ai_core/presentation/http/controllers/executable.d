@@ -64,11 +64,9 @@ class ExecutableController : PlatformController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
-      typeof(uc.list(rgId)) executables;
-      if (scenarioId.length > 0)
-        executables = uc.listByScenario(scenarioId, rgId);
-      else
-        executables = uc.list(rgId);
+      auto executables = scenarioId.length > 0
+        ? uc.listByScenario(scenarioId, rgId)
+        : uc.list(rgId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
@@ -85,8 +83,9 @@ class ExecutableController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-        .set("count", executables.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("totalCount", executables.length)
+        .set("message", "Executables retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -98,7 +97,7 @@ class ExecutableController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto e = uc.getbyId(id, rgId);
@@ -116,7 +115,8 @@ class ExecutableController : PlatformController {
         .set("versionId", e.versionId)
         .set("deployable", e.deployable)
         .set("createdAt", e.createdAt)
-        .set("updatedAt", e.updatedAt);
+        .set("updatedAt", e.updatedAt)
+        .set("message", "Executable retrieved");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -128,12 +128,16 @@ class ExecutableController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = uc.remove(id, rgId);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto response = Json.emptyObject
+          .set("id", id)
+          .set("message", "Executable deleted");
+
+        res.writeJsonBody(response, 204);
       } else {
         writeError(res, 404, result.error);
       }

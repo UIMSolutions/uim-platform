@@ -48,7 +48,7 @@ class EntitlementController : PlatformController {
       r.quotaAssigned = j.getInteger("quotaAssigned");
       r.unlimited = j.getBoolean("unlimited");
       r.autoAssign = j.getBoolean("autoAssign");
-      r.assignedBy = req.headers.get("X-User-Id", "");
+      r.assignedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.assign(r);
       if (result.success) {

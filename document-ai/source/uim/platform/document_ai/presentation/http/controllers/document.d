@@ -34,7 +34,7 @@ class DocumentController : PlatformController {
       auto j = req.json;
       UploadDocumentRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.fileName = j.getString("fileName");
       r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
@@ -62,7 +62,7 @@ class DocumentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto docs = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
@@ -86,7 +86,7 @@ class DocumentController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto d = uc.getById(id, clientId);
       if (d.isNull) {
@@ -105,7 +105,7 @@ class DocumentController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.remove(id, clientId);
       if (result.success) {
@@ -126,7 +126,7 @@ class DocumentController : PlatformController {
       auto j = req.json;
       ConfirmDocumentRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentId = id;
       r.correctedFields = jsonKeyValuePairs(j, "correctedFields");
 
@@ -151,7 +151,7 @@ class DocumentController : PlatformController {
       import std.conv : to;
 
       auto docId = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.getExtractionResult(docId, clientId);
       if (result.isNull) {

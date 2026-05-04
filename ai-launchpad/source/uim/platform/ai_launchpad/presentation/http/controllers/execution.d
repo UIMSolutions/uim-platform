@@ -35,7 +35,7 @@ class ExecutionController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateExecutionRequest r;
       r.connectionId = connectionId;
@@ -60,8 +60,8 @@ class ExecutionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       typeof(uc.listByConnection(connectionId)) executions;
       if (scenarioId.length > 0)
@@ -87,7 +87,7 @@ class ExecutionController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       if (!uc.existsById(id, connectionId)) {
         writeError(res, 404, "Execution not found");
@@ -110,7 +110,7 @@ class ExecutionController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchExecutionRequest r;
       r.connectionId = connectionId;
@@ -135,7 +135,7 @@ class ExecutionController : PlatformController {
   private void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchExecutionRequest r;
       r.connectionId = connectionId;
@@ -168,7 +168,7 @@ class ExecutionController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

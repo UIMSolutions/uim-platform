@@ -25,11 +25,15 @@ struct MonitoredResource {
   string region;
   int instanceCount;
   string[] tags;
-  string registeredBy;
+  UserId registeredBy;
   long registeredAt;
   long lastSeenAt;
 
   Json toJson() const {
+    auto jTags = Json.emptyArray;
+    foreach (tag; tags) {
+      jTags ~= tag;
+    } 
     return entityToJson
       .set("subaccountId", subaccountId)
       .set("name", name)
@@ -40,7 +44,7 @@ struct MonitoredResource {
       .set("runtime", runtime)
       .set("region", region)
       .set("instanceCount", instanceCount)
-      .set("tags", tags)
+      .set("tags", jTags)
       .set("registeredBy", registeredBy)
       .set("registeredAt", registeredAt)
       .set("lastSeenAt", lastSeenAt);

@@ -61,19 +61,18 @@ class ConnectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto workspaceId = req.headers.get("X-Workspace-Id", "");
+      auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
-      typeof(uc.listAll()) connections;
-      if (workspaceId.length > 0)
-        connections = uc.listByWorkspace(workspaceId);
-      else
-        connections = uc.listAll();
+      auto connections = workspaceId.value.length > 0
+        ? uc.listByWorkspace(workspaceId)
+        : uc.listAll();
 
       auto jarr = connections.map!(connection => connection.toJson).array.toJson;
 
       auto resp = Json.emptyObject
       .set("count", connections.length)
-      .set("resources", jarr);
+      .set("resources", jarr)
+      .set("message", "Connections retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -84,7 +83,7 @@ class ConnectionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto connection = uc.getById(id);
       if (connection.isNull) {
@@ -101,7 +100,7 @@ class ConnectionController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchConnectionRequest r;
@@ -127,11 +126,14 @@ class ConnectionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto response = Json.emptyObject
+          .set("message", "Connection deleted");  
+
+        res.writeJsonBody(response, 204);
       } else {
         writeError(res, 404, result.error);
       }

@@ -15,11 +15,18 @@ struct BackupSchedule {
   string cronExpression;
   int retentionDays;
   bool enabled;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("cronExpression", cronExpression)
+      .set("retentionDays", retentionDays)
+      .set("enabled", enabled);
+  }
 }
 
 struct Backup {
-  BackupId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BackupId);
+
   InstanceId instanceId;
   string name;
   BackupType type;
@@ -32,5 +39,20 @@ struct Backup {
   long startedAt;
   long completedAt;
   long expiresAt;
-  long createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("instanceId", instanceId.value)
+      .set("name", name)
+      .set("type", type.toString())
+      .set("status", status.toString())
+      .set("sizeBytes", sizeBytes)
+      .set("destination", destination)
+      .set("encryptionKey", encryptionKey)
+      .set("encrypted", encrypted)
+      .set("schedule", schedule.toJson())
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("expiresAt", expiresAt);
+  }
 }

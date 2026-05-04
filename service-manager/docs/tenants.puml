@@ -1,0 +1,26 @@
+@startuml
+skinparam componentStyle uml2
+
+package "SAP BTP Hierarchy" {
+
+    class "Global Account" as GA {
+    }
+
+    class "Subaccount" as SA {
+    }
+
+    class "Tenant / Service Instance" as T {
+  
+    }
+
+    ' Beziehungs-Definitionen
+    GA "1" *-- "0..*" SA : contains (Composition)
+    SA "1" o-- "0..*" T : hosts (Aggregation)
+
+}
+
+note right of GA : Vertratsebene (CPEA/Pay-as-you-go)
+note right of SA : Isolierte Umgebung (Dev/Test/Prod)
+note right of T : Spezifische App-Instanz\n(z.B. Cloud Integration)
+
+@enduml

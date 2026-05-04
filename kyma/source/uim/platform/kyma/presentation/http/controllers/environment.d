@@ -41,7 +41,7 @@ class EnvironmentController : PlatformController {
       auto j = req.json;
       CreateEnvironmentRequest r;
       r.tenantId = req.getTenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+      r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.plan = j.getString("plan");
@@ -55,7 +55,7 @@ class EnvironmentController : PlatformController {
       r.oidcGroupsClaim = getStringArray(j, "oidcGroupsClaim");
       r.oidcUsernameClaim = getStringArray(j, "oidcUsernameClaim");
       r.administrators = getStringArray(j, "administrators");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {
@@ -73,7 +73,7 @@ class EnvironmentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
 
       KymaEnvironment[] envs;
       if (subaccountId.length > 0)
@@ -95,13 +95,13 @@ class EnvironmentController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      if (!uc.hasEnvironment(KymaEnvironmentId(id))) {
+      auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
+      if (!uc.hasEnvironment(id)) {
         writeError(res, 404, "Environment not found");
         return;
       }
 
-      auto env = uc.getEnvironment(KymaEnvironmentId(id));
+      auto env = uc.getEnvironment(id);
       res.writeJsonBody(env.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -110,7 +110,7 @@ class EnvironmentController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateEnvironmentRequest r;
       r.name = j.getString("name");
@@ -123,7 +123,7 @@ class EnvironmentController : PlatformController {
       r.oidcClientId = j.getString("oidcClientId");
       r.administrators = getStringArray(j, "administrators");
 
-      auto result = uc.updateEnvironment(KymaEnvironmentId(id), r);
+      auto result = uc.updateEnvironment(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,8 +135,8 @@ class EnvironmentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteEnvironment(KymaEnvironmentId(id));
+      auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
+      auto result = uc.deleteEnvironment(id);
       if (result.success)
         res.writeBody("", 204);
       else

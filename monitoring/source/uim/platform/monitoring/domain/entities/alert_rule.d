@@ -43,7 +43,7 @@ struct AlertRule {
       .set("consecutiveBreaches", consecutiveBreaches)
       .set("severity", severity.to!string)
       .set("isEnabled", isEnabled)
-      .set("channelIds", channelIds.map!(id => id.value).array);
+      .set("channelIds", channelIds.map!(id => id.value).array.toJson);
 
     return j;
   }

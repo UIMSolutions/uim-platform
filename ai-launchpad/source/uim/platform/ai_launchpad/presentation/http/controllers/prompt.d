@@ -64,7 +64,7 @@ class PromptController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto collectionId = req.headers.get("X-Collection-Id", "");
+      auto collectionId = CollectionId(req.headers.get("X-Collection-Id", ""));
 
       auto prompts = collectionId.length > 0
         ? uc.listByCollection(collectionId)

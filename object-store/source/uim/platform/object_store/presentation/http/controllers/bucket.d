@@ -49,7 +49,7 @@ class BucketController : PlatformController {
       r.encryptionType = j.getString("encryptionType");
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createBucket(r);
       if (result.success) {

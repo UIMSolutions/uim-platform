@@ -79,7 +79,7 @@ class CredentialController : PlatformController {
       auto j = req.json;
       CreateCredentialRequest r;
       r.tenantId = req.getTenantId;
-      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.name = j.getString("name");
       r.type = type;
       r.value = j.getString("value");
@@ -106,11 +106,11 @@ class CredentialController : PlatformController {
 
   private void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
+      auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
       Credential[] creds;
       if (namespaceId.length > 0) {
-        creds = credentials.listByType(NamespaceId(namespaceId), type);
+        creds = credentials.listByType(namespaceId, type);
       }
 
       auto jarr = Json.emptyArray;

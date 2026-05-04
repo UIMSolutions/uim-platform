@@ -46,7 +46,7 @@ class DataRecordController : PlatformController {
       r.datasetId = j.getString("datasetId");
       r.attributes = j.getString("attributes");
       r.labels = j.getString("labels");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createRecord(r);
       if (result.isSuccess) {

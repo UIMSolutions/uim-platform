@@ -50,7 +50,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     check.expectedResponseContains = req.expectedResponseContains;
     check.warningThreshold = req.warningThreshold;
     check.criticalThreshold = req.criticalThreshold;
-    check.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
+    check.thresholdOperator = req.thresholdOperator.to!ThresholdOperator;
     check.createdBy = req.createdBy;
     check.createdAt = clockSeconds();
     check.updatedAt = check.createdAt;
@@ -68,10 +68,6 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
 
     checkRepo.save(check);
     return CommandResult(true, check.id.value, "");
-  }
-
-  CommandResult updateCheck(string id, UpdateHealthCheckRequest req) {
-    return updateCheck(HealthCheckId(id), req);
   }
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
@@ -117,7 +113,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     r.executedAt = clockSeconds();
 
     resultRepo.save(r);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   HealthCheck getCheck(HealthCheckId id) {

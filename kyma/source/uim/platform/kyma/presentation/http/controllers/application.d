@@ -51,7 +51,7 @@ class ApplicationController : PlatformController {
         connectorUrl = j.getString("connectorUrl");
         boundNamespaces = getStringArray(j, "boundNamespaces");
         labels = jsonStrMap(j, "labels");
-        createdBy = req.headers.get("X-User-Id", "");
+        createdBy = UserId(req.headers.get("X-User-Id", ""));
         // Parse APIs
         apis = j.toApis;
         events = parseEvents(j);

@@ -42,7 +42,7 @@ class ImportController : PlatformController {
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
       r.sourceFilePath = j.getString("sourceFilePath");
-      r.startedBy = req.headers.get("X-User-Id", "");
+      r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.startImport(r);
       if (result.success) {

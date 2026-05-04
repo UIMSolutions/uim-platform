@@ -35,12 +35,17 @@ struct NotificationChannel {
   string onPremiseProtocol;
 
   Json toJson() const {
+    auto jRecipients = Json.emptyArray;
+    foreach (r; emailRecipients) {
+      jRecipients ~= r;
+    }
+
     auto j = entityToJson
       .set("name", name)
       .set("description", description)
-      .set("channelType", channelType.toString())
-      .set("state", state.toString())
-      .set("emailRecipients", emailRecipients)
+      .set("channelType", channelType.to!string())
+      .set("state", state.to!string())
+      .set("emailRecipients", jRecipients)
       .set("emailSubjectPrefix", emailSubjectPrefix)
       .set("webhookUrl", webhookUrl)
       .set("webhookSecret", webhookSecret)

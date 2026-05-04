@@ -42,7 +42,7 @@ class ExportController : PlatformController {
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
       r.queueId = j.getString("queueId");
-      r.startedBy = req.headers.get("X-User-Id", "");
+      r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.startExport(r);
       if (result.success) {

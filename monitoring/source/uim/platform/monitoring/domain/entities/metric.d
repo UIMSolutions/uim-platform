@@ -25,6 +25,11 @@ struct Metric {
   long timestamp;
 
   Json toJson() const {
+    auto jLabel = Json.emptyObject;
+    foreach (k, v; labels) {
+      jLabel.set(k, v);
+    } 
+
     return entityToJson
       .set("resourceId", resourceId.value)
       .set("definitionId", definitionId.value)
@@ -32,7 +37,7 @@ struct Metric {
       .set("value", value_)
       .set("unit", unit.to!string)
       .set("category", category.to!string)
-      .set("labels", labels)
+      .set("labels", jLabel)
       .set("timestamp", timestamp);
   }
 }

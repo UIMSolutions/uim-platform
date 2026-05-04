@@ -25,8 +25,8 @@ struct Alert {
   AlertSeverity severity = AlertSeverity.warning;
   AlertState state = AlertState.open;
   string message;
-  string acknowledgedBy;
-  string resolvedBy;
+  UserId acknowledgedBy;
+  UserId resolvedBy;
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;
@@ -39,9 +39,9 @@ struct Alert {
       .set("metricName", metricName)
       .set("currentValue", currentValue)
       .set("thresholdValue", thresholdValue)
-      .set("operator", operator_.toString())
-      .set("severity", severity.toString())
-      .set("state", state.toString())
+      .set("operator", operator_.to!string())
+      .set("severity", severity.to!string())
+      .set("state", state.to!string())
       .set("message", message)
       .set("acknowledgedBy", acknowledgedBy)
       .set("resolvedBy", resolvedBy)

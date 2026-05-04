@@ -47,7 +47,7 @@ class QueueController : PlatformController {
       r.endpoint = j.getString("endpoint");
       r.authToken = j.getString("authToken");
       r.isDefault = j.getBoolean("isDefault");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createQueue(r);
       if (result.success) {

@@ -21,8 +21,8 @@ struct Alert {
   string message;
   long matchCount;
   LogEntryId sampleLogEntryId;
-  string acknowledgedBy;
-  string resolvedBy;
+  UserId acknowledgedBy;
+  UserId resolvedBy;
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;

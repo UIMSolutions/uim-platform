@@ -41,7 +41,7 @@ class FragmentController : PlatformController {
       auto j = req.json;
       CreateFragmentRequest r;
       r.tenantId = req.getTenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+      r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.level = j.getString("level");
@@ -57,7 +57,7 @@ class FragmentController : PlatformController {
       r.keystoreId = j.getString("keystoreId");
       r.truststoreId = j.getString("truststoreId");
       r.properties = jsonStrMap(j, "properties");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

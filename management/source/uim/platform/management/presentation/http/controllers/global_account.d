@@ -50,7 +50,7 @@ class GlobalAccountController : PlatformController {
       r.contactEmail = j.getString("contactEmail");
       r.maxSubaccounts = j.getInteger("maxSubaccounts", 100);
       r.maxDirectories = j.getInteger("maxDirectories", 20);
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = uc.create(r);

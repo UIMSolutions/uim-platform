@@ -33,7 +33,7 @@ class DocumentTypeController : PlatformController {
       auto j = req.json;
       CreateDocumentTypeRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.category = j.getString("category");
@@ -57,7 +57,7 @@ class DocumentTypeController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto types = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
@@ -80,7 +80,7 @@ class DocumentTypeController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto dt = uc.getById(id, clientId);
       if (dt.isNull) {
@@ -103,7 +103,7 @@ class DocumentTypeController : PlatformController {
 
       UpdateDocumentTypeRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -130,7 +130,7 @@ class DocumentTypeController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.remove(id, clientId);
       if (result.success) {

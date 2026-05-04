@@ -42,7 +42,7 @@ class LabelController : PlatformController {
       r.resourceId = j.getString("resourceId");
       r.key = j.getString("key");
       r.values = getStringArray(j, "values");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

@@ -16,11 +16,19 @@ struct ReplicationMapping {
   string sourceTable;
   string targetSchema;
   string targetTable;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("sourceSchema", sourceSchema)
+      .set("sourceTable", sourceTable)
+      .set("targetSchema", targetSchema)
+      .set("targetTable", targetTable);
+  }
 }
 
 struct ReplicationTask {
-  ReplicationTaskId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ReplicationTaskId);
+
   InstanceId instanceId;
   string name;
   string description;
@@ -34,6 +42,21 @@ struct ReplicationTask {
   long nextRunAt;
   long rowsReplicated;
   long errorCount;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("instanceId", instanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("mode", mode.toString())
+      .set("status", status.toString())
+      .set("sourceConnectionId", sourceConnectionId)
+      .set("targetConnectionId", targetConnectionId)
+      .set("mappings", mappings.map!(m => m.toJson()).array)
+      .set("scheduleExpression", scheduleExpression)
+      .set("lastRunAt", lastRunAt)
+      .set("nextRunAt", nextRunAt)
+      .set("rowsReplicated", rowsReplicated)
+      .set("errorCount", errorCount);
+  }
 }

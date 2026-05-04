@@ -32,7 +32,7 @@ struct Certificate {
   long validTo;
 
   // Metadata
-  string uploadedBy;
+  UserId uploadedBy;
   long uploadedAt;
 
   Json toJson() const {

@@ -1,0 +1,26 @@
+@startuml
+package "SAP BTP Structure" {
+    class "Global Account" as GA
+    class "Subaccount" as SA
+    
+    node "Cloud Foundry Environment" {
+        class "Space" as SP {
+            + String spaceName
+            + Quota devQuota
+        }
+        class "Service Instance" as SI {
+            + String instanceName
+            + String plan
+        }
+    }
+
+    class "SaaS Tenant" as T {
+        + String subscriptionName
+    }
+
+    GA "1" *-- "0..*" SA
+    SA "1" *-- "0..*" SP : contains
+    SP "1" *-- "0..*" SI : provisioned in
+    SA "1" -- "0..*" T : subscribed in
+}
+@enduml

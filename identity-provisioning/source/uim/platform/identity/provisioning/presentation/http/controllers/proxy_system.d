@@ -45,7 +45,7 @@ class ProxySystemController : PlatformController {
       r.connectionConfig = j.getString("connectionConfig");
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createProxySystem(r);
       if (result.isSuccess) {

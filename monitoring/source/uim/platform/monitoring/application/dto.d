@@ -161,14 +161,21 @@ struct UpdateAlertRuleRequest {
 struct AcknowledgeAlertRequest {
   AlertId alertId;
   TenantId tenantId;
-  string acknowledgedBy;
+  UserId acknowledgedBy;
 }
 
 struct ResolveAlertRequest {
   AlertId alertId;
   TenantId tenantId;
-  string resolvedBy;
+  UserId acknowledgedBy;
+  UserId resolvedBy;
 }
+
+// struct ResolveAlertRequest {
+//   AlertId alertId;
+//   TenantId tenantId;
+//   UserId resolvedBy;
+// }
 
 /// --- Notification Channel DTOs ---
 
@@ -203,6 +210,7 @@ struct UpdateNotificationChannelRequest {
   string webhookUrl;
   string webhookSecret;
   string onPremiseHost;
+  string onPremiseProtocol;
   int onPremisePort;
 }
 

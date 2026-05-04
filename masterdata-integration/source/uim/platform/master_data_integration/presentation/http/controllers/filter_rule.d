@@ -43,7 +43,7 @@ class FilterRuleController : PlatformController {
       r.dataModelId = j.getString("dataModelId");
       r.objectType = j.getString("objectType");
       r.logicOperator = j.getString("logicOperator");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.conditions = parseConditions(j);
 
       auto result = uc.create(r);

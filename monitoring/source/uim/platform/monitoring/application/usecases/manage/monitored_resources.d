@@ -52,10 +52,6 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, resource.id.value, "");
   }
 
-  CommandResult updateResource(string id, UpdateResourceRequest req) {
-    return updateResource(MonitoredResourceId(id), req);
-  }
-
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Resource not found");
@@ -79,16 +75,8 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, resource.id.value, "");
   }
 
-  MonitoredResource existsResource(string id) {
-    return existsResource(MonitoredResourceId(id));
-  }
-
-  MonitoredResource existsResource(MonitoredResourceId id) {
+  bool existsResource(MonitoredResourceId id) {
     return repo.existsById(id);
-  }
-
-  MonitoredResource getResource(string id) {
-    return getResource(MonitoredResourceId(id));
   }
 
   MonitoredResource getResource(MonitoredResourceId id) {

@@ -16,7 +16,7 @@ interface AlertRepository : ITenantRepository!(Alert, AlertId){
 
   size_t countByInstance(TenantId tenantId, InstanceId instanceId);
   Alert[] findByInstance(TenantId tenantId, InstanceId instanceId);
-  void removeByInstance(TenantId tenantIdInstanceId instanceId);
+  void removeByInstance(TenantId tenantId, InstanceId instanceId);
 
   size_t countActive(TenantId tenantId);
   Alert[] findActive(TenantId tenantId);

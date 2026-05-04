@@ -42,7 +42,7 @@ class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, M
   }
 
   MonitoredResource[] filterByType(MonitoredResource[] resources, ResourceType type) {
-    return resources.filter!(res => res.resourceType = type).array;
+    return resources.filter!(res => res.resourceType == type).array;
   }
 
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type) {
@@ -50,6 +50,6 @@ class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, M
   }
 
   void removeByType(TenantId tenantId, ResourceType type) {
-    findByType.each!(res => remove(res));
+    findByType(tenantId, type).each!(res => remove(res));
   }
 }

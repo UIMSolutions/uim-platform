@@ -46,7 +46,7 @@ class ProviderController : PlatformController {
       r.description = j.getString("description");
       r.endpoint = j.getString("endpoint");
       r.authToken = j.getString("authToken");
-      r.registeredBy = req.headers.get("X-User-Id", "");
+      r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.registerProvider(r);
       if (result.success) {

@@ -47,7 +47,7 @@ class TransportController : PlatformController {
       r.mode = j.getString("mode");
       r.packageIds = getStringArray(j, "packageIds");
       r.queueId = j.getString("queueId");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createTransportRequest(r);
       if (result.success) {
@@ -102,7 +102,7 @@ class TransportController : PlatformController {
       auto r = ReleaseTransportRequest();
       r.requestId = j.getString("requestId");
       r.tenantId = req.getTenantId;
-      r.releasedBy = req.headers.get("X-User-Id", "");
+      r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.releaseTransport(r);
       if (result.success) {

@@ -48,7 +48,7 @@ class PackageController : PlatformController {
       r.version_ = j.getString("version");
       r.format = j.getString("format");
       r.tags = getStringArray(j, "tags");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.items = parseContentItems(j);
 
       auto result = uc.createPackage(r);
@@ -150,7 +150,7 @@ class PackageController : PlatformController {
       auto r = AssemblePackageRequest();
       r.packageId = j.getString("packageId");
       r.tenantId = req.getTenantId;
-      r.assembledBy = req.headers.get("X-User-Id", "");
+      r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.assemblePackage(r);
       if (result.success) {

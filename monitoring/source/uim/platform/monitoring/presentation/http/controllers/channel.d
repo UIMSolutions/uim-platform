@@ -52,7 +52,7 @@ class ChannelController : PlatformController {
       r.onPremiseHost = j.getString("onPremiseHost");
       r.onPremisePort = j.getInteger("onPremisePort");
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createChannel(r);
       if (result.success) {
@@ -89,7 +89,7 @@ class ChannelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
       auto ch = uc.getChannel(id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
@@ -103,7 +103,7 @@ class ChannelController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateNotificationChannelRequest r;
       r.description = j.getString("description");
@@ -133,7 +133,7 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteChannel(id);
       if (result.success) {
         auto response = Json.emptyObject
@@ -149,23 +149,4 @@ class ChannelController : PlatformController {
     }
   }
 
-  private static Json serializeChannel(const ref NotificationChannel channel) {
-    return Json.emptyObject
-      .set("id", channel.id)
-      .set("tenantId", channel.tenantId)
-      .set("name", channel.name)
-      .set("description", channel.description)
-      .set("channelType", channel.channelType.to!string)
-      .set("state", channel.state.to!string)
-      .set("emailRecipients", channel.emailRecipients)
-      .set("emailSubjectPrefix", channel.emailSubjectPrefix)
-      .set("webhookUrl", channel.webhookUrl)
-      .set("webhookMethod", channel.webhookMethod)
-      .set("onPremiseHost", channel.onPremiseHost)
-      .set("onPremisePort", channel.onPremisePort)
-      .set("onPremiseProtocol", channel.onPremiseProtocol)
-      .set("createdBy", channel.createdBy)
-      .set("createdAt", channel.createdAt)
-      .set("updatedAt", channel.updatedAt);
-  }
 }

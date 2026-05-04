@@ -16,11 +16,20 @@ struct ConnectionPoolConfig {
   int maxConnections;
   int idleTimeoutSeconds;
   int connectionTimeoutSeconds;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("minConnections", minConnections)
+      .set("maxConnections", maxConnections)
+      .set("idleTimeoutSeconds", idleTimeoutSeconds)
+      .set("connectionTimeoutSeconds", connectionTimeoutSeconds);
+
+  }
 }
 
 struct DatabaseConnection {
-  DatabaseConnectionId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DatabaseConnectionId);
+
   InstanceId instanceId;
   string name;
   string description;
@@ -34,6 +43,21 @@ struct DatabaseConnection {
   string tlsCertificate;
   ConnectionPoolConfig poolConfig;
   string[][] properties;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("instanceId", instanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.toString())
+      .set("status", status.toString())
+      .set("host", host)
+      .set("port", port)
+      .set("database", database)
+      .set("user", user)
+      .set("useTls", useTls)
+      .set("tlsCertificate", tlsCertificate)
+      .set("poolConfig", poolConfig.toJson())
+      .set("properties", properties.array);
+  }
 }

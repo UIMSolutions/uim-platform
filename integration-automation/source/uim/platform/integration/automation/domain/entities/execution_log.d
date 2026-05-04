@@ -22,7 +22,7 @@ struct ExecutionLog {
   ExecutionOutcome outcome;
   string message;
   string details; // extended info (JSON payload, error trace)
-  string executedBy; // userId or "system"
+  UserId executedBy; // userId or "system"
   long durationMs; // execution duration in milliseconds
   long timestamp;
 }

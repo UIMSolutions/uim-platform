@@ -46,7 +46,7 @@ class PermissionController : PlatformController {
       r.resourceType = parseResourceType(j.getString("resourceType"));
       r.userId = j.getString("userId");
       r.level = parsePermissionLevel(j.getString("level"));
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = permissions.grantPermission(r);
       if (result.isSuccess) {

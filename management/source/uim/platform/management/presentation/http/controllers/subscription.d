@@ -43,7 +43,7 @@ class SubscriptionController : PlatformController {
       r.globalAccountId = j.getString("globalAccountId");
       r.appName = j.getString("appName");
       r.planName = j.getString("planName");
-      r.subscribedBy = req.headers.get("X-User-Id", "");
+      r.subscribedBy = UserId(req.headers.get("X-User-Id", ""));
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 

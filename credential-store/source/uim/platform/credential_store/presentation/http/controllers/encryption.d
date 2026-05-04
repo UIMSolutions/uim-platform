@@ -34,7 +34,7 @@ class EncryptionController : PlatformController {
       auto j = req.json;
       GenerateDekRequest r;
       r.tenantId = req.getTenantId;
-      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.keyringName = j.getString("keyringName");
 
       auto result = uc.generate(r);
@@ -59,7 +59,7 @@ class EncryptionController : PlatformController {
       auto j = req.json;
       EncryptDekRequest r;
       r.tenantId = req.getTenantId;
-      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.keyringName = j.getString("keyringName");
       r.dek = j.getString("dek");
 
@@ -84,7 +84,7 @@ class EncryptionController : PlatformController {
       auto j = req.json;
       DecryptDekRequest r;
       r.tenantId = req.getTenantId;
-      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.keyringName = j.getString("keyringName");
       r.encryptedDek = j.getString("encryptedDek");
       r.keyringVersion = jsonLong(j, "keyringVersion");

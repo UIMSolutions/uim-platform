@@ -48,7 +48,7 @@ class RepositoryController : PlatformController {
       r.description = j.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
       r.allowedFileTypes = j.getString("allowedFileTypes");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createRepository(r);
       if (result.isSuccess) {

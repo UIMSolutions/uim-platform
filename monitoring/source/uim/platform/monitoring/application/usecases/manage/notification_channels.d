@@ -67,34 +67,33 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (!channels.existsById(id))
       return CommandResult(false, "", "Notification channel not found");
 
-    auto channel = channels.findById(id);
-    NotificationChannel updated = channel.dup;
+    NotificationChannel channel = channels.findById(id);
 
-    if (req.description.length > 0)
-      updated.description = req.description;
-    if (req.state.length > 0)
-      updated.state = parseChannelState(req.state);
-    if (req.emailRecipients.length > 0)
-      updated.emailRecipients = req.emailRecipients;
-    if (req.emailSubjectPrefix.length > 0)
-      updated.emailSubjectPrefix = req.emailSubjectPrefix;
-    if (req.webhookUrl.length > 0)
-      updated.webhookUrl = req.webhookUrl;
-    if (req.webhookSecret.length > 0)
-      updated.webhookSecret = req.webhookSecret;
-    if (req.webhookMethod.length > 0)
-      updated.webhookMethod = req.webhookMethod;
-    if (req.onPremiseHost.length > 0)
-      updated.onPremiseHost = req.onPremiseHost;
-    if (req.onPremisePort > 0)
-      updated.onPremisePort = req.onPremisePort;
-    if (req.onPremiseProtocol.length > 0)
-      updated.onPremiseProtocol = req.onPremiseProtocol;
+    if (request.description.length > 0)
+      channel.description = request.description;
+    if (request.state.length > 0)
+      channel.state = request.state.to!ChannelState;
+    if (request.emailRecipients.length > 0)
+      channel.emailRecipients = request.emailRecipients;
+    if (request.emailSubjectPrefix.length > 0)
+      channel.emailSubjectPrefix = request.emailSubjectPrefix;
+    if (request.webhookUrl.length > 0)
+      channel.webhookUrl = request.webhookUrl;
+    if (request.webhookSecret.length > 0)
+      channel.webhookSecret = request.webhookSecret;
+    // TODO: if (request.webhookMethod.length > 0)
+    //   channel.webhookMethod = request.webhookMethod;
+    if (request.onPremiseHost.length > 0)
+      channel.onPremiseHost = request.onPremiseHost;
+    if (request.onPremisePort > 0)
+      channel.onPremisePort = request.onPremisePort;
+    if (request.onPremiseProtocol.length > 0)
+      channel.onPremiseProtocol = request.onPremiseProtocol;
 
-    updated.updatedAt = clockSeconds();
+    channel.updatedAt = clockSeconds();
 
-    channels.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    channels.update(channel);
+    return CommandResult(true, channel.id.value, "");
   }
 
   bool existsChannel(NotificationChannelId id) {
@@ -110,7 +109,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
-    return channels.findByType(tenantId, typeStr.to!ChannelType);
+    return channels.findByType(tenantId, typeStr.to!NotificationChannelType);
   }
 
   NotificationChannel[] listActive(TenantId tenantId) {

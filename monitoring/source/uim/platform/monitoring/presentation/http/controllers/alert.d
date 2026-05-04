@@ -44,9 +44,9 @@ class AlertController : PlatformController {
 
       Alert[] alerts;
       if (state.length > 0)
-        alerts = uc.listByState(tenantId, state);
+        alerts = uc.listByState(tenantId, state.to!AlertState);
       else if (severity.length > 0)
-        alerts = uc.listBySeverity(tenantId, severity);
+        alerts = uc.listBySeverity(tenantId, severity.to!AlertSeverity);
       else
         alerts = uc.listAlerts(tenantId);
 
@@ -65,7 +65,7 @@ class AlertController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AlertId(extractIdFromPath(req.requestURI));
       auto a = uc.getAlert(id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
@@ -81,9 +81,9 @@ class AlertController : PlatformController {
     try {
       auto j = req.json;
       AcknowledgeAlertRequest r;
-      r.alertId = j.getString("alertId");
+      r.alertId = AlertId(j.getString("alertId"));
       r.tenantId = req.getTenantId;
-      r.acknowledgedBy = req.headers.get("X-User-Id", "");
+      r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.acknowledgeAlert(r);
       if (result.success) {
@@ -105,9 +105,9 @@ class AlertController : PlatformController {
     try {
       auto j = req.json;
       ResolveAlertRequest r;
-      r.alertId = j.getString("alertId");
+      r.alertId = AlertId(j.getString("alertId"));
       r.tenantId = req.getTenantId;
-      r.resolvedBy = req.headers.get("X-User-Id", "");
+      r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.resolveAlert(r);
       if (result.success) {
@@ -127,7 +127,7 @@ class AlertController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AlertId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteAlert(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -153,9 +153,9 @@ class AlertController : PlatformController {
       .set("metricName", a.metricName)
       .set("currentValue", a.currentValue)
       .set("thresholdValue", a.thresholdValue)
-      .set("operator", a.operator_.to!string)
-      .set("severity", a.severity.to!string)
-      .set("state", a.state.to!string)
+      .set("operator", a.operator_.to!string())
+      .set("severity", a.severity.to!string())
+      .set("state", a.state.to!string())
       .set("message", a.message)
       .set("acknowledgedBy", a.acknowledgedBy)
       .set("resolvedBy", a.resolvedBy)

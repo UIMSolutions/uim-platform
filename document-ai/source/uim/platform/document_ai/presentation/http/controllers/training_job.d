@@ -33,7 +33,7 @@ class TrainingJobController : PlatformController {
       auto j = req.json;
       CreateTrainingJobRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = j.getString("documentTypeId");
       r.schemaId = j.getString("schemaId");
       r.name = j.getString("name");
@@ -56,7 +56,7 @@ class TrainingJobController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto jobs = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
@@ -80,7 +80,7 @@ class TrainingJobController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto tj = uc.getById(id, clientId);
       if (tj.isNull) {
@@ -103,7 +103,7 @@ class TrainingJobController : PlatformController {
 
       PatchTrainingJobRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.trainingJobId = id;
       r.targetStatus = j.getString("targetStatus");
 
@@ -127,7 +127,7 @@ class TrainingJobController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.remove(id, clientId);
       if (result.success) {

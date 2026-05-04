@@ -98,7 +98,7 @@ struct CreateInstanceRequest {
 
   struct CreateDataLakeRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string description;
@@ -139,7 +139,7 @@ struct CreateInstanceRequest {
 
   struct CreateSchemaRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string owner;
@@ -173,7 +173,7 @@ struct CreateInstanceRequest {
 
   struct CreateDatabaseUserRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string userName;
     string password;
@@ -223,7 +223,7 @@ struct CreateInstanceRequest {
 
   struct CreateBackupRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string type;
@@ -269,7 +269,7 @@ struct CreateInstanceRequest {
 
   struct CreateAlertRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string description;
@@ -320,7 +320,7 @@ struct CreateInstanceRequest {
   struct AcknowledgeAlertRequest {
     TenantId tenantId;
     string id;
-    string acknowledgedBy;
+    UserId acknowledgedBy;
 
     Json toJson() const {
       return Json.emptyObject
@@ -334,7 +334,7 @@ struct CreateInstanceRequest {
 
   struct CreateHDIContainerRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string description;
@@ -374,7 +374,7 @@ struct CreateInstanceRequest {
 
   struct CreateReplicationTaskRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string description;
@@ -422,8 +422,8 @@ struct CreateInstanceRequest {
 
   struct CreateConfigurationRequest {
     TenantId tenantId;
-    string instanceId;
-    string id;
+    InstanceId instanceId;
+    ConfigurationId id;
     string section;
     string key;
     string value;
@@ -447,7 +447,7 @@ struct CreateInstanceRequest {
 
   struct UpdateConfigurationRequest {
     TenantId tenantId;
-    string id;
+    ConfigurationId id;
     string value;
 
     Json toJson() const {
@@ -462,7 +462,7 @@ struct CreateInstanceRequest {
 
   struct CreateDatabaseConnectionRequest {
     TenantId tenantId;
-    string instanceId;
+    InstanceId instanceId;
     string id;
     string name;
     string description;
@@ -499,7 +499,8 @@ struct CreateInstanceRequest {
 
   struct UpdateDatabaseConnectionRequest {
     TenantId tenantId;
-    string id;
+    InstanceId instanceId;
+    DatabaseConnectionId id;
     string name;
     string description;
     string host;

@@ -57,7 +57,7 @@ class ApiRuleController : PlatformController {
       r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
       r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       // Parse rules array
       r.rules = j.toRuleEntries;

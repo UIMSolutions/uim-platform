@@ -87,28 +87,28 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getById(ExecutionId id, ResourceGroupId rgId) {
-    return execRepo.findById(id, rgId);
+  Execution getById(ResourceGroupId rgId, ExecutionId id) {
+    return execRepo.findById(rgId, id);
   }
 
   Execution[] list(ResourceGroupId rgId) {
     return execRepo.findByResourceGroup(rgId);
   }
 
-  Execution[] listByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    return execRepo.findByScenario(scenarioId, rgId);
+  Execution[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
+    return execRepo.findByScenario(rgId, scenarioId);
   }
 
-  Execution[] listByStatus(ExecutionStatus status, ResourceGroupId rgId) {
-    return execRepo.findByStatus(status, rgId);
+  Execution[] listByStatus(ResourceGroupId rgId, ExecutionStatus status) {
+    return execRepo.findByStatus(rgId, status, rgId);
   }
 
-  CommandResult remove(ExecutionId id, ResourceGroupId rgId) {
-    auto existing = execRepo.findById(id, rgId);
+  CommandResult remove(ResourceGroupId rgId, ExecutionId id) {
+    auto existing = execRepo.findById(rgId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Execution not found");
 
-    execRepo.remove(id, rgId);
+    execRepo.remove(rgId, id);
     return CommandResult(true, id.value, "");
   }
 

@@ -46,7 +46,7 @@ class DatasetController : PlatformController {
       r.description = j.getString("description");
       r.dataType = parseDataType(j.getString("dataType"));
       r.columnDefinitions = j.getString("columnDefinitions");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createDataset(r);
       if (result.isSuccess) {

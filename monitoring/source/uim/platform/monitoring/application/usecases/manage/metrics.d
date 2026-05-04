@@ -90,7 +90,6 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   // --- Metric Data Points ---
-
   CommandResult pushMetric(PushMetricRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
@@ -145,7 +144,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (req.metricName.length > 0 && req.resourceId.value.length > 0)
       return metricRepo.findByResourceAndName(req.tenantId, req.resourceId, req.metricName);
     if (req.metricName.length > 0)
-      return metricRepo.findByName(req.tenantId, req.metricName);
+      return metricRepo.findByTenant(req.tenantId).filter!(m => m.name == req.metricName).array;
     return metricRepo.findByResource(req.tenantId, req.resourceId);
   }
 

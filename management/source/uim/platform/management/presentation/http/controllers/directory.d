@@ -45,7 +45,7 @@ class DirectoryController : PlatformController {
       r.features = getStringArray(j, "features");
       r.manageEntitlements = j.getBoolean("manageEntitlements");
       r.manageAuthorizations = j.getBoolean("manageAuthorizations");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 

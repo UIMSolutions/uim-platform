@@ -83,19 +83,18 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findAll().filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp))
-      .array;
+    findByTenant(tenantId).filter!(r => r.executedAt < beforeTimestamp).each!(r => remove(r));
   }
 
-  size_t countByType(TenantId tenantId, CheckType checkType) {
-    return findByType(tenantId, checkType).length;
-  }
+  // size_t countByType(TenantId tenantId, CheckType checkType) {
+  //   return findByType(tenantId, checkType).length;
+  // }
 
-  HealthCheck[] findByType(TenantId tenantId, CheckType checkType) {
-    return findByTenant(tenantId).filter!(r => r.checkType == checkType).array;
-  }
+  // HealthCheckResult[] findByType(TenantId tenantId, CheckType checkType) {
+  //   return findByTenant(tenantId).filter!(r => r.checkType == checkType).array;
+  // }
 
-  void removeByType(TenantId tenantId, CheckType checkType) {
-    findByType(tenantId, checkType).each!(r => remove(r));
-  }
+  // void removeByType(TenantId tenantId, CheckType checkType) {
+  //   findByType(tenantId, checkType).each!(r => remove(r));
+  // }
 }

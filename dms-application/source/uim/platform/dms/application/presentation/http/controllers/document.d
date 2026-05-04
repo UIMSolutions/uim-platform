@@ -53,7 +53,7 @@ class DocumentController : PlatformController {
       r.fileSize = jsonLong(j, "fileSize");
       r.tags = j.getString("tags");
       r.properties = j.getString("properties");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createDocument(r);
       if (result.isSuccess) {

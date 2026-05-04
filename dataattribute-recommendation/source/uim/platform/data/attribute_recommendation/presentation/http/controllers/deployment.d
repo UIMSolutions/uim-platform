@@ -45,7 +45,7 @@ class DeploymentController : PlatformController {
       r.trainingJobId = j.getString("trainingJobId");
       r.name = j.getString("name");
       r.replicas = j.getInteger("replicas", 1);
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createDeployment(r);
       if (result.isSuccess) {

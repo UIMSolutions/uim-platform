@@ -33,7 +33,7 @@ class SchemaController : PlatformController {
       auto j = req.json;
       CreateSchemaRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = j.getString("documentTypeId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -58,7 +58,7 @@ class SchemaController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto schemas = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
@@ -82,7 +82,7 @@ class SchemaController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto s = uc.getById(id, clientId);
       if (s.isNull) {
@@ -105,7 +105,7 @@ class SchemaController : PlatformController {
 
       UpdateSchemaRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.schemaId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -131,7 +131,7 @@ class SchemaController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.remove(id, clientId);
       if (result.success) {

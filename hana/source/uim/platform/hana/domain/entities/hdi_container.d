@@ -16,11 +16,19 @@ struct HDIArtifact {
   string artifactType;
   string path;
   long sizeBytes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("artifactType", artifactType)
+      .set("path", path)
+      .set("sizeBytes", sizeBytes);
+  }
 }
 
 struct HDIContainer {
-  HDIContainerId id;
-  TenantId tenantId;
+  mixin TenantEntity!(HDIContainerId);
+
   InstanceId instanceId;
   string name;
   string description;
@@ -31,6 +39,18 @@ struct HDIContainer {
   int artifactCount;
   long sizeBytes;
   string[] grantedSchemas;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("instanceId", instanceId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.toString())
+      .set("schemaName", schemaName)
+      .set("appUser", appUser)
+      .set("appUserSchema", appUserSchema)
+      .set("artifactCount", artifactCount)
+      .set("sizeBytes", sizeBytes)
+      .set("grantedSchemas", grantedSchemas.array);
+  }
 }

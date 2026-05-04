@@ -36,7 +36,7 @@ class CatalogAssetController : PlatformController {
       auto j = req.json;
       CreateCatalogAssetRequest r;
       r.tenantId = req.getTenantId;
-      r.spaceId = req.headers.get("X-Space-Id", "");
+      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");

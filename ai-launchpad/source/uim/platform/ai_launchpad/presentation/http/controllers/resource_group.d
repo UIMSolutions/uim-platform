@@ -33,7 +33,7 @@ class ResourceGroupController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateResourceGroupRequest r;
       r.connectionId = connectionId;
@@ -57,7 +57,7 @@ class ResourceGroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto groups = connectionId.length > 0
         ? uc.listByConnection(connectionId)
@@ -81,7 +81,7 @@ class ResourceGroupController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto g = uc.getById(id, connectionId);
       if (g.isNull) {
@@ -101,7 +101,7 @@ class ResourceGroupController : PlatformController {
 
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchResourceGroupRequest r;
       r.connectionId = connectionId;
@@ -128,7 +128,7 @@ class ResourceGroupController : PlatformController {
       import std.conv : to;
 
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

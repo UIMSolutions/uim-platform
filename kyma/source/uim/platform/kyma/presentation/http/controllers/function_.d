@@ -59,7 +59,7 @@ class FunctionController : PlatformController {
       r.envVars = jsonStrMap(j, "envVars");
       r.labels = jsonStrMap(j, "labels");
       r.timeoutSeconds = j.getInteger("timeoutSeconds");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

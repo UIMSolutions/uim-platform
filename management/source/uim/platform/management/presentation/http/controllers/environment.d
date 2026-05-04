@@ -46,7 +46,7 @@ class EnvironmentController : PlatformController {
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
       r.routeQuota = j.getInteger("routeQuota");
       r.serviceQuota = j.getInteger("serviceQuota");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 

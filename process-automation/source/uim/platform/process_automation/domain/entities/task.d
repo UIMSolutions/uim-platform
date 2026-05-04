@@ -39,7 +39,7 @@ struct Task {
     string formData;
     TaskComment[] comments;
     TaskAttachment[] attachments;
-    string completedBy;
+    UserId completedBy;
     string outcome;
     long dueDate;
     long completedAt;

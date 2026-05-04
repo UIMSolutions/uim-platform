@@ -48,7 +48,7 @@ class MetricDefinitionController : PlatformController {
       r.category = j.getString("category");
       r.unit = j.getString("unit");
       r.aggregation = j.getString("aggregation");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createDefinition(r);
       if (result.success) {
@@ -85,7 +85,7 @@ class MetricDefinitionController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
       auto d = uc.getDefinition(id);
       if (d.isNull) {
         writeError(res, 404, "Metric definition not found");
@@ -99,7 +99,7 @@ class MetricDefinitionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateMetricDefinitionRequest request;
       request.displayName = j.getString("displayName");
@@ -124,7 +124,7 @@ class MetricDefinitionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
       auto result = uc.removeDefinition(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -141,19 +141,4 @@ class MetricDefinitionController : PlatformController {
     }
   }
 
-  private static Json serializeDefinition(const ref MetricDefinition d) {
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("tenantId", d.tenantId)
-      .set("name", d.name)
-      .set("displayName", d.displayName)
-      .set("description", d.description)
-      .set("category", d.category.to!string)
-      .set("unit", d.unit.to!string)
-      .set("aggregation", d.aggregation.to!string)
-      .set("isCustom", d.isCustom)
-      .set("isEnabled", d.isEnabled)
-      .set("createdBy", d.createdBy)
-      .set("createdAt", d.createdAt);
-  }
 }

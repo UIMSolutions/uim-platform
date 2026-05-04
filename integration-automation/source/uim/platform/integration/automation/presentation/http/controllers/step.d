@@ -42,7 +42,7 @@ class StepController : PlatformController {
   private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto workflowId = req.headers.get("X-Workflow-Id", "");
+      auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
       auto steps = useCase.listSteps(tenantId, workflowId);
 
       auto arr = steps.map!(s => s.toJson).array.toJson;
@@ -50,7 +50,8 @@ class StepController : PlatformController {
       auto resp = Json.emptyObject
           .set("items", arr)
           .set("totalCount", steps.length)
-          .set("workflowId", workflowId);
+          .set("workflowId", workflowId)
+          .set("message", "Steps retrieved successfully");
           
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -76,14 +77,15 @@ class StepController : PlatformController {
   private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto userId = req.headers.get("X-User-Id", "");
+      auto userId = UserId(req.headers.get("X-User-Id", ""));
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
       auto arr = tasks.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(tasks.length));
+        .set("totalCount", Json(tasks.length))
+        .set("message", "My tasks retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -95,13 +97,14 @@ class StepController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto userId = req.headers.get("X-User-Id", "");
+      auto userId = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = useCase.startStep(tenantId, id, userId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("status", "inProgress");
+          .set("status", "inProgress")
+          .set("message", "Step started successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -119,14 +122,15 @@ class StepController : PlatformController {
       auto r = CompleteStepRequest();
       r.id = id;
       r.tenantId = req.getTenantId;
-      r.completedBy = req.headers.get("X-User-Id", "");
+      r.completedBy = UserId(req.headers.get("X-User-Id", ""));
       r.result = j.getString("result");
 
       auto result = useCase.completeStep(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("status", "completed");
+          .set("status", "completed")
+          .set("message", "Step completed successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -151,7 +155,8 @@ class StepController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("status", "failed");
+          .set("status", "failed")
+          .set("message", "Step marked as failed");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -176,7 +181,8 @@ class StepController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("status", "skipped");
+          .set("status", "skipped")
+          .set("message", "Step skipped successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -200,7 +206,8 @@ class StepController : PlatformController {
       auto result = useCase.assignStep(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Step assigned successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

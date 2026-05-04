@@ -50,7 +50,7 @@ class SubaccountController : PlatformController {
       r.usage = j.getString("usage");
       r.betaEnabled = j.getBoolean("betaEnabled");
       r.usedForProduction = j.getBoolean("usedForProduction");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 

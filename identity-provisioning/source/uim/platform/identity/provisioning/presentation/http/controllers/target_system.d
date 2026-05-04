@@ -43,7 +43,7 @@ class TargetSystemController : PlatformController {
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
       r.connectionConfig = j.getString("connectionConfig");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createTargetSystem(r);
       if (result.isSuccess) {

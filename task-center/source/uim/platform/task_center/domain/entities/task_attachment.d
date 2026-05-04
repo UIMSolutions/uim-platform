@@ -19,7 +19,7 @@ struct TaskAttachment {
     string fileSize;
     string mimeType;
     AttachmentStatus status = AttachmentStatus.available;
-    string uploadedBy;
+    UserId uploadedBy;
     string uploadedAt;
 
     Json toJson() const {

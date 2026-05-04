@@ -50,7 +50,7 @@ class ObjectController : PlatformController {
       r.size = jsonLong(j, "size");
       r.metadata = j.getString("metadata");
       r.storageClass = j.getString("storageClass");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createObject(r);
       if (result.success) {
@@ -162,7 +162,7 @@ class ObjectController : PlatformController {
       r.sourceKey = j.getString("sourceKey");
       r.destBucketId = j.getString("destBucketId");
       r.destKey = j.getString("destKey");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.copyObject(r);
       if (result.success) {

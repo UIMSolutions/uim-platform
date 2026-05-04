@@ -57,7 +57,7 @@ class EventSubscriptionController : PlatformController {
       r.exactTypeMatching = j.getBoolean("exactTypeMatching", true);
       r.filterAttributes = jsonStrMap(j, "filterAttributes");
       r.labels = jsonStrMap(j, "labels");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

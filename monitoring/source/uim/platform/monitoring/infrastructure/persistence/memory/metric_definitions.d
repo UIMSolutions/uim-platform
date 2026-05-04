@@ -19,12 +19,12 @@ mixin(ShowModule!());
 class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name = name);
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
 
   MetricDefinition findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId)) {
-      if (e.name = name)
+      if (e.name == name)
         return e;
     }
     return MetricDefinition.init;
@@ -32,7 +32,7 @@ class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, Met
 
   void removeByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId)) {
-      if (e.name = name) {
+      if (e.name == name) {
         remove(e);
         return;
       }

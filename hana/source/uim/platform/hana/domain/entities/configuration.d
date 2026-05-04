@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct Configuration {
-  ConfigurationId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ConfigurationId);
+
   InstanceId instanceId;
   string section;
   string key;
@@ -24,6 +24,18 @@ struct Configuration {
   string description;
   bool isReadOnly;
   bool requiresRestart;
-  long updatedAt;
-  UserId updatedBy;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("instanceId", instanceId.value)
+      .set("section", section)
+      .set("key", key)
+      .set("value", value)
+      .set("defaultValue", defaultValue)
+      .set("scope", scope_.toString())
+      .set("dataType", dataType.toString())
+      .set("description", description)
+      .set("isReadOnly", isReadOnly)
+      .set("requiresRestart", requiresRestart);
+  }
 }

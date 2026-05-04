@@ -61,7 +61,7 @@ class DeploymentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       typeof(uc.listByConnection(connectionId)) deployments;
       deployments = scenarioId.length > 0

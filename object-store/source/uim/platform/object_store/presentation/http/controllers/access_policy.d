@@ -47,7 +47,7 @@ class AccessPolicyController : PlatformController {
       r.principal = j.getString("principal");
       r.actions = j.getString("actions");
       r.resources = j.getString("resources");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createPolicy(r);
       if (result.success) {

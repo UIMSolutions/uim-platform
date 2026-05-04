@@ -34,7 +34,7 @@ class DatasetController : PlatformController {
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       RegisterDatasetRequest r;
       r.connectionId = connectionId;
@@ -62,8 +62,8 @@ class DatasetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       typeof(uc.listByConnection(connectionId)) datasets = scenarioId.length > 0
         ? uc.listByScenario(scenarioId, connectionId)
@@ -87,7 +87,7 @@ class DatasetController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto d = uc.getById(id, connectionId);
       if (d.isNull) {
@@ -110,7 +110,7 @@ class DatasetController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchDatasetRequest r;
       r.connectionId = connectionId;
@@ -137,7 +137,7 @@ class DatasetController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

@@ -44,7 +44,7 @@ class DataModelController : PlatformController {
       r.category = j.getString("category");
       r.keyFields = getStringArray(j, "keyFields");
       r.requiredFields = getStringArray(j, "requiredFields");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       // Parse field definitions
       auto fieldsArr = jsonObjArray(j, "fields");

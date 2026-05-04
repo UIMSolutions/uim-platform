@@ -42,11 +42,17 @@ struct InstanceResource {
 struct InstanceLabel {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject()
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct DatabaseInstance {
-  InstanceId id;
-  TenantId tenantId;
+  mixin TenantEntity!(InstanceId);
+
   string name;
   string description;
   InstanceType type;
@@ -63,6 +69,24 @@ struct DatabaseInstance {
   bool enableDataLake;
   bool allowAllIpAccess;
   string[] whitelistedIps;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.toString())
+      .set("status", status.toString())
+      .set("size", size.toString())
+      .set("version", version_)
+      .set("region", region)
+      .set("availabilityZone", availabilityZone)
+      .set("endpoint", endpoint.toJson())
+      .set("resources", resources.toJson())
+      .set("labels", labels.map!(l => l.toJson()).array)
+      .set("enableScriptServer", enableScriptServer)
+      .set("enableDocStore", enableDocStore)
+      .set("enableDataLake", enableDataLake)
+      .set("allowAllIpAccess", allowAllIpAccess)
+      .set("whitelistedIps", whitelistedIps.array);
+  }
 }

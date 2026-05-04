@@ -41,7 +41,7 @@ class VersionController : PlatformController {
     try {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto userId = req.headers.get("X-User-Id", "system");
+      auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.checkOut(doctenantId, id, userId);
       if (result.isSuccess) {
@@ -66,7 +66,7 @@ class VersionController : PlatformController {
       auto r = CheckInRequest();
       r.documentId = j.getString("documentId");
       r.tenantId = req.getTenantId;
-      r.userId = req.headers.get("X-User-Id", "system");
+      r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.isMajor = j.getBoolean("isMajor", true);
       r.comment = j.getString("comment");
       r.fileName = j.getString("fileName");

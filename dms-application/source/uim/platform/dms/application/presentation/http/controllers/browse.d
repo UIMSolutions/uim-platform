@@ -91,7 +91,7 @@ class BrowseController : PlatformController {
       auto j = req.json;
       auto r = CreateFavoriteRequest();
       r.tenantId = req.getTenantId;
-      r.userId = req.headers.get("X-User-Id", "system");
+      r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.resourceId = j.getString("resourceId");
       r.resourceType = parseResourceType(j.getString("resourceType"));
 
@@ -112,7 +112,7 @@ class BrowseController : PlatformController {
   private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto userId = req.headers.get("X-User-Id", "system");
+      auto userId = UserId(req.headers.get("X-User-Id", "system"));
       auto items = uc.getFavorites(tenantId, userId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;

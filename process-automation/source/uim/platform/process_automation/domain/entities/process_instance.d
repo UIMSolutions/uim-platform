@@ -46,7 +46,7 @@ struct ProcessInstance {
     string processName;
     InstanceStatus status;
     InstancePriority priority;
-    string startedBy;
+    UserId startedBy;
     string currentStepId;
     ContextVariable[] context;
     ExecutionLog[] executionLogs;

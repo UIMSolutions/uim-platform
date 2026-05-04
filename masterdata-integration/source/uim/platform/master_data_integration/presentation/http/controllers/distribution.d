@@ -49,7 +49,7 @@ class DistributionController : PlatformController {
       r.filterRuleIds = getStringArray(j, "filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = j.getString("cronSchedule");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {

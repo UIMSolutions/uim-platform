@@ -52,8 +52,8 @@ class AlertRuleController : PlatformController {
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
-      r.channelIds = j["channelIds"].toArray.map!(c => c.to!string).array;
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createRule(r);
       if (result.success) {
@@ -89,7 +89,7 @@ class AlertRuleController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
       auto r = uc.getRule(id);
       if (r.isNull) {
         writeError(res, 404, "Alert rule not found");
@@ -103,7 +103,7 @@ class AlertRuleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateAlertRuleRequest r;
       r.description = j.getString("description");
@@ -113,7 +113,7 @@ class AlertRuleController : PlatformController {
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = j["channelIds"].toArray.map!(c => c.to!string).array;
+      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
       auto result = uc.updateRule(id, r);
       if (result.success) {
@@ -131,7 +131,7 @@ class AlertRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
       auto result = uc.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject

@@ -33,7 +33,7 @@ class ConfigurationController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateConfigurationRequest r;
       r.connectionId = connectionId;
@@ -60,12 +60,12 @@ class ConfigurationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto configs = scenarioId.length > 0
-        ? configurations.listByScenario(scenarioId, connectionId)
-        : configurations.listByConnection(connectionId);
+        ? configurations.listByScenario(connectionId, ScenarioId(scenarioId)) : configurations.listByConnection(
+          connectionId);
 
       auto jarr = configs.map!(c => c.toJson).array.toJson;
 
@@ -84,10 +84,10 @@ class ConfigurationController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto c = configurations.getById(id, connectionId);
+      auto c = configurations.getById(connectionId, id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -103,10 +103,10 @@ class ConfigurationController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = configurations.remove(id, connectionId);
+      auto result = configurations.remove(connectionId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -128,8 +128,8 @@ class ConfigurationController : PlatformController {
     }
 
     auto artifacts = c.inputArtifacts.map!(a => Json.emptyObject
-      .set("key", a.key)
-      .set("artifactId", a.artifactId)).array.toJson;
+        .set("key", a.key)
+        .set("artifactId", a.artifactId)).array.toJson;
 
     return Json.emptyObject
       .set("id", c.id)

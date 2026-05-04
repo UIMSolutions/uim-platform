@@ -49,7 +49,7 @@ class LifecycleRuleController : PlatformController {
       request.transitionDays = j.getInteger("transitionDays");
       request.transitionStorageClass = j.getString("transitionStorageClass");
       request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
-      request.createdBy = req.headers.get("X-User-Id", "");
+      request.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createRule(request);
       if (result.success) {

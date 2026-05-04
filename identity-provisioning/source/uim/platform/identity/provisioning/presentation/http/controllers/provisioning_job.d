@@ -43,7 +43,7 @@ class ProvisioningJobController : PlatformController {
       r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(j.getString("jobType"));
       r.schedule = j.getString("schedule");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createJob(r);
       if (result.isSuccess) {
@@ -125,7 +125,7 @@ class ProvisioningJobController : PlatformController {
       r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(j.getString("jobType"));
       r.schedule = j.getString("schedule");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createAndRunJob(r);
       if (result.isSuccess) {

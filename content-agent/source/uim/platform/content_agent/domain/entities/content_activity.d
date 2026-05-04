@@ -20,7 +20,7 @@ struct ContentActivity {
   string entityId;
   string entityName;
   string description;
-  string performedBy;
+  UserId performedBy;
   long timestamp;
   string details;
 

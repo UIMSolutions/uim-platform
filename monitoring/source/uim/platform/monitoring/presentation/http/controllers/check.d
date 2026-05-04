@@ -58,7 +58,7 @@ class CheckController : PlatformController {
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.thresholdOperator = j.getString("thresholdOperator");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createCheck(r);
       if (result.success) {
@@ -79,7 +79,7 @@ class CheckController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto checks = usecase.listChecks(tenantId);
-      auto arr = checks.map!(c => c.toJson).array;
+      auto arr = checks.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -94,7 +94,7 @@ class CheckController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = HealthCheckId(extractIdFromPath(req.requestURI));
       auto c = usecase.getCheck(id);
       if (c.isNull) {
         writeError(res, 404, "Health check not found");
@@ -108,7 +108,7 @@ class CheckController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = HealthCheckId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateHealthCheckRequest r;
       r.description = j.getString("description");
@@ -137,7 +137,7 @@ class CheckController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = HealthCheckId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteCheck(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -159,7 +159,7 @@ class CheckController : PlatformController {
       auto j = req.json;
       RecordCheckResultRequest r;
       r.tenantId = req.getTenantId;
-      r.checkId = j.getString("checkId");
+      r.checkId = HealthCheckId(j.getString("checkId"));
       r.resourceId = j.getString("resourceId");
       r.status = j.getString("status");
       r.value_ = getDouble(j, "value");
@@ -185,7 +185,7 @@ class CheckController : PlatformController {
   private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto checkId = extractIdFromPath(req.requestURI);
+      auto checkId = HealthCheckId(extractIdFromPath(req.requestURI));
       auto results = usecase.getResults(tenantId, checkId);
 
       auto arr = results.map!(result => result.toJson).array.toJson;

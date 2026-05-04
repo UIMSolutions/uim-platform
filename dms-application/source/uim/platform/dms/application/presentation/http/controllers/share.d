@@ -47,7 +47,7 @@ class ShareController : PlatformController {
       r.sharedWith = j.getString("sharedWith");
       r.permissionLevel = parsePermissionLevel(j.getString("permissionLevel"));
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createShare(r);
       if (result.isSuccess) {

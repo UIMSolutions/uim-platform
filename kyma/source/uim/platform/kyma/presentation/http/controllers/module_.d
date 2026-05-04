@@ -50,7 +50,7 @@ class ModuleController : PlatformController {
       r.channel = j.getString("channel");
       r.customResourcePolicy = j.getString("customResourcePolicy");
       r.configurationJson = j.getString("configuration");
-      r.enabledBy = req.headers.get("X-User-Id", "");
+      r.enabledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.enableModule(r);
       if (result.success) {

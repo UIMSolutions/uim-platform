@@ -29,8 +29,8 @@ class StatisticsController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       auto period = req.headers.get("X-Period", "");
 
       typeof(uc.getAll()) stats;

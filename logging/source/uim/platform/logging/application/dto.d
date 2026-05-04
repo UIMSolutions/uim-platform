@@ -189,13 +189,13 @@ struct UpdateAlertRuleRequest {
 struct AcknowledgeAlertRequest {
   AlertId alertId;
   TenantId tenantId;
-  string acknowledgedBy;
+  UserId acknowledgedBy;
 }
 
 struct ResolveAlertRequest {
   AlertId alertId;
   TenantId tenantId;
-  string resolvedBy;
+  UserId resolvedBy;
 }
 
 // --- Notification Channel ---

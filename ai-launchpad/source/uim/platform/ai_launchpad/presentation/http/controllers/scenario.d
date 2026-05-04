@@ -32,7 +32,7 @@ class ScenarioController : PlatformController {
   private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       SyncScenarioRequest r;
       r.connectionId = connectionId;
@@ -58,7 +58,7 @@ class ScenarioController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto scenarios = connectionId.length > 0
         ? uc.listByConnection(connectionId)
@@ -81,7 +81,7 @@ class ScenarioController : PlatformController {
     try {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto s = uc.getById(id, connectionId);
       if (s.isNull) {
@@ -99,7 +99,7 @@ class ScenarioController : PlatformController {
     try {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

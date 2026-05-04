@@ -33,7 +33,7 @@ class ModelController : PlatformController {
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       RegisterModelRequest r;
       r.connectionId = connectionId;
@@ -63,8 +63,8 @@ class ModelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto connectionId = req.headers.get("X-Connection-Id", "");
-      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       typeof(uc.listByConnection(connectionId)) models;
       if (scenarioId.length > 0)
@@ -89,7 +89,7 @@ class ModelController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto model = uc.getById(id, connectionId);
       if (m.isNull) {
@@ -109,7 +109,7 @@ class ModelController : PlatformController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchModelRequest r;
       r.connectionId = connectionId;
@@ -137,7 +137,7 @@ class ModelController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {

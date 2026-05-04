@@ -36,7 +36,7 @@ struct AutomationRun {
     AutomationRunId id;
     AutomationId automationId;
     AutomationRunStatus status;
-    string triggeredBy;
+    UserId triggeredBy;
     string agentId;
     string inputData;
     string outputData;

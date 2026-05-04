@@ -42,7 +42,7 @@ class ResourceController : PlatformController {
       auto j = req.json;
       RegisterResourceRequest r;
       r.tenantId = req.getTenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+      r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.resourceType = j.getString("resourceType");
@@ -51,12 +51,13 @@ class ResourceController : PlatformController {
       r.region = j.getString("region");
       r.instanceCount = j.getInteger("instanceCount");
       r.tags = getStringArray(j, "tags");
-      r.registeredBy = req.headers.get("X-User-Id", "");
+      r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", result.id);
+        .set("id", result.id)
+        .set("message", "Resource created successfully");
         
         res.writeJsonBody(resp, 201);
       } else {
@@ -76,7 +77,8 @@ class ResourceController : PlatformController {
 
       auto response = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", resources.length);
+        .set("totalCount", resources.length)
+        .set("message", "Resources retrieved successfully");
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -86,7 +88,7 @@ class ResourceController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
       if (!usecase.existsResource(id)) {
         writeError(res, 404, "Resource not found");
         return;
@@ -101,7 +103,7 @@ class ResourceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateResourceRequest r;
       r.description = j.getString("description");
@@ -114,7 +116,8 @@ class ResourceController : PlatformController {
       auto result = usecase.updateResource(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Resource updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -127,11 +130,12 @@ class ResourceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
       auto result = usecase.removeResource(id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Resource deleted successfully");
           
         res.writeJsonBody(resp, 200);
       } else {

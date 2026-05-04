@@ -95,7 +95,7 @@ struct UpdateTaskRequest {
 struct CompleteTaskRequest {
     TenantId tenantId;
     string id;
-    string completedBy;
+    UserId completedBy;
     string outcome;
     string formData;
 }
@@ -179,7 +179,7 @@ struct UpdateAutomationRequest {
 struct RunAutomationRequest {
     TenantId tenantId;
     string id;
-    string triggeredBy;
+    UserId triggeredBy;
     string inputData;
 }
 

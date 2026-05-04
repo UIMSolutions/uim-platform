@@ -44,7 +44,7 @@ class TransformationController : PlatformController {
       r.name = j.getString("name");
       r.mappingRules = j.getString("mappingRules");
       r.conditions = j.getString("conditions");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createTransformation(r);
       if (result.isSuccess) {

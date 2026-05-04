@@ -42,8 +42,8 @@ class CertificateController : PlatformController {
     try {
       auto j = req.json;
       UploadCertificateRequest r;
-      r.tenantId = req.getTenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+        r.tenantId = req.getTenantId;
+        r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.certificateType = j.getString("type");
@@ -55,7 +55,7 @@ class CertificateController : PlatformController {
       r.serialNumber = j.getString("serialNumber");
       r.validFrom = jsonLong(j, "validFrom");
       r.validTo = jsonLong(j, "validTo");
-      r.uploadedBy = req.headers.get("X-User-Id", "");
+      r.uploadedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.upload(r);
       if (result.success) {

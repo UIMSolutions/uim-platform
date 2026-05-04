@@ -21,26 +21,26 @@ mixin(ShowModule!());
 @safe:
 /// Application service: evaluates metrics against alert rules and triggers alerts.
 class EvaluateMetricsUseCase { // TODO: UIMUseCase {
-  private AlertRuleRepository ruleRepo;
-  private MetricRepository metricRepo;
+  private AlertRuleRepository rules;
+  private MetricRepository metrics;
   private ManageAlertsUseCase alertsUseCase;
 
-  this(AlertRuleRepository ruleRepo, MetricRepository metricRepo, ManageAlertsUseCase alertsUseCase) {
-    this.ruleRepo = ruleRepo;
-    this.metricRepo = metricRepo;
+  this(AlertRuleRepository rules, MetricRepository metrics, ManageAlertsUseCase alertsUseCase) {
+    this.rules = rules;
+    this.metrics = metrics;
     this.alertsUseCase = alertsUseCase;
   }
 
   /// Evaluate all enabled alert rules for a tenant. Returns number of alerts triggered.
   int evaluateAll(TenantId tenantId) {
-    auto rules = ruleRepo.findEnabled(tenantId);
+    auto rules = rules.findEnabled(tenantId);
     int triggered = 0;
 
     foreach (rule; rules) {
       auto now = clockSeconds();
       auto windowStart = now - rule.evaluationPeriodSeconds;
 
-      auto metrics = metricRepo.findInTimeRange(tenantId, rule.resourceId,
+      auto metrics = metrics.findInTimeRange(tenantId, rule.resourceId,
           rule.metricName, windowStart, now);
 
       if (metrics.length == 0)
@@ -62,14 +62,14 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
 
   /// Evaluate a single rule by ID. Returns whether an alert was triggered.
   bool evaluateRule(TenantId tenantId, AlertRuleId ruleId) {
-    auto rule = ruleRepo.findById(ruleId);
+    auto rule = rules.findById(ruleId);
     if (rule.isNull || !rule.isEnabled)
       return false;
 
     auto now = clockSeconds();
     auto windowStart = now - rule.evaluationPeriodSeconds;
 
-    auto metrics = metricRepo.findInTimeRange(tenantId, rule.resourceId,
+    auto metrics = metrics.findInTimeRange(tenantId, rule.resourceId,
         rule.metricName, windowStart, now);
 
     if (metrics.length == 0)

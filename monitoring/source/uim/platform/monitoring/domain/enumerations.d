@@ -1,6 +1,5 @@
 module uim.platform.monitoring.domain.enumerations;
 
-
 /// Type of monitored resource.
 enum ResourceType {
   javaApplication,
@@ -119,28 +118,28 @@ enum ChannelState {
   error,
 }
 
-  static AlertState parseAlertState(string state) {
-    switch (state) {
-    case "acknowledged":
-      return AlertState.acknowledged;
-    case "resolved":
-      return AlertState.resolved;
-    case "expired":
-      return AlertState.expired;
-    default:
-      return AlertState.open;
-    }
+static AlertState parseAlertState(string state) {
+  switch (state) {
+  case "acknowledged":
+    return AlertState.acknowledged;
+  case "resolved":
+    return AlertState.resolved;
+  case "expired":
+    return AlertState.expired;
+  default:
+    return AlertState.open;
   }
+}
 
-  static AlertSeverity parseSeverity(string severity) {
-    switch (severity) {
-    case "info":
-      return AlertSeverity.info;
-    case "critical":
-      return AlertSeverity.critical;
-    case "fatal":
-      return AlertSeverity.fatal;
-    default:
-      return AlertSeverity.warning;
-    }
+static AlertSeverity parseSeverity(string severity) {
+  switch (severity) {
+  case "info":
+    return AlertSeverity.info;
+  case "critical":
+    return AlertSeverity.critical;
+  case "fatal":
+    return AlertSeverity.fatal;
+  default:
+    return AlertSeverity.warning;
   }
+}

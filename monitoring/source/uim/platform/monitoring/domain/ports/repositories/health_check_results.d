@@ -15,11 +15,20 @@ mixin(ShowModule!());
 /// Port: outgoing - health check result persistence.
 interface HealthCheckResultRepository : ITenantRepository!(HealthCheckResult, HealthCheckResultId) {
 
-  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId);
-  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId);
+
+  size_t countByCheck(TenantId tenantId, HealthCheckId checkId);
+  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId);
+  void removeByCheck(TenantId tenantId, HealthCheckId checkId);
+  
+  size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
+  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
+  void removeByResource(TenantId tenantId, MonitoredResourceId resourceId);
+
+  size_t countInTimeRange(TenantId tenantId, HealthCheckId checkId, long startTime, long endTime);
   HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
       long startTime, long endTime);
-      
+  void removeInTimeRange(TenantId tenantId, HealthCheckId checkId, long startTime, long endTime);
+
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

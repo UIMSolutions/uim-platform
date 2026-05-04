@@ -48,7 +48,7 @@ class MasterDataController : PlatformController {
       r.attributes = jsonStrMap(j, "attributes");
       r.sourceSystem = j.getString("sourceSystem");
       r.sourceClient = j.getString("sourceClient");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
       if (result.success) {
@@ -131,7 +131,7 @@ class MasterDataController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
       r.attributes = jsonStrMap(j, "attributes");
-      r.updatedBy = req.headers.get("X-User-Id", "");
+      r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.updateObject(id, r);
       if (result.success)

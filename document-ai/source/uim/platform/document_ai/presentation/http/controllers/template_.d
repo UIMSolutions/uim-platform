@@ -33,7 +33,7 @@ class TemplateController : PlatformController {
       auto j = req.json;
       CreateTemplateRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.schemaId = j.getString("schemaId");
       r.documentTypeId = j.getString("documentTypeId");
       r.name = j.getString("name");
@@ -57,7 +57,7 @@ class TemplateController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto templates = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
@@ -81,7 +81,7 @@ class TemplateController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto t = uc.getById(id, clientId);
       if (t.isNull) {
@@ -104,7 +104,7 @@ class TemplateController : PlatformController {
 
       UpdateTemplateRequest r;
       r.tenantId = req.getTenantId;
-      r.clientId = req.headers.get("X-Client-Id", "");
+      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.templateId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -130,7 +130,7 @@ class TemplateController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto clientId = req.headers.get("X-Client-Id", "");
+      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = uc.remove(id, clientId);
       if (result.success) {

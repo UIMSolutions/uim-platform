@@ -42,7 +42,7 @@ class ServiceBindingController : PlatformController {
       r.name = j.getString("name");
       r.permission = j.getString("permission");
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = req.headers.get("X-User-Id", "");
+      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.createBinding(r);
       if (result.success) {

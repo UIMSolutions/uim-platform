@@ -48,7 +48,7 @@ class FolderController : PlatformController {
       r.parentFolderId = j.getString("parentFolderId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createFolder(r);
       if (result.isSuccess) {

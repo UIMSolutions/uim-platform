@@ -77,10 +77,10 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto ex = uc.getbyId(id, rgId);
+      auto ex = uc.getById(rgId, id);
       if (ex.isNull) {
         writeError(res, 404, "Execution not found");
         return;
@@ -96,7 +96,7 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchExecutionRequest r;
       r.tenantId = req.getTenantId;
@@ -123,10 +123,10 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(id, rgId);
+      auto result = uc.remove(rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -135,21 +135,5 @@ class ExecutionController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json executionToJson(Execution ex) {
-    import std.conv : to;
-
-    return Json.emptyObject
-    .set("id", ex.id)
-    .set("configurationId", ex.configurationId)
-    .set("scenarioId", ex.scenarioId)
-    .set("executableId", ex.executableId)
-    .set("status", ex.status.to!string)
-    .set("statusMessage", ex.statusMessage)
-    .set("createdAt", ex.createdAt)
-    .set("updatedAt", ex.updatedAt)
-    .set("startedAt", ex.startedAt)
-    .set("completedAt", ex.completedAt);
   }
 }

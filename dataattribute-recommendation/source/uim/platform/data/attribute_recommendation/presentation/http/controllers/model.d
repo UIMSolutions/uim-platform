@@ -49,7 +49,7 @@ class ModelController : PlatformController {
       r.targetColumns = j.getString("targetColumns");
       r.featureColumns = j.getString("featureColumns");
       r.hyperparameters = j.getString("hyperparameters");
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.createModelConfig(r);
       if (result.isSuccess) {
@@ -165,7 +165,7 @@ class ModelController : PlatformController {
       auto r = StartTrainingRequest();
       r.modelConfigId = id;
       r.tenantId = req.getTenantId;
-      r.createdBy = req.headers.get("X-User-Id", "system");
+      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = uc.startTraining(r);
       if (result.isSuccess) {

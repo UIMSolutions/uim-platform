@@ -156,7 +156,7 @@ struct CreateConsentRecordRequest {
 struct WithdrawConsentRequest {
     TenantId tenantId;
     string id;
-    string withdrawnBy;
+    UserId withdrawnBy;
 }
 
 // --- Retention Rule ---
@@ -203,6 +203,7 @@ struct CreateDataProcessingLogRequest {
     string details;
     string affectedFields;
     string ipAddress;
+    UserId createdBy;
 }
 
 // --- Data Export ---
@@ -210,4 +211,5 @@ struct ExportPersonalDataRequest {
     TenantId tenantId;
     string dataSubjectId;
     string format;
+    UserId requestedBy;
 }
