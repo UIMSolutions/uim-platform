@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_event_messages;
+module uim.platform.event_mesh.application.usecases.manage.event_messages;
 
 import uim.platform.event_mesh;
 
@@ -42,10 +42,10 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         EventMessage m;
         m.id = EventMessageId(dto.id);
         m.tenantId = dto.tenantId;
-        m.brokerServiceId = BrokerServiceId(dto.brokerServiceId);
-        m.topicId = TopicId(dto.topicId);
-        m.queueId = QueueId(dto.queueId);
-        m.publisherId = EventApplicationId(dto.publisherId);
+        m.brokerServiceId = dto.brokerServiceId;
+        m.topicId = dto.topicId;
+        m.queueId = dto.queueId;
+        m.publisherId = dto.publisherId;
         m.correlationId = dto.correlationId;
         m.contentType = dto.contentType;
         m.payload = dto.payload;

@@ -70,7 +70,7 @@ class DevSpaceController : PlatformController {
             dto.hibernateAfterDays = j.getString("hibernateAfterDays");
             dto.memoryLimit = j.getString("memoryLimit");
             dto.diskLimit = j.getString("diskLimit");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -97,7 +97,7 @@ class DevSpaceController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.extensions = j.getString("extensions");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

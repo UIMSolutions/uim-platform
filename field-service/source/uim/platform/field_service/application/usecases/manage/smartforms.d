@@ -63,10 +63,10 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.formData.length > 0) existing.formData = dto.formData;
         if (dto.signatureData.length > 0) existing.signatureData = dto.signatureData;
-        if (dto.submittedBy.length > 0) existing.submittedBy = dto.submittedBy;
+        if (!dto.submittedBy.isNull) existing.submittedBy = dto.submittedBy;
         if (dto.submittedDate.length > 0) existing.submittedDate = dto.submittedDate;
-        if (dto.approvedBy.length > 0) existing.approvedBy = dto.approvedBy;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.approvedBy.isNull) existing.approvedBy = dto.approvedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

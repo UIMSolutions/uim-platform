@@ -49,7 +49,7 @@ class WorkflowController : PlatformController {
       r.description = j.getString("description");
       r.sourceSystemConnectionId = j.getString("sourceSystemConnectionId");
       r.targetSystemConnectionId = j.getString("targetSystemConnectionId");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createWorkflow(r);
       if (result.isSuccess()) {

@@ -71,7 +71,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
         if (dto.actualEnd.length > 0) existing.actualEnd = dto.actualEnd;
         if (dto.notes.length > 0) existing.notes = dto.notes;
         if (dto.feedbackCode.length > 0) existing.feedbackCode = dto.feedbackCode;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

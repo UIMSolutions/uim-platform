@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.application.usecases.manage.manage_logic_flows;
+module uim.platform.build_apps.application.usecases.manage.logic_flows;
 
 import uim.platform.build_apps;
 
@@ -66,7 +66,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.nodes.length > 0) existing.nodes = dto.nodes;
         if (dto.connections.length > 0) existing.connections = dto.connections;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

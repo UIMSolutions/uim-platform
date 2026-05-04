@@ -67,7 +67,7 @@ class ProjectTemplateController : PlatformController {
             dto.scaffoldConfig = j.getString("scaffoldConfig");
             dto.defaultFiles = j.getString("defaultFiles");
             dto.iconUrl = j.getString("iconUrl");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -94,7 +94,7 @@ class ProjectTemplateController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

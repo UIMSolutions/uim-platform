@@ -65,7 +65,7 @@ class ExecutionController : PlatformController {
             dto.commandId = j.getString("commandId");
             dto.inputValues = j.getString("inputValues");
             dto.triggeredBy = j.getString("triggeredBy");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = executions.create(dto);
             if (result.success) {

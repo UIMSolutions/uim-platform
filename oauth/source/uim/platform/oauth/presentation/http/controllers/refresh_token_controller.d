@@ -68,7 +68,7 @@ class RefreshTokenController : PlatformController {
             dto.scopes = j.getString("scopes");
             dto.accessTokenId = j.getString("accessTokenId");
             dto.expiresAt = 0;
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {

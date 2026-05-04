@@ -73,7 +73,7 @@ class LogicFlowController : PlatformController {
             dto.connections = j.getString("connections");
             dto.variables = j.getString("variables");
             dto.errorHandler = j.getString("errorHandler");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -101,7 +101,7 @@ class LogicFlowController : PlatformController {
             dto.description = j.getString("description");
             dto.nodes = j.getString("nodes");
             dto.connections = j.getString("connections");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

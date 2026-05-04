@@ -71,7 +71,7 @@ class PageController : PlatformController {
             dto.componentTree = j.getString("componentTree");
             dto.styleOverrides = j.getString("styleOverrides");
             dto.pageVariables = j.getString("pageVariables");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class PageController : PlatformController {
             dto.route = j.getString("route");
             dto.layoutConfig = j.getString("layoutConfig");
             dto.componentTree = j.getString("componentTree");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

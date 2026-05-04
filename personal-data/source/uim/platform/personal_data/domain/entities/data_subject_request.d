@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct ProcessingComment {
     string author;
     string comment;
-    string createdAt;
+    long createdAt;
 
     Json toJson() const {
         return Json.emptyObject

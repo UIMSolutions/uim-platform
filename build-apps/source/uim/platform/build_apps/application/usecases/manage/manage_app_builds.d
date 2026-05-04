@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.application.usecases.manage.manage_app_builds;
+module uim.platform.build_apps.application.usecases.manage.app_builds;
 
 import uim.platform.build_apps;
 
@@ -58,7 +58,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

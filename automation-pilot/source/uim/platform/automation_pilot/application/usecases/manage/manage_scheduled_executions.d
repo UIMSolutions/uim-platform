@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.application.usecases.manage.manage_scheduled_executions;
+module uim.platform.automation_pilot.application.usecases.manage.scheduled_executions;
 
 import uim.platform.automation_pilot;
 
@@ -57,9 +57,9 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Scheduled execution not found");
         auto existing = repo.findById(ScheduledExecutionId(dto.id));
         if (dto.cronExpression.length > 0) existing.cronExpression = dto.cronExpression;
-        if (dto.scheduledAt.length > 0) existing.scheduledAt = dto.scheduledAt;
+        if (dto.scheduledAt > 0) existing.scheduledAt = dto.scheduledAt;
         if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

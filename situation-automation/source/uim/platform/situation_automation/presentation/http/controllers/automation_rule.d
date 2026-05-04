@@ -42,7 +42,7 @@ class AutomationRuleController : PlatformController {
             r.description = j.getString("description");
             r.priority = j.getString("priority");
             r.executionOrder = j.getInteger("executionOrder");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -138,7 +138,7 @@ class AutomationRuleController : PlatformController {
             r.priority = j.getString("priority");
             r.executionOrder = j.getInteger("executionOrder");
             r.enabled = j.getBoolean("enabled", true);
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

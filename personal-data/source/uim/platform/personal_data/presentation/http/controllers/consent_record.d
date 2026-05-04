@@ -42,7 +42,7 @@ class ConsentRecordController : PlatformController {
             r.ipAddress = j.getString("ipAddress");
             r.userAgent = j.getString("userAgent");
             r.source = j.getString("source");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -117,7 +117,7 @@ class ConsentRecordController : PlatformController {
             WithdrawConsentRequest r;
             r.id = id;
             r.reason = j.getString("reason");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.withdraw(r);
             if (result.success) {

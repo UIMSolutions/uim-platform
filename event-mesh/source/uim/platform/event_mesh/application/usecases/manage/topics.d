@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_topics;
+module uim.platform.event_mesh.application.usecases.manage.topics;
 
 import uim.platform.event_mesh;
 
@@ -60,7 +60,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.topicString.length > 0) existing.topicString = dto.topicString;
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

@@ -25,8 +25,8 @@ struct Skill {
     string issuingAuthority;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json skillToJson() {
   return Json.emptyObject

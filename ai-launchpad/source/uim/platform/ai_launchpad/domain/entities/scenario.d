@@ -20,6 +20,6 @@ struct Scenario {
   string[] labels;
   int executionCount;
   int deploymentCount;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 }

@@ -38,7 +38,7 @@ class CertificateController : PlatformController {
             r.id = j.getString("id");
             r.keyId = j.getString("keyId");
             r.certificateType = j.getString("certificateType");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = certificates.create(r);
             if (result.success) {

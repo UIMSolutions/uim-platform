@@ -68,7 +68,7 @@ class EventSchemaController : PlatformController {
             dto.schemaContent = j.getString("schemaContent");
             dto.applicationDomainId = j.getString("applicationDomainId");
             dto.shared_ = j.getString("shared");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,7 +96,7 @@ class EventSchemaController : PlatformController {
             dto.description = j.getString("description");
             dto.schemaContent = j.getString("schemaContent");
             dto.version_ = j.getString("version");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

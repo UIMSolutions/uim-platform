@@ -30,8 +30,8 @@ struct Smartform {
     string signatureData;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json smartformToJson() {
         return Json.emptyObject

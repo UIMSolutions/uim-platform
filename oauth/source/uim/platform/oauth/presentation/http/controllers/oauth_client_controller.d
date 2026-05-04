@@ -78,7 +78,7 @@ class OAuthClientController : PlatformController {
             dto.refreshTokenValidity = j.getString("refreshTokenValidity").length > 0 ? 86400
                 : 86400;
             dto.contacts = j.getString("contacts");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -108,7 +108,7 @@ class OAuthClientController : PlatformController {
             dto.redirectUris = j.getString("redirectUris");
             dto.allowedScopes = j.getString("allowedScopes");
             dto.contacts = j.getString("contacts");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

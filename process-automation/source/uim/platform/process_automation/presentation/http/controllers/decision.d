@@ -43,7 +43,7 @@ class DecisionController : PlatformController {
             r.type = j.getString("type");
             r.hitPolicy = j.getString("hitPolicy");
             r.version_ = j.getString("version");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -131,7 +131,7 @@ class DecisionController : PlatformController {
             r.description = j.getString("description");
             r.hitPolicy = j.getString("hitPolicy");
             r.version_ = j.getString("version");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

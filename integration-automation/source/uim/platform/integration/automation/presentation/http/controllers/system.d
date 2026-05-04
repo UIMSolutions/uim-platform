@@ -53,7 +53,7 @@ class SystemController : PlatformController {
       r.region = j.getString("region");
       r.systemId = j.getString("systemId");
       r.tenant = j.getString("tenant");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createSystem(r);
       if (result.isSuccess()) {

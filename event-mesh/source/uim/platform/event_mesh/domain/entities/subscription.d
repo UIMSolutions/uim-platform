@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct EventSubscription {
-    SubscriptionId id;
-    TenantId tenantId;
+    mixin TenantEntity!EventSubscriptionId;
+
     BrokerServiceId brokerServiceId;
     TopicId topicId;
     QueueId queueId;
@@ -31,8 +31,8 @@ struct EventSubscription {
     string messageCount;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json subscriptionToJson() {
         return Json.emptyObject

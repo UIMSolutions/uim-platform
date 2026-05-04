@@ -73,7 +73,7 @@ class CustomerController : PlatformController {
             dto.website = j.getString("website");
             dto.industry = j.getString("industry");
             dto.accountNumber = j.getString("accountNumber");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -103,7 +103,7 @@ class CustomerController : PlatformController {
             dto.email = j.getString("email");
             dto.phone = j.getString("phone");
             dto.address = j.getString("address");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

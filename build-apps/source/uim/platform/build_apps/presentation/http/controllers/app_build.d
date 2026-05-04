@@ -68,7 +68,7 @@ class AppBuildController : PlatformController {
             dto.version_ = j.getString("version");
             dto.buildConfig = j.getString("buildConfig");
             dto.signingConfig = j.getString("signingConfig");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -95,7 +95,7 @@ class AppBuildController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

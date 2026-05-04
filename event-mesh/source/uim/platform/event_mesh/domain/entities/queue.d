@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Queue {
-    QueueId id;
-    TenantId tenantId;
+    mixin TenantEntity!QueueId;
+
     BrokerServiceId brokerServiceId;
     string name;
     string description;
@@ -33,15 +33,9 @@ struct Queue {
     string currentSpoolUsage;
     string messageCount;
     string bindCount;
-    UserId createdBy;
-    UserId updatedBy;
-    string createdAt;
-    string updatedAt;
 
     Json queueToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+        return entityToJson
             .set("brokerServiceId", brokerServiceId)
             .set("name", name)
             .set("description", description)
@@ -60,10 +54,6 @@ struct Queue {
             .set("ingressEnabled", ingressEnabled)
             .set("currentSpoolUsage", currentSpoolUsage)
             .set("messageCount", messageCount)
-            .set("bindCount", bindCount)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("bindCount", bindCount);
     }
 }

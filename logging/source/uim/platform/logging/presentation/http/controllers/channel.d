@@ -46,7 +46,7 @@ class ChannelController : PlatformController {
       r.webhookMethod = j.getString("webhookMethod");
       r.slackWebhookUrl = j.getString("slackWebhookUrl");
       r.slackChannel = j.getString("slackChannel");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.success) {

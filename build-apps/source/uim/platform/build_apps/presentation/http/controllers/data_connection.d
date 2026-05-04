@@ -73,7 +73,7 @@ class DataConnectionController : PlatformController {
             dto.queryParams = j.getString("queryParams");
             dto.responseMapping = j.getString("responseMapping");
             dto.destinationName = j.getString("destinationName");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -101,7 +101,7 @@ class DataConnectionController : PlatformController {
             dto.description = j.getString("description");
             dto.baseUrl = j.getString("baseUrl");
             dto.basePath = j.getString("basePath");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

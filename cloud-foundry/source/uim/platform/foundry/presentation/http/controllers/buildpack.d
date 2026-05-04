@@ -43,7 +43,7 @@ class BuildpackController : PlatformController {
       r.position = j.getInteger("position");
       r.stack = j.getString("stack");
       r.filename = j.getString("filename");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createBuildpack(r);
       if (result.isSuccess()) {

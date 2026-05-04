@@ -39,7 +39,7 @@ class AppConfigurationController : PlatformController {
       r.description = j.getString("description");
       r.isSecret = j.getBoolean("isSecret");
       r.platform = j.getString("platform");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -116,7 +116,7 @@ class AppConfigurationController : PlatformController {
       r.description = j.getString("description");
       r.isSecret = j.getBoolean("isSecret");
       r.platform = j.getString("platform");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

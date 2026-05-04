@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct BrokerServiceDTO {
-    string id;
+    BrokerServiceId brokerServiceId;
     TenantId tenantId;
     string name;
     string description;
@@ -29,14 +29,14 @@ struct BrokerServiceDTO {
     string msgVpnName;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct QueueDTO {
-    string id;
+    QueueId queueId;
     TenantId tenantId;
-    string brokerServiceId;
+    BrokerServiceId brokerServiceId;
     string name;
     string description;
     string queueType;
@@ -54,14 +54,14 @@ struct QueueDTO {
     string ingressEnabled;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct TopicDTO {
     string id;
     TenantId tenantId;
-    string brokerServiceId;
+    BrokerServiceId brokerServiceId;
     string name;
     string description;
     string status;
@@ -71,17 +71,17 @@ struct TopicDTO {
     string subscribeEnabled;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct SubscriptionDTO {
-    string id;
+    EventSubscriptionId eventSubscriptionId;
     TenantId tenantId;
-    string brokerServiceId;
-    string topicId;
-    string queueId;
-    string applicationId;
+    BrokerServiceId brokerServiceId;
+    TopicId topicId;
+    QueueId queueId;
+    EventApplicationId eventApplicationId;
     string name;
     string description;
     string status;
@@ -93,17 +93,17 @@ struct SubscriptionDTO {
     string maxTtl;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct EventMessageDTO {
-    string id;
+    EventMessageId eventMessageId;
     TenantId tenantId;
-    string brokerServiceId;
-    string topicId;
-    string queueId;
-    string publisherId;
+    BrokerServiceId brokerServiceId;
+    TopicId topicId;
+    QueueId queueId;
+    EventApplicationId publisherId;
     string correlationId;
     string contentType;
     string payload;
@@ -114,11 +114,11 @@ struct EventMessageDTO {
     string replyTo;
     string timeToLive;
     UserId createdBy;
-    string createdAt;
+    long createdAt;
 }
 
 struct EventSchemaDTO {
-    string id;
+    EventSchemaId eventSchemaId;
     TenantId tenantId;
     string name;
     string description;
@@ -130,14 +130,14 @@ struct EventSchemaDTO {
     string shared_;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct EventApplicationDTO {
-    string id;
+    EventApplicationId eventApplicationId;
     TenantId tenantId;
-    string brokerServiceId;
+    BrokerServiceId brokerServiceId;
     string name;
     string description;
     string status;
@@ -154,8 +154,8 @@ struct EventApplicationDTO {
     string maxConnections;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }
 
 struct MeshBridgeDTO {
@@ -178,6 +178,6 @@ struct MeshBridgeDTO {
     string retryDelay;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 }

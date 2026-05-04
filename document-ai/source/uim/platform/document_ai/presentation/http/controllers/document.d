@@ -49,7 +49,7 @@ class DocumentController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
           .set("status", Json("pending"))
-          .set("message", Json("Document uploaded for processing"));
+          .set("message", "Document uploaded for processing");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -73,7 +73,7 @@ class DocumentController : PlatformController {
       auto resp = Json.emptyObject
         .set("count", Json(docs.length))
         .set("resources", jarr)
-        .set("message", Json("Document list retrieved successfully"));
+        .set("message", "Document list retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

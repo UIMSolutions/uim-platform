@@ -48,7 +48,7 @@ class VersionController : PlatformController {
         auto resp = Json.emptyObject
           .set("documentId", Json(docId))
           .set("status", Json("locked"))
-          .set("message", Json("Document checked out successfully"));
+          .set("message", "Document checked out successfully");
 
         res.writeJsonBody(resp, 200);
       }
@@ -80,7 +80,7 @@ class VersionController : PlatformController {
           .set("versionId", Json(result.id))
           .set("documentId", Json(r.documentId))
           .set("status", Json("active"))
-          .set("message", Json("Document checked in successfully"));
+          .set("message", "Document checked in successfully");
 
         res.writeJsonBody(resp, 201);
       }
@@ -102,7 +102,7 @@ class VersionController : PlatformController {
         auto resp = Json.emptyObject
           .set("documentId", Json(docId))
           .set("status", Json("active"))
-          .set("message", Json("Document checkout cancelled successfully"));
+          .set("message", "Document checkout cancelled successfully");
 
         res.writeJsonBody(resp, 200);
       }
@@ -124,7 +124,7 @@ class VersionController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(versions.length))
-        .set("message", Json("Document versions retrieved successfully"));
+        .set("message", "Document versions retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     }

@@ -40,7 +40,7 @@ class ClientController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", Json(result.id))
-          .set("message", Json("Client created"));
+          .set("message", "Client created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -107,7 +107,7 @@ class ClientController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", Json(result.id))
-          .set("message", Json("Client updated"));
+          .set("message", "Client updated");
           
         res.writeJsonBody(resp, 200);
       } else {

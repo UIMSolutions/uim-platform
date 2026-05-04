@@ -23,11 +23,11 @@ struct Deployment {
   string deploymentUrl;
   ScalingConfig scaling;
   int ttl;
-  string startedAt;
+  long startedAt;
   string stoppedAt;
   string statusMessage;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 
   Json toJson() {
     import std.conv : to;

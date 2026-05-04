@@ -72,7 +72,7 @@ class ActivityController : PlatformController {
             dto.latitude = j.getString("latitude");
             dto.longitude = j.getString("longitude");
             dto.notes = j.getString("notes");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -104,7 +104,7 @@ class ActivityController : PlatformController {
             dto.actualEnd = j.getString("actualEnd");
             dto.notes = j.getString("notes");
             dto.feedbackCode = j.getString("feedbackCode");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

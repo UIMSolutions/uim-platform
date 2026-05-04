@@ -40,7 +40,7 @@ class RetentionRuleController : PlatformController {
             r.autoDelete = j.getBoolean("autoDelete");
             r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -106,7 +106,7 @@ class RetentionRuleController : PlatformController {
             r.autoDelete = j.getBoolean("autoDelete");
             r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

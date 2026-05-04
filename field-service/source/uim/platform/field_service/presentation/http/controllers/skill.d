@@ -71,7 +71,7 @@ class SkillController : PlatformController {
             dto.expirationDate = j.getString("expirationDate");
             dto.certificationNumber = j.getString("certificationNumber");
             dto.issuingAuthority = j.getString("issuingAuthority");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class SkillController : PlatformController {
             dto.certificationDate = j.getString("certificationDate");
             dto.expirationDate = j.getString("expirationDate");
             dto.issuingAuthority = j.getString("issuingAuthority");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -41,7 +41,7 @@ class BindingController : PlatformController {
       r.permission = j.getString("permission");
       r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array;
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = bindings.create(r);
 

@@ -76,7 +76,7 @@ class DataEntityController : PlatformController {
             dto.validationRules = j.getString("validationRules");
             dto.defaultValues = j.getString("defaultValues");
             dto.relations = j.getString("relations");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -104,7 +104,7 @@ class DataEntityController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.fields = j.getString("fields");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

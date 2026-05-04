@@ -44,7 +44,7 @@ class EnrichmentDataController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Enrichment data created"));
+          .set("message", "Enrichment data created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -68,7 +68,7 @@ class EnrichmentDataController : PlatformController {
       auto resp = Json.emptyObject
         .set("count", Json(data.length))
         .set("resources", jarr)
-        .set("message", Json("Enrichment data list retrieved successfully"));
+        .set("message", "Enrichment data list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -114,7 +114,7 @@ class EnrichmentDataController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Enrichment data updated"));
+          .set("message", "Enrichment data updated");
 
         res.writeJsonBody(resp, 200);
       } else {

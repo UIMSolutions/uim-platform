@@ -40,7 +40,7 @@ class DataProcessingLogController : PlatformController {
             r.action = j.getString("action");
             r.details = j.getString("details");
             r.ipAddress = j.getString("ipAddress");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

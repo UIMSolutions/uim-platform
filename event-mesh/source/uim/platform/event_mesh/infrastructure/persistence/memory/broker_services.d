@@ -23,7 +23,7 @@ class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerSer
         return findAll().filter!(e => e.status == status).array;
     }
     void removeByStatus(BrokerServiceStatus status) {
-        findByStatus(status).removeAll;
+        findByStatus(status).each!(e => remove(e));
     }
 
     size_t countByCloudProvider(CloudProvider provider) {
@@ -39,7 +39,7 @@ class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerSer
     }
 
     void removeByCloudProvider(CloudProvider provider) {
-        findByCloudProvider(provider).removeAll;
+        findByCloudProvider(provider).each!(e => remove(e));
     }
 
 }

@@ -70,7 +70,7 @@ class RunConfigurationController : PlatformController {
             dto.environmentVars = j.getString("environmentVars");
             dto.port = j.getString("port");
             dto.debugPort = j.getString("debugPort");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -98,7 +98,7 @@ class RunConfigurationController : PlatformController {
             dto.description = j.getString("description");
             dto.entryPoint = j.getString("entryPoint");
             dto.arguments = j.getString("arguments");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -46,7 +46,7 @@ class OrgController : PlatformController {
       r.totalRoutes = j.getInteger("totalRoutes", 0);
       r.totalServices = j.getInteger("totalServices", 0);
       r.totalAppInstances = j.getInteger("totalAppInstances", 0);
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createOrg(r);
       if (result.isSuccess()) {

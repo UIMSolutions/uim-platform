@@ -43,7 +43,7 @@ class WorkspaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.alias_ = j.getString("alias");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto typeStr = j.getString("type");
       if (typeStr == "project")

@@ -31,12 +31,12 @@ class EventMessageController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => eventMessageToJson(e)).array;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", Json(items.length))
               .set("resources", jarr)
-              .set("message", Json("Event message list retrieved successfully"));
+              .set("message", "Event message list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -73,7 +73,7 @@ class EventMessageController : PlatformController {
             dto.topicString = j.getString("topicString");
             dto.replyTo = j.getString("replyTo");
             dto.timeToLive = j.getString("timeToLive");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.publish(dto);
             if (result.success) {

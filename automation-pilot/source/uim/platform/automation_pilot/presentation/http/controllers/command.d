@@ -76,7 +76,7 @@ class CommandController : PlatformController {
             dto.timeout = j.getString("timeout");
             dto.retryCount = j.getString("retryCount");
             dto.tags = j.getString("tags");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = commands.create(dto);
             if (result.success) {
@@ -107,7 +107,7 @@ class CommandController : PlatformController {
             dto.outputSchema = j.getString("outputSchema");
             dto.steps = j.getString("steps");
             dto.timeout = j.getString("timeout");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = commands.update(dto);
             if (result.success) {

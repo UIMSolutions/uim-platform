@@ -86,7 +86,7 @@ class CredentialController : PlatformController {
       r.metadata = j.getString("metadata");
       r.format = j.getString("format");
       r.username = j.getString("username");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto result = credentials.create(r);

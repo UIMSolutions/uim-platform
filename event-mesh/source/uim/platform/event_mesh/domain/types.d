@@ -37,7 +37,7 @@ struct TopicId {
     mixin DomainId;
 }
 
-struct SubscriptionId {
+struct EventSubscriptionId {
     string value;
 
     this(string value) {

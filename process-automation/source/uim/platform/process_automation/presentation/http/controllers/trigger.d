@@ -41,7 +41,7 @@ class TriggerController : PlatformController {
             r.eventType = j.getString("eventType");
             r.eventSource = j.getString("eventSource");
             r.filterExpression = j.getString("filterExpression");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

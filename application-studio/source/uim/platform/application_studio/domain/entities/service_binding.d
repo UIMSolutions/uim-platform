@@ -24,8 +24,8 @@ struct ServiceBinding {
     string authType;
     string credentials;
     string systemAlias;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     UserId createdBy;
     UserId updatedBy;
 

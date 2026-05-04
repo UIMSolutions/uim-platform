@@ -41,7 +41,7 @@ class PipelineController : PlatformController {
       r.sourceType = j.getString("sourceType");
       r.format = j.getString("format");
       r.targetStreamId = j.getString("targetStreamId");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto processorsVal = "processors" in j;
       if (processorsVal !is null && (processorsVal).isArray) {

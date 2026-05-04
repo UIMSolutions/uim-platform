@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySubscriptionRepository : TenantRepository!(EventSubscription, SubscriptionId), SubscriptionRepository {
+class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventSubscriptionId), SubscriptionRepository {
 
     size_t countByBrokerService(BrokerServiceId brokerServiceId) {
         return findByBrokerService(brokerServiceId).length;

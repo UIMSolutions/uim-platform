@@ -45,7 +45,7 @@ class PromptController : PlatformController {
       r.frequencyPenalty = getDouble(j, "frequencyPenalty");
       r.presencePenalty = getDouble(j, "presencePenalty");
       r.inputParams = getStringArray(j, "inputParams");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.success) {

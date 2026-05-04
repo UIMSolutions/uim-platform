@@ -61,7 +61,7 @@ class CertificateController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Certificate uploaded"));
+          .set("message", "Certificate uploaded");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -149,7 +149,7 @@ class CertificateController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Certificate updated"));
+          .set("message", "Certificate updated");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -184,9 +184,9 @@ class CertificateController : PlatformController {
       auto result = uc.validateCertificate(id);
 
       auto resp = Json.emptyObject
-        .set("isValid", Json(result.isValid))
-        .set("status", Json(result.status.to!string))
-        .set("message", Json(result.message))
+        .set("isValid", result.isValid))
+        .set("status", result.status.to!string))
+        .set("message", (result.message))
         .set("daysUntilExpiry", Json(result.daysUntilExpiry))
         .set("message", "Certificate validation completed");
 

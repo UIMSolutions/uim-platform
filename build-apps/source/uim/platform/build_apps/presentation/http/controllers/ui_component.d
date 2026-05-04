@@ -73,7 +73,7 @@ class UIComponentController : PlatformController {
             dto.childComponents = j.getString("childComponents");
             dto.iconUrl = j.getString("iconUrl");
             dto.previewUrl = j.getString("previewUrl");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = components.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class UIComponentController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = components.update(dto);
             if (result.success) {

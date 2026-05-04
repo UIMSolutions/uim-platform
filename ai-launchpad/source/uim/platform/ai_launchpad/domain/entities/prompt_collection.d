@@ -19,6 +19,6 @@ struct PromptCollection {
   ScenarioId scenarioId;
   WorkspaceId workspaceId;
   int promptCount;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 }

@@ -28,7 +28,7 @@ class LegalEntityController : PlatformController {
             r.description = j.getString("description");
             r.country = j.getString("country");
             r.region = j.getString("region");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

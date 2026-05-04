@@ -68,7 +68,7 @@ class CommandInputController : PlatformController {
             dto.values = j.getString("values");
             dto.version_ = j.getString("version");
             dto.commandId = j.getString("commandId");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = commandInputs.create(dto);
             if (result.success) {
@@ -96,7 +96,7 @@ class CommandInputController : PlatformController {
             dto.description = j.getString("description");
             dto.keys = j.getString("keys");
             dto.values = j.getString("values");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = commandInputs.update(dto);
             if (result.success) {

@@ -52,8 +52,8 @@ struct Prompt {
   string lastOutput;
   PromptStatus status;
   UserId createdBy;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 
   Json toJson() const {
     return entityToJson

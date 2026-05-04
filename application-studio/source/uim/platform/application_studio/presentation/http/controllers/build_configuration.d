@@ -69,7 +69,7 @@ class BuildConfigurationController : PlatformController {
             dto.deployCommand = j.getString("deployCommand");
             dto.artifactPath = j.getString("artifactPath");
             dto.mtaDescriptor = j.getString("mtaDescriptor");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -97,7 +97,7 @@ class BuildConfigurationController : PlatformController {
             dto.description = j.getString("description");
             dto.buildCommand = j.getString("buildCommand");
             dto.deployCommand = j.getString("deployCommand");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

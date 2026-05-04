@@ -37,7 +37,7 @@ class ServiceInstanceController : PlatformController {
       r.description = j.getString("description");
       r.spaceId = j.getString("spaceId");
       r.plan = j.getString("plan");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
@@ -120,7 +120,7 @@ class ServiceInstanceController : PlatformController {
       r.id = id;
       r.tenantId = tenantId;
       r.description = j.getString("description");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

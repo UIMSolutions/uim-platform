@@ -39,7 +39,7 @@ class CustomDomainController : PlatformController {
             r.organizationId = j.getString("organizationId");
             r.spaceId = j.getString("spaceId");
             r.environment = j.getString("environment");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -139,7 +139,7 @@ class CustomDomainController : PlatformController {
             r.isShared = j.getBoolean("isShared");
             r.sharedWithOrgs = j.getString("sharedWithOrgs");
             r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

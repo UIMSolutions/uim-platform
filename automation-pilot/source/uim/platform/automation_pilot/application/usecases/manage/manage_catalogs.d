@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.application.usecases.manage.manage_catalogs;
+module uim.platform.automation_pilot.application.usecases.manage.catalogs;
 
 import uim.platform.automation_pilot;
 
@@ -56,7 +56,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.tags.length > 0) existing.tags = dto.tags;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

@@ -35,8 +35,8 @@ struct ServiceCall {
   string longitude;
   UserId createdBy;
   UserId updatedBy;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 
   Json serviceCallToJson() {
     return Json.emptyObject

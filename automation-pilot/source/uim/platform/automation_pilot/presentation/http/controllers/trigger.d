@@ -68,7 +68,7 @@ class TriggerController : PlatformController {
             dto.eventSource = j.getString("eventSource");
             dto.filterExpression = j.getString("filterExpression");
             dto.inputMapping = j.getString("inputMapping");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -97,7 +97,7 @@ class TriggerController : PlatformController {
             dto.eventType = j.getString("eventType");
             dto.eventSource = j.getString("eventSource");
             dto.filterExpression = j.getString("filterExpression");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

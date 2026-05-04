@@ -42,7 +42,7 @@ class MobileAppController : PlatformController {
       r.pushEnabled = j.getBoolean("pushEnabled");
       r.offlineEnabled = j.getBoolean("offlineEnabled");
       r.iconUrl = j.getString("iconUrl");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -123,7 +123,7 @@ class MobileAppController : PlatformController {
       r.pushEnabled = j.getBoolean("pushEnabled");
       r.offlineEnabled = j.getBoolean("offlineEnabled");
       r.iconUrl = j.getString("iconUrl");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

@@ -36,7 +36,7 @@ class PrivateKeyController : PlatformController {
             r.domains = getStringArray(j, "domains");
             r.algorithm = j.getString("algorithm");
             r.keySize = j.getInteger("keySize");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -121,7 +121,7 @@ class PrivateKeyController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("Private key deleted"));
+                    .set("message", "Private key deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

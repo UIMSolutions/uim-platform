@@ -69,7 +69,7 @@ class ServiceBindingController : PlatformController {
             dto.authType = j.getString("authType");
             dto.credentials = j.getString("credentials");
             dto.systemAlias = j.getString("systemAlias");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,7 +96,7 @@ class ServiceBindingController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.serviceUrl = j.getString("serviceUrl");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

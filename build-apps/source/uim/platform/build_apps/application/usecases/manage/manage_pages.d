@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.application.usecases.manage.manage_pages;
+module uim.platform.build_apps.application.usecases.manage.pages;
 
 import uim.platform.build_apps;
 
@@ -64,7 +64,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         if (dto.route.length > 0) existing.route = dto.route;
         if (dto.layoutConfig.length > 0) existing.layoutConfig = dto.layoutConfig;
         if (dto.componentTree.length > 0) existing.componentTree = dto.componentTree;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

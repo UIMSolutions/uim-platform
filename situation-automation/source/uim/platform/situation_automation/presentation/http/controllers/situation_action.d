@@ -47,7 +47,7 @@ class SituationActionController : PlatformController {
             r.webhookUrl = j.getString("webhookUrl");
             r.emailTemplate = j.getString("emailTemplate");
             r.scriptContent = j.getString("scriptContent");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -147,7 +147,7 @@ class SituationActionController : PlatformController {
             r.destinationName = j.getString("destinationName");
             r.webhookUrl = j.getString("webhookUrl");
             r.emailTemplate = j.getString("emailTemplate");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

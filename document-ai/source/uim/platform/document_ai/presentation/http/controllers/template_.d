@@ -44,7 +44,7 @@ class TemplateController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Template created"));
+          .set("message", "Template created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -68,7 +68,7 @@ class TemplateController : PlatformController {
       auto resp = Json.emptyObject
         .set("count", Json(templates.length))
         .set("resources", jarr)
-        .set("message", Json("Template list retrieved successfully"));
+        .set("message", "Template list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

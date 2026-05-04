@@ -67,7 +67,7 @@ class ContentConnectorController : PlatformController {
             dto.repositoryUrl = j.getString("repositoryUrl");
             dto.branch = j.getString("branch");
             dto.path = j.getString("path");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,7 +96,7 @@ class ContentConnectorController : PlatformController {
             dto.repositoryUrl = j.getString("repositoryUrl");
             dto.branch = j.getString("branch");
             dto.path = j.getString("path");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

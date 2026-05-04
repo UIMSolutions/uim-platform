@@ -65,7 +65,7 @@ class CatalogController : PlatformController {
             dto.description = j.getString("description");
             dto.tags = j.getString("tags");
             dto.version_ = j.getString("version");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = catalogs.create(dto);
             if (result.success) {
@@ -92,7 +92,7 @@ class CatalogController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.tags = j.getString("tags");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = catalogs.update(dto);
             if (result.success) {

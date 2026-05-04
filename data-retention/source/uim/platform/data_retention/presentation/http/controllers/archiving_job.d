@@ -28,7 +28,7 @@ class ArchivingJobController : PlatformController {
             r.operationType = j.getString("operationType");
             r.selectionCriteria = j.getString("selectionCriteria");
             r.scheduledAt = jsonLong(j, "scheduledAt");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

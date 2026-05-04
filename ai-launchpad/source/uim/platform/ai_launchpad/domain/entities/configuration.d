@@ -31,5 +31,5 @@ struct Configuration {
   string name;
   ParameterBinding[] parameters;
   InputArtifactBinding[] inputArtifacts;
-  string createdAt;
+  long createdAt;
 }

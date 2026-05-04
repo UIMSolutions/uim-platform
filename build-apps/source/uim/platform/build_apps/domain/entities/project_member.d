@@ -23,8 +23,8 @@ struct ProjectMember {
     string permissions;
     string invitedAt;
     string joinedAt;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     UserId createdBy;
     UserId updatedBy;
 

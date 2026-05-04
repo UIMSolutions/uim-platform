@@ -35,13 +35,13 @@ class TrustedCertificateController : PlatformController {
             r.customDomainId = j.getString("customDomainId");
             r.certificatePem = j.getString("certificatePem");
             r.authMode = j.getString("authMode");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("Trusted certificate created"));
+                    .set("message", "Trusted certificate created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -121,7 +121,7 @@ class TrustedCertificateController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("Trusted certificate deleted"));
+                    .set("message", "Trusted certificate deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

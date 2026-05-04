@@ -74,7 +74,7 @@ class ServiceCallController : PlatformController {
             dto.address = j.getString("address");
             dto.latitude = j.getString("latitude");
             dto.longitude = j.getString("longitude");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -104,7 +104,7 @@ class ServiceCallController : PlatformController {
             dto.contactPhone = j.getString("contactPhone");
             dto.contactEmail = j.getString("contactEmail");
             dto.resolution = j.getString("resolution");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

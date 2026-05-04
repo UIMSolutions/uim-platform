@@ -41,7 +41,7 @@ class DashboardController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = j.getBoolean("isDefault");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto panelsVal = "panels" in j;
       if (panelsVal !is null && (panelsVal).isArray) {

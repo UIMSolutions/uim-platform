@@ -28,7 +28,7 @@ class DataSubjectController : PlatformController {
             r.roleId = j.getString("roleId");
             r.applicationGroupId = j.getString("applicationGroupId");
             r.externalId = j.getString("externalId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

@@ -41,7 +41,7 @@ class AppVersionController : PlatformController {
       r.releaseNotes = j.getString("releaseNotes");
       r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -120,7 +120,7 @@ class AppVersionController : PlatformController {
       r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
       r.status = j.getString("status");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

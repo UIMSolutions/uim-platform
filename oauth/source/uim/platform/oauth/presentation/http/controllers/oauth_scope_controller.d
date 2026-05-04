@@ -64,7 +64,7 @@ class OAuthScopeController : PlatformController {
             dto.applicationId = j.getString("applicationId");
             dto.name = j.getString("name");
             dto.description = j.getString("description");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -90,7 +90,7 @@ class OAuthScopeController : PlatformController {
             dto.id = extractIdFromPath(path);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

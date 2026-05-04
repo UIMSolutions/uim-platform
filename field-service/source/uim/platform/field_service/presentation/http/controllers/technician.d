@@ -73,7 +73,7 @@ class TechnicianController : PlatformController {
             dto.availabilityEnd = j.getString("availabilityEnd");
             dto.maxWorkload = j.getString("maxWorkload");
             dto.travelRadius = j.getString("travelRadius");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -102,7 +102,7 @@ class TechnicianController : PlatformController {
             dto.phone = j.getString("phone");
             dto.region = j.getString("region");
             dto.address = j.getString("address");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

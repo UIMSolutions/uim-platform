@@ -56,7 +56,7 @@ class ServiceController : PlatformController {
       r.servicePlanName = j.getString("servicePlanName");
       r.parameters = j.getString("parameters");
       r.tags = j.getString("tags");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createInstance(r);
       if (result.isSuccess()) {
@@ -162,7 +162,7 @@ class ServiceController : PlatformController {
       r.serviceInstanceId = j.getString("serviceInstanceId");
       r.name = j.getString("name");
       r.bindingOptions = j.getString("bindingOptions");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createBinding(r);
       if (result.isSuccess()) {

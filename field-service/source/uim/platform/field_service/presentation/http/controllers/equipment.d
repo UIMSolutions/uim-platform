@@ -75,7 +75,7 @@ class EquipmentController : PlatformController {
             dto.latitude = j.getString("latitude");
             dto.longitude = j.getString("longitude");
             dto.measuringPoint = j.getString("measuringPoint");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -106,7 +106,7 @@ class EquipmentController : PlatformController {
             dto.locationAddress = j.getString("locationAddress");
             dto.lastServiceDate = j.getString("lastServiceDate");
             dto.nextServiceDate = j.getString("nextServiceDate");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

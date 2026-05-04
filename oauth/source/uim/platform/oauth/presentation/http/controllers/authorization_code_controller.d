@@ -73,7 +73,7 @@ class AuthorizationCodeController : PlatformController {
             dto.redirectUri = j.getString("redirectUri");
             dto.scopes = j.getString("scopes");
             dto.expiresAt = 0;
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {

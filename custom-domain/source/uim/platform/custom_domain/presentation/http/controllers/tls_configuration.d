@@ -41,13 +41,13 @@ class TlsConfigurationController : PlatformController {
             r.hstsEnabled = j.getBoolean("hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("TLS configuration created"));
+                    .set("message", "TLS configuration created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -135,13 +135,13 @@ class TlsConfigurationController : PlatformController {
             r.hstsEnabled = j.getBoolean("hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("TLS configuration updated"));
+                    .set("message", "TLS configuration updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -161,7 +161,7 @@ class TlsConfigurationController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("TLS configuration deleted"));
+                    .set("message", "TLS configuration deleted");
                     
                 res.writeJsonBody(resp, 200);
             } else {

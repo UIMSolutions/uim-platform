@@ -45,7 +45,7 @@ class DataSubjectController : PlatformController {
             r.organizationName = j.getString("organizationName");
             r.organizationId = j.getString("organizationId");
             r.externalId = j.getString("externalId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -146,7 +146,7 @@ class DataSubjectController : PlatformController {
             request.dateOfBirth = j.getString("dateOfBirth");
             request.organizationName = j.getString("organizationName");
             request.organizationId = j.getString("organizationId");
-            request.updatedBy = j.getString("updatedBy");
+            request.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.updateDataSubject(request);
             if (result.success) {

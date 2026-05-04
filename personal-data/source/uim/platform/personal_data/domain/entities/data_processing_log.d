@@ -24,5 +24,5 @@ struct DataProcessingLog {
     string details;
     string affectedFields;
     string ipAddress;
-    string createdAt;
+    long createdAt;
 }

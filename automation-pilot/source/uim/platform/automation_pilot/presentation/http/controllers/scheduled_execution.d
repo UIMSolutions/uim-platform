@@ -70,7 +70,7 @@ class ScheduledExecutionController : PlatformController {
             dto.description = j.getString("description");
             dto.maxRetries = j.getString("maxRetries");
             dto.retryDelay = j.getString("retryDelay");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = scheduledExecutions.create(dto);
             if (result.success) {
@@ -97,7 +97,7 @@ class ScheduledExecutionController : PlatformController {
             dto.cronExpression = j.getString("cronExpression");
             dto.scheduledAt = j.getString("scheduledAt");
             dto.description = j.getString("description");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = scheduledExecutions.update(dto);
             if (result.success) {

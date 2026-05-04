@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_queues;
+module uim.platform.event_mesh.application.usecases.manage.queues;
 
 import uim.platform.event_mesh;
 
@@ -55,7 +55,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidQueue(q))
             return CommandResult(false, "", "Invalid queue data");
         repo.save(q);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, q.id.value, "");
     }
 
     CommandResult update(QueueDTO dto) {
@@ -67,9 +67,9 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         if (dto.maxMsgSpoolUsage.length > 0) existing.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
         if (dto.maxBindCount.length > 0) existing.maxBindCount = dto.maxBindCount;
         if (dto.maxMsgSize.length > 0) existing.maxMsgSize = dto.maxMsgSize;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.queue.id.value, "");
     }
 
     CommandResult remove(QueueId id) {

@@ -57,7 +57,7 @@ class RouteController : PlatformController {
       r.path = j.getString("path");
       r.port = j.getInteger("port");
       r.protocol = parseRouteProtocol(j.getString("protocol"));
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createRoute(r);
       if (result.isSuccess()) {
@@ -175,7 +175,7 @@ class RouteController : PlatformController {
       r.name = j.getString("name");
       r.scope_ = parseDomainScope(j.getString("scope"));
       r.isInternal = j.getBoolean("isInternal");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createDomain(r);
       if (result.isSuccess()) {

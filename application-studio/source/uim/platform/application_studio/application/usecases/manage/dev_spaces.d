@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.application_studio.application.usecases.manage.manage_dev_spaces;
+module uim.platform.application_studio.application.usecases.manage.dev_spaces;
 
 import uim.platform.application_studio;
 
@@ -36,7 +36,7 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
 
     CommandResult create(DevSpaceDTO dto) {
         DevSpace e;
-        e.id = DevSpaceId(dto.id);
+        e.id = dto.devSpaceId;
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
@@ -51,19 +51,19 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidDevSpace(e))
             return CommandResult(false, "", "Invalid dev space data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.devSpaceId.value, "");
     }
 
     CommandResult update(DevSpaceDTO dto) {
-        if (!repo.existsById(DevSpaceId(dto.id)))
+        if (!repo.existsById(dto.devSpaceId))
             return CommandResult(false, "", "Dev space not found");
-        auto existing = repo.findById(DevSpaceId(dto.id));
+        auto existing = repo.findById(dto.devSpaceId);
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.extensions.length > 0) existing.extensions = dto.extensions;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.devSpaceId.value, "");
     }
 
     CommandResult remove(DevSpaceId id) {

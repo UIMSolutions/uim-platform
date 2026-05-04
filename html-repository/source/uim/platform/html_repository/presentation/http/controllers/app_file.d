@@ -42,7 +42,7 @@ class AppFileController : PlatformController {
       r.contentType = j.getString("contentType");
       r.data = j.getString("data");
       r.encoding = j.getString("encoding");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.upload(r);
       if (result.isSuccess()) {

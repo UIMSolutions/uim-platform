@@ -40,7 +40,7 @@ class DomainMappingController : PlatformController {
             r.applicationName = j.getString("applicationName");
             r.organizationId = j.getString("organizationId");
             r.spaceId = j.getString("spaceId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -125,7 +125,7 @@ class DomainMappingController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", Json(result.id))
-                    .set("message", Json("Domain mapping deleted"));
+                    .set("message", "Domain mapping deleted");
                     
                 res.writeJsonBody(resp, 200);
             } else {

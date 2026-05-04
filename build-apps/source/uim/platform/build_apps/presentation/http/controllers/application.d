@@ -72,7 +72,7 @@ class ApplicationController : PlatformController {
             dto.defaultLanguage = j.getString("defaultLanguage");
             dto.supportedLanguages = j.getString("supportedLanguages");
             dto.owner = j.getString("owner");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class ApplicationController : PlatformController {
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.iconUrl = j.getString("iconUrl");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

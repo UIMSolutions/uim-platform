@@ -68,7 +68,7 @@ class TopicController : PlatformController {
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.publishEnabled = j.getString("publishEnabled");
             dto.subscribeEnabled = j.getString("subscribeEnabled");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,7 +96,7 @@ class TopicController : PlatformController {
             dto.description = j.getString("description");
             dto.topicString = j.getString("topicString");
             dto.maxMessageSize = j.getString("maxMessageSize");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

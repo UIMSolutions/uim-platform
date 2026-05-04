@@ -27,11 +27,11 @@ struct Execution {
   ExecutionStatus status;
   string targetStatus;
   OutputArtifact[] outputArtifacts;
-  string startedAt;
+  long startedAt;
   string completedAt;
   string duration;
   string logsUrl;
   string statusMessage;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 }

@@ -67,7 +67,7 @@ class ServiceAccountController : PlatformController {
             dto.clientId = j.getString("clientId");
             dto.permissions = j.getString("permissions");
             dto.expiresAt = j.getString("expiresAt");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = serviceAccounts.create(dto);
             if (result.success) {
@@ -93,7 +93,7 @@ class ServiceAccountController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.permissions = j.getString("permissions");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = serviceAccounts.update(dto);
             if (result.success) {

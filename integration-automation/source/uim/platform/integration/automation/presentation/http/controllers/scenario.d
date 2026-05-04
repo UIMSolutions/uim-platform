@@ -49,7 +49,7 @@ class ScenarioController : PlatformController {
       r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
       r.prerequisites = getStringArray(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createScenario(r);
       if (result.isSuccess()) {

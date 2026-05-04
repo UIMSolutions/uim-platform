@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.application_studio.application.usecases.manage.manage_run_configurations;
+module uim.platform.application_studio.application.usecases.manage.run_configurations;
 
 import uim.platform.application_studio;
 
@@ -61,7 +61,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.entryPoint.length > 0) existing.entryPoint = dto.entryPoint;
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

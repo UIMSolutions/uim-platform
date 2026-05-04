@@ -71,7 +71,7 @@ class AssignmentController : PlatformController {
             dto.schedulingPolicy = j.getString("schedulingPolicy");
             dto.matchScore = j.getString("matchScore");
             dto.notes = j.getString("notes");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class AssignmentController : PlatformController {
             dto.completedDate = j.getString("completedDate");
             dto.travelDistance = j.getString("travelDistance");
             dto.notes = j.getString("notes");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.update(dto);
             if (result.success) {

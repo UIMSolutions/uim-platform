@@ -55,7 +55,7 @@ class DestinationController : PlatformController {
       r.tokenServiceUser = j.getString("tokenServiceUser");
       r.audience = j.getString("audience");
       r.scope_ = j.getString("scope");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createDestination(r);
       if (result.isSuccess()) {

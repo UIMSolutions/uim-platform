@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct EventMessage {
-    EventMessageId id;
-    TenantId tenantId;
+    mixin TenantEntity!EventMessageId;
+
     BrokerServiceId brokerServiceId;
     TopicId topicId;
     QueueId queueId;
@@ -34,13 +34,9 @@ struct EventMessage {
     string publishTime;
     string deliveredTime;
     string acknowledgedTime;
-    UserId createdBy;
-    string createdAt;
 
-    Json eventMessageToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("brokerServiceId", brokerServiceId)
             .set("topicId", topicId)
             .set("queueId", queueId)
@@ -60,8 +56,6 @@ struct EventMessage {
             .set("dmqEligible", dmqEligible)
             .set("publishTime", publishTime)
             .set("deliveredTime", deliveredTime)
-            .set("acknowledgedTime", acknowledgedTime)
-            .set("createdBy", createdBy)
-            .set("createdAt", createdAt);
+            .set("acknowledgedTime", acknowledgedTime);
     }
 }

@@ -54,7 +54,7 @@ class FolderController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Folder created"));
+          .set("message", "Folder created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -114,7 +114,7 @@ class FolderController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Folder updated"));
+          .set("message", "Folder updated");
           
         res.writeJsonBody(resp, 200);
       } else {
@@ -138,7 +138,8 @@ class FolderController : PlatformController {
       auto result = uc.moveFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", Json(result.id))
+          .set("message", "Folder moved");
           
         res.writeJsonBody(resp, 200);
       } else {
@@ -160,7 +161,8 @@ class FolderController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Child folders retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

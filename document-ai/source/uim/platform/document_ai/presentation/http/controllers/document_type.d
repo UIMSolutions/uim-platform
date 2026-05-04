@@ -44,7 +44,7 @@ class DocumentTypeController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Document type created"));
+          .set("message", "Document type created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -114,7 +114,7 @@ class DocumentTypeController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Document type updated"));
+          .set("message", "Document type updated");
           
         res.writeJsonBody(resp, 200);
       } else {

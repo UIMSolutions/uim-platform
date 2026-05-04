@@ -40,7 +40,7 @@ class EntityTypeController : PlatformController {
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.sourceSystem = j.getString("sourceSystem");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -124,7 +124,7 @@ class EntityTypeController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

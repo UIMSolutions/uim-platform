@@ -47,7 +47,7 @@ class RemoteTableController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Remote table created"));
+          .set("message", "Remote table created");
 
         res.writeJsonBody(resp, 201);
       } else {

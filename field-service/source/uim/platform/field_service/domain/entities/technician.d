@@ -30,8 +30,8 @@ struct Technician {
     string travelRadius;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json technicianToJson() {
         return Json.emptyObject

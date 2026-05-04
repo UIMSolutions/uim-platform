@@ -41,7 +41,7 @@ class RegisteredApplicationController : PlatformController {
             r.apiVersion = j.getString("apiVersion");
             r.contactEmail = j.getString("contactEmail");
             r.contactName = j.getString("contactName");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -109,7 +109,7 @@ class RegisteredApplicationController : PlatformController {
             r.apiVersion = j.getString("apiVersion");
             r.contactEmail = j.getString("contactEmail");
             r.contactName = j.getString("contactName");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

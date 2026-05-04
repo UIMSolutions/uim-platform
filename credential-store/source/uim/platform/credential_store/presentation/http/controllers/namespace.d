@@ -38,7 +38,7 @@ class NamespaceController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = namespaces.create(r);
       if (result.success) {

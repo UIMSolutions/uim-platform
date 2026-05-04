@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct BrokerService {
-    BrokerServiceId id;
-    TenantId tenantId;
+    mixin TenantEntity!BrokerServiceId;
+
     string name;
     string description;
     BrokerServiceStatus status = BrokerServiceStatus.provisioning;
@@ -38,15 +38,9 @@ struct BrokerService {
     string webSocketHost;
     string webSocketPort;
     string adminUrl;
-    UserId createdBy;
-    UserId updatedBy;
-    string createdAt;
-    string updatedAt;
 
-    Json brokerServiceToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
@@ -70,10 +64,6 @@ struct BrokerService {
             .set("restPort", restPort)
             .set("webSocketHost", webSocketHost)
             .set("webSocketPort", webSocketPort)
-            .set("adminUrl", adminUrl)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("adminUrl", adminUrl);
     }
 }

@@ -20,7 +20,7 @@ struct Execution {
     string inputValues;
     string outputValues;
     string logs;
-    string startedAt;
+    long startedAt;
     string completedAt;
     string duration;
     string errorMessage;

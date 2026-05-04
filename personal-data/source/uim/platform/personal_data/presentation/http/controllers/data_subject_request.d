@@ -39,7 +39,7 @@ class DataSubjectRequestController : PlatformController {
             r.description = j.getString("description");
             r.assignedTo = j.getString("assignedTo");
             r.dueDate = j.getString("dueDate");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -124,7 +124,7 @@ class DataSubjectRequestController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.comment = j.getString("comment");
             r.rejectionReason = j.getString("rejectionReason");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

@@ -46,7 +46,7 @@ class SituationTemplateController : PlatformController {
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -145,7 +145,7 @@ class SituationTemplateController : PlatformController {
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

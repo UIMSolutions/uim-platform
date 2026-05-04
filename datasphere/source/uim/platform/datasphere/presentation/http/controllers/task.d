@@ -52,7 +52,7 @@ class TaskController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Task created"));
+          .set("message", "Task created");
 
         res.writeJsonBody(resp, 201);
       } else {

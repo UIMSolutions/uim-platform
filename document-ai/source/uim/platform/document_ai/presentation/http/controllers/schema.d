@@ -45,7 +45,7 @@ class SchemaController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Schema created"));
+          .set("message", "Schema created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -69,7 +69,7 @@ class SchemaController : PlatformController {
       auto resp = Json.emptyObject
         .set("count", Json(schemas.length))
         .set("resources", jarr)
-        .set("message", Json("Schema list retrieved successfully"));
+        .set("message", "Schema list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -115,7 +115,7 @@ class SchemaController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject  
           .set("id", Json(result.id))
-          .set("message", Json("Schema updated"));
+          .set("message", "Schema updated");
 
         res.writeJsonBody(resp, 200);
       } else {

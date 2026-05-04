@@ -29,7 +29,7 @@ class LegalGroundController : PlatformController {
             r.businessPurposeId = j.getString("businessPurposeId");
             r.type = j.getString("type");
             r.referenceDate = jsonLong(j, "referenceDate");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

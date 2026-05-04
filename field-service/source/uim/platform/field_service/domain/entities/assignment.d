@@ -27,8 +27,8 @@ struct Assignment {
   string notes;
   UserId createdBy;
   UserId updatedBy;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 
   Json toJson() {
     return Json.emptyObject

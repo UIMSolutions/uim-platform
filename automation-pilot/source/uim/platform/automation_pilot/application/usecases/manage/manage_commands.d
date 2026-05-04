@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.application.usecases.manage.manage_commands;
+module uim.platform.automation_pilot.application.usecases.manage.commands;
 
 import uim.platform.automation_pilot;
 
@@ -56,16 +56,16 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(CommandDTO dto) {
-        if (!repo.existsById(CommandId(dto.id)))
+        if (!repo.existsById(dto.commandId))
             return CommandResult(false, "", "Command not found");
-        auto existing = repo.findById(CommandId(dto.id));
+        auto existing = repo.findById(dto.commandId);
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.inputSchema.length > 0) existing.inputSchema = dto.inputSchema;
         if (dto.outputSchema.length > 0) existing.outputSchema = dto.outputSchema;
         if (dto.steps.length > 0) existing.steps = dto.steps;
         if (dto.timeout.length > 0) existing.timeout = dto.timeout;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

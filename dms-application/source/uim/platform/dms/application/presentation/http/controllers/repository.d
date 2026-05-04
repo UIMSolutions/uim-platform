@@ -54,7 +54,7 @@ class RepositoryController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Repository created successfully"));
+          .set("message", "Repository created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -74,7 +74,7 @@ class RepositoryController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(items.length))
-        .set("message", Json("Repositories retrieved successfully"));
+        .set("message", "Repositories retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -113,7 +113,7 @@ class RepositoryController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Repository updated successfully"));
+          .set("message", "Repository updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -134,7 +134,7 @@ class RepositoryController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
           .set("status", Json("active"))
-          .set("message", Json("Repository activated successfully"));
+          .set("message", "Repository activated successfully");
 
         res.writeJsonBody(resp, 200);
       } else

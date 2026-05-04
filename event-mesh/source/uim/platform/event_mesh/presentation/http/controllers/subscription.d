@@ -47,7 +47,7 @@ class SubscriptionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(SubscriptionId(id));
+            auto e = uc.getById(EventSubscriptionId(id));
             if (e.isNull) { writeError(res, 404, "Subscription not found"); return; }
             res.writeJsonBody(subscriptionToJson(e), 200);
         } catch (Exception e) {
@@ -71,7 +71,7 @@ class SubscriptionController : PlatformController {
             dto.selector = j.getString("selector");
             dto.maxRedeliveryCount = j.getString("maxRedeliveryCount");
             dto.maxTtl = j.getString("maxTtl");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -99,7 +99,7 @@ class SubscriptionController : PlatformController {
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
             dto.selector = j.getString("selector");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {
@@ -121,7 +121,7 @@ class SubscriptionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(SubscriptionId(id));
+            auto result = uc.remove(EventSubscriptionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", Json("Subscription deleted"));

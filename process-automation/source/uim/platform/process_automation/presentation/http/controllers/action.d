@@ -47,7 +47,7 @@ class ActionController : PlatformController {
             r.authType = j.getString("authType");
             r.destinationName = j.getString("destinationName");
             r.version_ = j.getString("version");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -142,7 +142,7 @@ class ActionController : PlatformController {
             r.authType = j.getString("authType");
             r.destinationName = j.getString("destinationName");
             r.version_ = j.getString("version");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

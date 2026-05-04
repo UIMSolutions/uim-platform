@@ -31,7 +31,7 @@ class BusinessPurposeController : PlatformController {
             r.dataSubjectRoleId = j.getString("dataSubjectRoleId");
             r.legalEntityId = j.getString("legalEntityId");
             r.referenceDate = jsonLong(j, "referenceDate");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

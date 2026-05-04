@@ -43,7 +43,7 @@ class TrainingJobController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Training job created"));
+          .set("message", "Training job created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -67,7 +67,7 @@ class TrainingJobController : PlatformController {
       auto resp = Json.emptyObject
         .set("count", Json(jobs.length))
         .set("resources", jarr)
-        .set("message", Json("Training job list retrieved successfully"));
+        .set("message", "Training job list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -111,7 +111,7 @@ class TrainingJobController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Training job updated"));
+          .set("message", "Training job updated");
           
         res.writeJsonBody(resp, 200);
       } else {

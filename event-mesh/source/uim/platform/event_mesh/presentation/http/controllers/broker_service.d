@@ -20,6 +20,7 @@ class BrokerServiceController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/broker-services", &handleList);
         router.get("/api/v1/event-mesh/broker-services/*", &handleGet);
         router.post("/api/v1/event-mesh/broker-services", &handleCreate);
@@ -30,12 +31,10 @@ class BrokerServiceController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => brokerServiceToJson(e)).array;
-            
-            auto resp = Json.emptyObject
+            auto jarr = items.map!(e => e.toJson).array.toJson;
               .set("count", Json(items.length))
               .set("resources", jarr)
-              .set("message", Json("Broker service list retrieved successfully"));
+              .set("message", "Broker service list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -50,7 +49,12 @@ class BrokerServiceController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(BrokerServiceId(id));
             if (e.isNull) { writeError(res, 404, "Broker service not found"); return; }
-            res.writeJsonBody(brokerServiceToJson(e), 200);
+
+            auto resp = Json.emptyObject
+              .set("message", Json("Broker service retrieved successfully"))
+              .set("resource", e.toJson);
+              
+            res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -71,7 +75,7 @@ class BrokerServiceController : PlatformController {
             dto.maxQueueDepth = j.getString("maxQueueDepth");
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.msgVpnName = j.getString("msgVpnName");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -101,7 +105,7 @@ class BrokerServiceController : PlatformController {
             dto.maxConnections = j.getString("maxConnections");
             dto.maxQueueDepth = j.getString("maxQueueDepth");
             dto.maxMessageSize = j.getString("maxMessageSize");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

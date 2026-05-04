@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.application.usecases.manage.manage_triggers;
+module uim.platform.automation_pilot.application.usecases.manage.triggers;
 
 import uim.platform.automation_pilot;
 
@@ -61,7 +61,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (dto.eventType.length > 0) existing.eventType = dto.eventType;
         if (dto.eventSource.length > 0) existing.eventSource = dto.eventSource;
         if (dto.filterExpression.length > 0) existing.filterExpression = dto.filterExpression;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

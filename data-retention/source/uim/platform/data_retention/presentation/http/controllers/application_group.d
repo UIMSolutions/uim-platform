@@ -27,7 +27,7 @@ class ApplicationGroupController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.scope_ = j.getString("scope");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto appIdsVal = "applicationIds" in j;
             if (appIdsVal !is null && (appIdsVal).isArray) {

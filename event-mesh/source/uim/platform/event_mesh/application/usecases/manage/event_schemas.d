@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_event_schemas;
+module uim.platform.event_mesh.application.usecases.manage.event_schemas;
 
 import uim.platform.event_mesh;
 
@@ -36,7 +36,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
 
     CommandResult create(EventSchemaDTO dto) {
         EventSchema s;
-        s.id = EventSchemaId(dto.id);
+        s.id = dto.eventSchemaId;
         s.tenantId = dto.tenantId;
         s.name = dto.name;
         s.description = dto.description;
@@ -48,25 +48,25 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidEventSchema(s))
             return CommandResult(false, "", "Invalid event schema data");
         repo.save(s);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.eventSchemaId.value, "");
     }
 
     CommandResult update(EventSchemaDTO dto) {
-        auto existing = repo.findById(EventSchemaId(dto.id));
-        if (existing.isNull)
+        auto existing = repo.findById(EventSchemaId(dto.eventSchemaId));
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Event schema not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.schemaContent.length > 0) existing.schemaContent = dto.schemaContent;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.eventSchemaId.value, "");
     }
 
     CommandResult remove(EventSchemaId id) {
         auto existing = repo.findById(id);
-        if (existing.isNull)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Event schema not found");
         repo.removeById(id);
         return CommandResult(true, id.value, "");

@@ -42,7 +42,7 @@ class StreamController : PlatformController {
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
       r.retentionPolicyId = j.getString("retentionPolicyId");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.success) {

@@ -22,8 +22,8 @@ struct Dataset {
   long size;
   DatasetStatus status;
   string[] labels;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 
   Json toJson() {
 

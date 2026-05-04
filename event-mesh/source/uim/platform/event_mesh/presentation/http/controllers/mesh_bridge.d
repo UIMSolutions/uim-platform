@@ -74,7 +74,7 @@ class MeshBridgeController : PlatformController {
             dto.maxTtl = j.getString("maxTtl");
             dto.retryCount = j.getString("retryCount");
             dto.retryDelay = j.getString("retryDelay");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -103,7 +103,7 @@ class MeshBridgeController : PlatformController {
             dto.remoteAddress = j.getString("remoteAddress");
             dto.topicSubscriptions = j.getString("topicSubscriptions");
             dto.queueBindings = j.getString("queueBindings");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

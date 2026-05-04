@@ -39,7 +39,7 @@ class ClientResourceController : PlatformController {
       r.type = j.getString("type");
       r.contentType = j.getString("contentType");
       r.data = j.getString("data");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -115,7 +115,7 @@ class ClientResourceController : PlatformController {
       r.type = j.getString("type");
       r.contentType = j.getString("contentType");
       r.data = j.getString("data");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject

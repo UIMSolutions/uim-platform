@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct EventSchema {
-    EventSchemaId id;
-    TenantId tenantId;
+    mixin TenantEntity!EventSchemaId;
+    
     string name;
     string description;
     SchemaFormat format = SchemaFormat.json;
@@ -24,15 +24,9 @@ struct EventSchema {
     string shared_;
     string versionCount;
     string latestVersion;
-    UserId createdBy;
-    UserId updatedBy;
-    string createdAt;
-    string updatedAt;
 
-    Json eventSchemaToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("format", format.to!string)
@@ -42,10 +36,6 @@ struct EventSchema {
             .set("applicationDomainId", applicationDomainId)
             .set("shared", shared_)
             .set("versionCount", versionCount)
-            .set("latestVersion", latestVersion)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("latestVersion", latestVersion);
     }
 }

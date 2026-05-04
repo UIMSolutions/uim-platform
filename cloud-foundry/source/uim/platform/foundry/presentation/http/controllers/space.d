@@ -45,7 +45,7 @@ class SpaceController : PlatformController {
       r.orgId = j.getString("orgId");
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createSpace(r);
       if (result.isSuccess()) {

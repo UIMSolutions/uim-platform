@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_broker_services;
+module uim.platform.event_mesh.application.usecases.manage.broker_services;
 
 import uim.platform.event_mesh;
 
@@ -36,7 +36,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
 
     CommandResult create(BrokerServiceDTO dto) {
         BrokerService bs;
-        bs.id = BrokerServiceId(dto.id);
+        bs.id = dto.brokerServiceId;
         bs.tenantId = dto.tenantId;
         bs.name = dto.name;
         bs.description = dto.description;
@@ -51,11 +51,11 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidBrokerService(bs))
             return CommandResult(false, "", "Invalid broker service data");
         repo.save(bs);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, bs.id.value, "");
     }
 
     CommandResult update(BrokerServiceDTO dto) {
-        auto existing = repo.findById(BrokerServiceId(dto.id));
+        auto existing = repo.findById(dto.brokerServiceId);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -64,9 +64,9 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         if (dto.maxConnections.length > 0) existing.maxConnections = dto.maxConnections;
         if (dto.maxQueueDepth.length > 0) existing.maxQueueDepth = dto.maxQueueDepth;
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.brokerServiceId.value, "");
     }
 
     CommandResult remove(BrokerServiceId id) {

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.application.usecases.manage.manage_project_members;
+module uim.platform.build_apps.application.usecases.manage.project_members;
 
 import uim.platform.build_apps;
 
@@ -57,7 +57,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.email.length > 0) existing.email = dto.email;
         if (dto.permissions.length > 0) existing.permissions = dto.permissions;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

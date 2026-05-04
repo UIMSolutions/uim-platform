@@ -42,7 +42,7 @@ class KeystoreController : PlatformController {
       r.description   = j.getString("description");
       r.format        = j.getString("format");
       r.content       = j.getString("content");
-      r.createdBy     = j.getString("createdBy");
+      r.createdBy     = UserId(j.getString("createdBy"));
 
       auto result = uc.upload(r);
       if (result.success) {
@@ -133,7 +133,7 @@ class KeystoreController : PlatformController {
       UpdateKeystoreRequest r;
       r.description = j.getString("description");
       r.content     = j.getString("content");
-      r.updatedBy  = j.getString("updatedBy");
+      r.updatedBy  = UserId(j.getString("updatedBy"));
 
       auto result = uc.update(id, r);
       if (result.success) {

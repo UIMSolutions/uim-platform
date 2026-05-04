@@ -69,7 +69,7 @@ class SmartformController : PlatformController {
             dto.formType = j.getString("formType");
             dto.templateId = j.getString("templateId");
             dto.safetyLabel = j.getString("safetyLabel");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -100,7 +100,7 @@ class SmartformController : PlatformController {
             dto.submittedBy = j.getString("submittedBy");
             dto.submittedDate = j.getString("submittedDate");
             dto.approvedBy = j.getString("approvedBy");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

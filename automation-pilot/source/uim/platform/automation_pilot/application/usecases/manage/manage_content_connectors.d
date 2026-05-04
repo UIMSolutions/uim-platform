@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.application.usecases.manage.manage_content_connectors;
+module uim.platform.automation_pilot.application.usecases.manage.content_connectors;
 
 import uim.platform.automation_pilot;
 
@@ -55,7 +55,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (dto.repositoryUrl.length > 0) existing.repositoryUrl = dto.repositoryUrl;
         if (dto.branch.length > 0) existing.branch = dto.branch;
         if (dto.path.length > 0) existing.path = dto.path;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

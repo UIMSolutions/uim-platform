@@ -43,7 +43,7 @@ class TaskProviderController : PlatformController {
             r.endpointUrl = j.getString("endpointUrl");
             r.authEndpointUrl = j.getString("authEndpointUrl");
             r.clientId = j.getString("clientId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {
@@ -113,7 +113,7 @@ class TaskProviderController : PlatformController {
             r.endpointUrl = j.getString("endpointUrl");
             r.authEndpointUrl = j.getString("authEndpointUrl");
             r.clientId = j.getString("clientId");
-            r.updatedBy = j.getString("updatedBy");
+            r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(r);
             if (result.success) {

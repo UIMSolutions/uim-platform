@@ -60,7 +60,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.buildCommand.length > 0) existing.buildCommand = dto.buildCommand;
         if (dto.deployCommand.length > 0) existing.deployCommand = dto.deployCommand;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id, "");
     }

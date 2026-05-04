@@ -67,7 +67,7 @@ class ProjectMemberController : PlatformController {
             dto.email = j.getString("email");
             dto.role = j.getString("role");
             dto.permissions = j.getString("permissions");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -94,7 +94,7 @@ class ProjectMemberController : PlatformController {
             dto.displayName = j.getString("displayName");
             dto.email = j.getString("email");
             dto.permissions = j.getString("permissions");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

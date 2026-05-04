@@ -29,7 +29,7 @@ class RetentionRuleController : PlatformController {
             r.duration = jsonInt(j, "duration");
             r.periodUnit = j.getString("periodUnit");
             r.actionOnExpiry = j.getString("actionOnExpiry");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

@@ -62,7 +62,7 @@ class AppController : PlatformController {
       r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
       r.environmentVariables = j.getString("environmentVariables");
       r.dockerImage = j.getString("dockerImage");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createApp(r);
       if (result.isSuccess()) {

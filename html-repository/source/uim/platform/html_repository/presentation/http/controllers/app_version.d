@@ -40,7 +40,7 @@ class AppVersionController : PlatformController {
       r.appId = j.getString("appId");
       r.versionCode = j.getString("versionCode");
       r.description = j.getString("description");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.isSuccess()) {

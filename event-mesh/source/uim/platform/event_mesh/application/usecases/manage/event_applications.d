@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.application.usecases.manage.manage_event_applications;
+module uim.platform.event_mesh.application.usecases.manage.event_applications;
 
 import uim.platform.event_mesh;
 
@@ -36,9 +36,9 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult create(EventApplicationDTO dto) {
         EventApplication a;
-        a.id = EventApplicationId(dto.id);
+        a.id = dto.eventApplicationId;
         a.tenantId = dto.tenantId;
-        a.brokerServiceId = BrokerServiceId(dto.brokerServiceId);
+        a.brokerServiceId = dto.brokerServiceId;
         a.name = dto.name;
         a.description = dto.description;
         a.applicationDomainId = dto.applicationDomainId;
@@ -54,11 +54,11 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidEventApplication(a))
             return CommandResult(false, "", "Invalid event application data");
         repo.save(a);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, a.id.value, "");
     }
 
     CommandResult update(EventApplicationDTO dto) {
-        auto existing = repo.findById(EventApplicationId(dto.id));
+        auto existing = repo.findById(dto.eventApplicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Event application not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -68,9 +68,9 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         if (dto.aclProfile.length > 0) existing.aclProfile = dto.aclProfile;
         if (dto.publishTopics.length > 0) existing.publishTopics = dto.publishTopics;
         if (dto.subscribeTopics.length > 0) existing.subscribeTopics = dto.subscribeTopics;
-        if (dto.updatedBy.length > 0) existing.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.eventApplicationId.value, "");
     }
 
     CommandResult remove(EventApplicationId id) {

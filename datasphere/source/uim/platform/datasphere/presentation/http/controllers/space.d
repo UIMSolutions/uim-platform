@@ -45,7 +45,7 @@ class SpaceController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", Json(result.id))
-            .set("message", Json("Space created"));
+            .set("message", "Space created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -128,7 +128,7 @@ class SpaceController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", Json(result.id))
-            .set("message", Json("Space updated"));
+            .set("message", "Space updated");
             
         res.writeJsonBody(resp, 200);
       } else {

@@ -53,7 +53,7 @@ class ShareController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Share created successfully"));
+          .set("message", "Share created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -104,7 +104,7 @@ class ShareController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
           .set("status", Json("revoked"))
-          .set("message", Json("Share revoked"));
+          .set("message", "Share revoked");
 
         res.writeJsonBody(resp, 200);
       } else

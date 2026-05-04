@@ -28,7 +28,7 @@ class ResidenceRuleController : PlatformController {
             r.legalGroundId = j.getString("legalGroundId");
             r.duration = jsonInt(j, "duration");
             r.periodUnit = j.getString("periodUnit");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

@@ -44,7 +44,7 @@ class SiteController : PlatformController {
       r.description = j.getString("description");
       r.alias_ = j.getString("alias");
       r.themeId = j.getString("themeId");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = useCase.createSite(r);
       if (result.isSuccess()) {

@@ -52,7 +52,7 @@ class PermissionController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
           .set("id", Json(result.id))
-          .set("message", Json("Permission granted"));
+          .set("message", "Permission granted");
 
         res.writeJsonBody(resp, 201);
       }
@@ -144,7 +144,7 @@ class PermissionController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Permission updated"));
+          .set("message", "Permission updated");
 
         res.writeJsonBody(resp, 200);
       }
@@ -164,7 +164,7 @@ class PermissionController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true)
-          .set("message", Json("Permission revoked"));
+          .set("message", "Permission revoked");
 
         res.writeJsonBody(resp, 200);
       }

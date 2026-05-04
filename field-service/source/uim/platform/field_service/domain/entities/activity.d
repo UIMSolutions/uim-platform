@@ -33,8 +33,8 @@ struct Activity {
     string feedbackCode;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json activityToJson() {
         return Json.emptyObject

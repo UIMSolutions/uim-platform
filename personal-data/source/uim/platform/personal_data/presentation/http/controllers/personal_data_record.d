@@ -42,7 +42,7 @@ class PersonalDataRecordController : PlatformController {
             r.purposeId = j.getString("purposeId");
             r.legalBasis = j.getString("legalBasis");
             r.retentionRuleId = j.getString("retentionRuleId");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

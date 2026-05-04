@@ -47,7 +47,7 @@ class AlertRuleController : PlatformController {
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.create(r);
       if (result.success) {

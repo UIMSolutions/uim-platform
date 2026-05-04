@@ -42,7 +42,7 @@ class RetentionController : PlatformController {
       r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
       if (result.success) {

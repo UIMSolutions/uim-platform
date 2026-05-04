@@ -74,7 +74,7 @@ class QueueController : PlatformController {
             dto.permission = j.getString("permission");
             dto.egressEnabled = j.getString("egressEnabled");
             dto.ingressEnabled = j.getString("ingressEnabled");
-            dto.createdBy = j.getString("createdBy");
+            dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -103,7 +103,7 @@ class QueueController : PlatformController {
             dto.maxMsgSpoolUsage = j.getString("maxMsgSpoolUsage");
             dto.maxBindCount = j.getString("maxBindCount");
             dto.maxMsgSize = j.getString("maxMsgSize");
-            dto.updatedBy = j.getString("updatedBy");
+            dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = uc.update(dto);
             if (result.success) {

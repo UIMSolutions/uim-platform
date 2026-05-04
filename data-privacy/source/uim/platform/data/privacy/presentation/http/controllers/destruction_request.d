@@ -99,7 +99,7 @@ class DestructionRequestController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id))
-          .set("message", Json("Destruction request status updated successfully"));
+          .set("message", "Destruction request status updated successfully");
           
         res.writeJsonBody(resp, 200);
       } else

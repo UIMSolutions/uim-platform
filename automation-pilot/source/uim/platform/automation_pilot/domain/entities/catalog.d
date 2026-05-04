@@ -23,8 +23,8 @@ struct Catalog {
     string commandCount;
     UserId createdBy;
     UserId updatedBy;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
 
     Json catalogToJson() {
         return Json.emptyObject

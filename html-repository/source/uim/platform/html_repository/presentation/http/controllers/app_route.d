@@ -46,7 +46,7 @@ class AppRouteController : PlatformController {
          targetPath = j.getString("targetPath");
          authRequired = j.getBoolean("authRequired");
          cacheEnabled = j.getBoolean("cacheEnabled");
-         createdBy = j.getString("createdBy");
+         createdBy = UserId(j.getString("createdBy"));
       }
 
       auto result = usecase.create(request);
@@ -131,7 +131,7 @@ class AppRouteController : PlatformController {
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.targetUrl = j.getString("targetUrl");
-      r.updatedBy = j.getString("updatedBy");
+      r.updatedBy = UserId(j.getString("updatedBy"));
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

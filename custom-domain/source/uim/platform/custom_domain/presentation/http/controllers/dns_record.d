@@ -38,7 +38,7 @@ class DnsRecordController : PlatformController {
             r.hostname = j.getString("hostname");
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
-            r.createdBy = j.getString("createdBy");
+            r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = uc.create(r);
             if (result.success) {

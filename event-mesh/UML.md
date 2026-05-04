@@ -48,7 +48,7 @@ classDiagram
     }
 
     class EventSubscription {
-        +SubscriptionId id
+        +EventSubscriptionId id
         +TenantId tenantId
         +string name
         +string description

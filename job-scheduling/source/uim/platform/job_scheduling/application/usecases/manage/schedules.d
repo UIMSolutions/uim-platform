@@ -72,7 +72,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
             existing.humanReadableSchedule = request.humanReadableSchedule;
         if (request.repeatInterval > 0)
             existing.repeatInterval = request.repeatInterval;
-        if (request.repeatAt.length > 0)
+        if (request.repeatAt > 0)
             existing.repeatAt = request.repeatAt;
         if (request.time.length > 0)
             existing.time = request.time;

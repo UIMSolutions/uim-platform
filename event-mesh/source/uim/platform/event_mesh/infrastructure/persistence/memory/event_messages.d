@@ -23,7 +23,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
         return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
     void removeByBrokerService(BrokerServiceId brokerServiceId) {
-        findByBrokerService(brokerServiceId).removeAll;
+        findByBrokerService(brokerServiceId).each!(e => remove(e));
     }
 
     size_t countByTopic(TopicId topicId) {
@@ -38,7 +38,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
         return findAll().filter!(e => e.topicId == topicId).array;
     }
     void removeByTopic(TopicId topicId) {
-        findByTopic(topicId).removeAll;
+        findByTopic(topicId).each!(e => remove(e));
     }
 
 
@@ -68,6 +68,6 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
     }
 
     void removeByStatus(MessageStatus status) {
-        findByStatus(status).removeAll;
+        findByStatus(status).each!(e => remove(e));
     }
 }

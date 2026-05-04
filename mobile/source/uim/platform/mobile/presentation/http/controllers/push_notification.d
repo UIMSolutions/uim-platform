@@ -42,7 +42,7 @@ class PushNotificationController : PlatformController {
       r.targetTopics = getStringArray(j, "targetTopics");
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = j.getString("createdBy");
+      r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.send(r);
       if (result.success) {
         auto resp = Json.emptyObject

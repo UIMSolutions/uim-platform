@@ -22,6 +22,6 @@ struct ResourceGroup {
   ConnectionId connectionId;
   LabelPair[] labels;
   string status;
-  string createdAt;
-  string updatedAt;
+  long createdAt;
+  long updatedAt;
 }

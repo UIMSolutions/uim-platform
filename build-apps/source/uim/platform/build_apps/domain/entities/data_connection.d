@@ -27,8 +27,8 @@ struct DataConnection {
     string queryParams;
     string responseMapping;
     string destinationName;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     UserId createdBy;
     UserId updatedBy;
 
