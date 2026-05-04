@@ -31,7 +31,7 @@ class ExecutionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = executions.list();
-            auto jarr = items.map!(e => e.executionToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -50,7 +50,7 @@ class ExecutionController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = executions.getById(ExecutionId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Execution not found"); return; }
-            res.writeJsonBody(e.executionToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

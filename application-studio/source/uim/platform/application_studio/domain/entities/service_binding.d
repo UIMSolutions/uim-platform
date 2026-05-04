@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceBinding {
-    ServiceBindingId id;
-    TenantId tenantId;
+    mixin TenantEntity!ServiceBindingId;
+    
     DevSpaceId devSpaceId;
     string name;
     string description;
@@ -24,15 +24,9 @@ struct ServiceBinding {
     string authType;
     string credentials;
     string systemAlias;
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
 
-    Json serviceBindingToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("devSpaceId", devSpaceId)
             .set("name", name)
             .set("description", description)
@@ -42,10 +36,6 @@ struct ServiceBinding {
             .set("servicePath", servicePath)
             .set("authType", authType)
             .set("credentials", credentials)
-            .set("systemAlias", systemAlias)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy);
+            .set("systemAlias", systemAlias);
     }
 }

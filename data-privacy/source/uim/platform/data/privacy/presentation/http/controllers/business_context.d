@@ -48,7 +48,7 @@ class BusinessContextController : PlatformController {
       auto result = uc.createContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business context created");
 
         res.writeJsonBody(resp, 201);
@@ -105,7 +105,7 @@ class BusinessContextController : PlatformController {
       auto result = uc.updateContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business context updated");
 
         res.writeJsonBody(resp, 200);
@@ -124,7 +124,7 @@ class BusinessContextController : PlatformController {
       auto result = uc.activateContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business context activated");
             
         res.writeJsonBody(resp, 200);

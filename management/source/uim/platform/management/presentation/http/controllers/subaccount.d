@@ -84,7 +84,7 @@ class SubaccountController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Subaccounts retrieved successfully");
 
       res.writeJsonBody(resp, 200);

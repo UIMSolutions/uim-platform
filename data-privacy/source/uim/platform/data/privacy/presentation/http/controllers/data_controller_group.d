@@ -43,7 +43,7 @@ class DataControllerGroupController : PlatformController {
       auto result = uc.createGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data controller group created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -62,7 +62,7 @@ class DataControllerGroupController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Data controller groups retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -97,7 +97,7 @@ class DataControllerGroupController : PlatformController {
       auto result = uc.updateGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data controller group updated successfully");
             
         res.writeJsonBody(resp, 200);

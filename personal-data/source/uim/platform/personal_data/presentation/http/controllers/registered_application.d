@@ -89,7 +89,7 @@ class RegisteredApplicationController : PlatformController {
                 writeError(res, 404, "Application not found");
                 return;
             }
-            res.writeJsonBody(appToJson(a), 200);
+            res.writeJsonBody(toJson(a), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

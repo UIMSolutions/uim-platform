@@ -61,14 +61,12 @@ class ProcessingPurposeController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto purposes = uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (p; purposes) {
-                jarr ~= purposeToJson(p);
-            }
+            auto jarr = purposes.map!(p => toJson(p)).array;
 
             auto resp = Json.emptyObject
               .set("count", purposes.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+              .set("message", "Processing purpose list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -86,7 +84,7 @@ class ProcessingPurposeController : PlatformController {
                 writeError(res, 404, "Processing purpose not found");
                 return;
             }
-            res.writeJsonBody(purposeToJson(p), 200);
+            res.writeJsonBody(toJson(p), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

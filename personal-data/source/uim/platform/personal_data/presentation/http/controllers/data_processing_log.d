@@ -73,14 +73,12 @@ class DataProcessingLogController : PlatformController {
                 logs = uc.list(tenantId);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (l; logs) {
-                jarr ~= logToJson(l);
-            }
+            auto jarr = logs.map!(l => logToJson(l)).array;
 
             auto resp = Json.emptyObject
               .set("count", logs.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+              .set("message", "Processing log list retrieved successfully") ;
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -97,7 +95,7 @@ class DataProcessingLogController : PlatformController {
                 writeError(res, 404, "Processing log entry not found");
                 return;
             }
-            res.writeJsonBody(logToJson(l), 200);
+            res.writeJsonBody(toJson(l), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -30,7 +30,7 @@ class RefreshTokenController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.refreshTokenToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
               .set("count", items.length)

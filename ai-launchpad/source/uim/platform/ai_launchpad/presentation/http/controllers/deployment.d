@@ -142,7 +142,7 @@ class DeploymentController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("success", Json(result.success));
 
         if (result.error.length > 0)

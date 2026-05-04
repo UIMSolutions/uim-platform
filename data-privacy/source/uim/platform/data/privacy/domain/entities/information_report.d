@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An information report — generated report about a data subject's personal data.
 struct InformationReport {
-  InformationReportId id;
-  TenantId tenantId;
+  mixin TenantEntity!(InformationReportId);
+
   DataSubjectId dataSubjectId;
   DataSubjectType subjectRole;
   UserId requestedBy;
@@ -28,4 +28,21 @@ struct InformationReport {
   long requestedAt;
   long generatedAt;
   long expiresAt; // download link expiry
+
+  Json toJson() const {
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("subjectRole", subjectRole.to!string)
+      .set("requestedBy", requestedBy)
+      .set("status", status.to!string)
+      .set("format", format.to!string)
+      .set("targetSystems", targetSystems)
+      .set("categories", categories)
+      .set("downloadUrl", downloadUrl)
+      .set("totalRecords", totalRecords)
+      .set("reason", reason)
+      .set("requestedAt", requestedAt)
+      .set("generatedAt", generatedAt)
+      .set("expiresAt", expiresAt);
+  }
 }

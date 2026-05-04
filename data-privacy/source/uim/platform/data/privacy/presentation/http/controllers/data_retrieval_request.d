@@ -49,7 +49,7 @@ class DataRetrievalController : PlatformController {
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data retrieval request created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -73,7 +73,7 @@ class DataRetrievalController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length));
+            .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -107,7 +107,7 @@ class DataRetrievalController : PlatformController {
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data retrieval request status updated successfully");
 
         res.writeJsonBody(resp, 200);

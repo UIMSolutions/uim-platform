@@ -66,14 +66,12 @@ class UserTaskFilterController : PlatformController {
                 filters = [];
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (f; filters) {
-                jarr ~= filterToJson(f);
-            }
+            auto jarr = filters.map!(f => toJson(f)).array;
 
             auto resp = Json.emptyObject
                 .set("count", filters.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Filter list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -97,7 +95,7 @@ class UserTaskFilterController : PlatformController {
                 writeError(res, 404, "Filter not found");
                 return;
             }
-            res.writeJsonBody(filterToJson(f), 200);
+            res.writeJsonBody(toJson(f), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

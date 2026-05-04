@@ -46,7 +46,7 @@ class PushNotificationController : PlatformController {
       auto result = uc.send(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Push notification sent successfully");
 
         res.writeJsonBody(resp, 201);

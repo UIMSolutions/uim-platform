@@ -54,7 +54,7 @@ class CertificateController : PlatformController {
       auto result = uc.createCertificate(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Certificate created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -109,7 +109,7 @@ class CertificateController : PlatformController {
       auto result = uc.updateCertificate(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Certificate updated successfully");
 
         res.writeJsonBody(resp, 200);

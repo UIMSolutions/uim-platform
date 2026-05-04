@@ -77,10 +77,7 @@ class PersonalDataRecordController : PlatformController {
                 records = uc.list(tenantId);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (r; records) {
-                jarr ~= recordToJson(r);
-            }
+            auto jarr = records.map!(r => toJson(r)).array;
 
             auto resp = Json.emptyObject
                 .set("count", records.length)
@@ -103,7 +100,7 @@ class PersonalDataRecordController : PlatformController {
                 writeError(res, 404, "Personal data record not found");
                 return;
             }
-            res.writeJsonBody(recordToJson(r), 200);
+            res.writeJsonBody(toJson(r), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A data cleansing / transformation rule.
 struct CleansingRule {
-  RuleId ruleId;
-  TenantId tenantId;
+  mixin TenantEntity!(RuleId);
+
   string name;
   string description;
   string datasetPattern;
@@ -35,6 +35,25 @@ struct CleansingRule {
 
   string category;
   int priority;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("datasetPattern", datasetPattern)
+      .set("fieldName", fieldName)
+      .set("action", action.to!string)
+      .set("status", status.to!string)
+      .set("findPattern", findPattern)
+      .set("replaceWith", replaceWith)
+      .set("defaultValue", defaultValue)
+      .set("lookupDataset", lookupDataset)
+      .set("lookupField", lookupField)
+      .set("trimWhitespace", trimWhitespace)
+      .set("normalizeCase", normalizeCase)
+      .set("caseMode", caseMode)
+      .set("removeDiacritics", removeDiacritics)
+      .set("category", category)
+      .set("priority", priority);
+  }
 }

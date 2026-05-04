@@ -18,17 +18,36 @@ struct ViewColumn {
   string description;
   bool isKey;
   bool isMeasure;
+
+  Json toJson() const {
+    return Json([
+      "name": name,
+      "dataType": dataType,
+      "semanticType": semanticType,
+      "description": description,
+      "isKey": isKey,
+      "isMeasure": isMeasure
+    ]);
+  }
 }
 
 struct ViewAssociation {
   string targetViewId;
   string joinType;
   string[] onColumns;
+
+  Json toJson() const {
+    return Json([
+      "targetViewId": targetViewId,
+      "joinType": joinType,
+      "onColumns": onColumns
+    ]);
+  }
 }
 
 struct View {
-  ViewId id;
-  TenantId tenantId;
+  mixin TenantEntity!ViewId;
+
   SpaceId spaceId;
   string name;
   string description;
@@ -40,6 +59,20 @@ struct View {
   bool isExposed;
   bool isPersisted;
   long rowCount;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("businessName", businessName)
+      .set("semantic", semantic.to!string)
+      .set("columns", columns.map!(c => c.toJson()).array)
+      .set("associations", associations.map!(a => a.toJson()).array)
+      .set("sqlExpression", sqlExpression)
+      .set("isExposed", isExposed)
+      .set("isPersisted", isPersisted)
+      .set("rowCount", rowCount);
+  }
+
 }

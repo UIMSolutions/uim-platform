@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An address record for cleansing and geocoding.
 struct AddressRecord {
-  TenantId tenantId;
-  AddressId addressId;
+  mixin TenantEntity!(AddressId);
+
   RecordId sourceRecordId; // link to originating record
 
   // Input fields
@@ -47,4 +47,31 @@ struct AddressRecord {
   string[] changeLog; // human-readable changes
   long cleansedAt;
   long geocodedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("sourceRecordId", sourceRecordId)
+      .set("inputLine1", inputLine1)
+      .set("inputLine2", inputLine2)
+      .set("inputCity", inputCity)
+      .set("inputRegion", inputRegion)
+      .set("inputPostalCode", inputPostalCode)
+      .set("inputCountry", inputCountry)
+      .set("line1", line1)
+      .set("line2", line2)
+      .set("city", city)
+      .set("region", region)
+      .set("postalCode", postalCode)
+      .set("country", country)
+      .set("countryIso2", countryIso2)
+      .set("addressType", addressType.to!string)
+      .set("quality", quality.to!string)
+      .set("latitude", latitude)
+      .set("longitude", longitude)
+      .set("geocodePrecision", geocodePrecision.to!string)
+      .set("appliedActions", appliedActions)
+      .set("changeLog", changeLog)
+      .set("cleansedAt", cleansedAt)
+      .set("geocodedAt", geocodedAt);
+  }
 }

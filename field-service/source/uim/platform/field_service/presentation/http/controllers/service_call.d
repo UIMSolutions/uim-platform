@@ -30,10 +30,10 @@ class ServiceCallController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => serviceCallToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
+                .set("count", items.length)
                 .set("resources", jarr);
                 
             res.writeJsonBody(resp, 200);
@@ -49,7 +49,7 @@ class ServiceCallController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Service call not found"); return; }
-            res.writeJsonBody(serviceCallToJson(e), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -38,7 +38,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         Queue q;
         q.id = QueueId(dto.id);
         q.tenantId = dto.tenantId;
-        q.brokerServiceId = BrokerServiceId(dto.brokerServiceId);
+        q.brokerServiceId = dto.brokerServiceId;
         q.name = dto.name;
         q.description = dto.description;
         q.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
@@ -54,12 +54,13 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         q.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidQueue(q))
             return CommandResult(false, "", "Invalid queue data");
+            
         repo.save(q);
         return CommandResult(true, q.id.value, "");
     }
 
     CommandResult update(QueueDTO dto) {
-        auto existing = repo.findById(QueueId(dto.id));
+        auto existing = repo.findById(dto.queueId);
         if (existing.isNull)
             return CommandResult(false, "", "Queue not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -68,8 +69,9 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         if (dto.maxBindCount.length > 0) existing.maxBindCount = dto.maxBindCount;
         if (dto.maxMsgSize.length > 0) existing.maxMsgSize = dto.maxMsgSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
-        return CommandResult(true, dto.queue.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(QueueId id) {

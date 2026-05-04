@@ -13,7 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Aggregated data quality metrics for a tenant / dataset.
 struct QualityDashboard {
-  TenantId tenantId;
+  mixin TenantEntity!(QualityDashboardId);
+
   DatasetId datasetId;
   string datasetName;
 
@@ -44,12 +45,42 @@ struct QualityDashboard {
   QualityTrendPoint[] trend; // historical scores
 
   long computedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("datasetId", datasetId)
+      .set("datasetName", datasetName)
+      .set("totalRecords", totalRecords)
+      .set("validRecords", validRecords)
+      .set("invalidRecords", invalidRecords)
+      .set("duplicateRecords", duplicateRecords)
+      .set("cleansedRecords", cleansedRecords)
+      .set("overallScore", overallScore)
+      .set("completenessScore", completenessScore)
+      .set("validityScore", validityScore)
+      .set("uniquenessScore", uniquenessScore)
+      .set("consistencyScore", consistencyScore)
+      .set("accuracyScore", accuracyScore)
+      .set("rating", rating.to!string)
+      .set("totalRules", totalRules)
+      .set("activeRules", activeRules)
+      .set("violationCount", violationCount)
+      .set("violationsBySeverity", violationsBySeverity)
+      .set("trend", trend)
+      .set("computedAt", computedAt);
+  }
 }
 
 /// Count of violations per severity level.
 struct RuleSeverityCount {
   RuleSeverity severity;
   int count;
+
+  Json toJson() const {
+    return Json()
+      .set("severity", severity.to!string)
+      .set("count", count);
+  }
 }
 
 /// A historical quality score data point.
@@ -57,4 +88,11 @@ struct QualityTrendPoint {
   long timestamp;
   double score;
   long recordCount;
+
+  Json toJson() const {
+    return Json()
+      .set("timestamp", timestamp)
+      .set("score", score)
+      .set("recordCount", recordCount);
+  }
 }

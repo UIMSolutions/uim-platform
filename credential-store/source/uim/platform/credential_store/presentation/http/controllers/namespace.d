@@ -43,7 +43,7 @@ class NamespaceController : PlatformController {
       auto result = namespaces.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Namespace created successfully");
 
         res.writeJsonBody(resp, 201);

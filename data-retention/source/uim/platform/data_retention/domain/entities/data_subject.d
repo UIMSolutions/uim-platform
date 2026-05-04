@@ -6,8 +6,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DataSubject {
-    DataSubjectId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DataSubjectId);
+
     DataSubjectRoleId roleId;
     ApplicationGroupId applicationGroupId;
     string externalId;
@@ -16,7 +16,16 @@ struct DataSubject {
     long endOfRetentionDate;
     long blockedAt;
     long deletedAt;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("roleId", roleId)
+            .set("applicationGroupId", applicationGroupId)
+            .set("externalId", externalId)
+            .set("lifecycleStatus", lifecycleStatus)
+            .set("endOfPurposeDate", endOfPurposeDate)
+            .set("endOfRetentionDate", endOfRetentionDate)
+            .set("blockedAt", blockedAt)
+            .set("deletedAt", deletedAt);
+    }
 }

@@ -51,7 +51,7 @@ class DataRecordController : PlatformController {
       auto result = uc.createRecord(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data record created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -107,7 +107,7 @@ class DataRecordController : PlatformController {
       auto result = uc.validateRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("status", Json("validated"))
             .set("message", "Data record validated successfully");
 
@@ -128,7 +128,7 @@ class DataRecordController : PlatformController {
       auto result = uc.rejectRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("status", Json("rejected"))
             .set("message", "Data record rejected successfully");
 
@@ -149,7 +149,7 @@ class DataRecordController : PlatformController {
       auto result = uc.deleteRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("deleted", true)
             .set("message", "Data record deleted successfully");
 

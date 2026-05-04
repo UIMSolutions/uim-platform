@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Smartform {
-    SmartformId id;
-    TenantId tenantId;
+    mixin TenantEntity!SmartformId;
+
     ServiceCallId serviceCallId;
     ActivityId activityId;
     string name;
@@ -28,15 +28,9 @@ struct Smartform {
     string formData;
     string safetyLabel;
     string signatureData;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
 
-    Json smartformToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("serviceCallId", serviceCallId)
             .set("activityId", activityId)
             .set("name", name)
@@ -50,10 +44,6 @@ struct Smartform {
             .set("approvedDate", approvedDate)
             .set("formData", formData)
             .set("safetyLabel", safetyLabel)
-            .set("signatureData", signatureData)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("signatureData", signatureData);
     }
 }

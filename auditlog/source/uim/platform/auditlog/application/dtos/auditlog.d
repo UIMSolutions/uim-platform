@@ -20,7 +20,8 @@ struct CreateAuditConfigRequest {
   int rateLimitPerSecond;
 }
 
-@safe:
+
+
 struct UpdateAuditConfigRequest {
   AuditConfigId id;
   TenantId tenantId;

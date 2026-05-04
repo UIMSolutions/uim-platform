@@ -11,18 +11,17 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// IdaGroup entity for organizing users.
-struct IdaGroup {
-  GroupId id;
-  TenantId tenantId;
+struct IdaGroup {  
+  mixin TenantEntity!GroupId;
+
   string name;
   string description;
   string[] memberUserIds;
-  long createdAt;
-  long updatedAt;
-
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("tenantId", tenantId).set("name",
-        name).set("description", description).set("memberUserIds",
-        memberUserIds).set("createdAt", createdAt).set("updatedAt", updatedAt);
+ 
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("memberUserIds", memberUserIds);
   }
 }

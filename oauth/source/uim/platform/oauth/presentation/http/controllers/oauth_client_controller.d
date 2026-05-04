@@ -20,6 +20,7 @@ class OAuthClientController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/oauth/clients", &handleList);
         router.get("/api/v1/oauth/clients/*", &handleGet);
         router.post("/api/v1/oauth/clients", &handleCreate);
@@ -32,10 +33,11 @@ class OAuthClientController : PlatformController {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
             foreach (e; items)
-                jarr ~= e.oauthClientToJson();
+                jarr ~= e.toJson();
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
-                .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "OAuth client list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -54,7 +56,7 @@ class OAuthClientController : PlatformController {
                 writeError(res, 404, "OAuth client not found");
                 return;
             }
-            res.writeJsonBody(e.oauthClientToJson(), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

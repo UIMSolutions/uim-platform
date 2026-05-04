@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// Core user entity in the identity directory.
 struct User {
-  UserId id;
-  TenantId tenantId;
+  mixin TenantEntity!UserId;
+
   string userName;
   string email;
   string firstName;
@@ -25,32 +25,31 @@ struct User {
   string[] groupIds;
   string phoneNumber;
   string externalIdpId;
-  long createdAt;
-  long updatedAt;
-  string globalUserId; // Unique identifier across landscape (like SAP Global User ID)
+  UserId globalUserId; // Unique identifier across landscape (like SAP Global User ID)
 
-  string displayName() const
-  {
+  string displayName() const {
     return firstName ~ " " ~ lastName;
   }
 
-  bool isActive() const
-  {
+  bool isActive() const {
     return status == UserStatus.active;
   }
 
-  bool hasMfa() const
-  {
+  bool hasMfa() const {
     return mfaType != MfaType.none;
   }
 
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("tenantId", tenantId)
-      .set("userName", userName).set("email", email).set("firstName",
-        firstName).set("lastName", lastName) // Note: Exclude passwordHash and mfaSecret from JSON for security reasons
-      .set("status", to!string(status))
-      .set("mfaType", to!string(mfaType)).set("groupIds", groupIds).set("phoneNumber", phoneNumber)
-      .set("externalIdpId", externalIdpId).set("createdAt", createdAt)
-      .set("updatedAt", updatedAt).set("globalUserId", globalUserId);
+  Json toJson() const {
+    return entityToJson
+      .set("userName", userName)
+      .set("email", email)
+      .set("firstName", firstName)
+      .set("lastName", lastName)
+      .set("status", status.to!string)
+      .set("mfaType", mfaType.to!string)
+      .set("groupIds", groupIds)
+      .set("phoneNumber", phoneNumber)
+      .set("externalIdpId", externalIdpId)
+      .set("globalUserId", globalUserId);
   }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Technician {
-    TechnicianId id;
-    TenantId tenantId;
+    mixin TenantEntity!TechnicianId;
+
     string firstName;
     string lastName;
     string email;
@@ -28,15 +28,9 @@ struct Technician {
     string maxWorkload;
     string currentWorkload;
     string travelRadius;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
 
-    Json technicianToJson() {
-        return Json.emptyObject
-        .set("id", id)
-        .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
         .set("firstName", firstName)
         .set("lastName", lastName)
         .set("email", email)
@@ -51,9 +45,5 @@ struct Technician {
         .set("maxWorkload", maxWorkload)
         .set("currentWorkload", currentWorkload)
         .set("travelRadius", travelRadius)
-        .set("createdBy", createdBy)
-        .set("updatedBy", updatedBy)
-        .set("createdAt", createdAt)
-        .set("updatedAt", updatedAt);
     }
 }

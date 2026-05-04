@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to correct personal data for a data subject (GDPR Art. 16).
 struct CorrectionRequest {
-  CorrectionRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!(CorrectionRequestId);
+
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   CorrectionStatus status = CorrectionStatus.requested;
@@ -26,4 +26,19 @@ struct CorrectionRequest {
   long requestedAt;
   long completedAt;
   long deadline; // regulatory deadline
+
+  Json toJson() const {
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("requestedBy", requestedBy)
+      .set("status", status.to!string)
+      .set("targetSystems", targetSystems)
+      .set("fieldName", fieldName)
+      .set("currentValue", currentValue)
+      .set("correctedValue", correctedValue)
+      .set("reason", reason)
+      .set("requestedAt", requestedAt)
+      .set("completedAt", completedAt)
+      .set("deadline", deadline);
+  }
 }

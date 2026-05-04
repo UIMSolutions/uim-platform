@@ -40,7 +40,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
 
     CommandResult publish(EventMessageDTO dto) {
         EventMessage m;
-        m.id = EventMessageId(dto.id);
+        m.id = dto.eventMessageId;
         m.tenantId = dto.tenantId;
         m.brokerServiceId = dto.brokerServiceId;
         m.topicId = dto.topicId;
@@ -56,7 +56,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidEventMessage(m))
             return CommandResult(false, "", "Invalid event message data");
         repo.save(m);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, m.id.value, "");
     }
 
     CommandResult acknowledge(EventMessageId id) {

@@ -48,7 +48,7 @@ class CatalogAssetController : PlatformController {
       auto result = assets.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Catalog asset created successfully");
 
         res.writeJsonBody(resp, 201);

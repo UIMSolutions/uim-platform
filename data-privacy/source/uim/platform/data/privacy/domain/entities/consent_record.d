@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A consent record — tracks a data subject's consent for a specific purpose.
 struct ConsentRecord {
-  ConsentRecordId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ConsentRecordId);
+
   DataSubjectId dataSubjectId;
   ProcessingPurpose purpose;
   PersonalDataCategory[] categories;
@@ -26,5 +26,19 @@ struct ConsentRecord {
   long grantedAt;
   long revokedAt;
   long expiresAt; // 0 = no expiry
-  long createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("purpose", purpose)
+      .set("categories", categories)
+      .set("status", status.to!string)
+      .set("channel", channel)
+      .set("consentText", consentText)
+      .set("version", version_)
+      .set("ipAddress", ipAddress)
+      .set("grantedAt", grantedAt)
+      .set("revokedAt", revokedAt)
+      .set("expiresAt", expiresAt);
+  }
 }

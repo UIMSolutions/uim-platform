@@ -53,7 +53,7 @@ class RepositoryController : PlatformController {
       auto result = uc.createRepository(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Repository created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -73,7 +73,7 @@ class RepositoryController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Repositories retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -112,7 +112,7 @@ class RepositoryController : PlatformController {
       auto result = uc.updateRepository(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Repository updated successfully");
 
         res.writeJsonBody(resp, 200);
@@ -132,7 +132,7 @@ class RepositoryController : PlatformController {
       auto result = uc.activateRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("active"))
           .set("message", "Repository activated successfully");
 
@@ -151,7 +151,7 @@ class RepositoryController : PlatformController {
       auto result = uc.archiveRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("archived"));
 
         res.writeJsonBody(resp, 200);

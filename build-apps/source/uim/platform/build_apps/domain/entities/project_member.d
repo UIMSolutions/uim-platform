@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ProjectMember {
-    ProjectMemberId id;
-    TenantId tenantId;
+    mixin TenantEntity!ProjectMemberId;
+    
     ApplicationId applicationId;
     string userId;
     string displayName;
@@ -23,15 +23,9 @@ struct ProjectMember {
     string permissions;
     string invitedAt;
     string joinedAt;
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
 
-    Json projectMemberToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() {
+        return entityToJson()
             .set("applicationId", applicationId)
             .set("userId", userId)
             .set("displayName", displayName)
@@ -40,10 +34,6 @@ struct ProjectMember {
             .set("status", status.to!string)
             .set("permissions", permissions)
             .set("invitedAt", invitedAt)
-            .set("joinedAt", joinedAt)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy);
+            .set("joinedAt", joinedAt);
     }
 }

@@ -22,14 +22,22 @@ struct ClientLabel {
 }
 
 struct Client {
-  ClientId id;
-  TenantId tenantId;
+  mixin TenantEntity!ClientId;
+
   string name;
   string description;
   int documentQuota;
   int documentsProcessed;
   bool dataFeedbackEnabled;
   ClientLabel[] labels;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("documentQuota", documentQuota)
+      .set("documentsProcessed", documentsProcessed)
+      .set("dataFeedbackEnabled", dataFeedbackEnabled)
+      .set("labels", labels.map!(l => l.toJson()).array);
+  }
 }

@@ -49,7 +49,7 @@ class DataControllerController : PlatformController {
       auto result = uc.createController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data controller created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -68,7 +68,7 @@ class DataControllerController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length));
+            .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -108,7 +108,7 @@ class DataControllerController : PlatformController {
       auto result = uc.updateController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data controller updated successfully");
 
         res.writeJsonBody(resp, 200);

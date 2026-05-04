@@ -41,14 +41,12 @@ class RunLogController : PlatformController {
 
             auto logs = uc.listBySchedule(ids[1], ids[0], tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (l; logs) {
-                jarr ~= runLogToJson(l);
-            }
+            auto jarr = logs.map!(l => toJson(l)).array;
 
             auto resp = Json.emptyObject
                 .set("total", logs.length)
-                .set("results", jarr);
+                .set("results", jarr)
+                .set("message", "Run log list retrieved successfully");
                 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -66,10 +64,11 @@ class RunLogController : PlatformController {
 
             auto logs = uc.listByJob(jobId, tenantId);
 
-            auto jarr = logs.map!(log => runLogToJson(log)).array.toJson;
+            auto jarr = logs.map!(log => toJson(log)).array;
             auto resp = Json.emptyObject
                 .set("total", logs.length)
-                .set("results", jarr);
+                .set("results", jarr)
+                .set("message", "Run log list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

@@ -6,14 +6,20 @@ mixin(ShowModule!());
 @safe:
 
 struct ResidenceRule {
-    ResidenceRuleId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ResidenceRuleId);
+
     BusinessPurposeId businessPurposeId;
     LegalGroundId legalGroundId;
     int duration;
     PeriodUnit periodUnit = PeriodUnit.years;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("businessPurposeId", businessPurposeId)
+            .set("legalGroundId", legalGroundId)
+            .set("duration", duration)
+            .set("periodUnit", periodUnit)
+            .set("isActive", isActive);
+    }
 }

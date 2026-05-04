@@ -20,6 +20,7 @@ class QueueController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/queues", &handleList);
         router.get("/api/v1/event-mesh/queues/*", &handleGet);
         router.post("/api/v1/event-mesh/queues", &handleCreate);
@@ -30,11 +31,12 @@ class QueueController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => queueToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
-              .set("count", Json(items.length))
-              .set("resources", jarr);
+              .set("count", items.length)
+              .set("resources", jarr)
+                .set("message", "Queue list retrieved successfully");
               
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -49,7 +51,7 @@ class QueueController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(QueueId(id));
             if (e.isNull) { writeError(res, 404, "Queue not found"); return; }
-            res.writeJsonBody(queueToJson(e), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -59,7 +61,7 @@ class QueueController : PlatformController {
         try {
             auto j = req.json;
             QueueDTO dto;
-            dto.id = j.getString("id");
+            dto.queueId = QueueId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.brokerServiceId = j.getString("brokerServiceId");
             dto.name = j.getString("name");
@@ -79,8 +81,8 @@ class QueueController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Queue created"));
+                  .set("id", result.id)
+                  .set("message", "Queue created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -97,7 +99,7 @@ class QueueController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             QueueDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.queueId = QueueId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.maxMsgSpoolUsage = j.getString("maxMsgSpoolUsage");
@@ -108,8 +110,8 @@ class QueueController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Queue updated"));
+                  .set("id", result.id)
+                  .set("message", "Queue updated");
                   
                 res.writeJsonBody(resp, 200);
             } else {
@@ -124,11 +126,11 @@ class QueueController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(QueueId(id));
+            auto id = QueueId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Queue deleted"));
+                  .set("message", "Queue deleted");
                   
                 res.writeJsonBody(resp, 200);
             } else {

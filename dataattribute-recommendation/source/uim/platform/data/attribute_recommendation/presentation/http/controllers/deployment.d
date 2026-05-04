@@ -50,7 +50,7 @@ class DeploymentController : PlatformController {
       auto result = uc.createDeployment(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Deployment created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -72,7 +72,7 @@ class DeploymentController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length))
+            .set("totalCount", items.length)
             .set("message", "Deployments retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -105,7 +105,7 @@ class DeploymentController : PlatformController {
       auto result = uc.activateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("status", Json("active"))
             .set("message", "Deployment activated successfully");
 
@@ -129,7 +129,7 @@ class DeploymentController : PlatformController {
       auto result = uc.deactivateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("status", Json("inactive"))
             .set("message", "Deployment deactivated successfully");
 
@@ -153,7 +153,7 @@ class DeploymentController : PlatformController {
       auto result = uc.deleteDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("deleted", true)
             .set("message", "Deployment deleted successfully");
             

@@ -50,7 +50,7 @@ class ConsentPurposeController : PlatformController {
       auto result = uc.createPurpose(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Consent purpose created successfully");
             
         res.writeJsonBody(resp, 201);
@@ -69,7 +69,7 @@ class ConsentPurposeController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Consent purposes retrieved successfully");
 
       res.writeJsonBody(resp, 200);

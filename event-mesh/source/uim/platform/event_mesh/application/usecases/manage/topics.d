@@ -38,7 +38,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         Topic t;
         t.id = TopicId(dto.id);
         t.tenantId = dto.tenantId;
-        t.brokerServiceId = BrokerServiceId(dto.brokerServiceId);
+        t.brokerServiceId = dto.brokerServiceId;
         t.name = dto.name;
         t.description = dto.description;
         t.topicString = dto.topicString;

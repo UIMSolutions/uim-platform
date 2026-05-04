@@ -51,7 +51,7 @@ class RetentionController : PlatformController {
       auto result = useCase.createPolicy(policyRequest);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", result.id);
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);

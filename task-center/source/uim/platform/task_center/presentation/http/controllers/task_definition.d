@@ -65,14 +65,12 @@ class TaskDefinitionController : PlatformController {
 
             TaskDefinition[] defs = providerId.length > 0 ? uc.listByProvider(tenantId, providerId) : uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (d; defs) {
-                jarr ~= defToJson(d);
-            }
+            auto jarr = defs.map!(d => toJson(d)).array;
 
             auto resp = Json.emptyObject
                 .set("count", defs.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Task definition list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -94,7 +92,7 @@ class TaskDefinitionController : PlatformController {
                 writeError(res, 404, "Task definition not found");
                 return;
             }
-            res.writeJsonBody(defToJson(d), 200);
+            res.writeJsonBody(toJson(d), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

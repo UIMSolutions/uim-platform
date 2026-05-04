@@ -30,10 +30,11 @@ class ProjectTemplateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.projectTemplateToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
             auto resp = Json.emptyObject
               .set("count", items.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+              .set("message", "Project template list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -48,7 +49,7 @@ class ProjectTemplateController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(ProjectTemplateId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Project template not found"); return; }
-            res.writeJsonBody(e.projectTemplateToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

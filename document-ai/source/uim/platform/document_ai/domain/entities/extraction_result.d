@@ -18,16 +18,32 @@ struct ExtractedField {
   double confidence;
   int page;
   string coordinates;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("value", value)
+      .set("type", type.to!string)
+      .set("confidence", confidence)
+      .set("page", page)
+      .set("coordinates", coordinates);
+  }
 }
 
 struct LineItem {
   int rowIndex;
   ExtractedField[] fields;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("rowIndex", rowIndex)
+      .set("fields", fields.map!(f => f.toJson()).array);
+  }
 }
 
 struct ExtractionResult {
-  ExtractionResultId id;
-  TenantId tenantId;
+  mixin TenantEntity!ExtractionResultId;
+
   ClientId clientId;
   DocumentId documentId;
   SchemaId schemaId;
@@ -38,5 +54,18 @@ struct ExtractionResult {
   int extractedFieldCount;
   int totalPages;
   long processedAt;
-  long createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("clientId", clientId)
+      .set("documentId", documentId)
+      .set("schemaId", schemaId)
+      .set("method", method.to!string)
+      .set("headerFields", headerFields.map!(f => f.toJson()).array)
+      .set("lineItems", lineItems.map!(li => li.toJson()).array)
+      .set("overallConfidence", overallConfidence)
+      .set("extractedFieldCount", extractedFieldCount)
+      .set("totalPages", totalPages)
+      .set("processedAt", processedAt);
+  }
 }

@@ -73,7 +73,8 @@ class TaskActionController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("count", actions.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Action list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -92,7 +93,7 @@ class TaskActionController : PlatformController {
                 writeError(res, 404, "Action not found");
                 return;
             }
-            res.writeJsonBody(actionToJson(a), 200);
+            res.writeJsonBody(toJson(a), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

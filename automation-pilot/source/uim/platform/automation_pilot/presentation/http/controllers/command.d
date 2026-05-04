@@ -31,7 +31,7 @@ class CommandController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = commands.list();
-            auto jarr = items.map!(e => e.commandToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -54,7 +54,7 @@ class CommandController : PlatformController {
                 writeError(res, 404, "Command not found");
                 return;
             }
-            res.writeJsonBody(e.commandToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

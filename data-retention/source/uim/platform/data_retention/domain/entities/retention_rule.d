@@ -6,15 +6,21 @@ mixin(ShowModule!());
 @safe:
 
 struct RetentionRule {
-    RetentionRuleId id;
-    TenantId tenantId;
+    mixin TenantEntity!(RetentionRuleId);
+
     BusinessPurposeId businessPurposeId;
     LegalGroundId legalGroundId;
     int duration;
     PeriodUnit periodUnit = PeriodUnit.years;
     DeletionActionType actionOnExpiry = DeletionActionType.delete_;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
-}
+
+    Json toJson() const {
+        return entityToJson
+            .set("businessPurposeId", businessPurposeId)
+            .set("legalGroundId", legalGroundId)
+            .set("duration", duration)
+            .set("periodUnit", periodUnit)
+            .set("actionOnExpiry", actionOnExpiry)
+            .set("isActive", isActive);
+    }

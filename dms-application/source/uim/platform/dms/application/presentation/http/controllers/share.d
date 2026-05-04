@@ -52,7 +52,7 @@ class ShareController : PlatformController {
       auto result = uc.createShare(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Share created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -102,7 +102,7 @@ class ShareController : PlatformController {
       auto result = uc.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("revoked"))
           .set("message", "Share revoked");
 

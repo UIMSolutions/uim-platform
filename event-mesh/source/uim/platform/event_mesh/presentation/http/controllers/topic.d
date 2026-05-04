@@ -33,7 +33,7 @@ class TopicController : PlatformController {
             auto jarr = items.map!(e => topicToJson(e)).array;
             
             auto resp = Json.emptyObject
-              .set("count", Json(items.length))
+              .set("count", items.length)
               .set("resources", jarr);
 
             res.writeJsonBody(resp, 200);
@@ -73,8 +73,8 @@ class TopicController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Topic created"));
+                  .set("id", result.id)
+                  .set("message", "Topic created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -101,8 +101,8 @@ class TopicController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Topic updated"));
+                  .set("id", result.id)
+                  .set("message", "Topic updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -121,7 +121,7 @@ class TopicController : PlatformController {
             auto result = uc.remove(TopicId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Topic deleted"));
+                  .set("message", "Topic deleted");
                   
                 res.writeJsonBody(resp, 200);
             } else {

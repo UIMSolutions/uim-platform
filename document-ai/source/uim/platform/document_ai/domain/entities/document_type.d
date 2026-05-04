@@ -12,14 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 struct DocumentType {
-  DocumentTypeId id;
-  TenantId tenantId;
+  mixin TenantEntity!DocumentTypeId;
+
   ClientId clientId;
   string name;
   string description;
   DocumentCategory category;
   SchemaId defaultSchemaId;
   string[] supportedFileTypes;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("clientId", clientId)
+      .set("name", name)
+      .set("description", description)
+      .set("category", category.to!string)
+      .set("defaultSchemaId", defaultSchemaId)
+      .set("supportedFileTypes", supportedFileTypes);
+  }
 }

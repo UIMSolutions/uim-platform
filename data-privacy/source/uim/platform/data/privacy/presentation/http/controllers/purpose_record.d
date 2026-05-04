@@ -48,7 +48,7 @@ class PurposeRecordController : PlatformController {
       auto result = uc.createRecord(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Purpose record created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -67,7 +67,7 @@ class PurposeRecordController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Purpose records retrieved successfully");
 
       res.writeJsonBody(resp, 200);

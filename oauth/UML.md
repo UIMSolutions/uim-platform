@@ -23,7 +23,7 @@ classDiagram
         +string updatedAt
         +UserId createdBy
         +UserId updatedBy
-        +oauthClientToJson() Json
+        +toJson() Json
     }
 
     class OAuthScope {
@@ -37,7 +37,7 @@ classDiagram
         +string updatedAt
         +UserId createdBy
         +UserId updatedBy
-        +oauthScopeToJson() Json
+        +toJson() Json
     }
 
     class AccessToken {
@@ -52,7 +52,7 @@ classDiagram
         +long expiresAt
         +string issuedAt
         +string createdAt
-        +accessTokenToJson() Json
+        +toJson() Json
     }
 
     class RefreshToken {
@@ -67,7 +67,7 @@ classDiagram
         +long expiresAt
         +string issuedAt
         +string createdAt
-        +refreshTokenToJson() Json
+        +toJson() Json
     }
 
     class AuthorizationCode {
@@ -82,7 +82,7 @@ classDiagram
         +long expiresAt
         +string issuedAt
         +string createdAt
-        +authorizationCodeToJson() Json
+        +toJson() Json
     }
 
     class BrandingConfig {
@@ -101,7 +101,7 @@ classDiagram
         +string updatedAt
         +UserId createdBy
         +UserId updatedBy
-        +brandingConfigToJson() Json
+        +toJson() Json
     }
 
     OAuthClient "1" --> "*" AccessToken : issues

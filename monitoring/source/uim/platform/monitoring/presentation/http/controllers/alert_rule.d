@@ -118,7 +118,7 @@ class AlertRuleController : PlatformController {
       auto result = uc.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", Json(result.id));
+        .set("id", result.id);
 
         res.writeJsonBody(resp, 200);
       } else {

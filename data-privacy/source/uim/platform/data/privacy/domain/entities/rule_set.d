@@ -20,8 +20,8 @@ struct RuleCondition {
 
 /// A rule set — evaluates master data to determine applicable business purposes.
 struct RuleSet {
-  RuleSetId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RuleSetId);
+
   BusinessContextId businessContextId;
   string name;
   string description;
@@ -29,7 +29,17 @@ struct RuleSet {
   RuleCondition[] conditions;
   ProcessingPurpose[] resultPurposes; // purposes assigned when rules match
   int priority; // evaluation order
-  long createdAt;
-  long updatedAt;
   long activatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("businessContextId", businessContextId)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("conditions", conditions)
+      .set("resultPurposes", resultPurposes)
+      .set("priority", priority)
+      .set("activatedAt", activatedAt);
+  }
 }

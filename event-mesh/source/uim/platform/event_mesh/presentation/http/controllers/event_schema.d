@@ -30,12 +30,12 @@ class EventSchemaController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => eventSchemaToJson(e)).array;
+            auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
-              .set("count", Json(items.length))
+              .set("count", items.length)
               .set("resources", jarr)
-              .set("message", Json("Event schema list retrieved successfully"));
+              .set("message", "Event schema list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -50,7 +50,7 @@ class EventSchemaController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventSchemaId(id));
             if (e.isNull) { writeError(res, 404, "Event schema not found"); return; }
-            res.writeJsonBody(eventSchemaToJson(e), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -73,8 +73,8 @@ class EventSchemaController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Event schema created"));
+                  .set("id", result.id)
+                  .set("message", "Event schema created");
                   
                 res.writeJsonBody(resp, 201);
             } else {
@@ -101,8 +101,8 @@ class EventSchemaController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Event schema updated"));
+                  .set("id", result.id)
+                  .set("message", "Event schema updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -121,7 +121,7 @@ class EventSchemaController : PlatformController {
             auto result = uc.remove(EventSchemaId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Event schema deleted"));
+                  .set("message", "Event schema deleted");
                   
                 res.writeJsonBody(resp, 200);
             } else {

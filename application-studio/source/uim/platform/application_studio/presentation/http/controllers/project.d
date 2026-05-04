@@ -20,6 +20,7 @@ class ProjectController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/application-studio/projects", &handleList);
         router.get("/api/v1/application-studio/projects/*", &handleGet);
         router.post("/api/v1/application-studio/projects", &handleCreate);
@@ -30,11 +31,12 @@ class ProjectController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.projectToJson()).array;
-            
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Project list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -45,11 +47,15 @@ class ProjectController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(ProjectId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Project not found"); return; }
-            res.writeJsonBody(e.projectToJson(), 200);
+            if (e.id.value.length == 0) {
+                writeError(res, 404, "Project not found");
+                return;
+            }
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -74,8 +80,8 @@ class ProjectController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Project created");
+                    .set("id", result.id)
+                    .set("message", "Project created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -89,6 +95,7 @@ class ProjectController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ProjectDTO dto;
@@ -102,9 +109,9 @@ class ProjectController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Project updated");
-                  
+                    .set("id", result.id)
+                    .set("message", "Project updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -117,12 +124,13 @@ class ProjectController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.remove(ProjectId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Project deleted");
+                    .set("message", "Project deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

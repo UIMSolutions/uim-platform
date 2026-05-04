@@ -6,8 +6,8 @@ mixin(ShowModule!());
 @safe:
 
 struct LegalGround {
-    LegalGroundId id;
-    TenantId tenantId;
+    mixin TenantEntity!(LegalGroundId);
+
     BusinessPurposeId businessPurposeId;
     string name;
     string description;
@@ -16,7 +16,16 @@ struct LegalGround {
     long residenceEndDate;
     long retentionEndDate;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("businessPurposeId", businessPurposeId)
+            .set("name", name)
+            .set("description", description)
+            .set("type", type)
+            .set("referenceDate", referenceDate)
+            .set("residenceEndDate", residenceEndDate)
+            .set("retentionEndDate", retentionEndDate)
+            .set("isActive", isActive);
+    }
 }

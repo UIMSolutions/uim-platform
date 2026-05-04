@@ -53,7 +53,7 @@ class ConsentController : PlatformController {
       auto result = uc.grantConsent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Consent granted successfully");
 
         res.writeJsonBody(resp, 201);
@@ -81,7 +81,7 @@ class ConsentController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Consent records retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -104,7 +104,7 @@ class ConsentController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Active consent records retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -139,7 +139,7 @@ class ConsentController : PlatformController {
       auto result = uc.revokeConsent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Consent revoked successfully");
 
         res.writeJsonBody(resp, 200);

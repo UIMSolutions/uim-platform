@@ -29,15 +29,9 @@ struct EventSubscription {
     string maxTtl;
     string lastMessageTime;
     string messageCount;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
 
-    Json subscriptionToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson()
             .set("brokerServiceId", brokerServiceId)
             .set("topicId", topicId)
             .set("queueId", queueId)
@@ -52,10 +46,6 @@ struct EventSubscription {
             .set("maxRedeliveryCount", maxRedeliveryCount)
             .set("maxTtl", maxTtl)
             .set("lastMessageTime", lastMessageTime)
-            .set("messageCount", messageCount)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("messageCount", messageCount);
     }
 }

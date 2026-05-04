@@ -143,8 +143,8 @@ class DatabaseConnectionController : PlatformController {
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
-          .set("message", Json("Database connection updated"));
+          .set("id", result.id)
+          .set("message", "Database connection updated");
           
         res.writeJsonBody(resp, 200);
       } else {

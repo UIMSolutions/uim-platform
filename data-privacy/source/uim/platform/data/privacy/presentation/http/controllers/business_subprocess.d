@@ -46,7 +46,7 @@ class BusinessSubprocessController : PlatformController {
       auto result = uc.createSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business subprocess created");
 
         res.writeJsonBody(resp, 201);
@@ -102,7 +102,7 @@ class BusinessSubprocessController : PlatformController {
       auto result = uc.updateSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business subprocess updated successfully");
 
         res.writeJsonBody(resp, 200);

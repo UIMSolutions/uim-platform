@@ -42,7 +42,7 @@ class TrainingJobController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Training job created");
 
         res.writeJsonBody(resp, 201);
@@ -110,7 +110,7 @@ class TrainingJobController : PlatformController {
       auto result = uc.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Training job updated");
           
         res.writeJsonBody(resp, 200);

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An asynchronous data cleansing job.
 struct CleansingJob {
-  CleansingJobId jobId;
-  TenantId tenantId;
+  mixin TenantEntity!(CleansingJobId);
+
   DatasetId datasetId;
   UserId requestedBy;
   JobStatus status = JobStatus.pending;
@@ -26,7 +26,21 @@ struct CleansingJob {
   long errorRecords;
 
   string errorMessage;
-  long createdAt;
   long startedAt;
   long completedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("datasetId", datasetId)
+      .set("requestedBy", requestedBy)
+      .set("status", status.to!string)
+      .set("ruleIds", ruleIds)
+      .set("totalRecords", totalRecords)
+      .set("processedRecords", processedRecords)
+      .set("cleansedRecords", cleansedRecords)
+      .set("errorRecords", errorRecords)
+      .set("errorMessage", errorMessage)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }

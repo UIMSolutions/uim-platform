@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// Application (Service Provider) registered for SSO.
 struct Application {
-  ApplicationId id;
-  TenantId tenantId;
+  mixin TenantEntity!ApplicationId;
+
   string name;
   string description;
   SsoProtocol protocol = SsoProtocol.oidc;
@@ -25,15 +25,18 @@ struct Application {
   string samlAcsUrl;
   string samlMetadataUrl;
   bool active = true;
-  long createdAt;
-  long updatedAt;
-
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("tenantId", tenantId).set("name",
-        name).set("description", description).set("protocol", to!string(protocol))
-      .set("clientId", clientId).set("redirectUris", redirectUris).set("allowedScopes", allowedScopes)
-      .set("samlEntityId", samlEntityId).set("samlAcsUrl", samlAcsUrl).set("samlMetadataUrl",
-        samlMetadataUrl).set("active", active).set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+ 
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("protocol", protocol.to!string)
+      .set("clientId", clientId)
+      .set("redirectUris", redirectUris)
+      .set("allowedScopes", allowedScopes)
+      .set("samlEntityId", samlEntityId)
+      .set("samlAcsUrl", samlAcsUrl)
+      .set("samlMetadataUrl", samlMetadataUrl)
+      .set("active", active);
   }
 }

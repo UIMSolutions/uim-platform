@@ -40,7 +40,7 @@ class TrustedCertificateController : PlatformController {
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "Trusted certificate created");
 
                 res.writeJsonBody(resp, 201);
@@ -120,7 +120,7 @@ class TrustedCertificateController : PlatformController {
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "Trusted certificate deleted");
 
                 res.writeJsonBody(resp, 200);

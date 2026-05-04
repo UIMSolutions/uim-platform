@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct ContentCache {
-  ContentCacheId contentCacheId;
-  TenantId tenantId;
+  mixin TenantEntity!ContentCacheId;
+
   AppFileId appFileId;
   string filePath;
   string contentType;
@@ -26,4 +26,20 @@ struct ContentCache {
   long expiresAt;
   long lastAccessedAt;
   long hitCount;
+
+  Json toJson() const {
+    return entityToJson
+      .set("appFileId", appFileId)
+      .set("filePath", filePath)
+      .set("contentType", contentType)
+      .set("data", data)
+      .set("etag", etag)
+      .set("status", status.to!string)
+      .set("sizeBytes", sizeBytes)
+      .set("ttlSeconds", ttlSeconds)
+      .set("cachedAt", cachedAt)
+      .set("expiresAt", expiresAt)
+      .set("lastAccessedAt", lastAccessedAt)
+      .set("hitCount", hitCount);
+  }
 }

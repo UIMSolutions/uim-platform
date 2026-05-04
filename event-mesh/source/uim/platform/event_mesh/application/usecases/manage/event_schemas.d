@@ -52,9 +52,10 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(EventSchemaDTO dto) {
-        auto existing = repo.findById(EventSchemaId(dto.eventSchemaId));
-        if (existing.id.isEmpty)
+        auto existing = repo.findById(dto.eventSchemaId);
+        if (existing.isNull)
             return CommandResult(false, "", "Event schema not found");
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.schemaContent.length > 0) existing.schemaContent = dto.schemaContent;

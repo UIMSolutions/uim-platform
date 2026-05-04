@@ -72,7 +72,7 @@ class SubstitutionRuleController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (r; rules) {
-                jarr ~= ruleToJson(r);
+                jarr ~= toJson(r);
             }
 
             auto resp = Json.emptyObject
@@ -101,7 +101,7 @@ class SubstitutionRuleController : PlatformController {
                 writeError(res, 404, "Substitution rule not found");
                 return;
             }
-            res.writeJsonBody(ruleToJson(r), 200);
+            res.writeJsonBody(toJson(r), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

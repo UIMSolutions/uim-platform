@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Activity {
-    ActivityId id;
-    TenantId tenantId;
+    mixin TenantEntity!ActivityId;
+
     ServiceCallId serviceCallId;
     TechnicianId technicianId;
     string subject;
@@ -31,15 +31,9 @@ struct Activity {
     string longitude;
     string notes;
     string feedbackCode;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
 
-    Json activityToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("serviceCallId", serviceCallId)
             .set("technicianId", technicianId)
             .set("subject", subject)
@@ -56,10 +50,6 @@ struct Activity {
             .set("latitude", latitude)
             .set("longitude", longitude)
             .set("notes", notes)
-            .set("feedbackCode", feedbackCode)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("feedbackCode", feedbackCode);
     }
 }

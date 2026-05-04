@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Catalog {
-    CatalogId id;
-    TenantId tenantId;
+    mixin TenantEntity!(CatalogId);
+
     string name;
     string description;
     CatalogStatus status = CatalogStatus.active;
@@ -21,25 +21,15 @@ struct Catalog {
     string tags;
     string version_;
     string commandCount;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
 
-    Json catalogToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
             .set("catalogType", catalogType.to!string)
             .set("tags", tags)
             .set("version", version_)
-            .set("commandCount", commandCount)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("commandCount", commandCount);
     }
 }

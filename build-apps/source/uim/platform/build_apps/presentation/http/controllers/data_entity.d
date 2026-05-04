@@ -55,7 +55,7 @@ class DataEntityController : PlatformController {
                 writeError(res, 404, "Data entity not found");
                 return;
             }
-            res.writeJsonBody(e.dataEntityToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

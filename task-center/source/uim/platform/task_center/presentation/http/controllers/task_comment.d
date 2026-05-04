@@ -65,14 +65,12 @@ class TaskCommentController : PlatformController {
                 comments = [];
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (c; comments) {
-                jarr ~= commentToJson(c);
-            }
+            auto jarr = comments.map!(c => toJson(c)).array;
 
             auto resp = Json.emptyObject
                 .set("count", comments.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Comment list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -90,7 +88,7 @@ class TaskCommentController : PlatformController {
                 writeError(res, 404, "Comment not found");
                 return;
             }
-            res.writeJsonBody(commentToJson(c), 200);
+            res.writeJsonBody(toJson(c), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -112,7 +110,7 @@ class TaskCommentController : PlatformController {
                     .set("id", result.id)
                     .set("message", "Comment updated");
 
-#                res.writeJsonBody(resp, 200);
+                res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
             }

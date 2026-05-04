@@ -67,7 +67,7 @@ class AuditConfigController : PlatformController {
       auto result = useCase.createConfig(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Audit config created successfully");
 
         res.writeJsonBody(resp, 201);

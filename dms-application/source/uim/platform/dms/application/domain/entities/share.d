@@ -12,28 +12,34 @@ mixin(ShowModule!());
 
 @safe:
 struct Share {
-  ShareId id;
-  TenantId tenantId;
+  mixin TenantEntity!ShareId;
+  
   DocumentId documentId;
   ShareType shareType = ShareType.internal;
   string sharedWith; // userId, email, or empty for public
   PermissionLevel permissionLevel = PermissionLevel.read;
   ShareStatus status = ShareStatus.active;
   long expiresAt; // 0 = no expiry
-  UserId createdBy;
-  long createdAt;
+  
+    Json toJson() const {
+      return Json.emptyObject
+        .set("id", id.value)
+        .set("tenantId", tenantId.value)
+        .set("documentId", documentId.value)
+        .set("shareType", shareType.toString())
+        .set("sharedWith", sharedWith)
+        .set("permissionLevel", permissionLevel.toString())
+        .set("status", status.toString())
+        .set("expiresAt", expiresAt);
+    }
 
   Json toJson() const {
-    return Json.emptyObject
-      .set("id", id.value)
-      .set("tenantId", tenantId.value)
-      .set("documentId", documentid.value)
-      .set("shareType", shareType.toString)
+    return entityToJson
+      .set("documentId", documentId.value)
+      .set("shareType", shareType.toString())
       .set("sharedWith", sharedWith)
-      .set("permissionLevel", permissionLevel.toString)
-      .set("status", status.toString)
-      .set("expiresAt", expiresAt)
-      .set("createdBy", createdBy.toString())
-      .set("createdAt", createdAt);
+      .set("permissionLevel", permissionLevel.toString())
+      .set("status", status.toString())
+      .set("expiresAt", expiresAt);
   }
 }

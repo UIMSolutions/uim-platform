@@ -47,7 +47,7 @@ class ConnectionController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Connection created");
 
         res.writeJsonBody(resp, 201);

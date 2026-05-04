@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Defines how long personal data may be retained for a given purpose.
 struct RetentionRule {
-  RetentionRuleId id;
-  TenantId tenantId;
+  mixin TenantEntity!(RetentionRuleId);
+
   string name;
   string description;
   ProcessingPurpose purpose;
@@ -23,6 +23,16 @@ struct RetentionRule {
   string legalReference; // e.g. "HGB §257 (10 years)"
   RetentionRuleStatus status = RetentionRuleStatus.active;
   bool isDefault;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("purpose", purpose)
+      .set("categories", categories)
+      .set("retentionDays", retentionDays)
+      .set("legalReference", legalReference)
+      .set("status", status.to!string)
+      .set("isDefault", isDefault);
+  }
 }

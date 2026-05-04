@@ -30,10 +30,10 @@ class ActivityController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => activityToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
+                .set("count", items.length)
                 .set("resources", jarr);
                 
             res.writeJsonBody(resp, 200);
@@ -49,7 +49,7 @@ class ActivityController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Activity not found"); return; }
-            res.writeJsonBody(activityToJson(e), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -78,7 +78,7 @@ class ActivityController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
-                  .set("message", Json("Activity created"));
+                  .set("message", "Activity created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -109,8 +109,8 @@ class ActivityController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Activity updated"));
+                  .set("id", result.id)
+                  .set("message", "Activity updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -129,7 +129,7 @@ class ActivityController : PlatformController {
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Activity deleted"));
+                  .set("message", "Activity deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

@@ -13,16 +13,28 @@ mixin(ShowModule!());
 @safe:
 /// An export operation that packages and ships content to a transport queue or file.
 struct ExportJob {
-  TenantId tenantId;
-  ExportJobId id;
+  mixin TenantEntity!(ExportJobId);
+
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
   TransportQueueId queueId;
   ExportStatus status = ExportStatus.pending;
   string exportedFilePath;
   long exportedSizeBytes;
-  UserId createdBy;
   long startedAt;
   long completedAt;
   string errorMessage;
+
+  Json toJson() const {
+    return entityToJson
+      .set("packageId", packageId)
+      .set("transportRequestId", transportRequestId)
+      .set("queueId", queueId)
+      .set("status", status.to!string)
+      .set("exportedFilePath", exportedFilePath)
+      .set("exportedSizeBytes", exportedSizeBytes)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("errorMessage", errorMessage);
+  }
 }

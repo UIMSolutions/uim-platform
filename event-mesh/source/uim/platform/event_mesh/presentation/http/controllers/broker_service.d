@@ -32,7 +32,9 @@ class BrokerServiceController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = items.map!(e => e.toJson).array.toJson;
-              .set("count", Json(items.length))
+
+            auto resp = Json.emptyObject
+              .set("count", items.length)
               .set("resources", jarr)
               .set("message", "Broker service list retrieved successfully");
 
@@ -51,7 +53,7 @@ class BrokerServiceController : PlatformController {
             if (e.isNull) { writeError(res, 404, "Broker service not found"); return; }
 
             auto resp = Json.emptyObject
-              .set("message", Json("Broker service retrieved successfully"))
+              .set("message", "Broker service retrieved successfully")
               .set("resource", e.toJson);
               
             res.writeJsonBody(resp, 200);
@@ -80,8 +82,8 @@ class BrokerServiceController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Broker service created"));
+                  .set("id", result.id)
+                  .set("message", "Broker service created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -110,8 +112,8 @@ class BrokerServiceController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Broker service updated"));
+                  .set("id", result.id)
+                  .set("message", "Broker service updated");
                   
                 res.writeJsonBody(resp, 200);
             } else {

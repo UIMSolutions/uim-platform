@@ -15,11 +15,19 @@ struct CriteriaCondition {
   string column;
   string operator;
   string[] values;
+
+  Json toJson() const {
+    return Json([
+      "column": column,
+      "operator": operator,
+      "values": values
+    ]);
+  }
 }
 
 struct DataAccessControl {
-  DataAccessControlId id;
-  TenantId tenantId;
+  mixin TenantEntity!(DataAccessControlId);
+
   SpaceId spaceId;
   string name;
   string description;
@@ -28,6 +36,16 @@ struct DataAccessControl {
   ViewId[] targetViewIds;
   UserId[] assignedUserIds;
   bool isEnabled;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("criteriaType", criteriaType.to!string)
+      .set("conditions", conditions.map!(c => c.toJson()).array)
+      .set("targetViewIds", targetViewIds)
+      .set("assignedUserIds", assignedUserIds)
+      .set("isEnabled", isEnabled);
+  }
 }

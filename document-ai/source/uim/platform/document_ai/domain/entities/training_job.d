@@ -15,11 +15,18 @@ struct TrainingMetric {
   string name;
   double value;
   long timestamp;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("value", value)
+      .set("timestamp", timestamp);
+  }
 }
 
 struct TrainingJob {
-  TrainingJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!TrainingJobId;
+
   ClientId clientId;
   DocumentTypeId documentTypeId;
   SchemaId schemaId;
@@ -33,6 +40,21 @@ struct TrainingJob {
   TrainingMetric[] metrics;
   long startedAt;
   long completedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("clientId", clientId)
+      .set("documentTypeId", documentTypeId)
+      .set("schemaId", schemaId)
+      .set("name", name)
+      .set("description", description)
+      .set("modelVersion", modelVersion)
+      .set("status", status.to!string)
+      .set("statusMessage", statusMessage)
+      .set("documentCount", documentCount)
+      .set("accuracy", accuracy)
+      .set("metrics", metrics.map!(m => m.toJson()).array)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }

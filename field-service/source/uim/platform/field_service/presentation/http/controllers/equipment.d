@@ -30,10 +30,10 @@ class EquipmentController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => equipmentToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
 
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
+                .set("count", items.length)
                 .set("resources", jarr)
                 .set("message", "Equipment list retrieved");
 
@@ -50,7 +50,7 @@ class EquipmentController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Equipment not found"); return; }
-            res.writeJsonBody(equipmentToJson(e), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -80,8 +80,8 @@ class EquipmentController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Equipment created"));
+                  .set("id", result.id)
+                  .set("message", "Equipment created");
 
                 res.writeJsonBody(resp, 201);
             } else {

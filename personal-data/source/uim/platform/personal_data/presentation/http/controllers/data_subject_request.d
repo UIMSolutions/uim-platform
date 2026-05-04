@@ -79,14 +79,12 @@ class DataSubjectRequestController : PlatformController {
                 requests = uc.list(tenantId);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (r; requests) {
-                jarr ~= requestToJson(r);
-            }
+            auto jarr = requests.map!(r => toJson(r)).array;
 
             auto resp = Json.emptyObject
                 .set("count", requests.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Data subject request list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

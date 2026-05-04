@@ -10,8 +10,8 @@ import uim.platform.data.attribute_recommendation.domain.types;
 /// Configuration for a machine-learning model that defines which dataset
 /// to train on, which columns are features/targets, and hyperparameters.
 struct ModelConfiguration {
-  ModelConfigId id;
-  TenantId tenantId;
+  mixin TenantEntity!(ModelConfigId);
+
   DatasetId datasetId;
   string name;
   string description;
@@ -20,7 +20,16 @@ struct ModelConfiguration {
   string featureColumns; // JSON array of column names
   string hyperparameters; // JSON: {learningRate, epochs, batchSize, ...}
   ModelConfigStatus status = ModelConfigStatus.draft;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("datasetId", datasetId)
+      .set("name", name)
+      .set("description", description)
+      .set("modelType", modelType.to!string)
+      .set("targetColumns", targetColumns)
+      .set("featureColumns", featureColumns)
+      .set("hyperparameters", hyperparameters)
+      .set("status", status.to!string);
+  }
 }

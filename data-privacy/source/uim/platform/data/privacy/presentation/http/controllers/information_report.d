@@ -65,7 +65,7 @@ class InformationReportController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Information reports retrieved successfully");
         
       res.writeJsonBody(resp, 200);

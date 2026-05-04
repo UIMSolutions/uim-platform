@@ -81,12 +81,9 @@ class ScheduleController : PlatformController {
             auto jobId = extractJobIdFromSchedulePath(path);
             TenantId tenantId = req.getTenantId;
 
-            auto schedules = uc.list(jobtenantId, id);
+            auto schedules = uc.list(tenantId, jobId);
 
-            auto jarr = Json.emptyArray;
-            foreach (s; schedules) {
-                jarr ~= scheduleToJson(s);
-            }
+            auto jarr = schedules.map!(s => toJson(s)).array;
 
             auto resp = Json.emptyObject
                 .set("total", schedules.length)
@@ -210,7 +207,7 @@ class ScheduleController : PlatformController {
 
             auto schedules = uc.search(query, tenantId);
 
-            auto jarr = schedules.map!(s => scheduleToJson(s)).array.toJson;
+            auto jarr = schedules.map!(s => toJson(s)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("total", schedules.length)

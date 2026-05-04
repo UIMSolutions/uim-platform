@@ -30,7 +30,7 @@ class BrandingConfigController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.brandingConfigToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -50,7 +50,7 @@ class BrandingConfigController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(BrandingConfigId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Branding config not found"); return; }
-            res.writeJsonBody(e.brandingConfigToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

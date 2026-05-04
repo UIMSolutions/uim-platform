@@ -46,7 +46,7 @@ class BusinessProcessController : PlatformController {
       auto result = uc.createProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business process created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -65,7 +65,7 @@ class BusinessProcessController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Business processes retrieved successfully");
           
       res.writeJsonBody(resp, 200);
@@ -102,7 +102,7 @@ class BusinessProcessController : PlatformController {
       auto result = uc.updateProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Business process updated successfully");
 
         res.writeJsonBody(resp, 200);

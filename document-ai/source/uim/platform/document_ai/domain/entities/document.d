@@ -17,8 +17,8 @@ struct DocumentLabel {
 }
 
 struct Document {
-  DocumentId id;
-  TenantId tenantId;
+  mixin TenantEntity!DocumentId;
+
   ClientId clientId;
   string fileName;
   FileType fileType;
@@ -35,6 +35,24 @@ struct Document {
   DocumentLabel[] labels;
   long uploadedAt;
   long processedAt;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("clientId", clientId)
+      .set("fileName", fileName)
+      .set("fileType", fileType.to!string)
+      .set("category", category.to!string)
+      .set("documentTypeId", documentTypeId)
+      .set("status", status.to!string)
+      .set("language", language)
+      .set("fileSize", fileSize)
+      .set("pageCount", pageCount)
+      .set("mimeType", mimeType)
+      .set("schemaId", schemaId)
+      .set("templateId", templateId)
+      .set("extractionMethod", extractionMethod.to!string)
+      .set("labels", labels.map!(l => Json.emptyObject.set("key", l.key).set("value", l.value)).array)
+      .set("uploadedAt", uploadedAt)
+      .set("processedAt", processedAt);
+  }
 }

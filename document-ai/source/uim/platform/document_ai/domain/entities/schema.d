@@ -19,6 +19,17 @@ struct SchemaField {
   string description;
   string defaultValue;
   string format;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("label", label)
+      .set("type", type.to!string)
+      .set("required", required)
+      .set("description", description)
+      .set("defaultValue", defaultValue)
+      .set("format", format);
+  }
 }
 
 struct LineItemField {
@@ -27,11 +38,20 @@ struct LineItemField {
   FieldValueType type;
   bool required;
   string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("label", label)
+      .set("type", type.to!string)
+      .set("required", required)
+      .set("description", description);
+  }
 }
 
 struct Schema {
-  SchemaId id;
-  TenantId tenantId;
+  mixin TenantEntity!SchemaId;
+
   ClientId clientId;
   DocumentTypeId documentTypeId;
   string name;
@@ -40,6 +60,16 @@ struct Schema {
   SchemaField[] headerFields;
   LineItemField[] lineItemFields;
   string[] supportedLanguages;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("clientId", clientId)
+      .set("documentTypeId", documentTypeId)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("headerFields", headerFields.map!(f => f.toJson()).array)
+      .set("lineItemFields", lineItemFields.map!(f => f.toJson()).array)
+      .set("supportedLanguages", supportedLanguages);
+  }
 }

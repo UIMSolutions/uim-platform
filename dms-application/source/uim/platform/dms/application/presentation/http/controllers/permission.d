@@ -51,7 +51,7 @@ class PermissionController : PlatformController {
       auto result = permissions.grantPermission(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Permission granted");
 
         res.writeJsonBody(resp, 201);
@@ -76,7 +76,7 @@ class PermissionController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Permissions for resource retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -96,7 +96,7 @@ class PermissionController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Permissions for user retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -143,7 +143,7 @@ class PermissionController : PlatformController {
       auto result = permissions.updatePermission(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Permission updated");
 
         res.writeJsonBody(resp, 200);

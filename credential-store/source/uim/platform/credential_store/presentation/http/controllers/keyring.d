@@ -47,7 +47,7 @@ class KeyringController : PlatformController {
       auto result = keyrings.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Keyring created successfully");
 
         res.writeJsonBody(resp, 201);

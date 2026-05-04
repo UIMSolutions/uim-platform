@@ -45,8 +45,8 @@ class RetentionRuleController : PlatformController {
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Retention rule created");
+                    .set("id", result.id)
+                    .set("message", "Retention rule created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -62,14 +62,13 @@ class RetentionRuleController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto rules = uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (r; rules) {
-                jarr ~= ruleToJson(r);
-            }
+            auto jarr = rules.map!(r => toJson(r)).array;
 
             auto resp = Json.emptyObject
-              .set("count", rules.length)
-              .set("resources", jarr);
+                .set("count", rules.length)
+                .set("resources", jarr)
+                .set("message", "Retention rule list retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -79,13 +78,14 @@ class RetentionRuleController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "Retention rule not found");
                 return;
             }
-            res.writeJsonBody(ruleToJson(r), 200);
+            res.writeJsonBody(toJson(r), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -111,8 +111,8 @@ class RetentionRuleController : PlatformController {
             auto result = uc.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Retention rule updated");
+                    .set("id", result.id)
+                    .set("message", "Retention rule updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -126,12 +126,13 @@ class RetentionRuleController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Retention rule deleted");
+                    .set("id", result.id)
+                    .set("message", "Retention rule deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -144,16 +145,16 @@ class RetentionRuleController : PlatformController {
 
     private Json ruleToJson(RetentionRule r) {
         return Json.emptyObject
-        .set("id", r.id)
-        .set("name", r.name)
-        .set("description", r.description)
-        .set("status", r.status.to!string)
-        .set("retentionPeriod", r.retentionPeriod)
-        .set("periodUnit", r.periodUnit.to!string)
-        .set("autoDelete", r.autoDelete)
-        .set("notifyBeforeExpiry", r.notifyBeforeExpiry)
-        .set("notifyDaysBefore", r.notifyDaysBefore)
-        .set("createdBy", r.createdBy)
-        .set("createdAt", r.createdAt);
+            .set("id", r.id)
+            .set("name", r.name)
+            .set("description", r.description)
+            .set("status", r.status.to!string)
+            .set("retentionPeriod", r.retentionPeriod)
+            .set("periodUnit", r.periodUnit.to!string)
+            .set("autoDelete", r.autoDelete)
+            .set("notifyBeforeExpiry", r.notifyBeforeExpiry)
+            .set("notifyDaysBefore", r.notifyDaysBefore)
+            .set("createdBy", r.createdBy)
+            .set("createdAt", r.createdAt);
     }
 }

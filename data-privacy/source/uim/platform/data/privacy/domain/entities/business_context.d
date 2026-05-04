@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A business context — defines the context for processing personal data with versioning.
 struct BusinessContext {
-  BusinessContextId id;
-  TenantId tenantId;
+  mixin TenantEntity!(BusinessContextId);
+
   string name;
   string description;
   DataControllerGroupId controllerGroupId;
@@ -24,7 +24,19 @@ struct BusinessContext {
   ProcessingPurpose[] purposes;
   string[] dataCategoryAttributes; // fine-grained attribute mapping
   bool isCrossRoleEnabled; // sap:pdm-data-subject-cross-role-enabled
-  long createdAt;
-  long updatedAt;
   long activatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("controllerGroupId", controllerGroupId)
+      .set("status", status.to!string)
+      .set("version", version_)
+      .set("dataCategories", dataCategories)
+      .set("purposes", purposes)
+      .set("dataCategoryAttributes", dataCategoryAttributes)
+      .set("isCrossRoleEnabled", isCrossRoleEnabled)
+      .set("activatedAt", activatedAt);
+  }
 }

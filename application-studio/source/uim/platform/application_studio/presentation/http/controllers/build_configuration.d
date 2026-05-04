@@ -31,7 +31,7 @@ class BuildConfigurationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.buildConfigurationToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -50,7 +50,7 @@ class BuildConfigurationController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(BuildConfigurationId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Build configuration not found"); return; }
-            res.writeJsonBody(e.buildConfigurationToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

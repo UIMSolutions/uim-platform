@@ -73,7 +73,7 @@ class MobileAppController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", items)
         .set("totalCount", Json(results.length))
-        .set("message", Json("Mobile apps retrieved successfully"));
+        .set("message", "Mobile apps retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

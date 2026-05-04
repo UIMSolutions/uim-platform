@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct AppFile {
-  AppFileId id;
-  TenantId tenantId;
+  mixin TenantEntity!AppFileId;
+
   AppVersionId versionId;
   string filePath;          // relative path e.g. "webapp/index.html"
   string contentType;       // MIME type e.g. "text/html"
@@ -22,7 +22,16 @@ struct AppFile {
   string encoding;          // compression e.g. "gzip", "br", ""
   string etag;              // content hash for caching
   long sizeBytes;
-  long createdAt;
-  long updatedAt;
-  UserId createdBy;
-}
+ 
+  Json toJson() const {
+    return entityToJson
+      .set("versionId", versionId)
+      .set("filePath", filePath)
+      .set("contentType", contentType)
+      .set("category", category.to!string)
+      .set("data", data)
+      .set("encoding", encoding)
+      .set("etag", etag)
+      .set("sizeBytes", sizeBytes);
+  }
+ }

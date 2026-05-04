@@ -39,7 +39,7 @@ class ClientController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("clientId", Json(result.id))
+          .set("clientId", result.id)
           .set("message", "Client created");
 
         res.writeJsonBody(resp, 201);
@@ -106,7 +106,7 @@ class ClientController : PlatformController {
       auto result = uc.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("clientId", Json(result.id))
+          .set("clientId", result.id)
           .set("message", "Client updated");
           
         res.writeJsonBody(resp, 200);

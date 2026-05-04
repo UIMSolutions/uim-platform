@@ -30,10 +30,10 @@ class SubscriptionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => subscriptionToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
+                .set("count", items.length)
                 .set("resources", jarr);
                 
             res.writeJsonBody(resp, 200);
@@ -49,7 +49,7 @@ class SubscriptionController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventSubscriptionId(id));
             if (e.isNull) { writeError(res, 404, "Subscription not found"); return; }
-            res.writeJsonBody(subscriptionToJson(e), 200);
+            res.writeJsonBody(e.toJsone, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -76,8 +76,8 @@ class SubscriptionController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Subscription created"));
+                  .set("id", result.id)
+                  .set("message", "Subscription created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -104,8 +104,8 @@ class SubscriptionController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Subscription updated"));
+                  .set("id", result.id)
+                  .set("message", "Subscription updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -124,7 +124,7 @@ class SubscriptionController : PlatformController {
             auto result = uc.remove(EventSubscriptionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Subscription deleted"));
+                  .set("message", "Subscription deleted");
                   
                 res.writeJsonBody(resp, 200);
             } else {

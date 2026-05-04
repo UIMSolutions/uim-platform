@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to transport one or more content packages between landscapes.
 struct TransportRequest {
-  TenantId tenantId;
-  TransportRequestId id;
+  mixin TenantEntity!(TransportRequestId);
+
   SubaccountId sourceSubaccount;
   SubaccountId targetSubaccount;
   string description;
@@ -22,9 +22,17 @@ struct TransportRequest {
   TransportMode mode = TransportMode.cloudTransportManagement;
   ContentPackageId[] packageIds;
   TransportQueueId queueId;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
-  long releasedAt;
   string errorMessage;
+
+  Json toJson() const {
+    return entityToJson
+      .set("sourceSubaccount", sourceSubaccount)
+      .set("targetSubaccount", targetSubaccount)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("mode", mode.to!string)
+      .set("packageIds", packageIds)
+      .set("queueId", queueId)
+      .set("errorMessage", errorMessage);
+  }
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// External Identity Provider configuration for delegated authentication.
 struct IdpConfig {
-  string id;
-  TenantId tenantId;
+  mixin TenantEntity!IdpConfigId;
+
   string name;
   IdpType idpType;
   string metadataUrl;
@@ -26,15 +26,18 @@ struct IdpConfig {
   string[] domainHints; // email domains that route to this IdP
   bool isDefault;
   bool active = true;
-  long createdAt;
-  long updatedAt;
-
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("tenantId", tenantId).set("name",
-        name).set("idpType", to!string(idpType)).set("metadataUrl", metadataUrl)
-      .set("authorizationEndpoint", authorizationEndpoint).set("tokenEndpoint",
-        tokenEndpoint).set("userInfoEndpoint", userInfoEndpoint)
-      .set("clientId", clientId).set("domainHints", domainHints).set("isDefault",
-        isDefault).set("active", active).set("createdAt", createdAt).set("updatedAt", updatedAt);
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("idpType", idpType.to!string)
+      .set("metadataUrl", metadataUrl)
+      .set("authorizationEndpoint", authorizationEndpoint)
+      .set("tokenEndpoint", tokenEndpoint)
+      .set("userInfoEndpoint", userInfoEndpoint)
+      .set("clientId", clientId)
+      .set("domainHints", domainHints)
+      .set("isDefault", isDefault)
+      .set("active", active);
   }
 }

@@ -81,7 +81,7 @@ class ServiceController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Service instances retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -187,7 +187,7 @@ class ServiceController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Service bindings retrieved successfully");
 
       res.writeJsonBody(resp, 200);

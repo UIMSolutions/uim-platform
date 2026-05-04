@@ -54,7 +54,7 @@ class ModelController : PlatformController {
       auto result = uc.createModelConfig(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Model configuration created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -76,7 +76,7 @@ class ModelController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length))
+            .set("totalCount", items.length)
             .set("message", "Model configurations retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -119,7 +119,7 @@ class ModelController : PlatformController {
       auto result = uc.updateModelConfig(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Model configuration updated successfully");
 
         res.writeJsonBody(resp, 200);
@@ -142,7 +142,7 @@ class ModelController : PlatformController {
       auto result = uc.activateConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("status", Json("ready"))
             .set("message", "Model configuration activated successfully");
 
@@ -170,7 +170,7 @@ class ModelController : PlatformController {
       auto result = uc.startTraining(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("jobId", Json(result.id))
+            .set("jobId", result.id)
             .set("status", Json("running"))
             .set("message", "Model training started successfully");
 

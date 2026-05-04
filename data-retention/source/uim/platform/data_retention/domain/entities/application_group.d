@@ -6,14 +6,20 @@ mixin(ShowModule!());
 @safe:
 
 struct ApplicationGroup {
-    ApplicationGroupId id;
-    TenantId tenantId;
+    mixin TenantEntity!(ApplicationGroupId);
+
     string name;
     string description;
     ApplicationGroupScope scope_ = ApplicationGroupScope.global;
     string[] applicationIds;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("scope", scope_)
+            .set("applicationIds", applicationIds)
+            .set("isActive", isActive);
+    }
 }

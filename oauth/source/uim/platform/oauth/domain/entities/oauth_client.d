@@ -27,8 +27,8 @@ struct OAuthClient {
     long refreshTokenValidity = 86400;
     string contacts;
 
-    Json oauthClientToJson() {
-        import std.conv : to;
+    Json toJson() {
+
         return entityToJson
             .set("clientId", clientId)
             .set("name", name)

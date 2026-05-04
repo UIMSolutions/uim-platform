@@ -80,7 +80,7 @@ class DuplicateController : PlatformController {
       auto result = uc.resolve(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("resolved", true)
           .set("message", "Duplicate group resolved successfully");
 

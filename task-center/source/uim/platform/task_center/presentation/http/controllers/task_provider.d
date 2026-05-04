@@ -65,14 +65,12 @@ class TaskProviderController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto providers = uc.list(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (p; providers) {
-                jarr ~= providerToJson(p);
-            }
+            auto jarr = providers.map!(p => toJson(p)).array;{
 
             auto resp = Json.emptyObject
                 .set("count", providers.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Provider list retrieved successfully");
                 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -94,7 +92,7 @@ class TaskProviderController : PlatformController {
                 writeError(res, 404, "Provider not found");
                 return;
             }
-            res.writeJsonBody(providerToJson(p), 200);
+            res.writeJsonBody(toJson(p), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

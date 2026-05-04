@@ -55,7 +55,7 @@ class DomainDashboardController : PlatformController {
             auto result = uc.refresh(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "Dashboard refreshed");
                     
                 res.writeJsonBody(resp, 200);

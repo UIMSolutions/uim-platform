@@ -34,7 +34,7 @@ class EventMessageController : PlatformController {
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
-              .set("count", Json(items.length))
+              .set("count", items.length)
               .set("resources", jarr)
               .set("message", "Event message list retrieved successfully");
 
@@ -51,7 +51,7 @@ class EventMessageController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(EventMessageId(id));
             if (e.isNull) { writeError(res, 404, "Event message not found"); return; }
-            res.writeJsonBody(eventMessageToJson(e), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -61,7 +61,7 @@ class EventMessageController : PlatformController {
         try {
             auto j = req.json;
             EventMessageDTO dto;
-            dto.id = j.getString("id");
+            dto.eventMessageId = EventMessageId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.brokerServiceId = j.getString("brokerServiceId");
             dto.topicId = j.getString("topicId");
@@ -78,8 +78,8 @@ class EventMessageController : PlatformController {
             auto result = uc.publish(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Event message published"));
+                  .set("id", result.id)
+                  .set("message", "Event message published");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -98,7 +98,7 @@ class EventMessageController : PlatformController {
             auto result = uc.acknowledge(EventMessageId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", Json("Event message acknowledged"));
+                  .set("message", "Event message acknowledged");
                   
                 res.writeJsonBody(resp, 200);
             } else {
@@ -117,7 +117,7 @@ class EventMessageController : PlatformController {
             auto result = uc.remove(EventMessageId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("message", Json("Event message deleted"));
+                .set("message", "Event message deleted");
                 
                 res.writeJsonBody(resp, 200);
             } else {

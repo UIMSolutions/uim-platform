@@ -32,4 +32,12 @@ struct UpdateBusinessRoleRequest {
   string roleType;
   string[] restrictionTypes;
   CatalogAssignment[] assignedCatalogs;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("description", description)
+      .set("roleType", roleType)
+      .set("restrictionTypes", restrictionTypes.toJson())
+      .set("assignedCatalogs", assignedCatalogs.map!(c => c.toJson()).array.toJson());
+  }
 }

@@ -30,7 +30,7 @@ class SkillController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => skillToJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array;
 
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -50,7 +50,7 @@ class SkillController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Skill not found"); return; }
-            res.writeJsonBody(skillToJson(e), 200);
+            res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -76,8 +76,8 @@ class SkillController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
-                  .set("message", Json("Skill created"));
+                  .set("id", result.id)
+                  .set("message", "Skill created");
 
                 res.writeJsonBody(resp, 201);
             } else {

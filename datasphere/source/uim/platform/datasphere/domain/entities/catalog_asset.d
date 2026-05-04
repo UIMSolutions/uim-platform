@@ -14,11 +14,18 @@ mixin(ShowModule!());
 struct CatalogTag {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json([
+      "key": key,
+      "value": value
+    ]);
+  }
 }
 
 struct CatalogAsset {
-  CatalogAssetId id;
-  TenantId tenantId;
+  mixin TenantEntity!CatalogAssetId;
+
   SpaceId spaceId;
   string name;
   string description;
@@ -30,6 +37,19 @@ struct CatalogAsset {
   string[] glossaryTerms;
   string owner;
   long accessCount;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("businessName", businessName)
+      .set("assetType", assetType.to!string)
+      .set("qualityStatus", qualityStatus.to!string)
+      .set("sourceObjectId", sourceObjectId)
+      .set("tags", tags.map!(t => t.toJson()).array)
+      .set("glossaryTerms", glossaryTerms)
+      .set("owner", owner)
+      .set("accessCount", accessCount);
+  }
 }

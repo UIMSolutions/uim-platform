@@ -46,7 +46,7 @@ class TlsConfigurationController : PlatformController {
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "TLS configuration created");
 
                 res.writeJsonBody(resp, 201);
@@ -140,7 +140,7 @@ class TlsConfigurationController : PlatformController {
             auto result = uc.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "TLS configuration updated");
 
                 res.writeJsonBody(resp, 200);
@@ -160,7 +160,7 @@ class TlsConfigurationController : PlatformController {
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "TLS configuration deleted");
                     
                 res.writeJsonBody(resp, 200);

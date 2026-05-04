@@ -51,7 +51,7 @@ class DatasetController : PlatformController {
       auto result = uc.createDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Dataset created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -109,7 +109,7 @@ class DatasetController : PlatformController {
       auto result = uc.updateDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Dataset updated successfully");
 
         res.writeJsonBody(resp, 200);
@@ -129,7 +129,7 @@ class DatasetController : PlatformController {
       auto result = uc.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("ready"))
           .set("message", "Dataset validated successfully");
 
@@ -150,7 +150,7 @@ class DatasetController : PlatformController {
       auto result = uc.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("completed"))
           .set("message", "Dataset processed successfully");
 

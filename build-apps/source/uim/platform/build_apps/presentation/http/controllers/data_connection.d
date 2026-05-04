@@ -30,7 +30,7 @@ class DataConnectionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.dataConnectionToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -50,7 +50,7 @@ class DataConnectionController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = uc.getById(DataConnectionId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "Data connection not found"); return; }
-            res.writeJsonBody(e.dataConnectionToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

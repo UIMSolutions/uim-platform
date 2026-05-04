@@ -55,7 +55,7 @@ class PersonalDataModelController : PlatformController {
       auto result = uc.createModel(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Personal data model created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -80,7 +80,7 @@ class PersonalDataModelController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Personal data models retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -98,7 +98,7 @@ class PersonalDataModelController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Special category personal data models retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -140,7 +140,7 @@ class PersonalDataModelController : PlatformController {
       auto result = uc.updateModel(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Personal data model updated successfully");
             
         res.writeJsonBody(resp, 200);

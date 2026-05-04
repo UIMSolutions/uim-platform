@@ -74,7 +74,7 @@ class AppVersionController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)

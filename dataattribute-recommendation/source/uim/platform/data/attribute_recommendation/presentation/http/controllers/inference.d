@@ -47,7 +47,7 @@ class InferenceController : PlatformController {
       auto result = uc.submitInference(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-            .set("resultId", Json(result.id))
+            .set("resultId", result.id)
             .set("status", Json("completed"))
             .set("message", "Inference submitted successfully");
 
@@ -115,7 +115,7 @@ class InferenceController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length))
+            .set("totalCount", items.length)
             .set("message", "Inference requests retrieved successfully");
             
       res.writeJsonBody(resp, 200);

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DataConnection {
-    DataConnectionId id;
-    TenantId tenantId;
+    mixin TenantEntity!DataConnectionId;
+
     ApplicationId applicationId;
     string name;
     string description;
@@ -27,15 +27,9 @@ struct DataConnection {
     string queryParams;
     string responseMapping;
     string destinationName;
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
 
-    Json dataConnectionToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() const {
+        return entityToJson()
             .set("applicationId", applicationId)
             .set("name", name)
             .set("description", description)
@@ -48,10 +42,6 @@ struct DataConnection {
             .set("headers", headers)
             .set("queryParams", queryParams)
             .set("responseMapping", responseMapping)
-            .set("destinationName", destinationName)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy);
+            .set("destinationName", destinationName);
     }
 }

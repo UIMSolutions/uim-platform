@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 /// Issued security token.
 struct Token {
-  TokenId id;
+  mixin TenantEntity!TokenId;
+
   UserId userId;
-  TenantId tenantId;
   ApplicationId applicationId;
   TokenType tokenType;
   string tokenValue;
@@ -23,10 +23,15 @@ struct Token {
   long expiresAt;
   bool revoked;
 
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("userId", userId).set("tenantId",
-        tenantId).set("applicationId", applicationId).set("tokenType",
-        to!string(tokenType)).set("tokenValue", tokenValue).set("scopes", scopes)
-      .set("issuedAt", issuedAt).set("expiresAt", expiresAt).set("revoked", revoked);
+  Json toJson() const {
+    return entityToJson
+      .set("userId", userId)
+      .set("applicationId", applicationId)
+      .set("tokenType", tokenType.to!string)
+      .set("tokenValue", tokenValue)
+      .set("scopes", scopes)
+      .set("issuedAt", issuedAt)
+      .set("expiresAt", expiresAt)
+      .set("revoked", revoked);
   }
 }

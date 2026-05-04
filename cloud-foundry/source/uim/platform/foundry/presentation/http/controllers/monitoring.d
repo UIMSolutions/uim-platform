@@ -39,7 +39,7 @@ class MonitoringController : PlatformController {
       auto resp = Json.emptyObject
         .set("message", "Application health summaries retrieved successfully")
         .set("resources", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     }

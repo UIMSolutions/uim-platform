@@ -45,7 +45,7 @@ class UsageReportController : PlatformController {
       auto result = uc.report(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Usage report created successfully");
         res.writeJsonBody(resp, 201);
       } else {

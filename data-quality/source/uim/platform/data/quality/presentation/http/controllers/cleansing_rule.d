@@ -61,7 +61,7 @@ class CleansingRuleController : PlatformController {
       auto result = uc.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Cleansing rule created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -131,7 +131,7 @@ class CleansingRuleController : PlatformController {
       auto result = uc.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Cleansing rule updated successfully");
 
         res.writeJsonBody(resp, 200);

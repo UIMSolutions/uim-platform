@@ -30,7 +30,7 @@ class CatalogController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = catalogs.list();
-            auto jarr = items.map!(e => e.catalogToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -49,7 +49,7 @@ class CatalogController : PlatformController {
             auto id = CatalogId(extractIdFromPath(path));
             auto e = catalogs.getById(id);
             if (e.id.value.length == 0) { writeError(res, 404, "Catalog not found"); return; }
-            res.writeJsonBody(e.catalogToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

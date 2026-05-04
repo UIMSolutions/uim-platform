@@ -47,7 +47,7 @@ class DocumentController : PlatformController {
       auto result = uc.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("status", Json("pending"))
           .set("message", "Document uploaded for processing");
 
@@ -65,10 +65,7 @@ class DocumentController : PlatformController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto docs = uc.list(clientId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; docs) {
-        jarr ~= documentToJson(d);
-      }
+        auto jarr = docs.map!(d => toJson(d)).array;
 
       auto resp = Json.emptyObject
         .set("count", Json(docs.length))
@@ -94,7 +91,7 @@ class DocumentController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(documentToJson(d), 200);
+      res.writeJsonBody(toJson(d), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

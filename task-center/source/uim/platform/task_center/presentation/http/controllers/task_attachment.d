@@ -66,14 +66,12 @@ class TaskAttachmentController : PlatformController {
                 attachments = [];
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (a; attachments) {
-                jarr ~= attachmentToJson(a);
-            }
+            auto jarr = attachments.map!(a => toJson(a)).array;
 
             auto resp = Json.emptyObject
                 .set("count", attachments.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Attachment list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -92,7 +90,7 @@ class TaskAttachmentController : PlatformController {
                 writeError(res, 404, "Attachment not found");
                 return;
             }
-            res.writeJsonBody(attachmentToJson(a), 200);
+            res.writeJsonBody(toJson(a), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

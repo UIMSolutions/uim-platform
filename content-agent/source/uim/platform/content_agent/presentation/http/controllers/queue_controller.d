@@ -52,7 +52,7 @@ class QueueController : PlatformController {
       auto result = uc.createQueue(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Queue created successfully");
 
         res.writeJsonBody(resp, 201);

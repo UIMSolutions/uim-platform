@@ -43,7 +43,7 @@ class DnsRecordController : PlatformController {
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", Json(result.id))
+                  .set("id", result.id)
                   .set("message", "DNS record created");
 
                 res.writeJsonBody(resp, 201);
@@ -129,7 +129,7 @@ class DnsRecordController : PlatformController {
             auto result = uc.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "DNS record updated");
 
                 res.writeJsonBody(resp, 200);
@@ -149,7 +149,7 @@ class DnsRecordController : PlatformController {
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "DNS record deleted");
                     
                 res.writeJsonBody(resp, 200);

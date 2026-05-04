@@ -45,7 +45,7 @@ class RuleSetController : PlatformController {
       auto result = uc.createRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Rule set created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -64,7 +64,7 @@ class RuleSetController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Rule sets retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -99,7 +99,7 @@ class RuleSetController : PlatformController {
       auto result = uc.updateRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Rule set updated successfully");
 
         res.writeJsonBody(resp, 200);
@@ -117,7 +117,7 @@ class RuleSetController : PlatformController {
       auto result = uc.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Rule set activated successfully");
 
         res.writeJsonBody(resp, 200);

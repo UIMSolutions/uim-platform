@@ -6,12 +6,16 @@ mixin(ShowModule!());
 @safe:
 
 struct DataSubjectRole {
-    DataSubjectRoleId id;
-    TenantId tenantId;
+    mixin TenantEntity!(DataSubjectRoleId);
+
     string name;
     string description;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("isActive", isActive);
+    }
 }

@@ -60,7 +60,7 @@ class CertificateController : PlatformController {
       auto result = uc.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Certificate uploaded");
 
         res.writeJsonBody(resp, 201);
@@ -148,7 +148,7 @@ class CertificateController : PlatformController {
       auto result = uc.updateCertificate(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Certificate updated");
 
         res.writeJsonBody(resp, 200);

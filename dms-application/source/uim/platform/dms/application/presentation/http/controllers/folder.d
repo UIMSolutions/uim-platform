@@ -53,7 +53,7 @@ class FolderController : PlatformController {
       auto result = uc.createFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Folder created");
 
         res.writeJsonBody(resp, 201);
@@ -113,7 +113,7 @@ class FolderController : PlatformController {
       auto result = uc.updateFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Folder updated");
           
         res.writeJsonBody(resp, 200);
@@ -138,7 +138,7 @@ class FolderController : PlatformController {
       auto result = uc.moveFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Folder moved");
           
         res.writeJsonBody(resp, 200);

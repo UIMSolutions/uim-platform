@@ -31,7 +31,7 @@ class ScheduledExecutionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = scheduledExecutions.list();
-            auto jarr = items.map!(e => e.scheduledExecutionToJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -51,7 +51,7 @@ class ScheduledExecutionController : PlatformController {
             auto id = ScheduledExecutionId(extractIdFromPath(path));
             auto e = scheduledExecutions.getById(id);
             if (e.id.value.length == 0) { writeError(res, 404, "Scheduled execution not found"); return; }
-            res.writeJsonBody(e.scheduledExecutionToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

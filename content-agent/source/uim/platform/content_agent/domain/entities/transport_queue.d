@@ -13,15 +13,22 @@ mixin(ShowModule!());
 @safe:
 /// A configured transport queue (CTS+, Cloud TMS, or local).
 struct TransportQueue {
-  TransportQueueId id;
-  TenantId tenantId;
+  mixin TenantEntity!(TransportQueueId);
+
   string name;
   string description;
   QueueType queueType = QueueType.cloudTMS;
   string endpoint;
   string authToken;
   bool isDefault;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("queueType", queueType.to!string)
+      .set("endpoint", endpoint)
+      .set("authToken", authToken)
+      .set("isDefault", isDefault);
+  }
 }

@@ -6,14 +6,20 @@ mixin(ShowModule!());
 @safe:
 
 struct LegalEntity {
-    LegalEntityId id;
-    TenantId tenantId;
+    mixin TenantEntity!(LegalEntityId);
+
     string name;
     string description;
     string country;
     string region;
     bool isActive = true;
-    UserId createdBy;
-    long createdAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("country", country)
+            .set("region", region)
+            .set("isActive", isActive);
+    }
 }

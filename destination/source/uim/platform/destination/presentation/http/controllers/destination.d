@@ -79,7 +79,7 @@ class DestinationController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Destination created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -158,7 +158,7 @@ class DestinationController : PlatformController {
       auto result = uc.updateDestination(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Destination updated successfully");
 
         res.writeJsonBody(resp, 200);

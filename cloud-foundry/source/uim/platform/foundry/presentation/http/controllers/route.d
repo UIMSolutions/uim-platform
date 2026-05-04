@@ -81,7 +81,7 @@ class RouteController : PlatformController {
       auto arr = items.map!(r => r.toJson).array.toJson;
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length));
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -111,7 +111,7 @@ class RouteController : PlatformController {
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", result.id);
 
         res.writeJsonBody(resp, 200);
       } else
@@ -200,7 +200,7 @@ class RouteController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(items.length))
+        .set("totalCount", items.length)
         .set("message", "Domains retrieved successfully");
 
       res.writeJsonBody(resp, 200);

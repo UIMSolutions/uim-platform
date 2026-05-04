@@ -30,12 +30,12 @@ class EventApplicationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => eventApplicationToJson(e)).array;
+            auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
-                .set("count", Json(items.length))
+                .set("count", items.length)
                 .set("resources", jarr)
-                .set("message", Json("Event application list retrieved successfully"));
+                .set("message", "Event application list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ class EventApplicationController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
+            auto id = EventApplicationId(extractIdFromPath(path));
             auto e = uc.getById(EventApplicationId(id));
             if (e.isNull) {
                 writeError(res, 404, "Event application not found");
@@ -56,9 +56,9 @@ class EventApplicationController : PlatformController {
             }
 
             auto resp = e.toJson()
-                .set("message", Json("Event application retrieved successfully"));
+                .set("message", "Event application retrieved successfully");
 
-            res.writeJsonBody(eventApplicationToJson(e), 200);
+            res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -68,7 +68,7 @@ class EventApplicationController : PlatformController {
         try {
             auto j = req.json;
             EventApplicationDTO dto;
-            dto.id = j.getString("id");
+            dto.eventApplicationId = EventApplicationId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
             dto.name = j.getString("name");
@@ -88,7 +88,7 @@ class EventApplicationController : PlatformController {
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
-                    .set("message", Json("Event application created"));
+                    .set("message", "Event application created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -119,8 +119,8 @@ class EventApplicationController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
-                    .set("message", Json("Event application updated"));
+                    .set("id", result.id)
+                    .set("message", "Event application updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -136,8 +136,8 @@ class EventApplicationController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(EventApplicationId(id));
+            auto id = EventApplicationId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Event application deleted");

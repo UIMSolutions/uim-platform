@@ -44,7 +44,7 @@ class SchemaController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Schema created");
 
         res.writeJsonBody(resp, 201);
@@ -114,7 +114,7 @@ class SchemaController : PlatformController {
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject  
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Schema updated");
 
         res.writeJsonBody(resp, 200);

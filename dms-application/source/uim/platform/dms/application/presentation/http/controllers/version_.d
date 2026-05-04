@@ -77,7 +77,7 @@ class VersionController : PlatformController {
       auto result = uc.checkIn(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("versionId", Json(result.id))
+          .set("versionId", result.id)
           .set("documentId", Json(r.documentId))
           .set("status", Json("active"))
           .set("message", "Document checked in successfully");

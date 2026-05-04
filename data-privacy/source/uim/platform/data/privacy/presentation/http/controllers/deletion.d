@@ -49,7 +49,7 @@ class DeletionController : PlatformController {
       auto result = uc.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Deletion request created successfully");
             
         res.writeJsonBody(resp, 201);
@@ -77,7 +77,7 @@ class DeletionController : PlatformController {
 
       auto resp = Json.emptyObject
           .set("items", arr)
-          .set("totalCount", Json(items.length))
+          .set("totalCount", items.length)
           .set("message", "Deletion requests retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -111,7 +111,7 @@ class DeletionController : PlatformController {
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Deletion request status updated successfully");
 
         res.writeJsonBody(resp, 200);

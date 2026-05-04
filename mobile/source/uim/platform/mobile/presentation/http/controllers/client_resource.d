@@ -43,7 +43,7 @@ class ClientResourceController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -70,7 +70,7 @@ class ClientResourceController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", items)
         .set("totalCount", Json(results.length))
-        .set("message", Json("Client resources retrieved successfully"));
+        .set("message", "Client resources retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -119,7 +119,7 @@ class ClientResourceController : PlatformController {
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", result.id);
           
         res.writeJsonBody(resp, 200);
       } else {

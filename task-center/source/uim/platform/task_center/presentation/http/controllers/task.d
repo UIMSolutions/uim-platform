@@ -87,10 +87,7 @@ class TaskController : PlatformController {
                 tasks = uc.list(tenantId);
             }
 
-            auto jarr = Json.emptyArray;
-            foreach (t; tasks) {
-                jarr ~= taskToJson(t);
-            }
+            auto jarr = tasks.map!(t => toJson(t)).array;
 
             auto resp = Json.emptyObject
                 .set("count", tasks.length)
@@ -118,7 +115,7 @@ class TaskController : PlatformController {
                 writeError(res, 404, "Task not found");
                 return;
             }
-            res.writeJsonBody(taskToJson(t), 200);
+            res.writeJsonBody(toJson(t), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -51,7 +51,7 @@ class DataSubjectController : PlatformController {
       auto result = uc.createSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data subject created successfully");
 
         res.writeJsonBody(resp, 201);
@@ -76,7 +76,7 @@ class DataSubjectController : PlatformController {
 
       auto resp = Json.emptyObject
             .set("items", arr)
-            .set("totalCount", Json(items.length))
+            .set("totalCount", items.length)
             .set("message", "Data subjects retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -116,7 +116,7 @@ class DataSubjectController : PlatformController {
       auto result = uc.updateSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
+            .set("id", result.id)
             .set("message", "Data subject updated successfully");
 
         res.writeJsonBody(resp, 200);

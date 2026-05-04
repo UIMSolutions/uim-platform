@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A purpose record — tracks a specific purpose with retention/residence and expiration.
 struct PurposeRecord {
-  PurposeRecordId id;
-  TenantId tenantId;
+  mixin TenantEntity!(PurposeRecordId);
+
   DataSubjectId dataSubjectId;
   BusinessContextId businessContextId;
   ProcessingPurpose purpose;
@@ -25,6 +25,18 @@ struct PurposeRecord {
   long validFrom;
   long validUntil; // 0 = indefinite
   long deactivatedAt;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("businessContextId", businessContextId)
+      .set("purpose", purpose)
+      .set("status", status.to!string)
+      .set("legalBasis", legalBasis)
+      .set("residenceDays", residenceDays)
+      .set("retentionDays", retentionDays)
+      .set("validFrom", validFrom)
+      .set("validUntil", validUntil)
+      .set("deactivatedAt", deactivatedAt);
+  }
 }

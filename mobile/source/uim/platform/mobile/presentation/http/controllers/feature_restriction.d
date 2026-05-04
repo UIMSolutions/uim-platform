@@ -46,7 +46,7 @@ class FeatureRestrictionController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id));
+          .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -74,7 +74,7 @@ class FeatureRestrictionController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", items)
         .set("totalCount", Json(results.length))
-        .set("message", Json("Feature restrictions retrieved successfully"));
+        .set("message", "Feature restrictions retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -126,7 +126,7 @@ class FeatureRestrictionController : PlatformController {
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", Json(result.id))
+          .set("id", result.id)
           .set("message", "Feature restriction updated successfully");
 
         res.writeJsonBody(resp, 200);

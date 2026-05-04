@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Page {
-    PageId id;
-    TenantId tenantId;
+    mixin TenantEntity!PageId;
+
     ApplicationId applicationId;
     string name;
     string description;
@@ -25,15 +25,9 @@ struct Page {
     string pageVariables;
     int sortOrder;
     bool isStartPage;
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
 
-    Json pageToJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    Json toJson() {
+        return entityToJson()
             .set("applicationId", applicationId)
             .set("name", name)
             .set("description", description)
@@ -44,10 +38,6 @@ struct Page {
             .set("styleOverrides", styleOverrides)
             .set("pageVariables", pageVariables)
             .set("sortOrder", sortOrder)
-            .set("isStartPage", isStartPage)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy);
+            .set("isStartPage", isStartPage);
     }
 }

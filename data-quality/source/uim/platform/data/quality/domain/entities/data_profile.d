@@ -13,8 +13,9 @@ mixin(ShowModule!());
 @safe:
 /// Profile analysis result for a dataset.
 struct DataProfile {
-  DataProfileId DataProfileId;
-  TenantId tenantId;
+  mixin TenantEntity!(DataProfileId);
+
+  
   DatasetId datasetId;
   string datasetName;
   long totalRecords;
@@ -24,6 +25,19 @@ struct DataProfile {
   QualityRating rating;
   long profiledAt;
   long duration; // profiling time in ms
+
+  Json toJson() const {
+    return entityToJson
+      .set("datasetId", datasetId)
+      .set("datasetName", datasetName)
+      .set("totalRecords", totalRecords)
+      .set("profiledRecords", profiledRecords)
+      .set("columns", columns)
+      .set("overallQualityScore", overallQualityScore)
+      .set("rating", rating.to!string)
+      .set("profiledAt", profiledAt)
+      .set("duration", duration);
+  }
 }
 
 /// Profiling statistics for a single column / field.
@@ -48,4 +62,28 @@ struct ColumnProfile {
   double avgLength;
   string[] topValues; // most frequent values
   string[] patternDistribution; // discovered patterns
+
+  Json toJson() const {
+    return Json()
+      .set("fieldName", fieldName)
+      .set("detectedType", detectedType.to!string)
+      .set("totalValues", totalValues)
+      .set("nullCount", nullCount)
+      .set("emptyCount", emptyCount)
+      .set("uniqueCount", uniqueCount)
+      .set("duplicateCount", duplicateCount)
+      .set("completeness", completeness)
+      .set("uniqueness", uniqueness)
+      .set("validity", validity)
+      .set("minValue", minValue)
+      .set("maxValue", maxValue)
+      .set("meanValue", meanValue)
+      .set("medianValue", medianValue)
+      .set("modeValue", modeValue)
+      .set("minLength", minLength)
+      .set("maxLength", maxLength)
+      .set("avgLength", avgLength)
+      .set("topValues", topValues)
+      .set("patternDistribution", patternDistribution);
+  }
 }

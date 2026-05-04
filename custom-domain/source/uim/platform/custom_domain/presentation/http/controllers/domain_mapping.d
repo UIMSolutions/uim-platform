@@ -45,7 +45,7 @@ class DomainMappingController : PlatformController {
             auto result = uc.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "Domain mapping created");
 
                 res.writeJsonBody(resp, 201);
@@ -124,7 +124,7 @@ class DomainMappingController : PlatformController {
             auto result = uc.removeById(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("id", Json(result.id))
+                    .set("id", result.id)
                     .set("message", "Domain mapping deleted");
                     
                 res.writeJsonBody(resp, 200);

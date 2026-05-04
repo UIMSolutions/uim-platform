@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct HtmlApp {
-  HtmlAppId id;
-  TenantId tenantId;
+  mixin TenantEntity!HtmlAppId;
+
   SpaceId spaceId;
   ServiceInstanceId serviceInstanceId;
   string name;             // app technical name e.g. "com.sap.myapp"
@@ -23,8 +23,17 @@ struct HtmlApp {
   AppStatus status;
   string activeVersionId;  // currently active version
   long totalSizeBytes;     // total storage used
-  long createdAt;
-  long updatedAt;
-  UserId createdBy;
-  UserId updatedBy;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("serviceInstanceId", serviceInstanceId)
+      .set("name", name)
+      .set("namespace", namespace_)
+      .set("description", description)
+      .set("visibility", visibility.to!string)
+      .set("status", status.to!string)
+      .set("activeVersionId", activeVersionId)
+      .set("totalSizeBytes", totalSizeBytes);
+  }
 }

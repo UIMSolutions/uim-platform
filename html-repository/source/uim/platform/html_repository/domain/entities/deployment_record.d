@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct DeploymentRecord {
-  DeploymentRecordId id;
-  TenantId tenantId;
+  mixin TenantEntity!DeploymentRecordId;
+
   HtmlAppId appId;
   AppVersionId versionId;
   ServiceInstanceId serviceInstanceId;
@@ -22,6 +22,19 @@ struct DeploymentRecord {
   string errorMessage;
   long startedAt;
   long completedAt;
-  long createdAt;
   UserId deployedBy;
+
+  Json toJson() const {
+    return entityToJson
+      .set("appId", appId)
+      .set("versionId", versionId)
+      .set("serviceInstanceId", serviceInstanceId)
+      .set("operation", operation.to!string)
+      .set("status", status.to!string)
+      .set("errorMessage", errorMessage)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("createdAt", createdAt)
+      .set("deployedBy", deployedBy);
+  }
 }

@@ -50,7 +50,7 @@ class UIComponentController : PlatformController {
             auto id = extractIdFromPath(path);
             auto e = components.getById(UIComponentId(id));
             if (e.id.value.length == 0) { writeError(res, 404, "UI component not found"); return; }
-            res.writeJsonBody(e.uiComponentToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
