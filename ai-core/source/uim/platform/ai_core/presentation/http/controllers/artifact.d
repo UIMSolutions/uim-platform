@@ -35,7 +35,7 @@ class ArtifactController : PlatformController {
       auto j = req.json;
       CreateArtifactRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -60,7 +60,7 @@ class ArtifactController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto artifacts = scenarioId.length > 0
@@ -83,8 +83,8 @@ class ArtifactController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto a = uc.getbyId(id, rgId);
       if (a.isNull) {
@@ -102,8 +102,8 @@ class ArtifactController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = uc.remove(id, rgId);
       if (result.success) {

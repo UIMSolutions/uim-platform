@@ -84,7 +84,7 @@ class AppController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AppId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, id);
       if (app.isNull) {
@@ -101,7 +101,7 @@ class AppController : PlatformController {
     try {
       auto j = req.json;
       auto r = UpdateAppRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = AppId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");

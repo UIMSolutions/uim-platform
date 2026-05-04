@@ -14,8 +14,8 @@ struct SrvConfig {
   string serviceName = "HTML5 Application Repository Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("HTML_REPO_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

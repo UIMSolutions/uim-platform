@@ -27,7 +27,7 @@ class MemoryCardRepository : TenantRepository!(Card, CardId), CardRepository {
   }
 
   void removeByType(TenantId tenantId, CardType cardType) {
-    return findByType(tenantId, cardType).each!(c => remove(c));
+    findByType(tenantId, cardType).each!(c => remove(c));
   }
 
 }

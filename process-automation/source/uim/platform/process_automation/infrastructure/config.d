@@ -18,8 +18,8 @@ struct SrvConfig {
     string serviceName = "Process Automation Service";
 }
 
-AppConfig loadConfig() {
-    AppConfig config;
+SrvConfig loadConfig() {
+    SrvConfig config;
     auto hostEnv = environment.get("PROCESS_AUTOMATION_HOST", "");
     if (hostEnv.length > 0)
         config.host = hostEnv;

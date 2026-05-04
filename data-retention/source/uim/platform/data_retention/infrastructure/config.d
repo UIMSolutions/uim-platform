@@ -13,8 +13,8 @@ struct SrvConfig {
     string serviceName = "Data Retention Manager Service";
 }
 
-AppConfig loadConfig() {
-    AppConfig config;
+SrvConfig loadConfig() {
+    SrvConfig config;
 
     auto host = environment.get("DATA_RETENTION_HOST", "");
     if (host.length > 0) config.host = host;

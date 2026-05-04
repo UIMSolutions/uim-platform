@@ -36,7 +36,7 @@ class ExecutionController : PlatformController {
       auto j = req.json;
       CreateExecutionRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
 
       auto result = uc.create(r);
@@ -57,7 +57,7 @@ class ExecutionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto executions = uc.list(rgId);
 
       auto jarr = executions.map!(ex => executionToJson(ex)).array;
@@ -78,7 +78,7 @@ class ExecutionController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto ex = uc.getbyId(id, rgId);
       if (ex.isNull) {
@@ -100,7 +100,7 @@ class ExecutionController : PlatformController {
       auto j = req.json;
       PatchExecutionRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");
 
@@ -124,7 +124,7 @@ class ExecutionController : PlatformController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = uc.remove(id, rgId);
       if (result.success) {

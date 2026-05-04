@@ -18,10 +18,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for alert rule CRUD (thresholds and checks configuration).
 class ManageAlertRulesUseCase { // TODO: UIMUseCase {
-  private AlertRuleRepository repo;
+  private AlertRuleRepository alertRules;
 
-  this(AlertRuleRepository repo) {
-    this.repo = repo;
+  this(AlertRuleRepository alertRules) {
+    this.alertRules = alertRules;
   }
 
   CommandResult createRule(CreateAlertRuleRequest req) {
@@ -52,19 +52,15 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.createdAt = clockSeconds();
     rule.updatedAt = rule.createdAt;
 
-    repo.save(rule);
-    return CommandResult(true, rule.id.value(), "");
-  }
-
-  CommandResult updateRule(string id, UpdateAlertRuleRequest req) {
-    return updateRule(AlertRuleId(id), req);
+    alertRules.save(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
-    if (!repo.existsById(id))
+    if (!alertRules.existsById(id))
       return CommandResult(false, "", "Alert rule not found");
 
-    auto rule = repo.findById(id);
+    auto rule = alertRules.findById(id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.warningThreshold != 0)
@@ -82,53 +78,33 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
       rule.channelIds = req.channelIds;
     rule.updatedAt = clockSeconds();
 
-    repo.update(rule);
-    return CommandResult(true, rule.id.value(), "");
-  }
-
-  AlertRule getRule(string id) {
-    return getRule(AlertRuleId(id));
+    alertRules.update(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   AlertRule getRule(AlertRuleId id) {
-    return repo.findById(id);
+    return alertRules.findById(id);
   }
 
   AlertRule[] listRules(TenantId tenantId) {
-    return listRules(TenantId(tenantId));
-  }
-
-  AlertRule[] listRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
-  }
-
-  AlertRule[] listByResource(TenantId tenantId, string resourceId) {
-    return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
+    return alertRules.findByTenant(tenantId);
   }
 
   AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return repo.findByResource(tenantId, resourceId);
+    return alertRules.findByResource(tenantId, resourceId);
   }
 
   AlertRule[] listEnabled(TenantId tenantId) {
-    return listEnabled(TenantId(tenantId));
-  }
-  
-  AlertRule[] listEnabled(TenantId tenantId) {
-    return repo.findEnabled(tenantId);
-  }
-
-  CommandResult deleteRule(string id) {
-    return deleteRule(AlertRuleId(id));
+    return alertRules.findEnabled(tenantId);
   }
 
   CommandResult deleteRule(AlertRuleId id) {
-    auto rule = repo.findById(id);
+    auto rule = alertRules.findById(id);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value(), "");
+    alertRules.remove(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   private static ThresholdOperator parseOperator(string thresholdOperator) {

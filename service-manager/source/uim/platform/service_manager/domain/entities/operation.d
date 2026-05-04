@@ -11,8 +11,8 @@ struct Operation {
 
     string resourceId;
     string resourceType;
-        OperationType type = OperationType.create;
-        OperationStatus status = OperationStatus.pending;
+    OperationType type = OperationType.create;
+    OperationStatus status = OperationStatus.pending;
     string description;
     string errorMessage;
     int rescheduleCount;
@@ -23,8 +23,8 @@ struct Operation {
         return entityToJson
             .set("resourceId", resourceId)
             .set("resourceType", resourceType)
-            .set("type", type.toString())
-            .set("status", status.toString())
+            .set("type", type.to!string())
+            .set("status", status.to!string())
             .set("description", description)
             .set("errorMessage", errorMessage)
             .set("rescheduleCount", rescheduleCount)

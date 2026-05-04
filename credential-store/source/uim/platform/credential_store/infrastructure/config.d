@@ -19,8 +19,8 @@ struct SrvConfig {
   string serviceName = "Credential Store Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("CREDSTORE_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

@@ -16,11 +16,11 @@ struct SrvConfig {
     ushort port = 8114;
 }
 
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
     import std.process : environment;
     import std.conv : to;
 
-    AppConfig config;
+    SrvConfig config;
     auto host = environment.get("OAUTH_HOST", "0.0.0.0");
     auto port = environment.get("OAUTH_PORT", "8114");
     config.host = host;

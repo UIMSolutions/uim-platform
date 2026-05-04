@@ -27,6 +27,8 @@ class CertificateController : PlatformController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/certificates", &handleUpload);
     router.get("/api/v1/certificates", &handleList);
     router.get("/api/v1/certificates/expiring", &handleListExpiring);
@@ -58,17 +60,14 @@ class CertificateController : PlatformController {
       auto result = uc.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Certificate uploaded"));
+          .set("id", Json(result.id))
+          .set("message", Json("Certificate uploaded"));
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -88,12 +87,12 @@ class CertificateController : PlatformController {
       auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(certs.length));
+        .set("items", arr)
+        .set("totalCount", certs.length)
+        .set("message", "Certificates retrieved");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -108,15 +107,15 @@ class CertificateController : PlatformController {
 
       auto certs = uc.listExpiring(tenantId, thirtyDays);
 
-        auto arr = certs.map!(c => c.toJson).array.toJson;
+      auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(certs.length));
+        .set("items", arr)
+        .set("totalCount", Json(certs.length))
+        .set("message", "Expiring certificates retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -130,8 +129,7 @@ class CertificateController : PlatformController {
         return;
       }
       res.writeJsonBody(c.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -150,17 +148,14 @@ class CertificateController : PlatformController {
       auto result = uc.updateCertificate(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", Json(result.id))
-            .set("message", Json("Certificate updated"));
+          .set("id", Json(result.id))
+          .set("message", Json("Certificate updated"));
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -171,16 +166,14 @@ class CertificateController : PlatformController {
       auto result = uc.removeCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Certificate deleted successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -194,32 +187,13 @@ class CertificateController : PlatformController {
         .set("isValid", Json(result.isValid))
         .set("status", Json(result.status.to!string))
         .set("message", Json(result.message))
-        .set("daysUntilExpiry", Json(result.daysUntilExpiry));
-        
+        .set("daysUntilExpiry", Json(result.daysUntilExpiry))
+        .set("message", "Certificate validation completed");
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeCertificate(const ref Certificate c) {
-    return Json.emptyObject
-    .set("id", c.id.toJson())
-    .set("tenantId", c.tenantId.toJson())
-    .set("subaccountId", c.subaccountId.toJson())
-    .set("name", c.name)
-    .set("description", c.description)
-    .set("type", c.certificateType.to!string)
-    .set("format", c.format_.to!string)
-    .set("status", c.status.to!string)
-    .set("subject", c.subject)
-    .set("issuer", c.issuer)
-    .set("serialNumber", c.serialNumber)
-    .set("validFrom", c.validFrom)
-    .set("validTo", c.validTo)
-    .set("uploadedBy", c.uploadedBy)
-    .set("uploadedAt", c.uploadedAt)
-    .set("updatedAt", c.updatedAt);
-  }
 }

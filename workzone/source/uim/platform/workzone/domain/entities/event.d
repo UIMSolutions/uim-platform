@@ -40,7 +40,7 @@ struct Event {
       .set("organizerId", organizerId.value)
       .set("organizerName", organizerName)
       .set("attendeeIds", attendeeIds.map!(id => id.value).array)
-      .set("status", status.toString())
+      .set("status", status.to!string())
       .set("allDay", allDay)
       .set("startTime", startTime)
       .set("endTime", endTime)

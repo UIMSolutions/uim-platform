@@ -4,8 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.config;
-import uim.platform.destination;
 import std.process : environment;
+import uim.platform.destination;
 
 mixin(ShowModule!());
 
@@ -18,10 +18,10 @@ struct SrvConfig {
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
   // import std.process : environment;
 
-  AppConfig config;
+  SrvConfig config;
 
   auto host = environment.get("DESTINATION_HOST", "");
   if (host.length > 0)

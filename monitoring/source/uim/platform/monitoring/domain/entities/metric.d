@@ -25,17 +25,15 @@ struct Metric {
   long timestamp;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("resourceId", resourceId.value)
       .set("definitionId", definitionId.value)
       .set("name", name)
       .set("value", value_)
-      .set("unit", unit.toString())
-      .set("category", category.toString())
+      .set("unit", unit.to!string)
+      .set("category", category.to!string)
       .set("labels", labels)
       .set("timestamp", timestamp);
-
-    return j;
   }
 }
 
@@ -50,4 +48,17 @@ struct MetricSummary {
   long dataPointCount;
   long windowStartTime;
   long windowEndTime;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("resourceId", resourceId.value)
+      .set("minValue", minValue)
+      .set("maxValue", maxValue)
+      .set("avgValue", avgValue)
+      .set("sumValue", sumValue)
+      .set("dataPointCount", dataPointCount)
+      .set("windowStartTime", windowStartTime)
+      .set("windowEndTime", windowEndTime);
+  }
 }

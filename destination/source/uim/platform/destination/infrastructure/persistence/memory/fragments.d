@@ -18,15 +18,32 @@ mixin(ShowModule!());
 @safe:
 class MemoryFragmentRepository : TenantRepository!(DestinationFragment, FragmentId), FragmentRepository {
 
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+  }
+  DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.subaccountId == subaccountId && e.name == name)
+        return e;
+    return DestinationFragment.init;
+  }
+
+  void removeByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    findByName(tenantId, subaccountId, name).remove();
+  }
+
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }
+
   DestinationFragment[] filterBySubaccount(DestinationFragment[] fragments, SubaccountId subaccountId) {
     return fragments.filter!(e => e.subaccountId == subaccountId).array;
   }
+
   DestinationFragment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
+
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }

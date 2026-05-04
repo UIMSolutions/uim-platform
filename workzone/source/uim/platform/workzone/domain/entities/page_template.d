@@ -27,7 +27,7 @@ struct PageTemplate {
       .set("name", name)
       .set("description", description)
       .set("thumbnailUrl", thumbnailUrl)
-      .set("sections", sections.map!(s => s.toJson()).array)
+      .set("sections", sections.map!(s => s.toJson()).array.toJson)
       .set("isDefault", isDefault)
       .set("isPublic", isPublic);
   }
@@ -49,7 +49,7 @@ struct TemplateSection {
       .set("columns", columns)
       .set("layoutType", layoutType)
       .set("sortOrder", sortOrder)
-      .set("allowedWidgetSizes", allowedWidgetSizes.map!(s => s.toJson()).array);
+      .set("allowedWidgetSizes", allowedWidgetSizes.map!(s => s.toJson()).array.toJson());
   }
 
 }

@@ -28,7 +28,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(s => remove(s));
+    findByWorkspace(tenantId, workspaceId).each!(s => remove(s));
   }
   // #endregion ByWorkspace
 
@@ -42,7 +42,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   void removeByOrganizer(TenantId tenantId, UserId organizerId) {
-    return findByOrganizer(tenantId, organizerId).each!(s => remove(s));
+    findByOrganizer(tenantId, organizerId).each!(s => remove(s));
   }
   // #endregion ByOrganizer
 
@@ -56,7 +56,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   void removeByStatus(TenantId tenantId, SurveyStatus status) {
-    return findByStatus(tenantId, status).each!(s => remove(s));
+    findByStatus(tenantId, status).each!(s => remove(s));
   }
   // #endregion ByStatus
 

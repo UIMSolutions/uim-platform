@@ -33,27 +33,20 @@ class MetaController : PlatformController {
       .set("timeToLiveDeployments", true);
 
     // AI API capabilities
-    auto aiApi = Json.emptyObject;
-    aiApi["capabilities"] = caps;
+    auto ttlLimits = Json.emptyObject
+      .set("minimum", Json("10m"))
+      .set("maximum", Json(-1));
 
-    auto limits = Json.emptyObject;
-    auto deplLimits = Json.emptyObject;
-    deplLimits["maxRunningCount"] = Json(-1);
-    limits["deployments"] = deplLimits;
+    auto limits = Json.emptyObject
+      .set("deployments", ["maxRunningCount": Json(-1)].toJson)
+      .set("executions", ["maxRunningCount": Json(-1)].toJson)
+      .set("minimumFrequencyHour", Json(1))
+      .set("timeToLiveDeployments", ttlLimits);
 
-    auto execLimits = Json.emptyObject;
-    execLimits["maxRunningCount"] = Json(-1);
-    limits["executions"] = execLimits;
-
-    limits["minimumFrequencyHour"] = Json(1);
-
-    auto ttlLimits = Json.emptyObject;
-    ttlLimits["minimum"] = Json("10m");
-    ttlLimits["maximum"] = Json(-1);
-    limits["timeToLiveDeployments"] = ttlLimits;
-
-    aiApi["limits"] = limits;
-    aiApi["version"] = Json("2.18.0");
+    auto aiApi = Json.emptyObject
+      .set("capabilities", caps)
+      .set("limits", limits)
+      .set("version", Json("2.18.0"));
 
     j["aiApi"] = aiApi;
 

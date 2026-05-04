@@ -16,11 +16,11 @@ struct SrvConfig {
     ushort port = 8110;
 }
 
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
     import std.process : environment;
     import std.conv : to;
 
-    AppConfig config;
+    SrvConfig config;
     auto host = environment.get("AUTOMATION_PILOT_HOST", "0.0.0.0");
     auto port = environment.get("AUTOMATION_PILOT_PORT", "8110");
     config.host = host;

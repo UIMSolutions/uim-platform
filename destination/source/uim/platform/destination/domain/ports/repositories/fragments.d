@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing — destination fragment persistence.
 interface FragmentRepository : ITenantRepository!(DestinationFragment, FragmentId) {
   
-  size_t countByName(TenantId tenantId, SubaccountId subaccountId, string name);
-  DestinationFragment[] findByName(TenantId tenantId, SubaccountId subaccountId, string name);
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
+  DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name);
   void removeByName(TenantId tenantId, SubaccountId subaccountId, string name);
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);

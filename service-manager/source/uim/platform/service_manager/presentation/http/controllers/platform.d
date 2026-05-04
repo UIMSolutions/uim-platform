@@ -9,7 +9,9 @@ mixin(ShowModule!());
 class EnvironmentController : PlatformController {
     private ManagePlatformsUseCase uc;
 
-    this(ManagePlatformsUseCase uc) { this.uc = uc; }
+    this(ManagePlatformsUseCase uc) {
+        this.uc = uc;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -20,6 +22,14 @@ class EnvironmentController : PlatformController {
         router.delete_("/api/v1/service-manager/platforms/*", &handleDelete);
     }
 
+    /**
+        * Handles the HTTP GET request to list all platforms for the tenant.
+        * It retrieves the tenant ID from the request, fetches the list of platforms using the use case, and constructs a JSON response containing the platform details and total count.
+        * If any exception occurs during processing, it returns a 500 Internal Server Error response.
+        *
+        * @param req The HTTP request object containing details of the incoming request.
+        * @param res The HTTP response object used to send back the response to the client.
+        */
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
@@ -33,27 +43,41 @@ class EnvironmentController : PlatformController {
                     .set("status", e.status.to!string)
                     .set("region", e.region);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+            auto response = Json.emptyObject
+                .set("items", jarr)
+                .set("totalCount", items.length)
+                .set("message", "Platforms retrieved successfully");
+
+            res.writeJsonBody(response, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, PlatformId(id));
-            if (e.isNull) { writeError(res, 404, "Platform not found"); return; }
+            if (e.isNull) {
+                writeError(res, 404, "Platform not found");
+                return;
+            }
             res.writeJsonBody(Json.emptyObject
-                .set("id", e.id.value).set("name", e.name)
-                .set("description", e.description)
-                .set("type", e.type.to!string)
-                .set("status", e.status.to!string)
-                .set("brokerUrl", e.brokerUrl)
-                .set("region", e.region)
-                .set("subaccountId", e.subaccountId)
-                .set("createdAt", e.createdAt), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                    .set("id", e.id.value).set("name", e.name)
+                    .set("description", e.description)
+                    .set("type", e.type.to!string)
+                    .set("status", e.status.to!string)
+                    .set("brokerUrl", e.brokerUrl)
+                    .set("region", e.region)
+                    .set("subaccountId", e.subaccountId)
+                    .set("createdAt", e.createdAt), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -70,14 +94,23 @@ class EnvironmentController : PlatformController {
 
             auto result = uc.create(req.getTenantId, r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Platform created successfully");
+
+                res.writeJsonBody(response, 201);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdatePlatformRequest r;
@@ -91,18 +124,27 @@ class EnvironmentController : PlatformController {
             auto result = uc.update(req.getTenantId, PlatformId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 404, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(req.getTenantId, PlatformId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 404, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

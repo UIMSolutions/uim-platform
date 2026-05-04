@@ -27,7 +27,7 @@ class MemoryChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRe
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
+      findByWorkspace(tenantId, workspaceId).each!(c => remove(c));
   }
 
 }

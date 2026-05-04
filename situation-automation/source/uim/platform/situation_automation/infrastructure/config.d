@@ -17,8 +17,8 @@ struct SrvConfig {
     string serviceName = "Situation Automation Service";
 }
 
-AppConfig loadConfig() {
-    AppConfig config;
+SrvConfig loadConfig() {
+    SrvConfig config;
     auto hostEnv = environment.get("SITUATION_AUTOMATION_HOST", "");
     if (hostEnv.length > 0)
         config.host = hostEnv;

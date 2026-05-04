@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An active or resolved alert triggered by a rule breach.
 struct Alert {
-  TenantId tenantId;
-  AlertId id;
+  mixin TenantEntity!(AlertId);
+  
   AlertRuleId ruleId;
   MonitoredResourceId resourceId;
   string ruleName;
@@ -30,4 +30,23 @@ struct Alert {
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("ruleId", ruleId.value)
+      .set("resourceId", resourceId.value)
+      .set("ruleName", ruleName)
+      .set("metricName", metricName)
+      .set("currentValue", currentValue)
+      .set("thresholdValue", thresholdValue)
+      .set("operator", operator_.toString())
+      .set("severity", severity.toString())
+      .set("state", state.toString())
+      .set("message", message)
+      .set("acknowledgedBy", acknowledgedBy)
+      .set("resolvedBy", resolvedBy)
+      .set("triggeredAt", triggeredAt)
+      .set("acknowledgedAt", acknowledgedAt)
+      .set("resolvedAt", resolvedAt);
+  }
 }

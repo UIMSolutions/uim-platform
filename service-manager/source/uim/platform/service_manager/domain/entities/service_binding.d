@@ -22,7 +22,7 @@ struct ServiceBinding {
         return entityToJson()
             .set("name", name)
             .set("instanceId", instanceId.value)
-            .set("status", status.toString())
+            .set("status", status.to!string())
             .set("credentials", credentials)
             .set("parameters", parameters)
             .set("bindResource", bindResource)

@@ -19,8 +19,8 @@ struct SrvConfig {
   string serviceName = "Cloud Logging Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
 
   auto host = environment.get("LOGGING_HOST", "");
   if (host.length > 0)

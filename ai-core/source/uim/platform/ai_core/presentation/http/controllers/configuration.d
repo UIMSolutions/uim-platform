@@ -35,7 +35,7 @@ class ConfigurationController : PlatformController {
       auto j = req.json;
       CreateConfigurationRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.scenarioId = j.getString("scenarioId");
       r.executableId = j.getString("executableId");
       r.name = j.getString("name");
@@ -59,7 +59,7 @@ class ConfigurationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
       typeof(uc.list(rgId)) configs;
@@ -100,8 +100,8 @@ class ConfigurationController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto c = uc.getbyId(id, rgId);
       if (c.isNull) {
@@ -126,8 +126,8 @@ class ConfigurationController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = uc.remove(id, rgId);
       if (result.success) {

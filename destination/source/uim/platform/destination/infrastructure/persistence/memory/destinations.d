@@ -28,6 +28,9 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
         return e;
     return Destination.init;
   }
+  void removeByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    findByName(tenantId, subaccountId, name).remove();
+  }
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
@@ -61,9 +64,15 @@ Destination[] filterByServiceInstance(Destination[] dests, TenantId tenantId, Se
     return findAll().any!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId && e.level == level);
   }
+  size_t countByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
+    return findByLevel(tenantId, subaccountId, level).length;
+  }
   Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
     return findAll().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId && e.level == level).array;
+  }
+  void removeByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
+    findByLevel(tenantId, subaccountId, level).each!(e => remove(e));
   }
 
 }

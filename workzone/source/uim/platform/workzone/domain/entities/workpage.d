@@ -29,8 +29,8 @@ struct Workpage {
       .set("workspaceId", workspaceId.value)
       .set("title", title)
       .set("description", description)
-      .set("widgetIds", widgetIds.map!(w => w.value).array)
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("widgetIds", widgetIds.map!(w => w.value).array.toJson())
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson())
       .set("sortOrder", sortOrder)
       .set("visible", visible)
       .set("isDefault", isDefault);

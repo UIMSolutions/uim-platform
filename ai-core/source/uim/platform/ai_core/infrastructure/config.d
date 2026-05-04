@@ -18,8 +18,8 @@ struct SrvConfig {
   string serviceName = "AI Core Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("AICORE_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

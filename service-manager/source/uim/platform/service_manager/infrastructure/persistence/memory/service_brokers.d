@@ -8,7 +8,7 @@ mixin(ShowModule!());
 
 class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), ServiceBrokerRepository {
 
-    size_t coundtByStatus(TenantId tenantId, ServiceBrokerStatus status) {
+    size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status) {
         return findByStatus(tenantId, status).length;
     }
 
@@ -17,10 +17,11 @@ class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBr
     }
 
     ServiceBroker[] findByStatus(TenantId tenantId, ServiceBrokerStatus status) {
-        return findByTenant(tenantId).filterByStatus!(status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceBrokerStatus status) {
-        findByStatus(tenantId, status).removeAll;
+        findByStatus(tenantId, status).each!(b => remove(b));
     }
+
 }

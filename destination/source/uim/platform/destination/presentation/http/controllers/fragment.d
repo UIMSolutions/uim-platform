@@ -27,6 +27,8 @@ class FragmentController : PlatformController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/fragments", &handleCreate);
     router.get("/api/v1/fragments", &handleList);
     router.get("/api/v1/fragments/*", &handleGetById);
@@ -155,26 +157,5 @@ class FragmentController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeFragment(const ref DestinationFragment f) {
-    auto propsJson = Json.emptyObject;
-    foreach (k, v; f.properties)
-      propsJson[k] = Json(v);
-
-    return Json.emptyObject
-      .set("id", f.id.toJson())
-      .set("tenantId", f.tenantId.toJson())
-      .set("subaccountId", f.subaccountId.toJson())
-      .set("name", f.name)
-      .set("description", f.description)
-      .set("level", f.level.to!string)
-      .set("url", f.url)
-      .set("authentication", f.authenticationType)
-      .set("proxyType", f.proxyType)
-      .set("locationId", f.locationId)
-      .set("properties", propsJson)
-      .set("createdBy", f.createdBy)
-      .set("createdAt", f.createdAt)
-      .set("updatedAt", f.updatedAt);
-  }
+  
 }

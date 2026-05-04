@@ -18,8 +18,8 @@ struct SrvConfig {
   string serviceName = "HANA Cloud Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("HANA_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

@@ -42,10 +42,6 @@ class GetDashboardUseCase { // TODO: UIMUseCase {
   }
 
   DashboardSummary getSummary(TenantId tenantId) {
-    return getSummary(TenantId(tenantId));
-  }
-
-  DashboardSummary getSummary(TenantId tenantId) {
     DashboardSummary summary;
 
     // Resources

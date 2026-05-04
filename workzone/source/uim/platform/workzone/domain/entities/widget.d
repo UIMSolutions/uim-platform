@@ -32,7 +32,7 @@ struct Widget {
       .set("title", title)
       .set("cardId", cardId.value)
       .set("appId", appId.value)
-      .set("size", size.toString())
+      .set("size", size.to!string)
       .set("row", row)
       .set("col", col)
       .set("sortOrder", sortOrder)
@@ -55,6 +55,6 @@ struct WidgetConfig {
       .set("maxItems", maxItems)
       .set("refreshIntervalSec", refreshIntervalSec)
       .set("filterExpression", filterExpression)
-      .set("parameters", parameters);
+      .set("parameters", parameters.toJson());
   }
 }

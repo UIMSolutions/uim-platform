@@ -96,23 +96,11 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   MonitoredResource[] listResources(TenantId tenantId) {
-    return listResources(TenantId(tenantId));
-  }
-
-  MonitoredResource[] listResources(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
   MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
-    return listByType(TenantId(tenantId), typeStr);
-  }
-
-  MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
     return repo.findByType(tenantId, parseResourceType(typeStr));
-  }
-
-  CommandResult removeResource(string id) {
-    return removeResource(MonitoredResourceId(id));
   }
 
   CommandResult removeResource(MonitoredResourceId id) {

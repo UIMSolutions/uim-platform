@@ -61,29 +61,26 @@ class ResourceGroupController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (rg; groups) {
-        auto rgj = Json.emptyObject
-          .set("resourceGroupId", rg.id)
-          .set("tenantId", rg.tenantId)
-          .set("status", rg.status)
-          .set("createdAt", rg.createdAt);
-
         auto lArr = Json.emptyArray;
         foreach (lbl; rg.labels) {
           lArr ~= Json.emptyObject
             .set("key", lbl.key)
             .set("value", lbl.value);
         }
-        rgj["labels"] = lArr;
 
-        jarr ~= rgj;
+        jarr ~= Json.emptyObject
+          .set("resourceGroupId", rg.id)
+          .set("tenantId", rg.tenantId)
+          .set("status", rg.status)
+          .set("createdAt", rg.createdAt)
+          .set("labels", lArr);
       }
 
       auto resp = Json.emptyObject
         .set("count", groups.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Resource groups retrieved successfully");
       
-      .set("message", "Resource groups retrieved successfully");
-
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -94,7 +91,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
       auto rg = groups.getbyId(id);
       if (rg.isNull) {
@@ -119,7 +116,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchResourceGroupRequest r;
       r.tenantId = req.getTenantId;
@@ -145,7 +142,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = groups.removeById(id);
       if (result.success) {

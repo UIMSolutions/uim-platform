@@ -14,8 +14,8 @@ struct SrvConfig {
   string serviceName = "Mobile Services";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("MOBILE_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

@@ -33,7 +33,7 @@ class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
   void removeByAlias(TenantId tenantId, string alias_) {
     foreach (s; findByTenant(tenantId))
       if (s.alias_ == alias_)
-        store.remove(s);
+        remove(s);
   }
   // #endregion ByAlias
 

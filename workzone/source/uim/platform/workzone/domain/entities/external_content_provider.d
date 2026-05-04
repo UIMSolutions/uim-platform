@@ -30,12 +30,12 @@ struct ExternalContentProvider {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("providerType", providerType.toString())
-      .set("status", status.toString())
+      .set("providerType", providerType.to!string())
+      .set("status", status.to!string())
       .set("endpointUrl", endpointUrl)
       .set("authType", authType)
       .set("authConfig", authConfig)
-      .set("contentTypes", contentTypes.array)
+      .set("contentTypes", contentTypes.toJson())
       .set("refreshIntervalSec", refreshIntervalSec)
       .set("lastSyncAt", lastSyncAt);
   }

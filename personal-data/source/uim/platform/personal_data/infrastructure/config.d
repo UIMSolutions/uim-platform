@@ -17,11 +17,11 @@ struct SrvConfig {
     string serviceName = "Personal Data Manager Service";
 }
 
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
     import std.process : environment;
     import std.conv : to;
 
-    AppConfig config;
+    SrvConfig config;
     config.host = environment.get("PERSONAL_DATA_HOST", "0.0.0.0");
     auto portStr = environment.get("PERSONAL_DATA_PORT", "8102");
     config.port = portStr.to!ushort;

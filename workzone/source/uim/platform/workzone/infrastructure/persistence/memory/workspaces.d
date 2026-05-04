@@ -30,13 +30,8 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
   }
 
   void removeByAlias(TenantId tenantId, string alias_) {
-    foreach (w; findByTenant(tenantId))
-      if (w.alias_ == alias_) {
-        remove(w.id);
-        return;
-      }
+    remove(findByAlias(tenantId, alias_));
   }
-
 
   size_t countByMember(TenantId tenantId, UserId userId) {
     return findByMember(tenantId, userId).length;
@@ -55,7 +50,7 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
   }
 
   void removeByMember(TenantId tenantId, UserId userId) {
-    findByMember(tenantId, userId).each!(w => remove(w.id));
+    findByMember(tenantId, userId).each!(w => remove(w));
   }
 
 }

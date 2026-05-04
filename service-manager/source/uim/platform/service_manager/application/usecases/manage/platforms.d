@@ -1,4 +1,4 @@
-module uim.platform.service_manager.application.usecases.manage.manage_platforms;
+module uim.platform.service_manager.application.usecases.manage.platforms;
 
 import uim.platform.service_manager;
 

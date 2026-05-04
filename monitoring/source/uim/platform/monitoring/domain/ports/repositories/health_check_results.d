@@ -13,9 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - health check result persistence.
-interface HealthCheckResultRepository {
-  bool existsById(HealthCheckResultId id);
-  HealthCheckResult findById(HealthCheckResultId id);
+interface HealthCheckResultRepository : ITenantRepository!(HealthCheckResult, HealthCheckResultId) {
 
   HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId);
   HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
@@ -23,6 +21,5 @@ interface HealthCheckResultRepository {
   HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
       long startTime, long endTime);
       
-  void save(HealthCheckResult result);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

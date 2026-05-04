@@ -1,4 +1,4 @@
-module uim.platform.service_manager.application.usecases.manage.manage_service_offerings;
+module uim.platform.service_manager.application.usecases.manage.service_offerings;
 
 import uim.platform.service_manager;
 

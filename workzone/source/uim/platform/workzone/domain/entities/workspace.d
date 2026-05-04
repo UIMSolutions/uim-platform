@@ -34,9 +34,9 @@ struct Workspace {
       .set("type", type.to!string)
       .set("status", status.to!string)
       .set("imageUrl", imageUrl)
-      .set("members", members.map!(m => m.toJson()).array)
-      .set("pageIds", pageIds.map!(p => p.value).array)
-      .set("channelIds", channelIds.map!(c => c.value).array)
+      .set("members", members.map!(m => m.toJson()).array.toJson)
+      .set("pageIds", pageIds.map!(p => p.value).array.toJson)
+      .set("channelIds", channelIds.map!(c => c.value).array.toJson)
       .set("settings", settings.toJson());
   }
 }

@@ -35,8 +35,8 @@ struct Survey {
       .set("description", description)
       .set("creatorId", creatorId.value)
       .set("creatorName", creatorName)
-      .set("status", status.toString())
-      .set("questions", questions.map!(q => q.toJson()).array)
+      .set("status", status.to!string())
+      .set("questions", questions.map!(q => q.toJson()).array.toJson)
       .set("anonymous", anonymous)
       .set("allowMultipleResponses", allowMultipleResponses)
       .set("responseCount", responseCount)
@@ -58,8 +58,8 @@ struct SurveyQuestion {
     return Json.emptyObject
       .set("questionId", questionId)
       .set("text", text)
-      .set("questionType", questionType.toString())
-      .set("options", options.array)
+      .set("questionType", questionType.to!string())
+      .set("options", options.toJson)
       .set("required", required_)
       .set("sortOrder", sortOrder);
   }

@@ -28,9 +28,9 @@ struct Channel {
       .set("workspaceId", workspaceId.value)
       .set("name", name)
       .set("description", description)
-      .set("channelType", channelType.toString())
+      .set("channelType", channelType.to!string())
       .set("active", active)
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson())
       .set("config", config.toJson());
   }
 }

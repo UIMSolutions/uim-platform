@@ -27,6 +27,6 @@ class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppReposi
   }
 
   void removeByStatus(TenantId tenantId, AppStatus status) {
-    return findByStatus(tenantId, status).each!(a => remove(a));
+    findByStatus(tenantId, status).each!(a => remove(a));
   }
 }

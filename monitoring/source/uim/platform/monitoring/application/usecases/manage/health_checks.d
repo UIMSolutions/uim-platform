@@ -39,7 +39,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     check.resourceId = req.resourceId;
     check.name = req.name;
     check.description = req.description;
-    check.checkType = parseCheckType(req.checkType);
+    check.checkType = req.checkType.to!CheckType;
     check.isEnabled = true;
     check.intervalSeconds = req.intervalSeconds > 0 ? req.intervalSeconds : 60;
     check.url = req.url;
@@ -93,7 +93,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     if (req.criticalThreshold != 0)
       check.criticalThreshold = req.criticalThreshold;
     if (req.thresholdOperator.length > 0)
-      check.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
+      check.thresholdOperator = req.thresholdOperator.to!ThresholdOperator;
     check.updatedAt = clockSeconds();
 
     checkRepo.update(check);
@@ -109,7 +109,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     r.tenantId = req.tenantId;
     r.checkId = req.checkId;
     r.resourceId = req.resourceId;
-    r.status = parseCheckStatus(req.status);
+    r.status = req.status.to!CheckStatus;
     r.value_ = req.value_;
     r.message = req.message;
     r.responseTimeMs = req.responseTimeMs;
@@ -120,24 +120,12 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  HealthCheck getCheck(string id) {
-    return getCheck(HealthCheckId(id));
-  }
-
   HealthCheck getCheck(HealthCheckId id) {
     return checkRepo.findById(id);
   }
 
   HealthCheck[] listChecks(TenantId tenantId) {
-    return listChecks(TenantId(tenantId));
-  }
-
-  HealthCheck[] listChecks(TenantId tenantId) {
     return checkRepo.findByTenant(tenantId);
-  }
-
-  HealthCheck[] listByResource(TenantId tenantId, string resourceId) {
-    return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
   }
 
   HealthCheck[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
@@ -145,31 +133,15 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   HealthCheck[] listByType(TenantId tenantId, string typeStr) {
-    return listByType(TenantId(tenantId), typeStr);
-  }
-
-  HealthCheck[] listByType(TenantId tenantId, string typeStr) {
-    return checkRepo.findByType(tenantId, parseCheckType(typeStr));
-  }
-
-  HealthCheckResult[] getResults(TenantId tenantId, string checkId) {
-    return getResults(TenantId(tenantId), HealthCheckId(checkId));
+    return checkRepo.findByType(tenantId, typeStr.to!CheckType);
   }
 
   HealthCheckResult[] getResults(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findByCheck(tenantId, checkId);
   }
 
-  HealthCheckResult getLatestResult(TenantId tenantId, string checkId) {
-    return getLatestResult(TenantId(tenantId), HealthCheckId(checkId));
-  }
-
   HealthCheckResult getLatestResult(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findLatestByCheck(tenantId, checkId);
-  }
-
-  CommandResult deleteCheck(string id) {
-    return deleteCheck(HealthCheckId(id));
   }
 
   CommandResult deleteCheck(HealthCheckId id) {
@@ -180,52 +152,4 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  private static CheckType parseCheckType(string checkType) {
-    switch (checkType) {
-    case "jmx":
-      return CheckType.jmx;
-    case "customHttp":
-      return CheckType.customHttp;
-    case "process":
-      return CheckType.process;
-    case "database":
-      return CheckType.database;
-    case "certificate":
-      return CheckType.certificate;
-    default:
-      return CheckType.availability;
-    }
-  }
-
-  private static CheckStatus parseCheckStatus(string s) {
-    switch (s) {
-    case "ok":
-      return CheckStatus.ok;
-    case "warning":
-      return CheckStatus.warning;
-    case "critical":
-      return CheckStatus.critical;
-    case "disabled":
-      return CheckStatus.disabled;
-    default:
-      return CheckStatus.unknown;
-    }
-  }
-
-  private static ThresholdOperator parseThresholdOperator(string s) {
-    switch (s) {
-    case "greaterOrEqual":
-      return ThresholdOperator.greaterOrEqual;
-    case "lessThan":
-      return ThresholdOperator.lessThan;
-    case "lessOrEqual":
-      return ThresholdOperator.lessOrEqual;
-    case "equal":
-      return ThresholdOperator.equal;
-    case "notEqual":
-      return ThresholdOperator.notEqual;
-    default:
-      return ThresholdOperator.greaterThan;
-    }
-  }
 }

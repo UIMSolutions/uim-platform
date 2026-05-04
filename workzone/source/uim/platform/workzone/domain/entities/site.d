@@ -30,11 +30,11 @@ struct Site {
       .set("name", name)
       .set("description", description)
       .set("alias", alias_)
-      .set("status", status.toString())
+      .set("status", status.to!string)
       .set("themeId", themeId.value)
-      .set("navigationIds", navigationIds.map!(n => n.value).array)
-      .set("defaultPageIds", defaultPageIds.map!(p => p.value).array)
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("navigationIds", navigationIds.map!(n => n.value).array.toJson)
+      .set("defaultPageIds", defaultPageIds.map!(p => p.value).array.toJson)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson)
       .set("settings", settings.toJson());
   }
 }

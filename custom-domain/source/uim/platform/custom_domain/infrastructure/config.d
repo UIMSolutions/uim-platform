@@ -18,8 +18,8 @@ struct SrvConfig {
     string serviceName = "Custom Domain Service";
 }
 
-AppConfig loadConfig() {
-    AppConfig config;
+SrvConfig loadConfig() {
+    SrvConfig config;
     auto hostEnv = environment.get("CUSTOM_DOMAIN_HOST", "");
     if (hostEnv.length > 0)
         config.host = hostEnv;

@@ -26,9 +26,9 @@ struct WZGroup {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("groupType", groupType.toString())
-      .set("memberIds", memberIds.map!(u => u.value).array)
-      .set("roleIds", roleIds.map!(r => r.value).array)
+      .set("groupType", groupType.to!string)
+      .set("memberIds", memberIds.map!(u => u.value).array.toJson)
+      .set("roleIds", roleIds.map!(r => r.value).array.toJson)
       .set("active", active);
   }
 }

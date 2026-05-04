@@ -13,7 +13,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
     }
 
     Label[] filterByResource(Label[] labels, string resourceType, string resourceId) {
-        return labels.filter!(e => e.resourceType == resourceType && e.resourceId == resourceId);
+        return labels.filter!(e => e.resourceType == resourceType && e.resourceId == resourceId).array;
     }
 
     Label[] findByResource(TenantId tenantId, string resourceType, string resourceId) {

@@ -33,7 +33,7 @@ struct NavigationItem {
       .set("siteId", siteId.value)
       .set("title", title)
       .set("icon", icon)
-      .set("itemType", itemType.toString())
+      .set("itemType", itemType.to!string)
       .set("targetUrl", targetUrl)
       .set("targetAppId", targetAppId.value)
       .set("targetPageId", targetPageId.value)

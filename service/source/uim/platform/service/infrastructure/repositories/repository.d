@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PlatformRepository(TEntity) : IPlatformRepository!(TEntity) {
+class BaseRepository(TEntity) : IBaseRepository!(TEntity) {
   TEntity[] store;
 
   this() {
@@ -105,7 +105,7 @@ struct TestEntity {
   }
 }
 
-class TestRepository : PlatformRepository!(TestEntity) {
+class TestRepository : BaseRepository!(TestEntity) {
 }
 
 unittest {

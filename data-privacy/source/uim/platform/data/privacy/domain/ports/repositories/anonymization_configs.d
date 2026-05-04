@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying anonymization configurations.
-interface AnonymizationConfigRepository : IBaseRepository!(AnonymizationConfig, AnonymizationConfigId) {
+interface AnonymizationConfigRepository : ITeRepository!(AnonymizationConfig, AnonymizationConfigId) {
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status);
 
   void save(AnonymizationConfig config);

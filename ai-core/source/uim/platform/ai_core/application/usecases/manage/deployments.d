@@ -20,12 +20,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private DeploymentRepository deplRepo;
-  private ConfigurationRepository confRepo;
+  private DeploymentRepository deployments;
+  private ConfigurationRepository configurations;
 
-  this(DeploymentRepository deplRepo, ConfigurationRepository confRepo) {
-    this.deplRepo = deplRepo;
-    this.confRepo = confRepo;
+  this(DeploymentRepository deployments, ConfigurationRepository configurations) {
+    this.deployments = deployments;
+    this.configurations = configurations;
   }
 
   CommandResult create(CreateDeploymentRequest r) {
@@ -34,7 +34,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);
+    auto conf = configurations.findById(r.configurationId, r.resourceGroupId);
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
@@ -54,15 +54,15 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.createdAt = now;
     d.updatedAt = now;
 
-    deplRepo.save(d);
+    deployments.save(d);
     return CommandResult(true, d.id.value, "");
   }
 
   CommandResult patch(PatchDeploymentRequest request) {
-    if (!deplRepo.existsById(request.deploymentId, request.resourceGroupId))
+    if (!deployments.existsById(request.deploymentId, request.resourceGroupId))
       return CommandResult(false, "", "Deployment not found");
 
-    auto d = deplRepo.findById(request.deploymentId, request.resourceGroupId);
+    auto d = deployments.findById(request.deploymentId, request.resourceGroupId);
     if (request.targetStatus.length > 0) {
       TargetStatus target;
       if (request.targetStatus == "stopped")
@@ -96,35 +96,35 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
     d.updatedAt = MonoTime.currTime.ticks;
 
-    deplRepo.update(d);
+    deployments.update(d);
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getById(DeploymentId id, ResourceGroupId groupId) {
-    return deplRepo.findById(id, groupId);
+  Deployment getById(ResourceGroupId groupId, DeploymentId id) {
+    return deployments.findById(groupId, id);
   }
 
   Deployment[] list(ResourceGroupId groupId) {
-    return deplRepo.findByResourceGroup(groupId);
+    return deployments.findByResourceGroup(groupId);
   }
 
-  Deployment[] listByScenario(ScenarioId scenarioId, ResourceGroupId groupId) {
-    return deplRepo.findByScenario(scenarioId, groupId);
+  Deployment[] listByScenario(ResourceGroupId groupId, ScenarioId scenarioId) {
+    return deployments.findByScenario(groupId, scenarioId);
   }
 
-  Deployment[] listByStatus(DeploymentStatus status, ResourceGroupId groupId) {
-    return deplRepo.findByStatus(status, groupId);
+  Deployment[] listByStatus(ResourceGroupId groupId, DeploymentStatus status) {
+    return deployments.findByStatus(groupId, status);
   }
 
-  CommandResult remove(DeploymentId id, ResourceGroupId groupId) {
-    if (!deplRepo.existsById(id, groupId))
+  CommandResult remove(ResourceGroupId groupId, DeploymentId id) {
+    if (!deployments.existsById(groupId, id))
       return CommandResult(false, "", "Deployment not found");
 
-    deplRepo.remove(id, groupId);
+    deployments.remove(id, groupId);
     return CommandResult(true, id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {
-    return deplRepo.countByResourceGroup(rgId);
+    return deployments.countByResourceGroup(rgId);
   }
 }

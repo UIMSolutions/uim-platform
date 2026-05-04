@@ -28,9 +28,34 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (request.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    NotificationChannel channel = NotificationChannel.createFromRequest(request);
-    channels.save(channel);
+    NotificationChannel channel;
+    
+    channel.id = randomUUID();
+    channel.tenantId = request.tenantId;
+    channel.name = request.name;
+    channel.description = request.description;
+    channel.channelType = request.channelType.to!NotificationChannelType;
+    channel.state = ChannelState.active;
 
+    // Email fields
+    channel.emailRecipients = request.emailRecipients;
+    channel.emailSubjectPrefix = request.emailSubjectPrefix;
+
+    // Webhook fields
+    channel.webhookUrl = request.webhookUrl;
+    channel.webhookSecret = request.webhookSecret;
+    channel.webhookMethod = request.webhookMethod.length > 0 ? request.webhookMethod : "POST";
+
+    // On-premise fields
+    channel.onPremiseHost = request.onPremiseHost;
+    channel.onPremisePort = request.onPremisePort;
+    channel.onPremiseProtocol = request.onPremiseProtocol;
+
+    channel.createdBy = request.createdBy;
+    channel.createdAt = clockSeconds();
+    channel.updatedAt = channel.createdAt;
+
+    channels.save(channel);
     return CommandResult(true, channel.id.value, "");
   }
 
@@ -42,15 +67,34 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (!channels.existsById(id))
       return CommandResult(false, "", "Notification channel not found");
 
-    auto ch = channels.findById(id);
-    auto updated = ch.updateFromRequest(request);
+    auto channel = channels.findById(id);
+    NotificationChannel updated = channel.dup;
+
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.state.length > 0)
+      updated.state = parseChannelState(req.state);
+    if (req.emailRecipients.length > 0)
+      updated.emailRecipients = req.emailRecipients;
+    if (req.emailSubjectPrefix.length > 0)
+      updated.emailSubjectPrefix = req.emailSubjectPrefix;
+    if (req.webhookUrl.length > 0)
+      updated.webhookUrl = req.webhookUrl;
+    if (req.webhookSecret.length > 0)
+      updated.webhookSecret = req.webhookSecret;
+    if (req.webhookMethod.length > 0)
+      updated.webhookMethod = req.webhookMethod;
+    if (req.onPremiseHost.length > 0)
+      updated.onPremiseHost = req.onPremiseHost;
+    if (req.onPremisePort > 0)
+      updated.onPremisePort = req.onPremisePort;
+    if (req.onPremiseProtocol.length > 0)
+      updated.onPremiseProtocol = req.onPremiseProtocol;
+
+    updated.updatedAt = clockSeconds();
+
     channels.update(updated);
-
-    return CommandResult(true, id.value, "");
-  }
-
-  bool existsChannel(string id) {
-    return existsChannel(NotificationChannelId(id));
+    return CommandResult(true, updated.id.value, "");
   }
 
   bool existsChannel(NotificationChannelId id) {
@@ -61,32 +105,16 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return channels.findById(id);
   }
 
-  NotificationChannel getChannel(string id) {
-    return getChannel(NotificationChannelId(id));
-  }
-
-  NotificationChannel[] listChannels(TenantId tenantId) {
-    return listChannels(TenantId(tenantId));
-  }
-
   NotificationChannel[] listChannels(TenantId tenantId) {
     return channels.findByTenant(tenantId);
   }
 
   NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
-    return channels.findByType(tenantId, parseChannelType(typeStr));
-  }
-
-  NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
-    return listByType(TenantId(tenantId), typeStr);
+    return channels.findByType(tenantId, typeStr.to!ChannelType);
   }
 
   NotificationChannel[] listActive(TenantId tenantId) {
     return channels.findActive(tenantId);
-  }
-
-  NotificationChannel[] listActive(TenantId tenantId) {
-    return listActive(TenantId(tenantId));
   }
 
   CommandResult deleteChannel(string id) {
@@ -102,14 +130,5 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  private static ChannelState parseChannelState(string state) {
-    switch (state) {
-    case "inactive":
-      return ChannelState.inactive;
-    case "error":
-      return ChannelState.error;
-    default:
-      return ChannelState.active;
-    }
-  }
+
 }

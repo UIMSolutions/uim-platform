@@ -14,8 +14,8 @@ struct SrvConfig {
   string serviceName = "Keystore Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("KEYSTORE_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;

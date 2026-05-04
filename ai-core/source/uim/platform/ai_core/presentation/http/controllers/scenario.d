@@ -35,7 +35,7 @@ class ScenarioController : PlatformController {
       auto j = req.json;
       CreateScenarioRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.id = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -58,7 +58,7 @@ class ScenarioController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarios = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
@@ -86,8 +86,8 @@ class ScenarioController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto s = uc.getbyId(id, rgId);
       if (s.isNull) {
@@ -113,8 +113,8 @@ class ScenarioController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = uc.remove(id, rgId);
       if (result.success) {

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A certificate (keystore or truststore) uploaded for destination authentication.
 struct Certificate {
-  CertificateId id;
-  TenantId tenantId;
+  mixin TenantEntity!CertificateId;
+
   SubaccountId subaccountId;
   string name;
   string description;
@@ -34,5 +34,21 @@ struct Certificate {
   // Metadata
   string uploadedBy;
   long uploadedAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("subaccountId", subaccountId.toJson())
+      .set("name", name)
+      .set("description", description)
+      .set("type", certificateType.to!string)
+      .set("format", format_.to!string)
+      .set("status", status.to!string)
+      .set("subject", subject)
+      .set("issuer", issuer)
+      .set("serialNumber", serialNumber)
+      .set("validFrom", validFrom)
+      .set("validTo", validTo)
+      .set("uploadedBy", uploadedBy)
+      .set("uploadedAt", uploadedAt);
+  }
 }

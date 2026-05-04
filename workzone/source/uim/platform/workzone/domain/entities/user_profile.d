@@ -45,9 +45,9 @@ struct UserProfile {
       .set("phone", phone)
       .set("timezone", timezone)
       .set("language", language)
-      .set("roleIds", roleIds.map!(r => r.value).array)
-      .set("groupIds", groupIds.map!(g => g.value).array)
-      .set("workspaceIds", workspaceIds.map!(w => w.value).array)
+      .set("roleIds", roleIds.map!(r => r.value).array.toJson())
+      .set("groupIds", groupIds.map!(g => g.value).array.toJson())
+      .set("workspaceIds", workspaceIds.map!(w => w.value).array.toJson())
       .set("active", active)
       .set("lastLoginAt", lastLoginAt);
   }

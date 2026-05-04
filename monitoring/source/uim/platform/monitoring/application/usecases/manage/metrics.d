@@ -21,11 +21,11 @@ mixin(ShowModule!());
 /// Application service for metric retrieval, push, and custom metric definitions.
 class ManageMetricsUseCase { // TODO: UIMUseCase {
   private MetricRepository metricRepo;
-  private MetricDefinitionRepository definitionRepo;
+  private MetricDefinitionRepository definitions;
 
-  this(MetricRepository metricRepo, MetricDefinitionRepository definitionRepo) {
+  this(MetricRepository metricRepo, MetricDefinitionRepository definitions) {
     this.metricRepo = metricRepo;
-    this.definitionRepo = definitionRepo;
+    this.definitions = definitions;
   }
 
   // --- Metric Definitions ---
@@ -34,7 +34,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    if (definitionRepo.existsByName(req.tenantId, req.name))
+    if (definitions.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
     MetricDefinition definition;
@@ -51,19 +51,15 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     definition.createdBy = req.createdBy;
     definition.createdAt = clockSeconds();
 
-    definitionRepo.save(definition);
+    definitions.save(definition);
     return CommandResult(true, definition.id.value, "");
   }
 
-  CommandResult updateDefinition(string id, UpdateMetricDefinitionRequest req) {
-    return updateDefinition(MetricDefinitionId(id), req);
-  }
-
   CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
-    if (!definitionRepo.existsById(id))
+    if (!definitions.existsById(id))
       return CommandResult(false, "", "Metric definition not found");
 
-    auto def = definitionRepo.findById(id);
+    auto def = definitions.findById(id);
     if (req.displayName.length > 0)
       def.displayName = req.displayName;
     if (req.description.length > 0)
@@ -72,36 +68,25 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       def.aggregation = parseAggregation(req.aggregation);
     def.isEnabled = req.isEnabled;
 
-    definitionRepo.update(def);
-    return CommandResult(true, id.value(), "");
-  }
-
-  MetricDefinition getDefinition(string id) {
-    return getDefinition(MetricDefinitionId(id));
+    definitions.update(def);
+    return CommandResult(true, id.value, "");
   }
 
   MetricDefinition getDefinition(MetricDefinitionId id) {
-    return definitionRepo.findById(id);
+    return definitions.findById(id);
   }
 
   MetricDefinition[] listDefinitions(TenantId tenantId) {
-    return listDefinitions(TenantId(tenantId));
-  }
-
-  MetricDefinition[] listDefinitions(TenantId tenantId) {
-    return definitionRepo.findByTenant(tenantId);
-  }
-
-  CommandResult removeDefinition(string id) {
-    return removeDefinition(MetricDefinitionId(id));
+    return definitions.findByTenant(tenantId);
   }
 
   CommandResult removeDefinition(MetricDefinitionId id) {
-    if (!definitionRepo.existsById(id))
+    auto def = definitions.findById(id);
+    if (def.isNull)
       return CommandResult(false, "", "Metric definition not found");
 
-    definitionRepo.removeById(id);
-    return CommandResult(true, id.value(), "");
+    definitions.remove(def);
+    return CommandResult(true, def.id.value, "");
   }
 
   // --- Metric Data Points ---
@@ -125,7 +110,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     m.timestamp = clockSeconds();
 
     metricRepo.save(m);
-    return CommandResult(true, m.id.value(), "");
+    return CommandResult(true, m.id.value, "");
   }
 
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
@@ -147,10 +132,6 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
 
     metricRepo.saveAll(metrics);
     return CommandResult(true, "", "");
-  }
-
-  Metric[] getMetrics(TenantId tenantId, string resourceId) {
-    return getMetrics(TenantId(tenantId), MonitoredResourceId(resourceId));
   }
 
   Metric[] getMetrics(TenantId tenantId, MonitoredResourceId resourceId) {

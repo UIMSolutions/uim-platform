@@ -1,4 +1,4 @@
-module uim.platform.service_manager.infrastructure.persistence.memory.memory_service_binding_repo;
+module uim.platform.service_manager.infrastructure.persistence.memory.service_bindings;
 
 import uim.platform.service_manager;
 
@@ -8,6 +8,17 @@ mixin(ShowModule!());
 
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-// TODO
+    size_t countByStatus(TenantId tenantId, ServiceBindingStatus status) {
+        return this.findByStatus(tenantId, status).length;
+    }
+    ServiceBinding[] filterByStatus(ServiceBinding[] bindings, ServiceBindingStatus status) {
+        return bindings.filter!(b => b.status == status).array;
+    }
+    ServiceBinding[] findByStatus(TenantId tenantId, ServiceBindingStatus status) {
+        return this.filterByStatus(this.findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, ServiceBindingStatus status)     {
+        this.removeAll(this.findByStatus(tenantId, status));
+    }
 
 }

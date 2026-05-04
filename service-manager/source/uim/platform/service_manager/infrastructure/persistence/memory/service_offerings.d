@@ -1,4 +1,4 @@
-module uim.platform.service_manager.infrastructure.persistence.memory.memory_service_offering_repo;
+module uim.platform.service_manager.infrastructure.persistence.memory.service_offerings;
 
 import uim.platform.service_manager;
 
@@ -8,18 +8,19 @@ mixin(ShowModule!());
 
 class MemoryServiceOfferingRepository : TenantRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
 
-    bool existsById(ServiceOfferingId id) {
-        return findById(TenantId.init, id) !is null;
+    size_t countByStatus(TenantId tenantId, ServiceOfferingStatus status) {
+        return this.findByStatus(tenantId, status).length;
     }
 
-    ServiceOffering findById(TenantId tenantId, ServiceOfferingId id) @trusted {
-        foreach (e; findByTenant(tenantId))
-                if (e.id == id)
-                    return e;
-        return ServiceOffering.init;
+    ServiceOffering[] filterByStatus(ServiceOffering[] offerings, ServiceOfferingStatus status) {
+        return offerings.filter!(o => o.status == status).array;
     }
 
-    void removeById(TenantId tenantId, ServiceOfferingId id) {
-        remove(findById(tenantId, id));
+    ServiceOffering[] findByStatus(TenantId tenantId, ServiceOfferingStatus status) {
+        return this.filterByStatus(this.findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ServiceOfferingStatus status) {
+        this.removeAll(this.findByStatus(tenantId, status));
     }
 }

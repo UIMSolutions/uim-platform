@@ -29,7 +29,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         if (r.resourceGroupId.isEmpty)
             return CommandResult(false, "", "Resource group ID is required");
 
-        auto existing = repo.findById(r.id, r.resourceGroupId);
+        auto existing = repo.findById(r.resourceGroupId, r.id);
         if (!existing.isNull)
             return CommandResult(false, "", "Executable already exists");
 
@@ -58,24 +58,24 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    Executable getById(ExecutableId id, ResourceGroupId rgId) {
-        return repo.findById(id, rgId);
+    Executable getById(ResourceGroupId rgId, ExecutableId id) {
+        return repo.findById(rgId, id);
     }
 
-    Executable[] listByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-        return repo.findByScenario(scenarioId, rgId);
+    Executable[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
+        return repo.findByScenario(rgId, scenarioId);
     }
 
     Executable[] list(ResourceGroupId rgId) {
         return repo.findByResourceGroup(rgId);
     }
 
-    CommandResult remove(ExecutableId id, ResourceGroupId rgId) {
-        auto existing = repo.findById(id, rgId);
+    CommandResult remove(ResourceGroupId rgId, ExecutableId id) {
+        auto existing = repo.findById(rgId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Executable not found");
 
-        repo.remove(id, rgId);
+        repo.remove(rgId, id);
         return CommandResult(true, id.value, "");
     }
 }

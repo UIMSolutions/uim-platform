@@ -187,31 +187,4 @@ class DestinationController : PlatformController {
     }
   }
 
-  private static Json serializeDestination(const ref Destination d) {
-    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array.toJson;
-
-    auto propsJson = Json.emptyObject;
-    foreach (k, v; d.properties)
-      propsJson[k] = Json(v);
-
-    return Json.emptyObject
-      .set("id", d.id.toJson())
-      .set("tenantId", d.tenantId.toJson())
-      .set("subaccountId", d.subaccountId.toJson())
-      .set("serviceInstanceId", d.serviceInstanceId.toJson())
-      .set("name", Json(d.name))
-      .set("description", Json(d.description))
-      .set("type", Json(d.destinationType.to!string))
-      .set("url", Json(d.url))
-      .set("authentication", Json(d.authenticationType.to!string))
-      .set("proxyType", Json(d.proxyType.to!string))
-      .set("level", Json(d.level.to!string))
-      .set("status", Json(d.status.to!string))
-      .set("locationId", Json(d.locationId))
-      .set("properties", propsJson)
-      .set("fragmentIds", fragArr)
-      .set("createdBy", Json(d.createdBy))
-      .set("createdAt", Json(d.createdAt))
-      .set("updatedAt", Json(d.updatedAt));
-  }
 }

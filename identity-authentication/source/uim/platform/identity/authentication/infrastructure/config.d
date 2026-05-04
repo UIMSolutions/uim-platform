@@ -19,10 +19,10 @@ struct SrvConfig {
 }
 
 /// Load configuration (extend to read from env vars or config files).
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
   // import std.process : environment;
 
-  AppConfig config;
+  SrvConfig config;
 
   auto host = environment.get("IAS_HOST", "");
   if (host.length > 0)

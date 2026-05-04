@@ -1,0 +1,41 @@
+erdiagram Model
+
+notation=uml
+
+entity Tenant {
+   id key
+}
+
+entity Platform {
+    TenantId 
+    id key
+
+    name
+    description
+    type
+    status
+    brokerUrl
+    credentials
+    region
+    subaccountId
+}
+
+entity Label {
+    TenantId 
+    id key 
+
+    resourceId
+    resourceType
+    key_
+    value
+
+	attr1:Int
+	attr2:Int
+}
+
+relationship PlatformTenant {
+   Platform[N] -> Tenant[1]
+}
+relationship LabelTenant {
+   Label[N] -> Tenant[1]
+}

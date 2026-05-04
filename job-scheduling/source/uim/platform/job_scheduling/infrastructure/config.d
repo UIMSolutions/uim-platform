@@ -19,8 +19,8 @@ struct SrvConfig {
     string serviceName = "Job Scheduling Service";
 }
 
-AppConfig loadConfig() {
-    AppConfig config;
+SrvConfig loadConfig() {
+    SrvConfig config;
     auto hostEnv = environment.get("JOB_SCHEDULING_HOST", "");
     if (hostEnv.length > 0)
         config.host = hostEnv;

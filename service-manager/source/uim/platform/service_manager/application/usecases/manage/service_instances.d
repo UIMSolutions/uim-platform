@@ -1,4 +1,4 @@
-module uim.platform.service_manager.application.usecases.manage.manage_service_instances;
+module uim.platform.service_manager.application.usecases.manage.service_instances;
 
 import uim.platform.service_manager;
 

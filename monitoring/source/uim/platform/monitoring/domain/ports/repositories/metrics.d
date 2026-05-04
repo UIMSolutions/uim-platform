@@ -15,14 +15,25 @@ mixin(ShowModule!());
 /// Port: outgoing - metric data point persistence.
 interface MetricRepository : ITenantRepository!(Metric, MetricId) {
 
-  Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
-  Metric[] findByName(TenantId tenantId, string metricName);
-  Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName);
-  Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName, long startTime, long endTime);
-      
-  void save(Metric m);
-  void saveAll(Metric[] metrics);
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp);
+    bool existsByName(TenantId tenantId, string metricName);
+    Metric findByName(TenantId tenantId, string metricName);
+    void removeByName(TenantId tenantId, string metricName);
+
+    size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
+    Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
+    void removeByResource(TenantId tenantId, MonitoredResourceId resourceId);
+
+    size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName);
+    Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId,
+        string metricName);
+    void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId,
+        string metricName);
+
+    size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName);
+    Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
+        string metricName, long startTime, long endTime);
+    void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
+        string metricName, long startTime, long endTime);
+
+    void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

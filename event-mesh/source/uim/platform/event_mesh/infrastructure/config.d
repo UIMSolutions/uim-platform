@@ -16,11 +16,11 @@ struct SrvConfig {
     ushort port = 8108;
 }
 
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
     import std.process : environment;
     import std.conv : to;
 
-    AppConfig config;
+    SrvConfig config;
     auto host = environment.get("EVENT_MESH_HOST", "0.0.0.0");
     auto port = environment.get("EVENT_MESH_PORT", "8108");
     config.host = host;

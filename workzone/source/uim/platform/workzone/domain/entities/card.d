@@ -30,10 +30,10 @@ struct Card {
       .set("subtitle", subtitle)
       .set("description", description)
       .set("icon", icon)
-      .set("cardType", cardType.toString())
+      .set("cardType", cardType.to!string())
       .set("dataSource", dataSource.toJson())
       .set("manifest", manifest.toJson())
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson)
       .set("active", active);
   }
 }

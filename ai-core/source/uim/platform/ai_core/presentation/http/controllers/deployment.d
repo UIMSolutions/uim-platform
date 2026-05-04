@@ -36,7 +36,7 @@ class DeploymentController : PlatformController {
       auto j = req.json;
       CreateDeploymentRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
       r.ttl = j.getInteger("ttl");
 
@@ -58,7 +58,7 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto deploys = deployments.list(rgId);
 
       auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
@@ -78,10 +78,10 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto deployment = deployments.getbyId(id, rgId);
+      auto deployment = deployments.getById(rgId, id);
       if (deployment.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -97,11 +97,11 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchDeploymentRequest request;
       request.tenantId = req.getTenantId;
-      request.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      request.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       request.deploymentId = id;
       request.targetStatus = j.getString("targetStatus");
       request.configurationId = j.getString("configurationId");
@@ -126,10 +126,10 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = deployments.remove(id, rgId);
+      auto result = deployments.remove(rgId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

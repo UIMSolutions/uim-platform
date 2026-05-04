@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A reusable destination fragment — partial configuration that can be merged into destinations.
 struct DestinationFragment {
-  FragmentId id;
-  TenantId tenantId;
+  mixin TenantEntity!FragmentId;
+  
   SubaccountId subaccountId;
   string name;
   string description;
@@ -34,8 +34,22 @@ struct DestinationFragment {
   CertificateId truststoreId;
   string[string] properties;
 
-  // Metadata
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; properties)
+      propsJson[k] = Json(v);
+
+    return entityToJson()
+      .set("subaccountId", subaccountId.toJson())
+      .set("name", name)
+      .set("description", description)
+      .set("level", level.to!string)
+      .set("url", url)
+      .set("authentication", authenticationType)
+      .set("proxyType", proxyType)
+      .set("locationId", locationId)
+      .set("keystoreId", keystoreId.toJson())
+      .set("truststoreId", truststoreId.toJson())
+      .set("properties", propsJson);
+  }
 }

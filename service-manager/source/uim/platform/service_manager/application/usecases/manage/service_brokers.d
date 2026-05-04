@@ -1,4 +1,4 @@
-module uim.platform.service_manager.application.usecases.manage.manage_service_brokers;
+module uim.platform.service_manager.application.usecases.manage.service_brokers;
 
 import uim.platform.service_manager;
 

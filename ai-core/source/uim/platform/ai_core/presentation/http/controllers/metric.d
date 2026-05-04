@@ -20,7 +20,7 @@ class MetricController : PlatformController {
   this(GetMetricsUseCase uc) {
     this.uc = uc;
   }
-
+  
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
     
@@ -33,7 +33,7 @@ class MetricController : PlatformController {
       auto j = req.json;
       PatchMetricsRequest r;
       r.tenantId = req.getTenantId;
-      r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
+      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.executionId = j.getString("executionId");
       r.metrics = jsonKeyValuePairs(j, "metrics");
       r.tags = jsonKeyValuePairs(j, "tags");
@@ -56,7 +56,7 @@ class MetricController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto rgId = req.headers.get("AI-Resource-Group", "");
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto execId = req.params.get("executionId", "");
 
       if (execId.isEmpty) {
@@ -68,18 +68,12 @@ class MetricController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (m; metrics) {
-        auto mj = Json.emptyObject
-        .set("id", m.id)
-        .set("executionId", m.executionId)
-        .set("createdAt", m.createdAt);
-
         auto vArr = Json.emptyArray;
         foreach (v; m.metrics) {
           vArr ~= Json.emptyObject
             .set("name", v.name)
             .set("value", v.value);
         }
-        mj["metrics"] = vArr;
 
         auto tArr = Json.emptyArray;
         foreach (t; m.tags) {
@@ -87,14 +81,19 @@ class MetricController : PlatformController {
             .set("key", t.key)
             .set("value", t.value);
         }
-        mj["tags"] = tArr;
 
-        jarr ~= mj;
+        jarr ~= Json.emptyObject
+        .set("id", m.id)
+        .set("executionId", m.executionId)
+        .set("createdAt", m.createdAt)
+        .set("metrics", vArr)
+        .set("tags", tArr);
       }
 
       auto resp = Json.emptyObject
         .set("count", metrics.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Metrics retrieved");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

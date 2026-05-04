@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A destination configuration — defines how to connect to a remote system.
 struct Destination {
-  DestinationId id;
-  TenantId tenantId;
+  mixin TenantEntity!DestinationId;
+
   SubaccountId subaccountId;
   ServiceInstanceId serviceInstanceId;
   string name;
@@ -60,8 +60,30 @@ struct Destination {
   // Fragment references
   FragmentId[] fragmentIds;
 
-  // Metadata
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  Json toJson() const {
+    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array.toJson;
+
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; properties)
+      propsJson[k] = Json(v);
+
+    return entityToJson()
+      .set("subaccountId", subaccountId.toJson())
+      .set("serviceInstanceId", serviceInstanceId.toJson())
+      .set("name", name)
+      .set("description", description)
+      .set("type", destinationType.to!string)
+      .set("url", url)
+      .set("authentication", authenticationType.to!string)
+      .set("proxyType", proxyType.to!string)
+      .set("level", level.to!string)
+      .set("status", status.to!string)
+      .set("urlPath", urlPath)
+      .set("httpMethod", httpMethod)
+      .set("locationId", locationId)
+      .set("keystoreId", keystoreId.toJson())
+      .set("truststoreId", truststoreId.toJson())
+      .set("fragmentIds", fragArr)
+      .set("properties", propsJson);
+  }
 }

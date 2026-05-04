@@ -11,11 +11,11 @@ struct SrvConfig {
     ushort port = 8113;
 }
 
-AppConfig loadConfig() {
+SrvConfig loadConfig() {
     import std.process : environment;
     import std.conv : to;
 
-    AppConfig config;
+    SrvConfig config;
     auto host = environment.get("SERVICE_MANAGER_HOST", "0.0.0.0");
     auto port = environment.get("SERVICE_MANAGER_PORT", "8113");
     config.host = host;

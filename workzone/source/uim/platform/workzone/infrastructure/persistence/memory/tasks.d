@@ -28,7 +28,7 @@ class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
   }
 
   void removeByAssignee(TenantId tenantId, UserId assigneeId) {
-    return findByAssignee(tenantId, assigneeId).each!(t => remove(t));
+    findByAssignee(tenantId, assigneeId).each!(t => remove(t));
   }
   // #endregion ByAssignee
 
@@ -42,7 +42,7 @@ class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
   }
 
   void removeByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
-    return findByStatus(tenantId, status, assigneeId).each!(t => remove(t));
+    findByStatus(tenantId, status, assigneeId).each!(t => remove(t));
   }
   // #endregion ByStatus
 

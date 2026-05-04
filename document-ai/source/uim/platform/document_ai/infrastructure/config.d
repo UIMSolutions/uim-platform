@@ -19,8 +19,8 @@ struct SrvConfig {
   string serviceName = "Document AI Service";
 }
 
-AppConfig loadConfig() {
-  AppConfig config;
+SrvConfig loadConfig() {
+  SrvConfig config;
   auto hostEnv = environment.get("DOCAI_HOST", "");
   if (hostEnv.length > 0)
     config.host = hostEnv;
