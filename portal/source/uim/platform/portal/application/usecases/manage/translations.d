@@ -35,7 +35,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     auto translation = Translation(id, req.tenantId, req.resourceType,
       req.resourceId, req.fieldName, req.language, req.value, now, now,);
     translationRepo.save(translation);
-    return TranslationResponse(id, "");
+    return TranslationResponse(id.value, "");
   }
 
   Translation getTranslation(TranslationId id) {
@@ -47,8 +47,8 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     return translationRepo.findByResource(resourceType, resourceId, language);
   }
 
-  Translation[] listTranslations(TenantId tenantId, string language, uint offset = 0,
-    uint limit = 100) {
+  Translation[] listTranslations(TenantId tenantId, string language, size_t offset = 0,
+    size_t limit = 100) {
     return translationRepo.findByLanguage(tenantId, language, offset, limit);
   }
 

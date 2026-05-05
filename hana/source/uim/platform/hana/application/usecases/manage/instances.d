@@ -58,10 +58,10 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     i.updatedAt = now;
 
     repo.save(i);
-    return CommandResult(true, i.id, "");
+    return CommandResult(true, i.id.value, "");
   }
 
-  DatabaseInstance getById(InstanceId id) {
+  DatabaseInstance getById(DatabaseInstanceId id) {
     return repo.findById(id);
   }
 
@@ -88,7 +88,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult performAction(InstanceActionRequest r) {
@@ -114,10 +114,10 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(InstanceId id) {
+  CommandResult remove(DatabaseInstanceId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Instance not found");
 

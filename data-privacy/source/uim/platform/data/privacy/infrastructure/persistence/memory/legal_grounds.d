@@ -28,7 +28,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity.id));
+    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity));
   }
 
   size_t countByBasis(TenantId tenantId, LegalBasis basis) {
@@ -44,7 +44,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   void removeByBasis(TenantId tenantId, LegalBasis basis) {
-    findByBasis(tenantId, basis).each!(entity => remove(entity.id));
+    findByBasis(tenantId, basis).each!(entity => remove(entity));
   }
 
   size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
@@ -60,7 +60,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    findByPurpose(tenantId, purpose).each!(entity => remove(entity.id));
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity));
   }
 
   size_t countActive(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -76,7 +76,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   void removeActive(TenantId tenantId, DataSubjectId dataSubjectId) {
-    findActive(tenantId, dataSubjectId).each!(entity => remove(entity.id));
+    findActive(tenantId, dataSubjectId).each!(entity => remove(entity));
   }
   
 }

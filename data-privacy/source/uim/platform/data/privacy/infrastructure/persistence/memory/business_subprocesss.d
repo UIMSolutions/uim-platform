@@ -28,7 +28,7 @@ class MemoryBusinessSubprocessRepository : TenantRepository!(BusinessSubprocess,
   }
 
   void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    findByParentProcess(tenantId, parentId).each!(entity => remove(entity.id));
+    findByParentProcess(tenantId, parentId).each!(entity => remove(entity));
   }
 
 }

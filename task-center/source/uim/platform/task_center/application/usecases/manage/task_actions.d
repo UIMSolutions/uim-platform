@@ -39,7 +39,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         a.forwardTo = req.forwardTo;
         a.comment = req.comment;
         repo.save(req.tenantId, a);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult remove(TenantId tenantId, string id) {

@@ -192,14 +192,14 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       tenantId : TenantId
       name, description : string
       strength : PasswordStrength
-      minLength, maxLength : uint
+      minLength, maxLength : size_t
       requireUppercase, requireLowercase : bool
       requireDigit, requireSpecialChar : bool
-      minUniqueChars, maxRepeatedChars : uint
-      passwordHistoryCount : uint
-      maxFailedAttempts : uint
-      lockoutDurationMinutes : uint
-      expiryDays : uint
+      minUniqueChars, maxRepeatedChars : size_t
+      passwordHistoryCount : size_t
+      maxFailedAttempts : size_t
+      lockoutDurationMinutes : size_t
+      expiryDays : size_t
       active : bool
     }
 

@@ -39,7 +39,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         t.createdAt = MonoTime.currTime.ticks;
 
         repo.save(t);
-        return CommandResult(true, t.id, "");
+        return CommandResult(true, t.id.value, "");
     }
 
     Task getById(TaskId id) {
@@ -70,7 +70,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         existing.status = TaskStatus.reserved;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult complete(CompleteTaskRequest r) {
@@ -87,7 +87,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         existing.completedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult update(UpdateTaskRequest r) {
@@ -101,7 +101,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         existing.dueDate = r.dueDate;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(TaskId id) {

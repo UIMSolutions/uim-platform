@@ -16,7 +16,7 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
     size_t countByLegalBasis(LegalBasis basis) {
         return findByLegalBasis(basis).length;
     }
-    ProcessingPurpose[] filterByLegalBasis(ProcessingPurpose[] purposes, LegalBasis basis, uint offset = 0, uint limit = 0) {
+    ProcessingPurpose[] filterByLegalBasis(ProcessingPurpose[] purposes, LegalBasis basis, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? purposes.filter!(v => v.legalBasis == basis).skip(offset).array
             : purposes.filter!(v => v.legalBasis == basis).skip(offset).take(limit).array;
@@ -31,7 +31,7 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
     size_t countByApplication(RegisteredApplicationId applicationId) {
         return findByApplication(applicationId).length;
     }
-    ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+    ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).array
             : purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).take(limit).array;

@@ -44,7 +44,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         a.updatedAt = now;
 
         repo.save(a);
-        return CommandResult(true, a.id, "");
+        return CommandResult(true, a.id.value, "");
     }
 
     Artifact getById(ArtifactId id) {
@@ -73,7 +73,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(ArtifactId id) {

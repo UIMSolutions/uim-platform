@@ -39,7 +39,7 @@ size_t countByEnvironment(KymaEnvironmentId envId) {
     return filterByEnvironment(findAll().array, envId);
   }
   void removeByEnvironment(KymaEnvironmentId envId) {
-    findByEnvironment(envId).each!(e => remove(e.id));
+    findByEnvironment(envId).each!(entity => remove(entity));
   }
 
   size_t countByStatus(AppConnectivityStatus status) {
@@ -52,7 +52,7 @@ size_t countByEnvironment(KymaEnvironmentId envId) {
     return filterByStatus(findAll().array, status);
   }
   void removeByStatus(AppConnectivityStatus status) {
-    findByStatus(status).each!(e => remove(e.id));
+    findByStatus(status).each!(entity => remove(entity));
   }
 
 }

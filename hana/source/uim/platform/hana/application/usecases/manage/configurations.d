@@ -45,7 +45,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     c.updatedAt = MonoTime.currTime.ticks;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Configuration getById(ConfigurationId id) {
@@ -56,7 +56,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Configuration[] listBySection(InstanceId instanceId, string section) {
+  Configuration[] listBySection(DatabaseInstanceId instanceId, string section) {
     return repo.findBySection(instanceId, section);
   }
 
@@ -74,7 +74,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(ConfigurationId id) {

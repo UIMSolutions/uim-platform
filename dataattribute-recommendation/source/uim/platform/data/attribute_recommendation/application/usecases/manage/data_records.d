@@ -50,7 +50,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     record.createdAt = Clock.currStdTime();
 
     repo.save(record);
-    return CommandResult(record.id, "");
+    return CommandResult(record.id.value, "");
   }
 
   DataRecord getRecord(DataRecordId tenantId, id tenantId) {

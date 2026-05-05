@@ -25,7 +25,7 @@ class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSyste
   size_t countByType(TenantId tenantId, SystemType systemType) {
     return findByType(tenantId, systemType).length;
   }
-  SourceSystem[] filterByType(SourceSystem[] entries, SystemType systemType, uint offset = 0, uint limit = 0) {
+  SourceSystem[] filterByType(SourceSystem[] entries, SystemType systemType, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? entries.filter!(e => e.systemType == systemType).skip(offset).array
         : entries.filter!(e => e.systemType == systemType).skip(offset).take(limit).array;
@@ -40,7 +40,7 @@ class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSyste
   size_t countByStatus(TenantId tenantId, SystemStatus status) {
     return findByStatus(tenantId, status).length;
   }
-  SourceSystem[] filterByStatus(SourceSystem[] entries, SystemStatus status, uint offset = 0, uint limit = 0) {
+  SourceSystem[] filterByStatus(SourceSystem[] entries, SystemStatus status, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? entries.filter!(e => e.status == status).skip(offset).array
         : entries.filter!(e => e.status == status).skip(offset).take(limit).array;

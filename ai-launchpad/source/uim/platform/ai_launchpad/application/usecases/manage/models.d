@@ -42,7 +42,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     m.createdAt = "now";
     m.updatedAt = "now";
     repo.save(m);
-    return CommandResult(true, m.id, "");
+    return CommandResult(true, m.id.value, "");
   }
 
   Model getById(ModelId id, ConnectionId connectionId) {
@@ -65,7 +65,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     else if (r.status == "deprecated") m.status = ModelStatus.deprecated_;
     m.updatedAt = "now";
     repo.save(m);
-    return CommandResult(true, m.id, "");
+    return CommandResult(true, m.id.value, "");
   }
 
   CommandResult remove(ModelId id, ConnectionId connectionId) {

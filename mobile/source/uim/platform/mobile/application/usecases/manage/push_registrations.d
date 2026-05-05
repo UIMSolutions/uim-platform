@@ -26,7 +26,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
             existing.topics = r.topics;
             existing.updatedAt = currentTimestamp();
             repo.update(existing);
-            return CommandResult(true, existing.id, "");
+            return CommandResult(true, existing.id.value, "");
         }
         PushRegistration reg;
         reg.id = randomUUID();
@@ -40,7 +40,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         reg.registeredAt = currentTimestamp();
         reg.updatedAt = reg.registeredAt;
         repo.save(reg);
-        return CommandResult(true, reg.id, "");
+        return CommandResult(true, reg.id.value, "");
     }
 
     PushRegistration get_(PushRegistrationId id) {

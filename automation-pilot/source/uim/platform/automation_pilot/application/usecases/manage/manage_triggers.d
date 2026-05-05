@@ -49,7 +49,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidTrigger(t))
             return CommandResult(false, "", "Invalid trigger data");
         repo.save(t);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(TriggerDTO dto) {
@@ -63,7 +63,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (dto.filterExpression.length > 0) existing.filterExpression = dto.filterExpression;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(TriggerId id) {

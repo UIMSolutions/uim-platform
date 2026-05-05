@@ -29,7 +29,7 @@ struct SchemaObject {
 struct Schema {
   mixin TenantEntity!(SchemaId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   string owner;
   SchemaType type;

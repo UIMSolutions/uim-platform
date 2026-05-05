@@ -22,15 +22,44 @@ struct ValidationResult {
   int failedRules;
   double qualityScore; // 0.0 - 100.0
   long validatedAt;
+
+  Json toJson() const {
+    auto violationsJson = Json.emptyArray;
+    foreach (violation; violations) {
+      violationsJson.add(violation.toJson());
+    }
+
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("recordId", recordId.value)
+      .set("datasetId", datasetId.value)
+      .set("violations", violationsJson)
+      .set("totalRulesChecked", totalRulesChecked)
+      .set("passedRules", passedRules)
+      .set("failedRules", failedRules)
+      .set("qualityScore", qualityScore)
+      .set("validatedAt", validatedAt);
+  }
 }
 
 /// A single rule violation found during validation.
 struct RuleViolation {
-  RuleId ruleId;
+  ValidationValidationRuleId ruleId;
   string ruleName;
   string fieldName;
   string fieldValue;
   RuleSeverity severity;
   string message;
   string suggestedValue; // auto-correction hint
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("ruleId", ruleId.value)
+      .set("ruleName", ruleName)
+      .set("fieldName", fieldName)
+      .set("fieldValue", fieldValue)
+      .set("severity", severity.to!string())
+      .set("message", message)
+      .set("suggestedValue", suggestedValue);
+  }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct NotificationChannel {
-  NotificationChannelId id;
-  TenantId tenantId;
+  mixin TenantEntity!NotificationChannelId;
+
   string name;
   string description;
   ChannelType channelType = ChannelType.email;
@@ -28,33 +28,19 @@ struct NotificationChannel {
   // Slack config
   string slackWebhookUrl;
   string slackChannel;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
-
-  NotificationChannel updateFromRequest(const UpdateNotificationChannelRequest req) const {
-    NotificationChannel updated = this.dup;
-
-    if (req.description.length > 0)
-      updated.description = req.description;
-    if (req.state.length > 0)
-      updated.state = parseChannelState(req.state);
-    if (req.emailRecipients.length > 0)
-      updated.emailRecipients = cast(string[]) req.emailRecipients;
-    if (req.emailSubjectPrefix.length > 0)
-      updated.emailSubjectPrefix = req.emailSubjectPrefix;
-    if (req.webhookUrl.length > 0)
-      updated.webhookUrl = req.webhookUrl;
-    if (req.webhookSecret.length > 0)
-      updated.webhookSecret = req.webhookSecret;
-    if (req.webhookMethod.length > 0)
-      updated.webhookMethod = req.webhookMethod;
-    if (req.slackWebhookUrl.length > 0)
-      updated.slackWebhookUrl = req.slackWebhookUrl;
-    if (req.slackChannel.length > 0)
-      updated.slackChannel = req.slackChannel;
-
-    updated.updatedAt = clockSeconds();
-    return updated;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("channelType", channelType.to!string())
+      .set("state", state.to!string())
+      .set("emailRecipients", emailRecipients)
+      .set("emailSubjectPrefix", emailSubjectPrefix)
+      .set("webhookUrl", webhookUrl)
+      .set("webhookSecret", webhookSecret)
+      .set("webhookMethod", webhookMethod)
+      .set("slackWebhookUrl", slackWebhookUrl)
+      .set("slackChannel", slackChannel);
   }
 }

@@ -32,7 +32,7 @@ class JwtTokenService : TokenService {
     // import std.array : join;
 
     auto now = Clock.currStdTime();
-    auto payload = user.id ~ "|" ~ app.id ~ "|" ~ tokenType.to!string ~ "|" ~ scopes.join(
+    auto payload = user.id.value ~ "|" ~ app.id.value ~ "|" ~ tokenType.to!string ~ "|" ~ scopes.join(
         ",") ~ "|" ~ now.to!string;
 
     // Sign payload

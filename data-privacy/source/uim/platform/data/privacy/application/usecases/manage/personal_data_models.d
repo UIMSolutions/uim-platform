@@ -49,7 +49,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = now;
 
     repo.save(model);
-    return CommandResult(model.id, "");
+    return CommandResult(model.id.value, "");
   }
 
   PersonalDataModel getModel(PersonalDataModelId tenantId, id tenantId) {
@@ -89,7 +89,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = Clock.currStdTime();
 
     repo.update(model);
-    return CommandResult(model.id, "");
+    return CommandResult(model.id.value, "");
   }
 
   void deleteModel(PersonalDataModelId tenantId, id tenantId) {

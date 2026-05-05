@@ -43,7 +43,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         f.updatedAt = now;
 
         repo.save(f);
-        return CommandResult(true, f.id, "");
+        return CommandResult(true, f.id.value, "");
     }
 
     Form getById(FormId id) {
@@ -68,7 +68,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(FormId id) {

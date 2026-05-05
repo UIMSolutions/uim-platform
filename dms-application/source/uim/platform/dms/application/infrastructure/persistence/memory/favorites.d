@@ -32,7 +32,7 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
   void removeByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
     foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId)
-        store.remove(e.id);
+        remove(e.id);
   }
 
   size_t countByUser(TenantId tenantId, UserId userId) {
@@ -44,7 +44,7 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
-    findByTenant(tenantId).filter!(e => e.userId == userId).each!(e => store.remove(e.id));
+    findByTenant(tenantId).filter!(e => e.userId == userId).each!(e => remove(e.id));
   }
 
   size_t countByResource(TenantId tenantId, string resourceId) {
@@ -56,6 +56,6 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
   }
 
   void removeByResource(TenantId tenantId, string resourceId) {
-    findByTenant(tenantId).filter!(e => e.resourceId == resourceId).each!(e => store.remove(e.id));
+    findByTenant(tenantId).filter!(e => e.resourceId == resourceId).each!(e => remove(e.id));
   }
 }

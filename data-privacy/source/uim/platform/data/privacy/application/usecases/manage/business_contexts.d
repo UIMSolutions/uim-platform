@@ -69,7 +69,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.updatedAt = Clock.currStdTime();
 
     repo.update(ctx);
-    return CommandResult(ctx.id, "");
+    return CommandResult(ctx.id.value, "");
   }
 
   CommandResult activateContext(ActivateBusinessContextRequest req) {

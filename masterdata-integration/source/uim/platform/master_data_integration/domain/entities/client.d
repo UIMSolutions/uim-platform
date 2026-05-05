@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// A connected client system participating in master data integration.
 struct Client {
-  ClientId id;
-  TenantId tenantId;
+  mixin TenantEntity!ClientId;
+
   string name;
   string description;
   ClientType clientType = ClientType.sapS4Hana;
@@ -32,9 +32,21 @@ struct Client {
   string clientIdRef; // Reference to credential store
   string certificateRef;
 
-  // Metadata
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
-  long lastSyncAt;
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("clientType", clientType.to!string())
+      .set("status", status.to!string())
+      .set("systemUrl", systemUrl)
+      .set("destinationName", destinationName)
+      .set("communicationArrangement", communicationArrangement)
+      .set("supportedCategories", supportedCategories.map!(c => c.to!string()).array.toJson())
+      .set("supportsInitialLoad", supportsInitialLoad)
+      .set("supportsDeltaReplication", supportsDeltaReplication)
+      .set("supportsKeyMapping", supportsKeyMapping)
+      .set("authType", authType)
+      .set("clientIdRef", clientIdRef)
+      .set("certificateRef", certificateRef);
+  }
 }

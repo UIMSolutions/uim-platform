@@ -48,7 +48,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidUIComponent(e))
             return CommandResult(false, "", "Invalid UI component data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(UIComponentDTO dto) {
@@ -60,7 +60,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(UIComponentId id) {

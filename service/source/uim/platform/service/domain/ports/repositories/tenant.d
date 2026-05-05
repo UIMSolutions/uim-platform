@@ -60,7 +60,7 @@ interface ITenantRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
   bool existsByTenant(TenantId tenantId);
   size_t countByTenant(TenantId tenantId);
   TEntity[] filterByTenant(TEntity[] items, TenantId tenantId);
-  TEntity[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 0);
+  TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0);
   void removeByTenant(TenantId tenantId);
 
 }

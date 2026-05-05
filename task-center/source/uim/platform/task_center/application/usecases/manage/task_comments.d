@@ -34,7 +34,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         c.author = req.author;
         c.content = req.content;
         repo.save(req.tenantId, c);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateTaskCommentRequest req) {
@@ -43,7 +43,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Comment not found");
         if (req.content.length > 0) existing.content = req.content;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult remove(TenantId tenantId, string id) {

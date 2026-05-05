@@ -53,7 +53,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidCustomer(c))
             return CommandResult(false, "", "Invalid customer data");
         repo.save(c);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(CustomerDTO dto) {
@@ -68,7 +68,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         if (dto.address.length > 0) existing.address = dto.address;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(CustomerId id) {

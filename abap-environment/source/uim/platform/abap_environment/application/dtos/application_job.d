@@ -14,6 +14,7 @@ mixin(ShowModule!());
 struct CreateApplicationJobRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
+  
   string name;
   string description;
   string jobTemplateName;

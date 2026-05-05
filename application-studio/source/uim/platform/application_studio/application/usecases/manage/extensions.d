@@ -46,7 +46,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidExtension(e))
             return CommandResult(false, "", "Invalid extension data");
         extensions.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ExtensionDTO dto) {
@@ -59,7 +59,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         extensions.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ExtensionId id) {

@@ -17,7 +17,17 @@ struct RecordId {
   mixin DomainId;
 }
 
-struct RuleId {
+struct ValidationRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct CleansingRuleId {
   string value;
 
   this(string value) {

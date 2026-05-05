@@ -46,7 +46,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     }
 
     themeRepo.save(theme);
-    return ThemeResponse(id, "");
+    return ThemeResponse(id.value, "");
   }
 
   Theme getTheme(ThemeId id) {
@@ -57,7 +57,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     return themeRepo.findDefault(tenantId);
   }
 
-  Theme[] listThemes(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  Theme[] listThemes(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return themeRepo.findByTenant(tenantId, offset, limit);
   }
 

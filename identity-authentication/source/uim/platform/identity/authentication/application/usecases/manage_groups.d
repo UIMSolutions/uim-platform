@@ -33,14 +33,14 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     auto group = IdaGroup(randomUUID().toString(), req.tenantId, req.name,
         req.description, [], now, now);
     groupRepo.save(group);
-    return GroupResponse(group.id, "");
+    return GroupResponse(group.id.value, "");
   }
 
   IdaGroup getGroup(GroupId id) {
     return groupRepo.findById(id);
   }
 
-  IdaGroup[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  IdaGroup[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 

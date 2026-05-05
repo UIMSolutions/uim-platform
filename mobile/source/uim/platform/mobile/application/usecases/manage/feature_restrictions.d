@@ -38,7 +38,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         restriction.updatedAt = restriction.createdAt;
         restriction.createdBy = r.createdBy;
         repo.save(restriction);
-        return CommandResult(true, restriction.id, "");
+        return CommandResult(true, restriction.id.value, "");
     }
 
     CommandResult update(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
@@ -56,7 +56,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         restriction.updatedAt = currentTimestamp();
         restriction.updatedBy = r.updatedBy;
         repo.update(restriction);
-        return CommandResult(true, restriction.id, "");
+        return CommandResult(true, restriction.id.value, "");
     }
 
     bool evaluate(FeatureRestrictionId featureId, string userId, string deviceId) {

@@ -87,17 +87,17 @@ private bool hasSpecialChar(string s) {
   return false;
 }
 
-private uint uniqueCharCount(string s) {
+private size_t uniqueCharCount(string s) {
   bool[char] seen;
   foreach (c; s)
     seen[c] = true;
-  return cast(uint)seen.length;
+  return cast(size_t)seen.length;
 }
 
-private bool hasExcessiveRepeats(string s, uint maxRepeats) {
+private bool hasExcessiveRepeats(string s, size_t maxRepeats) {
   if (s.length < 2)
     return false;
-  uint count = 1;
+  size_t count = 1;
   foreach (i; 1 .. s.length) {
     if (s[i] == s[i - 1]) {
       count++;

@@ -50,7 +50,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidServiceBinding(e))
             return CommandResult(false, "", "Invalid service binding data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ServiceBindingDTO dto) {
@@ -62,7 +62,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (dto.serviceUrl.length > 0) existing.serviceUrl = dto.serviceUrl;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ServiceBindingId id) {

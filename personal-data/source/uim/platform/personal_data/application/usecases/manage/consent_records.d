@@ -43,7 +43,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         cr.createdAt = clockTime();
 
         repo.save(cr);
-        return CommandResult(true, cr.id, "");
+        return CommandResult(true, cr.id.value, "");
     }
 
     bool hasById(string id) {
@@ -88,7 +88,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult removeById(string id) {

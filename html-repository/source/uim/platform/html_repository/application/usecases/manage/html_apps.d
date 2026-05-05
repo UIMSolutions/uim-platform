@@ -46,7 +46,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         app.updatedBy = r.createdBy;
 
         repo.save(app);
-        return CommandResult(true, app.id, "");
+        return CommandResult(true, app.id.value, "");
     }
 
     CommandResult update(HtmlAppId id, UpdateHtmlAppRequest r) {
@@ -60,7 +60,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         app.updatedBy = r.updatedBy;
 
         repo.update(app);
-        return CommandResult(true, app.id, "");
+        return CommandResult(true, app.id.value, "");
     }
 
     HtmlApp getById(HtmlAppId id) {

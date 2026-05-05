@@ -52,7 +52,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     ed.updatedAt = now;
 
     repo.save(ed);
-    return CommandResult(true, ed.id, "");
+    return CommandResult(true, ed.id.value, "");
   }
 
   CommandResult update(UpdateEnrichmentDataRequest r) {
@@ -83,7 +83,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   EnrichmentData getById(EnrichmentDataId id, ClientId clientId) {

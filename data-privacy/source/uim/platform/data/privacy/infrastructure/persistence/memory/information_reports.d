@@ -48,7 +48,7 @@ class MemoryInformationReportRepository : TenantRepository!(InformationReport, I
   }
 
   void removeByStatus(TenantId tenantId, InformationReportStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
 }

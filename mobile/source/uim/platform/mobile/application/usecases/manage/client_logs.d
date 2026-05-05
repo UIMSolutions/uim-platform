@@ -35,7 +35,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         entry.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
         entry.createdAt = currentTimestamp();
         repo.save(entry);
-        return CommandResult(true, entry.id, "");
+        return CommandResult(true, entry.id.value, "");
     }
 
     ClientLogEntry get_(ClientLogEntryId id) {

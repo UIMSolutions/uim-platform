@@ -105,7 +105,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       stepRepo.save(step);
     }
 
-    return CommandResult(wf.id, "");
+    return CommandResult(wf.id.value, "");
   }
 
   Workflow getWorkflow(WorkflowId tenantId, id tenantId) {

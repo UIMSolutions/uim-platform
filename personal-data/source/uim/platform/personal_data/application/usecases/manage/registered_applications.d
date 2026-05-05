@@ -38,7 +38,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         app.registeredAt = clockTime();
 
         repo.save(app);
-        return CommandResult(true, app.id, "");
+        return CommandResult(true, app.id.value, "");
     }
 
     RegisteredApplication getById(RegisteredApplicationId id) {
@@ -64,7 +64,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult activate(RegisteredApplicationId id) {
@@ -74,7 +74,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         existing.status = ApplicationStatus.active;
         existing.updatedAt = clockTime();
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult suspend(RegisteredApplicationId id) {
@@ -84,7 +84,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         existing.status = ApplicationStatus.suspended;
         existing.updatedAt = clockTime();
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(RegisteredApplicationId id) {

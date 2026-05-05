@@ -40,7 +40,7 @@ struct DataLakeStorage {
 struct DataLake {
   mixin TenantEntity!(DataLakeId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   string description;
   DataLakeStatus status;

@@ -41,7 +41,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         rec.createdAt = clockTime();
 
         repo.save(rec);
-        return CommandResult(true, rec.id, "");
+        return CommandResult(true, rec.id.value, "");
     }
 
     PersonalDataRecord getById(PersonalDataRecordId id) {

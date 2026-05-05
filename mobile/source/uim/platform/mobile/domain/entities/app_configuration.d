@@ -8,8 +8,8 @@ module uim.platform.mobile.domain.entities.app_configuration;
 import uim.platform.mobile.domain.types;
 
 struct AppConfiguration {
-  AppConfigurationId id;
-  TenantId tenantId;
+  mixin TenantEntity!AppConfigurationId;
+
   MobileAppId appId;
   string key;
   string value;
@@ -17,8 +17,16 @@ struct AppConfiguration {
   bool isSecret;
   AppPlatform platform;     // platform-specific or all
   long version_;
-  long createdAt;
-  long updatedAt;
-  UserId createdBy;
-  UserId updatedBy;
+
+
+  Json toJson() const {
+    return entityToJson
+      .set("appId", appId)
+      .set("key", key)
+      .set("value", value)
+      .set("description", description)
+      .set("isSecret", isSecret)
+      .set("platform", platform.to!string)
+      .set("version_", version_);
+  }
 }

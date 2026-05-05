@@ -10,8 +10,8 @@ import uim.platform.identity.provisioning.domain.types;
 /// A provisioning job that synchronises identities from a source
 /// system to a target system.
 struct ProvisioningJob {
-  ProvisioningJobId id;
-  TenantId tenantId;
+  mixin TenantEntity!ProvisioningJobId;
+
   SourceSystemId sourceSystemId;
   TargetSystemId targetSystemId;
   JobType jobType = JobType.full;
@@ -22,6 +22,18 @@ struct ProvisioningJob {
   long failedEntities;
   long startedAt;
   long completedAt;
-  UserId createdBy;
-  long createdAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("sourceSystemId", sourceSystemId)
+      .set("targetSystemId", targetSystemId)
+      .set("jobType", jobType.to!string())
+      .set("status", status.to!string())
+      .set("schedule", schedule)
+      .set("totalEntities", totalEntities)
+      .set("processedEntities", processedEntities)
+      .set("failedEntities", failedEntities)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }

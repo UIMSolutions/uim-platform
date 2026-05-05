@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A request to destroy blocked or archived personal data.
 struct DestructionRequest {
-  DestructionRequestId id;
-  TenantId tenantId;
+  mixin TenantEntity!DestructionRequestId;
+  
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   DestructionStatus status = DestructionStatus.scheduled;
@@ -25,4 +25,18 @@ struct DestructionRequest {
   long scheduledAt; // 0 = immediate
   long startedAt;
   long completedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId)
+      .set("requestedBy", requestedBy)
+      .set("status", status.to!string())
+      .set("targetSystems", targetSystems)
+      .set("archiveRequestId", archiveRequestId)
+      .set("blockingRequestId", blockingRequestId)
+      .set("reason", reason)
+      .set("scheduledAt", scheduledAt)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }

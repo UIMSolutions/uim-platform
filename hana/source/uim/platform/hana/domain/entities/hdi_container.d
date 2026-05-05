@@ -29,7 +29,7 @@ struct HDIArtifact {
 struct HDIContainer {
   mixin TenantEntity!(HDIContainerId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   string description;
   HDIContainerStatus status;

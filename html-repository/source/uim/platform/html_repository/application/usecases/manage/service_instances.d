@@ -40,7 +40,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         inst.updatedBy = r.createdBy;
 
         repo.save(inst);
-        return CommandResult(true, inst.id, "");
+        return CommandResult(true, inst.id.value, "");
     }
 
     CommandResult update(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
@@ -55,7 +55,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         inst.updatedBy = r.updatedBy;
 
         repo.update(inst);
-        return CommandResult(true, inst.id, "");
+        return CommandResult(true, inst.id.value, "");
     }
 
     ServiceInstance getById(ServiceInstanceId id) {

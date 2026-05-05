@@ -51,7 +51,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.triggeredAt = a.createdAt;
 
     repo.save(a);
-    return CommandResult(true, a.id, "");
+    return CommandResult(true, a.id.value, "");
   }
 
   Alert getById(AlertId id) {
@@ -79,7 +79,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     existing.acknowledgedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult update(UpdateAlertRequest r) {
@@ -93,7 +93,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     existing.threshold.criticalValue = r.criticalValue;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(AlertId id) {

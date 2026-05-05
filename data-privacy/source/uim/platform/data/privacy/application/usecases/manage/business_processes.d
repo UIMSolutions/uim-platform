@@ -38,7 +38,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.updatedAt = now;
 
     repo.save(p);
-    return CommandResult(p.id, "");
+    return CommandResult(p.id.value, "");
   }
 
   BusinessProcess getProcess(BusinessProcessId tenantId, id tenantId) {
@@ -62,7 +62,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);
-    return CommandResult(p.id, "");
+    return CommandResult(p.id.value, "");
   }
 
   void deleteProcess(BusinessProcessId tenantId, id tenantId) {

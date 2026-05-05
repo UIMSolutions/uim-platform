@@ -52,7 +52,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         m.updatedAt = now;
 
         repo.save(m);
-        return CommandResult(true, m.id, "");
+        return CommandResult(true, m.id.value, "");
     }
 
     DomainMapping getById(DomainMappingId id) {

@@ -48,7 +48,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = now;
 
     repo.save(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(rule.id.value, "");
   }
 
   RetentionRule getRule(RetentionRuleId tenantId, id tenantId) {
@@ -82,7 +82,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = Clock.currStdTime();
 
     repo.update(rule);
-    return CommandResult(rule.id, "");
+    return CommandResult(rule.id.value, "");
   }
 
   void deleteRule(RetentionRuleId tenantId, id tenantId) {

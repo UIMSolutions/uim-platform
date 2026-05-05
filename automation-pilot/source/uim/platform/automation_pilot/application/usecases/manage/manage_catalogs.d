@@ -46,7 +46,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidCatalog(c))
             return CommandResult(false, "", "Invalid catalog data");
         repo.save(c);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(CatalogDTO dto) {
@@ -58,7 +58,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         if (dto.tags.length > 0) existing.tags = dto.tags;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(CatalogId id) {

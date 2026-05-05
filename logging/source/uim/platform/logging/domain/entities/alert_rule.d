@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct AlertRule {
-  AlertRuleId id;
-  TenantId tenantId;
+  mixin TenantEntity!AlertRuleId;
+
   string name;
   string description;
   string query;
@@ -26,7 +26,19 @@ struct AlertRule {
   AlertSeverity severity = AlertSeverity.warning;
   NotificationChannelId[] channelIds;
   bool isEnabled = true;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
-}
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("query", query)
+      .set("condition", condition.to!string())
+      .set("field", field)
+      .set("pattern", pattern)
+      .set("thresholdValue", thresholdValue)
+      .set("thresholdOperator", thresholdOperator.to!string())
+      .set("evaluationWindowSeconds", evaluationWindowSeconds)
+      .set("severity", severity.to!string())
+      .set("channelIds", channelIds)
+      .set("isEnabled", isEnabled);
+  }}

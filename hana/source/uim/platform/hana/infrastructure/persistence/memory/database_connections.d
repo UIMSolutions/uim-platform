@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryDatabaseConnectionRepository : TenantRepository!(DatabaseConnection, DatabaseConnectionId), DatabaseConnectionRepository {
 
 
-  DatabaseConnection[] findByInstance(InstanceId instanceId) {
+  DatabaseConnection[] findByInstance(DatabaseInstanceId instanceId) {
     return findAll().filter!(c => c.instanceId == instanceId).array;
   }
 

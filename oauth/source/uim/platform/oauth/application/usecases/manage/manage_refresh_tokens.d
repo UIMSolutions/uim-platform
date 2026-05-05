@@ -48,7 +48,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
         if (error.length > 0)
             return CommandResult(false, "", error);
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult revoke(RefreshTokenId id) {

@@ -57,14 +57,14 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     }
 
     tileRepo.save(tile);
-    return TileResponse(id, "");
+    return TileResponse(id.value, "");
   }
 
   Tile getTile(TileId id) {
     return tileRepo.findById(id);
   }
 
-  Tile[] listTiles(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  Tile[] listTiles(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return tileRepo.findByTenant(tenantId, offset, limit);
   }
 
@@ -72,7 +72,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     return tileRepo.findByCatalog(catalogId);
   }
 
-  Tile[] searchTiles(TenantId tenantId, string query, uint offset = 0, uint limit = 100) {
+  Tile[] searchTiles(TenantId tenantId, string query, size_t offset = 0, size_t limit = 100) {
     return tileRepo.search(tenantId, query, offset, limit);
   }
 

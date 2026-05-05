@@ -48,7 +48,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         }
 
         repo.save(route);
-        return CommandResult(true, route.id, "");
+        return CommandResult(true, route.id.value, "");
     }
 
     CommandResult update(string id, UpdateAppRouteRequest request) {
@@ -70,7 +70,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         route.updatedBy = request.updatedBy;
 
         repo.update(route);
-        return CommandResult(true, route.id, "");
+        return CommandResult(true, route.id.value, "");
     }
 
     AppRoute getById(AppRouteId id) {

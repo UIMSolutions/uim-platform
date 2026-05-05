@@ -58,7 +58,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         r.createdAt = now;
 
         repo.save(r);
-        return CommandResult(true, r.id, "");
+        return CommandResult(true, r.id.value, "");
     }
 
     CommandResult updateStatus(UpdateRunLogRequest req) {
@@ -84,7 +84,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         }
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
 }

@@ -39,7 +39,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         entry.createdAt = clockTime();
 
         repo.save(entry);
-        return CommandResult(true, entry.id, "");
+        return CommandResult(true, entry.id.value, "");
     }
 
     bool hasById(DataProcessingLogId id) {

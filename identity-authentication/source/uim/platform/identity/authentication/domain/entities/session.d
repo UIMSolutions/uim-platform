@@ -12,16 +12,28 @@ mixin(ShowModule!());
 @safe:
 /// Authenticated session.
 struct IdaSession {
-  SessionId id;
+  mixin TenantEntity!SessionId;
+
   UserId userId;
-  TenantId tenantId;
   ApplicationId applicationId;
   AuthMethod authMethod;
   MfaType mfaUsed = MfaType.none;
   string ipAddress;
   string userAgent;
   RiskLevel riskLevel = RiskLevel.low;
-  long createdAt;
   long expiresAt;
   bool revoked;
+
+  Json toJson() const {
+    return entityToJson
+      .set("userId", userId)
+      .set("applicationId", applicationId)
+      .set("authMethod", authMethod.to!string())
+      .set("mfaUsed", mfaUsed.to!string())
+      .set("ipAddress", ipAddress)
+      .set("userAgent", userAgent)
+      .set("riskLevel", riskLevel.to!string())
+      .set("expiresAt", expiresAt)
+      .set("revoked", revoked);
+  }
 }

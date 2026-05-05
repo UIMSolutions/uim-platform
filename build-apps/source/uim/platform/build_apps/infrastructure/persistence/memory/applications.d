@@ -22,7 +22,7 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     }
 
     void removeByOwner(string owner) {
-        findByOwner(owner).each!(e => remove(e.id));
+        findByOwner(owner).each!(e => remove(e));
     }
 
     size_t countByStatus(ApplicationStatus status) {
@@ -34,7 +34,7 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     }
 
     void removeByStatus(ApplicationStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(e => remove(e));
     }
 
 }

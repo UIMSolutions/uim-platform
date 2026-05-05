@@ -38,7 +38,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     w.createdAt = "now";
     w.updatedAt = "now";
     repo.save(w);
-    return CommandResult(true, w.id, "");
+    return CommandResult(true, w.id.value, "");
   }
 
   Workspace getById(WorkspaceId id) {
@@ -63,7 +63,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       w.description = r.description;
     w.updatedAt = "now";
     repo.save(w);
-    return CommandResult(true, w.id, "");
+    return CommandResult(true, w.id.value, "");
   }
 
   CommandResult remove(WorkspaceId id) {

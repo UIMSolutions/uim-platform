@@ -23,7 +23,7 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
   size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId) {
     return findByWorkflow(tenantId, workflowId).length;
   }
-  ExecutionLog[] filterByWorkflow(ExecutionLog[] logs, TenantId tenantId, WorkflowId workflowId, uint offset = 0, uint limit = 0) {
+  ExecutionLog[] filterByWorkflow(ExecutionLog[] logs, TenantId tenantId, WorkflowId workflowId, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? logs.filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).skip(offset).array
         : logs.filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).skip(offset).take(limit).array;
@@ -38,7 +38,7 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
   size_t countByStep(TenantId tenantId, StepId stepId) {
     return findByStep(tenantId, stepId).length;
   }
-  ExecutionLog[] filterByStep(ExecutionLog[] logs, TenantId tenantId, StepId stepId, uint offset = 0, uint limit = 0) {
+  ExecutionLog[] filterByStep(ExecutionLog[] logs, TenantId tenantId, StepId stepId, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? logs.filter!(e => e.stepId == stepId && e.tenantId == tenantId).skip(offset).array
         : logs.filter!(e => e.stepId == stepId && e.tenantId == tenantId).skip(offset).take(limit).array;
@@ -53,7 +53,7 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
   size_t countByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
     return findByOutcome(tenantId, outcome).length;
   }
-  ExecutionLog[] filterByOutcome(ExecutionLog[] logs, TenantId tenantId, ExecutionOutcome outcome, uint offset = 0, uint limit = 0) {
+  ExecutionLog[] filterByOutcome(ExecutionLog[] logs, TenantId tenantId, ExecutionOutcome outcome, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? logs.filter!(e => e.outcome == outcome && e.tenantId == tenantId).skip(offset).array
         : logs.filter!(e => e.outcome == outcome && e.tenantId == tenantId).skip(offset).take(limit).array;
@@ -68,7 +68,7 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
   size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return findByTimeRange(tenantId, timeFrom, timeTo).length;
   }
-  ExecutionLog[] filterByTimeRange(ExecutionLog[] logs, TenantId tenantId, long timeFrom, long timeTo, uint offset = 0, uint limit = 0) {
+  ExecutionLog[] filterByTimeRange(ExecutionLog[] logs, TenantId tenantId, long timeFrom, long timeTo, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? logs.filter!((e) {
           if (e.tenantId != tenantId)

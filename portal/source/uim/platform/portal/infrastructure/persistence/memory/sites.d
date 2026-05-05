@@ -34,9 +34,9 @@ class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
   Site[] filterByStatus(Site[] sites, SiteStatus status) {
     return sites.filter!(s => s.status == status).array;
   }  
-  Site[] findByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100) {
+  Site[] findByStatus(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100) {
     Site[] result;
-    uint idx;
+    size_t idx;
     foreach (s; findByTenant(tenantId)) {
       if (s.status == status) {
         if (idx >= offset && result.length < limit)
@@ -47,7 +47,7 @@ class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
     return result;
   }
   void removeByStatus(TenantId tenantId, SiteStatus status) {
-    findByStatus(tenantId, status).each!(s => remove(s.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   
 }

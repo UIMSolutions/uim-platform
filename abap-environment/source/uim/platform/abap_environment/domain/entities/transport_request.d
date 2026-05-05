@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// Individual task within a transport request.
 struct TransportTask {
-  string id;
+  TransportTaskId id;
   string owner;
   TransportStatus status = TransportStatus.modifiable;
   string description;

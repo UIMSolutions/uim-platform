@@ -18,16 +18,16 @@ mixin(ShowModule!());
 @safe:
 class MemoryReplicationTaskRepository : TenantRepository!(ReplicationTask, ReplicationTaskId), ReplicationTaskRepository {
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
-  ReplicationTask[] filterByInstance(RReplicationTask[] tasks, InstanceId instanceId) {
+  ReplicationTask[] filterByInstance(RReplicationTask[] tasks, DatabaseInstanceId instanceId) {
     return tasks.filter!(t => t.instanceId == instanceId).array;
   }
-  ReplicationTask[] findByInstance(InstanceId instanceId) {
+  ReplicationTask[] findByInstance(DatabaseInstanceId instanceId) {
     return findAll().filter!(t => t.instanceId == instanceId).array;
   }
-  void deleteByInstance(InstanceId instanceId) {
+  void deleteByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(t => remove(t));
   }
 }

@@ -28,7 +28,7 @@ class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), 
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    findByDataset(tenantId, datasetId).each!(entity => remove(entity.id));
+    findByDataset(tenantId, datasetId).each!(entity => remove(entity));
   }
   // #endregion ByDataset
 
@@ -46,7 +46,7 @@ class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), 
   }
 
   void removeUnresolved(TenantId tenantId) {
-    findUnresolved(tenantId).each!(entity => remove(entity.id));
+    findUnresolved(tenantId).each!(entity => remove(entity));
   }
   // #endregion Unresolved
 

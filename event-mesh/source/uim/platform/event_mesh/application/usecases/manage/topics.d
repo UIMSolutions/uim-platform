@@ -49,7 +49,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidTopic(t))
             return CommandResult(false, "", "Invalid topic data");
         repo.save(t);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(TopicDTO dto) {
@@ -62,7 +62,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(TopicId id) {

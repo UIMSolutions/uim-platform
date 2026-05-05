@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 // ID aliases
-struct InstanceId  {
+struct DatabaseInstanceId  {
   string value;
 
   this(string value) {

@@ -36,7 +36,7 @@ class MemoryContentPackageRepository : TenantRepository!(ContentPackage, Content
   void removeByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name) {
-        store.remove(e.id);
+        remove(e.id);
         return;
       }
   }

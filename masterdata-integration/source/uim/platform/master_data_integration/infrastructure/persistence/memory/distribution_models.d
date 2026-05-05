@@ -25,7 +25,7 @@ class MemoryDistributionModelRepository : TenantRepository!(DistributionModel, D
     return filterByStatus(findByTenant(tenantId), tenantId, status);
   }
   void removeByStatus(TenantId tenantId, DistributionModelStatus status) {
-    findByStatus(tenantId, status).each!(e => remove(e.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
    size_t countBySourceClient(TenantId tenantId, ClientId sourceClientId) {
@@ -38,7 +38,7 @@ class MemoryDistributionModelRepository : TenantRepository!(DistributionModel, D
     return filterBySourceClient(findByTenant(tenantId), sourceClientId);
   }
   void removeBySourceClient(TenantId tenantId, ClientId sourceClientId) {
-    findBySourceClient(tenantId, sourceClientId).each!(e => remove(e.id));
+    findBySourceClient(tenantId, sourceClientId).each!(entity => remove(entity));
   }
   
 }

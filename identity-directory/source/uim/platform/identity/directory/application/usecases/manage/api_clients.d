@@ -56,7 +56,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
   }
 
   /// List clients for a tenant.
-  ApiClient[] listClients(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  ApiClient[] listClients(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return clientRepo.findByTenant(tenantId, offset, limit);
   }
 

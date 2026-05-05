@@ -50,7 +50,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   CommandResult patch(PatchClientRequest r) {
@@ -83,7 +83,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   Client getById(ClientId id) {

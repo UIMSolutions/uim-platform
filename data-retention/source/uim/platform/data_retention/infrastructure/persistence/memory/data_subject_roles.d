@@ -16,6 +16,6 @@ class MemoryDataSubjectRoleRepository : DataSubjectRoleRepository {
     }
 
     void removeActive(TenantId tenantId) {
-        findActive(tenantId).each!(entity => remove(entity.id));
+        findActive(tenantId).each!(entity => remove(entity));
     }
 }

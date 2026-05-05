@@ -40,7 +40,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         e.updatedAt = now;
 
         repo.save(e);
-        return CommandResult(true, e.id, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     EntityType getById(EntityTypeId id) {
@@ -64,7 +64,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(EntityTypeId id) {

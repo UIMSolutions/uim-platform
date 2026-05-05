@@ -42,7 +42,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.updatedAt = now;
 
     repo.save(cp);
-    return CommandResult(cp.id, "");
+    return CommandResult(cp.id.value, "");
   }
 
   ConsentPurpose getPurpose(ConsentPurposeId tenantId, id tenantId) {
@@ -70,7 +70,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.updatedAt = Clock.currStdTime();
 
     repo.update(cp);
-    return CommandResult(cp.id, "");
+    return CommandResult(cp.id.value, "");
   }
 
   void deletePurpose(ConsentPurposeId tenantId, id tenantId) {

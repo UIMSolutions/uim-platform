@@ -40,7 +40,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         d.updatedAt = now;
 
         repo.save(d);
-        return CommandResult(true, d.id, "");
+        return CommandResult(true, d.id.value, "");
     }
 
     Dashboard getById(DashboardId id) {
@@ -65,7 +65,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(DashboardId id) {

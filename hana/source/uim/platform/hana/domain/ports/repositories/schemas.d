@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  Schema[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  Schema[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

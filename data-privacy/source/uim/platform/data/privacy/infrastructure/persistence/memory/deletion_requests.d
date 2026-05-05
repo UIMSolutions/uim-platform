@@ -47,7 +47,7 @@ class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, Delet
   }
 
   void removeByStatus(TenantId tenantId, DeletionStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
 

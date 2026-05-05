@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 interface ReplicationTaskRepository : ITenantRepository!(ReplicationTask, ReplicationTaskId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  ReplicationTask[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  ReplicationTask[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 }

@@ -36,7 +36,7 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
         return findAll().filter!(e => e.status == status).array;
     }
     void removeByStatus(ClientStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(entity => remove(entity));
     }
 
 }

@@ -92,10 +92,10 @@ class MemoryUserRepository : UserRepository {
     return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
-  User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100) {
+  User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
     User[] result;
     auto lowerFilter = filter.toLower();
-    uint idx;
+    size_t idx;
     foreach (u; findByTenant(tenantId)) {
       // Simple filter: match against userName, displayName, emails
       bool matches = false;

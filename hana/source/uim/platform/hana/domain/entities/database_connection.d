@@ -30,7 +30,7 @@ struct ConnectionPoolConfig {
 struct DatabaseConnection {
   mixin TenantEntity!(DatabaseConnectionId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   string description;
   ConnectionType type;

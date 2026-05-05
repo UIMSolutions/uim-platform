@@ -29,7 +29,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
   void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     foreach (e; findByTenant(tenantId))
       if (e.repositoryId == repositoryId && e.path == path)
-        store.remove(e.id);
+        remove(e.id);
   }
 
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -41,7 +41,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
   }
 
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    findByRepository(tenantId, repositoryId).each!(e => store.remove(e.id));
+    findByRepository(tenantId, repositoryId).each!(e => remove(e.id));
   }
 
   size_t countByParent(TenantId tenantId, FolderId parentFolderId) {
@@ -53,6 +53,6 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
   }
 
   void removeByParent(TenantId tenantId, FolderId parentFolderId) {
-    findByParent(tenantId, parentFolderId).each!(e => store.remove(e.id));
+    findByParent(tenantId, parentFolderId).each!(e => remove(e.id));
   }
 }

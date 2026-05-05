@@ -82,7 +82,7 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
 
   void remove(TEntity entity) {
     if (existsById(entity.id)) {
-      store.remove(entity.id);
+      remove(entity.id);
     }
   }
 

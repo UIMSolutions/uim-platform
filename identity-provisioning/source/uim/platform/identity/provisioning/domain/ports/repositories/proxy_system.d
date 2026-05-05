@@ -15,10 +15,10 @@ interface ProxySystemRepository : ITenantRepository!(ProxySystem, ProxySystemId)
   void removeByName(TenantId tenantId, string name);
 
   size_t countBySource(TenantId tenantId, SourceSystemId sourceSystemId);
-  ProxySystem[] findBySource(TenantId tenantId, SourceSystemId sourceSystemId, uint offset = 0, uint limit = 100);
+  ProxySystem[] findBySource(TenantId tenantId, SourceSystemId sourceSystemId, size_t offset = 0, size_t limit = 100);
   void removeBySource(TenantId tenantId, SourceSystemId sourceSystemId);
 
   size_t countByTarget(TenantId tenantId, TargetSystemId targetSystemId);
-  ProxySystem[] findByTarget(TenantId tenantId, TargetSystemId targetSystemId, uint offset = 0, uint limit = 100);
+  ProxySystem[] findByTarget(TenantId tenantId, TargetSystemId targetSystemId, size_t offset = 0, size_t limit = 100);
   void removeByTarget(TenantId tenantId, TargetSystemId targetSystemId);
 }

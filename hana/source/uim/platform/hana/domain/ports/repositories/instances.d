@@ -12,7 +12,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface InstanceRepository : ITenantRepository!(DatabaseInstance, InstanceId) {
+interface InstanceRepository : ITenantRepository!(DatabaseInstance, DatabaseInstanceId) {
 
   size_t countByStatus(InstanceStatus status);
   DatabaseInstance[] findByStatus(InstanceStatus status);

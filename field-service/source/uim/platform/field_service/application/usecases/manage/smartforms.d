@@ -52,7 +52,7 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidSmartform(sf))
             return CommandResult(false, "", "Invalid smartform data");
         repo.save(sf);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(SmartformDTO dto) {
@@ -68,7 +68,7 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         if (!dto.approvedBy.isNull) existing.approvedBy = dto.approvedBy;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(SmartformId id) {

@@ -20,16 +20,16 @@ mixin(ShowModule!());
 class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLakeRepository {
 
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
-  DataLake[] filterByInstance(DataLake[] dataLakes, InstanceId instanceId) {
+  DataLake[] filterByInstance(DataLake[] dataLakes, DatabaseInstanceId instanceId) {
     return dataLakes.filter!(d => d.instanceId == instanceId).array;
   }
-  DataLake[] findByInstance(InstanceId instanceId) {
+  DataLake[] findByInstance(DatabaseInstanceId instanceId) {
     return filterByInstance(findAll(), instanceId);
   }
-  void removeByInstance(InstanceId instanceId) {
+  void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(d => remove(d.id));
   }
 

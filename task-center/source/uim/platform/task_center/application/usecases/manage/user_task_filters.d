@@ -39,7 +39,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         f.description = req.description;
         f.isDefault = req.isDefault;
         repo.save(req.tenantId, f);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateUserTaskFilterRequest req) {
@@ -50,7 +50,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         if (req.description.length > 0) existing.description = req.description;
         existing.isDefault = req.isDefault;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult setDefault(TenantId tenantId, string id) {

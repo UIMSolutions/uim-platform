@@ -34,7 +34,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         usage.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
         usage.createdAt = currentTimestamp();
         repo.save(usage);
-        return CommandResult(true, usage.id, "");
+        return CommandResult(true, usage.id.value, "");
     }
 
     UsageReport get_(UsageReportId id) {

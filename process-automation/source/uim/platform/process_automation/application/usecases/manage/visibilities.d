@@ -42,7 +42,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         v.updatedAt = now;
 
         repo.save(v);
-        return CommandResult(true, v.id, "");
+        return CommandResult(true, v.id.value, "");
     }
 
     Visibility getById(VisibilityId id) {
@@ -67,7 +67,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(VisibilityId id) {

@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).
 struct WorkflowStep {
-  StepId id;
+  mixin TenantEntity!StepId;
+
   WorkflowId workflowId;
-  TenantId tenantId;
   string name;
   string description;
   StepType type_;
@@ -35,6 +35,29 @@ struct WorkflowStep {
   string errorMessage;
   long startedAt;
   long completedAt;
-  long createdAt;
   int estimatedDurationMinutes;
+
+  Json toJson() const {
+    return entityToJson
+      .set("workflowId", workflowId)
+      .set("name", name)
+      .set("description", description)
+      .set("type_", type_.to!string())
+      .set("status", status.to!string())
+      .set("priority", priority.to!string())
+      .set("sequenceNumber", sequenceNumber)
+      .set("assignedTo", assignedTo)
+      .set("assignedRole", assignedRole)
+      .set("instructions", instructions)
+      .set("automationEndpoint", automationEndpoint)
+      .set("automationPayload", automationPayload)
+      .set("sourceSystemConnectionId", sourceSystemConnectionId)
+      .set("targetSystemConnectionId", targetSystemConnectionId)
+      .set("dependencies", dependencies)
+      .set("result", result)
+      .set("errorMessage", errorMessage)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("estimatedDurationMinutes", estimatedDurationMinutes);
+  }
 }

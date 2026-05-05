@@ -12,7 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, RuleId), ValidationRuleRepository {
+class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;
@@ -23,7 +23,7 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, RuleId)
   }
 
   void removeByDataset(TenantId tenantId, string datasetPattern) {
-    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity.id));
+    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity));
   } 
 
   size_t countByField(TenantId tenantId, string fieldName) {
@@ -35,7 +35,7 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, RuleId)
   }
 
   void removeByField(TenantId tenantId, string fieldName) {
-    findByField(tenantId, fieldName).each!(entity => remove(entity.id));
+    findByField(tenantId, fieldName).each!(entity => remove(entity));
   }
 
   size_t countActive(TenantId tenantId) {
@@ -47,6 +47,6 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, RuleId)
   }
 
   void removeActive(TenantId tenantId) {
-    findActive(tenantId).each!(entity => remove(entity.id));
+    findActive(tenantId).each!(entity => remove(entity));
   }
 }

@@ -45,7 +45,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         p.clientId = req.clientId;
         p.createdBy = req.createdBy;
         repo.save(req.tenantId, p);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateTaskProviderRequest req) {
@@ -59,7 +59,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         if (req.clientId.length > 0) existing.clientId = req.clientId;
         existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult activate(TenantId tenantId, string id) {

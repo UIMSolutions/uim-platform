@@ -38,6 +38,6 @@ class MemorySectionRepository : SectionRepository {
   }
 
   void remove(SectionId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

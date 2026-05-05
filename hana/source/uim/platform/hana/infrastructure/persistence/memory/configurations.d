@@ -19,29 +19,29 @@ mixin(ShowModule!());
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
-  Configuration[] filterByInstance(Configuration[] configurations, InstanceId instanceId) {
+  Configuration[] filterByInstance(Configuration[] configurations, DatabaseInstanceId instanceId) {
     return configurations.filter!(c => c.instanceId == instanceId).array;
   }
-  Configuration[] findByInstance(InstanceId instanceId) {
+  Configuration[] findByInstance(DatabaseInstanceId instanceId) {
     return filterByInstance(findAll(), instanceId);
   }
-  void removeByInstance(InstanceId instanceId) {
+  void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(c => remove(c.id));
   }
 
-  size_t countBySection(InstanceId instanceId, string section) {
+  size_t countBySection(DatabaseInstanceId instanceId, string section) {
     return findBySection(instanceId, section).length;
   }
-  Configuration[] filterBySection(Configuration[] configurations, InstanceId instanceId, string section) {
+  Configuration[] filterBySection(Configuration[] configurations, DatabaseInstanceId instanceId, string section) {
     return configurations.filter!(c => c.instanceId == instanceId && c.section == section).array;
   }
-  Configuration[] findBySection(InstanceId instanceId, string section) {
+  Configuration[] findBySection(DatabaseInstanceId instanceId, string section) {
     return filterBySection(findAll(), instanceId, section);
   }
-  void removeBySection(InstanceId instanceId, string section) {
+  void removeBySection(DatabaseInstanceId instanceId, string section) {
     findBySection(instanceId, section).each!(c => remove(c.id));
   }
 

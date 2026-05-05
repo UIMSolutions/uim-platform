@@ -39,7 +39,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         ver.updatedBy = r.createdBy;
 
         repo.save(ver);
-        return CommandResult(true, ver.id, "");
+        return CommandResult(true, ver.id.value, "");
     }
 
     CommandResult update(AppVersionId id, UpdateAppVersionRequest r) {
@@ -53,7 +53,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         ver.updatedBy = r.updatedBy;
 
         repo.update(ver);
-        return CommandResult(true, ver.id, "");
+        return CommandResult(true, ver.id.value, "");
     }
 
     AppVersion getById(AppVersionId id) {

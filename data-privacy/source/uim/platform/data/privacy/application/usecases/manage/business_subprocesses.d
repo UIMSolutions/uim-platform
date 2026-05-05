@@ -40,7 +40,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     sp.updatedAt = now;
 
     repo.save(sp);
-    return CommandResult(sp.id, "");
+    return CommandResult(sp.id.value, "");
   }
 
   BusinessSubprocess getSubprocess(BusinessSubprocessId tenantId, id tenantId) {
@@ -68,7 +68,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     sp.updatedAt = Clock.currStdTime();
 
     repo.update(sp);
-    return CommandResult(sp.id, "");
+    return CommandResult(sp.id.value, "");
   }
 
   void deleteSubprocess(BusinessSubprocessId tenantId, id tenantId) {

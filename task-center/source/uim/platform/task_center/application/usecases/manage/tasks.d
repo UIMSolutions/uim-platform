@@ -63,7 +63,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         t.dueDate = req.dueDate;
         t.createdBy = req.createdBy;
         repo.save(req.tenantId, t);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateTaskRequest req) {
@@ -76,7 +76,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (req.dueDate.length > 0) existing.dueDate = req.dueDate;
         existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult claim(TenantId tenantId, string id, string userId) {

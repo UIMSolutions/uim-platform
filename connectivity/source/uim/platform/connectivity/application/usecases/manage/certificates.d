@@ -70,7 +70,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return certificates.findByTenant(tenantId);
   }
 
-  Certificate[] listExpiring(TenantId tenantId, long now, uint withinDays) {
+  Certificate[] listExpiring(TenantId tenantId, long now, size_t withinDays) {
     return certificates.findExpiring(tenantId, now, withinDays);
   }
 

@@ -41,7 +41,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         app.createdBy = r.createdBy;
         app.updatedBy = r.createdBy;
         repo.save(app);
-        return CommandResult(true, app.id, "");
+        return CommandResult(true, app.id.value, "");
     }
 
     CommandResult update(MobileAppId id, UpdateMobileAppRequest r) {
@@ -57,7 +57,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         app.updatedAt = currentTimestamp();
         app.updatedBy = r.updatedBy;
         repo.update(app);
-        return CommandResult(true, app.id, "");
+        return CommandResult(true, app.id.value, "");
     }
 
     MobileApp get_(MobileAppId id) {

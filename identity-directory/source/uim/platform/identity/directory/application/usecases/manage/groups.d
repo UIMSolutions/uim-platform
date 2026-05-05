@@ -74,7 +74,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   /// List groups for a tenant.
-  Group[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  Group[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 

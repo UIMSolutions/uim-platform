@@ -51,7 +51,7 @@ struct InstanceLabel {
 }
 
 struct DatabaseInstance {
-  mixin TenantEntity!(InstanceId);
+  mixin TenantEntity!(DatabaseInstanceId);
 
   string name;
   string description;

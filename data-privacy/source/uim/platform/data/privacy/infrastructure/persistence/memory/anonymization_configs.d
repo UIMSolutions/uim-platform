@@ -24,7 +24,7 @@ class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
   }
 
   void removeByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
 }

@@ -11,9 +11,9 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-struct  ObjectVersion {
-  ObjectVersionId id;
-  TenantId tenantId;
+struct ObjectVersion {
+  mixin TenantEntity!ObjectVersionId;
+
   ObjectId objectId;
   string versionTag; // e.g. "v1", "v2", auto-incremented label
   long size;
@@ -22,19 +22,15 @@ struct  ObjectVersion {
   bool isLatest;
   bool isDeleteMarker;
   UserId createdBy;
-  long createdAt;
 
   Json toJson() const {
-    return Json()
-      .set("id", id.value)
-      .set("objectId", objectId.value)
+    return entityToJson
+      .set("objectId", objectId)
       .set("versionTag", versionTag)
       .set("size", size)
       .set("etag", etag)
       .set("contentType", contentType)
       .set("isLatest", isLatest)
-      .set("isDeleteMarker", isDeleteMarker)
-      .set("createdBy", createdBy.value)
-      .set("createdAt", createdAt);
+      .set("isDeleteMarker", isDeleteMarker);
   }
 }

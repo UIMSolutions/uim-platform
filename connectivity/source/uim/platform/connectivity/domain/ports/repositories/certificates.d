@@ -19,8 +19,8 @@ interface CertificateRepository : ITenantRepository!(Certificate, CertificateId)
   Certificate findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
-  size_t countExpiring(TenantId tenantId, long now, uint withinDays);
-  Certificate[] findExpiring(TenantId tenantId, long now, uint withinDays);
-  void removeExpiring(TenantId tenantId, long now, uint withinDays);
+  size_t countExpiring(TenantId tenantId, long now, size_t withinDays);
+  Certificate[] findExpiring(TenantId tenantId, long now, size_t withinDays);
+  void removeExpiring(TenantId tenantId, long now, size_t withinDays);
 
 }

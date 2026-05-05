@@ -54,7 +54,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(t.id, "");
+    return CommandResult(t.id.value, "");
   }
 
   Transformation getTransformation(TransformationId tenantId, id tenantId) {
@@ -92,7 +92,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);
-    return CommandResult(updated.id, "");
+    return CommandResult(updated.id.value, "");
   }
 
   /// Test a transformation with sample input.

@@ -33,9 +33,9 @@ class MemoryPageRepository : PageRepository {
     return findAll().filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
-  Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100) {
+  Page[] findBySite(SiteId siteId, size_t offset = 0, size_t limit = 100) {
     Page[] result;
-    uint idx;
+    size_t idx;
     foreach (p; findAll()
       if (p.siteId == siteId) {
         if (idx >= offset && result.length < limit)
@@ -55,6 +55,6 @@ class MemoryPageRepository : PageRepository {
   }
 
   void remove(PageId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

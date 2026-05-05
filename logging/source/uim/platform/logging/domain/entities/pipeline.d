@@ -16,11 +16,19 @@ struct PipelineProcessor {
   string name;
   string config;
   int order_;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("type", type.to!string())
+      .set("name", name)
+      .set("config", config)
+      .set("order_", order_);
+  }
 }
 
 struct Pipeline {
-  PipelineId id;
-  TenantId tenantId;
+  mixin TenantEntity!PipelineId;
+
   string name;
   string description;
   PipelineSourceType sourceType = PipelineSourceType.custom;
@@ -28,7 +36,20 @@ struct Pipeline {
   PipelineProcessor[] processors;
   LogStreamId targetStreamId;
   bool isActive = true;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto procsJson = Json.emptyArray;
+    foreach (proc; processors) {
+      procsJson ~= proc.toJson();
+    }
+
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("sourceType", sourceType.to!string())
+      .set("format", format.to!string())
+      .set("processors", procsJson)
+      .set("targetStreamId", targetStreamId)
+      .set("isActive", isActive);
+  }
 }

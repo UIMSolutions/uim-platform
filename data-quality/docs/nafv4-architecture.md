@@ -194,7 +194,7 @@ DQM Service Offerings
 │  ┌──────────────────┐       ┌──────────────────────┐            │
 │  │  ValidationRule   │──1:N──│  ValidationResult    │            │
 │  ├──────────────────┤       ├──────────────────────┤            │
-│  │ id: RuleId        │       │ recordId: RecordId    │            │
+│  │ id: ValidationRuleId        │       │ recordId: RecordId    │            │
 │  │ tenantId          │       │ tenantId              │            │
 │  │ name              │       │ isValid: bool          │            │
 │  │ ruleType: RuleType│       │ qualityScore: double   │            │
@@ -260,10 +260,10 @@ DQM Service Offerings
 │  ┌──────────────────┐       ┌──────────────────────┐            │
 │  │  CleansingRule    │       │  CleansingJob         │            │
 │  ├──────────────────┤       ├──────────────────────┤            │
-│  │ id: RuleId        │       │ id: CleansingJobId    │            │
+│  │ id: CleansingRuleId        │       │ id: CleansingJobId    │            │
 │  │ tenantId          │       │ tenantId              │            │
 │  │ name, fieldName   │       │ datasetId             │            │
-│  │ action: enum      │       │ ruleIds: RuleId[]     │            │
+│  │ action: enum      │       │ ruleIds: CleansingRuleId[]     │            │
 │  │ parameters: map   │       │ status: JobStatus     │            │
 │  │ priority: int     │       │ totalRecords          │            │
 │  │ active: bool      │       │ processedRecords      │            │

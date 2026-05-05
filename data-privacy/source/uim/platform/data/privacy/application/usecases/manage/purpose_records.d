@@ -40,7 +40,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     r.updatedAt = now;
 
     repo.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(r.id.value, "");
   }
 
   PurposeRecord getRecord(TenantId tenantId, PurposeRecordId id) {

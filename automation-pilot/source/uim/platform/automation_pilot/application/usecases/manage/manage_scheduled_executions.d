@@ -49,7 +49,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidScheduledExecution(se))
             return CommandResult(false, "", "Invalid scheduled execution data");
         repo.save(se);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ScheduledExecutionDTO dto) {
@@ -61,7 +61,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         if (dto.description.length > 0) existing.description = dto.description;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ScheduledExecutionId id) {

@@ -12,15 +12,15 @@ import uim.platform.identity.directory.domain.types;
 interface AuditRepository  : ITenantRepository!(AuditEvent, AuditEventId) {
 
   size_t countByActor(string actorId);
-  AuditEvent[] findByActor(string actorId, uint offset = 0, uint limit = 100);
+  AuditEvent[] findByActor(string actorId, size_t offset = 0, size_t limit = 100);
   void removeByActor(string actorId);
 
   size_t countByTarget(string targetId);
-  AuditEvent[] findByTarget(string targetId, uint offset = 0, uint limit = 100);
+  AuditEvent[] findByTarget(string targetId, size_t offset = 0, size_t limit = 100);
   void removeByTarget(string targetId);
 
   size_t countByType(TenantId tenantId, AuditEventType eventType);
-  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType, uint offset = 0, uint limit = 100);
+  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType, size_t offset = 0, size_t limit = 100);
   void removeByType(TenantId tenantId, AuditEventType eventType);
   
 }

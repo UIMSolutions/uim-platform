@@ -36,7 +36,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         config.updatedAt = config.createdAt;
         config.createdBy = r.createdBy;
         repo.save(config);
-        return CommandResult(true, config.id, "");
+        return CommandResult(true, config.id.value, "");
     }
 
     CommandResult update(AppConfigurationId id, UpdateAppConfigurationRequest r) {
@@ -48,7 +48,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         config.updatedAt = currentTimestamp();
         config.updatedBy = r.updatedBy;
         repo.update(config);
-        return CommandResult(true, config.id, "");
+        return CommandResult(true, config.id.value, "");
     }
 
     AppConfiguration get_(AppConfigurationId id) {

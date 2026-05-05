@@ -16,7 +16,7 @@ class MemoryLegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId
     }
 
     void removeActive(TenantId tenantId) {
-        findActive(tenantId).each!(entity => remove(entity.id));
+        findActive(tenantId).each!(entity => remove(entity));
     }
 
 }

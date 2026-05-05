@@ -24,7 +24,7 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
   }
 
   void removeByDocument(TenantId tenantId, DocumentId documentId) {
-    findByDocument(tenantId, documentId).each!(e => store.remove(e.id));
+    findByDocument(tenantId, documentId).each!(e => remove(e.id));
   }
 
   DocumentVersion findLatest(TenantId tenantId, DocumentId documentId) {

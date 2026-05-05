@@ -40,7 +40,7 @@ struct CreateValidationRuleRequest {
 }
 
 struct UpdateValidationRuleRequest {
-  RuleId id;
+  ValidationRuleId id;
   TenantId tenantId;
   string name;
   string description;
@@ -161,7 +161,7 @@ struct CreateCleansingRuleRequest {
 }
 
 struct UpdateCleansingRuleRequest {
-  RuleId id;
+  CleansingRuleId id;
   TenantId tenantId;
   string name;
   string description;
@@ -190,7 +190,7 @@ struct CreateCleansingJobRequest {
   TenantId tenantId;
   DatasetId datasetId;
   UserId requestedBy;
-  RuleId[] ruleIds;
+  CleansingRuleId[] ruleIds;
 }
 
 // ──────────────── Quality Dashboard DTOs ────────────────

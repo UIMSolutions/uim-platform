@@ -14,11 +14,17 @@ mixin(ShowModule!());
 struct ConnectionProperty {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct Connection {
-  ConnectionId id;
-  TenantId tenantId;
+  mixin TenantEntity!ConnectionId;
+
   SpaceId spaceId;
   string name;
   string description;
@@ -30,6 +36,24 @@ struct Connection {
   ConnectionProperty[] properties;
   bool isValid;
   string statusMessage;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto propsJson = Json.emptyArray;
+    foreach (prop; properties) {
+      propsJson ~= prop.toJson();
+    }
+
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.to!string())
+      .set("host", host)
+      .set("port", port)
+      .set("database", database)
+      .set("user", user)
+      .set("properties", propsJson)
+      .set("isValid", isValid)
+      .set("statusMessage", statusMessage);
+  }
 }

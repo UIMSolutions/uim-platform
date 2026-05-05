@@ -65,6 +65,6 @@ class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   }
 
   void remove(EventSubscriptionId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

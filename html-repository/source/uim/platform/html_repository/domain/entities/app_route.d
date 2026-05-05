@@ -12,15 +12,20 @@ mixin(ShowModule!());
 
 @safe:
 struct AppRoute {
-  AppRouteId id;
-  TenantId tenantId;
+  mixin TenantEntity!AppRouteId;
+
   HtmlAppId appId;
   string pathPrefix;        // URL path prefix e.g. "/myapp"
   string targetUrl;         // target backend URL for proxying
   string description;
   RouteStatus status;
-  long createdAt;
-  long updatedAt;
-  UserId createdBy;
-  UserId updatedBy;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("appId", appId)
+      .set("pathPrefix", pathPrefix)
+      .set("targetUrl", targetUrl)
+      .set("description", description)
+      .set("status", status.to!string);
+  }
 }

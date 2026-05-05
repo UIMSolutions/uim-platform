@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface DataLakeRepository : ITenantRepository!(DataLake, DataLakeId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  DataLake[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  DataLake[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

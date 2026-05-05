@@ -35,7 +35,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
   }
   
   void removeByType(TenantId tenantId, DataSubjectType subjectType) {
-    findByType(tenantId, subjectType).each!(entity => remove(entity.id));
+    findByType(tenantId, subjectType).each!(entity => remove(entity));
   }
 
   size_t countBySourceSystem(TenantId tenantId, string sourceSystem) {
@@ -51,7 +51,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
   }
 
   void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
-    findBySourceSystem(tenantId, sourceSystem).each!(entity => remove(entity.id));
+    findBySourceSystem(tenantId, sourceSystem).each!(entity => remove(entity));
   }
 
 }

@@ -14,9 +14,9 @@ mixin(ShowModule!());
 @safe:
 interface AlertRepository : ITenantRepository!(Alert, AlertId){
 
-  size_t countByInstance(TenantId tenantId, InstanceId instanceId);
-  Alert[] findByInstance(TenantId tenantId, InstanceId instanceId);
-  void removeByInstance(TenantId tenantId, InstanceId instanceId);
+  size_t countByInstance(TenantId tenantId, DatabaseInstanceId instanceId);
+  Alert[] findByInstance(TenantId tenantId, DatabaseInstanceId instanceId);
+  void removeByInstance(TenantId tenantId, DatabaseInstanceId instanceId);
 
   size_t countActive(TenantId tenantId);
   Alert[] findActive(TenantId tenantId);

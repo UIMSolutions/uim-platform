@@ -41,7 +41,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         req.createdAt = clockTime();
 
         repo.save(req);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     DataSubjectRequest getById(DataSubjectRequestId id) {
@@ -87,7 +87,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(DataSubjectRequestId id) {

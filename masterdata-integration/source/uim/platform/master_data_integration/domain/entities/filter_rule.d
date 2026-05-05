@@ -9,8 +9,8 @@ import uim.platform.master_data_integration.domain.types;
 
 /// A filter rule for selective master data distribution.
 struct FilterRule {
-  FilterRuleId id;
-  TenantId tenantId;
+  mixin TenantEntity!FilterRuleId;
+
   string name;
   string description;
 
@@ -24,9 +24,18 @@ struct FilterRule {
   string logicOperator; // "AND" or "OR"
 
   bool isActive;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("category", category.to!string())
+      .set("dataModelId", dataModelId)
+      .set("objectType", objectType)
+      .set("conditions", conditions.map!(c => c.toJson()).array.toJson())
+      .set("logicOperator", logicOperator)
+      .set("isActive", isActive);
+  }
 }
 
 /// A single filter condition.
@@ -37,4 +46,14 @@ struct FilterCondition {
   string[] valueList; // For inList / notInList operators
   string lowerBound; // For between operator
   string upperBound; // For between operator
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("fieldName", fieldName)
+      .set("operator", operator.to!string)
+      .set("value", value)
+      .set("valueList", valueList)
+      .set("lowerBound", lowerBound)
+      .set("upperBound", upperBound);
+  }
 }

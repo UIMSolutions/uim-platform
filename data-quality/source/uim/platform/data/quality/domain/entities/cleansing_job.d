@@ -18,7 +18,7 @@ struct CleansingJob {
   DatasetId datasetId;
   UserId requestedBy;
   JobStatus status = JobStatus.pending;
-  RuleId[] ruleIds; // rules to apply
+  CleansingRuleId[] ruleIds; // rules to apply
 
   long totalRecords;
   long processedRecords;

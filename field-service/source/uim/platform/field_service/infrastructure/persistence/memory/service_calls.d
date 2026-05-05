@@ -23,7 +23,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return filterByStatus(findAll(), status);
     }
     void removeByStatus(ServiceCallStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(entity => remove(entity));
     }
 
     size_t countByPriority(ServiceCallPriority priority) {
@@ -36,7 +36,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return filterByPriority(findAll(), priority);
     }
     void removeByPriority(ServiceCallPriority priority) {
-        findByPriority(priority).each!(e => remove(e.id));
+        findByPriority(priority).each!(entity => remove(entity));
     }
 
     size_t countByCustomer(CustomerId customerId) {
@@ -49,7 +49,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return filterByCustomer(findAll(), customerId);
     }
     void removeByCustomer(CustomerId customerId) {
-        findByCustomer(customerId).each!(e => remove(e.id));
+        findByCustomer(customerId).each!(entity => remove(entity));
     }
 
 }

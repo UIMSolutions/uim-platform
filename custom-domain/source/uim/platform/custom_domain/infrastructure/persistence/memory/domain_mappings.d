@@ -27,7 +27,7 @@ class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMap
     }
 
     void removeByDomain(CustomDomainId domainId) {
-        findByDomain(domainId).each!(m => remove(m.id));
+        findByDomain(domainId).each!(m => remove(m));
     }
     // #endregion ByDomain
 

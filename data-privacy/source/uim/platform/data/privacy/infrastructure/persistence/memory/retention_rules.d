@@ -51,7 +51,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    findByPurpose(tenantId, purpose).each!(entity => remove(entity.id));
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity));
   }
   // #endregion ByPurpose
 

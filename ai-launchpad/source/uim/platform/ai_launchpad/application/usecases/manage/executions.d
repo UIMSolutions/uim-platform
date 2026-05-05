@@ -34,7 +34,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.createdAt = "now";
     e.updatedAt = "now";
     repo.save(e);
-    return CommandResult(true, e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   Execution getById(ExecutionId id, ConnectionId connectionId) {
@@ -57,7 +57,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     else if (r.targetStatus == "deleted") e.status = ExecutionStatus.dead;
     e.updatedAt = "now";
     repo.save(e);
-    return CommandResult(true, e.id, "");
+    return CommandResult(true, e.id.value, "");
   }
 
   CommandResult[] bulkPatch(BulkPatchExecutionRequest r) {

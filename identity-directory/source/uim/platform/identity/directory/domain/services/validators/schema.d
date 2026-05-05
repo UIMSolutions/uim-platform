@@ -56,7 +56,7 @@ SchemaValidationResult validateExtendedAttributes(ExtendedAttribute[] attrs, Sch
       }
     }
     if (!found)
-      errors ~= "Unknown attribute '" ~ a.attributeName ~ "' for schema '" ~ schema.id ~ "'";
+      errors ~= "Unknown attribute '" ~ a.attributeName ~ "' for schema '" ~ schema.id.value ~ "'";
   }
 
   return SchemaValidationResult(errors.length == 0, errors);

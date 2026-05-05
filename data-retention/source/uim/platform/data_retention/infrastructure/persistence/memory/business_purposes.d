@@ -16,7 +16,7 @@ class MemoryBusinessPurposeRepository : TenantRepository!(BusinessPurpose, Busin
     }
 
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity.id));
+        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity));
     }
 
     size_t countByStatus(TenantId tenantId, BusinessPurposeStatus status) {
@@ -28,6 +28,6 @@ class MemoryBusinessPurposeRepository : TenantRepository!(BusinessPurpose, Busin
     }
 
     void removeByStatus(TenantId tenantId, BusinessPurposeStatus status) {
-        findByStatus(tenantId, status).each!(entity => remove(entity.id));
+        findByStatus(tenantId, status).each!(entity => remove(entity));
     }
 }

@@ -42,7 +42,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         c.createdAt = MonoTime.currTime.ticks;
 
         repo.save(c);
-        return CommandResult(true, c.id, "");
+        return CommandResult(true, c.id.value, "");
     }
 
     TrustedCertificate getById(TrustedCertificateId id) {

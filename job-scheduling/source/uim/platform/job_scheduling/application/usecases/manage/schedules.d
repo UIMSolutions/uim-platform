@@ -36,7 +36,25 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
                 request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
-        Schedule schedule = Schedule.createFromRequest(request);
+        Schedule schedule;
+        schedule.id = randomUUID();
+        schedule.jobId = request.jobId;
+        schedule.tenantId = request.tenantId;
+        schedule.description = request.description;
+        schedule.type = request.type.to!ScheduleType;
+        schedule.format = request.format.to!ScheduleFormat;
+        schedule.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        schedule.active = request.active;
+        schedule.cronExpression = request.cronExpression;
+        schedule.humanReadableSchedule = request.humanReadableSchedule;
+        schedule.repeatInterval = request.repeatInterval;
+        schedule.repeatAt = request.repeatAt;
+        schedule.time = request.time;
+        schedule.startTime = request.startTime;
+        schedule.endTime = request.endTime;
+        schedule.createdAt = now;
+        schedule.updatedAt = now;
+
         schedules.save(schedule);
         return CommandResult(true, schedule.id.value, "");
     }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct DataProcessingLog {
-    DataProcessingLogId id;
-    TenantId tenantId;
+    mixin TenantEntity!DataProcessingLogId;
+    
     LogEntryType entryType;
     LogSeverity severity;
     DataSubjectId dataSubjectId;
@@ -24,5 +24,18 @@ struct DataProcessingLog {
     string details;
     string affectedFields;
     string ipAddress;
-    long createdAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("entryType", entryType.to!string())
+            .set("severity", severity.to!string())
+            .set("dataSubjectId", dataSubjectId)
+            .set("applicationId", applicationId)
+            .set("requestId", requestId)
+            .set("operatorId", operatorId)
+            .set("action", action)
+            .set("details", details)
+            .set("affectedFields", affectedFields)
+            .set("ipAddress", ipAddress);
+    }
 }

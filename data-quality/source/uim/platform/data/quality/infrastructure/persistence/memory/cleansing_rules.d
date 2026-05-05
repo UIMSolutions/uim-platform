@@ -12,7 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, RuleId), CleansingRuleRepository {
+class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), CleansingRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;
@@ -27,7 +27,7 @@ class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, RuleId), 
   }
 
   void removeByDataset(TenantId tenantId, string datasetPattern) {
-    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity.id));
+    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity));
   }
 
   size_t countActive(TenantId tenantId) {
@@ -43,7 +43,7 @@ class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, RuleId), 
   }
 
   void removeActive(TenantId tenantId) {
-    findActive(tenantId).each!(entity => remove(entity.id));
+    findActive(tenantId).each!(entity => remove(entity));
   }
 
 }

@@ -44,7 +44,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidCommandInput(ci))
             return CommandResult(false, "", "Invalid command input data");
         repo.save(ci);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(CommandInputDTO dto) {
@@ -57,7 +57,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         if (dto.values.length > 0) existing.values = dto.values;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(CommandInputId id) {

@@ -22,7 +22,7 @@ class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), Ext
     }
 
     void removeByScope(ExtensionScope scope_) {
-        findByScope(scope_).each!(e => remove(e.id));
+        findByScope(scope_).each!(e => remove(e));
     }
 
     size_t countByStatus(ExtensionStatus status) {
@@ -34,7 +34,7 @@ class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), Ext
     }
 
     void removeByStatus(ExtensionStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(e => remove(e));
     }
 
 }

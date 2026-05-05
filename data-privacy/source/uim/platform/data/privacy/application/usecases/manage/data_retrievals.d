@@ -77,7 +77,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     request.totalFields = fieldCount;
     request.status = RetrievalStatus.completed;
     request.completedAt = Clock.currStdTime();
-    request.downloadUrl = "/api/v1/data-retrievals/" ~ request.id ~ "/download";
+    request.downloadUrl = "/api/v1/data-retrievals/" ~ request.id.value ~ "/download";
 
     repo.save(request);
     return CommandResult(true, request.id.value, "");

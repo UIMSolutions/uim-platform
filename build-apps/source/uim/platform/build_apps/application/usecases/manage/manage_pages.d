@@ -52,7 +52,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidPage(e))
             return CommandResult(false, "", "Invalid page data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(PageDTO dto) {
@@ -66,7 +66,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         if (dto.componentTree.length > 0) existing.componentTree = dto.componentTree;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(PageId id) {

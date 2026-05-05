@@ -46,7 +46,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         a.updatedAt = now;
 
         repo.save(a);
-        return CommandResult(true, a.id, "");
+        return CommandResult(true, a.id.value, "");
     }
 
     Action getById(ActionId id) {
@@ -75,7 +75,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(ActionId id) {

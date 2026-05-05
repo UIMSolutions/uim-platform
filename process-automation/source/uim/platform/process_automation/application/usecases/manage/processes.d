@@ -42,7 +42,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         p.updatedAt = now;
 
         repo.save(p);
-        return CommandResult(true, p.id, "");
+        return CommandResult(true, p.id.value, "");
     }
 
     Process getById(ProcessId id) {
@@ -71,7 +71,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deploy(DeployProcessRequest r) {
@@ -94,7 +94,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(ProcessId id) {

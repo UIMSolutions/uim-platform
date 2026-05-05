@@ -47,7 +47,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidProjectMember(e))
             return CommandResult(false, "", "Invalid project member data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ProjectMemberDTO dto) {
@@ -59,7 +59,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (dto.permissions.length > 0) existing.permissions = dto.permissions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ProjectMemberId id) {

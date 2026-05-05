@@ -43,7 +43,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
         );
     userRepo.save(user);
-    return UserResponse(user.id, "");
+    return UserResponse(user.id.value, "");
   }
 
   /// Get user by ID.
@@ -52,7 +52,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// List users for a tenant.
-  User[] listUsers(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  User[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return userRepo.findByTenant(tenantId, offset, limit);
   }
 

@@ -50,7 +50,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     c.createdAt = "now";
     c.updatedAt = "now";
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Connection getById(ConnectionId id) {
@@ -73,7 +73,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     if (r.defaultResourceGroupId.length > 0) c.defaultResourceGroupId = r.defaultResourceGroupId;
     c.updatedAt = "now";
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   CommandResult remove(ConnectionId id) {

@@ -49,7 +49,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidBuildConfiguration(e))
             return CommandResult(false, "", "Invalid build configuration data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(BuildConfigurationDTO dto) {
@@ -62,7 +62,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.deployCommand.length > 0) existing.deployCommand = dto.deployCommand;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(BuildConfigurationId id) {

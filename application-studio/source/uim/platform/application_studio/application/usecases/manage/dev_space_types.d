@@ -44,7 +44,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidDevSpaceType(e))
             return CommandResult(false, "", "Invalid dev space type data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(DevSpaceTypeDTO dto) {
@@ -56,7 +56,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         if (dto.predefinedExtensions.length > 0) existing.predefinedExtensions = dto.predefinedExtensions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(DevSpaceTypeId id) {

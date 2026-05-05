@@ -20,16 +20,33 @@ struct DashboardPanel {
   int positionY;
   int width = 6;
   int height = 4;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("id", id)
+      .set("title", title)
+      .set("panelType", panelType.to!string())
+      .set("query", query)
+      .set("positionX", positionX)
+      .set("positionY", positionY)
+      .set("width", width)
+      .set("height", height);
+  }
 }
 
 struct Dashboard {
-  DashboardId id;
-  TenantId tenantId;
+  mixin TenantEntity!DashboardId;
+
   string name;
   string description;
   bool isDefault;
   DashboardPanel[] panels;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("isDefault", isDefault)
+      .set("panels", panels.map!(p => p.toJson()).array.toJson());
+  }
 }

@@ -25,7 +25,7 @@ class MemoryTransformationRepository : TenantRepository!(Transformation, Transfo
   }
 
   void removeBySystem(TenantId tenantId, string systemId) {
-    findBySystem(tenantId, systemId).each!(e => remove(e.id));
+    findBySystem(tenantId, systemId).each!(entity => remove(entity));
   }
   // #endregion BySystem
 
@@ -43,7 +43,7 @@ class MemoryTransformationRepository : TenantRepository!(Transformation, Transfo
   }
 
   void removeBySystemRole(TenantId tenantId, SystemRole role) {
-    findBySystemRole(tenantId, role).each!(e => remove(e.id));
+    findBySystemRole(tenantId, role).each!(entity => remove(entity));
   }
   // #endregion BySystemRole
 

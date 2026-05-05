@@ -21,7 +21,7 @@ class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJo
     }
 
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity.id));
+        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity));
     }
     // #endregion ByApplicationGroup
 
@@ -39,7 +39,7 @@ class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJo
     }
 
     void removeByStatus(TenantId tenantId, ArchivingJobStatus status) {
-        findByStatus(tenantId, status).each!(entity => remove(entity.id));
+        findByStatus(tenantId, status).each!(entity => remove(entity));
     }
     // #endregion ByStatus
 

@@ -55,7 +55,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     tj.updatedAt = now;
 
     jobRepo.save(tj);
-    return CommandResult(true, tj.id, "");
+    return CommandResult(true, tj.id.value, "");
   }
 
   CommandResult patch(PatchTrainingJobRequest r) {
@@ -89,7 +89,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     jobRepo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   TrainingJob getById(TrainingJobId id, ClientId clientId) {

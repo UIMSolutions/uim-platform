@@ -73,7 +73,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     // Simulate extraction processing
     processExtraction(doc);
 
-    return CommandResult(true, doc.id, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   CommandResult confirm(ConfirmDocumentRequest r) {
@@ -92,7 +92,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     doc.updatedAt = MonoTime.currTime.ticks;
 
     docRepo.update(doc);
-    return CommandResult(true, doc.id, "");
+    return CommandResult(true, doc.id.value, "");
   }
 
   Document getById(DocumentId id, ClientId clientId) {

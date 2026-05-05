@@ -38,7 +38,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         entry.status = CacheStatus.active;
 
         repo.save(entry);
-        return CommandResult(true, entry.id, "");
+        return CommandResult(true, entry.id.value, "");
     }
 
     ContentCache getById(ContentCacheId id) {

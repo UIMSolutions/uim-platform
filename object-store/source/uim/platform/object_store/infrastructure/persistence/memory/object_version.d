@@ -50,7 +50,7 @@ class MemoryObjectVersionRepository : ObjectVersionRepository {
   }
 
   void remove(ObjectVersionId id) {
-    store.removeById(id);
+    removeById(id);
   }
 
   void removeByObject(ObjectId objectId) {
@@ -59,6 +59,6 @@ class MemoryObjectVersionRepository : ObjectVersionRepository {
       if (kv.value.objectId == objectId)
         toRemove ~= kv.key;
     foreach (id; toRemove)
-      store.removeById(id);
+      removeById(id);
   }
 }

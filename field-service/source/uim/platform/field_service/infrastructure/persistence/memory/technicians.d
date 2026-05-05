@@ -23,7 +23,7 @@ class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), 
         return findAll().filter!(e => e.status == status).array;
     }
     void removeByStatus(TechnicianStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(entity => remove(entity));
     }
 
     size_t countByRegion(string region) {
@@ -36,7 +36,7 @@ class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), 
         return findAll().filter!(e => e.region == region).array;
     }
     void removeByRegion(string region) {
-        findByRegion(region).each!(e => remove(e.id));
+        findByRegion(region).each!(entity => remove(entity));
     }
 
 }

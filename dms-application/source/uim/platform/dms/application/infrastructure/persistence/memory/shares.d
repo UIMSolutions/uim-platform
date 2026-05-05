@@ -24,7 +24,7 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   void removeByDocument(TenantId tenantId, DocumentId documentId) {
-    findByDocument(tenantId, documentId).each!(e => store.remove(e.id));
+    findByDocument(tenantId, documentId).each!(e => remove(e.id));
   }
 
   size_t countBySharedWith(TenantId tenantId, string sharedWith) {
@@ -36,7 +36,7 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   void removeBySharedWith(TenantId tenantId, string sharedWith) {
-    findBySharedWith(tenantId, sharedWith).each!(e => store.remove(e.id));
+    findBySharedWith(tenantId, sharedWith).each!(e => remove(e.id));
   }
 
   size_t countByStatus(TenantId tenantId, ShareStatus status) {
@@ -48,6 +48,6 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   void removeByStatus(TenantId tenantId, ShareStatus status) {
-    findByStatus(tenantId, status).each!(e => store.remove(e));
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 }

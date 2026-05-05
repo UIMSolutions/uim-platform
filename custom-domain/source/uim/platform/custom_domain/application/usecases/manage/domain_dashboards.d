@@ -85,6 +85,6 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
         else
             dashboardRepo.update(dashboard);
 
-        return CommandResult(true, dashboard.id, "");
+        return CommandResult(true, dashboard.id.value, "");
     }
 }

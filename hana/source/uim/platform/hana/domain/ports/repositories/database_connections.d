@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface DatabaseConnectionRepository : ITenantRepository!(DatabaseConnection, DatabaseConnectionId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  DatabaseConnection[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  DatabaseConnection[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

@@ -33,7 +33,7 @@ struct Certificate {
   }
 
   /// Check if certificate expires within the given number of days.
-  bool expiresWithinDays(long now, uint days) const {
+  bool expiresWithinDays(long now, size_t days) const {
     enum secsPerDay = 86_400L;
     return validTo > 0 && (validTo - now) < (days * secsPerDay);
   }

@@ -48,7 +48,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     b.createdAt = MonoTime.currTime.ticks;
 
     repo.save(b);
-    return CommandResult(true, b.id, "");
+    return CommandResult(true, b.id.value, "");
   }
 
   Backup getById(BackupId id) {
@@ -70,7 +70,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     existing.schedule.retentionDays = r.retentionDays;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(BackupId id) {

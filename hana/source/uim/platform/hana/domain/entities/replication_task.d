@@ -29,7 +29,7 @@ struct ReplicationMapping {
 struct ReplicationTask {
   mixin TenantEntity!(ReplicationTaskId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   string description;
   ReplicationMode mode;

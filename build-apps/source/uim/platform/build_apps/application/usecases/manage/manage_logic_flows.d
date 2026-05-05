@@ -55,7 +55,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidLogicFlow(e))
             return CommandResult(false, "", "Invalid logic flow data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(LogicFlowDTO dto) {
@@ -68,7 +68,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         if (dto.connections.length > 0) existing.connections = dto.connections;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(LogicFlowId id) {

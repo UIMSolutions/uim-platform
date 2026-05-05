@@ -43,7 +43,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         ds.createdAt = clockTime();
 
         repo.save(ds);
-        return CommandResult(true, ds.id, "");
+        return CommandResult(true, ds.id.value, "");
     }
 
     DataSubject getById(DataSubjectId id) {
@@ -76,7 +76,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult block(DataSubjectId id) {
@@ -87,7 +87,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         existing.status = DataSubjectStatus.blocked;
         existing.updatedAt = clockTime();
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult erase(DataSubjectId id) {
@@ -103,7 +103,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         existing.dateOfBirth = "";
         existing.updatedAt = clockTime();
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(DataSubjectId id) {

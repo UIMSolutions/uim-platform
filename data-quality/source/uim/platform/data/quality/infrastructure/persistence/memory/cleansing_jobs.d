@@ -28,7 +28,7 @@ class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJo
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    findByDataset(tenantId, datasetId).each!(entity => remove(entity.id));
+    findByDataset(tenantId, datasetId).each!(entity => remove(entity));
   }
   // #endregion ByDataset
 
@@ -46,7 +46,7 @@ class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJo
   }
 
   void removeByStatus(TenantId tenantId, JobStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
   

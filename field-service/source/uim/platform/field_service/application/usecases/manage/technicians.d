@@ -58,7 +58,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidTechnician(t))
             return CommandResult(false, "", "Invalid technician data");
         repo.save(t);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(TechnicianDTO dto) {
@@ -73,7 +73,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         if (dto.address.length > 0) existing.address = dto.address;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(TechnicianId id) {

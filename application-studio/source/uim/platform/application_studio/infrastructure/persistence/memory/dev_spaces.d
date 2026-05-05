@@ -22,7 +22,7 @@ class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpa
     }
 
     void removeByOwner(string owner) {
-        findByOwner(owner).each!(e => remove(e.id));
+        findByOwner(owner).each!(e => remove(e));
     }
 
     size_t countByStatus(DevSpaceStatus status) {
@@ -34,7 +34,7 @@ class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpa
     }
 
     void removeByStatus(DevSpaceStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(e => remove(e));
     }
 
 }

@@ -23,7 +23,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     }
 
     void removeByKey(PrivateKeyId keyId) {
-        findByKey(keyId).each!(c => remove(c.id));
+        findByKey(keyId).each!(c => remove(c));
     }
     // #endregion ByKey
 
@@ -38,7 +38,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     }
 
     void removeExpiring(TenantId tenantId, long beforeTimestamp) {
-        findExpiring(tenantId, beforeTimestamp).each!(c => remove(c.id));
+        findExpiring(tenantId, beforeTimestamp).each!(c => remove(c));
     }
     // #endregion Expiring
 

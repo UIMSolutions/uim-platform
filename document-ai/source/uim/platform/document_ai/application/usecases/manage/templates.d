@@ -64,7 +64,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     t.updatedAt = now;
 
     repo.save(t);
-    return CommandResult(true, t.id, "");
+    return CommandResult(true, t.id.value, "");
   }
 
   CommandResult update(UpdateTemplateRequest r) {
@@ -91,7 +91,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   Template getById(TemplateId id, ClientId clientId) {

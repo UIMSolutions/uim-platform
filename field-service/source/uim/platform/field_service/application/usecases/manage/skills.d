@@ -53,7 +53,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidSkill(s))
             return CommandResult(false, "", "Invalid skill data");
         repo.save(s);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(SkillDTO dto) {
@@ -67,7 +67,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         if (dto.issuingAuthority.length > 0) existing.issuingAuthority = dto.issuingAuthority;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(SkillId id) {

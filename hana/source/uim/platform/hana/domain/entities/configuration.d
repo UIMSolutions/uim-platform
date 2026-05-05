@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct Configuration {
   mixin TenantEntity!(ConfigurationId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string section;
   string key;
   string value;

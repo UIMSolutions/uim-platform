@@ -20,7 +20,7 @@ interface SiteRepository : ITenantRepository!(Site, SiteId) {
   void removeByAlias(TenantId tenantId, string alias_);
 
   size_t countByStatus(TenantId tenantId, SiteStatus status);
-  Site[] findByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100);
+  Site[] findByStatus(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100);
   void removeByStatus(TenantId tenantId, SiteStatus status);
   
 }

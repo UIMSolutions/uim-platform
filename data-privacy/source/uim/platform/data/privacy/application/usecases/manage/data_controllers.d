@@ -41,7 +41,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(c.id, "");
+    return CommandResult(c.id.value, "");
   }
 
   DataController getController(DataControllerId tenantId, id tenantId) {
@@ -69,7 +69,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     c.updatedAt = Clock.currStdTime();
 
     repo.update(c);
-    return CommandResult(c.id, "");
+    return CommandResult(c.id.value, "");
   }
 
   void deleteController(DataControllerId tenantId, id tenantId) {

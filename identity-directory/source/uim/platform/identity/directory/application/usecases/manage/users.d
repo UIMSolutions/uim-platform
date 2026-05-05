@@ -83,12 +83,12 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// List users for a tenant (SCIM paginated).
-  User[] listUsers(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  User[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return userRepo.findByTenant(tenantId, offset, limit);
   }
 
   /// Search users with a SCIM-like filter.
-  User[] searchUsers(TenantId tenantId, string filter, uint offset = 0, uint limit = 100) {
+  User[] searchUsers(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
     return userRepo.search(tenantId, filter, offset, limit);
   }
 

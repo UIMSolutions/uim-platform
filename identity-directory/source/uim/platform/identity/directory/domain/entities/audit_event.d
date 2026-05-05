@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// Immutable audit log entry.
 struct AuditEvent {
-  string id;
-  TenantId tenantId;
+      mixin TenantEntity!AuditEventId;
+
   AuditEventType eventType;
   string actorId; // user or client that performed the action
   string actorType; // "User", "ApiClient", "System"
@@ -25,4 +25,18 @@ struct AuditEvent {
   string userAgent;
   string[string] details; // additional key-value metadata
   long timestamp;
+
+  Json toJson() const {
+    return entityToJson
+      .set("eventType", eventType.to!string)
+      .set("actorId", actorId)
+      .set("actorType", actorType)
+      .set("targetId", targetId)
+      .set("targetType", targetType)
+      .set("description", description)
+      .set("ipAddress", ipAddress)
+      .set("userAgent", userAgent)
+      .set("details", details)
+      .set("timestamp", timestamp);
+  }
 }

@@ -49,476 +49,477 @@ struct CreateInstanceRequest {
       .set("whitelistedIps", whitelistedIps)
       .set("labels", labels);
   }
+}
 
-  struct UpdateInstanceRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string description;
-    string size;
-    long memoryGB;
-    int vcpus;
-    long storageGB;
-    bool enableScriptServer;
-    bool enableDocStore;
-    bool allowAllIpAccess;
-    string[] whitelistedIps;
+struct UpdateInstanceRequest {
+  TenantId tenantId;
+  string id;
+  string name;
+  string description;
+  string size;
+  long memoryGB;
+  int vcpus;
+  long storageGB;
+  bool enableScriptServer;
+  bool enableDocStore;
+  bool allowAllIpAccess;
+  string[] whitelistedIps;
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("size", size)
-        .set("memoryGB", memoryGB)
-        .set("vcpus", vcpus)
-        .set("storageGB", storageGB)
-        .set("enableScriptServer", enableScriptServer)
-        .set("enableDocStore", enableDocStore)
-        .set("allowAllIpAccess", allowAllIpAccess)
-        .set("whitelistedIps", whitelistedIps);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("size", size)
+      .set("memoryGB", memoryGB)
+      .set("vcpus", vcpus)
+      .set("storageGB", storageGB)
+      .set("enableScriptServer", enableScriptServer)
+      .set("enableDocStore", enableDocStore)
+      .set("allowAllIpAccess", allowAllIpAccess)
+      .set("whitelistedIps", whitelistedIps);
+  }
+}
+
+struct InstanceActionRequest {
+  TenantId tenantId;
+  string id;
+  string action;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", id)
+      .set("action", action);
+  }
+}
+
+// --- Data Lake ---
+
+struct CreateDataLakeRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  string id;
+  string name;
+  string description;
+  int computeNodes;
+  string[][] storage;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("computeNodes", computeNodes)
+      .set("storage", storage);
+  }
+}
+
+struct UpdateDataLakeRequest {
+  TenantId tenantId;
+  string id;
+  string name;
+  string description;
+  int computeNodes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("computeNodes", computeNodes);
   }
 
-  struct InstanceActionRequest {
-    TenantId tenantId;
-    string id;
-    string action;
+}
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("action", action);
-    }
+// --- Schema ---
+
+struct CreateSchemaRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  string id;
+  string name;
+  string owner;
+  string type;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", id)
+      .set("name", name)
+      .set("owner", owner)
+      .set("type", type);
   }
+}
 
-  // --- Data Lake ---
+struct UpdateSchemaRequest {
+  TenantId tenantId;
+  SchemaId schemaId;
+  string owner;
 
-  struct CreateDataLakeRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string description;
-    int computeNodes;
-    string[][] storage;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("computeNodes", computeNodes)
-        .set("storage", storage);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", schemaId.value)
+      .set("owner", owner);
   }
+}
 
-  struct UpdateDataLakeRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string description;
-    int computeNodes;
+// --- Database User ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("computeNodes", computeNodes);
-    }
+struct CreateDatabaseUserRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  string id;
+  string userName;
+  string password;
+  string authType;
+  string defaultSchema;
+  bool isRestricted;
+  bool forcePasswordChange;
+  string[] roles;
 
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", id)
+      .set("userName", userName)
+      .set("password", password)
+      .set("authType", authType)
+      .set("defaultSchema", defaultSchema)
+      .set("isRestricted", isRestricted)
+      .set("forcePasswordChange", forcePasswordChange)
+      .set("roles", roles);
   }
+}
 
-  // --- Schema ---
+struct UpdateDatabaseUserRequest {
+  TenantId tenantId;
+  DatabaseUserId userId;
+  string password;
+  string defaultSchema;
+  bool isRestricted;
+  bool forcePasswordChange;
+  string[] roles;
 
-  struct CreateSchemaRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string owner;
-    string type;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("owner", owner)
-        .set("type", type);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", userId.value)
+      .set("password", password)
+      .set("defaultSchema", defaultSchema)
+      .set("isRestricted", isRestricted)
+      .set("forcePasswordChange", forcePasswordChange)
+      .set("roles", roles);
   }
+}
 
-  struct UpdateSchemaRequest {
-    TenantId tenantId;
-    string id;
-    string owner;
+// --- Backup ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("owner", owner);
-    }
+struct CreateBackupRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  string id;
+  string name;
+  string type;
+  string destination;
+  bool encrypted;
+  string cronExpression;
+  int retentionDays;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", id)
+      .set("name", name)
+      .set("type", type)
+      .set("destination", destination)
+      .set("encrypted", encrypted)
+      .set("cronExpression", cronExpression)
+      .set("retentionDays", retentionDays);
   }
+}
 
-  // --- Database User ---
+struct UpdateBackupRequest {
+  TenantId tenantId;
+  BackupId backupId;
+  string name;
+  string destination;
+  string cronExpression;
+  int retentionDays;
 
-  struct CreateDatabaseUserRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string userName;
-    string password;
-    string authType;
-    string defaultSchema;
-    bool isRestricted;
-    bool forcePasswordChange;
-    string[] roles;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("userName", userName)
-        .set("password", password)
-        .set("authType", authType)
-        .set("defaultSchema", defaultSchema)
-        .set("isRestricted", isRestricted)
-        .set("forcePasswordChange", forcePasswordChange)
-        .set("roles", roles);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", backupId.value)
+      .set("name", name)
+      .set("destination", destination)
+      .set("cronExpression", cronExpression)
+      .set("retentionDays", retentionDays);
   }
+}
 
-  struct UpdateDatabaseUserRequest {
-    TenantId tenantId;
-    string id;
-    string password;
-    string defaultSchema;
-    bool isRestricted;
-    bool forcePasswordChange;
-    string[] roles;
+// --- Alert ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("password", password)
-        .set("defaultSchema", defaultSchema)
-        .set("isRestricted", isRestricted)
-        .set("forcePasswordChange", forcePasswordChange)
-        .set("roles", roles);
-    }
+struct CreateAlertRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  string id;
+  string name;
+  string description;
+  string severity;
+  string category;
+  string metricName;
+  double warningValue;
+  double criticalValue;
+  string unit;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("severity", severity)
+      .set("category", category)
+      .set("metricName", metricName)
+      .set("warningValue", warningValue)
+      .set("criticalValue", criticalValue)
+      .set("unit", unit);
   }
+}
 
-  // --- Backup ---
+struct UpdateAlertRequest {
+  TenantId tenantId;
+  string id;
+  string name;
+  string description;
+  string severity;
+  double warningValue;
+  double criticalValue;
 
-  struct CreateBackupRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string type;
-    string destination;
-    bool encrypted;
-    string cronExpression;
-    int retentionDays;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("type", type)
-        .set("destination", destination)
-        .set("encrypted", encrypted)
-        .set("cronExpression", cronExpression)
-        .set("retentionDays", retentionDays);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("severity", severity)
+      .set("warningValue", warningValue)
+      .set("criticalValue", criticalValue);
   }
+}
 
-  struct UpdateBackupRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string destination;
-    string cronExpression;
-    int retentionDays;
+struct AcknowledgeAlertRequest {
+  TenantId tenantId;
+  string id;
+  UserId acknowledgedBy;
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("destination", destination)
-        .set("cronExpression", cronExpression)
-        .set("retentionDays", retentionDays);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", id)
+      .set("acknowledgedBy", acknowledgedBy);
   }
+}
 
-  // --- Alert ---
+// --- HDI Container ---
 
-  struct CreateAlertRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string description;
-    string severity;
-    string category;
-    string metricName;
-    double warningValue;
-    double criticalValue;
-    string unit;
+struct CreateHDIContainerRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  HDIContainerId hdiContainerId;
+  string name;
+  string description;
+  string appUser;
+  string[] grantedSchemas;
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("severity", severity)
-        .set("category", category)
-        .set("metricName", metricName)
-        .set("warningValue", warningValue)
-        .set("criticalValue", criticalValue)
-        .set("unit", unit);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", hdiContainerId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("appUser", appUser)
+      .set("grantedSchemas", grantedSchemas);
   }
+}
 
-  struct UpdateAlertRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string description;
-    string severity;
-    double warningValue;
-    double criticalValue;
+struct UpdateHDIContainerRequest {
+  TenantId tenantId;
+  HDIContainerId hdiContainerId;
+  string name;
+  string description;
+  string[] grantedSchemas;
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("severity", severity)
-        .set("warningValue", warningValue)
-        .set("criticalValue", criticalValue);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", hdiContainerId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("grantedSchemas", grantedSchemas);
   }
+}
 
-  struct AcknowledgeAlertRequest {
-    TenantId tenantId;
-    string id;
-    UserId acknowledgedBy;
+// --- Replication Task ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("acknowledgedBy", acknowledgedBy);
-    }
+struct CreateReplicationTaskRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  ReplicationTaskId replicationTaskId;
+  string name;
+  string description;
+  string mode;
+  string sourceConnectionId;
+  string targetConnectionId;
+  string scheduleExpression;
+  string[][] mappings;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", replicationTaskId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("mode", mode)
+      .set("sourceConnectionId", sourceConnectionId)
+      .set("targetConnectionId", targetConnectionId)
+      .set("scheduleExpression", scheduleExpression)
+      .set("mappings", mappings);
   }
+}
 
-  // --- HDI Container ---
+struct UpdateReplicationTaskRequest {
+  TenantId tenantId;
+  ReplicationTaskId replicationTaskId;
+  string name;
+  string description;
+  string mode;
+  string scheduleExpression;
 
-  struct CreateHDIContainerRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string description;
-    string appUser;
-    string[] grantedSchemas;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("appUser", appUser)
-        .set("grantedSchemas", grantedSchemas);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", replicationTaskId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("mode", mode)
+      .set("scheduleExpression", scheduleExpression);
   }
+}
 
-  struct UpdateHDIContainerRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string description;
-    string[] grantedSchemas;
+// --- Configuration ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("grantedSchemas", grantedSchemas);
-    }
+struct CreateConfigurationRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  ConfigurationId configurationId;
+  string section;
+  string key;
+  string value;
+  string scope_;
+  string dataType;
+  string description;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId)
+      .set("id", configurationId.value)
+      .set("section", section)
+      .set("key", key)
+      .set("value", value)
+      .set("scope_", scope_)
+      .set("dataType", dataType)
+      .set("description", description);
   }
+}
 
-  // --- Replication Task ---
+struct UpdateConfigurationRequest {
+  TenantId tenantId;
+  ConfigurationId configurationId;
+  string value;
 
-  struct CreateReplicationTaskRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string description;
-    string mode;
-    string sourceConnectionId;
-    string targetConnectionId;
-    string scheduleExpression;
-    string[][] mappings;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("mode", mode)
-        .set("sourceConnectionId", sourceConnectionId)
-        .set("targetConnectionId", targetConnectionId)
-        .set("scheduleExpression", scheduleExpression)
-        .set("mappings", mappings);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", configurationId.value)
+      .set("value", value);
   }
+}
 
-  struct UpdateReplicationTaskRequest {
-    TenantId tenantId;
-    string id;
-    string name;
-    string description;
-    string mode;
-    string scheduleExpression;
+// --- Database Connection ---
 
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("mode", mode)
-        .set("scheduleExpression", scheduleExpression);
-    }
+struct CreateDatabaseConnectionRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  DatabaseConnectionId databaseConnectionId;
+  string name;
+  string description;
+  string type;
+  string host;
+  int port;
+  string database;
+  string user;
+  string password;
+  bool useTls;
+  int minConnections;
+  int maxConnections;
+  string[][] properties;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("instanceId", instanceId.value)
+      .set("id", databaseConnectionId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type)
+      .set("host", host)
+      .set("port", port)
+      .set("database", database)
+      .set("user", user)
+      .set("password", password)
+      .set("useTls", useTls)
+      .set("minConnections", minConnections)
+      .set("maxConnections", maxConnections)
+      .set("properties", properties);
   }
+}
 
-  // --- Configuration ---
+struct UpdateDatabaseConnectionRequest {
+  TenantId tenantId;
+  DatabaseInstanceId instanceId;
+  DatabaseConnectionId databaseConnectionId;
+  string name;
+  string description;
+  string host;
+  int port;
+  string database;
+  string user;
+  string password;
 
-  struct CreateConfigurationRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    ConfigurationId id;
-    string section;
-    string key;
-    string value;
-    string scope_;
-    string dataType;
-    string description;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("section", section)
-        .set("key", key)
-        .set("value", value)
-        .set("scope_", scope_)
-        .set("dataType", dataType)
-        .set("description", description);
-    }
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("id", databaseConnectionId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("host", host)
+      .set("port", port)
+      .set("database", database)
+      .set("user", user)
+      .set("password", password);
   }
-
-  struct UpdateConfigurationRequest {
-    TenantId tenantId;
-    ConfigurationId id;
-    string value;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("value", value);
-    }
-  }
-
-  // --- Database Connection ---
-
-  struct CreateDatabaseConnectionRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    string id;
-    string name;
-    string description;
-    string type;
-    string host;
-    int port;
-    string database;
-    string user;
-    string password;
-    bool useTls;
-    int minConnections;
-    int maxConnections;
-    string[][] properties;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("instanceId", instanceId)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("type", type)
-        .set("host", host)
-        .set("port", port)
-        .set("database", database)
-        .set("user", user)
-        .set("password", password)
-        .set("useTls", useTls)
-        .set("minConnections", minConnections)
-        .set("maxConnections", maxConnections)
-        .set("properties", properties);
-    }
-  }
-
-  struct UpdateDatabaseConnectionRequest {
-    TenantId tenantId;
-    InstanceId instanceId;
-    DatabaseConnectionId id;
-    string name;
-    string description;
-    string host;
-    int port;
-    string database;
-    string user;
-    string password;
-
-    Json toJson() const {
-      return Json.emptyObject
-        .set("tenantId", tenantId.value)
-        .set("id", id)
-        .set("name", name)
-        .set("description", description)
-        .set("host", host)
-        .set("port", port)
-        .set("database", database)
-        .set("user", user)
-        .set("password", password);
-    }
-  }
+}

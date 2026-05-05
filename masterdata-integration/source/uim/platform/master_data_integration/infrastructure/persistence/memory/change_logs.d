@@ -17,7 +17,7 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   size_t countByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
     return findByObjectId(tenantId, objectId).length;
   }
-  ChangeLogEntry[] filterByObjectId(ChangeLogEntry[] entries, MasterDataObjectId objectId, uint offset = 0, uint limit = 0) {
+  ChangeLogEntry[] filterByObjectId(ChangeLogEntry[] entries, MasterDataObjectId objectId, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? entries.filter!(e => e.objectId == objectId).skip(offset).array
         : entries.filter!(e => e.objectId == objectId).skip(offset).take(limit).array;
@@ -32,7 +32,7 @@ class MemoryChangeLogRepository : ChangeLogRepository {
    size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;
   }
-  ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries, MasterDataCategory category, uint offset = 0, uint limit = 0) {
+  ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries, MasterDataCategory category, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? entries.filter!(e => e.category == category).skip(offset).array
         : entries.filter!(e => e.category == category).skip(offset).take(limit).array;
@@ -45,7 +45,7 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   size_t countSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
     return findSinceTimestamp(tenantId, sinceTimestamp).length;
   }
-  ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries, long sinceTimestamp, uint offset = 0, uint limit = 0) {
+  ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries, long sinceTimestamp, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).array
         : entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).take(limit).array;

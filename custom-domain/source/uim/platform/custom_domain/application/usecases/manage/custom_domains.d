@@ -49,7 +49,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         d.updatedAt = now;
 
         repo.save(d);
-        return CommandResult(true, d.id, "");
+        return CommandResult(true, d.id.value, "");
     }
 
     CustomDomain getById(CustomDomainId id) {
@@ -76,7 +76,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult activate(CustomDomainId id) {

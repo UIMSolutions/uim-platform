@@ -18,7 +18,7 @@ interface RegisteredApplicationRepository : ITenantRepository!(RegisteredApplica
     void removeByName(string name);
 
     size_t countByStatus(ApplicationStatus status);
-    RegisteredApplication[] findByStatus(ApplicationStatus status, uint offset = 0, uint limit = 100);
+    RegisteredApplication[] findByStatus(ApplicationStatus status, size_t offset = 0, size_t limit = 100);
     void removeByStatus(ApplicationStatus status);
 
 }

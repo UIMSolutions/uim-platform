@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.types;
 
-// --- ID aliases ---
+import uim.platform.job_scheduling;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct JobId {
     string value;

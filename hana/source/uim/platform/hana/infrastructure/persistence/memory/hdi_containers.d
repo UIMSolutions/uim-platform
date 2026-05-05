@@ -19,19 +19,19 @@ mixin(ShowModule!());
 class MemoryHDIContainerRepository : TenantRepository!(HDIContainer, HDIContainerId), HDIContainerRepository {
 
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
 
-  HDIContainer[] filterByInstance(HDIContainer[] containers, InstanceId instanceId) {
+  HDIContainer[] filterByInstance(HDIContainer[] containers, DatabaseInstanceId instanceId) {
     return containers.filter!(c => c.instanceId == instanceId).array;
   }
 
-  HDIContainer[] findByInstance(InstanceId instanceId) {
+  HDIContainer[] findByInstance(DatabaseInstanceId instanceId) {
     return filterByInstance(findAll(), instanceId);
   }
 
-  void removeByInstance(InstanceId instanceId) {
+  void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(c => remove(c.id));
   }
 }

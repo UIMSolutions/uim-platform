@@ -44,7 +44,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
   }
 
   void removeByStatus(TenantId tenantId, PurposeRecordStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
   size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
@@ -60,7 +60,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
   }
 
   void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
-    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity.id));
+    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity));
   }
 
 }

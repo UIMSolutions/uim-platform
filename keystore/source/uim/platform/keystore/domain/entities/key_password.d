@@ -16,12 +16,17 @@ mixin(ShowModule!());
 /// A stored password or key phrase that protects a keystore or key entry.
 /// Passwords are encrypted at rest and scoped per application/subscription.
 struct KeyPassword {
-  KeyPasswordId id;
+  mixin TenantEntity!KeyPasswordId;
+
   string alias_; // user-defined alias for this password
   string passwordValue; // stored opaque/encrypted value
   string accountId;
   string applicationId;
-  TenantId tenantId;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("alias_", alias_)
+      .set("accountId", accountId)
+      .set("applicationId", applicationId);
+  }
 }

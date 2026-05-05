@@ -65,14 +65,14 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       siteRepo.update(site);
     }
 
-    return PageResponse(page.id, "");
+    return PageResponse(page.id.value, "");
   }
 
   Page getPage(PageId id) {
     return pageRepo.findById(id);
   }
 
-  Page[] listPages(SiteId siteId, uint offset = 0, uint limit = 100) {
+  Page[] listPages(SiteId siteId, size_t offset = 0, size_t limit = 100) {
     return pageRepo.findBySite(siteId, offset, limit);
   }
 

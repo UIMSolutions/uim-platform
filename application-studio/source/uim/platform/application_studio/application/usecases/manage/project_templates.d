@@ -45,7 +45,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidProjectTemplate(e))
             return CommandResult(false, "", "Invalid project template data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ProjectTemplateDTO dto) {
@@ -57,7 +57,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ProjectTemplateId id) {

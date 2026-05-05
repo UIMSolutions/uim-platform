@@ -46,7 +46,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         rec.updatedAt = now;
 
         repo.save(rec);
-        return CommandResult(true, rec.id, "");
+        return CommandResult(true, rec.id.value, "");
     }
 
     DnsRecord getById(DnsRecordId id) {
@@ -75,7 +75,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(DnsRecordId id) {

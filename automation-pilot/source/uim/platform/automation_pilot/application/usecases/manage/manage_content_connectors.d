@@ -43,7 +43,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidContentConnector(cc))
             return CommandResult(false, "", "Invalid content connector data");
         repo.save(cc);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ContentConnectorDTO dto) {
@@ -57,7 +57,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (dto.path.length > 0) existing.path = dto.path;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ContentConnectorId id) {

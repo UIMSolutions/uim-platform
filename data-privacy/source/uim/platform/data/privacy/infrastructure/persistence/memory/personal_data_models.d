@@ -28,7 +28,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   void removeByCategory(TenantId tenantId, PersonalDataCategory category) {
-    findByCategory(tenantId, category).each!(entity => remove(entity.id));
+    findByCategory(tenantId, category).each!(entity => remove(entity));
   }
 
   size_t countBySourceSystem(TenantId tenantId, string sourceSystem) {
@@ -44,7 +44,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
-    findBySourceSystem(tenantId, sourceSystem).each!(entity => remove(entity.id));
+    findBySourceSystem(tenantId, sourceSystem).each!(entity => remove(entity));
   }
 
   size_t countBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
@@ -60,7 +60,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   void removeBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
-    findBySubjectType(tenantId, subjectType).each!(entity => remove(entity.id));
+    findBySubjectType(tenantId, subjectType).each!(entity => remove(entity));
   }
 
   PersonalDataModel[] filterSpecialCategories(PersonalDataModel[] models) {
@@ -72,7 +72,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   void removeSpecialCategories(TenantId tenantId) {
-    findSpecialCategories(tenantId).each!(entity => remove(entity.id));
+    findSpecialCategories(tenantId).each!(entity => remove(entity));
   }
 
 }

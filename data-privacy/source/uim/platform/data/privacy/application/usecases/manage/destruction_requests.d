@@ -43,7 +43,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
 
     repo.save(r);
-    return CommandResult(true, r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   DestructionRequest getRequest(TenantId tenantId, DestructionRequestId id) {
@@ -71,7 +71,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
       r.completedAt = now;
 
     repo.update(r);
-    return CommandResult(true, r.id, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   CommandResult deleteRequest(TenantId tenantId, DestructionRequestId id) {

@@ -52,7 +52,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     subject.updatedAt = now;
 
     repo.save(subject);
-    return CommandResult(true, subject.id, "");
+    return CommandResult(true, subject.id.value, "");
   }
 
   DataSubject getSubject(DataSubjectId tenantId, id tenantId) {

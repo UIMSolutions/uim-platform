@@ -43,7 +43,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         k.createdAt = MonoTime.currTime.ticks;
 
         repo.save(k);
-        return CommandResult(true, k.id, "");
+        return CommandResult(true, k.id.value, "");
     }
 
     PrivateKey getById(PrivateKeyId id) {

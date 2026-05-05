@@ -50,7 +50,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
 
     c.createdAt = "now";
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   Configuration getById(ConnectionId connectionId, ConfigurationId id) {

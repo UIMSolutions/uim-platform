@@ -46,7 +46,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
         if (error.length > 0)
             return CommandResult(false, "", error);
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(OAuthScopeDTO dto) {
@@ -57,7 +57,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
         existing.description = dto.description;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(OAuthScopeId id) {

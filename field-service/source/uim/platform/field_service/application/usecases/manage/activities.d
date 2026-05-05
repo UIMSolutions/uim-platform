@@ -56,7 +56,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidActivity(a))
             return CommandResult(false, "", "Invalid activity data");
         repo.save(a);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ActivityDTO dto) {
@@ -73,7 +73,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
         if (dto.feedbackCode.length > 0) existing.feedbackCode = dto.feedbackCode;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ActivityId id) {

@@ -138,13 +138,13 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     return items.filter!(e => e.tenantId == tenantId).array;
   }
 
-  TEntity[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 0) {
+  TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
     if (!existsByTenant(tenantId)) {
       return null;
     }
 
     TEntity[] allItems;
-    uint idx;
+    size_t idx;
     foreach (item; store[tenantId].values.array) {
       if (idx >= offset && (limit == 0 || allItems.length < limit))
         allItems ~= item;

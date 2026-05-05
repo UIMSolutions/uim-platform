@@ -18,7 +18,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByDataSubject(dataSubjectId).length;
     }
 
-    PersonalDataRecord[] filterByDataSubject(PersonalDataRecord[] records, DataSubjectId dataSubjectId, uint offset = 0, uint limit = 0) {
+    PersonalDataRecord[] filterByDataSubject(PersonalDataRecord[] records, DataSubjectId dataSubjectId, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? records.filter!(v => v.dataSubjectId == dataSubjectId).skip(offset)
             .array : records.filter!(v => v.dataSubjectId == dataSubjectId)
@@ -39,7 +39,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByApplication(applicationId).length;
     }
 
-    PersonalDataRecord[] filterByApplication(PersonalDataRecord[] records, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+    PersonalDataRecord[] filterByApplication(PersonalDataRecord[] records, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? records.filter!(v => v.applicationId == applicationId).skip(offset)
             .array : records.filter!(v => v.applicationId == applicationId)
@@ -60,7 +60,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByDataSubjectAndApplication(dataSubjectId, applicationId).length;
     }
 
-    PersonalDataRecord[] filterByDataSubjectAndApplication(PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, uint offset = 0, uint limit = 0) {
+    PersonalDataRecord[] filterByDataSubjectAndApplication(PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
             .array

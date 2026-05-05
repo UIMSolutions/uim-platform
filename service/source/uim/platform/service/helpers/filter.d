@@ -8,7 +8,7 @@ mixin(ShowModule!());
 
 TEntity[] filterPaged(TEntity)(TEntity[] items, size_t offset, size_t limit, bool delegate(TEntity) pred = (TEntity e) => true) {
     TEntity[] result;
-    uint idx;
+    size_t idx;
     if (offset >= items.length)
       return result;  
 

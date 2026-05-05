@@ -16,11 +16,19 @@ struct ChainStep {
   TaskId taskId;
   string onSuccess;
   string onFailure;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("order", order)
+      .set("taskId", taskId)
+      .set("onSuccess", onSuccess)
+      .set("onFailure", onFailure);
+  }
 }
 
 struct TaskChain {
-  TaskChainId id;
-  TenantId tenantId;
+  mixin TenantEntity!TaskChainId;
+  
   SpaceId spaceId;
   string name;
   string description;
@@ -31,6 +39,23 @@ struct TaskChain {
   long lastRunAt;
   long lastRunDurationMs;
   string lastRunMessage;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto stepsJson = Json.emptyArray;
+    foreach (step; steps) {
+      stepsJson ~= step.toJson();
+    }
+
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string())
+      .set("steps", stepsJson)
+      .set("scheduleExpression", scheduleExpression)
+      .set("scheduleFrequency", scheduleFrequency.to!string())
+      .set("lastRunAt", lastRunAt)
+      .set("lastRunDurationMs", lastRunDurationMs)
+      .set("lastRunMessage", lastRunMessage);
+  }
 }

@@ -55,7 +55,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     page.updatedAt = now;
     pageRepo.save(page);
 
-    return SectionResponse(id, "");
+    return SectionResponse(id.value, "");
   }
 
   PortalSection getSection(SectionId id) {

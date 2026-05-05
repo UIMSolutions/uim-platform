@@ -18,19 +18,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryDatabaseUserRepository : TenantRepository!(DatabaseUser, DatabaseUserId), DatabaseUserRepository {
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
 
-  DatabaseUser[] filterByInstance(DatabaseUser[] users, InstanceId instanceId) {
+  DatabaseUser[] filterByInstance(DatabaseUser[] users, DatabaseInstanceId instanceId) {
     return users.filter!(u => u.instanceId == instanceId).array;
   }
 
-  DatabaseUser[] findByInstance(InstanceId instanceId) {
+  DatabaseUser[] findByInstance(DatabaseInstanceId instanceId) {
     return filterByInstance(findAll(), instanceId);
   }
 
-  void removeByInstance(InstanceId instanceId) {
+  void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(u => remove(u));
 
   }

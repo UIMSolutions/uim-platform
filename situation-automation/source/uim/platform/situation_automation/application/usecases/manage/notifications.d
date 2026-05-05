@@ -41,7 +41,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         n.createdAt = MonoTime.currTime.ticks;
 
         repo.save(n);
-        return CommandResult(true, n.id, "");
+        return CommandResult(true, n.id.value, "");
     }
 
     Notification getById(NotificationId id) {
@@ -79,7 +79,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         }
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(NotificationId id) {

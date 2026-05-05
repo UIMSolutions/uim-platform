@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Equipment {
-    EquipmentId id;
-    TenantId tenantId;
+    mixin TenantEntity!EquipmentId;
+
     CustomerId customerId;
     string serialNumber;
     string name;
@@ -30,21 +30,15 @@ struct Equipment {
     string lastServiceDate;
     string nextServiceDate;
     string measuringPoint;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
-
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
+    
+    Json toJson() const {
+        return entityToJson
             .set("customerId", customerId)
             .set("serialNumber", serialNumber)
             .set("name", name)
             .set("description", description)
-            .set("equipmentType", equipmentType.to!string)
-            .set("status", status.to!string)
+            .set("equipmentType", equipmentType.to!string())
+            .set("status", status.to!string())
             .set("manufacturer", manufacturer)
             .set("model", model)
             .set("installationDate", installationDate)
@@ -54,10 +48,6 @@ struct Equipment {
             .set("longitude", longitude)
             .set("lastServiceDate", lastServiceDate)
             .set("nextServiceDate", nextServiceDate)
-            .set("measuringPoint", measuringPoint)
-            .set("createdBy", createdBy)
-            .set("updatedBy", updatedBy)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
+            .set("measuringPoint", measuringPoint);
     }
 }

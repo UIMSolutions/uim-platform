@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Skill {
-    SkillId id;
-    TenantId tenantId;
+    mixin TenantEntity!SkillId;
+
     TechnicianId technicianId;
     string name;
     string description;
@@ -23,28 +23,18 @@ struct Skill {
     string expirationDate;
     string certificationNumber;
     string issuingAuthority;
-    UserId createdBy;
-    UserId updatedBy;
-    long createdAt;
-    long updatedAt;
-
-    Json skillToJson() {
-  return Json.emptyObject
-    .set("id", id)
-    .set("tenantId", tenantId)
-    .set("technicianId", technicianId)
-    .set("name", name)
-    .set("description", description)
-    .set("category", category.to!string)
-    .set("proficiencyLevel", proficiencyLevel.to!string)
-    .set("certificationDate", certificationDate)
-    .set("expirationDate", expirationDate)
-    .set("certificationNumber", certificationNumber)
-    .set("issuingAuthority", issuingAuthority)
-    .set("createdBy", createdBy)
-    .set("updatedBy", updatedBy)
-    .set("createdAt", createdAt)
-    .set("updatedAt", updatedAt);
-}
+    
+    Json toJson() const {
+        return entityToJson
+            .set("technicianId", technicianId)
+            .set("name", name)
+            .set("description", description)
+            .set("category", category.to!string())
+            .set("proficiencyLevel", proficiencyLevel.to!string())
+            .set("certificationDate", certificationDate)
+            .set("expirationDate", expirationDate)
+            .set("certificationNumber", certificationNumber)
+            .set("issuingAuthority", issuingAuthority);
+    }
 
 }

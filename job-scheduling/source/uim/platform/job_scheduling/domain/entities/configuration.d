@@ -12,13 +12,20 @@ mixin(ShowModule!());
 
 @safe:
 struct Configuration {
-    TenantId tenantId;
-    ConfigId id;
+    mixin TenantEntity!ConfigurationId;
+
     int defaultRetries;
     long defaultRetryDelayMs;
     long maxRunDurationMs;
     bool enableAsyncMode;
     bool enableAlertNotifications;
-    long createdAt;
-    long updatedAt;
+    
+    Json toJson() const {
+        return entityToJson
+            .set("defaultRetries", defaultRetries)
+            .set("defaultRetryDelayMs", defaultRetryDelayMs)
+            .set("maxRunDurationMs", maxRunDurationMs)
+            .set("enableAsyncMode", enableAsyncMode)
+            .set("enableAlertNotifications", enableAlertNotifications);
+    }
 }

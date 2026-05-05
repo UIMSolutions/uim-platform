@@ -39,7 +39,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         c.createdAt = MonoTime.currTime.ticks;
 
         repo.save(c);
-        return CommandResult(true, c.id, "");
+        return CommandResult(true, c.id.value, "");
     }
 
     CommandResult uploadChain(UploadCertificateChainRequest r) {
@@ -51,7 +51,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
         existing.certificatePem = r.certificatePem;
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult activate(ActivateCertificateRequest r) {
@@ -66,7 +66,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         existing.activatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deactivate(CertificateId id) {

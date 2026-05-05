@@ -24,7 +24,7 @@ class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), 
   }
 
   void removeByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
-    findByResource(tenantId, resourceId, resourceType).each!(e => store.remove(e));
+    findByResource(tenantId, resourceId, resourceType).each!(e => remove(e));
   }
   // #endregion byResource
 
@@ -38,7 +38,7 @@ class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), 
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
-    findByUser(tenantId, userId).each!(e => store.remove(e));
+    findByUser(tenantId, userId).each!(e => remove(e));
   }
   // #endregion byUser
 

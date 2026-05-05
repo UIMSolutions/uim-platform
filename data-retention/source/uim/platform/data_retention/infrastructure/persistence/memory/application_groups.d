@@ -16,7 +16,7 @@ class MemoryApplicationGroupRepository : TenantRepository!(ApplicationGroup, App
     }
 
     void removeActive(TenantId tenantId) {
-        findActive(tenantId).each!(entity => remove(entity.id));
+        findActive(tenantId).each!(entity => remove(entity));
     }
 
 }

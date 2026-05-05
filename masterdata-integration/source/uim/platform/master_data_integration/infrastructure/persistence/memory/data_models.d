@@ -35,7 +35,7 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     return filterByCategory(findByTenant(tenantId), category);
   }
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
-    findByCategory(tenantId, category).each!(e => remove(e.id));
+    findByCategory(tenantId, category).each!(entity => remove(entity));
   }
 
 }

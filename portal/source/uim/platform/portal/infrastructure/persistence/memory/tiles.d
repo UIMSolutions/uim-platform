@@ -29,10 +29,10 @@ class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
     findByCatalog(catalogId).each!(t => store.remove(t));
   }
 
-  Tile[] search(TenantId tenantId, string query, uint offset = 0, uint limit = 100) {
+  Tile[] search(TenantId tenantId, string query, size_t offset = 0, size_t limit = 100) {
     Tile[] result;
     auto lowerQuery = query.toLower();
-    uint idx;
+    size_t idx;
     foreach (t; findAll())
       if (t.tenantId != tenantId)
         continue;

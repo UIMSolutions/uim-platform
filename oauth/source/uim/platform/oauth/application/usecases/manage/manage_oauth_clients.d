@@ -53,7 +53,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
         if (error.length > 0)
             return CommandResult(false, "", error);
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(OAuthClientDTO dto) {
@@ -70,7 +70,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
         existing.contacts = dto.contacts;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(OAuthClientId id) {

@@ -43,7 +43,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     dt.updatedAt = now;
 
     repo.save(dt);
-    return CommandResult(true, dt.id, "");
+    return CommandResult(true, dt.id.value, "");
   }
 
   CommandResult update(UpdateDocumentTypeRequest r) {
@@ -63,7 +63,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   DocumentType getById(DocumentTypeId id, ClientId clientId) {

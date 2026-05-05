@@ -45,7 +45,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         d.requiresClaim = req.requiresClaim;
         d.createdBy = req.createdBy;
         repo.save(req.tenantId, d);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateTaskDefinitionRequest req) {
@@ -58,7 +58,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         existing.requiresClaim = req.requiresClaim;
         existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult activate(TenantId tenantId, string id) {

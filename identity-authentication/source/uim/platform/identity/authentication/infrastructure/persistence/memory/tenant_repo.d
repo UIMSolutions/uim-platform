@@ -35,9 +35,9 @@ class MemoryTenantRepository : TenantRepository {
     return Tenant.init;
   }
 
-  Tenant[] findAll(uint offset = 0, uint limit = 100) {
+  Tenant[] findAll(size_t offset = 0, size_t limit = 100) {
     Tenant[] result;
-    uint idx;
+    size_t idx;
     foreach (t; findAll()) {
       if (idx >= offset && result.length < limit)
         result ~= t;
@@ -55,6 +55,6 @@ class MemoryTenantRepository : TenantRepository {
   }
 
   void remove(TenantId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

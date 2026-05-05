@@ -10,8 +10,8 @@ import uim.platform.data.attribute_recommendation.domain.types;
 /// A training dataset containing column definitions and data records
 /// used to train attribute recommendation models.
 struct Dataset {
-  DatasetId id;
-  TenantId tenantId;
+  mixin TenantEntity!DatasetId;
+
   string name;
   string description;
   DatasetStatus status = DatasetStatus.draft;
@@ -19,7 +19,15 @@ struct Dataset {
   string columnDefinitions; // JSON: [{name, dataType, isTarget, isFeature}]
   long rowCount;
   string validationMessage;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string())
+      .set("dataType", dataType.to!string())
+      .set("columnDefinitions", columnDefinitions)
+      .set("rowCount", rowCount)
+      .set("validationMessage", validationMessage);
+  }
 }

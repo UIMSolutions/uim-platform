@@ -27,7 +27,7 @@ class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), Imp
   }
 
   void removeByPackage(ContentPackageId packageId) {
-    findByPackage(packageId).each!(e => remove(e.id));
+    findByPackage(packageId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, ImportStatus status) {
@@ -39,7 +39,7 @@ class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), Imp
   }
 
   void removeByStatus(TenantId tenantId, ImportStatus status) {
-    findByStatus(tenantId, status).each!(e => remove(e.id));
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
 }

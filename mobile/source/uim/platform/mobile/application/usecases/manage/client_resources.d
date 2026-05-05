@@ -35,7 +35,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         resource.updatedAt = resource.createdAt;
         resource.createdBy = r.createdBy;
         repo.save(resource);
-        return CommandResult(true, resource.id, "");
+        return CommandResult(true, resource.id.value, "");
     }
 
     CommandResult update(ClientResourceId id, UpdateClientResourceRequest r) {
@@ -50,7 +50,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         resource.updatedAt = currentTimestamp();
         resource.updatedBy = r.updatedBy;
         repo.update(resource);
-        return CommandResult(true, resource.id, "");
+        return CommandResult(true, resource.id.value, "");
     }
 
     ClientResource get_(ClientResourceId id) {

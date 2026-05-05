@@ -18,17 +18,17 @@ mixin(ShowModule!());
 @safe:
 class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   } 
-  Alert[] filterByInstance(Alert[] alerts, InstanceId instanceId) {
+  Alert[] filterByInstance(Alert[] alerts, DatabaseInstanceId instanceId) {
     return alerts.filter!(a => a.instanceId == instanceId).array;
   }
-  Alert[] findByInstance(InstanceId instanceId) {
+  Alert[] findByInstance(DatabaseInstanceId instanceId) {
     return findAll().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
   }
-  void removeByInstance(InstanceId instanceId) {
-    findByInstance(instanceId).each!(a => remove(a.id));
+  void removeByInstance(DatabaseInstanceId instanceId) {
+    findByInstance(instanceId).each!(entity => remove(entity));
   }
 
   size_t countActive(TenantId tenantId) {
@@ -41,7 +41,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
     return findByTenant(tenantId).filter!(a => a.status == AlertStatus.active).array;
   }
   void removeActive(TenantId tenantId) {
-    findActive(tenantId).each!(a => remove(a.id));
+    findActive(tenantId).each!(entity => remove(entity));
   }
 
 }

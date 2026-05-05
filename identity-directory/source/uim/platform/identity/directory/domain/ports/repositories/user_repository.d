@@ -27,6 +27,6 @@ interface UserRepository : ITenantRepository!(User, UserId) {
   User[] findByGroupId(GroupId groupId);
   void removeByGroupId(GroupId groupId);
 
-  User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100);
+  User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100);
 
 }

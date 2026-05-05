@@ -46,7 +46,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         r.isAutoForward = req.isAutoForward;
         r.createdBy = req.createdBy;
         repo.save(req.tenantId, r);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult update(UpdateSubstitutionRuleRequest req) {
@@ -60,7 +60,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         existing.isAutoForward = req.isAutoForward;
         existing.updatedBy = req.updatedBy;
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult activate(TenantId tenantId, string id) {

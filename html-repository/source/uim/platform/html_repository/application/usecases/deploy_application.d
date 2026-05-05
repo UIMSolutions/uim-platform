@@ -63,7 +63,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
         version_.deployedAt = currentTimestamp();
         versionRepo.update(version_);
 
-        return CommandResult(true, record.id, "");
+        return CommandResult(true, record.id.value, "");
     }
 
     DeploymentRecord getById(DeploymentRecordId id) {

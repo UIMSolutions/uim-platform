@@ -47,7 +47,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     u.updatedAt = now;
 
     repo.save(u);
-    return CommandResult(true, u.id, "");
+    return CommandResult(true, u.id.value, "");
   }
 
   DatabaseUser getById(DatabaseUserId id) {
@@ -71,7 +71,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(DatabaseUserId id) {

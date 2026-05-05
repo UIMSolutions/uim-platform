@@ -108,7 +108,7 @@ class TransportRequestController : PlatformController {
       auto result = uc.addTask(requestId, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("taskId", result.id.value)
+          .set("taskId", result.id)
           .set("message", "Transport task added");
 
         res.writeJsonBody(resp, 201);

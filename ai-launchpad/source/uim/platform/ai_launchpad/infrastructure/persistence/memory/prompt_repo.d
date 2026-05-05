@@ -46,6 +46,6 @@ class MemoryPromptRepository : IPromptRepository {
   }
 
   void remove(PromptId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

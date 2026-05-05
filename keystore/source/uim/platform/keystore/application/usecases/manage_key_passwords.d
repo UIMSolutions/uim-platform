@@ -39,7 +39,7 @@ class ManageKeyPasswordsUseCase {
       existing.passwordValue = r.passwordValue;
       existing.updatedAt     = now;
       repo.update(existing);
-      return CommandResult(true, existing.id, "");
+      return CommandResult(true, existing.id.value, "");
     }
 
     KeyPassword kp;
@@ -53,7 +53,7 @@ class ManageKeyPasswordsUseCase {
     kp.updatedAt     = now;
 
     repo.save(kp);
-    return CommandResult(true, kp.id, "");
+    return CommandResult(true, kp.id.value, "");
   }
 
   // Retrieve a password by alias. Returns KeyPassword.init when not found.
@@ -71,6 +71,6 @@ class ManageKeyPasswordsUseCase {
     if (kp.id.length == 0)
       return CommandResult(false, "", "Password not found");
     repo.removeByAlias(accountId, applicationId, alias_);
-    return CommandResult(true, kp.id, "");
+    return CommandResult(true, kp.id.value, "");
   }
 }

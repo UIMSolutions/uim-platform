@@ -36,7 +36,7 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
         return findAll().filter!(e => e.clientId == clientId).array;
     }
     void removeByClientId(string clientId) {
-        findByClientId(clientId).each!(e => store.remove(e));
+        findByClientId(clientId).each!(e => remove(e));
     }
     // #endregion ByClientId
 
@@ -48,7 +48,7 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
         return findAll().filter!(e => e.status == status).array;
     }
     void removeByStatus(TokenStatus status) {
-        findByStatus(status).each!(e => store.remove(e));
+        findByStatus(status).each!(e => remove(e));
     }
     // #endregion ByStatus
 

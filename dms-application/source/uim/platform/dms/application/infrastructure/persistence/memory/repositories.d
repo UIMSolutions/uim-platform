@@ -27,7 +27,7 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).each!(e => store.remove(e.tenantId, e.id));
+    findByName(tenantId, name).each!(e => remove(e.tenantId, e.id));
   }
   // #endregion byName
 
@@ -41,7 +41,7 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
   }
 
   void removeByStatus(TenantId tenantId, RepositoryStatus status) {
-    findByStatus(tenantId, status).each!(e => store.remove(e.tenantId, e.id));
+    findByStatus(tenantId, status).each!(e => remove(e.tenantId, e.id));
   }
   // #endregion byStatus
 }

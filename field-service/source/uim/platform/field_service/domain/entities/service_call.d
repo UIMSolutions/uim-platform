@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceCall {
-  ServiceCallId id;
-  TenantId tenantId;
+  mixin TenantEntity!ServiceCallId;
+
   CustomerId customerId;
   EquipmentId equipmentId;
   string subject;
@@ -33,15 +33,9 @@ struct ServiceCall {
   string address;
   string latitude;
   string longitude;
-  UserId createdBy;
-  UserId updatedBy;
-  long createdAt;
-  long updatedAt;
 
-  Json serviceCallToJson() {
-    return Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+  Json toJson() const {
+    return entityToJson
       .set("customerId", customerId)
       .set("equipmentId", equipmentId)
       .set("subject", subject)
@@ -60,10 +54,6 @@ struct ServiceCall {
       .set("resolution", resolution)
       .set("address", address)
       .set("latitude", latitude)
-      .set("longitude", longitude)
-      .set("createdBy", createdBy)
-      .set("updatedBy", updatedBy)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("longitude", longitude);
   }
 }

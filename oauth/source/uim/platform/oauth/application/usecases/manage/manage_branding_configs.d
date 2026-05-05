@@ -48,7 +48,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
         if (error.length > 0)
             return CommandResult(false, "", error);
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(BrandingConfigDTO dto) {
@@ -66,7 +66,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
         existing.customCss = dto.customCss;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(BrandingConfigId id) {

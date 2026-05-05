@@ -44,7 +44,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         file.updatedBy = r.createdBy;
 
         repo.save(file);
-        return CommandResult(true, file.id, "");
+        return CommandResult(true, file.id.value, "");
     }
 
     CommandResult update(AppFileId id, UpdateAppFileRequest r) {
@@ -62,7 +62,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         file.updatedBy = r.updatedBy;
 
         repo.update(file);
-        return CommandResult(true, file.id, "");
+        return CommandResult(true, file.id.value, "");
     }
 
     AppFile getById(AppFileId id) {

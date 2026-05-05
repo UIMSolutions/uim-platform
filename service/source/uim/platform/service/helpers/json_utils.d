@@ -230,7 +230,7 @@ Json toJsonValue(T)(T val) {
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == bool))
         j[name] = Json(val.tupleof[i]);
-      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+      else static if (is(FT == long) || is(FT == int) || is(FT == size_t) || is(FT == ulong))
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == string[])) {
         auto arr = Json.emptyArray;
@@ -256,9 +256,9 @@ Json toJsonValue(T)(T val) {
   return j;
 }
 
-/// Read a uint field from JSON.
-uint jsonUint(Json j, string key, uint default_ = 0) {
-  return cast(uint)jsonLong(j, key, default_);
+/// Read a size_t field from JSON.
+size_t jsonUint(Json j, string key, size_t default_ = 0) {
+  return cast(size_t)jsonLong(j, key, default_);
 }
 /// Read an int field from JSON.
 
@@ -293,7 +293,7 @@ Json toJsonValue(T)(T val) {
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == bool))
         j[name] = Json(val.tupleof[i]);
-      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+      else static if (is(FT == long) || is(FT == int) || is(FT == size_t) || is(FT == ulong))
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == string[])) {
         auto arr = Json.emptyArray;
@@ -477,7 +477,7 @@ Json toJsonValue(T)(T val) {
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == bool))
         j[name] = Json(val.tupleof[i]);
-      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+      else static if (is(FT == long) || is(FT == int) || is(FT == size_t) || is(FT == ulong))
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == string[])) {
         auto arr = Json.emptyArray;

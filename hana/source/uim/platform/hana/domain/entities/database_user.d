@@ -40,7 +40,7 @@ struct UserRole {
 struct DatabaseUser {
   mixin TenantEntity!(DatabaseUserId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string userName;
   AuthType authType;
   UserStatus status;

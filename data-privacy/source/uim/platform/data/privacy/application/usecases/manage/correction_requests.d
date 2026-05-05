@@ -47,7 +47,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     r.deadline = now + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
 
     repo.save(r);
-    return CommandResult(r.id, "");
+    return CommandResult(r.id.value, "");
   }
 
   CorrectionRequest getRequest(CorrectionRequestId tenantId, id tenantId) {
@@ -72,7 +72,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
       r.completedAt = Clock.currStdTime();
 
     repo.update(r);
-    return CommandResult(r.id, "");
+    return CommandResult(r.id.value, "");
   }
 
   void deleteRequest(CorrectionRequestId tenantId, id tenantId) {

@@ -14,12 +14,12 @@ mixin(ShowModule!());
 @safe:
 interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  Configuration[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  Configuration[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
-  size_t countBySection(InstanceId instanceId, string section);
-  Configuration[] findBySection(InstanceId instanceId, string section);
-  void removeBySection(InstanceId instanceId, string section);
+  size_t countBySection(DatabaseInstanceId instanceId, string section);
+  Configuration[] findBySection(DatabaseInstanceId instanceId, string section);
+  void removeBySection(DatabaseInstanceId instanceId, string section);
 
 }

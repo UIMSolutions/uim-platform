@@ -64,7 +64,7 @@ class MemoryKeystoreRepository : KeystoreRepository {
   }
 
   void remove(KeystoreId id) {
-    store.removeById(id);
+    removeById(id);
   }
 
   void removeByName(string accountId, string applicationId, KeystoreLevel level, string name) {

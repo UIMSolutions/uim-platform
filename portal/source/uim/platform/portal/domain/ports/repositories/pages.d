@@ -20,7 +20,7 @@ interface PageRepository {
   bool existsByAlias(SiteId siteId, string alias_);
   Page findByAlias(SiteId siteId, string alias_);
 
-  Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100);
+  Page[] findBySite(SiteId siteId, size_t offset = 0, size_t limit = 100);
   
   void save(Page page);
   void update(Page page);

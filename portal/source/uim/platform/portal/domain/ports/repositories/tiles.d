@@ -16,9 +16,9 @@ mixin(ShowModule!());
 interface TileRepository : TTenantRepository!(Tile, TileId) {
 
   size_t countByCatalog(CatalogId catalogId);
-  Tile[] findByCatalog(CatalogId catalogId, uint offset = 0, uint limit = 100);
+  Tile[] findByCatalog(CatalogId catalogId, size_t offset = 0, size_t limit = 100);
   void removeByCatalog(CatalogId catalogId);
   
-  Tile[] search(TenantId tenantId, string query, uint offset = 0, uint limit = 100);
+  Tile[] search(TenantId tenantId, string query, size_t offset = 0, size_t limit = 100);
 
 }

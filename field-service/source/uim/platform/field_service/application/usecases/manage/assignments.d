@@ -52,7 +52,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidAssignment(a))
             return CommandResult(false, "", "Invalid assignment data");
         repo.save(a);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(AssignmentDTO dto) {
@@ -66,7 +66,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         if (dto.notes.length > 0) existing.notes = dto.notes;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(AssignmentId id) {

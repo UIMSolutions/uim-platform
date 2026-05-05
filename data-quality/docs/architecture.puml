@@ -63,7 +63,7 @@ package "Domain Layer  «core»" as DOM <<Rectangle>> {
     skinparam packageBackgroundColor ENTITY_COLOR
 
     class ValidationRule << (E,#66BB6A) >> {
-      id : RuleId
+      id : ValidationRuleId
       tenantId : TenantId
       name : string
       ruleType : RuleType
@@ -106,7 +106,7 @@ package "Domain Layer  «core»" as DOM <<Rectangle>> {
     }
 
     class CleansingRule << (E,#66BB6A) >> {
-      id : RuleId
+      id : CleansingRuleId
       tenantId : TenantId
       action : CleansingAction
       priority : int

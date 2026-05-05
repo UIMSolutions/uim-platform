@@ -29,7 +29,7 @@ class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, Consent
   }
 
   void removeByController(TenantId tenantId, DataControllerId controllerId) {
-    findByController(tenantId, controllerId).each!(entity => remove(entity.id));
+    findByController(tenantId, controllerId).each!(entity => remove(entity));
   }
   // #endregion ByController
 

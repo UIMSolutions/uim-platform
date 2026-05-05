@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct Alert {
-  AlertId id;
-  TenantId tenantId;
+  mixin TenantEntity!AlertId;
+
   AlertRuleId ruleId;
   string ruleName;
   AlertSeverity severity = AlertSeverity.warning;
@@ -26,4 +26,20 @@ struct Alert {
   long triggeredAt;
   long acknowledgedAt;
   long resolvedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("ruleId", ruleId)
+      .set("ruleName", ruleName)
+      .set("severity", severity.to!string())
+      .set("state", state.to!string())
+      .set("message", message)
+      .set("matchCount", matchCount)
+      .set("sampleLogEntryId", sampleLogEntryId)
+      .set("acknowledgedBy", acknowledgedBy)
+      .set("resolvedBy", resolvedBy)
+      .set("triggeredAt", triggeredAt)
+      .set("acknowledgedAt", acknowledgedAt)
+      .set("resolvedAt", resolvedAt);
+  }
 }

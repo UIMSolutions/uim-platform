@@ -35,7 +35,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.createdAt = "now";
     d.updatedAt = "now";
     repo.save(d);
-    return CommandResult(true, d.id, "");
+    return CommandResult(true, d.id.value, "");
   }
 
   Deployment getById(DeploymentId id, ConnectionId connectionId) {
@@ -60,7 +60,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (r.ttl > 0) d.ttl = r.ttl;
     d.updatedAt = "now";
     repo.save(d);
-    return CommandResult(true, d.id, "");
+    return CommandResult(true, d.id.value, "");
   }
 
   CommandResult[] bulkPatch(BulkPatchDeploymentRequest r) {

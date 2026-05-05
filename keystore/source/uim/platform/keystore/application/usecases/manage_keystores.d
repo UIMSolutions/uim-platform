@@ -53,7 +53,7 @@ class ManageKeystoresUseCase {
     ks.updatedAt     = ks.createdAt;
 
     repo.save(ks);
-    return CommandResult(true, ks.id, "");
+    return CommandResult(true, ks.id.value, "");
   }
 
   // Update description and/or content of an existing keystore.
@@ -70,7 +70,7 @@ class ManageKeystoresUseCase {
     ks.updatedAt  = currentTimestamp();
 
     repo.update(ks);
-    return CommandResult(true, ks.id, "");
+    return CommandResult(true, ks.id.value, "");
   }
 
   KeystoreEntity getById(KeystoreId id) {
@@ -95,7 +95,7 @@ class ManageKeystoresUseCase {
     if (ks.id.length == 0)
       return CommandResult(false, "", "Keystore not found");
     repo.removeById(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   // Delete by name + scope (console-style delete-keystore command)
@@ -104,6 +104,6 @@ class ManageKeystoresUseCase {
     if (ks.id.length == 0)
       return CommandResult(false, "", "Keystore not found");
     repo.removeByName(accountId, applicationId, parseKeystoreLevel(level), name);
-    return CommandResult(true, ks.id, "");
+    return CommandResult(true, ks.id.value, "");
   }
 }

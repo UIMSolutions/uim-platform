@@ -31,7 +31,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     s.createdAt = "now";
     s.updatedAt = "now";
     repo.save(s);
-    return CommandResult(true, s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   Scenario getById(ScenarioId id, ConnectionId connectionId) {

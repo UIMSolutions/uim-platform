@@ -34,11 +34,11 @@ struct FeatureEvaluationService {
       return false;
 
     // Simple hash-based bucketing
-    uint hash = 0;
+    size_t hash = 0;
     foreach (c; userId) {
-      hash = hash * 31 + cast(uint) c;
+      hash = hash * 31 + cast(size_t) c;
     }
-    return (hash % 100) < cast(uint) percentage;
+    return (hash % 100) < cast(size_t) percentage;
   }
 
   // Check if user or device is in whitelist

@@ -29,7 +29,7 @@ class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, Busin
   }
 
   void removeByStatus(TenantId tenantId, BusinessContextStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
 
@@ -47,7 +47,7 @@ class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, Busin
   }
 
   void removeByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
-    findByControllerGroup(tenantId, groupId).each!(entity => remove(entity.id));
+    findByControllerGroup(tenantId, groupId).each!(entity => remove(entity));
   }
   // #endregion ByControllerGroup
 

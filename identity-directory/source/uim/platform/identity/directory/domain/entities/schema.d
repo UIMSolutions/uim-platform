@@ -24,15 +24,40 @@ struct SchemaAttribute {
   Uniqueness uniqueness = Uniqueness.none;
   string[] canonicalValues;
   string[] referenceTypes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("type", type.to!string())
+      .set("multiValued", multiValued)
+      .set("required", required)
+      .set("mutability", mutability.to!string())
+      .set("returned", returned.to!string())
+      .set("uniqueness", uniqueness.to!string())
+      .set("canonicalValues", canonicalValues)
+      .set("referenceTypes", referenceTypes);
+  }
 }
 
 /// Custom schema definition (SCIM 2.0 schema extension).
 struct Schema {
-  SchemaId id; // URN, e.g., "urn:sap:cloud:scim:schemas:extension:custom:2.0:MySchema"
-  TenantId tenantId;
+mixin TenantEntity!SchemaId; // URN, e.g., "urn:sap:cloud:scim:schemas:extension:custom:2.0:MySchema"
+
   string name;
   string description;
   SchemaAttribute[] attributes;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto attrsJson = Json.emptyArray;
+    foreach (attr; attributes) {
+      attrsJson ~= attr.toJson();
+    }
+
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("attributes", attrsJson);
+  }
 }

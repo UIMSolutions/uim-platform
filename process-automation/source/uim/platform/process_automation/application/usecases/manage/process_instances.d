@@ -34,7 +34,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         i.startedAt = MonoTime.currTime.ticks;
 
         repo.save(i);
-        return CommandResult(true, i.id, "");
+        return CommandResult(true, i.id.value, "");
     }
 
     ProcessInstance getById(ProcessInstanceId id) {
@@ -79,7 +79,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         }
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(ProcessInstanceId id) {

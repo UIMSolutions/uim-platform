@@ -34,7 +34,7 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
     return filterByObjectId(findByTenant(tenantId), objectId);
   }
   void removeByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    findByObjectId(tenantId, objectId).each!(e => remove(e.id));
+    findByObjectId(tenantId, objectId).each!(entity => remove(entity));
   }
 
    size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
@@ -48,7 +48,7 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
     return filterByCategory(findByTenant(tenantId), category);
   }
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
-    findByCategory(tenantId, category).each!(e => remove(e.id));
+    findByCategory(tenantId, category).each!(entity => remove(entity));
   }
 
 }

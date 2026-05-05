@@ -50,7 +50,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidRunConfiguration(e))
             return CommandResult(false, "", "Invalid run configuration data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(RunConfigurationDTO dto) {
@@ -63,7 +63,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(RunConfigurationId id) {

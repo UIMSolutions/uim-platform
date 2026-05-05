@@ -28,7 +28,7 @@ class MemoryDataControllerRepository : TenantRepository!(DataController, DataCon
   }
 
   void removeByCountry(TenantId tenantId, string country) {
-    findByCountry(tenantId, country).each!(entity => remove(entity.id));
+    findByCountry(tenantId, country).each!(entity => remove(entity));
   }
 
 }

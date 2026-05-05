@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port for persisting validation rules.
-interface ValidationRuleRepository : ITenantRepository!(ValidationRule, RuleId) {
+interface ValidationRuleRepository : ITenantRepository!(ValidationRule, ValidationRule) {
   
   size_t countByDataset(TenantId tenantId, string datasetPattern);
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern);

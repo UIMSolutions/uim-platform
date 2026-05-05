@@ -72,23 +72,22 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     tr.tasks ~= task;
     repo.update(tr);
-    return CommandResult(true, task.id, "");
+    return CommandResult(true, task.id.value, "");
   }
 
   CommandResult releaseTask(TransportRequestId requestId, TransportTaskId taskId) {
     if (!repo.existsById(requestId))
       return CommandResult(false, "", "Transport request not found");
 
-    auto tr = repo.findById(requestId);
-    foreach (task; tr.tasks) {
+    auto transportRequest = repo.findById(requestId);
+    foreach (task; transportRequest.tasks) {
       if (task.id == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
         if (!validation.valid) {
           string msg;
           foreach (i, e; validation.errors) {
-            if (i > 0)
-              msg ~= "; ";
-            msg ~= e;
+            msg ~= i > 0
+              ? "; " : e;
           }
           return CommandResult(false, "", msg);
         }
@@ -97,8 +96,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         // import std.datetime.systime : Clock;
         task.releasedAt = Clock.currStdTime();
 
-        repo.update(tr);
-        return CommandResult(true, task.id, "");
+        repo.update(transportRequest);
+        return CommandResult(true, task.id.value, "");
       }
     }
     return CommandResult(false, "", "Task not found");
@@ -113,9 +112,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     if (!validation.valid) {
       string msg;
       foreach (i, e; validation.errors) {
-        if (i > 0)
-          msg ~= "; ";
-        msg ~= e;
+        msg ~= i > 0
+          ? "; " : e;
       }
       return CommandResult(false, "", msg);
     }

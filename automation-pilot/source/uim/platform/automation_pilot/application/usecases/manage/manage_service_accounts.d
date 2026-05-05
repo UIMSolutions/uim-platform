@@ -43,7 +43,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidServiceAccount(sa))
             return CommandResult(false, "", "Invalid service account data");
         repo.save(sa);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ServiceAccountDTO dto) {
@@ -55,7 +55,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
         if (dto.permissions.length > 0) existing.permissions = dto.permissions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ServiceAccountId id) {

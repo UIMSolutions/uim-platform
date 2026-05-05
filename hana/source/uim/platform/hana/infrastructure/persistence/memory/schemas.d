@@ -18,17 +18,17 @@ mixin(ShowModule!());
 @safe:
 class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
-  size_t countByInstance(InstanceId instanceId) {
+  size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;
   }
-  Schema[] filterByInstance(Schema[] schemas, InstanceId instanceId) {
+  Schema[] filterByInstance(Schema[] schemas, DatabaseInstanceId instanceId) {
     return schemas.filter!(s => s.instanceId == instanceId).array;
   }
-  Schema[] findByInstance(InstanceId instanceId) {
+  Schema[] findByInstance(DatabaseInstanceId instanceId) {
     return filterByInstance(findAll(), instanceId);
   }
-  void removeByInstance(InstanceId instanceId) {
-    findByInstance(instanceId).each!(s => remove(s.id));
+  void removeByInstance(DatabaseInstanceId instanceId) {
+    findByInstance(instanceId).each!(entity => remove(entity));
   }
 
 }

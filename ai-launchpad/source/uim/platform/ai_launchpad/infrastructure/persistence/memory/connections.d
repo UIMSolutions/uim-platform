@@ -14,11 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryConnectionRepository : IConnectionRepository {
-  private Connection[string] store;
-
-  void save(Connection c) {
-    store[c.id] = c;
-  }
+  private Connection[ConnectionId] store;
 
   Connection findById(ConnectionId id) {
     if (auto p = id in store) return *p;
@@ -37,7 +33,11 @@ class MemoryConnectionRepository : IConnectionRepository {
     return store.values;
   }
 
+  void save(Connection connection) {
+    store[connection.id] = connection;
+  }
+
   void remove(ConnectionId id) {
-    store.removeById(id);
+    store.remove(id);
   }
 }

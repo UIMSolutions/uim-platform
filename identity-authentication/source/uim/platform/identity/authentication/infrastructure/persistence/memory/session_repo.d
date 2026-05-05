@@ -66,6 +66,6 @@ class MemorySessionRepository : SessionRepository {
   }
 
   void removeIds(SessionId[] ids) {
-    ids.each!(id => store.removeById(id));
+    ids.each!(id => removeById(id));
   }
 }

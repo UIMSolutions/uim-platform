@@ -47,7 +47,7 @@ class ManageKeyEntriesUseCase {
     entry.createdAt   = currentTimestamp();
 
     repo.save(entry);
-    return CommandResult(true, entry.id, "");
+    return CommandResult(true, entry.id.value, "");
   }
 
   KeyEntry getById(KeyEntryId id) {
@@ -67,6 +67,6 @@ class ManageKeyEntriesUseCase {
     if (entry.id.length == 0)
       return CommandResult(false, "", "Key entry not found");
     repo.removeById(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 }

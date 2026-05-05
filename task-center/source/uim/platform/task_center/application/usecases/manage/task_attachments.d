@@ -36,7 +36,7 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
         a.mimeType = req.mimeType;
         a.uploadedBy = req.uploadedBy;
         repo.save(req.tenantId, a);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     CommandResult remove(TenantId tenantId, string id) {

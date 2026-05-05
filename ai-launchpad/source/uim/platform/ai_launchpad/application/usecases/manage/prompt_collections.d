@@ -38,7 +38,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     pc.createdAt = "now";
     pc.updatedAt = "now";
     collectionRepository.save(pc);
-    return CommandResult(true, pc.id, "");
+    return CommandResult(true, pc.id.value, "");
   }
 
   PromptCollection getById(PromptCollectionId id) {
@@ -64,7 +64,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
       pc.description = r.description;
     pc.updatedAt = "now";
     collectionRepository.save(pc);
-    return CommandResult(true, pc.id, "");
+    return CommandResult(true, pc.id.value, "");
   }
 
   CommandResult remove(PromptCollectionId id) {

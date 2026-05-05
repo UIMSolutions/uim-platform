@@ -41,7 +41,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         p.createdAt = clockTime();
 
         repo.save(p);
-        return CommandResult(true, p.id, "");
+        return CommandResult(true, p.id.value, "");
     }
 
     ProcessingPurpose getById(ProcessingPurposeId id) {
@@ -69,7 +69,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(ProcessingPurposeId id) {

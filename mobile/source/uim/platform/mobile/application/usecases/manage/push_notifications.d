@@ -41,7 +41,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         notif.createdAt = currentTimestamp();
         notif.createdBy = r.createdBy;
         repo.save(notif);
-        return CommandResult(true, notif.id, "");
+        return CommandResult(true, notif.id.value, "");
     }
 
     PushNotification get_(PushNotificationId id) {

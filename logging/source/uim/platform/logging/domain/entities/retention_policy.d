@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct RetentionPolicy {
-  RetentionPolicyId id;
-  TenantId tenantId;
+  mixin TenantEntity!RetentionPolicyId;
+
   string name;
   string description;
   DataType dataType = DataType.all;
@@ -21,7 +21,15 @@ struct RetentionPolicy {
   double maxSizeGB = 10.0;
   bool isDefault;
   bool isActive = true;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+      return entityToJson
+          .set("name", name)
+          .set("description", description)
+          .set("dataType", dataType)
+          .set("retentionDays", retentionDays)
+          .set("maxSizeGB", maxSizeGB)
+          .set("isDefault", isDefault)
+          .set("isActive", isActive);
+  }
 }

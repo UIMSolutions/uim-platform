@@ -637,8 +637,8 @@ struct TranslationResponse {
 
 struct PagedListResponse {
   ulong totalResults;
-  uint startIndex;
-  uint itemsPerPage;
+  size_t startIndex;
+  size_t itemsPerPage;
 
     Json toJson() const {
     return Json.emptyObject

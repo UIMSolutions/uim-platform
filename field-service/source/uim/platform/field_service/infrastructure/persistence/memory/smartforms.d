@@ -23,7 +23,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return findAll().filter!(e => e.serviceCallId == serviceCallId).array;
     }
     void removeByServiceCall(ServiceCallId serviceCallId) {
-        findByServiceCall(serviceCallId).each!(e => remove(e.id));
+        findByServiceCall(serviceCallId).each!(entity => remove(entity));
     }
 
     size_t countByActivity(ActivityId activityId) {
@@ -36,7 +36,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return findAll().filter!(e => e.activityId == activityId).array;
     }
     void removeByActivity(ActivityId activityId) {
-        findByActivity(activityId).each!(e => remove(e.id));
+        findByActivity(activityId).each!(entity => remove(entity));
     }
 
     size_t countByStatus(SmartformStatus status) {
@@ -49,7 +49,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return findAll().filter!(e => e.status == status).array;
     }
     void removeByStatus(SmartformStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(entity => remove(entity));
     }
 
 }

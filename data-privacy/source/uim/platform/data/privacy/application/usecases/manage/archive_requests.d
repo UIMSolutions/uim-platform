@@ -44,7 +44,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     archiveRequest.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
 
     repo.save(archiveRequest);
-    return CommandResult(true, archiveRequest.id, "");
+    return CommandResult(true, archiveRequest.id.value, "");
   }
 
   ArchiveRequest getRequest(TenantId tenantId, ArchiveRequestId requestId) {

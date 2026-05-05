@@ -16,6 +16,10 @@ mixin(ShowModule!());
 struct TransportValidation {
   bool valid;
   string[] errors;
+
+  Json toJson() const {
+    return Json.emptyObject.set("valid", valid).set("errors", errors);
+  }
 }
 
 /// Domain service: validates transport request release preconditions.
@@ -36,7 +40,7 @@ struct TransportReleaseValidator {
     // All tasks must be released before the request
     foreach (task; request.tasks) {
       if (task.status == TransportStatus.modifiable) {
-        errors ~= "Task '" ~ task.id ~ "' is still modifiable - release all tasks first";
+        errors ~= "Task '" ~ task.id.value ~ "' is still modifiable - release all tasks first";
       }
     }
 

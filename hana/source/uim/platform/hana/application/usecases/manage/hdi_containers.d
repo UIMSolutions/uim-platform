@@ -47,7 +47,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     c.updatedAt = now;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   HDIContainer getById(HDIContainerId id) {
@@ -71,7 +71,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult remove(HDIContainerId id) {

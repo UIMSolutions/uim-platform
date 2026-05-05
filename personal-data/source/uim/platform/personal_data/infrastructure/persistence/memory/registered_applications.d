@@ -26,7 +26,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     size_t countByStatus(ApplicationStatus status) {
         return findAll().count!(v => v.status == status);
     }
-    RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, uint offset = 0, uint limit = 0) {
+    RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, size_t offset = 0, size_t limit = 0) {
         return (limit == 0) 
             ? applications.filter!(v => v.status == status).skip(offset).array
             : applications.filter!(v => v.status == status).skip(offset).take(limit).array;

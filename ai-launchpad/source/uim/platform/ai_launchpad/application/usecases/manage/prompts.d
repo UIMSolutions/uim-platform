@@ -68,7 +68,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     p.createdAt = "now";
     p.updatedAt = "now";
     repo.save(p);
-    return CommandResult(true, p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   Prompt getById(PromptId id) {
@@ -114,7 +114,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
 
     p.updatedAt = "now";
     repo.save(p);
-    return CommandResult(true, p.id, "");
+    return CommandResult(true, p.id.value, "");
   }
 
   CommandResult remove(PromptId id) {

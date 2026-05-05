@@ -125,7 +125,7 @@ graph TB
 ```mermaid
 classDiagram
     class DatabaseInstance {
-        +InstanceId id
+        +DatabaseInstanceId id
         +TenantId tenantId
         +string name
         +string description
@@ -163,7 +163,7 @@ classDiagram
     class DataLake {
         +DataLakeId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string description
         +DataLakeStatus status
@@ -184,7 +184,7 @@ classDiagram
     class Schema {
         +SchemaId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string owner
         +SchemaType type
@@ -200,7 +200,7 @@ classDiagram
     class DatabaseUser {
         +DatabaseUserId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string userName
         +AuthType authType
         +UserStatus status
@@ -226,7 +226,7 @@ classDiagram
     class Backup {
         +BackupId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +BackupType type
         +BackupStatus status
@@ -250,7 +250,7 @@ classDiagram
     class Alert {
         +AlertId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string description
         +AlertSeverity severity
@@ -277,7 +277,7 @@ classDiagram
     class HDIContainer {
         +HDIContainerId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string description
         +HDIContainerStatus status
@@ -294,7 +294,7 @@ classDiagram
     class ReplicationTask {
         +ReplicationTaskId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string description
         +ReplicationMode mode
@@ -321,7 +321,7 @@ classDiagram
     class Configuration {
         +ConfigurationId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string section
         +string key
         +string value
@@ -338,7 +338,7 @@ classDiagram
     class DatabaseConnection {
         +DatabaseConnectionId id
         +TenantId tenantId
-        +InstanceId instanceId
+        +DatabaseInstanceId instanceId
         +string name
         +string description
         +ConnectionType type

@@ -24,7 +24,7 @@ class MemoryDataControllerGroupRepository : TenantRepository!(DataControllerGrou
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).each!(entity => remove(entity.id));
+    findByName(tenantId, name).each!(entity => remove(entity));
   }
   
 }

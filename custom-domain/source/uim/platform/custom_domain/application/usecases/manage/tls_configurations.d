@@ -44,7 +44,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         c.updatedAt = now;
 
         repo.save(c);
-        return CommandResult(true, c.id, "");
+        return CommandResult(true, c.id.value, "");
     }
 
     TlsConfiguration getById(TlsConfigurationId id) {
@@ -72,7 +72,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(TlsConfigurationId id) {

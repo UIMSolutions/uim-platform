@@ -19,6 +19,16 @@ struct UserName {
   string middleName;
   string honorificPrefix;
   string honorificSuffix;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("formatted", formatted)
+      .set("familyName", familyName)
+      .set("givenName", givenName)
+      .set("middleName", middleName)
+      .set("honorificPrefix", honorificPrefix)
+      .set("honorificSuffix", honorificSuffix);
+  }
 }
 
 /// SCIM 2.0 email entry.
@@ -26,6 +36,13 @@ struct Email {
   string value;
   string type; // "work", "home", "other"
   bool primary;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("value", value)
+      .set("type", type)
+      .set("primary", primary);
+  }
 }
 
 /// SCIM 2.0 phone number entry.
@@ -33,6 +50,13 @@ struct PhoneNumber {
   string value;
   string type; // "work", "mobile", "fax", "other"
   bool primary;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("value", value)
+      .set("type", type)
+      .set("primary", primary);
+  }
 }
 
 /// SCIM 2.0 address entry.
@@ -45,6 +69,18 @@ struct Address {
   string country;
   string type; // "work", "home"
   bool primary;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("formatted", formatted)
+      .set("streetAddress", streetAddress)
+      .set("locality", locality)
+      .set("region", region)
+      .set("postalCode", postalCode)
+      .set("country", country)
+      .set("type", type)
+      .set("primary", primary);
+  }
 }
 
 /// Extended attributes stored as key-value pairs (custom schema extensions).
@@ -52,12 +88,19 @@ struct ExtendedAttribute {
   string schemaId;
   string attributeName;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("schemaId", schemaId)
+      .set("attributeName", attributeName)
+      .set("value", value);
+  }
 }
 
 /// Core user entity — SCIM 2.0 compliant.
 struct User {
-  UserId id;
-  TenantId tenantId;
+  mixin TenantEntity!UserId;
+
   string externalId;
   string userName;
   UserName name;
@@ -78,9 +121,7 @@ struct User {
   string[] groupIds;
   ExtendedAttribute[] extendedAttributes;
   string[] schemas; // SCIM schema URNs
-  long createdAt;
-  long updatedAt;
-
+  
   /// SCIM displayName or formatted name.
   string getDisplayName() const {
     if (displayName.length > 0)
@@ -103,62 +144,41 @@ struct User {
     return emails.length > 0 ? emails[0].value : "";
   }
 
-  Json toJson() {
-    auto nameJson = Json.emptyObject
-      .set("formatted", name.formatted)
-      .set("familyName", name.familyName)
-      .set("givenName", name.givenName)
-      .set("middleName", name.middleName)
-      .set("honorificPrefix", name.honorificPrefix)
-      .set("honorificSuffix", name.honorificSuffix);
+  Json toJson() const {
+    auto emailsJson = emails.map!(e => e.toJson()).array;
 
-    auto j = Json.emptyObject
-      .set("id", id)
+    auto phonesJson = phoneNumbers.map!(p => p.toJson()).array;
+
+    auto addressesJson = addresses.map!(a => a.toJson()).array;
+
+    auto extendedAttrsJson = extendedAttributes.map!(ea => ea.toJson()).array;
+
+    return entityToJson
       .set("externalId", externalId)
       .set("userName", userName)
-      .set("displayName", getDisplayName())
+      .set("name", Json.emptyObject
+        .set("formatted", name.formatted)
+        .set("familyName", name.familyName)
+        .set("givenName", name.givenName)
+        .set("middleName", name.middleName)
+        .set("honorificPrefix", name.honorificPrefix)
+        .set("honorificSuffix", name.honorificSuffix))
+      .set("displayName", displayName)
+      .set("nickName", nickName)
+      .set("profileUrl", profileUrl)
       .set("userType", userType)
-      .set("active", isActive())
+      .set("title", title)
       .set("preferredLanguage", preferredLanguage)
       .set("locale", locale)
-      .set("timezone", timezone);
-
-    // Name
-    j["name"] = nameJson;
-
-    // Emails
-    j["emails"] = toJsonArray(emails);
-
-    // Phone numbers
-    j["phoneNumbers"] = toJsonArray(phoneNumbers);
-
-    // Groups
-    auto groups = Json.emptyArray;
-    foreach (gid; groupIds) {
-      auto g = Json.emptyObject;
-      g["value"] = Json(gid);
-      groups ~= g;
-    }
-    j["groups"] = groups;
-
-    // Schemas
-    auto schemas = Json.emptyArray;
-    schemas ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
-    foreach (s; schemas)
-      schemas ~= Json(s);
-    j["schemas"] = schemas;
-
-    // Meta
-    auto meta = Json.emptyObject;
-    meta["resourceType"] = Json("User");
-    meta["created"] = Json(createdAt);
-    meta["lastModified"] = Json(updatedAt);
-    j["meta"] = meta;
-
-    return j;
+      .set("timezone", timezone)
+      .set("active", active)
+      .set("status", status.to!string())
+      // Note: passwordHash is intentionally excluded from JSON representation for security reasons
+      .set("emails", emailsJson)
+      .set("phoneNumbers", phonesJson)
+      .set("addresses", addressesJson)
+      .set("groupIds", groupIds)
+      .set("extendedAttributes", extendedAttrsJson)
+      .set("schemas", schemas); 
   }
-}
-
-Json serializeUsers(User[] users) {
-  return users.map!(u => u).array.toJson;
 }

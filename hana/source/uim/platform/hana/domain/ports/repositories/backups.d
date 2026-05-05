@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface BackupRepository : ITenantRepository!(Backup, BackupId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  Backup[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  Backup[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

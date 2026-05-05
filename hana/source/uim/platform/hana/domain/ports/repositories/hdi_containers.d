@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface HDIContainerRepository : ITenantRepository!(HDIContainer, HDIContainerId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  HDIContainer[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  HDIContainer[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

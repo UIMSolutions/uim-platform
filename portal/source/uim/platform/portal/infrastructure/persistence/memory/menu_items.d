@@ -42,6 +42,6 @@ class MemoryMenuItemRepository : MenuItemRepository {
   }
 
   void remove(MenuItemId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

@@ -27,7 +27,7 @@ struct BackupSchedule {
 struct Backup {
   mixin TenantEntity!(BackupId);
 
-  InstanceId instanceId;
+  DatabaseInstanceId instanceId;
   string name;
   BackupType type;
   BackupStatus status;

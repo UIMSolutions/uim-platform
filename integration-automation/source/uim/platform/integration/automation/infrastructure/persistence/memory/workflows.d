@@ -26,7 +26,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return filterByScenario(findByTenant(tenantId), scenarioId);
   }
   void removeByScenario(TenantId tenantId, ScenarioId scenarioId) {
-    findByScenario(tenantId, scenarioId).each!(e => remove(e.id));
+    findByScenario(tenantId, scenarioId).each!(entity => remove(entity));
   }
 
   size_t countByStatus(TenantId tenantId, WorkflowStatus status) {
@@ -39,7 +39,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return filterByStatus(findByTenant(tenantId), tenantId, status);
   }
   void removeByStatus(TenantId tenantId, WorkflowStatus status) {
-    findByStatus(tenantId, status).each!(e => remove(e.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
   size_t countByCreator(TenantId tenantId, UserId createdBy) {
@@ -52,7 +52,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return filterByCreator(findByTenant(tenantId), createdBy);
   }
   void removeByCreator(TenantId tenantId, UserId createdBy) {
-    findByCreator(tenantId, createdBy).each!(e => remove(e.id));
+    findByCreator(tenantId, createdBy).each!(entity => remove(entity));
   }
 
   size_t countActiveByTenant(TenantId tenantId) {

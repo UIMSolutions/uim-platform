@@ -39,7 +39,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         store.updatedAt = store.createdAt;
         store.createdBy = r.createdBy;
         repo.save(store);
-        return CommandResult(true, store.id, "");
+        return CommandResult(true, store.id.value, "");
     }
 
     CommandResult update(OfflineStoreId id, UpdateOfflineStoreRequest r) {
@@ -54,7 +54,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         store.updatedAt = currentTimestamp();
         store.updatedBy = r.updatedBy;
         repo.update(store);
-        return CommandResult(true, store.id, "");
+        return CommandResult(true, store.id.value, "");
     }
 
     OfflineStore get_(OfflineStoreId id) {

@@ -59,7 +59,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidServiceCall(sc))
             return CommandResult(false, "", "Invalid service call data");
         repo.save(sc);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ServiceCallDTO dto) {
@@ -74,7 +74,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         if (dto.resolution.length > 0) existing.resolution = dto.resolution;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(ServiceCallId id) {

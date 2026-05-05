@@ -35,7 +35,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     g.updatedAt = now;
 
     repo.save(g);
-    return CommandResult(g.id, "");
+    return CommandResult(g.id.value, "");
   }
 
   DataControllerGroup getGroup(DataControllerGroupId tenantId, id tenantId) {
@@ -57,7 +57,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     g.updatedAt = Clock.currStdTime();
 
     repo.update(g);
-    return CommandResult(g.id, "");
+    return CommandResult(g.id.value, "");
   }
 
   void deleteGroup(DataControllerGroupId tenantId, id tenantId) {

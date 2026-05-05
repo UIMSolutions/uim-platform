@@ -49,7 +49,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     ground.createdAt = now;
 
     repo.save(ground);
-    return CommandResult(true, ground.id, "");
+    return CommandResult(true, ground.id.value, "");
   }
 
   LegalGround getGround(LegalGroundId tenantId, id tenantId) {
@@ -88,7 +88,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
       ground.validUntil = req.validUntil;
 
     repo.update(ground);
-    return CommandResult(true, ground.id, "");
+    return CommandResult(true, ground.id.value, "");
   }
 
   CommandResult deleteGround(TenantId tenantId, LegalGroundId id) {

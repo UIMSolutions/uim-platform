@@ -29,7 +29,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
     auto policy = AuthorizationPolicy(randomUUID().toString(), req.tenantId,
         req.name, req.description, req.rules, req.applicationIds, true, now, now);
     policyRepo.save(policy);
-    return PolicyResponse(policy.id, "");
+    return PolicyResponse(policy.id.value, "");
   }
 
   AuthorizationPolicy getPolicy(PolicyId id) {

@@ -15,23 +15,44 @@ struct FlowSource {
   string objectId;
   string objectType;
   string[] columns;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("objectId", objectId)
+      .set("objectType", objectType)
+      .set("columns", columns);
+  }
 }
 
 struct FlowTarget {
   string objectId;
   string objectType;
   string truncateMode;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("objectId", objectId)
+      .set("objectType", objectType)
+      .set("truncateMode", truncateMode);
+  }
 }
 
 struct FlowTransform {
   string name;
   string type;
   string expression;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("type", type)
+      .set("expression", expression);
+  }
 }
 
 struct DataFlow {
-  DataFlowId id;
-  TenantId tenantId;
+  mixin TenantEntity!DataFlowId;
+
   SpaceId spaceId;
   string name;
   string description;
@@ -44,6 +65,30 @@ struct DataFlow {
   long lastRunAt;
   long lastRunDurationMs;
   string lastRunMessage;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    auto sourcesJson = Json.emptyArray;
+    foreach (source; sources) {
+      sourcesJson ~= source.toJson();
+    }
+
+    auto transformsJson = Json.emptyArray;
+    foreach (transform; transforms) {
+      transformsJson ~= transform.toJson();
+    }
+
+    return entityToJson
+      .set("spaceId", spaceId)
+      .set("name", name)
+      .set("description", description)
+      .set("status", status.to!string())
+      .set("sources", sourcesJson)
+      .set("target", target.toJson())
+      .set("transforms", transformsJson)
+      .set("scheduleExpression", scheduleExpression)
+      .set("scheduleFrequency", scheduleFrequency.to!string())
+      .set("lastRunAt", lastRunAt)
+      .set("lastRunDurationMs", lastRunDurationMs)
+      .set("lastRunMessage", lastRunMessage);
+  }
 }

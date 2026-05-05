@@ -27,7 +27,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
             existing.lastConnectedAt = currentTimestamp();
             existing.updatedAt = currentTimestamp();
             repo.update(existing);
-            return CommandResult(true, existing.id, "");
+            return CommandResult(true, existing.id.value, "");
         }
         DeviceRegistration reg;
         reg.id = randomUUID();
@@ -44,7 +44,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         reg.registeredAt = currentTimestamp();
         reg.updatedAt = reg.registeredAt;
         repo.save(reg);
-        return CommandResult(true, reg.id, "");
+        return CommandResult(true, reg.id.value, "");
     }
 
     CommandResult updateStatus(DeviceRegistrationId id, string status) {
@@ -59,7 +59,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         }
         reg.updatedAt = currentTimestamp();
         repo.update(reg);
-        return CommandResult(true, reg.id, "");
+        return CommandResult(true, reg.id.value, "");
     }
 
     DeviceRegistration get_(DeviceRegistrationId id) {

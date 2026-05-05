@@ -29,7 +29,7 @@ class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRe
   }
 
   void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
-    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity.id));
+    findByBusinessContext(tenantId, contextId).each!(entity => remove(entity));
   }
   // #region ByBusinessContext
 
@@ -47,7 +47,7 @@ class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRe
   }
 
   void removeByStatus(TenantId tenantId, RuleSetStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
 

@@ -46,18 +46,18 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
         req.settings, now, now, "", // createdBy
         );
     siteRepo.save(site);
-    return SiteResponse(id, "");
+    return SiteResponse(id.value, "");
   }
 
   Site getSite(SiteId id) {
     return siteRepo.findById(id);
   }
 
-  Site[] listSites(TenantId tenantId, uint offset = 0, uint limit = 100) {
+  Site[] listSites(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return siteRepo.findByTenant(tenantId, offset, limit);
   }
 
-  Site[] listSitesByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100) {
+  Site[] listSitesByStatus(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100) {
     return siteRepo.findByStatus(tenantId, status, offset, limit);
   }
 

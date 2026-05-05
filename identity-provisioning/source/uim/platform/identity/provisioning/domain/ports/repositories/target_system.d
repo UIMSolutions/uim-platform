@@ -15,11 +15,11 @@ interface TargetSystemRepository : ITenantRepository!(TargetSystem, TargetSystem
   void removeByName(TenantId tenantId, string name);
 
   size_t countByType(TenantId tenantId, SystemType systemType);
-  TargetSystem[] findByType(TenantId tenantId, SystemType systemType, uint offset = 0, uint limit = 0);
+  TargetSystem[] findByType(TenantId tenantId, SystemType systemType, size_t offset = 0, size_t limit = 0);
   void removeByType(TenantId tenantId, SystemType systemType);
 
   size_t countByStatus(TenantId tenantId, SystemStatus status);
-  TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status, uint offset = 0, uint limit = 0);
+  TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status, size_t offset = 0, size_t limit = 0);
   void removeByStatus(TenantId tenantId, SystemStatus status);
 
 }

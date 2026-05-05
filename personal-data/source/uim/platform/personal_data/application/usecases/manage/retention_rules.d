@@ -42,7 +42,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         rule.createdAt = clockTime();
 
         repo.save(rule);
-        return CommandResult(true, rule.id, "");
+        return CommandResult(true, rule.id.value, "");
     }
 
     RetentionRule getById(RetentionRuleId id) {
@@ -71,7 +71,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = clockTime();
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(RetentionRuleId id) {

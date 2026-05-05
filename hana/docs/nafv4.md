@@ -551,7 +551,7 @@ cancelled → [*]
 ┌──────────────────────────────┐
 │      DatabaseInstance         │
 ├──────────────────────────────┤
-│ PK id: InstanceId             │
+│ PK id: DatabaseInstanceId             │
 │    tenantId: TenantId         │
 │    name: string               │
 │    description: string        │

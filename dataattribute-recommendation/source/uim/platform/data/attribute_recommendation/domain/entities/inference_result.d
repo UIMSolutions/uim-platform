@@ -10,11 +10,18 @@ import uim.platform.data.attribute_recommendation.domain.types;
 /// The predicted attributes and confidence scores returned
 /// by the inference engine for a given request.
 struct InferenceResult {
-  InferenceResultId id;
-  TenantId tenantId;
+  mixin TenantEntity!InferenceResultId;
+
   InferenceRequestId requestId;
   string predictions; // JSON: {attributeName: predictedValue, ...}
   string confidenceScores; // JSON: {attributeName: score, ...}
   long processingTimeMs;
-  long createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("requestId", requestId)
+      .set("predictions", predictions)
+      .set("confidenceScores", confidenceScores)
+      .set("processingTimeMs", processingTimeMs);
+  }
 }

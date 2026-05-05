@@ -22,7 +22,7 @@ class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration,
     }
 
     void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(e => remove(e.id));
+        findByProject(projectId).each!(e => remove(e));
     }
 
     size_t countByStatus(BuildStatus status) {
@@ -34,6 +34,6 @@ class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration,
     }
 
     void removeByStatus(BuildStatus status) {
-        findByStatus(status).each!(e => remove(e.id));
+        findByStatus(status).each!(e => remove(e));
     }
 }

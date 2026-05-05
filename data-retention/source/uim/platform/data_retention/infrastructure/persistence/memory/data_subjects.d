@@ -20,7 +20,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     void removeByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status) {
-        findByLifecycleStatus(tenantId, status).each!(entity => remove(entity.id));
+        findByLifecycleStatus(tenantId, status).each!(entity => remove(entity));
     }
 
     size_t countByRole(TenantId tenantId, DataSubjectRoleId roleId) {
@@ -32,6 +32,6 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     void removeByRole(TenantId tenantId, DataSubjectRoleId roleId) {
-        findByRole(tenantId, roleId).each!(entity => remove(entity.id));
+        findByRole(tenantId, roleId).each!(entity => remove(entity));
     }
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct StorageObject {
-  ObjectId id;
-  TenantId tenantId;
+  mixin TenantEntity!ObjectId;
+
   BucketId bucketId;
   string key; // object path, e.g. "images/photo.jpg"
   string contentType;
@@ -23,7 +23,17 @@ struct StorageObject {
   StorageClass storageClass = StorageClass.standard;
   ObjectStatus status = ObjectStatus.active;
   string currentVersionId;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("bucketId", bucketId)
+      .set("key", key)
+      .set("contentType", contentType)
+      .set("size", size)
+      .set("etag", etag)
+      .set("metadata", metadata)
+      .set("storageClass", storageClass.to!string)
+      .set("status", status.to!string)
+      .set("currentVersionId", currentVersionId);
+  }
 }

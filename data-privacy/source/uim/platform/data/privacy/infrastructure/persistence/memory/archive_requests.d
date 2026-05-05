@@ -26,7 +26,7 @@ class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, Archive
     return result;
   }
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity.id));
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
   }
 
   size_t countByStatus(TenantId tenantId, ArchiveStatus status) {
@@ -40,7 +40,7 @@ class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, Archive
     return result;
   }
   void removeByStatus(TenantId tenantId, ArchiveStatus status) {
-    findByStatus(tenantId, status).each!(entity => remove(entity.id));
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
 }

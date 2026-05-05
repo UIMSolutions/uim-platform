@@ -36,15 +36,15 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
         return remove(e);
   }
 
-  size_t countExpiring(TenantId tenantId, long now, uint withinDays) {
+  size_t countExpiring(TenantId tenantId, long now, size_t withinDays) {
     return findExpiring(tenantId, now, withinDays).length;
   }
 
-  Certificate[] findExpiring(TenantId tenantId, long now, uint withinDays) {
+  Certificate[] findExpiring(TenantId tenantId, long now, size_t withinDays) {
     return findByTenant(tenantId).filter!(e => e.expiresWithinDays(now, withinDays)).array;
   }
 
-  void removeExpiring(TenantId tenantId, long now, uint withinDays) {
+  void removeExpiring(TenantId tenantId, long now, size_t withinDays) {
     findExpiring(tenantId, now, withinDays).each!(e => remove(e));
   }
 

@@ -57,6 +57,6 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   void remove(ServiceBindingId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

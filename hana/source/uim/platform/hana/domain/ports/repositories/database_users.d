@@ -14,8 +14,8 @@ mixin(ShowModule!());
 @safe:
 interface DatabaseUserRepository : ITenantRepository!(DatabaseUser, DatabaseUserId) {
 
-  size_t countByInstance(InstanceId instanceId);
-  DatabaseUser[] findByInstance(InstanceId instanceId);
-  void removeByInstance(InstanceId instanceId);
+  size_t countByInstance(DatabaseInstanceId instanceId);
+  DatabaseUser[] findByInstance(DatabaseInstanceId instanceId);
+  void removeByInstance(DatabaseInstanceId instanceId);
 
 }

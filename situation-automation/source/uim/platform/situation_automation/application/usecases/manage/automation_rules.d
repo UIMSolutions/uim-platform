@@ -43,7 +43,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         rule.updatedAt = now;
 
         repo.save(rule);
-        return CommandResult(true, rule.id, "");
+        return CommandResult(true, rule.id.value, "");
     }
 
     AutomationRule getById(AutomationRuleId id) {
@@ -77,7 +77,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult remove(AutomationRuleId id) {

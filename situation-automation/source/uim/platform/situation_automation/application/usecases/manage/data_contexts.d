@@ -42,7 +42,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         d.capturedAt = MonoTime.currTime.ticks;
 
         repo.save(d);
-        return CommandResult(true, d.id, "");
+        return CommandResult(true, d.id.value, "");
     }
 
     DataContext getById(DataContextId id) {

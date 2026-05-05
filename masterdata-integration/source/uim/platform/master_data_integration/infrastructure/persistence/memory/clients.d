@@ -17,7 +17,7 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
   size_t countByStatus(TenantId tenantId, ClientStatus status) {
     return findByStatus(tenantId, status).length;
   }
-  Client[] filterByStatus(Client[] clients, ClientStatus status, uint offset = 0, uint limit = 0) {
+  Client[] filterByStatus(Client[] clients, ClientStatus status, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? clients.filter!(e => e.status == status).skip(offset).array
         : clients.filter!(e => e.status == status).skip(offset).take(limit).array;
@@ -33,7 +33,7 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
    size_t countByType(TenantId tenantId, ClientType clientType) {
     return findByType(tenantId, clientType).length;
   }
-  Client[] filterByType(Client[] clients, ClientType clientType, uint offset = 0, uint limit = 0) {
+  Client[] filterByType(Client[] clients, ClientType clientType, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
         ? clients.filter!(e => e.clientType == clientType).skip(offset).array
         : clients.filter!(e => e.clientType == clientType).skip(offset).take(limit).array;

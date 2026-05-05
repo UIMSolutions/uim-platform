@@ -52,7 +52,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidCommand(cmd))
             return CommandResult(false, "", "Invalid command data");
         repo.save(cmd);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(CommandDTO dto) {
@@ -67,7 +67,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         if (dto.timeout.length > 0) existing.timeout = dto.timeout;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(CommandId id) {

@@ -33,14 +33,14 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
     auto tenant = Tenant(randomUUID().toString(), req.name, req.subdomain,
         req.defaultSsoProtocol, req.allowedAuthMethods, req.mfaEnforced, [], now, now);
     tenantRepo.save(tenant);
-    return TenantResponse(tenant.id, "");
+    return TenantResponse(tenant.id.value, "");
   }
 
   Tenant getTenant(TenantId id) {
     return tenantRepo.findById(id);
   }
 
-  Tenant[] listTenants(uint offset = 0, uint limit = 100) {
+  Tenant[] listTenants(size_t offset = 0, size_t limit = 100) {
     return tenantRepo.findAll(offset, limit);
   }
 

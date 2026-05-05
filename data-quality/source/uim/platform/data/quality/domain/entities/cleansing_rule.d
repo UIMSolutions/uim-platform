@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A data cleansing / transformation rule.
 struct CleansingRule {
-  mixin TenantEntity!(RuleId);
+  mixin TenantEntity!(CleansingRuleId);
 
   string name;
   string description;

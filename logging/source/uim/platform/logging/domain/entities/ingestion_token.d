@@ -12,13 +12,24 @@ mixin(ShowModule!());
 
 @safe:
 struct IngestionToken {
-  IngestionTokenId id;
-  TenantId tenantId;
+  mixin TenantEntity!IngestionTokenId;
+
   string name;
   string tokenHash;
   TokenScope[] scopes;
   long expiresAt;
   bool isActive = true;
-  UserId createdBy;
-  long createdAt;
+
+  Json toJson() const {
+    auto scopesJson = Json.emptyArray;
+    foreach (scope; scopes) {
+      scopesJson ~= scope.to!string();
+    }
+
+    return entityToJson
+      .set("name", name)
+      .set("scopes", scopesJson)
+      .set("expiresAt", expiresAt)
+      .set("isActive", isActive);
+  }
 }

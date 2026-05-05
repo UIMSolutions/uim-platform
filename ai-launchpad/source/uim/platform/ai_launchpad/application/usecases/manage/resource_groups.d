@@ -38,7 +38,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     rg.createdAt = "now";
     rg.updatedAt = "now";
     repo.save(rg);
-    return CommandResult(true, rg.id, "");
+    return CommandResult(true, rg.id.value, "");
   }
 
   ResourceGroup getById(ResourceGroupId id, ConnectionId connectionId) {
@@ -68,7 +68,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
 
     rg.updatedAt = "now";
     repo.save(rg);
-    return CommandResult(true, rg.id, "");
+    return CommandResult(true, rg.id.value, "");
   }
 
   CommandResult remove(ResourceGroupId id, ConnectionId connectionId) {

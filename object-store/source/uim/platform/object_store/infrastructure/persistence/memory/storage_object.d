@@ -57,6 +57,6 @@ class MemoryStorageObjectRepository : StorageObjectRepository {
   }
 
   void remove(ObjectId id) {
-    store.removeById(id);
+    removeById(id);
   }
 }

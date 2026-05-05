@@ -18,7 +18,7 @@ class MemoryResidenceRuleRepository : TenantRepository!(ResidenceRule, Residence
         return findByTenant(tenantId).filter!(a => a.businessPurposeId == purposeId).array;
     }
     void removeByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
-        findByBusinessPurpose(tenantId, purposeId).each!(a => remove(a.id));
+        findByBusinessPurpose(tenantId, purposeId).each!(entity => remove(entity));
     }
     
     size_t countByLegalGround(TenantId tenantId, LegalGroundId groundId) {
@@ -31,7 +31,7 @@ class MemoryResidenceRuleRepository : TenantRepository!(ResidenceRule, Residence
         return findByTenant(tenantId).filter!(a => a.legalGroundId == groundId).array;
     }
     void removeByLegalGround(TenantId tenantId, LegalGroundId groundId) {
-        findByLegalGround(tenantId, groundId).each!(a => remove(a.id));
+        findByLegalGround(tenantId, groundId).each!(entity => remove(entity));
     }
 
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// A configurable data quality validation rule.
 struct ValidationRule {
-  RuleId ruleId;
-  TenantId tenantId;
+      mixin TenantEntity!ValidationRuleId;
+
   string name;
   string description;
   string datasetPattern; // target dataset / object type

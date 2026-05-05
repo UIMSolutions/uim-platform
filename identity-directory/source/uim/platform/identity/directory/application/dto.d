@@ -126,18 +126,18 @@ struct CreatePasswordPolicyRequest {
   TenantId tenantId;
   string name;
   string description;
-  uint minLength;
-  uint maxLength;
+  size_t minLength;
+  size_t maxLength;
   bool requireUppercase;
   bool requireLowercase;
   bool requireDigit;
   bool requireSpecialChar;
-  uint minUniqueChars;
-  uint maxRepeatedChars;
-  uint passwordHistoryCount;
-  uint maxFailedAttempts;
-  uint lockoutDurationMinutes;
-  uint expiryDays;
+  size_t minUniqueChars;
+  size_t maxRepeatedChars;
+  size_t passwordHistoryCount;
+  size_t maxFailedAttempts;
+  size_t lockoutDurationMinutes;
+  size_t expiryDays;
 }
 
 struct PasswordPolicyResponse {

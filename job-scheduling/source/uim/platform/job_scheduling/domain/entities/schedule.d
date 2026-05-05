@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 struct Schedule {
-    TenantId tenantId;
-    ScheduleId id;
+            mixin TenantEntity!ScheduleId;
+    
     JobId jobId;
     string description;
     ScheduleType type;
@@ -28,29 +28,22 @@ struct Schedule {
     long startTime;
     long endTime;
     long nextRunAt;
-    long createdAt;
-    long updatedAt;
 
-    static Schedule createFromRequest(CreateScheduleRequest request) {
-        Schedule schedule;
-        schedule.id = randomUUID();
-        schedule.jobId = request.jobId;
-        schedule.tenantId = request.tenantId;
-        schedule.description = request.description;
-        schedule.type = request.type.to!ScheduleType;
-        schedule.format = request.format.to!ScheduleFormat;
-        schedule.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
-        schedule.active = request.active;
-        schedule.cronExpression = request.cronExpression;
-        schedule.humanReadableSchedule = request.humanReadableSchedule;
-        schedule.repeatInterval = request.repeatInterval;
-        schedule.repeatAt = request.repeatAt;
-        schedule.time = request.time;
-        schedule.startTime = request.startTime;
-        schedule.endTime = request.endTime;
-        schedule.createdAt = now;
-        schedule.updatedAt = now;
-
-        return schedule;
+    Json toJson() const {
+        return entityToJson
+            .set("jobId", jobId)
+            .set("description", description)
+            .set("type", type.to!string())
+            .set("format", format.to!string())
+            .set("status", status.to!string())
+            .set("active", active)
+            .set("cronExpression", cronExpression)
+            .set("humanReadableSchedule", humanReadableSchedule)
+            .set("repeatInterval", repeatInterval)
+            .set("repeatAt", repeatAt)
+            .set("time", time)
+            .set("startTime", startTime)
+            .set("endTime", endTime)
+            .set("nextRunAt", nextRunAt);
     }
 }

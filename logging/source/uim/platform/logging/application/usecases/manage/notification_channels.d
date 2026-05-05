@@ -59,7 +59,29 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
-    auto updated = channel.updateFromRequest(req);
+    NotificationChannel updated = channel;
+
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.state.length > 0)
+      updated.state = parseChannelState(req.state);
+    if (req.emailRecipients.length > 0)
+      updated.emailRecipients = cast(string[]) req.emailRecipients;
+    if (req.emailSubjectPrefix.length > 0)
+      updated.emailSubjectPrefix = req.emailSubjectPrefix;
+    if (req.webhookUrl.length > 0)
+      updated.webhookUrl = req.webhookUrl;
+    if (req.webhookSecret.length > 0)
+      updated.webhookSecret = req.webhookSecret;
+    if (req.webhookMethod.length > 0)
+      updated.webhookMethod = req.webhookMethod;
+    if (req.slackWebhookUrl.length > 0)
+      updated.slackWebhookUrl = req.slackWebhookUrl;
+    if (req.slackChannel.length > 0)
+      updated.slackChannel = req.slackChannel;
+
+    updated.updatedAt = clockSeconds();
+  
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
   }

@@ -18,7 +18,7 @@ interface TranslationRepository {
   Translation findById(TranslationId id);
 
   Translation[] findByResource(string resourceType, string resourceId, string language = "");
-  Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100);
+  Translation[] findByLanguage(TenantId tenantId, string language, size_t offset = 0, size_t limit = 100);
 
   void save(Translation translation);
   void update(Translation translation);

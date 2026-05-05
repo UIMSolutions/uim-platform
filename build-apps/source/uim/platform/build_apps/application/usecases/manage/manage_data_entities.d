@@ -51,7 +51,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidDataEntity(e))
             return CommandResult(false, "", "Invalid data entity");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(DataEntityDTO dto) {
@@ -63,7 +63,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         if (dto.fields.length > 0) existing.fields = dto.fields;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(DataEntityId id) {

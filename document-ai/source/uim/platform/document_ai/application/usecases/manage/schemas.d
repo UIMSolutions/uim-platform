@@ -70,7 +70,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     s.updatedAt = now;
 
     repo.save(s);
-    return CommandResult(true, s.id, "");
+    return CommandResult(true, s.id.value, "");
   }
 
   CommandResult update(UpdateSchemaRequest r) {
@@ -97,7 +97,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     existing.updatedAt = MonoTime.currTime.ticks;
 
     repo.update(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
   Schema getById(SchemaId id, ClientId clientId) {

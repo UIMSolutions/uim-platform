@@ -34,7 +34,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         session.createdAt = session.startedAt;
         session.updatedAt = session.startedAt;
         repo.save(session);
-        return CommandResult(true, session.id, "");
+        return CommandResult(true, session.id.value, "");
     }
 
     CommandResult terminate(UserSessionId id) {
@@ -45,7 +45,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         session.endedAt = currentTimestamp();
         session.updatedAt = currentTimestamp();
         repo.update(session);
-        return CommandResult(true, session.id, "");
+        return CommandResult(true, session.id.value, "");
     }
 
     UserSession get_(UserSessionId id) {

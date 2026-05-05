@@ -14,10 +14,10 @@ mixin(ShowModule!());
 /// An execution log entry — records the execution of a workflow step
 /// for monitoring, auditing, and troubleshooting purposes.
 struct ExecutionLog {
-  ExecutionLogId id;
+  mixin TenantEntity!ExecutionLogId;
+
   WorkflowId workflowId;
   StepId stepId;
-  TenantId tenantId;
   string action; // e.g. "step.started", "step.completed"
   ExecutionOutcome outcome;
   string message;
@@ -25,4 +25,17 @@ struct ExecutionLog {
   UserId executedBy; // userId or "system"
   long durationMs; // execution duration in milliseconds
   long timestamp;
+
+  Json toJson() const {
+    return entityToJson
+      .set("workflowId", workflowId)
+      .set("stepId", stepId)
+      .set("action", action)
+      .set("outcome", outcome.to!string())
+      .set("message", message)
+      .set("details", details)
+      .set("executedBy", executedBy)
+      .set("durationMs", durationMs)
+      .set("timestamp", timestamp);
+  }
 }

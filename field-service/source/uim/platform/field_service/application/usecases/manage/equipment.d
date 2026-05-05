@@ -58,7 +58,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidEquipment(e))
             return CommandResult(false, "", "Invalid equipment data");
         repo.save(e);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(EquipmentDTO dto) {
@@ -74,7 +74,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         if (dto.nextServiceDate.length > 0) existing.nextServiceDate = dto.nextServiceDate;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id, "");
+        return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult remove(EquipmentId id) {

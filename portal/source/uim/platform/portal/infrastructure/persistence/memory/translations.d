@@ -35,9 +35,9 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
   size_t countByLanguage(TenantId tenantId, string language) {
     return findByLanguage(tenantId, language).length;
   }
-  Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {
+  Translation[] findByLanguage(TenantId tenantId, string language, size_t offset = 0, size_t limit = 100) {
     Translation[] result;
-    uint idx;
+    size_t idx;
     foreach (t; findByTenant(tenantId)) {
       if (t.language == language) {
         if (idx >= offset && result.length < limit)

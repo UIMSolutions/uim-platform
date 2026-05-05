@@ -59,7 +59,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
             c.createdAt = now;
             c.updatedAt = now;
             repo.save(c);
-            return CommandResult(true, c.id, "");
+            return CommandResult(true, c.id.value, "");
         }
 
         auto existing = repo.findByTenant(request.tenantId);

@@ -28,7 +28,7 @@ class MemoryBusinessProcessRepository : TenantRepository!(BusinessProcess, Busin
   }
 
   void removeByController(TenantId tenantId, DataControllerId controllerId) {
-    findByController(tenantId, controllerId).each!(entity => remove(entity.id));
+    findByController(tenantId, controllerId).each!(entity => remove(entity));
   }
 
 }
