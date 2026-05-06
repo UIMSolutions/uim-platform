@@ -65,11 +65,12 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return repo.findByScenario(connectionId, scenarioId);
   }
 
-  CommandResult remove(ConnectionId connectionId, ConfigurationId id) {
-    if (!repo.existsById(connectionId, id))
+  CommandResult deleteConfiguration(ConnectionId connectionId, ConfigurationId id) {
+    auto entity = repo.findById(connectionId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    repo.remove(connectionId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

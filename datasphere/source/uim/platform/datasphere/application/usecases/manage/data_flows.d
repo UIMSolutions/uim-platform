@@ -71,12 +71,12 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(SpaceId spaceId, DataFlowId id) {
-    auto existing = repo.findById(spaceId, id);
-    if (existing.id.isEmpty)
+  CommandResult deleteDataFlow(SpaceId spaceId, DataFlowId id) {
+    auto entity = repo.findById(spaceId, id);
+    if (entity.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
-    repo.remove(spaceId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

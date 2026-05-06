@@ -68,10 +68,11 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, m.id.value, "");
   }
 
-  CommandResult remove(ConnectionId connectionId, ModelId id) {
-    auto m = repo.findById(connectionId, id);
-    if (m.isNull) return CommandResult(false, "", "Model not found");
-    repo.remove(connectionId, id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteModel(ConnectionId connectionId, ModelId id) {
+    auto entity = repo.findById(connectionId, id);
+    if (entity.isNull) return CommandResult(false, "", "Model not found");
+    
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

@@ -66,11 +66,12 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, w.id.value, "");
   }
 
-  CommandResult remove(WorkspaceId id) {
-    auto w = repo.findById(id);
-    if (w.isNull)
+  CommandResult deleteWorkspace(WorkspaceId id) {
+    auto entity = repo.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Workspace not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+      
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

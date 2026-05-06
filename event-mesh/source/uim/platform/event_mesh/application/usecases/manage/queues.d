@@ -34,7 +34,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         return repo.findByBrokerService(brokerServiceId);
     }
 
-    CommandResult create(QueueDTO dto) {
+    CommandResult createQueue(QueueDTO dto) {
         Queue q;
         q.id = QueueId(dto.id);
         q.tenantId = dto.tenantId;
@@ -59,7 +59,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, q.id.value, "");
     }
 
-    CommandResult update(QueueDTO dto) {
+    CommandResult updateQueue(QueueDTO dto) {
         auto existing = repo.findById(dto.queueId);
         if (existing.isNull)
             return CommandResult(false, "", "Queue not found");
@@ -74,11 +74,12 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(QueueId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteQueue(TenantId tenantId, QueueId id) {
+        auto queue = repo.findById(tenantId, id);
+        if (queue.isNull)
             return CommandResult(false, "", "Queue not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(queue);
+        return CommandResult(true, queue.id.value, "");
     }
 }

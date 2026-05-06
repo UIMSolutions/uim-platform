@@ -65,7 +65,12 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  void deleteProcess(TenantId tenantId, BusinessProcessId id) {
+  CommandResult deleteProcess(TenantId tenantId, BusinessProcessId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Business process not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

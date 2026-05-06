@@ -76,7 +76,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 
         existing.status = CertificateStatus.deactivated;
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     Certificate getById(CertificateId id) {
@@ -95,12 +95,12 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return repo.findExpiring(tenantId, beforeTimestamp);
     }
 
-    CommandResult remove(CertificateId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteCertificate(CertificateId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Certificate not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

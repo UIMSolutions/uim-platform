@@ -64,10 +64,12 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(ScheduledExecutionId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteScheduledExecution(ScheduledExecutionId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Scheduled execution not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

@@ -57,18 +57,24 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(ServiceBindingId(dto.id)))
             return CommandResult(false, "", "Service binding not found");
         auto existing = repo.findById(ServiceBindingId(dto.id));
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.serviceUrl.length > 0) existing.serviceUrl = dto.serviceUrl;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        if (dto.name.length > 0)
+            existing.name = dto.name;
+        if (dto.description.length > 0)
+            existing.description = dto.description;
+        if (dto.serviceUrl.length > 0)
+            existing.serviceUrl = dto.serviceUrl;
+        if (!dto.updatedBy.isNull)
+            existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(ServiceBindingId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteServiceBinding(ServiceBindingId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Service binding not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

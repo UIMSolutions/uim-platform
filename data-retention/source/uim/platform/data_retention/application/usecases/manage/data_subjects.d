@@ -63,8 +63,14 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     DataSubject[] listByStatus(TenantId tenantId, DataLifecycleStatus status) {
         return repo.findByLifecycleStatus(tenantId, status);
     }
-    CommandResult remove(string id) { return remove(DataSubjectId(id)); }
-    CommandResult remove(DataSubjectId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
+    CommandResult deleteDataSubject(DataSubjectId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Data subject not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
+    }
 
     private static DataLifecycleStatus parseLifecycleStatus(string s) {
         switch (s) {

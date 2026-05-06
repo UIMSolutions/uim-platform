@@ -117,11 +117,12 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult remove(PromptId id) {
-    auto p = repo.findById(id);
-    if (p.isNull)
+  CommandResult deletePrompt(PromptId id) {
+    auto entity = repo.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Prompt not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

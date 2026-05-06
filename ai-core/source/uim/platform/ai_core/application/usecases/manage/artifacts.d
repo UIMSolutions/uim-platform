@@ -100,13 +100,13 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     return repo.findByExecution(execId, rgId);
   }
 
-  CommandResult remove(ArtifactId id, ResourceGroupId rgId) {
-    auto existing = repo.findById(id, rgId);
-    if (existing.isNull)
+  CommandResult deleteArtifact(ArtifactId id, ResourceGroupId rgId) {
+    auto entity = repo.findById(id, rgId);
+    if (entity.isNull)
       return CommandResult(false, "", "Artifact not found");
 
-    repo.remove(id, rgId);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

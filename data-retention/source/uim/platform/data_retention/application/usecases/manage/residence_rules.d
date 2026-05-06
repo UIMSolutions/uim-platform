@@ -8,11 +8,15 @@ mixin(ShowModule!());
 class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     private ResidenceRuleRepository repo;
 
-    this(ResidenceRuleRepository repo) { this.repo = repo; }
+    this(ResidenceRuleRepository repo) {
+        this.repo = repo;
+    }
 
     CommandResult create(CreateResidenceRuleRequest req) {
         import std.uuid : randomUUID;
-        if (req.duration <= 0) return CommandResult(false, "", "Duration must be positive");
+
+        if (req.duration <= 0)
+            return CommandResult(false, "", "Duration must be positive");
 
         ResidenceRule rr;
         rr.id = ResidenceRuleId(randomUUID().toString());
@@ -29,14 +33,19 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateResidenceRuleRequest req) { return update(ResidenceRuleId(id), req); }
+    CommandResult update(string id, UpdateResidenceRuleRequest req) {
+        return update(ResidenceRuleId(id), req);
+    }
 
     CommandResult update(ResidenceRuleId id, UpdateResidenceRuleRequest req) {
-        if (!repo.existsById(id)) return CommandResult(false, "", "Residence rule not found");
+        if (!repo.existsById(id))
+            return CommandResult(false, "", "Residence rule not found");
 
         auto rr = repo.findById(id);
-        if (req.duration > 0) rr.duration = req.duration;
-        if (req.periodUnit.length > 0) rr.periodUnit = parsePeriodUnit(req.periodUnit);
+        if (req.duration > 0)
+            rr.duration = req.duration;
+        if (req.periodUnit.length > 0)
+            rr.periodUnit = parsePeriodUnit(req.periodUnit);
         rr.isActive = req.isActive;
         rr.updatedAt = clockSeconds();
 
@@ -44,25 +53,43 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(string id) { return hasById(ResidenceRuleId(id)); }
-    bool hasById(ResidenceRuleId id) { return repo.existsById(id); }
-    ResidenceRule getById(string id) { return getById(ResidenceRuleId(id)); }
-    ResidenceRule getById(ResidenceRuleId id) { return repo.findById(id); }
-    ResidenceRule[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
-    ResidenceRule[] list(TenantId tenantId) { return repo.findAll(tenantId); }
+    bool hasById(ResidenceRuleId id) {
+        return repo.existsById(id);
+    }
+
+    ResidenceRule getById(ResidenceRuleId id) {
+        return repo.findById(id);
+    }
+
+    ResidenceRule[] list(TenantId tenantId) {
+        return repo.findAll(tenantId);
+    }
+
     ResidenceRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
-    CommandResult remove(string id) { return remove(ResidenceRuleId(id)); }
-    CommandResult remove(ResidenceRuleId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
+
+    CommandResult deleteResidenceRule(ResidenceRuleId id) {
+        auto entity = repo.findById(id);
+        if (entity.id.isEmpty)
+            return CommandResult(false, "", "Residence rule not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
+    }
 
     private static PeriodUnit parsePeriodUnit(string s) {
         switch (s) {
-            case "days": return PeriodUnit.days;
-            case "weeks": return PeriodUnit.weeks;
-            case "months": return PeriodUnit.months;
-            case "years": return PeriodUnit.years;
-            default: return PeriodUnit.years;
+        case "days":
+            return PeriodUnit.days;
+        case "weeks":
+            return PeriodUnit.weeks;
+        case "months":
+            return PeriodUnit.months;
+        case "years":
+            return PeriodUnit.years;
+        default:
+            return PeriodUnit.years;
         }
     }
 }

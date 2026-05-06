@@ -48,7 +48,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidAppBuild(e))
             return CommandResult(false, "", "Invalid app build data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(AppBuildDTO dto) {
@@ -60,13 +60,15 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(AppBuildId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteAppBuild(AppBuildId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "App build not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

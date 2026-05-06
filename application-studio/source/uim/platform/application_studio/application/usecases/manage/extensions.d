@@ -62,11 +62,12 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(ExtensionId id) {
-        if (!extensions.existsById(id))
+    CommandResult deleteExtension(ExtensionId id) {
+        auto entity = extensions.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Extension not found");
 
-        extensions.removeById(id);
-        return CommandResult(true, id.value, "");
+        extensions.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

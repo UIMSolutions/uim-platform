@@ -82,7 +82,12 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "");
   }
 
-  void deleteApp(TenantId tenantId, AppId id) {
+  CommandResult deleteApp(TenantId tenantId, AppId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "App not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

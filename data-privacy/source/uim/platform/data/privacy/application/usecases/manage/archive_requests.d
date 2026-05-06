@@ -75,7 +75,12 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, archiveRequest.id.value, "");
   }
 
-  void deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {
+  CommandResult deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {
+    auto archiveRequest = repo.findById(tenantId, requestId);
+    if (archiveRequest.isNull)
+      return CommandResult(false, "", "Archive request not found");
+
     repo.removeById(tenantId, requestId);
+    return CommandResult(true, archiveRequest.id.value, "");
   }
 }

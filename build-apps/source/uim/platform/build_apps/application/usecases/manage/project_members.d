@@ -47,7 +47,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidProjectMember(e))
             return CommandResult(false, "", "Invalid project member data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(ProjectMemberDTO dto) {
@@ -59,13 +59,15 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         if (dto.permissions.length > 0) existing.permissions = dto.permissions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ProjectMemberId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteProjectMember(ProjectMemberId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Project member not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

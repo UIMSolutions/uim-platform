@@ -71,7 +71,12 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, sp.id.value, "");
   }
 
-  void deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
+  CommandResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Business subprocess not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

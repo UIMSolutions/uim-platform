@@ -85,7 +85,12 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "");
   }
 
-  void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+    auto policy = policyRepo.findById(tenantId, policyId);
+    if (policy.isNull)
+      return CommandResult(false, "", "Retention policy not found");
+
     policyRepo.removeById(tenantId, policyId);
+    return CommandResult(true, policy.id.value, "");
   }
 }

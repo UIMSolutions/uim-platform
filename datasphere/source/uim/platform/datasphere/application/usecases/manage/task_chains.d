@@ -71,12 +71,12 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(SpaceId spaceId, TaskChainId id) {
-    auto existing = repo.findById(spaceId, id);
-    if (existing.id.isEmpty)
+  CommandResult deleteTaskChain(SpaceId spaceId, TaskChainId id) {
+    auto entity = repo.findById(spaceId, id);
+    if (entity.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
-    repo.remove(spaceId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

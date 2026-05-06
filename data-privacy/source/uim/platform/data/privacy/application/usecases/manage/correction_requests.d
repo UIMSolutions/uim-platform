@@ -74,7 +74,11 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, correctionRequest.id.value, "");
   }
 
-  void deleteRequest(TenantId tenantId, CorrectionRequestId id) {
+  CommandResult deleteRequest(TenantId tenantId, CorrectionRequestId id) {
+    auto entity = correctionRequests.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Correction request not found");
+
     correctionRequests.removeById(tenantId, id);
   }
 }

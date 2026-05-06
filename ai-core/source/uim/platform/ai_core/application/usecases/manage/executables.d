@@ -70,12 +70,12 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return repo.findByResourceGroup(rgId);
     }
 
-    CommandResult remove(ResourceGroupId rgId, ExecutableId id) {
-        auto existing = repo.findById(rgId, id);
-        if (existing.isNull)
+    CommandResult deleteExecutable(ResourceGroupId rgId, ExecutableId id) {
+        auto entity = repo.findById(rgId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Executable not found");
 
-        repo.remove(rgId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

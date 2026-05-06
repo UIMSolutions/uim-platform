@@ -61,13 +61,13 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return repo.findByResourceGroup(rgId);
   }
 
-  CommandResult remove(ScenarioId id, ResourceGroupId rgId) {
-    auto existing = repo.findById(id, rgId);
-    if (existing.isNull)
+  CommandResult deleteScenario(ScenarioId id, ResourceGroupId rgId) {
+    auto entity = repo.findById(id, rgId);
+    if (entity.isNull)
       return CommandResult(false, "", "Scenario not found");
 
-    repo.removeB(id, rgId);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

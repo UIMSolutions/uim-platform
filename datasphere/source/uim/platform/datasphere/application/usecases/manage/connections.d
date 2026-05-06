@@ -81,12 +81,12 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(ConnectionId id, SpaceId spaceId) {
-    auto existing = repo.findById(spaceId, id);
-    if (existing.id.isEmpty)
+  CommandResult deleteConnection(ConnectionId id, SpaceId spaceId) {
+    auto entity = repo.findById(spaceId, id);
+    if (entity.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
-    repo.remove(spaceId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

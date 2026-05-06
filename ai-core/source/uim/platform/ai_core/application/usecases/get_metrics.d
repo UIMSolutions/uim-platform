@@ -88,8 +88,12 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     return repo.findById(id, rgId);
   }
 
-  CommandResult remove(MetricId id, ResourceGroupId rgId) {
-    repo.remove(id, rgId);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteMetric(MetricId id, ResourceGroupId rgId) {
+    auto entity = repo.findById(id, rgId);
+    if (entity.isNull)
+      return CommandResult(false, "", "Metric not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

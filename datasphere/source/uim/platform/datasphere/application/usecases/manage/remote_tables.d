@@ -62,12 +62,12 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     return tables.findBySpace(spaceId);
   }
 
-  CommandResult remove(RemoteTableId id, SpaceId spaceId) {
-    auto existing = tables.findById(spaceId, id);
-    if (existing.id.isEmpty)
+  CommandResult deleteRemoteTable(RemoteTableId id, SpaceId spaceId) {
+    auto entity = tables.findById(spaceId, id);
+    if (entity.id.isEmpty)
       return CommandResult(false, "", "Remote table not found");
 
-    tables.remove(id, spaceId);
-    return CommandResult(true, id.value, "");
+    tables.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

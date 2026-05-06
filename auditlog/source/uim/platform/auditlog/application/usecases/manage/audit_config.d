@@ -24,7 +24,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     this.configs = configs;
   }
 
-  CommandResult createConfig(CreateAuditConfigRequest req) {
+  CommandResult createAuditConfig(CreateAuditConfigRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
@@ -51,19 +51,19 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     return CommandResult(true, config.id.value, "");
   }
 
-  bool existsConfig(TenantId tenantId) {
+  bool existsAuditConfig(TenantId tenantId) {
     return configs.existsByTenant(tenantId);
   }
 
-  AuditConfig getConfig(TenantId tenantId) {
+  AuditConfig getAuditConfig(TenantId tenantId) {
     return configs.getByTenant(tenantId);
   }
 
-  AuditConfig[] listConfigs() {
+  AuditConfig[] listAuditConfigs() {
     return configs.findAll();
   }
 
-  CommandResult updateConfig(UpdateAuditConfigRequest req) {
+  CommandResult updateAuditConfig(UpdateAuditConfigRequest req) {
     auto cfg = configs.findById(req.tenantId, req.id);
     if (cfg.isNull)
       return CommandResult(false, "", "Audit config not found");
@@ -73,7 +73,12 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     return CommandResult(true, cfg.id.value, "");
   }
 
-  void deleteConfig(TenantId tenantId, AuditConfigId id) {
-    configs.removeById(tenantId, id);
+  CommandResult deleteAuditConfig(TenantId tenantId, AuditConfigId id) {
+    auto entity = configs.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Audit config not found");
+
+    configs.remove(entity);
+    return CommandResult(true, entity.id.value, ""); 
   }
 }

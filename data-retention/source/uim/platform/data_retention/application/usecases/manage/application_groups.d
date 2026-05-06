@@ -33,10 +33,6 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ag.id.value, "");
     }
 
-    CommandResult updateAppGroup(string id, UpdateApplicationGroupRequest req) {
-        return updateAppGroup(ApplicationGroupId(id), req);
-    }
-
     CommandResult updateAppGroup(ApplicationGroupId id, UpdateApplicationGroupRequest req) {
         if (!appGroupRepository.existsById(id))
             return CommandResult(false, "", "Application group not found");
@@ -57,16 +53,8 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasAppGroup(string id) {
-        return hasAppGroup(ApplicationGroupId(id));
-    }
-
     bool hasAppGroup(ApplicationGroupId id) {
         return appGroupRepository.existsById(id);
-    }
-
-    ApplicationGroup getAppGroupById(string id) {
-        return getAppGroupById(ApplicationGroupId(id));
     }
 
     ApplicationGroup getAppGroupById(ApplicationGroupId id) {
@@ -74,20 +62,16 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     }
 
     ApplicationGroup[] list(TenantId tenantId) {
-        return list(TenantId(tenantId));
-    }
-
-    ApplicationGroup[] list(TenantId tenantId) {
         return appGroupRepository.findAll(tenantId);
     }
 
-    CommandResult removeAppGroup(string id) {
-        return removeAppGroup(ApplicationGroupId(id));
-    }
+    CommandResult deleteAppGroup(ApplicationGroupId id) {
+        auto entity = appGroupRepository.findById(id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Application group not found");
 
-    CommandResult removeAppGroup(ApplicationGroupId id) {
-        appGroupRepository.removeById(id);
-        return CommandResult(true, id.value, "");
+        appGroupRepository.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
 }

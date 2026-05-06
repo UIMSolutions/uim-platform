@@ -40,11 +40,14 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     c.description = r.description;
     c.status = ConnectionStatus.pending;
 
-    if (r.type == "ai_core") c.type = ConnectionType.ai_core;
-    else c.type = ConnectionType.custom;
+    if (r.type == "ai_core")
+      c.type = ConnectionType.ai_core;
+    else
+      c.type = ConnectionType.custom;
 
     auto vr = validator.validate(c);
-    if (!vr.valid) return CommandResult(false, "", vr.error);
+    if (!vr.valid)
+      return CommandResult(false, "", vr.error);
 
     c.status = ConnectionStatus.active;
     c.createdAt = "now";
@@ -67,19 +70,25 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchConnectionRequest r) {
     auto c = repo.findById(r.connectionId);
-    if (c.isNull) return CommandResult(false, "", "Connection not found");
-    if (r.name.length > 0) c.name = r.name;
-    if (r.description.length > 0) c.description = r.description;
-    if (r.defaultResourceGroupId.length > 0) c.defaultResourceGroupId = r.defaultResourceGroupId;
+    if (c.isNull)
+      return CommandResult(false, "", "Connection not found");
+    if (r.name.length > 0)
+      c.name = r.name;
+    if (r.description.length > 0)
+      c.description = r.description;
+    if (r.defaultResourceGroupId.length > 0)
+      c.defaultResourceGroupId = r.defaultResourceGroupId;
     c.updatedAt = "now";
     repo.save(c);
     return CommandResult(true, c.id.value, "");
   }
 
-  CommandResult remove(ConnectionId id) {
-    auto c = repo.findById(id);
-    if (c.isNull) return CommandResult(false, "", "Connection not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteConnection(ConnectionId id) {
+    auto entity = repo.findById(id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Connection not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

@@ -80,7 +80,12 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, n.id.value, "");
   }
 
-  void deleteNotification(TenantId tenantId, NotificationId id) {
+  CommandResult deleteNotification(TenantId tenantId, NotificationId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Notification not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

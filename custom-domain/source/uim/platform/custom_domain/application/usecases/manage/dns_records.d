@@ -78,12 +78,12 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(DnsRecordId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteDnsRecord(DnsRecordId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "DNS record not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

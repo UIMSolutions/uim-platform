@@ -65,13 +65,15 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         if (dto.basePath.length > 0) existing.basePath = dto.basePath;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(DataConnectionId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteDataConnection(DataConnectionId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Data connection not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

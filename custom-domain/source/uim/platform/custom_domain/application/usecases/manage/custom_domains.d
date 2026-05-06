@@ -105,12 +105,12 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(CustomDomainId id) {
+    CommandResult deleteCustomDomain(CustomDomainId id) {
         auto existing = repo.findById(id);
         if (existing.isNull)
             return CommandResult(false, "", "Custom domain not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 }

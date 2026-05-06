@@ -80,7 +80,12 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  void deleteCard(TenantId tenantId, CardId id) {
+  CommandResult deleteCard(TenantId tenantId, CardId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Card not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

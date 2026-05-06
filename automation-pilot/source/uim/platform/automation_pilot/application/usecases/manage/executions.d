@@ -49,7 +49,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidExecution(e))
             return CommandResult(false, "", "Invalid execution data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(ExecutionDTO dto) {
@@ -57,13 +57,15 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Execution not found");
         auto existing = repo.findById(ExecutionId(dto.id));
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ExecutionId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteExecution(ExecutionId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Execution not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

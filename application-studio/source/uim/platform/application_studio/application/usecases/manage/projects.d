@@ -50,7 +50,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidProject(e))
             return CommandResult(false, "", "Invalid project data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(ProjectDTO dto) {
@@ -63,13 +63,15 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         if (dto.gitBranch.length > 0) existing.gitBranch = dto.gitBranch;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ProjectId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteProject(ProjectId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Project not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

@@ -30,7 +30,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createService(BrokerServiceDTO dto) {
+    CommandResult createBrokerService(BrokerServiceDTO dto) {
         BrokerService bs;
         bs.id = dto.brokerServiceId;
         bs.tenantId = dto.tenantId;
@@ -50,7 +50,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bs.id.value, "");
     }
 
-    CommandResult updateService(BrokerServiceDTO dto) {
+    CommandResult updateBrokerService(BrokerServiceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.brokerServiceId);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
@@ -62,15 +62,15 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.brokerServiceId.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteService(TenantId tenantId, BrokerServiceId id) {
+    CommandResult deleteBrokerService(TenantId tenantId, BrokerServiceId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
-            
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 }

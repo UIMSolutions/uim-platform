@@ -22,7 +22,8 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateResourceGroupRequest r) {
-    if (r.resourceGroupId.isEmpty) return CommandResult(false, "", "Resource group ID is required");
+    if (r.resourceGroupId.isEmpty)
+      return CommandResult(false, "", "Resource group ID is required");
 
     ResourceGroup rg;
     rg.initEntity();
@@ -54,7 +55,8 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.connectionId, r.resourceGroupId);
-    if (rg.isNull) return CommandResult(false, "", "Resource group not found");
+    if (rg.isNull)
+      return CommandResult(false, "", "Resource group not found");
 
     if (r.labels.length > 0) {
       rg.labels = [];
@@ -70,10 +72,12 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  CommandResult remove(ConnectionId connectionId, ResourceGroupId id) {
-    auto rg = repo.findById(connectionId, id);
-    if (rg.isNull) return CommandResult(false, "", "Resource group not found");
-    repo.remove(connectionId, id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteResourceGroup(ConnectionId connectionId, ResourceGroupId id) {
+    auto entity = repo.findById(connectionId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Resource group not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

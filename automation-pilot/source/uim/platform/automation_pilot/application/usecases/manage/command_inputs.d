@@ -57,13 +57,15 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         if (dto.values.length > 0) existing.values = dto.values;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(CommandInputId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteCommandInput(CommandInputId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Command input not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

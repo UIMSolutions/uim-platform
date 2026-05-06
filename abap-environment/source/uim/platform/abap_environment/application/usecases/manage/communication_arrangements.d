@@ -103,12 +103,12 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteArrangement(CommunicationArrangementId id) {
-    auto arrangement = repo.findById(id);
-    if (arrangement.isNull)      
+    auto entity = repo.findById(id);
+    if (entity.isNull)      
       return CommandResult(false, "", "Communication arrangement not found");
 
-    repo.remove(arrangement);
-    return CommandResult(true, arrangement.id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }
 

@@ -111,12 +111,13 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CertificateValidator.validate(c);
   }
 
-  CommandResult removeCertificate(CertificateId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteCertificate(CertificateId id) {
+    auto entity = repo.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Certificate not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
 

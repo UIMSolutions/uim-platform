@@ -132,7 +132,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cred.id.value, "");
   }
 
-  CommandResult remove(CredentialId id) {
+  CommandResult deleteKeyring(CredentialId id) {
     auto cred = credRepo.findById(id);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
@@ -145,8 +145,8 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Keyring must be disabled for at least 7 days before deletion");
 
     versionRepo.removeByKeyring(id);
-    credRepo.removeById(id);
-    return CommandResult(true, id.value, "");
+    credRepo.remove(cred);
+    return CommandResult(true, cred.id.value, "");
   }
 
   private static long currentTimestamp() {

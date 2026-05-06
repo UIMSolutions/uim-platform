@@ -67,11 +67,12 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, pc.id.value, "");
   }
 
-  CommandResult remove(PromptCollectionId id) {
-    if (!collectionRepository.existsById(id))
+  CommandResult deletePromptCollection(PromptCollectionId id) {
+    auto entity = collectionRepository.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Prompt collection not found");
 
-    collectionRepository.removeById(id);
-    return CommandResult(true, id.value, "");
+    collectionRepository.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

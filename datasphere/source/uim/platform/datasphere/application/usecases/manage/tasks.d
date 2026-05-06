@@ -66,12 +66,12 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(SpaceId spaceId, TaskId id) {
-    auto existing = tasks.findById(spaceId, id);
-    if (existing.isNull)
+  CommandResult deleteTask(SpaceId spaceId, TaskId id) {
+    auto entity = tasks.findById(spaceId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Task not found");
 
-    tasks.remove(spaceId, id);
-    return CommandResult(true, id.value, "");
+    tasks.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

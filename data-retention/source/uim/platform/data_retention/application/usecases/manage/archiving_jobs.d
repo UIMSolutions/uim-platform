@@ -60,24 +60,13 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(string id) {
-        return hasById(ArchivingJobId(id));
-    }
 
     bool hasById(ArchivingJobId id) {
         return repo.existsById(id);
     }
 
-    ArchivingJob getById(string id) {
-        return getById(ArchivingJobId(id));
-    }
-
     ArchivingJob getById(ArchivingJobId id) {
         return repo.findById(id);
-    }
-
-    ArchivingJob[] list(TenantId tenantId) {
-        return list(TenantId(tenantId));
     }
 
     ArchivingJob[] list(TenantId tenantId) {
@@ -86,10 +75,6 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
 
     ArchivingJob[] listByStatus(TenantId tenantId, ArchivingJobStatus status) {
         return repo.findByStatus(tenantId, status);
-    }
-
-    CommandResult remove(string id) {
-        return remove(ArchivingJobId(id));
     }
 
     CommandResult remove(ArchivingJobId id) {

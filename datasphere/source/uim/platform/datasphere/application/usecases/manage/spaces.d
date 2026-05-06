@@ -76,13 +76,13 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(SpaceId id) {
-    auto existing = repo.findById(id);
-    if (existing.isNull)
+  CommandResult deleteSpace(SpaceId id) {
+    auto entity = repo.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Space not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

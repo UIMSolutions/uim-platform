@@ -57,12 +57,12 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         return repo.findByDomain(domainId);
     }
 
-    CommandResult remove(TrustedCertificateId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTrustedCertificate(TrustedCertificateId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Trusted certificate not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

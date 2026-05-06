@@ -85,13 +85,13 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return repo.findByResourceGroup(rgId);
   }
 
-  CommandResult remove(ConfigurationId id, ResourceGroupId rgId) {
-    auto existing = repo.findById(id, rgId);
-    if (existing.isNull)
+  CommandResult deleteConfiguration(ConfigurationId id, ResourceGroupId rgId) {
+    auto entity = repo.findById(id, rgId);
+    if (entity.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    repo.remove(id, rgId);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

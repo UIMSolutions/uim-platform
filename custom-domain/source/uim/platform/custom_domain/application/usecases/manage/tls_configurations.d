@@ -75,12 +75,12 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TlsConfigurationId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTlsConfiguration(TlsConfigurationId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

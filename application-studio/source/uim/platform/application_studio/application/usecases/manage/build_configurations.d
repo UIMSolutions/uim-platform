@@ -65,10 +65,12 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(BuildConfigurationId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteBuildConfiguration(BuildConfigurationId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Build configuration not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

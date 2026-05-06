@@ -63,13 +63,15 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         if (dto.fields.length > 0) existing.fields = dto.fields;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(DataEntityId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteDataEntity(DataEntityId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Data entity not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

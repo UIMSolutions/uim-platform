@@ -59,10 +59,10 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patch(PatchDeploymentRequest request) {
-    if (!deployments.existsById(request.deploymentId, request.resourceGroupId))
+    auto d = deployments.findById(request.deploymentId, request.resourceGroupId);
+    if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
 
-    auto d = deployments.findById(request.deploymentId, request.resourceGroupId);
     if (request.targetStatus.length > 0) {
       TargetStatus target;
       if (request.targetStatus == "stopped")
@@ -116,12 +116,13 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return deployments.findByStatus(groupId, status);
   }
 
-  CommandResult remove(ResourceGroupId groupId, DeploymentId id) {
-    if (!deployments.existsById(groupId, id))
+  CommandResult deleteDeployment(ResourceGroupId groupId, DeploymentId id) {
+    auto entity = deployments.findById(groupId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Deployment not found");
 
-    deployments.remove(id, groupId);
-    return CommandResult(true, id.value, "");
+    deployments.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

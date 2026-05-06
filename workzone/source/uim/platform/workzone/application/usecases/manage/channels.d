@@ -69,7 +69,12 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ch.id.value, "");
   }
 
-  void deleteChannel(TenantId tenantId, ChannelId id) {
+  CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Channel not found");
+
     repo.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

@@ -50,20 +50,28 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(ContentConnectorId(dto.id)))
             return CommandResult(false, "", "Content connector not found");
         auto existing = repo.findById(ContentConnectorId(dto.id));
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.repositoryUrl.length > 0) existing.repositoryUrl = dto.repositoryUrl;
-        if (dto.branch.length > 0) existing.branch = dto.branch;
-        if (dto.path.length > 0) existing.path = dto.path;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        if (dto.name.length > 0)
+            existing.name = dto.name;
+        if (dto.description.length > 0)
+            existing.description = dto.description;
+        if (dto.repositoryUrl.length > 0)
+            existing.repositoryUrl = dto.repositoryUrl;
+        if (dto.branch.length > 0)
+            existing.branch = dto.branch;
+        if (dto.path.length > 0)
+            existing.path = dto.path;
+        if (!dto.updatedBy.isNull)
+            existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(ContentConnectorId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteContentConnector(ContentConnectorId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Content connector not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

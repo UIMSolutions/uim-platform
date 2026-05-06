@@ -116,10 +116,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteUser(BusinessUserId id) {
-    if (!repo.existsById(id))
+      auto entity = repo.findById(id);
+    if (entity.isNull)
       return CommandResult(false, "", "Business user not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

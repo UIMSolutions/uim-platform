@@ -51,10 +51,13 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
 
   CommandResult patch(PatchExecutionRequest r) {
     auto e = repo.findById(r.connectionId, r.executionId);
-    if (e.isNull) return CommandResult(false, "", "Execution not found");
+    if (e.isNull)
+      return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
-    if (r.targetStatus == "stopped") e.status = ExecutionStatus.stopped;
-    else if (r.targetStatus == "deleted") e.status = ExecutionStatus.dead;
+    if (r.targetStatus == "stopped")
+      e.status = ExecutionStatus.stopped;
+    else if (r.targetStatus == "deleted")
+      e.status = ExecutionStatus.dead;
     e.updatedAt = "now";
     repo.save(e);
     return CommandResult(true, e.id.value, "");
@@ -72,10 +75,12 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return results;
   }
 
-  CommandResult remove(ConnectionId connectionId, ExecutionId id) {
-    auto e = repo.findById(connectionId, id);
-    if (e.isNull) return CommandResult(false, "", "Execution not found");
-    repo.remove(connectionId, id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteExecution(ConnectionId connectionId, ExecutionId id) {
+    auto entity = repo.findById(connectionId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Execution not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

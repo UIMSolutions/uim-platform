@@ -69,12 +69,12 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult remove(ConnectionId connectionId, DatasetId id) {
-    auto d = repo.findById(connectionId, id);
-    if (d.isNull)
+  CommandResult deleteDataset(ConnectionId connectionId, DatasetId id) {
+    auto entity = repo.findById(connectionId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Dataset not found");
       
-    repo.remove(connectionId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

@@ -55,10 +55,10 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidMeshBridge(b))
             return CommandResult(false, "", "Invalid mesh bridge data");
         repo.save(b);
-        return CommandResult(true, dto.meshBridgeId.value, "");
+        return CommandResult(true, b.id.value, "");
     }
 
-    CommandResult update(MeshBridgeDTO dto) {
+    CommandResult updateMeshBridge(MeshBridgeDTO dto) {
         auto existing = repo.findById(dto.meshBridgeId);
         if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
@@ -69,14 +69,14 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (dto.queueBindings.length > 0) existing.queueBindings = dto.queueBindings;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.meshBridgeId.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(MeshBridgeId id) {
+    CommandResult deleteMeshBridge(MeshBridgeId id) {
         auto existing = repo.findById(id);
         if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 }

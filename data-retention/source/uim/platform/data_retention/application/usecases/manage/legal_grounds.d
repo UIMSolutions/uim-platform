@@ -8,11 +8,15 @@ mixin(ShowModule!());
 class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     private LegalGroundRepository repo;
 
-    this(LegalGroundRepository repo) { this.repo = repo; }
+    this(LegalGroundRepository repo) {
+        this.repo = repo;
+    }
 
     CommandResult create(CreateLegalGroundRequest req) {
         import std.uuid : randomUUID;
-        if (req.name.length == 0) return CommandResult(false, "", "Legal ground name is required");
+
+        if (req.name.length == 0)
+            return CommandResult(false, "", "Legal ground name is required");
 
         LegalGround lg;
         lg.id = LegalGroundId(randomUUID().toString());
@@ -30,43 +34,70 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, lg.id.value, "");
     }
 
-    CommandResult update(string id, UpdateLegalGroundRequest req) { return update(LegalGroundId(id), req); }
+    CommandResult update(string id, UpdateLegalGroundRequest req) {
+        return update(LegalGroundId(id), req);
+    }
 
     CommandResult update(LegalGroundId id, UpdateLegalGroundRequest req) {
-        if (!repo.existsById(id)) return CommandResult(false, "", "Legal ground not found");
+        if (!repo.existsById(id))
+            return CommandResult(false, "", "Legal ground not found");
 
         auto lg = repo.findById(id);
-        if (req.name.length > 0) lg.name = req.name;
-        if (req.description.length > 0) lg.description = req.description;
-        if (req.type.length > 0) lg.type = parseLegalGroundType(req.type);
-        if (req.referenceDate > 0) lg.referenceDate = req.referenceDate;
+        if (req.name.length > 0)
+            lg.name = req.name;
+        if (req.description.length > 0)
+            lg.description = req.description;
+        if (req.type.length > 0)
+            lg.type = parseLegalGroundType(req.type);
+        if (req.referenceDate > 0)
+            lg.referenceDate = req.referenceDate;
         lg.updatedAt = clockSeconds();
 
         repo.update(lg);
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(string id) { return hasById(LegalGroundId(id)); }
-    bool hasById(LegalGroundId id) { return repo.existsById(id); }
-    LegalGround getById(string id) { return getById(LegalGroundId(id)); }
-    LegalGround getById(LegalGroundId id) { return repo.findById(id); }
-    LegalGround[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
-    LegalGround[] list(TenantId tenantId) { return repo.findAll(tenantId); }
+    bool hasById(LegalGroundId id) {
+        return repo.existsById(id);
+    }
+
+    LegalGround getById(LegalGroundId id) {
+        return repo.findById(id);
+    }
+
+    LegalGround[] list(TenantId tenantId) {
+        return repo.findAll(tenantId);
+    }
+
     LegalGround[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
-    CommandResult remove(string id) { return remove(LegalGroundId(id)); }
-    CommandResult remove(LegalGroundId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
+
+    CommandResult deleteLegalGround(LegalGroundId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)            
+            return CommandResult(false, "", "Legal ground not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
+    }
 
     private static LegalGroundType parseLegalGroundType(string s) {
         switch (s) {
-            case "consent": return LegalGroundType.consent;
-            case "contract": return LegalGroundType.contract;
-            case "legalObligation": return LegalGroundType.legalObligation;
-            case "vitalInterest": return LegalGroundType.vitalInterest;
-            case "publicInterest": return LegalGroundType.publicInterest;
-            case "legitimateInterest": return LegalGroundType.legitimateInterest;
-            default: return LegalGroundType.consent;
+        case "consent":
+            return LegalGroundType.consent;
+        case "contract":
+            return LegalGroundType.contract;
+        case "legalObligation":
+            return LegalGroundType.legalObligation;
+        case "vitalInterest":
+            return LegalGroundType.vitalInterest;
+        case "publicInterest":
+            return LegalGroundType.publicInterest;
+        case "legitimateInterest":
+            return LegalGroundType.legitimateInterest;
+        default:
+            return LegalGroundType.consent;
         }
     }
 }

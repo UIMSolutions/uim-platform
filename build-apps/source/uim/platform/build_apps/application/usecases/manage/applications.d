@@ -51,7 +51,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidApplication(e))
             return CommandResult(false, "", "Invalid application data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(ApplicationDTO dto) {
@@ -64,13 +64,15 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         if (dto.iconUrl.length > 0) existing.iconUrl = dto.iconUrl;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ApplicationId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteApplication(ApplicationId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Application not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

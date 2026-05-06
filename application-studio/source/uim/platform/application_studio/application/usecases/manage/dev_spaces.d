@@ -66,10 +66,12 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.devSpaceId.value, "");
     }
 
-    CommandResult remove(DevSpaceId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteDevSpace(DevSpaceId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Dev space not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

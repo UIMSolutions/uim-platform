@@ -58,13 +58,15 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         if (dto.tags.length > 0) existing.tags = dto.tags;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(CatalogId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteCatalog(CatalogId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Catalog not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

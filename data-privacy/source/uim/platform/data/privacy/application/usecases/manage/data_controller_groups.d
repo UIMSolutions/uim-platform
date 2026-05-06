@@ -60,7 +60,12 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, g.id.value, "");
   }
 
-  void deleteGroup(TenantId tenantId, DataControllerGroupId id) {
+  CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId id) {
+    auto entity = dataControllerGroups.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Data controller group not found");
+
     dataControllerGroups.removeById(tenantId, id);
+    return CommandResult(true, entity.id.value, "");
   }
 }

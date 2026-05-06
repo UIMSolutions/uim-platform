@@ -67,12 +67,12 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         return repo.findByDomain(domainId);
     }
 
-    CommandResult remove(DomainMappingId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteDomainMapping(DomainMappingId id) {
+        auto entity = repo.findById(id);
+        if (entity.isNull)
             return CommandResult(false, "", "Domain mapping not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

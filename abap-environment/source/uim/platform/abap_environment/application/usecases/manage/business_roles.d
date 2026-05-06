@@ -89,10 +89,11 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRole(BusinessRoleId roleId) {
-    if (!repo.existsById(roleId))
+    auto entity = repo.findById(roleId);
+    if (entity.isNull)
       return CommandResult(false, "", "Business role not found");
 
-    repo.removeById(roleId);
-    return CommandResult(true, roleId.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

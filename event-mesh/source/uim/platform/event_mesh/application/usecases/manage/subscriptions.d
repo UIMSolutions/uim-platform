@@ -72,11 +72,12 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.eventSubscriptionId.value, "");
     }
 
-    CommandResult remove(EventSubscriptionId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId id) {
+        auto subscription = repo.findById(tenantId, id);
+        if (subscription.isNull)
             return CommandResult(false, "", "Subscription not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(subscription);
+        return CommandResult(true, subscription.id.value, "");
     }
 }
