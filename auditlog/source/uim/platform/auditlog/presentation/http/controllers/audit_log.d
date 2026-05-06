@@ -112,14 +112,14 @@ class AuditLogController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AuditLogId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      if (!retrieveUsecase.existsById(tenantId, AuditLogId(id))) {
+      if (!retrieveUsecase.existsById(tenantId, id)) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }
 
-      auto entry = retrieveUsecase.getById(tenantId, AuditLogId(id));
+      auto entry = retrieveUsecase.getById(tenantId, id);
       auto resp = entry.toJson
         .set("message", "Audit log entry retrieved successfully");
 
@@ -127,41 +127,6 @@ class AuditLogController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeEntry(const AuditLogEntry e) {
-    auto j = Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("userId", e.userId)
-      .set("userName", e.userName)
-      .set("serviceId", e.serviceId)
-      .set("serviceName", e.serviceName)
-      .set("category", e.category.to!string)
-      .set("severity", e.severity.to!string)
-      .set("action", e.action.to!string)
-      .set("outcome", e.outcome.to!string)
-      .set("objectType", e.objectType)
-      .set("objectId", e.objectId)
-      .set("message", e.message)
-      .set("ipAddress", e.ipAddress)
-      .set("userAgent", e.userAgent)
-      .set("correlationId", e.correlationId)
-      .set("originApp", e.originApp)
-      .set("timestamp", e.timestamp)
-      .set("formatVersion", e.formatVersion);
-
-    if (e.attributes.length > 0) {
-      auto attrs = Json.emptyArray;
-      foreach (a; e.attributes) {
-        attrs ~= Json.emptyObject
-        .set("name", a.name)
-        .set("oldValue", a.oldValue)
-        .set("newValue", a.newValue);
-      }
-      j["attributes"] = attrs;
-    }
-    return j;
   }
 
   private static AuditAttribute[] parseAttributes(Json j) {

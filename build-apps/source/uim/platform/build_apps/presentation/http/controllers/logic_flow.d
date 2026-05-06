@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class LogicFlowController : PlatformController {
-    private ManageLogicFlowsUseCase uc;
+    private ManageLogicFlowsUseCase usecase;
 
-    this(ManageLogicFlowsUseCase uc) {
-        this.uc = uc;
+    this(ManageLogicFlowsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class LogicFlowController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
@@ -48,9 +48,9 @@ class LogicFlowController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(LogicFlowId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Logic flow not found"); return; }
+            auto id = LogicFlowId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Logic flow not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -61,10 +61,10 @@ class LogicFlowController : PlatformController {
         try {
             auto j = req.json;
             LogicFlowDTO dto;
-            dto.id = j.getString("id");
+            dto.logicFlowId = LogicFlowId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
-            dto.pageId = j.getString("pageId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
+            dto.pageId = PageId(j.getString("pageId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.trigger = j.getString("trigger");
@@ -75,7 +75,7 @@ class LogicFlowController : PlatformController {
             dto.errorHandler = j.getString("errorHandler");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -96,14 +96,14 @@ class LogicFlowController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             LogicFlowDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.logicFlowId = LogicFlowId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.nodes = j.getString("nodes");
             dto.connections = j.getString("connections");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -122,8 +122,8 @@ class LogicFlowController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(LogicFlowId(id));
+            auto id = LogicFlowId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Logic flow deleted successfully");

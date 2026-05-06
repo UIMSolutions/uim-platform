@@ -25,7 +25,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 

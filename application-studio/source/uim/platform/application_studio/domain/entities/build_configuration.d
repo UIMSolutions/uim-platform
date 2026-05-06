@@ -13,6 +13,7 @@ mixin(ShowModule!());
 
 struct BuildConfiguration {
     mixin TenantEntity!(BuildConfigurationId);
+    
     ProjectId projectId;
     string name;
     string description;
@@ -27,7 +28,7 @@ struct BuildConfiguration {
     string buildLog;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("projectId", projectId)
             .set("name", name)
             .set("description", description)
@@ -40,7 +41,5 @@ struct BuildConfiguration {
             .set("lastBuildAt", lastBuildAt)
             .set("lastDeployAt", lastDeployAt)
             .set("buildLog", buildLog);
-
-        return j;
     }
 }

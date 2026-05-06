@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class ApplicationController : PlatformController {
-    private ManageApplicationsUseCase uc;
+    private ManageApplicationsUseCase usecase;
 
-    this(ManageApplicationsUseCase uc) {
-        this.uc = uc;
+    this(ManageApplicationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/build-apps/applications", &handleList);
         router.get("/api/v1/build-apps/applications/*", &handleGet);
         router.post("/api/v1/build-apps/applications", &handleCreate);
@@ -29,7 +30,7 @@ class ApplicationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -47,9 +48,9 @@ class ApplicationController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ApplicationId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Application not found"); return; }
+            auto id = ApplicationId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Application not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,7 +61,7 @@ class ApplicationController : PlatformController {
         try {
             auto j = req.json;
             ApplicationDTO dto;
-            dto.id = j.getString("id");
+            dto.applicationId = ApplicationId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -74,7 +75,7 @@ class ApplicationController : PlatformController {
             dto.owner = j.getString("owner");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -95,14 +96,14 @@ class ApplicationController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ApplicationDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.applicationId = ApplicationId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.iconUrl = j.getString("iconUrl");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -121,8 +122,8 @@ class ApplicationController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ApplicationId(id));
+            auto id = ApplicationId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Application deleted");

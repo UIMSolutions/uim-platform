@@ -159,7 +159,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
 
     auto fn = functionRepository.findById(functionId);
     functionRepository.remove(functionId);
-    return CommandResult(true, fn.id.value(), "");
+    return CommandResult(true, fn.id.value, "");
   }
 
   private ScalingType parseScalingType(string scalingTypeName) {

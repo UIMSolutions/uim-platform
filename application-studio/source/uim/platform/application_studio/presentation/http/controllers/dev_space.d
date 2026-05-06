@@ -20,6 +20,7 @@ class DevSpaceController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/application-studio/dev-spaces", &handleList);
         router.get("/api/v1/application-studio/dev-spaces/*", &handleGet);
         router.post("/api/v1/application-studio/dev-spaces", &handleCreate);
@@ -47,9 +48,9 @@ class DevSpaceController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(DevSpaceId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Dev space not found"); return; }
+            auto id = DevSpaceId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.id.isEmpty) { writeError(res, 404, "Dev space not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -64,9 +65,9 @@ class DevSpaceController : PlatformController {
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
-            dto.devSpaceTypeId = j.getString("devSpaceTypeId");
+            dto.devSpaceTypeId = DevSpaceTypeId(j.getString("devSpaceTypeId"));
             dto.extensions = j.getString("extensions");
-            dto.owner = j.getString("owner");
+            dto.owner = UserId(j.getString("owner"));
             dto.region = j.getString("region");
             dto.hibernateAfterDays = j.getString("hibernateAfterDays");
             dto.memoryLimit = j.getString("memoryLimit");
@@ -94,7 +95,7 @@ class DevSpaceController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DevSpaceDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.id = DevSpaceId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.extensions = j.getString("extensions");
@@ -119,8 +120,8 @@ class DevSpaceController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(DevSpaceId(id));
+            auto id = DevSpaceId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Dev space deleted");

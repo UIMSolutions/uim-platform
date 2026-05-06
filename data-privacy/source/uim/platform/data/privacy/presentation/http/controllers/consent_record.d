@@ -96,7 +96,7 @@ class ConsentController : PlatformController {
 
       ConsentRecord[] items;
       if (subjectParam.length > 0)
-        items = uc.listActiveConsents(tenantId, subjectParam);
+        items = uc.listActiveConsents(tenantId, DataSubjectId(subjectParam));
       else
         items = uc.listConsents(tenantId);
 
@@ -114,7 +114,7 @@ class ConsentController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getConsent(tenantId, id);
       if (entry.isNull) {
@@ -133,7 +133,7 @@ class ConsentController : PlatformController {
     try {
       auto j = req.json;
       RevokeConsentRequest r;
-      r.id = j.getString("id");
+      r.id = ConsentRecordId(j.getString("id"));
       r.tenantId = req.getTenantId;
 
       auto result = uc.revokeConsent(r);
@@ -151,34 +151,12 @@ class ConsentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const ConsentRecord e) {
-    auto cats = Json.emptyArray;
-    foreach (c; e.categories)
-      cats ~= Json(c.to!string);
-    
-    return Json.emptyObject
-    .set("id", e.id)
-    .set("tenantId", e.tenantId)
-    .set("dataSubjectId", e.dataSubjectId)
-    .set("purpose", e.purpose.to!string)
-    .set("status", e.status.to!string)
-    .set("channel", e.channel)
-    .set("consentText", e.consentText)
-    .set("version", e.version_)
-    .set("ipAddress", e.ipAddress)
-    .set("grantedAt", e.grantedAt)
-    .set("revokedAt", e.revokedAt)
-    .set("expiresAt", e.expiresAt)
-    .set("createdAt", e.createdAt)
-    .set("categories", cats);
   }
 
   private static ProcessingPurpose parsePurpose(string purpose) {

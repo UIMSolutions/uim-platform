@@ -86,7 +86,7 @@ class OrgController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = OrgId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto org = useCase.getOrg(tenantId, id);
       if (org.isNull) {
@@ -102,7 +102,7 @@ class OrgController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = OrgId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateOrgRequest();
       r.id = id;
@@ -132,7 +132,7 @@ class OrgController : PlatformController {
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = OrgId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.suspendOrg(tenantId, id);
       if (result.isSuccess()) {
@@ -152,7 +152,7 @@ class OrgController : PlatformController {
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = OrgId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.activateOrg(tenantId, id);
       if (result.isSuccess()) {
@@ -172,7 +172,7 @@ class OrgController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = OrgId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteOrg(tenantId, id);
       if (result.isSuccess()) {
@@ -188,21 +188,5 @@ class OrgController : PlatformController {
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeOrg(const Organization o) {
-    return Json.emptyObject
-      .set("id", o.id)
-      .set("tenantId", o.tenantId)
-      .set("name", o.name)
-      .set("status", o.status.to!string)
-      .set("memoryQuotaMb", o.memoryQuotaMb)
-      .set("instanceMemoryLimitMb", o.instanceMemoryLimitMb)
-      .set("totalRoutes", o.totalRoutes)
-      .set("totalServices", o.totalServices)
-      .set("totalAppInstances", o.totalAppInstances)
-      .set("createdBy", o.createdBy)
-      .set("createdAt", o.createdAt)
-      .set("updatedAt", o.updatedAt);
   }
 }

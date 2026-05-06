@@ -91,7 +91,7 @@ class RouteController : PlatformController {
 
   private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RouteId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto r = useCase.getRoute(tenantId, id);
       if (r.isNull) {
@@ -106,7 +106,7 @@ class RouteController : PlatformController {
 
   private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RouteId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
@@ -144,7 +144,7 @@ class RouteController : PlatformController {
 
   private void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto routeId = extractIdFromPath(req.requestURI);
+      auto routeId = RouteId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = routeId;
@@ -211,7 +211,7 @@ class RouteController : PlatformController {
 
   private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DomainId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {

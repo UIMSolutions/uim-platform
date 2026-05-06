@@ -45,8 +45,8 @@ class AppController : PlatformController {
       r.icon = j.getString("icon");
       r.vendor = j.getString("vendor");
       r.version_ = j.getString("version");
-      r.supportedPlatforms = getStringArray(j, "supportedPlatforms");
-      r.tags = getStringArray(j, "tags");
+      r.supportedPlatforms = getStrings(j, "supportedPlatforms");
+      r.tags = getStrings(j, "tags");
       r.appConfig = parseAppConfig(j);
 
       auto result = useCase.createApp(r);

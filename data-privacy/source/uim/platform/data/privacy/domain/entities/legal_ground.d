@@ -32,7 +32,7 @@ struct LegalGround {
       .set("purpose", purpose.to!string)
       .set("description", description)
       .set("legalReference", legalReference)
-      .set("categories", categories.map!(c => c.to!string).array)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
       .set("isActive", isActive)
       .set("validFrom", validFrom)
       .set("validUntil", validUntil);

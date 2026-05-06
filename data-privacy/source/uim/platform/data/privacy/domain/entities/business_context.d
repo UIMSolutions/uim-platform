@@ -27,16 +27,22 @@ struct BusinessContext {
   long activatedAt;
 
   Json toJson() const {
+    auto cats = dataCategories.map!(c => c.to!string).array.toJson;
+
+    auto purps = purposes.map!(p => p.to!string).array.toJson;
+
     return entityToJson
       .set("name", name)
       .set("description", description)
       .set("controllerGroupId", controllerGroupId)
       .set("status", status.to!string)
       .set("version", version_)
-      .set("dataCategories", dataCategories)
-      .set("purposes", purposes)
-      .set("dataCategoryAttributes", dataCategoryAttributes)
+      .set("dataCategories", dataCategories.map!(c => c.to!string).array.toJson())
+      .set("purposes", purposes.map!(p => p.to!string).array.toJson())
+      .set("dataCategoryAttributes", dataCategoryAttributes.toJson)
       .set("isCrossRoleEnabled", isCrossRoleEnabled)
-      .set("activatedAt", activatedAt);
+      .set("activatedAt", activatedAt)
+      .set("dataCategories", cats)
+      .set("purposes", purps);
   }
 }

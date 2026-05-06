@@ -38,7 +38,7 @@ class DataControllerGroupController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStringArray(j, "controllerIds");
+      r.controllerIds = getStrings(j, "controllerIds");
 
       auto result = uc.createGroup(r);
       if (result.isSuccess()) {
@@ -72,7 +72,7 @@ class DataControllerGroupController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getGroup(tenantId, id);
       if (entry.isNull) {
@@ -88,11 +88,11 @@ class DataControllerGroupController : PlatformController {
     try {
       auto j = req.json;
       UpdateDataControllerGroupRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStringArray(j, "controllerIds");
+      r.controllerIds = getStrings(j, "controllerIds");
 
       auto result = uc.updateGroup(r);
       if (result.isSuccess()) {
@@ -109,7 +109,7 @@ class DataControllerGroupController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteGroup(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
@@ -118,7 +118,7 @@ class DataControllerGroupController : PlatformController {
   }
 
   private static Json serialize(const DataControllerGroup e) {
-    auto ids = e.controllerIds.map!(cid => Json(cid)).array;
+    auto ids = e.controllerIds.map!(cid => cid.value).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

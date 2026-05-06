@@ -147,7 +147,10 @@ class LegalGroundController : PlatformController {
   }
 
   private static Json serialize(const LegalGround e) {
-    auto cats = e.categories)
+    auto cats = e.categories.map!(c => Json.emptyObject
+      .set("id", c.id)
+      .set("name", c.name)
+      .set("description", c.description)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

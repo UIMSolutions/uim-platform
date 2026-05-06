@@ -41,24 +41,5 @@ struct Document {
       .set("properties", properties);
   }
 
-  Document updateFromRequest(const UpdateDocumentRequest r) const {
-    Document updated = this.dup;
-
-    if (r.name.length > 0)
-      updated.name = r.name;
-    if (r.description.length > 0)
-      updated.description = r.description;
-    if (r.contentCategory != ContentCategory.unknown)
-      updated.contentCategory = r.contentCategory;
-    if (r.mimeType.length > 0)
-      updated.mimeType = r.mimeType;
-    if (r.fileSize >= 0)
-      updated.fileSize = r.fileSize;
-    if (r.tags.length > 0)
-      updated.tags = r.tags;
-    if (r.properties.length > 0)
-      updated.properties = r.properties;
-
-    return updated;
-  }
+  
 }

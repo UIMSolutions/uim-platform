@@ -41,7 +41,8 @@ struct PromptParameters {
 }
 
 struct Prompt {
-  PromptId id;
+  mixin IdEntity!PromptId;
+
   PromptCollectionId collectionId;
   string name;
   string modelName;
@@ -51,10 +52,7 @@ struct Prompt {
   string[] inputParams;
   string lastOutput;
   PromptStatus status;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
-
+  
   Json toJson() const {
     return entityToJson
       .set("collection_id", collectionId)

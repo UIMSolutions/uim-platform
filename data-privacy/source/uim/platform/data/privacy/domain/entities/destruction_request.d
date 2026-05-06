@@ -31,7 +31,7 @@ struct DestructionRequest {
       .set("dataSubjectId", dataSubjectId)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string())
-      .set("targetSystems", targetSystems)
+      .set("targetSystems", targetSystems.toJson())
       .set("archiveRequestId", archiveRequestId)
       .set("blockingRequestId", blockingRequestId)
       .set("reason", reason)

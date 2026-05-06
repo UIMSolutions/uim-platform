@@ -50,7 +50,7 @@ class CommandController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = CommandId(extractIdFromPath(path));
             auto e = commands.getById(id);
-            if (e.id.value.length == 0) {
+            if (e.isNull) {
                 writeError(res, 404, "Command not found");
                 return;
             }

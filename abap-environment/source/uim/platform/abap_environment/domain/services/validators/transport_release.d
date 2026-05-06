@@ -18,7 +18,7 @@ struct TransportValidation {
   string[] errors;
 
   Json toJson() const {
-    return Json.emptyObject.set("valid", valid).set("errors", errors);
+    return Json.emptyObject.set("valid", valid).set("errors", errors.toJson);
   }
 }
 

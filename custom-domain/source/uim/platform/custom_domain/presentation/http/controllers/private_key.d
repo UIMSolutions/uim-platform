@@ -33,7 +33,7 @@ class PrivateKeyController : PlatformController {
             r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.subject = j.getString("subject");
-            r.domains = getStringArray(j, "domains");
+            r.domains = getStrings(j, "domains");
             r.algorithm = j.getString("algorithm");
             r.keySize = j.getInteger("keySize");
             r.createdBy = UserId(j.getString("createdBy"));

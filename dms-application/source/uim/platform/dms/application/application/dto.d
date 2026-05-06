@@ -78,12 +78,14 @@ struct UpdateDocumentRequest {
   string description;
   string tags;
   string properties;
+  string mimeType;
 }
 
 struct MoveDocumentRequest {
   DocumentId id;
   TenantId tenantId;
   FolderId newFolderId;
+
 }
 
 // --- Version DTOs ---

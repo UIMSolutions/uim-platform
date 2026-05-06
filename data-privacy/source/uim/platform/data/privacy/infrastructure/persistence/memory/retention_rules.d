@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRetentionRuleRepository : RetentionRuleRepository {
+class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
   // #region ByDefault 
   bool existsDefault(TenantId tenantId) {
@@ -33,7 +33,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
   void removeDefault(TenantId tenantId) {
     foreach (r; findByTenant(tenantId))
       if (r.isDefault)
-        remove(r.id);
+        remove(r);
   }
   // #endregion ByDefault 
 

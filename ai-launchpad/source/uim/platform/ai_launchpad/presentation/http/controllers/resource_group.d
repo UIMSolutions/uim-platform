@@ -80,7 +80,7 @@ class ResourceGroupController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto g = uc.getById(id, connectionId);
@@ -141,20 +141,4 @@ class ResourceGroupController : PlatformController {
     }
   }
 
-  private Json serializeResourceGroup(ResourceGroup g) {
-    auto labels = Json.emptyArray;
-    foreach (l; g.labels) {
-      labels ~= Json.emptyObject
-        .set("key", l.key)
-        .set("value", l.value);
-    }
-
-    return Json.emptyObject
-      .set("id", g.id)
-      .set("connectionId", g.connectionId)
-      .set("labels", labels)
-      .set("status", g.status)
-      .set("createdAt", g.createdAt)
-      .set("updatedAt", g.updatedAt);
-  }
 }

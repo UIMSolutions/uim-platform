@@ -15,18 +15,28 @@ mixin(ShowModule!());
 @safe:
 class MemoryBusinessSubprocessRepository : TenantRepository!(BusinessSubprocess, BusinessSubprocessId), BusinessSubprocessRepository {
 
-  size_t countByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    return findByParentProcess(tenantId, parentId).length;
-  }
+  // size_t countByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   return findByParentProcess(tenantId, parentId).length;
+  // }
 
-  BusinessSubprocess[] filterByParentProcess(BusinessSubprocess[] subprocesses, BusinessProcessId parentId) {
-    return subprocesses.filter!(s => s.parentProcessId == parentId).array;
-  }
+  // BusinessSubprocess[] filterByParentProcess(BusinessSubprocess[] subprocesses, BusinessProcessId parentId) {
+  //   return subprocesses.filter!(s => s.parentProcessId == parentId).array;
+  // }
 
+  // BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   return filterByParentProcess(findByTenant(tenantId), parentId);
+  // }
+
+  // void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   findByParentProcess(tenantId, parentId).each!(entity => remove(entity));
+  // }
+
+  bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    return findByTenant(tenantId).any!(s => s.parentProcessId == parentId);
+  }
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    return filterByParentProcess(findByTenant(tenantId), parentId);
+    return findByTenant(tenantId).filter!(s => s.parentProcessId == parentId).array;
   }
-
   void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
     findByParentProcess(tenantId, parentId).each!(entity => remove(entity));
   }

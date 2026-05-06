@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SmartformRepository : ITenantRepository{
+interface SmartformRepository : ITenantRepository!(Smartform, SmartformId) {
 
     size_t findByServiceCall(ServiceCallId serviceCallId);
     Smartform[] findByServiceCall(ServiceCallId serviceCallId);

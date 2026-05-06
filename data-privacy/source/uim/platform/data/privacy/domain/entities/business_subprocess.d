@@ -28,8 +28,8 @@ struct BusinessSubprocess {
       .set("parentProcessId", parentProcessId)
       .set("name", name)
       .set("description", description)
-      .set("purposes", purposes)
-      .set("dataCategories", dataCategories)
+      .set("purposes", purposes.map!(p => p.to!string).array.toJson())
+      .set("dataCategories", dataCategories.map!(c => c.to!string).array.toJson())
       .set("owner", owner)
       .set("isActive", isActive);
 

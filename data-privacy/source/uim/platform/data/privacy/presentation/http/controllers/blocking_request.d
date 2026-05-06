@@ -43,7 +43,7 @@ class BlockingController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
@@ -82,7 +82,7 @@ class BlockingController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class BlockingController : PlatformController {
     try {
       auto j = req.json;
       UpdateBlockingStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = BlockingRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseBlockingStatus(j.getString("status"));
 
@@ -117,31 +117,12 @@ class BlockingController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const BlockingRequest e) {
-    auto systems = e.targetSystems.map!(s => Json(s)).array.toJson;
-
-    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
-
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("requestedBy", e.requestedBy)
-      .set("status", e.status.to!string)
-      .set("reason", e.reason)
-      .set("requestedAt", e.requestedAt)
-      .set("activatedAt", e.activatedAt)
-      .set("releasedAt", e.releasedAt)
-      .set("targetSystems", systems)
-      .set("categories", cats);
   }
 
   private static BlockingStatus parseBlockingStatus(string status) {

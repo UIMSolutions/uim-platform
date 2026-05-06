@@ -24,11 +24,11 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return findByTenant(tenantId).filterByDataSubject(dataSubjectId);
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    findByDataSubject(tenantId, dataSubjectId).removeAll;
+    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity));
   }
 
   size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
@@ -40,11 +40,11 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    return findByTenant(tenantId).filterByPurpose(purpose);
+    return filterByPurpose(findByTenant(tenantId), purpose);
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    findByPurpose(tenantId, purpose).removeAll;
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity));
   }
 
   size_t countByStatus(TenantId tenantId, ConsentStatus status) {
@@ -56,11 +56,11 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
-    return findByTenant(tenantId).filterByStatus(status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ConsentStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
   size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -72,11 +72,11 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return findByTenant(tenantId).filterActiveConsents(dataSubjectId);
+    return filterActiveConsents(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
-    findActiveConsents(tenantId, dataSubjectId).removeAll;
+    findActiveConsents(tenantId, dataSubjectId).each!(entity => remove(entity));
   }
 
 }

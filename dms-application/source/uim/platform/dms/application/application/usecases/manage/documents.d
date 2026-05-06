@@ -112,7 +112,22 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document not found");
 
     auto doc = docs.findById(request.tenantId, request.id);
-    doc = doc.updateFromRequest(request);
+
+    if (request.name.length > 0)
+      doc.name = request.name;
+    if (request.description.length > 0)
+      doc.description = request.description;
+    if (request.contentCategory != ContentCategory.unknown)
+      doc.contentCategory = request.contentCategory;
+    if (request.mimeType.length > 0)
+      doc.mimeType = request.mimeType;
+    if (request.fileSize >= 0)
+      doc.fileSize = request.fileSize;
+    if (request.tags.length > 0)
+      doc.tags = request.tags;
+    if (request.properties.length > 0)
+      doc.properties = request.properties;
+
     docs.update(doc);
     return CommandResult(true, doc.id.value, "");
   }

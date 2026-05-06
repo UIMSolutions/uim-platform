@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataControllersUseCase { // TODO: UIMUseCase {
-  private DataControllerRepository repo;
+  private DataControllerRepository dataControllers;
 
-  this(DataControllerRepository repo) {
-    this.repo = repo;
+  this(DataControllerRepository dataControllers) {
+    this.dataControllers = dataControllers;
   }
 
   CommandResult createController(CreateDataControllerRequest req) {
@@ -25,8 +25,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto c = DataController();
-    c.id = randomUUID();
-    c.tenantId = req.tenantId;
+    c.initEntity(req.tenantId);
     c.name = req.name;
     c.description = req.description;
     c.legalEntityName = req.legalEntityName;
@@ -37,23 +36,21 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     c.dpoName = req.dpoName;
     c.dpoEmail = req.dpoEmail;
     c.isActive = true;
-    c.createdAt = now;
-    c.updatedAt = now;
 
-    repo.save(c);
-    return CommandResult(c.id.value, "");
+    dataControllers.save(c);
+    return CommandResult(true, c.id.value, "");
   }
 
-  DataController getController(DataControllerId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  DataController getController(TenantId tenantId, DataControllerId id) {
+    return dataControllers.findById(tenantId, id);
   }
 
   DataController[] listControllers(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return dataControllers.findByTenant(tenantId);
   }
 
   CommandResult updateController(UpdateDataControllerRequest req) {
-    auto c = repo.findById(req.id, req.tenantId);
+    auto c = dataControllers.findById(req.tenantId, req.id);
     if (c.isNull)
       return CommandResult(false, "", "Data controller not found");
 
@@ -68,11 +65,16 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     if (req.dpoEmail.length > 0) c.dpoEmail = req.dpoEmail;
     c.updatedAt = Clock.currStdTime();
 
-    repo.update(c);
-    return CommandResult(c.id.value, "");
+    dataControllers.update(c);
+    return CommandResult(true, c.id.value, "");
   }
 
-  void deleteController(DataControllerId tenantId, id tenantId) {
-    repo.removeById(tenantId, id);
+  CommandResult deleteController(TenantId tenantId, DataControllerId id) {
+    auto existing = dataControllers.findById(tenantId, id);
+    if (existing.isNull)
+      return CommandResult(false, "", "Data controller not found");
+
+    dataControllers.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

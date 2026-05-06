@@ -39,7 +39,7 @@ class ScenarioController : PlatformController {
       r.id = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.labels = getStringArray(j, "labels");
+      r.labels = getStrings(j, "labels");
 
       auto result = uc.create(r);
       if (result.success) {

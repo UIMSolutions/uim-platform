@@ -47,9 +47,9 @@ class ServiceAccountController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = serviceAccounts.getById(ServiceAccountId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Service account not found"); return; }
+            auto id = ServiceAccountId(extractIdFromPath(path));
+            auto e = serviceAccounts.getById(id);
+            if (e.isNull) { writeError(res, 404, "Service account not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -89,7 +89,7 @@ class ServiceAccountController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceAccountDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.serviceAccountId = ServiceAccountId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.permissions = j.getString("permissions");
@@ -114,8 +114,8 @@ class ServiceAccountController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = serviceAccounts.remove(ServiceAccountId(id));
+            auto id = ServiceAccountId(extractIdFromPath(path));
+            auto result = serviceAccounts.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service account deleted");

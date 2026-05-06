@@ -39,8 +39,8 @@ class BusinessProcessController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
-      r.purposes = getStringArray(j, "purposes");
-      r.legalBases = getStringArray(j, "legalBases");
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
       auto result = uc.createProcess(r);
@@ -75,7 +75,7 @@ class BusinessProcessController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getProcess(tenantId, id);
       if (entry.isNull) {
@@ -91,12 +91,12 @@ class BusinessProcessController : PlatformController {
     try {
       auto j = req.json;
       UpdateBusinessProcessRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = BusinessProcessId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStringArray(j, "purposes");
-      r.legalBases = getStringArray(j, "legalBases");
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
       auto result = uc.updateProcess(r);
@@ -114,22 +114,22 @@ class BusinessProcessController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteProcess(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
+
+      auto resp = Json.emptyObject
+          .set("message", "Business process deleted successfully");
+
+      res.writeJsonBody(resp, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private static Json serialize(const BusinessProcess e) {
-    auto purps = Json.emptyArray;
-    foreach (p; e.purposes)
-      purps ~= Json(p);
+    auto purps = e.purposes.map!(p => p.toJson).array.toJson;
 
-    auto bases = Json.emptyArray;
-    foreach (b; e.legalBases)
-      bases ~= Json(b);
+    auto bases = e.legalBases.map!(b => b.toJson).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

@@ -21,10 +21,7 @@ struct IngestionToken {
   bool isActive = true;
 
   Json toJson() const {
-    auto scopesJson = Json.emptyArray;
-    foreach (scope; scopes) {
-      scopesJson ~= scope.to!string();
-    }
+    auto scopesJson = scopes.map!(sc => sc.to!string()).array.toJson;
 
     return entityToJson
       .set("name", name)

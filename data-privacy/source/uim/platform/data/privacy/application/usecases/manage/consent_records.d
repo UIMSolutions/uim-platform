@@ -35,14 +35,13 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     if (req.consentText.length == 0)
       return CommandResult(false, "", "Consent text is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
-    auto record = ConsentRecord();
-    record.id = randomUUID();
-    record.tenantId = req.tenantId;
+    ConsentRecord record;
+    record.initEntity(req.tenantId);
     record.dataSubjectId = req.dataSubjectId;
     record.purpose = req.purpose;
     record.categories = req.categories;
@@ -53,7 +52,6 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.ipAddress = req.ipAddress;
     record.grantedAt = now;
     record.expiresAt = req.expiresAt;
-    record.createdAt = now;
 
     repo.save(record);
     return CommandResult(true, record.id.value, "");

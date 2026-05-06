@@ -44,7 +44,7 @@ class PromptController : PlatformController {
       r.topP = getDouble(j, "topP");
       r.frequencyPenalty = getDouble(j, "frequencyPenalty");
       r.presencePenalty = getDouble(j, "presencePenalty");
-      r.inputParams = getStringArray(j, "inputParams");
+      r.inputParams = getStrings(j, "inputParams");
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = uc.create(r);
@@ -87,7 +87,7 @@ class PromptController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
 
       auto p = uc.getById(id);
       if (p.isNull) {
@@ -105,7 +105,7 @@ class PromptController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchPromptRequest r;
@@ -129,39 +129,5 @@ class PromptController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializePrompt(Prompt p) {
-    import std.conv : to;
-    import uim.platform.ai_launchpad.domain.entities.prompt : PromptMessage, PromptParameters;
-
-    auto msgs = Json.emptyArray;
-    foreach (m; p.messages) {
-      msgs ~= Json.emptyObject
-      .set("role", m.role.to!string)
-      .set("content", m.content);
-    }
-
-    auto params = Json.emptyObject
-    .set("temperature", p.parameters.temperature)
-    .set("maxTokens", p.parameters.maxTokens)
-    .set("topP", p.parameters.topP)
-    .set("frequencyPenalty", p.parameters.frequencyPenalty)
-    .set("presencePenalty", p.parameters.presencePenalty);
-
-    return Json.emptyObject
-      .set("id", p.id)
-      .set("collectionId", p.collectionId)
-      .set("name", p.name)
-      .set("modelName", p.modelName)
-      .set("modelVersion", p.modelVersion)
-      .set("messages", msgs)
-      .set("parameters", params)
-      .set("inputParams", toJsonArray(p.inputParams))
-      .set("lastOutput", Json(p.lastOutput))
-      .set("status", Json(p.status.to!string))
-      .set("createdBy", Json(p.createdBy))
-      .set("createdAt", Json(p.createdAt))
-      .set("updatedAt", Json(p.updatedAt));
   }
 }

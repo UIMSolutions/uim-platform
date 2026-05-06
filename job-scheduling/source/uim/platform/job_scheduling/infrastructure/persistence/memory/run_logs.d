@@ -16,45 +16,39 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRunLogRepository : RunLogRepository {
-    private RunLog[] store;
+class MemoryRunLogRepository : TenantRRepository!(RunLog, RunLogId), RunLogRepository {
 
-    RunLog findById(RunLogId id) {
-        foreach (r; findAll) {
-            if (r.id == id)
-                return r;
-        }
-        return RunLog.init;
+    size_t countByStatus(TenantId tenantId, JobId jobId, RunStatus status) {
+        return findByStatus(tenantId, jobId, status).length;
     }
 
-    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
+    RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
         return findAll().filter!(r => r.scheduleId == scheduleId
             && r.jobId == jobId && r.tenantId == tenantId).array;
     }
+    void removeBySchedule(TenantId tenantId, ScheduleId scheduleId) {
+        findAll().filter!(r => r.scheduleId == scheduleId && r.tenantId == tenantId)
+            .each!(r => remove(r));
+    }
 
-    RunLog[] findByJob(JobId jobtenantId, id tenantId) {
+    size_t countByJob(TenantId tenantId, JobId jobId) {
+        return findByJob(tenantId, jobId).length;
+    }
+    RunLog[] findByJob(TenantId tenantId, JobId jobId) {
         return findAll().filter!(r => r.jobId == jobId && r.tenantId == tenantId).array;
     }
-
-    RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId) {
-        return findAll().filter!(r => r.status == status
-            && r.jobId == jobId && r.tenantId == tenantId).array;
+    void removeByJob(TenantId tenantId, JobId jobId) {
+        findAll().filter!(r => r.jobId == jobId && r.tenantId == tenantId)
+            .each!(r => remove(r));
     }
 
-    void save(RunLog r) {
-        store ~= r;
+    size_t countBySchedule(TenantId tenantId, ScheduleId scheduleId) {
+        return findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).array.length;
     }
-
-    void update(RunLog r) {
-        foreach (existing; findAll) {
-            if (existing.id == r.id) {
-                existing = r;
-                return;
-            }
-        }
+    RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId) {
+        return findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).array;
     }
-
-    size_t countBySchedule(ScheduleId scheduleId) {
-        return findAll().filter!(r => r.scheduleId == scheduleId).array.length;
+    void removeBySchedule(TenantId tenantId, ScheduleId scheduleId) {
+        findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).each!(r => remove(r));
     }
 }

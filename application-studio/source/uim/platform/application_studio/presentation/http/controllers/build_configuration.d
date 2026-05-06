@@ -47,9 +47,9 @@ class BuildConfigurationController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(BuildConfigurationId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Build configuration not found"); return; }
+            auto id = BuildConfigurationId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) { writeError(res, 404, "Build configuration not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,7 +92,7 @@ class BuildConfigurationController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BuildConfigurationDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.id = BuildConfigurationId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.buildCommand = j.getString("buildCommand");
@@ -118,8 +118,8 @@ class BuildConfigurationController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(BuildConfigurationId(id));
+            auto id = BuildConfigurationId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Build configuration deleted");

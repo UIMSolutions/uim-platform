@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
-  private ConsentPurposeRepository repo;
+  private ConsentPurposeRepository contentPurposes;
 
-  this(ConsentPurposeRepository repo) {
-    this.repo = repo;
+  this(ConsentPurposeRepository contentPurposes) {
+    this.contentPurposes = contentPurposes;
   }
 
   CommandResult createPurpose(CreateConsentPurposeRequest req) {
@@ -23,10 +23,8 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
-    auto cp = ConsentPurpose();
-    cp.id = randomUUID();
-    cp.tenantId = req.tenantId;
+    ConsentPurpose cp;
+    cp.initEntity(req.tenantId);
     cp.controllerId = req.controllerId;
     cp.name = req.name;
     cp.description = req.description;
@@ -38,42 +36,49 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.requiresExplicitConsent = req.requiresExplicitConsent;
     cp.validFrom = req.validFrom;
     cp.validUntil = req.validUntil;
-    cp.createdAt = now;
-    cp.updatedAt = now;
 
-    repo.save(cp);
-    return CommandResult(cp.id.value, "");
+    contentPurposes.save(cp);
+    return CommandResult(true, cp.id.value, "");
   }
 
-  ConsentPurpose getPurpose(ConsentPurposeId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  ConsentPurpose getPurpose(TenantId tenantId, ConsentPurposeId id) {
+    return contentPurposes.findById(tenantId, id);
   }
 
   ConsentPurpose[] listPurposes(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return contentPurposes.findByTenant(tenantId);
   }
 
   ConsentPurpose[] listByController(TenantId tenantId, DataControllerId controllerId) {
-    return repo.findByController(tenantId, controllerId);
+    return contentPurposes.findByController(tenantId, controllerId);
   }
 
   CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
-    auto cp = repo.findById(req.id, req.tenantId);
+    auto cp = contentPurposes.findById(req.tenantId, req.id);
     if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 
-    if (req.name.length > 0) cp.name = req.name;
-    if (req.description.length > 0) cp.description = req.description;
-    if (req.consentFormTemplate.length > 0) cp.consentFormTemplate = req.consentFormTemplate;
-    if (req.version_.length > 0) cp.version_ = req.version_;
+    if (req.name.length > 0)
+      cp.name = req.name;
+    if (req.description.length > 0)
+      cp.description = req.description;
+    if (req.consentFormTemplate.length > 0)
+      cp.consentFormTemplate = req.consentFormTemplate;
+    if (req.version_.length > 0)
+      cp.version_ = req.version_;
     cp.requiresExplicitConsent = req.requiresExplicitConsent;
     cp.updatedAt = Clock.currStdTime();
 
-    repo.update(cp);
-    return CommandResult(cp.id.value, "");
+    contentPurposes.update(cp);
+    return CommandResult(true, cp.id.value, "");
   }
 
-  void deletePurpose(ConsentPurposeId tenantId, id tenantId) {
-    repo.removeById(tenantId, id);
+  CommandResult deletePurpose(TenantId tenantId, ConsentPurposeId id) {
+    auto cp = contentPurposes.findById(tenantId, id);
+    if (cp.isNull)
+      return CommandResult(false, "", "Consent purpose not found");
+
+    contentPurposes.removeById(tenantId, id);
+    return CommandResult(true, cp.id.value, "");
   }
 }

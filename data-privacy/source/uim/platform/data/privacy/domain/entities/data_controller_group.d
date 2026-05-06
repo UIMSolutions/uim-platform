@@ -24,7 +24,8 @@ struct DataControllerGroup {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("controllerIds", controllerIds.map!(id => id.value).array);
+      .set("controllerIds", controllerIds.map!(id => id.value).array.toJson())
+      .set("isActive", isActive);
 
   }
 }

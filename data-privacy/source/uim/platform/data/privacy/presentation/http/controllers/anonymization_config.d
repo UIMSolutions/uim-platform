@@ -40,7 +40,7 @@ class AnonymizationConfigController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.targetSystems = getStrings(j, "targetSystems");
 
       auto result = uc.createConfig(r);
       if (result.isSuccess()) {
@@ -74,7 +74,7 @@ class AnonymizationConfigController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getConfig(tenantId, id);
       if (entry.isNull) {
@@ -90,12 +90,12 @@ class AnonymizationConfigController : PlatformController {
     try {
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
 
       auto result = uc.updateConfig(r);
       if (result.isSuccess()) {
@@ -111,7 +111,7 @@ class AnonymizationConfigController : PlatformController {
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
 
       auto result = uc.activateConfig(tenantId, id);
@@ -128,7 +128,7 @@ class AnonymizationConfigController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
@@ -136,22 +136,4 @@ class AnonymizationConfigController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(const AnonymizationConfig e) {
-    auto j = Json.emptyObject
-      .set("id", Json(e.id))
-      .set("tenantId", Json(e.tenantId))
-      .set("name", Json(e.name))
-      .set("description", Json(e.description))
-      .set("status", Json(e.status.to!string))
-      .set("isReversible", Json(e.isReversible))
-      .set("createdAt", Json(e.createdAt))
-      .set("updatedAt", Json(e.updatedAt));
-
-    auto systems = Json.emptyArray;
-    foreach (s; e.targetSystems)
-      systems ~= Json(s);
-    j["targetSystems"] = systems;
-
-    return j;
-  }
 }

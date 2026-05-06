@@ -47,7 +47,7 @@ class BusinessUserController : PlatformController {
       r.firstName = j.getString("firstName");
       r.lastName = j.getString("lastName");
       r.email = j.getString("email");
-      r.roleIds = getStringArray(j, "roleIds");
+      r.roleIds = getStrings(j, "roleIds");
 
       auto result = uc.createUser(r);
       if (result.isSuccess()) {
@@ -102,7 +102,7 @@ class BusinessUserController : PlatformController {
       r.lastName = j.getString("lastName");
       r.email = j.getString("email");
       r.status = j.getString("status");
-      r.roleIds = getStringArray(j, "roleIds");
+      r.roleIds = getStrings(j, "roleIds");
 
       auto result = uc.updateUser(id, r);
       if (result.isSuccess()) {

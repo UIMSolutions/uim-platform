@@ -30,9 +30,9 @@ struct PurposeRecord {
     return entityToJson
       .set("dataSubjectId", dataSubjectId)
       .set("businessContextId", businessContextId)
-      .set("purpose", purpose)
+      .set("purpose", purpose.to!string)
       .set("status", status.to!string)
-      .set("legalBasis", legalBasis)
+      .set("legalBasis", legalBasis.to!string)
       .set("residenceDays", residenceDays)
       .set("retentionDays", retentionDays)
       .set("validFrom", validFrom)

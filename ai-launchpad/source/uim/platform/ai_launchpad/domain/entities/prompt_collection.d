@@ -13,12 +13,20 @@ mixin(ShowModule!());
 @safe:
 
 struct PromptCollection {
-  PromptCollectionId id;
+  mixin IdEntity!PromptCollectionId;
+
   string name;
   string description;
   ScenarioId scenarioId;
   WorkspaceId workspaceId;
   int promptCount;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson()
+      .set("name", name)
+      .set("description", description)
+      .set("scenarioId", scenarioId.value)
+      .set("workspaceId", workspaceId.value)
+      .set("promptCount", promptCount);
+  }
 }

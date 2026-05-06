@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
-  private PersonalDataModelRepository repo;
+  private PersonalDataModelRepository dataModels;
 
-  this(PersonalDataModelRepository repo) {
-    this.repo = repo;
+  this(PersonalDataModelRepository dataModels) {
+    this.dataModels = dataModels;
   }
 
   CommandResult createModel(CreatePersonalDataModelRequest req) {
@@ -33,9 +33,8 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Source system is required");
 
     auto now = Clock.currStdTime();
-    auto model = PersonalDataModel();
-    model.id = randomUUID();
-    model.tenantId = req.tenantId;
+    PersonalDataModel model;
+    model.initEntity(req.tenantId);
     model.fieldName = req.fieldName;
     model.fieldDescription = req.fieldDescription;
     model.category = req.category;
@@ -45,31 +44,29 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     model.subjectType = req.subjectType;
     model.isSpecialCategory = req.isSpecialCategory;
     model.legalReference = req.legalReference;
-    model.createdAt = now;
-    model.updatedAt = now;
 
-    repo.save(model);
-    return CommandResult(model.id.value, "");
+    dataModels.save(model);
+    return CommandResult(true, model.id.value, "");
   }
 
-  PersonalDataModel getModel(PersonalDataModelId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  PersonalDataModel getModel(TenantId tenantId, PersonalDataModelId id) {
+    return dataModels.findById(tenantId, id);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return dataModels.findByTenant(tenantId);
   }
 
   PersonalDataModel[] listByCategory(TenantId tenantId, PersonalDataCategory category) {
-    return repo.findByCategory(tenantId, category);
+    return dataModels.findByCategory(tenantId, category);
   }
 
   PersonalDataModel[] listSpecialCategories(TenantId tenantId) {
-    return repo.findSpecialCategories(tenantId);
+    return dataModels.findSpecialCategories(tenantId);
   }
 
   CommandResult updateModel(UpdatePersonalDataModelRequest req) {
-    auto model = repo.findById(req.id, req.tenantId);
+    auto model = dataModels.findById(req.tenantId, req.id);
     if (model.isNull)
       return CommandResult(false, "", "Personal data model not found");
 
@@ -88,11 +85,16 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
       model.legalReference = req.legalReference;
     model.updatedAt = Clock.currStdTime();
 
-    repo.update(model);
-    return CommandResult(model.id.value, "");
+    dataModels.update(model);
+    return CommandResult(true, model.id.value, "");
   }
 
-  void deleteModel(PersonalDataModelId tenantId, id tenantId) {
-    repo.removeById(tenantId, id);
+  CommandResult deleteModel(TenantId tenantId, PersonalDataModelId id) {
+    auto existing = dataModels.findById(tenantId, id);
+    if (existing.isNull)
+      return CommandResult(false, "", "Personal data model not found");
+
+    dataModels.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 }

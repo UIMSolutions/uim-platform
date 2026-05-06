@@ -37,8 +37,8 @@ class ApplicationController : PlatformController {
     try {
       auto j = req.json;
       auto createReq = CreateAppRequest(j.getString("tenantId"), j.getString("name"),
-          j.getString("description"), SsoProtocol.oidc, getStringArray(j, "redirectUris"),
-          getStringArray(j, "allowedScopes"), j.getString("samlEntityId"),
+          j.getString("description"), SsoProtocol.oidc, getStrings(j, "redirectUris"),
+          getStrings(j, "allowedScopes"), j.getString("samlEntityId"),
           j.getString("samlAcsUrl"));
 
       auto result = useCase.createApplication(createReq);
@@ -116,7 +116,7 @@ class ApplicationController : PlatformController {
 
       auto j = req.json;
       auto updateReq = UpdateAppRequest(appId, j.getString("name"),
-          getStringArray(j, "redirectUris"), getStringArray(j, "allowedScopes"));
+          getStrings(j, "redirectUris"), getStrings(j, "allowedScopes"));
 
       auto error = useCase.updateApplication(updateReq);
       if (error.length > 0) {

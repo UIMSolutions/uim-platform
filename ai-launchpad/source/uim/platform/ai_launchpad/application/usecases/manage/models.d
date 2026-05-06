@@ -45,20 +45,20 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, m.id.value, "");
   }
 
-  Model getById(ModelId id, ConnectionId connectionId) {
-    return repo.findById(id, connectionId);
+  Model getById(ConnectionId connectionId, ModelId id) {
+    return repo.findById(connectionId, id);
   }
 
   Model[] listByConnection(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  Model[] listByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    return repo.findByScenario(scenarioId, connectionId);
+  Model[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(connectionId, scenarioId);
   }
 
   CommandResult patch(PatchModelRequest r) {
-    auto m = repo.findById(r.modelId, r.connectionId);
+    auto m = repo.findById(r.connectionId, r.modelId);
     if (m.isNull) return CommandResult(false, "", "Model not found");
     if (r.description.length > 0) m.description = r.description;
     if (r.status == "archived") m.status = ModelStatus.archived;
@@ -68,10 +68,10 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, m.id.value, "");
   }
 
-  CommandResult remove(ModelId id, ConnectionId connectionId) {
-    auto m = repo.findById(id, connectionId);
+  CommandResult remove(ConnectionId connectionId, ModelId id) {
+    auto m = repo.findById(connectionId, id);
     if (m.isNull) return CommandResult(false, "", "Model not found");
-    repo.remove(id, connectionId);
+    repo.remove(connectionId, id);
     return CommandResult(true, id.value, "");
   }
 }

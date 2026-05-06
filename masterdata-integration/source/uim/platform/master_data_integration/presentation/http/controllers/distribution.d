@@ -43,10 +43,10 @@ class DistributionController : PlatformController {
       r.description = j.getString("description");
       r.direction = j.getString("direction");
       r.sourceClientId = j.getString("sourceClientId");
-      r.targetClientIds = getStringArray(j, "targetClientIds");
-      r.categories = getStringArray(j, "categories");
-      r.dataModelIds = getStringArray(j, "dataModelIds");
-      r.filterRuleIds = getStringArray(j, "filterRuleIds");
+      r.targetClientIds = getStrings(j, "targetClientIds");
+      r.categories = getStrings(j, "categories");
+      r.dataModelIds = getStrings(j, "dataModelIds");
+      r.filterRuleIds = getStrings(j, "filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = j.getString("cronSchedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -111,10 +111,10 @@ class DistributionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.status = j.getString("status");
-      r.targetClientIds = getStringArray(j, "targetClientIds");
-      r.categories = getStringArray(j, "categories");
-      r.dataModelIds = getStringArray(j, "dataModelIds");
-      r.filterRuleIds = getStringArray(j, "filterRuleIds");
+      r.targetClientIds = getStrings(j, "targetClientIds");
+      r.categories = getStrings(j, "categories");
+      r.dataModelIds = getStrings(j, "dataModelIds");
+      r.filterRuleIds = getStrings(j, "filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = j.getString("cronSchedule");
 

@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
-  private BusinessContextRepository repo;
+  private BusinessContextRepository businessContexts;
 
-  this(BusinessContextRepository repo) {
-    this.repo = repo;
+  this(BusinessContextRepository businessContexts) {
+    this.businessContexts = businessContexts;
   }
 
   CommandResult createContext(CreateBusinessContextRequest req) {
@@ -39,24 +39,24 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.createdAt = now;
     ctx.updatedAt = now;
 
-    repo.save(ctx);
+    businessContexts.save(ctx);
     return CommandResult(true, ctx.id.value, "");
   }
 
   BusinessContext getContext(TenantId tenantId, BusinessContextId id) {
-    return repo.findById(tenantId, id);
+    return businessContexts.findById(tenantId, id);
   }
 
   BusinessContext[] listContexts(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return businessContexts.findByTenant(tenantId);
   }
 
   BusinessContext[] listByStatus(TenantId tenantId, BusinessContextStatus status) {
-    return repo.findByStatus(tenantId, status);
+    return businessContexts.findByStatus(tenantId, status);
   }
 
   CommandResult updateContext(UpdateBusinessContextRequest req) {
-    auto ctx = repo.findById(req.tenantId, req.id);
+    auto ctx = businessContexts.findById(req.tenantId, req.id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 
@@ -68,12 +68,12 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
     ctx.updatedAt = Clock.currStdTime();
 
-    repo.update(ctx);
-    return CommandResult(ctx.id.value, "");
+    businessContexts.update(ctx);
+    return CommandResult(true, ctx.id.value, "");
   }
 
   CommandResult activateContext(ActivateBusinessContextRequest req) {
-    auto ctx = repo.findById(req.tenantId, req.id);
+    auto ctx = businessContexts.findById(req.tenantId, req.id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
     if (ctx.status == BusinessContextStatus.active)
@@ -83,16 +83,16 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.activatedAt = Clock.currStdTime();
     ctx.updatedAt = ctx.activatedAt;
 
-    repo.update(ctx);
+    businessContexts.update(ctx);
     return CommandResult(true, ctx.id.value, "");
   }
 
   CommandResult deleteContext(TenantId tenantId, BusinessContextId id) {
-    auto ctx = repo.findById(tenantId, id);
+    auto ctx = businessContexts.findById(tenantId, id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    businessContexts.remove(ctx);
+    return CommandResult(true, ctx.id.value, "");
   }
 }

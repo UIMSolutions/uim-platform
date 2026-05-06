@@ -40,7 +40,7 @@ class FeatureRestrictionController : PlatformController {
       r.type = j.getString("type");
       r.enabled = j.getBoolean("enabled");
       r.percentage = j.getInteger("percentage");
-      r.whitelist = getStringArray(j, "whitelist");
+      r.whitelist = getStrings(j, "whitelist");
       r.metadata = j.getString("metadata");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = uc.create(r);
@@ -120,7 +120,7 @@ class FeatureRestrictionController : PlatformController {
       r.type = j.getString("type");
       r.enabled = j.getBoolean("enabled");
       r.percentage = j.getInteger("percentage");
-      r.whitelist = getStringArray(j, "whitelist");
+      r.whitelist = getStrings(j, "whitelist");
       r.metadata = j.getString("metadata");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = uc.update(r);

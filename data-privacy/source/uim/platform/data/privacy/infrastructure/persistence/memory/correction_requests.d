@@ -28,7 +28,7 @@ class MemoryCorrectionRequestRepository : TenantRepository!(CorrectionRequest, C
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    findByDataSubject(tenantId, subjectId).removeAll;
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
   }
 
   size_t countByStatus(TenantId tenantId, CorrectionStatus status) {
@@ -44,7 +44,7 @@ class MemoryCorrectionRequestRepository : TenantRepository!(CorrectionRequest, C
   }
 
   void removeByStatus(TenantId tenantId, CorrectionStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
 }

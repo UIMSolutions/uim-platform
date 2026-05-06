@@ -47,7 +47,7 @@ class LogController : PlatformController {
       r.orgName = j.getString("orgName");
       r.resourceType = j.getString("resourceType");
       r.resourceId = j.getString("resourceId");
-      r.tags = getStringArray(j, "tags");
+      r.tags = getStrings(j, "tags");
 
       auto result = uc.ingest(r);
       if (result.success) {
@@ -85,7 +85,7 @@ class LogController : PlatformController {
           r.requestId = getString(ej, "requestId");
           r.correlationId = getString(ej, "correlationId");
           r.componentName = getString(ej, "componentName");
-          r.tags = getStringArray(ej, "tags");
+          r.tags = getStrings(ej, "tags");
           batchReq.entries ~= r;
         }
       }

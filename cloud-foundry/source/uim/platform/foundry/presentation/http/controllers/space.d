@@ -42,7 +42,7 @@ class SpaceController : PlatformController {
       auto j = req.json;
       auto r = CreateSpaceRequest();
       r.tenantId = req.getTenantId;
-      r.orgId = j.getString("orgId");
+      r.orgId = OrgId(j.getString("orgId"));
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
       r.createdBy = UserId(j.getString("createdBy"));
@@ -84,7 +84,7 @@ class SpaceController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SpaceId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto space = useCase.getSpace(tenantId, id);
       if (space.isNull) {
@@ -100,7 +100,7 @@ class SpaceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SpaceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateSpaceRequest();
       r.id = id;
@@ -126,7 +126,7 @@ class SpaceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = SpaceId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(tenantId, id);
       if (result.isSuccess()) {
@@ -142,18 +142,5 @@ class SpaceController : PlatformController {
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeSpace(const Space s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("orgId", s.orgId)
-      .set("tenantId", s.tenantId)
-      .set("name", s.name)
-      .set("status", s.status.to!string)
-      .set("allowSsh", s.allowSsh)
-      .set("createdBy", s.createdBy)
-      .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt);
   }
 }

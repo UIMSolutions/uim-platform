@@ -26,6 +26,19 @@ AuditCategory toAuditCategory(string s) {
   }
 }
 
+private static string categoryToString(AuditCategory c) {
+  final switch (c) {
+  case AuditCategory.securityEvents:
+    return "audit.security-events";
+  case AuditCategory.configuration:
+    return "audit.configuration";
+  case AuditCategory.dataAccess:
+    return "audit.data-access";
+  case AuditCategory.dataModification:
+    return "audit.data-modification";
+  }
+}
+
 /// Severity / log level of an audit event.
 enum AuditSeverity {
   info,

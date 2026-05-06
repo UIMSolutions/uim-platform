@@ -103,8 +103,8 @@ class RoleController : PlatformController {
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto assignReq = AssignRoleRequest(j.getString("roleId"), getStringArray(j,
-          "userIds"), getStringArray(j, "groupIds"),);
+      auto assignReq = AssignRoleRequest(j.getString("roleId"), getStrings(j,
+          "userIds"), getStrings(j, "groupIds"),);
 
       auto error = useCase.assignRole(assignReq);
       if (error.length > 0)

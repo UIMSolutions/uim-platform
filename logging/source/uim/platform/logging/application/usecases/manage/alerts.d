@@ -23,16 +23,8 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  bool hasById(string id) {
-    return hasById(AlertId(id));
-  }
-
   bool hasById(AlertId id) {
     return repo.existsById(id);
-  }
-
-  Alert getById(string id) {
-    return getById(AlertId(id));
   }
 
   Alert getById(AlertId id) {
@@ -40,23 +32,11 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   Alert[] list(TenantId tenantId) {
-    return list(TenantId(tenantId));
-  }
-
-  Alert[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
   Alert[] listByState(TenantId tenantId, AlertState state) {
-    return listByState(TenantId(tenantId), state);
-  }
-
-  Alert[] listByState(TenantId tenantId, AlertState state) {
     return repo.findByState(tenantId, state);
-  }
-
-  Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return listBySeverity(TenantId(tenantId), severity);
   }
 
   Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {

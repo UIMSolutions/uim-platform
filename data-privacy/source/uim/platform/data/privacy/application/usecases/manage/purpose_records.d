@@ -40,7 +40,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     r.updatedAt = now;
 
     repo.save(r);
-    return CommandResult(r.id.value, "");
+    return CommandResult(true, r.id.value, "");
   }
 
   PurposeRecord getRecord(TenantId tenantId, PurposeRecordId id) {
@@ -60,7 +60,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deactivateRecord(DeactivatePurposeRecordRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
+    auto r = repo.findById(req.tenantId, req.id);
     if (r.isNull)
       return CommandResult(false, "", "Purpose record not found");
     if (r.status == PurposeRecordStatus.deactivated)

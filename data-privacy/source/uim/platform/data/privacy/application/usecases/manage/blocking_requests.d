@@ -20,12 +20,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
-  private BlockingRequestRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private BlockingRequestRepository blockingRequests;
+  private DataSubjectRepository dataSubjects;
 
-  this(BlockingRequestRepository repo, DataSubjectRepository subjectRepo) {
-    this.repo = repo;
-    this.subjectRepo = subjectRepo;
+  this(BlockingRequestRepository blockingRequests, DataSubjectRepository dataSubjects) {
+    this.blockingRequests = blockingRequests;
+    this.dataSubjects = dataSubjects;
   }
 
   CommandResult createRequest(CreateBlockingRequest req) {
@@ -34,7 +34,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -50,24 +50,24 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     request.reason = req.reason;
     request.requestedAt = now;
 
-    repo.save(request);
+    blockingRequests.save(request);
     return CommandResult(true, request.id.value, "");
   }
 
   BlockingRequest getRequest(TenantId tenantId, BlockingRequestId id) {
-    return repo.findById(tenantId, id);
+    return blockingRequests.findById(tenantId, id);
   }
 
   BlockingRequest[] listRequests(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return blockingRequests.findByTenant(tenantId);
   }
 
   BlockingRequest[] listByStatus(TenantId tenantId, BlockingStatus status) {
-    return repo.findByStatus(tenantId, status);
+    return blockingRequests.findByStatus(tenantId, status);
   }
 
   CommandResult updateStatus(UpdateBlockingStatusRequest req) {
-    auto request = repo.findById(req.tenantId, req.id);
+    auto request = blockingRequests.findById(req.tenantId, req.id);
     if (request.isNull)
       return CommandResult(false, "", "Blocking request not found");
 
@@ -77,15 +77,16 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == BlockingStatus.released)
       request.releasedAt = Clock.currStdTime();
 
-    repo.update(request);
+    blockingRequests.update(request);
     return CommandResult(true, request.id.value, "");
   }
 
   CommandResult deleteRequest(TenantId tenantId, BlockingRequestId id) {
-    auto request = repo.findById(tenantId, id);
+    auto request = blockingRequests.findById(tenantId, id);
     if (request.isNull)
       return CommandResult(false, "", "Blocking request not found");
 
-    repo.removeById(tenantId, id);
+    blockingRequests.remove(request);
+    return CommandResult(true, request.id.value, ""); 
   }
 }

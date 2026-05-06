@@ -46,7 +46,7 @@ class KnowledgeBaseArticleController : PlatformController {
       r.authorId = j.getString("authorId");
       r.authorName = j.getString("authorName");
       r.category = j.getString("category");
-      r.tags = getStringArray(j, "tags");
+      r.tags = getStrings(j, "tags");
       r.language = j.getString("language");
 
       auto result = useCase.createArticle(r);
@@ -109,7 +109,7 @@ class KnowledgeBaseArticleController : PlatformController {
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
       r.category = j.getString("category");
-      r.tags = getStringArray(j, "tags");
+      r.tags = getStrings(j, "tags");
 
       auto result = useCase.updateArticle(r);
       if (result.isSuccess()) {

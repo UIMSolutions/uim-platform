@@ -28,19 +28,17 @@ struct ArchiveRequest {
   long completedAt;
 
   Json toJson() const {
-      auto j = entityToJson
+      return entityToJson
           .set("dataSubjectId", dataSubjectId)
           .set("requestedBy", requestedBy)
           .set("status", status.to!string)
-          .set("targetSystems", targetSystems)
-          .set("categories", categories.map!(c => c.to!string))
+          .set("targetSystems", targetSystems.toJson)
+          .set("categories", categories.map!(c => c.to!string).array.toJson())
           .set("archiveLocation", archiveLocation)
           .set("reason", reason)
           .set("isTestMode", isTestMode)
           .set("scheduledAt", scheduledAt)
           .set("startedAt", startedAt)
           .set("completedAt", completedAt);
-
-      return j;
   }
 }

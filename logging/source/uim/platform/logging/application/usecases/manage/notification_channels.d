@@ -86,24 +86,12 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, updated.id.value, "");
   }
 
-  NotificationChannel getById(string id) {
-    return getById(NotificationChannelId(id));
-  }
-
   NotificationChannel getById(NotificationChannelId id) {
     return repo.findById(id);
   }
 
   NotificationChannel[] list(TenantId tenantId) {
-    return list(TenantId(tenantId));
-  }
-
-  NotificationChannel[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
-  }
-
-  CommandResult remove(string id) {
-    return remove(NotificationChannelId(id));
   }
 
   CommandResult remove(NotificationChannelId id) {

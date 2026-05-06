@@ -11,12 +11,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
-  private CorrectionRequestRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private CorrectionRequestRepository correctionRequests;
+  private DataSubjectRepository dataSubjects;
 
-  this(CorrectionRequestRepository repo, DataSubjectRepository subjectRepo) {
-    this.repo = repo;
-    this.subjectRepo = subjectRepo;
+  this(CorrectionRequestRepository correctionRequests, DataSubjectRepository dataSubjects) {
+    this.correctionRequests = correctionRequests;
+    this.dataSubjects = dataSubjects;
   }
 
   CommandResult createRequest(CreateCorrectionRequest req) {
@@ -27,55 +27,54 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
-    auto r = CorrectionRequest();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
-    r.dataSubjectId = req.dataSubjectId;
-    r.requestedBy = req.requestedBy;
-    r.status = CorrectionStatus.requested;
-    r.targetSystems = req.targetSystems;
-    r.fieldName = req.fieldName;
-    r.currentValue = req.currentValue;
-    r.correctedValue = req.correctedValue;
-    r.reason = req.reason;
-    r.requestedAt = now;
-    r.deadline = now + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
+    CorrectionRequest request;
+    request.initEntity(req.tenantId);
+    request.dataSubjectId = req.dataSubjectId;
+    request.requestedBy = req.requestedBy;
+    request.status = CorrectionStatus.requested;
+    request.targetSystems = req.targetSystems;
+    request.fieldName = req.fieldName;
+    request.currentValue = req.currentValue;
+    request.correctedValue = req.correctedValue;
+    request.reason = req.reason;
+    request.requestedAt = now;
+    request.deadline = now + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
 
-    repo.save(r);
-    return CommandResult(r.id.value, "");
+    correctionRequests.save(request);
+    return CommandResult(true,request.id.value, "");
   }
 
-  CorrectionRequest getRequest(CorrectionRequestId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  CorrectionRequest getRequest(TenantId tenantId, CorrectionRequestId id) {
+    return correctionRequests.findById(tenantId, id);
   }
 
   CorrectionRequest[] listRequests(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return correctionRequests.findByTenant(tenantId);
   }
 
   CorrectionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return repo.findByDataSubject(tenantId, subjectId);
+    return correctionRequests.findByDataSubject(tenantId, subjectId);
   }
 
   CommandResult updateStatus(UpdateCorrectionStatusRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
-    if (r.isNull)
+    auto correctionRequest = correctionRequests.findById(req.tenantId, req.id);
+    if (correctionRequest.isNull)
       return CommandResult(false, "", "Correction request not found");
 
-    r.status = req.status;
+    correctionRequest.status = req.status;
     if (req.status == CorrectionStatus.completed)
-      r.completedAt = Clock.currStdTime();
+      correctionRequest.completedAt = Clock.currStdTime();
 
-    repo.update(r);
-    return CommandResult(r.id.value, "");
+    correctionRequests.update(correctionRequest);
+    return CommandResult(true, correctionRequest.id.value, "");
   }
 
-  void deleteRequest(CorrectionRequestId tenantId, id tenantId) {
-    repo.removeById(tenantId, id);
+  void deleteRequest(TenantId tenantId, CorrectionRequestId id) {
+    correctionRequests.removeById(tenantId, id);
   }
 }

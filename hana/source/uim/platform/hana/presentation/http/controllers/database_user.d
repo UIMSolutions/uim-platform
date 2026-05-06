@@ -43,7 +43,7 @@ class DatabaseUserController : PlatformController {
       r.defaultSchema = j.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
-      r.roles = getStringArray(j, "roles");
+      r.roles = getStrings(j, "roles");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -127,7 +127,7 @@ class DatabaseUserController : PlatformController {
       r.defaultSchema = j.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange");
-      r.roles = getStringArray(j, "roles");
+      r.roles = getStrings(j, "roles");
 
       auto result = uc.update(r);
       if (result.success) {

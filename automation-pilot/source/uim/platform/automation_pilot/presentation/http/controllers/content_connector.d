@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ContentConnectorController : PlatformController {
-    private ManageContentConnectorsUseCase uc;
+    private ManageContentConnectorsUseCase usecase;
 
-    this(ManageContentConnectorsUseCase uc) {
-        this.uc = uc;
+    this(ManageContentConnectorsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class ContentConnectorController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.contentConnectorToJson()).array;
 
             auto resp = Json.emptyObject
@@ -47,9 +47,9 @@ class ContentConnectorController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ContentConnectorId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Content connector not found"); return; }
+            auto id = ContentConnectorId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Content connector not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,7 +60,7 @@ class ContentConnectorController : PlatformController {
         try {
             auto j = req.json;
             ContentConnectorDTO dto;
-            dto.id = j.getString("id");
+            dto.contentConnectorId = ContentConnectorId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -69,7 +69,7 @@ class ContentConnectorController : PlatformController {
             dto.path = j.getString("path");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -90,7 +90,7 @@ class ContentConnectorController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ContentConnectorDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.contentConnectorId = ContentConnectorId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.repositoryUrl = j.getString("repositoryUrl");
@@ -98,7 +98,7 @@ class ContentConnectorController : PlatformController {
             dto.path = j.getString("path");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -117,8 +117,8 @@ class ContentConnectorController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ContentConnectorId(id));
+            auto id = ContentConnectorId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

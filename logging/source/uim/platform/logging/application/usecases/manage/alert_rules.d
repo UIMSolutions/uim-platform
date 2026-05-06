@@ -66,7 +66,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.query.length > 0)
       rule.query = req.query;
     if (req.condition.length > 0)
-      rule.condition = parseCondition(req.condition);
+      rule.condition = req.condition.to!AlertCondition;
     if (req.field.length > 0)
       rule.field = req.field;
     if (req.pattern.length > 0)
@@ -74,11 +74,11 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.thresholdValue != 0)
       rule.thresholdValue = req.thresholdValue;
     if (req.thresholdOperator.length > 0)
-      rule.thresholdOperator = parseOperator(req.thresholdOperator);
+      rule.thresholdOperator = req.thresholdOperator.to!ThresholdOperator;
     if (req.evaluationWindowSeconds > 0)
       rule.evaluationWindowSeconds = req.evaluationWindowSeconds;
     if (req.severity.length > 0)
-      rule.severity = parseSeverity(req.severity);
+      rule.severity = req.severity.to!AlertSeverity;
     rule.isEnabled = req.isEnabled;
     if (req.channelIds.length > 0)
       rule.channelIds = cast(NotificationChannelId[]) req.channelIds;
@@ -86,10 +86,6 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
 
     repo.update(rule);
     return CommandResult(true, id.value, "");
-  }
-
-  bool hasRule(string id) {
-    return hasRule(AlertRuleId(id));
   }
 
   bool hasRule(AlertRuleId id) {
@@ -100,28 +96,12 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findById(id);
   }
 
-  AlertRule getRule(string id) {
-    return getRule(AlertRuleId(id));
-  }
-
-  AlertRule[] listRules(TenantId tenantId) {
-    return listRules(TenantId(tenantId));
-  }
-
   AlertRule[] listRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
   AlertRule[] listEnabledRules(TenantId tenantId) {
-    return listEnabledRules(TenantId(tenantId));
-  }
-
-  AlertRule[] listEnabledRules(TenantId tenantId) {
     return repo.findEnabled(tenantId);
-  }
-
-  CommandResult removeRule(string id) {
-    return removeRule(AlertRuleId(id));
   }
 
   CommandResult removeRule(AlertRuleId id) {
@@ -129,54 +109,5 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  private static AlertCondition parseCondition(string condition) {
-    switch (condition) {
-    case "contains":
-      return AlertCondition.contains;
-    case "regex":
-      return AlertCondition.regex;
-    case "threshold":
-      return AlertCondition.threshold;
-    case "absence":
-      return AlertCondition.absence;
-    case "rateChange":
-      return AlertCondition.rateChange;
-    default:
-      return AlertCondition.contains;
-    }
-  }
-
-  private static ThresholdOperator parseOperator(string s) {
-    switch (s) {
-    case "greaterThan":
-      return ThresholdOperator.greaterThan;
-    case "greaterOrEqual":
-      return ThresholdOperator.greaterOrEqual;
-    case "lessThan":
-      return ThresholdOperator.lessThan;
-    case "lessOrEqual":
-      return ThresholdOperator.lessOrEqual;
-    case "equal":
-      return ThresholdOperator.equal;
-    case "notEqual":
-      return ThresholdOperator.notEqual;
-    default:
-      return ThresholdOperator.greaterThan;
-    }
-  }
-
-  private static AlertSeverity parseSeverity(string s) {
-    switch (s) {
-    case "info":
-      return AlertSeverity.info;
-    case "warning":
-      return AlertSeverity.warning;
-    case "critical":
-      return AlertSeverity.critical;
-    case "fatal":
-      return AlertSeverity.fatal;
-    default:
-      return AlertSeverity.warning;
-    }
-  }
+  
 }

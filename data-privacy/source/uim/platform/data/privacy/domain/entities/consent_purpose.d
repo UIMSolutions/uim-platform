@@ -28,17 +28,18 @@ struct ConsentPurpose {
   long validUntil; // 0 = indefinite
 
   Json toJson() const {
-      return entityToJson
-          .set("controllerId", controllerId.value)
-          .set("name", name)
-          .set("description", description)
-          .set("purpose", purpose.to!string)
-          .set("dataCategories", dataCategories.map!(dc => dc.to!string).array)
-          .set("status", status.to!string)
-          .set("consentFormTemplate", consentFormTemplate)
-          .set("version", version_)
-          .set("requiresExplicitConsent", requiresExplicitConsent)
-          .set("validFrom", validFrom)
-          .set("validUntil", validUntil);
+    return entityToJson
+      .set("controllerId", controllerId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("purpose", purpose.to!string)
+      .set("dataCategories", dataCategories.map!(dc => dc.to!string)
+          .array.toJson)
+      .set("status", status.to!string)
+      .set("consentFormTemplate", consentFormTemplate)
+      .set("version", version_)
+      .set("requiresExplicitConsent", requiresExplicitConsent)
+      .set("validFrom", validFrom)
+      .set("validUntil", validUntil);
   }
 }

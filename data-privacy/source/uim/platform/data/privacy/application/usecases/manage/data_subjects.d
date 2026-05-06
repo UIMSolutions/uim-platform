@@ -32,7 +32,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     // Check for duplicate external ID
     if (req.externalId.length > 0) {
-      auto existing = repo.findByExternalId(req.externalId, req.tenantId);
+      auto existing = repo.findByExternalId(req.tenantId, req.externalId);
       if (!existing.isNull)
         return CommandResult(false, "", "Data subject with this external ID already exists");
     }
@@ -55,7 +55,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, subject.id.value, "");
   }
 
-  DataSubject getSubject(DataSubjectId tenantId, id tenantId) {
+  DataSubject getSubject(TenantId tenantId, DataSubjectId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -68,7 +68,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSubject(UpdateDataSubjectRequest req) {
-    auto subject = repo.findById(req.id, req.tenantId);
+    auto subject = repo.findById(req.tenantId, req.id);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 

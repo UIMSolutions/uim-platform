@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class PageController : PlatformController {
-    private ManagePagesUseCase uc;
+    private ManagePagesUseCase usecase;
 
-    this(ManagePagesUseCase uc) {
-        this.uc = uc;
+    this(ManagePagesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/build-apps/pages", &handleList);
         router.get("/api/v1/build-apps/pages/*", &handleGet);
         router.post("/api/v1/build-apps/pages", &handleCreate);
@@ -29,7 +30,7 @@ class PageController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -47,9 +48,9 @@ class PageController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(PageId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Page not found"); return; }
+            auto id = PageId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Page not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,9 +61,9 @@ class PageController : PlatformController {
         try {
             auto j = req.json;
             PageDTO dto;
-            dto.id = j.getString("id");
+            dto.pageId = PageId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.pageType = j.getString("pageType");
@@ -73,7 +74,7 @@ class PageController : PlatformController {
             dto.pageVariables = j.getString("pageVariables");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -94,7 +95,7 @@ class PageController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             PageDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.pageId = PageId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.route = j.getString("route");
@@ -102,7 +103,7 @@ class PageController : PlatformController {
             dto.componentTree = j.getString("componentTree");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -121,8 +122,8 @@ class PageController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(PageId(id));
+            auto id = PageId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Page deleted");

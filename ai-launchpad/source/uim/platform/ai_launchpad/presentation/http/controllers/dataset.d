@@ -43,7 +43,7 @@ class DatasetController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.url = j.getString("url");
       r.size = jsonLong(j, "size");
-      r.labels = getStringArray(j, "labels");
+      r.labels = getStrings(j, "labels");
 
       auto result = uc.register(r);
       if (result.success) {
@@ -86,7 +86,7 @@ class DatasetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto d = uc.getById(id, connectionId);
@@ -108,7 +108,7 @@ class DatasetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -136,12 +136,15 @@ class DatasetController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = uc.remove(id, connectionId);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Dataset removed successfully");
+
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }

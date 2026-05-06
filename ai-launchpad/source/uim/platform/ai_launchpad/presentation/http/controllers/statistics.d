@@ -31,11 +31,11 @@ class StatisticsController : PlatformController {
     try {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
-      auto period = req.headers.get("X-Period", "");
+      auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
 
       typeof(uc.getAll()) stats;
       if (scenarioId.length > 0 && connectionId.length > 0)
-        stats = uc.getByScenario(scenarioId, connectionId);
+        stats = uc.getByScenario(connectionId, scenarioId);
       else if (connectionId.length > 0)
         stats = uc.getByConnection(connectionId);
       else
@@ -52,19 +52,5 @@ class StatisticsController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeStatistic(UsageStatistic s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("scenarioId", s.scenarioId)
-      .set("connectionId", s.connectionId)
-      .set("period", s.period.to!string)
-      .set("executionCount", s.executionCount)
-      .set("deploymentCount", s.deploymentCount)
-      .set("totalTrainingHours", s.totalTrainingHours)
-      .set("totalInferenceRequests", s.totalInferenceRequests)
-      .set("estimatedCost", s.estimatedCost)
-      .set("computedAt", s.computedAt);
   }
 }

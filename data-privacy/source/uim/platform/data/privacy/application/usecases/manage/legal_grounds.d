@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
-  private LegalGroundRepository repo;
+  private LegalGroundRepository legalGrounds;
 
-  this(LegalGroundRepository repo) {
-    this.repo = repo;
+  this(LegalGroundRepository legalGrounds) {
+    this.legalGrounds = legalGrounds;
   }
 
   CommandResult createGround(CreateLegalGroundRequest req) {
@@ -34,9 +34,8 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Description is required");
 
     auto now = Clock.currStdTime();
-    auto ground = LegalGround();
-    ground.id = randomUUID();
-    ground.tenantId = req.tenantId;
+    LegalGround ground;
+    ground.initEntity(req.tenantId);
     ground.dataSubjectId = req.dataSubjectId;
     ground.basis = req.basis;
     ground.purpose = req.purpose;
@@ -48,32 +47,32 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     ground.validUntil = req.validUntil;
     ground.createdAt = now;
 
-    repo.save(ground);
+    legalGrounds.save(ground);
     return CommandResult(true, ground.id.value, "");
   }
 
-  LegalGround getGround(LegalGroundId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  LegalGround getGround(TenantId tenantId, LegalGroundId id) {
+    return legalGrounds.findById(tenantId, id);
   }
 
   LegalGround[] listGrounds(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return legalGrounds.findByTenant(tenantId);
   }
 
   LegalGround[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return repo.findByDataSubject(tenantId, subjectId);
+    return legalGrounds.findByDataSubject(tenantId, subjectId);
   }
 
   LegalGround[] listByBasis(TenantId tenantId, LegalBasis basis) {
-    return repo.findByBasis(tenantId, basis);
+    return legalGrounds.findByBasis(tenantId, basis);
   }
 
   LegalGround[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    return repo.findByPurpose(tenantId, purpose);
+    return legalGrounds.findByPurpose(tenantId, purpose);
   }
 
   CommandResult updateGround(UpdateLegalGroundRequest req) {
-    auto ground = repo.findById(req.id, req.tenantId);
+    auto ground = legalGrounds.findById(req.tenantId, req.id);
     if (ground.isNull)
       return CommandResult(false, "", "Legal ground not found");
 
@@ -87,16 +86,16 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.validUntil > 0)
       ground.validUntil = req.validUntil;
 
-    repo.update(ground);
+    legalGrounds.update(ground);
     return CommandResult(true, ground.id.value, "");
   }
 
   CommandResult deleteGround(TenantId tenantId, LegalGroundId id) {
-    auto ground = repo.findById(tenantId, id);
+    auto ground = legalGrounds.findById(tenantId, id);
     if (ground.isNull)
       return CommandResult(false, "", "Legal ground not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    legalGrounds.remove(ground);
+    return CommandResult(true, ground.id.value, "");
   }
 }

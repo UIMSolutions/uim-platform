@@ -116,14 +116,14 @@ unittest {
   assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
   assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
-  assert(getStringArray(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
+  assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
       "a", "b"
     ]);
-  assert(getStringArray(parseJsonString(`{}`), "tags") is null);
+  assert(getStrings(parseJsonString(`{}`), "tags") is null);
 }
 
 /// Read a string array from JSON.
-string[] getStringArray(Json j, string key, string[] defaultArray = null) {
+string[] getStrings(Json j, string key, string[] defaultArray = null) {
   if (!j.isObject)
     return defaultArray;
 
@@ -367,7 +367,7 @@ Json envelopeJson(string key, Json data) {
 }
 
 /// Extract a string[][] (array of string arrays) from a Json object.
-string[][] getStringArrayArray(Json j, string key) {
+string[][] getStringsArray(Json j, string key) {
   if (!j.isObject)
     return null;
 

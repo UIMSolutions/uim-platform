@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct CatalogDTO {
-    string id;
+    CatalogId catalogId;
     TenantId tenantId;
     string name;
     string description;
@@ -25,9 +25,9 @@ struct CatalogDTO {
 }
 
 struct CommandDTO {
-    string id;
+    CommandId commandId;
     TenantId tenantId;
-    string catalogId;
+    CatalogId catalogId;
     string name;
     string description;
     string status;
@@ -44,7 +44,7 @@ struct CommandDTO {
 }
 
 struct CommandInputDTO {
-    string id;
+    CommandInputId commandInputId;
     TenantId tenantId;
     string name;
     string description;
@@ -53,15 +53,15 @@ struct CommandInputDTO {
     string keys;
     string values;
     string version_;
-    string commandId;
+    CommandId commandId;
     UserId createdBy;
     UserId updatedBy;
 }
 
 struct ExecutionDTO {
-    string id;
+    ExecutionId executionId;
     TenantId tenantId;
-    string commandId;
+    CommandId commandId;
     string status;
     string priority;
     string inputValues;
@@ -70,9 +70,9 @@ struct ExecutionDTO {
 }
 
 struct ScheduledExecutionDTO {
-    string id;
+    ScheduledExecutionId scheduledExecutionId;
     TenantId tenantId;
-    string commandId;
+    CommandId commandId;
     string scheduleType;
     string status;
     string cronExpression;
@@ -86,9 +86,9 @@ struct ScheduledExecutionDTO {
 }
 
 struct TriggerDTO {
-    string id;
+    TriggerId triggerId;
     TenantId tenantId;
-    string commandId;
+    CommandId commandId;
     string name;
     string description;
     string triggerType;
@@ -102,7 +102,7 @@ struct TriggerDTO {
 }
 
 struct ServiceAccountDTO {
-    string id;
+    ServiceAccountId serviceAccountId;
     TenantId tenantId;
     string name;
     string description;
@@ -115,7 +115,7 @@ struct ServiceAccountDTO {
 }
 
 struct ContentConnectorDTO {
-    string id;
+    ContentConnectorId contentConnectorId;
     TenantId tenantId;
     string name;
     string description;

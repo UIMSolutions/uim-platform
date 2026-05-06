@@ -41,7 +41,7 @@ class LabelController : PlatformController {
       r.resourceType = j.getString("resourceType");
       r.resourceId = j.getString("resourceId");
       r.key = j.getString("key");
-      r.values = getStringArray(j, "values");
+      r.values = getStrings(j, "values");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
@@ -102,7 +102,7 @@ class LabelController : PlatformController {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateLabelRequest r;
-      r.values = getStringArray(j, "values");
+      r.values = getStrings(j, "values");
 
       auto result = uc.update(id, r);
       if (result.success)

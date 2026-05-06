@@ -41,7 +41,7 @@ class CatalogController : PlatformController {
       auto j = req.json;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("title"), j.getString("description"), j.getString("providerId"),
-        getStringArray(j, "allowedRoleIds"), j.getBoolean("active", true),);
+        getStrings(j, "allowedRoleIds"), j.getBoolean("active", true),);
 
       auto result = useCase.createCatalog(createReq);
       if (result.isSuccess()) {
@@ -91,7 +91,7 @@ class CatalogController : PlatformController {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateCatalogRequest(catalogId, j.getString("title"),
-        j.getString("description"), getStringArray(j, "allowedRoleIds"),
+        j.getString("description"), getStrings(j, "allowedRoleIds"),
         j.getBoolean("active", true),);
 
       auto error = useCase.updateCatalog(updateReq);

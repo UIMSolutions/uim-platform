@@ -70,7 +70,7 @@ class AuthController : PlatformController {
     try {
       auto j = req.json;
       auto tokenReq = TokenRequest(j.getString("sessionId"), j.getString("clientId"),
-          j.getString("clientSecret"), getStringArray(j, "scopes"));
+          j.getString("clientSecret"), getStrings(j, "scopes"));
 
       auto result = tokenUseCase.execute(tokenReq);
       auto response = Json.emptyObject;

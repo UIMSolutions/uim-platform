@@ -43,7 +43,7 @@ class MenuItemController : PlatformController {
         req.headers.get("X-Tenant-Id", ""), j.getString("title"),
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), getStringArray(j, "allowedRoleIds"),
+          NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createMenuItem(createReq);
@@ -96,7 +96,7 @@ class MenuItemController : PlatformController {
       auto updateReq = UpdateMenuItemRequest(menuItemId, j.getString("title"),
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), getStringArray(j, "allowedRoleIds"),
+          NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updateMenuItem(updateReq);

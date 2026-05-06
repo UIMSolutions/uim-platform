@@ -172,7 +172,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
 
     auto rule = ruleRepository.findById(id);
     ruleRepository.removeById(id);
-    return CommandResult(true, rule.id.value(), "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   private AccessStrategy parseAccessStrategy(string strategyName) {

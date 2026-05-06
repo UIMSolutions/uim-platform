@@ -47,7 +47,7 @@ class ScenarioController : PlatformController {
       r.version_ = j.getString("version");
       r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
       r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
-      r.prerequisites = getStringArray(j, "prerequisites");
+      r.prerequisites = getStrings(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
       r.createdBy = UserId(j.getString("createdBy"));
 
@@ -113,7 +113,7 @@ class ScenarioController : PlatformController {
       r.status = parseScenarioStatus(j.getString("status"));
       r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
       r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
-      r.prerequisites = getStringArray(j, "prerequisites");
+      r.prerequisites = getStrings(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
 
       auto result = useCase.updateScenario(r);

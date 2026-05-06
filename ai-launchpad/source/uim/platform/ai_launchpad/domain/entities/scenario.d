@@ -13,13 +13,22 @@ mixin(ShowModule!());
 @safe:
 
 struct Scenario {
-  ScenarioId id;
+  mixin IdEntity!ScenarioId;
+
   ConnectionId connectionId;
   string name;
   string description;
   string[] labels;
   int executionCount;
   int deploymentCount;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("connection_id", connectionId)
+      .set("name", name)
+      .set("description", description)
+      .set("labels", labels.toJson)
+      .set("execution_count", executionCount)
+      .set("deployment_count", deploymentCount);
+  }
 }

@@ -32,7 +32,7 @@ struct CorrectionRequest {
       .set("dataSubjectId", dataSubjectId)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string)
-      .set("targetSystems", targetSystems)
+      .set("targetSystems", targetSystems.toJson)
       .set("fieldName", fieldName)
       .set("currentValue", currentValue)
       .set("correctedValue", correctedValue)

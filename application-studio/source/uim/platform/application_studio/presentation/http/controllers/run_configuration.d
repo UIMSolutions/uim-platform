@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class RunConfigurationController : PlatformController {
-    private ManageRunConfigurationsUseCase uc;
+    private ManageRunConfigurationsUseCase usecase;
 
-    this(ManageRunConfigurationsUseCase uc) {
-        this.uc = uc;
+    this(ManageRunConfigurationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class RunConfigurationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
@@ -49,9 +49,9 @@ class RunConfigurationController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(RunConfigurationId(id));
-            if (e.id.value.length == 0) {
+            auto id = RunConfigurationId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) {
                 writeError(res, 404, "Run configuration not found");
                 return;
             }
@@ -65,9 +65,9 @@ class RunConfigurationController : PlatformController {
         try {
             auto j = req.json;
             RunConfigurationDTO dto;
-            dto.id = j.getString("id");
+            dto.runConfigurationId = RunConfigurationId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.projectId = j.getString("projectId");
+            dto.projectId = ProjectId(j.getString("projectId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.entryPoint = j.getString("entryPoint");
@@ -77,7 +77,7 @@ class RunConfigurationController : PlatformController {
             dto.debugPort = j.getString("debugPort");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -99,14 +99,14 @@ class RunConfigurationController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             RunConfigurationDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.runConfigurationId = RunConfigurationId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.entryPoint = j.getString("entryPoint");
             dto.arguments = j.getString("arguments");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -125,8 +125,8 @@ class RunConfigurationController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(RunConfigurationId(id));
+            auto id = RunConfigurationId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Run configuration deleted");

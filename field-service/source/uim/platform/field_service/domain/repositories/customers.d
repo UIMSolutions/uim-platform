@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomerRepository : ITenantRepository{
+interface CustomerRepository : ITenantRepository!(Customer, CustomerId) {
 
     size_t countByType(CustomerType customerType);
     Customer[] findByType(CustomerType customerType);

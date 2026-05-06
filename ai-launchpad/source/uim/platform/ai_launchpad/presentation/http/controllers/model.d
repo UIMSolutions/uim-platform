@@ -44,7 +44,7 @@ class ModelController : PlatformController {
       r.executionId = j.getString("executionId");
       r.url = j.getString("url");
       r.size = jsonLong(j, "size");
-      r.labels = getStringArray(j, "labels");
+      r.labels = getStrings(j, "labels");
 
       auto result = uc.register(r);
       if (result.success) {
@@ -68,7 +68,7 @@ class ModelController : PlatformController {
 
       typeof(uc.listByConnection(connectionId)) models;
       if (scenarioId.length > 0)
-        models = uc.listByScenario(scenarioId, connectionId);
+        models = uc.listByScenario(connectionId, scenarioId);
       else
         models = uc.listByConnection(connectionId);
 
@@ -88,11 +88,11 @@ class ModelController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto model = uc.getById(id, connectionId);
-      if (m.isNull) {
+      auto model = uc.getById(connectionId, id);
+      if (model.isNull) {
         writeError(res, 404, "Model not found");
         return;
       }
@@ -107,7 +107,7 @@ class ModelController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -136,10 +136,10 @@ class ModelController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = uc.remove(connectionId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

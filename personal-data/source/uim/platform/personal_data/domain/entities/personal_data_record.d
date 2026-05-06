@@ -24,8 +24,8 @@ struct PersonalDataRecord {
     string legalBasis;
     string sourceSystem;
     string retentionRuleId;
-    string validFrom;
-    string validTo;
+    long validFrom;
+    long validTo;
     bool isAnonymized;
 
     Json toJson() const {

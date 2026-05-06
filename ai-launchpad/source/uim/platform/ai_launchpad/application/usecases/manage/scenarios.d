@@ -23,19 +23,18 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
 
   CommandResult sync(SyncScenarioRequest r) {
     Scenario s;
+    s.initEntity();
     s.id = r.scenarioId;
     s.connectionId = r.connectionId;
     s.name = r.name;
     s.description = r.description;
     s.labels = r.labels;
-    s.createdAt = "now";
-    s.updatedAt = "now";
     repo.save(s);
     return CommandResult(true, s.id.value, "");
   }
 
-  Scenario getById(ScenarioId id, ConnectionId connectionId) {
-    return repo.findById(id, connectionId);
+  Scenario getById(ConnectionId connectionId, ScenarioId id) {
+    return repo.findById(connectionId, id);
   }
 
   Scenario[] listByConnection(ConnectionId connectionId) {
@@ -46,10 +45,10 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return repo.findAll();
   }
 
-  CommandResult remove(ScenarioId id, ConnectionId connectionId) {
-    auto s = repo.findById(id, connectionId);
+  CommandResult remove(ConnectionId connectionId, ScenarioId id) {
+    auto s = repo.findById(connectionId, id);
     if (s.isNull) return CommandResult(false, "", "Scenario not found");
-    repo.remove(id, connectionId);
+    repo.remove(connectionId, id);
     return CommandResult(true, id.value, "");
   }
 }

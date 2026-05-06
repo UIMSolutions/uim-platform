@@ -50,7 +50,7 @@ class ServiceController : PlatformController {
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = req.getTenantId;
-      r.spaceId = j.getString("spaceId");
+      r.spaceId = SpaceId(j.getString("spaceId"));
       r.name = j.getString("name");
       r.serviceName = j.getString("serviceName");
       r.servicePlanName = j.getString("servicePlanName");
@@ -92,7 +92,7 @@ class ServiceController : PlatformController {
 
   private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto si = useCase.getInstance(tenantId, id);
       if (si.isNull) {
@@ -110,7 +110,7 @@ class ServiceController : PlatformController {
 
   private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
@@ -135,7 +135,7 @@ class ServiceController : PlatformController {
 
   private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
@@ -158,8 +158,8 @@ class ServiceController : PlatformController {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = req.getTenantId;
-      r.appId = j.getString("appId");
-      r.serviceInstanceId = j.getString("serviceInstanceId");
+      r.appId = AppId(j.getString("appId"));
+      r.serviceInstanceId = ServiceInstanceId(j.getString("serviceInstanceId"));
       r.name = j.getString("name");
       r.bindingOptions = j.getString("bindingOptions");
       r.createdBy = UserId(j.getString("createdBy"));
@@ -198,7 +198,7 @@ class ServiceController : PlatformController {
 
   private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
@@ -214,19 +214,4 @@ class ServiceController : PlatformController {
     }
   }
 
-  // --- Serializers ---
-
-  private static Json serializeBinding(const ServiceBinding b) {
-    return Json.emptyObject
-      .set("id", b.id)
-      .set("appId", b.appId)
-      .set("serviceInstanceId", b.serviceInstanceId)
-      .set("tenantId", b.tenantId)
-      .set("name", b.name)
-      .set("status", b.status.to!string)
-      .set("credentials", b.credentials)
-      .set("bindingOptions", b.bindingOptions)
-      .set("createdBy", b.createdBy)
-      .set("createdAt", b.createdAt);
-  }
 }

@@ -171,7 +171,7 @@ class CertificateController : PlatformController {
             ActivateCertificateRequest r;
             r.tenantId = req.getTenantId;
             r.id = id;
-            r.domains = getStringArray(j, "domains");
+            r.domains = getStrings(j, "domains");
 
             auto result = certificates.activate(r);
             if (result.success) {

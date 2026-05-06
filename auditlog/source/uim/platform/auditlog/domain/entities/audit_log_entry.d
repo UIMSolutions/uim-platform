@@ -35,11 +35,7 @@ struct AuditLogEntry {
   string formatVersion = "1.0";
 
   Json toJson() const {
-    auto attrs = attributes.map!(a => Json.emptyObject
-        .set("name", a.name)
-        .set("oldValue", a.oldValue)
-        .set("newValue", a.newValue)
-    ).array.toJson;
+    auto attrs = attributes.map!(a => a.toJson()).array.toJson;
 
     return entityToJson
       .set("userId", userId.value)

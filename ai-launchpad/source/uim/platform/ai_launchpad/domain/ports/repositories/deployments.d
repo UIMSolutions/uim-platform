@@ -14,14 +14,14 @@ mixin(ShowModule!());
 @safe:
 
 interface IDeploymentRepository {
-  bool existsById(DeploymentId id, ConnectionId connectionId);
-  Deployment findById(DeploymentId id, ConnectionId connectionId);
+  bool existsById(ConnectionId connectionId, DeploymentId id);
+  Deployment findById(ConnectionId connectionId, DeploymentId id);
   
   Deployment[] findByConnection(ConnectionId connectionId);
-  Deployment[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
-  Deployment[] findByStatus(DeploymentStatus status, ConnectionId connectionId);
+  Deployment[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId);
+  Deployment[] findByStatus(ConnectionId connectionId, DeploymentStatus status);
   Deployment[] findAll();
 
   void save(Deployment d);
-  void remove(DeploymentId id, ConnectionId connectionId);
+  void remove(ConnectionId connectionId, DeploymentId id);
 }

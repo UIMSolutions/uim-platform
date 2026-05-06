@@ -28,8 +28,8 @@ struct BusinessProcess {
       .set("name", name)
       .set("description", description)
       .set("controllerId", controllerId)
-      .set("purposes", purposes)
-      .set("legalBases", legalBases)
+      .set("purposes", purposes.map!(p => p.to!string).array.toJson())
+      .set("legalBases", legalBases.map!(l => l.to!string).array.toJson())
       .set("owner", owner)
       .set("isActive", isActive);
 

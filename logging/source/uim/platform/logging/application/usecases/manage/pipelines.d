@@ -88,24 +88,12 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasById(string id) {
-    return hasById(PipelineId(id));
-  }
-
   bool hasById(PipelineId id) {
     return repo.existsById(id);
   }
 
-  Pipeline getById(string id) {
-    return getById(PipelineId(id));
-  }
-
   Pipeline getById(PipelineId id) {
     return repo.findById(id);
-  }
-
-  Pipeline[] list(TenantId tenantId) {
-    return list(TenantId(tenantId));
   }
 
   Pipeline[] list(TenantId tenantId) {

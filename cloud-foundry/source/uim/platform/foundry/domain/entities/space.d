@@ -20,4 +20,12 @@ struct Space {
   string name;
   SpaceStatus status = SpaceStatus.active;
   bool allowSsh = true;
+
+  Json toJson() {
+    return entityToJson()
+      .set("orgId", orgId)
+      .set("name", name)
+      .set("status", status.to!string)
+      .set("allowSsh", allowSsh);
+  }
 }

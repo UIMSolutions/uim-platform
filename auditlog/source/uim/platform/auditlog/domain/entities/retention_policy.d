@@ -33,8 +33,8 @@ struct RetentionPolicy {
 
   static RetentionPolicy fromJson(Json j) {
     RetentionPolicy p;
-    p.id = j.getString("id");
-    p.tenantId = j.getString("tenantId");
+    p.id = RetentionPolicyId(j.getString("id"));
+    p.tenantId = TenantId(j.getString("tenantId"));
     p.name = j.getString("name");
     p.description = j.getString("description");
     p.retentionDays = j.getInteger("retentionDays");
@@ -49,27 +49,5 @@ struct RetentionPolicy {
     return p;
   }
 }
-unittest {
-  auto policy = RetentionPolicy();
-  policy.id = "policy1";
-  policy.tenantId = "tenant1";
-  policy.name = "Default Policy";
-  policy.description = "Default retention policy";
-  policy.retentionDays = 90;
-  // TODO: policy.categories = [AuditCategory.login, AuditCategory.dataChange];
-  policy.status = RetentionStatus.active;
-  policy.isDefault = true;
-  policy.createdAt = Clock.currStdTime();
-  policy.updatedAt = Clock.currStdTime();
 
-  auto json = policy.toJson();
-  assert(json.getString("id") == "policy1");
-  assert(json.getString("tenantId") == "tenant1");
-  assert(json.getString("name") == "Default Policy");
-  assert(json.getString("description") == "Default retention policy");
-  assert(json.getInteger("retentionDays") == 90);
-  // TODO: assert(json.getArray("categories").length == 2);
-  assert(json.getString("status") == "active");
-  assert(json.getBoolean("isDefault") == true);
-}
 

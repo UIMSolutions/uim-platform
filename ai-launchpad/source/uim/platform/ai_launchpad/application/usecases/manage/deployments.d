@@ -38,20 +38,20 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getById(DeploymentId id, ConnectionId connectionId) {
-    return repo.findById(id, connectionId);
+  Deployment getById(ConnectionId connectionId, DeploymentId id) {
+    return repo.findById(connectionId, id);
   }
 
   Deployment[] listByConnection(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  Deployment[] listByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    return repo.findByScenario(scenarioId, connectionId);
+  Deployment[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(connectionId, scenarioId);
   }
 
   CommandResult patch(PatchDeploymentRequest r) {
-    auto d = repo.findById(r.deploymentId, r.connectionId);
+    auto d = repo.findById(r.connectionId, r.deploymentId);
     if (d.isNull) return CommandResult(false, "", "Deployment not found");
     d.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped") d.status = DeploymentStatus.stopped;
@@ -75,10 +75,10 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return results;
   }
 
-  CommandResult remove(DeploymentId id, ConnectionId connectionId) {
-    auto d = repo.findById(id, connectionId);
+  CommandResult remove(ConnectionId connectionId, DeploymentId id) {
+    auto d = repo.findById(connectionId, id);
     if (d.isNull) return CommandResult(false, "", "Deployment not found");
-    repo.remove(id, connectionId);
+    repo.remove(connectionId, id);
     return CommandResult(true, id.value, "");
   }
 }

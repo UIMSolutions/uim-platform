@@ -34,12 +34,7 @@ class ConnectionController : PlatformController {
     try {
       auto j = req.json;
       CreateConnectionRequest r;
-      r.workspaceId = j.getString("workspaceId");
-      r.name = j.getString("name");
-      r.type = j.getString("type");
-      r.url = j.getString("url");
-      r.authUrl = j.getString("authUrl");
-      r.clientId = j.getString("clientId");
+      r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
       r.clientSecret = j.getString("clientSecret");
       r.description = j.getString("description");
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");

@@ -49,8 +49,8 @@ class AuditConfigController : PlatformController {
       request.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
       request.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
       request.enableDataMasking = j.getBoolean("enableDataMasking");
-      request.maskedFields = getStringArray(j, "maskedFields");
-      request.excludedServices = getStringArray(j, "excludedServices");
+      request.maskedFields = getStrings(j, "maskedFields");
+      request.excludedServices = getStrings(j, "excludedServices");
 
       auto sevStr = j.getString("minimumSeverity");
       if (sevStr == "warning")
@@ -116,7 +116,7 @@ class AuditConfigController : PlatformController {
 
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = AuditConfigId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.logDataAccess = j.getBoolean("logDataAccess", true);
@@ -124,15 +124,11 @@ class AuditConfigController : PlatformController {
       r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
       r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
       r.enableDataMasking = j.getBoolean("enableDataMasking");
-      r.maskedFields = getStringArray(j, "maskedFields");
-      r.excludedServices = getStringArray(j, "excludedServices");
+      r.maskedFields = getStrings(j, "maskedFields");
+      r.excludedServices = getStrings(j, "excludedServices");
       r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
-      auto statusStr = j.getString("status");
-      if (statusStr == "disabled")
-        r.status = ConfigStatus.disabled;
-      else
-        r.status = ConfigStatus.enabled;
+      r.status = j.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
 
       auto sevStr = j.getString("minimumSeverity");
       if (sevStr == "warning")

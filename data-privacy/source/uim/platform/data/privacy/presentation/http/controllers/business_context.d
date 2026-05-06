@@ -40,9 +40,9 @@ class BusinessContextController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
-      r.dataCategories = getStringArray(j, "dataCategories");
-      r.purposes = getStringArray(j, "purposes");
-      r.dataCategoryAttributes = getStringArray(j, "dataCategoryAttributes");
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = uc.createContext(r);
@@ -77,7 +77,7 @@ class BusinessContextController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getContext(tenantId, id);
       if (entry.isNull) {
@@ -93,13 +93,13 @@ class BusinessContextController : PlatformController {
     try {
       auto j = req.json;
       UpdateBusinessContextRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = BusinessContextId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataCategories = getStringArray(j, "dataCategories");
-      r.purposes = getStringArray(j, "purposes");
-      r.dataCategoryAttributes = getStringArray(j, "dataCategoryAttributes");
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = uc.updateContext(r);
@@ -118,7 +118,7 @@ class BusinessContextController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ActivateBusinessContextRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = BusinessContextId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
 
       auto result = uc.activateContext(r);
@@ -136,32 +136,11 @@ class BusinessContextController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteContext(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const BusinessContext e) {
-    auto cats = e.dataCategories.map!(c => Json(c)).array.toJson;
-
-    auto purps = e.purposes.map!(p => Json(p)).array.toJson;
-
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("controllerGroupId", e.controllerGroupId)
-      .set("status", e.status.to!string)
-      .set("version", e.version_)
-      .set("isCrossRoleEnabled", e.isCrossRoleEnabled)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("activatedAt", e.activatedAt)
-      .set("dataCategories", cats)
-      .set("purposes", purps);
   }
 }

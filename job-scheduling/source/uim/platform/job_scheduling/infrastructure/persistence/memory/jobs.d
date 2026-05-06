@@ -19,6 +19,25 @@ mixin(ShowModule!());
 @safe:
 class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
 
+    bool existsByName(TenantId tenantId, string name) {
+        return findByTenant(tenantId).canFind!(j => j.name == name);
+    }
+    Job findByName(TenantId tenantId, string name) {
+        foreach (j; findByTenant(tenantId)) {
+            if (j.name == name)
+                return j;
+        }
+        return Job.init;
+    }
+    void removeByName(TenantId tenantId, string name) {
+        foreach (j; findByTenant(tenantId)) {
+            if (j.name == name) {
+                removeById(tenantId, j.id);
+                return;
+            }
+        }
+    }
+    
     size_t countByStatus(TenantId tenantId, JobStatus status) {
         return findByStatus(tenantId, status).length;
     }

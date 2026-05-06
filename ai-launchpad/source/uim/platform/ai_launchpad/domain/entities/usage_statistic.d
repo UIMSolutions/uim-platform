@@ -13,7 +13,8 @@ mixin(ShowModule!());
 @safe:
 
 struct UsageStatistic {
-  StatisticsId id;
+  mixin IdEntity!StatisticsId;
+  
   ScenarioId scenarioId;
   ConnectionId connectionId;
   StatisticsPeriod period;
@@ -23,4 +24,17 @@ struct UsageStatistic {
   long totalInferenceRequests;
   double estimatedCost;
   string computedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("scenario_id", scenarioId)
+      .set("connection_id", connectionId)
+      .set("period", period)
+      .set("execution_count", executionCount)
+      .set("deployment_count", deploymentCount)
+      .set("total_training_hours", totalTrainingHours)
+      .set("total_inference_requests", totalInferenceRequests)
+      .set("estimated_cost", estimatedCost)
+      .set("computed_at", computedAt);
+  }
 }

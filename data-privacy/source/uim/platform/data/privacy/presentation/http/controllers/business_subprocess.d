@@ -36,12 +36,12 @@ class BusinessSubprocessController : PlatformController {
       auto j = req.json;
       CreateBusinessSubprocessRequest r;
       r.tenantId = req.getTenantId;
-      r.parentProcessId = j.getString("parentProcessId");
+      r.parentProcessId = BusinessProcessId(j.getString("parentProcessId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStringArray(j, "purposes");
-      r.dataCategories = getStringArray(j, "dataCategories");
-      r.owner = j.getString("owner");
+      r.purposes = getStrings(j, "purposes");
+      r.dataCategories = getStrings(j, "dataCategories");
+      r.owner = UserId(j.getString("owner"));
 
       auto result = uc.createSubprocess(r);
       if (result.isSuccess()) {
@@ -75,7 +75,7 @@ class BusinessSubprocessController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getSubprocess(tenantId, id);
       if (entry.isNull) {
@@ -91,13 +91,13 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto j = req.json;
       UpdateBusinessSubprocessRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStringArray(j, "purposes");
-      r.dataCategories = getStringArray(j, "dataCategories");
-      r.owner = j.getString("owner");
+      r.purposes = getStrings(j, "purposes").map!(p => PurposeId(p)).array;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => DataCategoryId(c)).array;
+      r.owner = UserId(j.getString("owner"));
 
       auto result = uc.updateSubprocess(r);
       if (result.isSuccess()) {
@@ -114,7 +114,7 @@ class BusinessSubprocessController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
@@ -123,9 +123,9 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private static Json serialize(const BusinessSubprocess e) {
-    auto purps = e.purposes.map!(p => Json(p)).array.toJson;
+    auto purps = e.purposes.map!(p => p.toJson).array.toJson;
 
-    auto cats = e.dataCategories.map!(c => Json(c)).array.toJson;
+    auto cats = e.dataCategories.map!(c => c.toJson).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

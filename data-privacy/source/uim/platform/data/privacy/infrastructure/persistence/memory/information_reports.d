@@ -29,7 +29,7 @@ class MemoryInformationReportRepository : TenantRepository!(InformationReport, I
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    findByDataSubject(tenantId, subjectId).removeAll;
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
   } 
   // #endregion ByDataSubject
 
@@ -44,7 +44,6 @@ class MemoryInformationReportRepository : TenantRepository!(InformationReport, I
 
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
-    return result;
   }
 
   void removeByStatus(TenantId tenantId, InformationReportStatus status) {

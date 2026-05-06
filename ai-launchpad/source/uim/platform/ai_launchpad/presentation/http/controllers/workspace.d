@@ -22,6 +22,7 @@ class WorkspaceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/workspaces", &handleCreate);
     router.get("/api/v1/workspaces", &handleList);
     router.get("/api/v1/workspaces/*", &handleGet);
@@ -75,7 +76,7 @@ class WorkspaceController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto w = uc.getById(id);
       if (w.isNull) {
@@ -92,7 +93,7 @@ class WorkspaceController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchWorkspaceRequest r;
@@ -118,7 +119,7 @@ class WorkspaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);
       if (result.success) {
@@ -132,17 +133,5 @@ class WorkspaceController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeWorkspace(Workspace w) {
-    return Json.emptyObject
-      .set("id", w.id)
-      .set("name", w.name)
-      .set("description", w.description)
-      .set("tenantId", w.tenantId)
-      .set("status", w.status.to!string)
-      .set("connectionCount", w.connectionCount)
-      .set("createdAt", w.createdAt)
-      .set("updatedAt", w.updatedAt);
   }
 }

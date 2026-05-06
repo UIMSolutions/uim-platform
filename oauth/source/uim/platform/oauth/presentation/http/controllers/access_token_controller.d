@@ -50,7 +50,7 @@ class AccessTokenController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(AccessTokenId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Access token not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Access token not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

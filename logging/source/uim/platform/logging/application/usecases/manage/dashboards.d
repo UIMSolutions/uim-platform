@@ -79,7 +79,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         DashboardPanel panel;
         panel.id = (p.id.length > 0) ? p.id : randomUUID().to!string;
         panel.title = p.title;
-        panel.panelType = parsePanelType(p.panelType);
+        panel.panelType = p.panelType.to!PanelType;
         panel.query = p.query;
         panel.positionX = p.positionX;
         panel.positionY = p.positionY;
@@ -93,24 +93,12 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasById(string id) {
-    return repo.existsById(DashboardId(id));
-  }
-
   bool hasById(DashboardId id) {
     return repo.existsById(id);
   }
 
-  Dashboard getById(string id) {
-    return getById(DashboardId(id));
-  }
-  
   Dashboard getById(DashboardId id) {
     return repo.findById(id);
-  }
-
-  Dashboard[] list(TenantId tenantId) {
-    return list(TenantId(tenantId));
   }
 
   Dashboard[] list(TenantId tenantId) {
@@ -118,15 +106,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   }
 
   Dashboard getDefault(TenantId tenantId) {
-    return getDefault(TenantId(tenantId));
-  }
-
-  Dashboard getDefault(TenantId tenantId) {
     return repo.findDefault(tenantId);
-  }
-
-  CommandResult remove(string id) {
-    return remove(DashboardId(id));
   }
 
   CommandResult remove(DashboardId id) {

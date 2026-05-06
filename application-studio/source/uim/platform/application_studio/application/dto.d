@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 
 struct DevSpaceDTO {
-    string id;
+    DevSpaceId devSpaceId;
     TenantId tenantId;
     string name;
     string description;
     string plan;
-    string devSpaceTypeId;
+    DevSpaceTypeId devSpaceTypeId;
     string extensions;
     string owner;
     string region;
@@ -29,7 +29,7 @@ struct DevSpaceDTO {
 }
 
 struct DevSpaceTypeDTO {
-    string id;
+    DevSpaceTypeId devSpaceTypeId;
     TenantId tenantId;
     string name;
     string description;
@@ -43,7 +43,7 @@ struct DevSpaceTypeDTO {
 }
 
 struct ExtensionDTO {
-    string id;
+    ExtensionId extensionId;
     TenantId tenantId;
     string name;
     string description;
@@ -60,13 +60,13 @@ struct ExtensionDTO {
 }
 
 struct ProjectDTO {
-    string id;
+    ProjectId projectId;
     TenantId tenantId;
-    string devSpaceId;
+    DevSpaceId devSpaceId;
     string name;
     string description;
     string projectType;
-    string templateId;
+    ProjectTemplateId projectTemplateId;
     string rootPath;
     string gitRepositoryUrl;
     string gitBranch;
@@ -76,7 +76,7 @@ struct ProjectDTO {
 }
 
 struct ProjectTemplateDTO {
-    string id;
+    ProjectTemplateId projectTemplateId;
     TenantId tenantId;
     string name;
     string description;
@@ -92,9 +92,9 @@ struct ProjectTemplateDTO {
 }
 
 struct ServiceBindingDTO {
-    string id;
+    ServiceBindingId serviceBindingId;
     TenantId tenantId;
-    string devSpaceId;
+    DevSpaceId devSpaceId;
     string name;
     string description;
     string providerType;
@@ -108,9 +108,9 @@ struct ServiceBindingDTO {
 }
 
 struct RunConfigurationDTO {
-    string id;
+    RunConfigurationId runConfigurationId;
     TenantId tenantId;
-    string projectId;
+    ProjectId projectId;
     string name;
     string description;
     string mode;
@@ -124,9 +124,9 @@ struct RunConfigurationDTO {
 }
 
 struct BuildConfigurationDTO {
-    string id;
+    BuildConfigurationId buildConfigurationId;
     TenantId tenantId;
-    string projectId;
+    ProjectId projectId;
     string name;
     string description;
     string deployTarget;

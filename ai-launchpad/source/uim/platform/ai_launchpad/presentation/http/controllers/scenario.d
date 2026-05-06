@@ -36,10 +36,10 @@ class ScenarioController : PlatformController {
 
       SyncScenarioRequest r;
       r.connectionId = connectionId;
-      r.scenarioId = j.getString("scenarioId");
+      r.scenarioId = ScenarioId(j.getString("scenarioId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.labels = getStringArray(j, "labels");
+      r.labels = getStrings(j, "labels");
 
       auto result = uc.sync(r);
       if (result.success) {
@@ -80,16 +80,19 @@ class ScenarioController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto s = uc.getById(id, connectionId);
+      auto s = uc.getById(connectionId, id);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
       }
 
-      res.writeJsonBody(s.toJson, 200);
+      auto resp = s.toJson
+      .set("message", "Scenario retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -98,12 +101,16 @@ class ScenarioController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = uc.remove(connectionId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Scenario deleted successfully");
+          
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }
@@ -112,16 +119,4 @@ class ScenarioController : PlatformController {
     }
   }
 
-  private Json serializeScenario(Scenario s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("connectionId", s.connectionId)
-      .set("name", s.name)
-      .set("description", s.description)
-      .set("labels", toJsonArray(s.labels))
-      .set("executionCount", s.executionCount)
-      .set("deploymentCount", s.deploymentCount)
-      .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt);
-  }
 }

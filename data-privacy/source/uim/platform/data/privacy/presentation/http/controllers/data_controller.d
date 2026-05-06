@@ -77,7 +77,7 @@ class DataControllerController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataControllerId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getController(tenantId, id);
       if (entry.isNull) {
@@ -93,7 +93,7 @@ class DataControllerController : PlatformController {
     try {
       auto j = req.json;
       UpdateDataControllerRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = DataControllerId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -120,7 +120,7 @@ class DataControllerController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataControllerId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteController(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

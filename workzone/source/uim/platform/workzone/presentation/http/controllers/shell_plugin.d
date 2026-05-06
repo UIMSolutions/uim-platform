@@ -45,7 +45,7 @@ class ShellPluginController : PlatformController {
       r.vendor = j.getString("vendor");
       r.scriptUrl = j.getString("scriptUrl");
       r.configSchemaUrl = j.getString("configSchemaUrl");
-      r.hookPoints = getStringArray(j, "hookPoints");
+      r.hookPoints = getStrings(j, "hookPoints");
 
       auto result = useCase.createPlugin(r);
       if (result.isSuccess()) {

@@ -46,8 +46,8 @@ class TileController : PlatformController {
         jsonEnum!TileType(j, "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType
           .url),
         j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), getStringArray(j,
-          "keywords"), getStringArray(j, "allowedRoleIds"), parseTileConfig(j),);
+          "navigationTarget", NavigationTarget.inPlace), getStrings(j,
+          "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
 
       auto result = useCase.createTile(createReq);
       if (result.isSuccess()) {
@@ -113,8 +113,8 @@ class TileController : PlatformController {
         j.getString("icon"), j.getString("info"), jsonEnum!TileType(j,
           "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
         j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), getStringArray(j,
-          "keywords"), getStringArray(j, "allowedRoleIds"), parseTileConfig(j),);
+          "navigationTarget", NavigationTarget.inPlace), getStrings(j,
+          "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
 
       auto error = useCase.updateTile(updateReq);
       if (error.length > 0)

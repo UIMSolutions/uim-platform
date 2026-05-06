@@ -35,7 +35,7 @@ class VisibilityController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.dashboardType = j.getString("dashboardType");
-            r.processIds = getStringArray(j, "processIds");
+            r.processIds = getStrings(j, "processIds");
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 

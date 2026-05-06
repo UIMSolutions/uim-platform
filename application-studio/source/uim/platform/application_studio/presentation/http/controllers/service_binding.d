@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceBindingController : PlatformController {
-    private ManageServiceBindingsUseCase uc;
+    private ManageServiceBindingsUseCase usecase;
 
-    this(ManageServiceBindingsUseCase uc) {
-        this.uc = uc;
+    this(ManageServiceBindingsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class ServiceBindingController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -46,9 +46,9 @@ class ServiceBindingController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ServiceBindingId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Service binding not found"); return; }
+            auto id = ServiceBindingId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Service binding not found"); return; }
             res.writeJsonBody(e.serviceBindingToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,9 +59,9 @@ class ServiceBindingController : PlatformController {
         try {
             auto j = req.json;
             ServiceBindingDTO dto;
-            dto.id = j.getString("id");
+            dto.id = ServiceBindingId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.devSpaceId = j.getString("devSpaceId");
+            dto.devSpaceId = DevSpaceId(j.getString("devSpaceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.serviceUrl = j.getString("serviceUrl");
@@ -71,7 +71,7 @@ class ServiceBindingController : PlatformController {
             dto.systemAlias = j.getString("systemAlias");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -92,13 +92,13 @@ class ServiceBindingController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceBindingDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.id = ServiceBindingId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.serviceUrl = j.getString("serviceUrl");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -117,8 +117,8 @@ class ServiceBindingController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ServiceBindingId(id));
+            auto id = ServiceBindingId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service binding deleted");

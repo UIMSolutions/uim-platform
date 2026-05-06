@@ -80,7 +80,7 @@ class PromptCollectionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto c = uc.getById(id);
       if (c.isNull) {
@@ -97,7 +97,7 @@ class PromptCollectionController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchPromptCollectionRequest r;
@@ -123,28 +123,20 @@ class PromptCollectionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Prompt collection deleted"); 
+
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeCollection(PromptCollection c) {
-    return Json.emptyObject
-      .set("id", Json(c.id))
-      .set("name", Json(c.name))
-      .set("description", Json(c.description))
-      .set("scenarioId", Json(c.scenarioId))
-      .set("workspaceId", Json(c.workspaceId))
-      .set("promptCount", Json(c.promptCount))
-      .set("createdAt", Json(c.createdAt))
-      .set("updatedAt", Json(c.updatedAt));
   }
 }

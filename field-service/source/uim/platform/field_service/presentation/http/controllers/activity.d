@@ -20,6 +20,7 @@ class ActivityController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/activities", &handleList);
         router.get("/api/v1/field-service/activities/*", &handleGet);
         router.post("/api/v1/field-service/activities", &handleCreate);

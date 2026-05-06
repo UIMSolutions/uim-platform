@@ -28,7 +28,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    findByDataSubject(tenantId, subjectId).removeAll;
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
   }
 
   size_t countByStatus(TenantId tenantId, PurposeRecordStatus status) {

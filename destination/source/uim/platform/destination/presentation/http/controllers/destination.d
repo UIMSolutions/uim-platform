@@ -73,7 +73,7 @@ class DestinationController : PlatformController {
       r.sccVirtualPort = j.getInteger("sccVirtualPort");
 
       r.properties = jsonStrMap(j, "properties");
-      r.fragmentIds = getStringArray(j, "fragmentIds");
+      r.fragmentIds = getStrings(j, "fragmentIds");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = uc.create(r);
@@ -153,7 +153,7 @@ class DestinationController : PlatformController {
       r.sccVirtualPort = j.getInteger("sccVirtualPort");
       r.status = j.getString("status");
       r.properties = jsonStrMap(j, "properties");
-      r.fragmentIds = getStringArray(j, "fragmentIds");
+      r.fragmentIds = getStrings(j, "fragmentIds");
 
       auto result = uc.updateDestination(id, r);
       if (result.success) {

@@ -40,10 +40,10 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     sp.updatedAt = now;
 
     repo.save(sp);
-    return CommandResult(sp.id.value, "");
+    return CommandResult(true, sp.id.value, "");
   }
 
-  BusinessSubprocess getSubprocess(BusinessSubprocessId tenantId, id tenantId) {
+  BusinessSubprocess getSubprocess(TenantId tenantId, BusinessSubprocessId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -56,7 +56,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSubprocess(UpdateBusinessSubprocessRequest req) {
-    auto sp = repo.findById(req.id, req.tenantId);
+    auto sp = repo.findById(req.tenantId, req.id);
     if (sp.isNull)
       return CommandResult(false, "", "Business subprocess not found");
 
@@ -68,10 +68,10 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     sp.updatedAt = Clock.currStdTime();
 
     repo.update(sp);
-    return CommandResult(sp.id.value, "");
+    return CommandResult(true, sp.id.value, "");
   }
 
-  void deleteSubprocess(BusinessSubprocessId tenantId, id tenantId) {
+  void deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
     repo.removeById(tenantId, id);
   }
 }

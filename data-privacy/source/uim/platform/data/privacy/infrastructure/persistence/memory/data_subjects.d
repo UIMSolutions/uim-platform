@@ -15,11 +15,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
-  DataSubject findByExternalId(string externaltenantId, id tenantId) {
-    foreach (s; findAll)
-      if (s.externalId == externalId && s.tenantId == tenantId)
+  bool existsByExternalId(TenantId tenantId, string externalId) {
+    return findByTenant(tenantId).any!(s => s.externalId == externalId);
+  }
+  DataSubject findByExternalId(TenantId tenantId, string externalId) {
+    foreach (s; findByTenant(tenantId))
+      if (s.externalId == externalId)
         return s;
     return DataSubject.init;
+  }
+  void removeByExternalId(TenantId tenantId, string externalId) {
+    foreach (s; findByTenant(tenantId))
+      if (s.externalId == externalId)
+        remove(s);
   }
 
   size_t countByType(TenantId tenantId, DataSubjectType subjectType) {

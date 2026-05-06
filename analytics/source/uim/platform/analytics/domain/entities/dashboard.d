@@ -71,4 +71,9 @@ struct Page {
   EntityId id;
   string title;
   EntityId[] widgetIds;
+
+  Json toJson() {
+    return Json.emptyObject.set("id", id.value).set("title", title)
+      .set("widgetIds", widgetIds.map!(wid => wid.value).array);
+  }
 }

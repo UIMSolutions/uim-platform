@@ -49,7 +49,7 @@ class CommandInputController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = CommandInputId(extractIdFromPath(path));
             auto e = commandInputs.getById(id);
-            if (e.id.value.length == 0) { writeError(res, 404, "Input not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Input not found"); return; }
             res.writeJsonBody(e.commandInputToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

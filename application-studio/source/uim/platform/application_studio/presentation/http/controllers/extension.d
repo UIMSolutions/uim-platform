@@ -46,9 +46,9 @@ class ExtensionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ExtensionId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Extension not found"); return; }
+            auto id = ExtensionId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.id.isEmpty) { writeError(res, 404, "Extension not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,7 +59,7 @@ class ExtensionController : PlatformController {
         try {
             auto j = req.json;
             ExtensionDTO dto;
-            dto.id = j.getString("id");
+            dto.extensionId = ExtensionId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -91,8 +91,9 @@ class ExtensionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+            
             ExtensionDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.extensionId = ExtensionId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -117,8 +118,8 @@ class ExtensionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ExtensionId(id));
+            auto id = ExtensionId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Extension deleted");

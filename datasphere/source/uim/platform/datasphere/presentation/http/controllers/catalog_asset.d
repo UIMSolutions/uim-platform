@@ -43,7 +43,7 @@ class CatalogAssetController : PlatformController {
       r.assetType = j.getString("assetType");
       r.sourceObjectId = j.getString("sourceObjectId");
       r.owner = j.getString("owner");
-      r.glossaryTerms = getStringArray(j, "glossaryTerms");
+      r.glossaryTerms = getStrings(j, "glossaryTerms");
 
       auto result = assets.create(r);
       if (result.success) {

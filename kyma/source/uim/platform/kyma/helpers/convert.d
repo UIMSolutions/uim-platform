@@ -26,11 +26,11 @@ ApiRuleEntryDto[] toRuleEntries(Json json) {
     foreach (item; value.toArray) {
       ApiRuleEntryDto entry;
       entry.path = item.getString("path");
-      entry.methods = getStringArray(item, "methods");
+      entry.methods = getStrings(item, "methods");
       entry.accessStrategy = item.getString("accessStrategy");
-      entry.requiredScopes = getStringArray(item, "requiredScopes");
-      entry.audiences = getStringArray(item, "audiences");
-      entry.trustedIssuers = getStringArray(item, "trustedIssuers");
+      entry.requiredScopes = getStrings(item, "requiredScopes");
+      entry.audiences = getStrings(item, "audiences");
+      entry.trustedIssuers = getStrings(item, "trustedIssuers");
       entries ~= entry;
     }
     return entries;

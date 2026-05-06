@@ -20,6 +20,7 @@ class TriggerController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/automation-pilot/triggers", &handleList);
         router.get("/api/v1/automation-pilot/triggers/*", &handleGet);
         router.post("/api/v1/automation-pilot/triggers", &handleCreate);
@@ -34,7 +35,8 @@ class TriggerController : PlatformController {
             
             auto resp = Json.emptyObject
               .set("count", items.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+                .set("message", "Trigger list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -46,9 +48,9 @@ class TriggerController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(TriggerId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Trigger not found"); return; }
+            auto id = TriggerId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) { writeError(res, 404, "Trigger not found"); return; }
             res.writeJsonBody(e.triggerToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,7 +61,7 @@ class TriggerController : PlatformController {
         try {
             auto j = req.json;
             TriggerDTO dto;
-            dto.id = j.getString("id");
+            dto.id = TriggerId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.commandId = j.getString("commandId");
             dto.name = j.getString("name");
@@ -91,7 +93,7 @@ class TriggerController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             TriggerDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.id = TriggerId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.eventType = j.getString("eventType");
@@ -118,8 +120,8 @@ class TriggerController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(TriggerId(id));
+            auto id = TriggerId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Trigger deleted");

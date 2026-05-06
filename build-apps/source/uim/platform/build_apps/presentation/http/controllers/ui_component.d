@@ -47,9 +47,9 @@ class UIComponentController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = components.getById(UIComponentId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "UI component not found"); return; }
+            auto id = UIComponentId(extractIdFromPath(path));
+            auto e = components.getById(id);
+            if (e.isNull) { writeError(res, 404, "UI component not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,7 +60,7 @@ class UIComponentController : PlatformController {
         try {
             auto j = req.json;
             UIComponentDTO dto;
-            dto.id = j.getString("id");
+            dto.uiComponentId = UIComponentId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -96,7 +96,7 @@ class UIComponentController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             UIComponentDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.uiComponentId = UIComponentId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -121,8 +121,8 @@ class UIComponentController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = components.remove(UIComponentId(id));
+            auto id = UIComponentId(extractIdFromPath(path));
+            auto result = components.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "UI component deleted");

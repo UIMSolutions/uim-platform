@@ -37,8 +37,8 @@ struct RuleSet {
       .set("name", name)
       .set("description", description)
       .set("status", status.to!string)
-      .set("conditions", conditions)
-      .set("resultPurposes", resultPurposes)
+      .set("conditions", conditions.map!(c => c.to!string).array.toJson())
+      .set("resultPurposes", resultPurposes.map!(p => p.to!string).array.toJson())
       .set("priority", priority)
       .set("activatedAt", activatedAt);
   }

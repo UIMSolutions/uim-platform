@@ -35,7 +35,8 @@ class DevSpaceTypeController : PlatformController {
             
             auto resp = Json.emptyObject
               .set("count", items.length)
-              .set("resources", jarr);
+              .set("resources", jarr)
+                .set("message", "Dev space types retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -47,9 +48,9 @@ class DevSpaceTypeController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(DevSpaceTypeId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Dev space type not found"); return; }
+            auto id = DevSpaceTypeId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.devSpaceTypeId.isEmpty) { writeError(res, 404, "Dev space type not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -91,7 +92,7 @@ class DevSpaceTypeController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DevSpaceTypeDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.devSpaceTypeId = DevSpaceTypeId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.predefinedExtensions = j.getString("predefinedExtensions");
@@ -116,8 +117,8 @@ class DevSpaceTypeController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(DevSpaceTypeId(id));
+            auto id = DevSpaceTypeId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Dev space type deleted");

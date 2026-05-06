@@ -48,9 +48,9 @@ class AppBuildController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(AppBuildId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "App build not found"); return; }
+            auto id = AppBuildId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) { writeError(res, 404, "App build not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -61,9 +61,9 @@ class AppBuildController : PlatformController {
         try {
             auto j = req.json;
             AppBuildDTO dto;
-            dto.id = j.getString("id");
+            dto.appBuildId = AppBuildId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.buildTarget = j.getString("buildTarget");
@@ -93,7 +93,7 @@ class AppBuildController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             AppBuildDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.appBuildId = AppBuildId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -118,8 +118,8 @@ class AppBuildController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(AppBuildId(id));
+            auto id = AppBuildId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "App build deleted");

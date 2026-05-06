@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
-  private DataControllerGroupRepository repo;
+  private DataControllerGroupRepository dataControllerGroups;
 
-  this(DataControllerGroupRepository repo) {
-    this.repo = repo;
+  this(DataControllerGroupRepository dataControllerGroups) {
+    this.dataControllerGroups = dataControllerGroups;
   }
 
   CommandResult createGroup(CreateDataControllerGroupRequest req) {
@@ -34,20 +34,20 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     g.createdAt = now;
     g.updatedAt = now;
 
-    repo.save(g);
-    return CommandResult(g.id.value, "");
+    dataControllerGroups.save(g);
+    return CommandResult(true, g.id.value, "");
   }
 
-  DataControllerGroup getGroup(DataControllerGroupId tenantId, id tenantId) {
-    return repo.findById(tenantId, id);
+  DataControllerGroup getGroup(TenantId tenantId, DataControllerGroupId id) {
+    return dataControllerGroups.findById(tenantId, id);
   }
 
   DataControllerGroup[] listGroups(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return dataControllerGroups.findByTenant(tenantId);
   }
 
   CommandResult updateGroup(UpdateDataControllerGroupRequest req) {
-    auto g = repo.findById(req.id, req.tenantId);
+    auto g = dataControllerGroups.findById(req.tenantId, req.id);
     if (g.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
@@ -56,11 +56,11 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (req.controllerIds.length > 0) g.controllerIds = req.controllerIds;
     g.updatedAt = Clock.currStdTime();
 
-    repo.update(g);
-    return CommandResult(g.id.value, "");
+    dataControllerGroups.update(g);
+    return CommandResult(true, g.id.value, "");
   }
 
-  void deleteGroup(DataControllerGroupId tenantId, id tenantId) {
-    repo.removeById(tenantId, id);
+  void deleteGroup(TenantId tenantId, DataControllerGroupId id) {
+    dataControllerGroups.removeById(tenantId, id);
   }
 }

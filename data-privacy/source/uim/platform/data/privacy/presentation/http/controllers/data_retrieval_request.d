@@ -41,9 +41,9 @@ class DataRetrievalController : PlatformController {
       auto j = req.json;
       CreateDataRetrievalRequest r;
       r.tenantId = req.getTenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
@@ -82,7 +82,7 @@ class DataRetrievalController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class DataRetrievalController : PlatformController {
     try {
       auto j = req.json;
       UpdateRetrievalStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseRetrievalStatus(j.getString("status"));
       r.downloadUrl = j.getString("downloadUrl");
@@ -119,7 +119,7 @@ class DataRetrievalController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

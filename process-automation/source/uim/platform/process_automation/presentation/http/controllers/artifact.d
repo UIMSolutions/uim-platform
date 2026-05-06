@@ -42,7 +42,7 @@ class ArtifactController : PlatformController {
             r.version_ = j.getString("version");
             r.author = j.getString("author");
             r.category = j.getString("category");
-            r.tags = getStringArray(j, "tags");
+            r.tags = getStrings(j, "tags");
             r.contentUrl = j.getString("contentUrl");
 
             auto result = uc.create(r);

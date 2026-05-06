@@ -83,16 +83,19 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto d = uc.getById(id, connectionId);
+      auto d = uc.getById(connectionId, id);
       if (d.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
       }
 
-      res.writeJsonBody(d.toJson, 200);
+      Auto resp = d.toJson
+        .set("message", "Deployment retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -102,7 +105,7 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -135,7 +138,7 @@ class DeploymentController : PlatformController {
 
       BulkPatchDeploymentRequest r;
       r.connectionId = connectionId;
-      r.deploymentIds = getStringArray(j, "deploymentIds");
+      r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
       r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);
@@ -163,12 +166,15 @@ class DeploymentController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = uc.remove(connectionId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Deployment removed successfully"); 
+          
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }

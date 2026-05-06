@@ -24,4 +24,14 @@ struct Organization {
   int totalServices = 100;
   int totalAppInstances = -1; // -1 = unlimited
 
+  Json toJson() {
+    return entityToJson()
+      .set("name", name)
+      .set("status", status.to!string)
+      .set("memoryQuotaMb", memoryQuotaMb)
+      .set("instanceMemoryLimitMb", instanceMemoryLimitMb)
+      .set("totalRoutes", totalRoutes)
+      .set("totalServices", totalServices)
+      .set("totalAppInstances", totalAppInstances);
+  }
 }

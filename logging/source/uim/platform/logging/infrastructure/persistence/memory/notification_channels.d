@@ -24,4 +24,8 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
     return findByTenant(tenantId).filter!(ch => ch.state == ChannelState.active).array;
   }
 
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(ch => remove(ch));
+  }
+
 }

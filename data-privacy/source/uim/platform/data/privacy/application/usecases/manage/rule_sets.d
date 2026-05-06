@@ -52,7 +52,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRuleSet(UpdateRuleSetRequest req) {
-    auto rs = repo.findById(req.id, req.tenantId);
+    auto rs = repo.findById(req.tenantId, req.id);
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 

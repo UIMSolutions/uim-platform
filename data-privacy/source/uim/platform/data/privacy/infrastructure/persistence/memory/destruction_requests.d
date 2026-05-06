@@ -29,7 +29,7 @@ class MemoryDestructionRequestRepository : TenantRepository!(DestructionRequest,
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    findByDataSubject(tenantId, subjectId).removeAll;
+    findByDataSubject(tenantId, subjectId).each!(entity => remove(entity));
   }
   // #endregion ByDataSubject
 
@@ -44,6 +44,9 @@ class MemoryDestructionRequestRepository : TenantRepository!(DestructionRequest,
 
   DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
+  }
+  void removeByStatus(TenantId tenantId, DestructionStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity));
   }
   // #endregion ByStatus
 

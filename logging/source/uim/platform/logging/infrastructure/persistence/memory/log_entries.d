@@ -84,12 +84,18 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     findByCorrelation(tenantId, correlationId).each!(e => remove(e));
   }
 
+  size_t countBySearch(TenantId tenantId, string query) {
+    return search(tenantId, query).length;
+  }
   LogEntry[] search(TenantId tenantId, string query) {
     return findByTenant(tenantId).filter!(e => e.message.indexOf(query) >= 0).array;
   }
+  void removeBySearch(TenantId tenantId, string query) {
+    search(tenantId, query).each!(e => remove(e));
+  }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findByTenant(tenantId).filter!(e => e.timestamp >= beforeTimestamp).array;
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 
 }

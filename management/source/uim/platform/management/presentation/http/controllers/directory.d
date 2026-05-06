@@ -42,7 +42,7 @@ class DirectoryController : PlatformController {
       r.parentDirectoryId = j.getString("parentDirectoryId");
       r.displayName = j.getString("displayName");
       r.description = j.getString("description");
-      r.features = getStringArray(j, "features");
+      r.features = getStrings(j, "features");
       r.manageEntitlements = j.getBoolean("manageEntitlements");
       r.manageAuthorizations = j.getBoolean("manageAuthorizations");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));

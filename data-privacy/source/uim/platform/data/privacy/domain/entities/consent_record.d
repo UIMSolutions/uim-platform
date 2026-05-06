@@ -30,8 +30,8 @@ struct ConsentRecord {
   Json toJson() const {
     return entityToJson
       .set("dataSubjectId", dataSubjectId)
-      .set("purpose", purpose)
-      .set("categories", categories)
+      .set("purpose", purpose.to!string)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
       .set("status", status.to!string)
       .set("channel", channel)
       .set("consentText", consentText)

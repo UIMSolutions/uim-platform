@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class DataConnectionController : PlatformController {
-    private ManageDataConnectionsUseCase uc;
+    private ManageDataConnectionsUseCase usecase;
 
-    this(ManageDataConnectionsUseCase uc) {
-        this.uc = uc;
+    this(ManageDataConnectionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/build-apps/data-connections", &handleList);
         router.get("/api/v1/build-apps/data-connections/*", &handleGet);
         router.post("/api/v1/build-apps/data-connections", &handleCreate);
@@ -29,7 +30,7 @@ class DataConnectionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -47,9 +48,9 @@ class DataConnectionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(DataConnectionId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Data connection not found"); return; }
+            auto id = DataConnectionId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) { writeError(res, 404, "Data connection not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,9 +61,9 @@ class DataConnectionController : PlatformController {
         try {
             auto j = req.json;
             DataConnectionDTO dto;
-            dto.id = j.getString("id");
+            dto.dataConnectionId = DataConnectionId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.connectionType = j.getString("connectionType");
@@ -75,7 +76,7 @@ class DataConnectionController : PlatformController {
             dto.destinationName = j.getString("destinationName");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -96,14 +97,14 @@ class DataConnectionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataConnectionDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.dataConnectionId = DataConnectionId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.baseUrl = j.getString("baseUrl");
             dto.basePath = j.getString("basePath");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -122,8 +123,8 @@ class DataConnectionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(DataConnectionId(id));
+            auto id = DataConnectionId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Data connection deleted");

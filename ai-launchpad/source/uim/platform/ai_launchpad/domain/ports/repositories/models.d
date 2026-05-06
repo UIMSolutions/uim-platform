@@ -14,13 +14,13 @@ mixin(ShowModule!());
 @safe:
 
 interface IModelRepository {
-  bool existsById(ModelId id, ConnectionId connectionId);
-  Model findById(ModelId id, ConnectionId connectionId);
+  bool existsById(ConnectionId connectionId, ModelId id);
+  Model findById(ConnectionId connectionId, ModelId id);
   
   Model[] findByConnection(ConnectionId connectionId);
-  Model[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
+  Model[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId);
   Model[] findAll();
 
   void save(Model m);
-  void remove(ModelId id, ConnectionId connectionId);
+  void remove(ConnectionId connectionId, ModelId id);
 }

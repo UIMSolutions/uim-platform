@@ -162,7 +162,7 @@ class SiteController : PlatformController {
       return SiteSettings.init;
     auto s = *settingsJson;
     return SiteSettings(getString(s, "logoUrl"), getString(s, "faviconUrl"),
-      getString(s, "footerText"), getString(s, "copyrightText"), getString(s, "defaultLanguage"), getStringArray(s,
+      getString(s, "footerText"), getString(s, "copyrightText"), getString(s, "defaultLanguage"), getStrings(s,
         "supportedLanguages"), getBoolean(s, "showPersonalization", false), getBoolean(s,
         "showNotifications", false), getBoolean(s, "showSearch", true),
       getBoolean(s, "showUserActions", true),);

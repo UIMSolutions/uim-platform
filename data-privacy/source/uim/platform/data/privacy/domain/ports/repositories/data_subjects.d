@@ -15,9 +15,9 @@ mixin(ShowModule!());
 /// Port for persisting and querying data subjects.
 interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
 
-  bool existsByExternalId(string externaltenantId, id tenantId);
-  DataSubject findByExternalId(string externaltenantId, id tenantId);
-  void removeByExternalId(string externaltenantId, id tenantId);
+  bool existsByExternalId(TenantId tenantId, string externalId);
+  DataSubject findByExternalId(TenantId tenantId, string externalId);
+  void removeByExternalId(TenantId tenantId, string externalId);
   
   size_t countByType(TenantId tenantId, DataSubjectType subjectType);
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType);

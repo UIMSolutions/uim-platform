@@ -20,6 +20,7 @@ class ProjectMemberController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/build-apps/project-members", &handleList);
         router.get("/api/v1/build-apps/project-members/*", &handleGet);
         router.post("/api/v1/build-apps/project-members", &handleCreate);
@@ -46,9 +47,9 @@ class ProjectMemberController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ProjectMemberId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Project member not found"); return; }
+            auto id = ProjectMemberId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) { writeError(res, 404, "Project member not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,10 +60,10 @@ class ProjectMemberController : PlatformController {
         try {
             auto j = req.json;
             ProjectMemberDTO dto;
-            dto.id = j.getString("id");
+            dto.projectMemberId = ProjectMemberId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
-            dto.userId = j.getString("userId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
+            dto.userId = UserId(j.getString("userId"));
             dto.displayName = j.getString("displayName");
             dto.email = j.getString("email");
             dto.role = j.getString("role");
@@ -90,7 +91,7 @@ class ProjectMemberController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ProjectMemberDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.projectMemberId = ProjectMemberId(extractIdFromPath(path));
             dto.displayName = j.getString("displayName");
             dto.email = j.getString("email");
             dto.permissions = j.getString("permissions");
@@ -115,8 +116,8 @@ class ProjectMemberController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ProjectMemberId(id));
+            auto id = ProjectMemberId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Project member removed");

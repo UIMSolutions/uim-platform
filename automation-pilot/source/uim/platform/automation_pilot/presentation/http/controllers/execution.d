@@ -47,9 +47,9 @@ class ExecutionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = executions.getById(ExecutionId(id));
-            if (e.id.value.length == 0) { writeError(res, 404, "Execution not found"); return; }
+            auto id = ExecutionId(extractIdFromPath(path));
+            auto e = executions.getById(id);
+            if (e.isNull) { writeError(res, 404, "Execution not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -60,7 +60,7 @@ class ExecutionController : PlatformController {
         try {
             auto j = req.json;
             ExecutionDTO dto;
-            dto.id = j.getString("id");
+            dto.executionId = ExecutionId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.commandId = j.getString("commandId");
             dto.inputValues = j.getString("inputValues");
@@ -87,7 +87,7 @@ class ExecutionController : PlatformController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             ExecutionDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.executionId = ExecutionId(extractIdFromPath(path));
 
             auto result = executions.update(dto);
             if (result.success) {
@@ -108,8 +108,8 @@ class ExecutionController : PlatformController {
         try {
             import std.conv : to;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = executions.remove(ExecutionId(id));
+            auto id = ExecutionId(extractIdFromPath(path));
+            auto result = executions.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

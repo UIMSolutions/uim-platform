@@ -63,6 +63,10 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
     findBySubjectType(tenantId, subjectType).each!(entity => remove(entity));
   }
 
+  size_t countSpecialCategories(TenantId tenantId) {
+    return findSpecialCategories(tenantId).length;
+  }
+
   PersonalDataModel[] filterSpecialCategories(PersonalDataModel[] models) {
     return models.filter!(m => m.isSpecialCategory).array;
   }

@@ -52,7 +52,7 @@ class ExportController : PlatformController {
         jobRequest.format_ = ExportFormat.json;
 
       // Parse category filter
-      auto cats = getStringArray(j, "categories");
+      auto cats = getStrings(j, "categories");
       foreach (c; cats)
         jobRequest.categories ~= toAuditCategory(c);
 

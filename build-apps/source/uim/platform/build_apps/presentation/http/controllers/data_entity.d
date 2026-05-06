@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataEntityController : PlatformController {
-    private ManageDataEntitiesUseCase uc;
+    private ManageDataEntitiesUseCase usecase;
 
-    this(ManageDataEntitiesUseCase uc) {
-        this.uc = uc;
+    this(ManageDataEntitiesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class DataEntityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.dataEntityToJson()).array;
 
             auto resp = Json.emptyObject
@@ -49,9 +49,9 @@ class DataEntityController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(DataEntityId(id));
-            if (e.id.value.length == 0) {
+            auto id = DataEntityId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) {
                 writeError(res, 404, "Data entity not found");
                 return;
             }
@@ -65,9 +65,9 @@ class DataEntityController : PlatformController {
         try {
             auto j = req.json;
             DataEntityDTO dto;
-            dto.id = j.getString("id");
+            dto.dataEntityId = DataEntityId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.applicationId = j.getString("applicationId");
+            dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.fields = j.getString("fields");
@@ -78,7 +78,7 @@ class DataEntityController : PlatformController {
             dto.relations = j.getString("relations");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -100,13 +100,13 @@ class DataEntityController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataEntityDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.dataEntityId = DataEntityId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.fields = j.getString("fields");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -126,8 +126,8 @@ class DataEntityController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(DataEntityId(id));
+            auto id = DataEntityId(extractIdFromPath(path));
+            auto result = usecase.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Data entity deleted");

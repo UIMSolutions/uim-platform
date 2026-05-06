@@ -38,8 +38,8 @@ class ArchiveRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
-      r.categories = getStringArray(j, "categories");
+      r.targetSystems = getStrings(j, "targetSystems");
+      r.categories = getStrings(j, "categories").map!(c => c.to!PersonalDataCategory).array;
       r.archiveLocation = j.getString("archiveLocation");
       r.reason = j.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);
@@ -77,7 +77,7 @@ class ArchiveRequestController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -93,7 +93,7 @@ class ArchiveRequestController : PlatformController {
     try {
       auto j = req.json;
       UpdateArchiveStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseArchiveStatus(j.getString("status"));
 
@@ -112,27 +112,12 @@ class ArchiveRequestController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const ArchiveRequest e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("requestedBy", e.requestedBy)
-      .set("status", e.status.to!string)
-      .set("archiveLocation", e.archiveLocation)
-      .set("reason", e.reason)
-      .set("isTestMode", e.isTestMode)
-      .set("scheduledAt", e.scheduledAt)
-      .set("startedAt", e.startedAt)
-      .set("completedAt", e.completedAt);
   }
 
   private static ArchiveStatus parseArchiveStatus(string status) {

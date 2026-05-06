@@ -37,20 +37,20 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getById(ExecutionId id, ConnectionId connectionId) {
-    return repo.findById(id, connectionId);
+  Execution getById(ConnectionId connectionId, ExecutionId id) {
+    return repo.findById(connectionId, id);
   }
 
   Execution[] listByConnection(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  Execution[] listByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    return repo.findByScenario(scenarioId, connectionId);
+  Execution[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(connectionId, scenarioId);
   }
 
   CommandResult patch(PatchExecutionRequest r) {
-    auto e = repo.findById(r.executionId, r.connectionId);
+    auto e = repo.findById(r.connectionId, r.executionId);
     if (e.isNull) return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped") e.status = ExecutionStatus.stopped;
@@ -72,10 +72,10 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return results;
   }
 
-  CommandResult remove(ExecutionId id, ConnectionId connectionId) {
-    auto e = repo.findById(id, connectionId);
+  CommandResult remove(ConnectionId connectionId, ExecutionId id) {
+    auto e = repo.findById(connectionId, id);
     if (e.isNull) return CommandResult(false, "", "Execution not found");
-    repo.remove(id, connectionId);
+    repo.remove(connectionId, id);
     return CommandResult(true, id.value, "");
   }
 }

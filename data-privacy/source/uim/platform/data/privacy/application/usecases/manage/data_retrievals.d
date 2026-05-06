@@ -21,13 +21,13 @@ mixin(ShowModule!());
 @safe:
 class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   private DataRetrievalRequestRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private DataSubjectRepository dataSubjects;
   private PersonalDataModelRepository modelRepo;
 
-  this(DataRetrievalRequestRepository repo, DataSubjectRepository subjectRepo,
+  this(DataRetrievalRequestRepository repo, DataSubjectRepository dataSubjects,
     PersonalDataModelRepository modelRepo) {
     this.repo = repo;
-    this.subjectRepo = subjectRepo;
+    this.dataSubjects = dataSubjects;
     this.modelRepo = modelRepo;
   }
 
@@ -37,7 +37,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -118,6 +118,6 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data retrieval request not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, ""); 
+    return CommandResult(true, request.id.value, ""); 
   }
 }

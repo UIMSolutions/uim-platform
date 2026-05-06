@@ -16,6 +16,13 @@ struct AnonymizationRule {
   PersonalDataCategory category;
   AnonymizationMethod method;
   string parameters; // method-specific params, e.g. mask char, generalization level
+
+  Json toJson() const {
+    return Json()
+      .set("category", category.to!string)
+      .set("method", method.to!string)
+      .set("parameters", parameters);
+  }
 }
 
 /// Configuration for data anonymization/pseudonymization.
@@ -30,14 +37,12 @@ struct AnonymizationConfig {
   string[] targetSystems;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("status", status.to!string)
-      .set("rules", rules)
+      .set("rules", rules.map!(r => r.toJson()).array.toJson)
       .set("isReversible", isReversible)
-      .set("targetSystems", targetSystems);
-
-    return j;
+      .set("targetSystems", targetSystems.toJson);
   }
 }

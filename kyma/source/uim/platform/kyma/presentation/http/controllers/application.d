@@ -49,7 +49,7 @@ class ApplicationController : PlatformController {
         description = j.getString("description");
         registrationType = j.getString("registrationType");
         connectorUrl = j.getString("connectorUrl");
-        boundNamespaces = getStringArray(j, "boundNamespaces");
+        boundNamespaces = getStrings(j, "boundNamespaces");
         labels = jsonStrMap(j, "labels");
         createdBy = UserId(req.headers.get("X-User-Id", ""));
         // Parse APIs
@@ -115,7 +115,7 @@ class ApplicationController : PlatformController {
       UpdateApplicationRequest r;
       r.description = j.getString("description");
       r.connectorUrl = j.getString("connectorUrl");
-      r.boundNamespaces = getStringArray(j, "boundNamespaces");
+      r.boundNamespaces = getStrings(j, "boundNamespaces");
       r.labels = jsonStrMap(j, "labels");
       r.apis = j.toApis;
       r.events = parseEvents(j);

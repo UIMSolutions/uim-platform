@@ -41,9 +41,9 @@ class DeletionController : PlatformController {
       auto j = req.json;
       CreateDeletionRequest r;
       r.tenantId = req.getTenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
@@ -69,7 +69,7 @@ class DeletionController : PlatformController {
       if (statusParam.length > 0)
         items = uc.listByStatus(tenantId, parseDeletionStatus(statusParam));
       else if (subjectParam.length > 0)
-        items = uc.listByDataSubject(tenantId, subjectParam);
+        items = uc.listByDataSubject(tenantId, DataSubjectId(subjectParam));
       else
         items = uc.listRequests(tenantId);
 
@@ -87,7 +87,7 @@ class DeletionController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -103,7 +103,7 @@ class DeletionController : PlatformController {
     try {
       auto j = req.json;
       UpdateDeletionStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = DeletionRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseDeletionStatus(j.getString("status"));
       r.blockerReason = j.getString("blockerReason");
@@ -123,7 +123,7 @@ class DeletionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
@@ -132,8 +132,8 @@ class DeletionController : PlatformController {
   }
 
   private static Json serialize(const DeletionRequest e) {
-    auto systems = e.targetSystems.map!(s => Json(s)).array;
-    auto cats = e.categories.map!(c => Json(c.to!string)).array;
+    auto systems = e.targetSystems.map!(s => Json(s)).array.toJson;
+    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

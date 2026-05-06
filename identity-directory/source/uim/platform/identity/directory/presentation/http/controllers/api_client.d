@@ -33,7 +33,7 @@ class ApiClientController : PlatformController {
     try {
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("name"), j.getString("description"), getStringArray(j,
+          j.getString("name"), j.getString("description"), getStrings(j,
             "scopes"), jsonLong(j, "expiresAt"),);
 
       auto result = useCase.createClient(createReq);

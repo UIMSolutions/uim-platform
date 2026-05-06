@@ -44,6 +44,6 @@ struct Technician {
         .set("availabilityEnd", availabilityEnd)
         .set("maxWorkload", maxWorkload)
         .set("currentWorkload", currentWorkload)
-        .set("travelRadius", travelRadius)
+        .set("travelRadius", travelRadius);
     }
 }

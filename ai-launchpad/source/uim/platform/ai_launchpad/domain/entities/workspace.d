@@ -21,12 +21,10 @@ struct Workspace {
   int connectionCount;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("status", status)
       .set("connectionCount", connectionCount);
-
-    return j;
   }
 }

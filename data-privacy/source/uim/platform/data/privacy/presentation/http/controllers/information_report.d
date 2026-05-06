@@ -36,11 +36,11 @@ class InformationReportController : PlatformController {
       auto j = req.json;
       CreateInformationReportRequest r;
       r.tenantId = req.getTenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.requestedBy = UserId(j.getString("requestedBy"));
       r.format = j.getString("format");
-      r.targetSystems = getStringArray(j, "targetSystems");
-      r.categories = getStringArray(j, "categories");
+      r.targetSystems = getStrings(j, "targetSystems");
+      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array;
       r.reason = j.getString("reason");
 
       auto result = uc.createReport(r);
@@ -75,7 +75,7 @@ class InformationReportController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = InformationReportId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getReport(tenantId, id);
       if (entry.isNull) {
@@ -94,7 +94,7 @@ class InformationReportController : PlatformController {
     try {
       auto j = req.json;
       UpdateInformationReportStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = InformationReportId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseReportStatus(j.getString("status"));
       r.downloadUrl = j.getString("downloadUrl");
@@ -114,7 +114,7 @@ class InformationReportController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = InformationReportId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

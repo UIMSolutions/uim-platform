@@ -28,8 +28,8 @@ struct RetentionRule {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("purpose", purpose)
-      .set("categories", categories)
+      .set("purpose", purpose.to!string)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
       .set("retentionDays", retentionDays)
       .set("legalReference", legalReference)
       .set("status", status.to!string)

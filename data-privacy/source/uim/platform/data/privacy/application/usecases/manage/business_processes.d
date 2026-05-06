@@ -38,10 +38,10 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.updatedAt = now;
 
     repo.save(p);
-    return CommandResult(p.id.value, "");
+    return CommandResult(true, p.id.value, "");
   }
 
-  BusinessProcess getProcess(BusinessProcessId tenantId, id tenantId) {
+  BusinessProcess getProcess(TenantId tenantId, BusinessProcessId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -50,7 +50,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {
-    auto p = repo.findById(req.id, req.tenantId);
+    auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
       return CommandResult(false, "", "Business process not found");
 
@@ -62,10 +62,10 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.updatedAt = Clock.currStdTime();
 
     repo.update(p);
-    return CommandResult(p.id.value, "");
+    return CommandResult(true, p.id.value, "");
   }
 
-  void deleteProcess(BusinessProcessId tenantId, id tenantId) {
+  void deleteProcess(TenantId tenantId, BusinessProcessId id) {
     repo.removeById(tenantId, id);
   }
 }

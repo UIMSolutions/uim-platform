@@ -65,7 +65,7 @@ class ExecutionController : PlatformController {
 
       typeof(uc.listByConnection(connectionId)) executions;
       if (scenarioId.length > 0)
-        executions = uc.listByScenario(scenarioId, connectionId);
+        executions = uc.listByScenario(connectionId, scenarioId);
       else
         executions = uc.listByConnection(connectionId);
 
@@ -86,15 +86,15 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      if (!uc.existsById(id, connectionId)) {
+      if (!uc.existsById(connectionId, id)) {
         writeError(res, 404, "Execution not found");
         return;
       }
 
-      auto ex = uc.getById(id, connectionId);
+      auto ex = uc.getById(connectionId, id);
       auto resp = ex.toJson
         .set("message", "Execution retrieved successfully");
 
@@ -108,7 +108,7 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -139,7 +139,7 @@ class ExecutionController : PlatformController {
 
       BulkPatchExecutionRequest r;
       r.connectionId = connectionId;
-      r.executionIds = getStringArray(j, "executionIds");
+      r.executionIds = getStrings(j, "executionIds");
       r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);
@@ -155,7 +155,8 @@ class ExecutionController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-        .set("results", jarr);
+        .set("results", jarr)
+          .set("message", "Bulk update completed");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -167,12 +168,15 @@ class ExecutionController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = uc.remove(connectionId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Execution removed successfully");
+
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }

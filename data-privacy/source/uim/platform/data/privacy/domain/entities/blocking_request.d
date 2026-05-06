@@ -26,16 +26,22 @@ struct BlockingRequest {
   long releasedAt;
 
   Json toJson() const {
+    auto systems = targetSystems.map!(s => Json(s)).array.toJson;
+
+    auto cats = categories.map!(c => Json(c.to!string)).array.toJson;
+
     return entityToJson
       .set("dataSubjectId", dataSubjectId)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string)
-      .set("targetSystems", targetSystems)
-      .set("categories", categories.map!(c => c.to!string))
+      .set("targetSystems", targetSystems.toJson)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
       .set("reason", reason)
       .set("requestedAt", requestedAt)
       .set("activatedAt", activatedAt)
-      .set("releasedAt", releasedAt);
+      .set("releasedAt", releasedAt)
+      .set("targetSystems", systems)
+      .set("categories", cats);
 
   }
 }

@@ -87,7 +87,7 @@ class DataSubjectController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getSubject(tenantId, id);
       if (entry.isNull) {
@@ -104,7 +104,7 @@ class DataSubjectController : PlatformController {
     try {
       auto j = req.json;
       UpdateDataSubjectRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = DataSubjectId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
@@ -130,7 +130,7 @@ class DataSubjectController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
@@ -155,7 +155,7 @@ class DataSubjectController : PlatformController {
   }
 
   private static DataSubjectType parseSubjectType(string type) {
-    switch (s) {
+    switch (type) {
     case "employee":
       return DataSubjectType.employee;
     case "customer":

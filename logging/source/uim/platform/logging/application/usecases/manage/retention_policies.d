@@ -32,7 +32,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;
-    p.dataType = parseDataType(req.dataType);
+    p.dataType = req.dataType.to!DataType;
     p.retentionDays = (req.retentionDays > 0) ? req.retentionDays : 30;
     p.maxSizeGB = (req.maxSizeGB > 0) ? req.maxSizeGB : 10.0;
     p.isDefault = req.isDefault;
@@ -75,24 +75,12 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  RetentionPolicy getById(string id) {
-    return getById(RetentionPolicyId(id));
-  }
-
   RetentionPolicy getById(RetentionPolicyId id) {
     return repo.findById(id);
   }
 
   RetentionPolicy[] list(TenantId tenantId) {
-    return list(TenantId(tenantId));
-  }
-
-  RetentionPolicy[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
-  }
-
-  CommandResult remove(string id) {
-    return remove(RetentionPolicyId(id));
   }
 
   CommandResult remove(RetentionPolicyId id) {

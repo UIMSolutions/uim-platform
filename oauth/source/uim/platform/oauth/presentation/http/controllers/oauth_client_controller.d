@@ -52,7 +52,7 @@ class OAuthClientController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(OAuthClientId(id));
-            if (e.id.value.length == 0) {
+            if (e.isNull) {
                 writeError(res, 404, "OAuth client not found");
                 return;
             }

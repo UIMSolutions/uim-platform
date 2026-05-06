@@ -36,9 +36,9 @@ class CorrectionRequestController : PlatformController {
       auto j = req.json;
       CreateCorrectionRequest r;
       r.tenantId = req.getTenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.targetSystems = getStrings(j, "targetSystems");
       r.fieldName = j.getString("fieldName");
       r.currentValue = j.getString("currentValue");
       r.correctedValue = j.getString("correctedValue");
@@ -76,7 +76,7 @@ class CorrectionRequestController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -92,7 +92,7 @@ class CorrectionRequestController : PlatformController {
     try {
       auto j = req.json;
       UpdateCorrectionStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
       r.status = parseCorrectionStatus(j.getString("status"));
 
@@ -111,7 +111,7 @@ class CorrectionRequestController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

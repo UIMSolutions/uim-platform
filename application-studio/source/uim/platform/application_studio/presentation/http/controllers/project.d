@@ -49,9 +49,9 @@ class ProjectController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(ProjectId(id));
-            if (e.id.value.length == 0) {
+            auto id = ProjectId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) {
                 writeError(res, 404, "Project not found");
                 return;
             }
@@ -65,7 +65,7 @@ class ProjectController : PlatformController {
         try {
             auto j = req.json;
             ProjectDTO dto;
-            dto.id = j.getString("id");
+            dto.projectId = ProjectId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.devSpaceId = j.getString("devSpaceId");
             dto.name = j.getString("name");
@@ -99,7 +99,7 @@ class ProjectController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ProjectDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.projectId = ProjectId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.gitRepositoryUrl = j.getString("gitRepositoryUrl");
@@ -126,8 +126,8 @@ class ProjectController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(ProjectId(id));
+            auto id = ProjectId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Project deleted");

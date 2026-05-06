@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   private DestructionRequestRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private DataSubjectRepository dataSubjects;
 
-  this(DestructionRequestRepository repo, DataSubjectRepository subjectRepo) {
+  this(DestructionRequestRepository repo, DataSubjectRepository dataSubjects) {
     this.repo = repo;
-    this.subjectRepo = subjectRepo;
+    this.dataSubjects = dataSubjects;
   }
 
   CommandResult createRequest(CreateDestructionRequest req) {
@@ -25,7 +25,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -59,27 +59,27 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateDestructionStatusRequest req) {
-    auto r = repo.findById(req.tenantId, req.id);
-    if (r.isNull)
+    auto request = repo.findById(req.tenantId, req.id);
+    if (request.isNull)
       return CommandResult(false, "", "Destruction request not found");
 
-    r.status = req.status;
+    request.status = req.status;
     auto now = Clock.currStdTime();
     if (req.status == DestructionStatus.inProgress)
-      r.startedAt = now;
+      request.startedAt = now;
     if (req.status == DestructionStatus.completed)
-      r.completedAt = now;
+      request.completedAt = now;
 
-    repo.update(r);
-    return CommandResult(true, r.id.value, "");
+    repo.update(request);
+    return CommandResult(true, request.id.value, "");
   }
 
   CommandResult deleteRequest(TenantId tenantId, DestructionRequestId id) {
-    auto r = repo.findById(tenantId, id);
-    if (r.isNull)
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
       return CommandResult(false, "", "Destruction request not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, request.id.value, "");
   }
 }

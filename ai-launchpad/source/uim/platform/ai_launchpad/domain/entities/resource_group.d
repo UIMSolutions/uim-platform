@@ -15,13 +15,25 @@ mixin(ShowModule!());
 struct LabelPair {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct ResourceGroup {
-  ResourceGroupId id;
+  mixin IdEntity!ResourceGroupId;
+
   ConnectionId connectionId;
   LabelPair[] labels;
   string status;
-  long createdAt;
-  long updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("connection_id", connectionId)
+      .set("labels", labels.map!(l => l.toJson()))
+      .set("status", status);
+  }
 }

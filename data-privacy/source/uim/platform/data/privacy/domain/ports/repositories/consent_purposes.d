@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.ports.repositories.consent_purposes;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.consent_purpose;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.consent_purpose;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting and querying consent purpose configurations.
 interface ConsentPurposeRepository : ITenantRepository!(ConsentPurpose, ConsentPurposeId) {
   

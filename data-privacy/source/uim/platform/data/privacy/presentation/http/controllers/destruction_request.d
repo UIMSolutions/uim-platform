@@ -36,11 +36,11 @@ class DestructionRequestController : PlatformController {
       auto j = req.json;
       CreateDestructionRequest r;
       r.tenantId = req.getTenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStringArray(j, "targetSystems");
-      r.archiveRequestId = j.getString("archiveRequestId");
-      r.blockingRequestId = j.getString("blockingRequestId");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.targetSystems = getStrings(j, "targetSystems");
+      r.archiveRequestId = ArchiveRequestId(j.getString("archiveRequestId"));
+      r.blockingRequestId = BlockingRequestId(j.getString("blockingRequestId"));
       r.reason = j.getString("reason");
       r.scheduledAt = jsonLong(j, "scheduledAt");
 
@@ -75,7 +75,7 @@ class DestructionRequestController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -110,7 +110,7 @@ class DestructionRequestController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

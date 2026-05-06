@@ -15,6 +15,7 @@ mixin(ShowModule!());
 /// Combines dimensions and measures — similar to SAC "Models".
 class Dataset {
   EntityId id;
+  
   string name;
   string description;
   EntityId dataSourceId;

@@ -37,10 +37,7 @@ class ConfigurationController : PlatformController {
 
       CreateConfigurationRequest r;
       r.connectionId = connectionId;
-      r.scenarioId = j.getString("scenarioId");
-      r.executableId = j.getString("executableId");
-      r.name = j.getString("name");
-      r.parameterValues = jsonPairArray(j, "parameterValues");
+      r.scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 
       auto result = configurations.create(r);
@@ -93,7 +90,9 @@ class ConfigurationController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(c.toJson, 200);
+      auto resp = c.toJson.set("message", "Configuration retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -108,7 +107,10 @@ class ConfigurationController : PlatformController {
 
       auto result = configurations.remove(connectionId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Configuration deleted");
+
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }

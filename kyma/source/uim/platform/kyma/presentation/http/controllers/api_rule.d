@@ -53,9 +53,9 @@ class ApiRuleController : PlatformController {
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = j.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = getStringArray(j, "corsAllowOrigins");
-      r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
-      r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
+      r.corsAllowOrigins = getStrings(j, "corsAllowOrigins");
+      r.corsAllowMethods = getStrings(j, "corsAllowMethods");
+      r.corsAllowHeaders = getStrings(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -131,9 +131,9 @@ class ApiRuleController : PlatformController {
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = j.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = getStringArray(j, "corsAllowOrigins");
-      r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
-      r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
+      r.corsAllowOrigins = getStrings(j, "corsAllowOrigins");
+      r.corsAllowMethods = getStrings(j, "corsAllowMethods");
+      r.corsAllowHeaders = getStrings(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
       r.rules = j.toRuleEntries;
 

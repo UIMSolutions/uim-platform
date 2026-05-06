@@ -51,7 +51,7 @@ class InstanceController : PlatformController {
       r.enableDocStore = j.getBoolean("enableDocStore");
       r.enableDataLake = j.getBoolean("enableDataLake");
       r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
-      r.whitelistedIps = getStringArray(j, "whitelistedIps");
+      r.whitelistedIps = getStrings(j, "whitelistedIps");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = uc.create(r);
@@ -153,7 +153,7 @@ class InstanceController : PlatformController {
       r.enableScriptServer = j.getBoolean("enableScriptServer");
       r.enableDocStore = j.getBoolean("enableDocStore");
       r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
-      r.whitelistedIps = getStringArray(j, "whitelistedIps");
+      r.whitelistedIps = getStrings(j, "whitelistedIps");
 
       auto result = uc.update(r);
       if (result.success) {

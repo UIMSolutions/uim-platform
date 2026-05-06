@@ -143,7 +143,7 @@ class FilterRuleController : PlatformController {
       c.fieldName = cj.getString("fieldName");
       c.operator = cj.getString("operator");
       c.value = cj.getString("value");
-      c.valueList = getStringArray(cj, "valueList");
+      c.valueList = getStrings(cj, "valueList");
       c.lowerBound = cj.getString("lowerBound");
       c.upperBound = cj.getString("upperBound");
       conditions ~= c;

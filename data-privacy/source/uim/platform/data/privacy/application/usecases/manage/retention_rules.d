@@ -48,10 +48,10 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = now;
 
     repo.save(rule);
-    return CommandResult(rule.id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  RetentionRule getRule(RetentionRuleId tenantId, id tenantId) {
+  RetentionRule getRule(TenantId tenantId, RetentionRuleId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -64,7 +64,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRule(UpdateRetentionRuleRequest req) {
-    auto rule = repo.findById(req.id, req.tenantId);
+    auto rule = repo.findById(req.tenantId, req.id);
     if (rule.isNull)
       return CommandResult(false, "", "Retention rule not found");
 
@@ -82,10 +82,10 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = Clock.currStdTime();
 
     repo.update(rule);
-    return CommandResult(rule.id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  void deleteRule(RetentionRuleId tenantId, id tenantId) {
+  void deleteRule(TenantId tenantId, RetentionRuleId id) {
     repo.removeById(tenantId, id);
   }
 }
