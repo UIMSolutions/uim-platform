@@ -10,9 +10,9 @@ import uim.platform.mobile.domain.types;
 
 interface UserSessionRepository : ITenantRepository!(UserSession, UserSessionId) {
 
-  size_t countByUser(string userId);
-  UserSession[] findByUser(string userId);
-  void removeByUser(string userId);
+  size_t countByUser(UserId userId);
+  UserSession[] findByUser(UserId userId);
+  void removeByUser(UserId userId);
 
   size_t countByDevice(DeviceRegistrationId deviceId);
   UserSession[] findByDevice(DeviceRegistrationId deviceId);

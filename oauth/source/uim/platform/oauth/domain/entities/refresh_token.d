@@ -17,7 +17,7 @@ struct RefreshToken {
     string tokenValue;
     TokenStatus status = TokenStatus.active;
     string clientId;
-    string userId;
+    UserId userId;
     string scopes;
     string accessTokenId;
     long expiresAt;

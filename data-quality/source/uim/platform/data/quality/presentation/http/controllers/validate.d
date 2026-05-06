@@ -57,14 +57,12 @@ class ValidateController : PlatformController {
       r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
 
-      if ("records" in j && j["records"].isArray) {
-        foreach (item; j["records"].toArray) {
-          if (item.isObject) {
-            RecordFieldValues rfv;
-            rfv.recordId = item.getString("recordId");
-            rfv.fieldValues = jsonStrMap(item, "fieldValues");
-            r.records ~= rfv;
-          }
+      foreach (item; j.getArray("records")) {
+        if (item.isObject) {
+          RecordFieldValues rfv;
+          rfv.recordId = item.getString("recordId");
+          rfv.fieldValues = jsonStrMap(item, "fieldValues");
+          r.records ~= rfv;
         }
       }
 

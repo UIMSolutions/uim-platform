@@ -77,7 +77,8 @@ class ChannelController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", channels.length);
+        .set("totalCount", channels.length)
+        .set("message", "Notification channels retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -89,7 +90,7 @@ class ChannelController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
       auto ch = uc.getById(id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
@@ -141,7 +142,7 @@ class ChannelController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

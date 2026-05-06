@@ -30,8 +30,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Channel name is required");
 
     NotificationChannel channel;
-    channel.id = randomUUID();
-    channel.tenantId = req.tenantId;
+    channel.initEntity(req.tenantId);
     channel.name = req.name;
     channel.description = req.description;
     channel.channelType = req.channelType.to!ChannelType;
@@ -44,7 +43,6 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     channel.slackWebhookUrl = req.slackWebhookUrl;
     channel.slackChannel = req.slackChannel;
     channel.createdBy = req.createdBy;
-    channel.createdAt = clockSeconds();
 
     repo.save(channel);
     return CommandResult(true, channel.id.value, "");
@@ -64,7 +62,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       updated.description = req.description;
     if (req.state.length > 0)
-      updated.state = parseChannelState(req.state);
+      updated.state = req.state.to!ChannelState;
     if (req.emailRecipients.length > 0)
       updated.emailRecipients = cast(string[]) req.emailRecipients;
     if (req.emailSubjectPrefix.length > 0)
@@ -73,8 +71,8 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
       updated.webhookUrl = req.webhookUrl;
     if (req.webhookSecret.length > 0)
       updated.webhookSecret = req.webhookSecret;
-    if (req.webhookMethod.length > 0)
-      updated.webhookMethod = req.webhookMethod;
+    // TODO: if (req.webhookMethod.length > 0)
+    //   updated.webhookMethod = req.webhookMethod;
     if (req.slackWebhookUrl.length > 0)
       updated.slackWebhookUrl = req.slackWebhookUrl;
     if (req.slackChannel.length > 0)

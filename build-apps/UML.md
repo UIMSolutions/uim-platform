@@ -145,7 +145,7 @@ classDiagram
         +ProjectMemberId id
         +TenantId tenantId
         +ApplicationId applicationId
-        +string userId
+        +UserId userId
         +string displayName
         +string email
         +MemberRole role

@@ -61,7 +61,7 @@ struct Destination {
   FragmentId[] fragmentIds;
 
   Json toJson() const {
-    auto fragArr = d.fragmentIds.map!(fid => fid.toJson).array.toJson;
+    auto fragArr = fragmentIds.map!(fid => fid.toJson).array.toJson;
 
     auto propsJson = Json.emptyObject;
     foreach (k, v; properties)

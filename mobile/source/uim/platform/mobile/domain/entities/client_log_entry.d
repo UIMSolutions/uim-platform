@@ -12,7 +12,7 @@ struct ClientLogEntry {
 
   MobileAppId appId;
   DeviceRegistrationId deviceId;
-  string userId;
+  UserId userId;
   LogLevel level;
   LogSource source;
   string message;

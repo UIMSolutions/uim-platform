@@ -36,13 +36,13 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.name = req.name;
     rule.description = req.description;
     rule.query = req.query;
-    rule.condition = parseCondition(req.condition);
+    rule.condition = req.condition.to!AlertCondition;
     rule.field = req.field;
     rule.pattern = req.pattern;
     rule.thresholdValue = req.thresholdValue;
-    rule.thresholdOperator = parseOperator(req.thresholdOperator);
+    rule.thresholdOperator = req.thresholdOperator.to!ThresholdOperator;
     rule.evaluationWindowSeconds = (req.evaluationWindowSeconds > 0) ? req.evaluationWindowSeconds : 300;
-    rule.severity = parseSeverity(req.severity);
+    rule.severity = req.severity.to!AlertSeverity;
     rule.channelIds = cast(NotificationChannelId[]) req.channelIds;
     rule.isEnabled = true;
     rule.createdBy = req.createdBy;

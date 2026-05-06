@@ -15,7 +15,7 @@ struct ProjectMember {
     mixin TenantEntity!ProjectMemberId;
     
     ApplicationId applicationId;
-    string userId;
+    UserId userId;
     string displayName;
     string email;
     MemberRole role = MemberRole.viewer;

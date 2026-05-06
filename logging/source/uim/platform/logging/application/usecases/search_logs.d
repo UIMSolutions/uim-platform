@@ -25,7 +25,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
   LogEntry[] search(SearchLogsRequest req) {
     // Route to the most specific query available
     if (req.traceId.length > 0)
-      return logRepo.findByTraceId(req.tenantId, req.traceId);
+      return logRepo.findByTrace(req.tenantId, req.traceId);
 
     if (req.correlationId.length > 0)
       return logRepo.findByCorrelation(req.tenantId, req.correlationId);

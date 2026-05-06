@@ -91,7 +91,7 @@ class AlertRuleController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       if (!usecase.hasRule(id)) {
         writeError(res, 404, "Alert rule not found");
         return;
@@ -117,7 +117,7 @@ class AlertRuleController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateAlertRuleRequest r;
       r.description = j.getString("description");
@@ -150,7 +150,7 @@ class AlertRuleController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       usecase.removeRule(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

@@ -18,8 +18,8 @@ interface DeviceRegistrationRepository : ITenantRepository!(DeviceRegistration, 
   DeviceRegistration[] findByApp(MobileAppId appId);
   void removeByApp(MobileAppId appId);
 
-  size_t countByUser(string userId);
-  DeviceRegistration[] findByUser(string userId);
-  void removeByUser(string userId);
+  size_t countByUser(UserId userId);
+  DeviceRegistration[] findByUser(UserId userId);
+  void removeByUser(UserId userId);
 
 }

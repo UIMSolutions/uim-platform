@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.feature_restriction;
 
 struct FeatureEvaluationService {
   // Evaluate whether a feature is enabled for a given user/device
-  static bool isFeatureEnabled(FeatureRestriction restriction, string userId, string deviceId) {
+  static bool isFeatureEnabled(FeatureRestriction restriction, UserId userId, string deviceId) {
     if (!restriction.enabled)
       return false;
 
@@ -27,7 +27,7 @@ struct FeatureEvaluationService {
   }
 
   // Percentage-based evaluation using a hash of the user ID
-  private static bool evaluatePercentage(int percentage, string userId) {
+  private static bool evaluatePercentage(int percentage, UserId userId) {
     if (percentage >= 100)
       return true;
     if (percentage <= 0)
@@ -42,7 +42,7 @@ struct FeatureEvaluationService {
   }
 
   // Check if user or device is in whitelist
-  private static bool isInWhitelist(string[] whitelist, string userId, string deviceId) {
+  private static bool isInWhitelist(string[] whitelist, UserId userId, string deviceId) {
     foreach (entry; whitelist) {
       if (entry == userId || entry == deviceId)
         return true;

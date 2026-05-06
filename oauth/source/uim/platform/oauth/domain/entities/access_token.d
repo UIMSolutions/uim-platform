@@ -18,7 +18,7 @@ struct AccessToken {
     TokenType tokenType = TokenType.bearer;
     TokenStatus status = TokenStatus.active;
     string clientId;
-    string userId;
+    UserId userId;
     string scopes;
     long expiresAt;
     string issuedAt;

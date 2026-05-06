@@ -4,6 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.application.dto;
+import uim.platform.keystore;
+
+mixin(ShowModule!());
+
+@safe:
 
 // ---------------------------------------------------------------------------
 // Shared result type

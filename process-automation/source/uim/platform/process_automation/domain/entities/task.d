@@ -9,7 +9,7 @@ import uim.platform.process_automation.domain.types;
 
 struct TaskComment {
     TaskCommentId id;
-    string userId;
+    UserId userId;
     string text;
     long createdAt;
 }

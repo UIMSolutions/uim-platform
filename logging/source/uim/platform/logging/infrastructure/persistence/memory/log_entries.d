@@ -58,29 +58,29 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     findByTimeRange(tenantId, startTime, endTime).each!(e => remove(e));
   }
 
-  size_t countByTraceId(TenantId tenantId, TraceId traceId) {
-    return findByTraceId(tenantId, traceId).length;
+  size_t countByTrace(TenantId tenantId, TraceId traceId) {
+    return findByTrace(tenantId, traceId).length;
   }
-  LogEntry[] filterByTraceId(LogEntry[] entries, TraceId traceId) {
+  LogEntry[] filterByTrace(LogEntry[] entries, TraceId traceId) {
     return entries.filter!(e => e.traceId == traceId).array;
   }
-  LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId) {
-    return filterByTraceId(findByTenant(tenantId), traceId);
+  LogEntry[] findByTrace(TenantId tenantId, TraceId traceId) {
+    return filterByTrace(findByTenant(tenantId), traceId);
   }
-  void removeByTraceId(TenantId tenantId, TraceId traceId) {
-    findByTraceId(tenantId, traceId).each!(e => remove(e));
+  void removeByTrace(TenantId tenantId, TraceId traceId) {
+    findByTrace(tenantId, traceId).each!(e => remove(e));
   }
 
-  size_t countByCorrelationId(TenantId tenantId, string correlationId) {
+  size_t countByCorrelation(TenantId tenantId, string correlationId) {
     return findByCorrelation(tenantId, correlationId).length;
   }
-  LogEntry[] filterByCorrelationId(LogEntry[] entries, string correlationId) {
+  LogEntry[] filterByCorrelation(LogEntry[] entries, string correlationId) {
     return entries.filter!(e => e.correlationId == correlationId).array;
   }
   LogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
-    return filterByCorrelationId(findByTenant(tenantId), correlationId);
+    return filterByCorrelation(findByTenant(tenantId), correlationId);
   }
-  void removeByCorrelationId(TenantId tenantId, string correlationId) {
+  void removeByCorrelation(TenantId tenantId, string correlationId) {
     findByCorrelation(tenantId, correlationId).each!(e => remove(e));
   }
 

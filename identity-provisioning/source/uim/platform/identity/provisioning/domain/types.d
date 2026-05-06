@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 // --- Type Aliases ---
 struct SourceSystemId {
   string value;

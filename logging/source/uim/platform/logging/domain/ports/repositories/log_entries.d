@@ -30,9 +30,9 @@ interface LogEntryRepository : ITenantRepository!(LogEntry, LogEntryId) {
   LogEntry[] search(TenantId tenantId, string query);
   void removeBySearch(TenantId tenantId, string query);
 
-  size_t countByTraceId(TenantId tenantId, TraceId traceId);
-  LogEntry[] findByTraceId(TenantId tenantId, TraceId traceId);
-  void removeByTraceId(TenantId tenantId, TraceId traceId);
+  size_t countByTrace(TenantId tenantId, TraceId traceId);
+  LogEntry[] findByTrace(TenantId tenantId, TraceId traceId);
+  void removeByTrace(TenantId tenantId, TraceId traceId);
 
   size_t countByCorrelation(TenantId tenantId, string correlationId);
   LogEntry[] findByCorrelation(TenantId tenantId, string correlationId);

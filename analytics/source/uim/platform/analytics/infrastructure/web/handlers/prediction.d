@@ -41,10 +41,7 @@ class PredictionHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      string[] features;
-      if ("featureColumns" in json) {
-        features = json["featureColumns"].toArray.map!(f => f.get!string).array;
-      }
+      string[] features = json.getArray("featureColumns").map!(f => f.get!string).array;
       auto cmd = CreatePredictionRequest(json.getString("name"), json.getString("description"),
           json.getString("datasetId"), json.getString("predictionType"),
           json.getString("targetColumn"), features, json.getString("userId"));

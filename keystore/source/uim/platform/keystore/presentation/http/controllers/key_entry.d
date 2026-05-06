@@ -7,7 +7,10 @@ module uim.platform.keystore.presentation.http.controllers.key_entry;
 
 import uim.platform.keystore;
 
+mixin(ShowModule!());
+
 @safe:
+
 
 class KeyEntryController : PlatformController {
   private ManageKeyEntriesUseCase uc;

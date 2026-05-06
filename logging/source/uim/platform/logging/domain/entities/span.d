@@ -17,10 +17,14 @@ struct SpanEvent {
   string[string] attributes;
 
   Json toJson() const {
+    auto jAttrs = Json.emptyObject;
+    foreach (k, v; attributes)
+      jAttrs.set(k, v); 
+
     return Json.emptyObject
       .set("name", name)
       .set("timestamp", timestamp)
-      .set("attributes", attributes);
+      .set("attributes", jAttrs);
   }
 }
 

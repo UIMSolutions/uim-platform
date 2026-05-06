@@ -14,13 +14,13 @@ import std.array : array;
 
 class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId), UserSessionRepository {
   
-  size_t countByUser(string userId) {
+  size_t countByUser(UserId userId) {
     return findByUser(userId).length;
   }
-  UserSession[] findByUser(string userId) {
+  UserSession[] findByUser(UserId userId) {
     return findAll().filter!(s => s.userId == userId).array;
   }
-  void removeByUser(string userId) {
+  void removeByUser(UserId userId) {
     findByUser(userId).each!(s => store.remove(s));
   }
 

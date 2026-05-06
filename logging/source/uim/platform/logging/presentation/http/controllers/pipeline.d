@@ -6,7 +6,7 @@
 module uim.platform.logging.presentation.http.controllers.pipeline;
 
 // import uim.platform.logging.application.usecases.manage.pipelines;
-  // import uim.platform.logging.application.dto;
+// import uim.platform.logging.application.dto;
 
 import uim.platform.logging;
 
@@ -43,22 +43,19 @@ class PipelineController : PlatformController {
       r.targetStreamId = j.getString("targetStreamId");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto processorsVal = "processors" in j;
-      if (processorsVal !is null && (processorsVal).isArray) {
-        foreach (pj; *processorsVal) {
-          ProcessorDTO p;
-          p.type = getString(pj, "type");
-          p.name = getString(pj, "name");
-          p.config = getString(pj, "config");
-          p.order_ = jsonInt(pj, "order");
-          r.processors ~= p;
-        }
+      foreach (pj; j.getArray("processors")) {
+        ProcessorDTO p;
+        p.type = getString(pj, "type");
+        p.name = getString(pj, "name");
+        p.config = getString(pj, "config");
+        p.order_ = jsonInt(pj, "order");
+        r.processors ~= p;
       }
 
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", result.id);
+          .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
       } else {

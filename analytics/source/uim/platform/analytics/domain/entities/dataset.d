@@ -26,7 +26,7 @@ class Dataset {
   this() {
   }
 
-  static Dataset create(string name, string description, string dataSourceId, string userId) {
+  static Dataset create(string name, string description, string dataSourceId, UserId userId) {
     auto dataset = new Dataset();
     dataset.id = EntityId.generate();
     dataset.name = name;

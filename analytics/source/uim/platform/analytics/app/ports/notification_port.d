@@ -8,6 +8,6 @@ module uim.platform.analytics.app.ports.notification_port;
 
 /// Outgoing port: send notifications (email, in-app, webhook).
 interface NotificationPort {
-  void notify(string userId, string subject, string body_);
+  void notify(UserId userId, string subject, string body_);
   void notifyGroup(string[] userIds, string subject, string body_);
 }

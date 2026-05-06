@@ -72,7 +72,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
   }
 
   Span[] getTrace(TenantId tenantId, TraceId traceId) {
-    return spanRepo.findByTraceId(tenantId, traceId);
+    return spanRepo.findByTrace(tenantId, traceId);
   }
 
   Span[] getServiceSpans(TenantId tenantId, string serviceName) {

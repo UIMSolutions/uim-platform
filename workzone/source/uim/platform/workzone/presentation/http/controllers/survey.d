@@ -69,7 +69,7 @@ class SurveyController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
-      auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
+      auto surveys = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = surveys.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject

@@ -16,7 +16,7 @@ struct DeviceRegistration {
   string appVersion;
   AppPlatform platform;
   DeviceStatus status;
-  string userId;
+  UserId userId;
   string deviceToken;    // unique device identifier
   long lastConnectedAt;
   long registeredAt;

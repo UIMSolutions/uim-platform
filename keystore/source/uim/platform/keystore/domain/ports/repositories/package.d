@@ -6,7 +6,7 @@
 module uim.platform.keystore.domain.ports.repositories;
 
 public {
-  import uim.platform.keystore.domain.ports.repositories.keystore_repository;
-  import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
-  import uim.platform.keystore.domain.ports.repositories.key_password_repository;
+  import uim.platform.keystore.domain.ports.repositories.keystores;
+  import uim.platform.keystore.domain.ports.repositories.key_entries;
+  import uim.platform.keystore.domain.ports.repositories.key_passwords;
 }

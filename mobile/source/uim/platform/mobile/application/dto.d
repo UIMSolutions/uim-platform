@@ -41,7 +41,7 @@ struct RegisterDeviceRequest {
   string osVersion;
   string appVersion;
   string platform;
-  string userId;
+  UserId userId;
   string deviceToken;
 }
 
@@ -167,7 +167,7 @@ struct ReportUsageRequest {
   TenantId tenantId;
   string appId;
   string deviceId;
-  string userId;
+  UserId userId;
   string metricType;
   string metricKey;
   string metricValue;
@@ -199,7 +199,7 @@ struct CreateUserSessionRequest {
   TenantId tenantId;
   string appId;
   string deviceId;
-  string userId;
+  UserId userId;
   string ipAddress;
   string userAgent;
   string platform;
@@ -211,7 +211,7 @@ struct UploadClientLogRequest {
   TenantId tenantId;
   string appId;
   string deviceId;
-  string userId;
+  UserId userId;
   string level;
   string source;
   string message;

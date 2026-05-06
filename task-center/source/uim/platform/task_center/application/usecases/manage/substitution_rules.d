@@ -22,7 +22,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    SubstitutionRule[] listByUser(TenantId tenantId, string userId) {
+    SubstitutionRule[] listByUser(TenantId tenantId, UserId userId) {
         return repo.findByUser(tenantId, userId);
     }
 

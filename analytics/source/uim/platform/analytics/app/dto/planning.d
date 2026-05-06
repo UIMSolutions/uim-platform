@@ -17,7 +17,7 @@ struct CreatePlanningModelRequest {
   string description;
   string datasetId;
   string granularity;
-  string userId;
+  UserId userId;
 }
 
 struct PlanningModelResponse {

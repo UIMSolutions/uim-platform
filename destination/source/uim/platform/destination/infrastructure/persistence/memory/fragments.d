@@ -29,7 +29,7 @@ class MemoryFragmentRepository : TenantRepository!(DestinationFragment, Fragment
   }
 
   void removeByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    findByName(tenantId, subaccountId, name).remove();
+    remove(findByName(tenantId, subaccountId, name));
   }
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {

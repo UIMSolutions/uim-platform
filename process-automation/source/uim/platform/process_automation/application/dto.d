@@ -103,7 +103,7 @@ struct CompleteTaskRequest {
 struct ClaimTaskRequest {
     TenantId tenantId;
     string id;
-    string userId;
+    UserId userId;
 }
 
 // --- Decision ---

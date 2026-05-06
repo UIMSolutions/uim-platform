@@ -58,7 +58,7 @@ classDiagram
     class SubstitutionRule {
         +string id
         +TenantId tenantId
-        +string userId
+        +UserId userId
         +string substituteId
         +string taskDefinitionId
         +SubstitutionStatus status
@@ -101,7 +101,7 @@ classDiagram
     class UserTaskFilter {
         +string id
         +TenantId tenantId
-        +string userId
+        +UserId userId
         +string name
         +string description
         +FilterCriterion[] criteria

@@ -7,7 +7,10 @@ module uim.platform.keystore.presentation.http.controllers.key_password;
 
 import uim.platform.keystore;
 
+mixin(ShowModule!());
+
 @safe:
+
 
 class KeyPasswordController : PlatformController {
   private ManageKeyPasswordsUseCase uc;

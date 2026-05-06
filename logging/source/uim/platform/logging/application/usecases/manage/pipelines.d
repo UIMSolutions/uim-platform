@@ -101,15 +101,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   Pipeline[] listActive(TenantId tenantId) {
-    return listActive(TenantId(tenantId));
-  }
-
-  Pipeline[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
-  }
-
-  CommandResult remove(string id) {
-    return remove(PipelineId(id));
   }
 
   CommandResult remove(PipelineId id) {

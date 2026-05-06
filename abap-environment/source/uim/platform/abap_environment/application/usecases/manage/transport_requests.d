@@ -152,30 +152,3 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 }
 
-private TransportType parseTransportType(string type) {
-  switch (type) {
-  case "workbench":
-    return TransportType.workbench;
-  case "customizing":
-    return TransportType.customizing;
-  case "transportOfCopies":
-    return TransportType.transportOfCopies;
-  default:
-    return TransportType.workbench;
-  }
-}
-
-private TransportStatus parseTransportStatus(string status) {
-  switch (status) {
-  case "modifiable":
-    return TransportStatus.modifiable;
-  case "released":
-    return TransportStatus.released;
-  case "imported":
-    return TransportStatus.imported;
-  case "error":
-    return TransportStatus.error;
-  default:
-    return TransportStatus.modifiable;
-  }
-}

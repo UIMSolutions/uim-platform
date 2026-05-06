@@ -22,11 +22,11 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    UserTaskFilter[] listByUser(TenantId tenantId, string userId) {
+    UserTaskFilter[] listByUser(TenantId tenantId, UserId userId) {
         return repo.findByUser(tenantId, userId);
     }
 
-    UserTaskFilter getDefault(TenantId tenantId, string userId) {
+    UserTaskFilter getDefault(TenantId tenantId, UserId userId) {
         return repo.findDefault(tenantId, userId);
     }
 

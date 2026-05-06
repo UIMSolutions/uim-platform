@@ -44,7 +44,7 @@ struct AccessTokenDTO {
     TenantId tenantId;
     string tokenValue;
     string clientId;
-    string userId;
+    UserId userId;
     string scopes;
     long expiresAt;
     UserId createdBy;
@@ -55,7 +55,7 @@ struct RefreshTokenDTO {
     TenantId tenantId;
     string tokenValue;
     string clientId;
-    string userId;
+    UserId userId;
     string scopes;
     string accessTokenId;
     long expiresAt;
@@ -67,7 +67,7 @@ struct AuthorizationCodeDTO {
     TenantId tenantId;
     string code;
     string clientId;
-    string userId;
+    UserId userId;
     string redirectUri;
     string scopes;
     long expiresAt;

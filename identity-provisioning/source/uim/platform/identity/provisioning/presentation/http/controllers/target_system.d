@@ -10,11 +10,15 @@ module uim.platform.identity.provisioning.presentation.http.target_system;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
-import uim.platform.identity.provisioning.application.dto;
-import uim.platform.identity.provisioning.domain.entities.target_system;
-import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
+// import uim.platform.identity.provisioning.application.dto;
+// import uim.platform.identity.provisioning.domain.entities.target_system;
+// import uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class TargetSystemController : PlatformController {
   private ManageTargetSystemsUseCase uc;
 

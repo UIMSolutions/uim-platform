@@ -27,7 +27,7 @@ class PlanningModel {
   }
 
   static PlanningModel create(string name, string description, string datasetId,
-      TimeGranularity granularity, string userId) {
+      TimeGranularity granularity, UserId userId) {
     auto pm = new PlanningModel();
     pm.id = EntityId.generate();
     pm.name = name;

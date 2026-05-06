@@ -79,7 +79,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult claim(TenantId tenantId, string id, string userId) {
+    CommandResult claim(TenantId tenantId, string id, UserId userId) {
         auto t = repo.findById(tenantId, id);
         if (t == Task.init)
             return CommandResult(false, "", "Task not found");

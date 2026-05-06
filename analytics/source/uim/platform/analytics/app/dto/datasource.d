@@ -18,7 +18,7 @@ struct CreateDataSourceRequest {
   int port;
   string databaseName;
   string username;
-  string userId;
+  UserId userId;
 }
 
 struct DataSourceResponse {

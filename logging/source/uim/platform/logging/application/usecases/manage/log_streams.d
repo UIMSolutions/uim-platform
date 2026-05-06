@@ -30,15 +30,13 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Stream name is required");
 
     LogStream stream;
-    stream.id = randomUUID();
-    stream.tenantId = req.tenantId;
+    stream.initEntity(req.tenantId);
     stream.name = req.name;
     stream.description = req.description;
-    stream.sourceType = toLogSourceType(req.sourceType);
+    stream.sourceType = req.sourceType.to!LogSourceType;
     stream.retentionPolicyId = req.retentionPolicyId;
     stream.isActive = true;
     stream.createdBy = req.createdBy;
-    stream.createdAt = clockSeconds();
 
     repo.save(stream);
     return CommandResult(true, stream.id.value, "");

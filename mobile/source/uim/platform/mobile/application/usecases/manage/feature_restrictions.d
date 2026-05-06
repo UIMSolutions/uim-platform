@@ -59,7 +59,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    bool evaluate(FeatureRestrictionId featureId, string userId, string deviceId) {
+    bool evaluate(FeatureRestrictionId featureId, UserId userId, string deviceId) {
         auto restriction = repo.findById(featureId);
         if (restriction.isNull)
             return false;

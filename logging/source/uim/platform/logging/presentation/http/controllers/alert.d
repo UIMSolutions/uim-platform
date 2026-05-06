@@ -62,7 +62,7 @@ class AlertController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       auto a = uc.getById(id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
@@ -92,7 +92,7 @@ class AlertController : PlatformController {
     try {
       auto j = req.json;
       AcknowledgeAlertRequest r;
-      r.alertId = j.getString("alertId");
+      r.alertId = AlertId(j.getString("alertId"));
       r.tenantId = req.getTenantId;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
@@ -136,7 +136,7 @@ class AlertController : PlatformController {
     try {
       import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);
 
       res.writeJsonBody(Json.emptyObject, 204);

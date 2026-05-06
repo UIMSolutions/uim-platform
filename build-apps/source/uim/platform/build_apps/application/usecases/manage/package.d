@@ -6,12 +6,12 @@
 module uim.platform.build_apps.application.usecases.manage;
 
 public {
-    import uim.platform.build_apps.application.usecases.manage.manage_applications;
-    import uim.platform.build_apps.application.usecases.manage.manage_pages;
-    import uim.platform.build_apps.application.usecases.manage.manage_ui_components;
-    import uim.platform.build_apps.application.usecases.manage.manage_data_entities;
-    import uim.platform.build_apps.application.usecases.manage.manage_data_connections;
-    import uim.platform.build_apps.application.usecases.manage.manage_logic_flows;
-    import uim.platform.build_apps.application.usecases.manage.manage_app_builds;
-    import uim.platform.build_apps.application.usecases.manage.manage_project_members;
+    import uim.platform.build_apps.application.usecases.manage.applications;
+    import uim.platform.build_apps.application.usecases.manage.pages;
+    import uim.platform.build_apps.application.usecases.manage.ui_components;
+    import uim.platform.build_apps.application.usecases.manage.data_entities;
+    import uim.platform.build_apps.application.usecases.manage.data_connections;
+    import uim.platform.build_apps.application.usecases.manage.logic_flows;
+    import uim.platform.build_apps.application.usecases.manage.app_builds;
+    import uim.platform.build_apps.application.usecases.manage.project_members;
 }

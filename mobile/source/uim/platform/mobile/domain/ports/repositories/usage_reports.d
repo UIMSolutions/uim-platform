@@ -18,9 +18,9 @@ interface UsageReportRepository : ITenantRepository!(UsageReport, UsageReportId)
   UsageReport[] findByDevice(DeviceRegistrationId deviceId);
   void removeByDevice(DeviceRegistrationId deviceId);
 
-  size_t countByUser(string userId);
-  UsageReport[] findByUser(string userId);
-  void removeByUser(string userId);
+  size_t countByUser(UserId userId);
+  UsageReport[] findByUser(UserId userId);
+  void removeByUser(UserId userId);
 
   size_t countByMetricType(MobileAppId appId, MetricType metricType);
   UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType);

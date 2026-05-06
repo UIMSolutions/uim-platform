@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.infrastructure.persistence.memory.keystores;
 
-import uim.platform.keystore.domain.entities.keystore_entity;
-import uim.platform.keystore.domain.ports.repositories.keystore_repository;
-import uim.platform.keystore.domain.types;
+// import uim.platform.keystore.domain.entities.keystore_entity;
+// import uim.platform.keystore.domain.ports.repositories.keystore_repository;
+// import uim.platform.keystore.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+
+import uim.platform.keystore;
+
+mixin(ShowModule!());
 
 @safe:
+
 
 class MemoryKeystoreRepository : KeystoreRepository {
   private KeystoreEntity[KeystoreId] store;

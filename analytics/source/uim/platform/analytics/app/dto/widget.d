@@ -17,7 +17,7 @@ struct CreateWidgetRequest {
   string title;
   string chartType;
   string datasetId;
-  string userId;
+  UserId userId;
 }
 
 struct WidgetResponse {

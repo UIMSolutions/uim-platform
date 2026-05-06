@@ -97,32 +97,10 @@ enum OrgStatus {
   suspended,
 }
 
-OrgStatus parseOrgStatus(string status) {
-  switch (status) {
-  case "active":
-    return OrgStatus.active;
-  case "suspended":
-    return OrgStatus.suspended;
-  default:
-    return OrgStatus.active;
-  }
-}
-
 /// Space lifecycle status.
 enum SpaceStatus {
   active,
   suspended,
-}
-
-SpaceStatus parseSpaceStatus(string status) {
-  switch (status) {
-  case "active":
-    return SpaceStatus.active;
-  case "suspended":
-    return SpaceStatus.suspended;
-  default:
-    return SpaceStatus.active;
-  }
 }
 
 /// Application runtime state.
@@ -133,20 +111,6 @@ enum AppState {
   crashed,
 }
 
-AppState parseAppState(string state) {
-  switch (state) {
-  case "stopped":
-    return AppState.stopped;
-  case "started":
-    return AppState.started;
-  case "crashed":
-    return AppState.crashed;
-  case "staging":
-    return AppState.staging;
-  default:
-    return AppState.stopped;
-  }
-}
 /// Individual application instance state.
 enum InstanceState {
   running,
@@ -178,51 +142,17 @@ enum RouteProtocol {
   tcp,
 }
 
-RouteProtocol parseRouteProtocol(string s) {
-  switch (s) {
-  case "http":
-    return RouteProtocol.http;
-  case "tcp":
-    return RouteProtocol.tcp;
-  default:
-    return RouteProtocol.http;
-  }
-}
-
 /// Domain ownership scope.
-enum DomainScope {
-  shared_,
-  private_,
-  internal_,
+enum DomainScope : string{
+  shared_ = "shared",
+  private_ = "private",
+  internal_ = "internal",
 }
 
-DomainScope parseDomainScope(string scope_) {
-  switch (scope_) {
-  case "shared":
-    return DomainScope.shared_;
-  case "private":
-    return DomainScope.private_;
-  case "internal":
-    return DomainScope.internal_;
-  default:
-    return DomainScope.shared_;
-  }
-}
 /// Buildpack origin type.
 enum BuildpackType {
   system,
   custom,
-}
-
-BuildpackType parseBuildpackType(string s) {
-  switch (s) {
-  case "system":
-    return BuildpackType.system;
-  case "custom":
-    return BuildpackType.custom;
-  default:
-    return BuildpackType.system;
-  }
 }
 
 /// Application health check strategy.
@@ -232,15 +162,3 @@ enum HealthCheckType {
   process,
 }
 
-HealthCheckType parseHealthCheckType(string s) {
-  switch (s) {
-  case "http":
-    return HealthCheckType.http;
-  case "port":
-    return HealthCheckType.port;
-  case "process":
-    return HealthCheckType.process;
-  default:
-    return HealthCheckType.port;
-  }
-}

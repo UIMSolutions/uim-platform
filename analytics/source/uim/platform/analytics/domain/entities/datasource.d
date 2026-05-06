@@ -25,7 +25,7 @@ class DataSource {
   }
 
   static DataSource create(string name, DataSourceType sourceType,
-      ConnectionInfo conn, string userId) {
+      ConnectionInfo conn, UserId userId) {
     auto ds = new DataSource();
     ds.id = EntityId.generate();
     ds.name = name;

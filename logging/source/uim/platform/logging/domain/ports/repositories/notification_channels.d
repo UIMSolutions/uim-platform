@@ -12,7 +12,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface NotificationChannelRepository {
+interface NotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {
 
   size_t countActive(TenantId tenantId);
   NotificationChannel[] findActive(TenantId tenantId);

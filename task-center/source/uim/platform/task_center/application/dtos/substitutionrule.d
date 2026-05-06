@@ -8,7 +8,7 @@ mixin(ShowModule!());
 struct CreateSubstitutionRuleRequest {
     TenantId tenantId;
     string id;
-    string userId;
+    UserId userId;
     string substituteId;
     string taskDefinitionId;
     string startDate;

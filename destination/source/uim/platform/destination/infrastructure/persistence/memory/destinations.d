@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.name == name);
   }
 
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
@@ -29,7 +29,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
     return Destination.init;
   }
   void removeByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    findByName(tenantId, subaccountId, name).remove();
+    remove(findByName(tenantId, subaccountId, name));
   }
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -39,8 +39,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
     return dests.filter!(e => e.tenantId == tenantId && e.subaccountId == subaccountId).array;
   }
   Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId).array;
+    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
   }
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
@@ -53,23 +52,20 @@ Destination[] filterByServiceInstance(Destination[] dests, TenantId tenantId, Se
     return dests.filter!(e => e.tenantId == tenantId && e.serviceInstanceId == instanceId).array;
   }
   Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.serviceInstanceId == instanceId).array;
+    return findByTenant(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;
   }
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     findByServiceInstance(tenantId, instanceId).each!(e => remove(e));
   }
 
   bool existsByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
-    return findAll().any!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId && e.level == level);
+    return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.level == level);
   }
   size_t countByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
     return findByLevel(tenantId, subaccountId, level).length;
   }
   Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
-    return findAll().filter!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId && e.level == level).array;
+    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId && e.level == level).array;
   }
   void removeByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
     findByLevel(tenantId, subaccountId, level).each!(e => remove(e));

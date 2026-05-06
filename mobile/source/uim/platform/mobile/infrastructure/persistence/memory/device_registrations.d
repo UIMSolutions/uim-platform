@@ -39,16 +39,16 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     findByApp(appId).each!(r => remove(r));
   }
 
-  size_t countByUser(string userId) {
+  size_t countByUser(UserId userId) {
     return findByUser(userId).length;
   }
-  DeviceRegistration[] filterByUser(DeviceRegistration[] registrations, string userId) {
+  DeviceRegistration[] filterByUser(DeviceRegistration[] registrations, UserId userId) {
     return registrations.filter!(r => r.userId == userId).array;
   }
-  DeviceRegistration[] findByUser(string userId) {
+  DeviceRegistration[] findByUser(UserId userId) {
     return findAll().filter!(r => r.userId == userId).array;
   }
-  void removeByUser(string userId) {
+  void removeByUser(UserId userId) {
     findByUser(userId).each!(r => remove(r));
   }
 

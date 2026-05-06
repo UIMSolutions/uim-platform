@@ -21,9 +21,9 @@ interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId)
     AccessToken[] findByClientId(string clientId);
     AccessToken[] findByClientId(string clientId);
 
-    AccessToken[] findByUserId(string userId);
-    AccessToken[] findByUserId(string userId);
-    AccessToken[] findByUserId(string userId);
+    AccessToken[] findByUserId(UserId userId);
+    AccessToken[] findByUserId(UserId userId);
+    AccessToken[] findByUserId(UserId userId);
 
     AccessToken[] findByStatus(TokenStatus status);
     AccessToken[] findByStatus(TokenStatus status);

@@ -15,19 +15,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), AlertRuleRepository {
 
-  size_t countByEnabled(TenantId tenantId) {
+  size_t countEnabled(TenantId tenantId) {
     return findEnabled(tenantId).length;
   }
 
-  AlertRule[] filterByEnabled(AlertRule[] rules) {
+  AlertRule[] filterEnabled(AlertRule[] rules) {
     return rules.filter!(entity => entity.isEnabled).array;
   }
 
   AlertRule[] findEnabled(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(entity => entity.isEnabled).array;
+    return filterEnabled(findByTenant(tenantId));
   }
 
-  void removeByEnabled(TenantId tenantId) {
+  void removeEnabled(TenantId tenantId) {
     findEnabled(tenantId).each!(entity => remove(entity));
   }
 

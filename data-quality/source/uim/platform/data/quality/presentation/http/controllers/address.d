@@ -60,20 +60,18 @@ class AddressController : PlatformController {
       auto batchReq = CleanseBatchAddressRequest();
       batchReq.tenantId = req.getTenantId;
 
-      if ("addresses" in j && j["addresses"].isArray) {
-        foreach (item; j["addresses"].toArray) {
-          if (item.isObject) {
-            CleanseAddressRequest a;
-            a.tenantId = batchReq.tenantId;
-            a.sourceRecordId = item.getString("sourceRecordId");
-            a.line1 = item.getString("line1");
-            a.line2 = item.getString("line2");
-            a.city = item.getString("city");
-            a.region = item.getString("region");
-            a.postalCode = item.getString("postalCode");
-            a.country = item.getString("country");
-            batchReq.addresses ~= a;
-          }
+      foreach (item; j.getArray("addresses")) {
+        if (item.isObject) {
+          CleanseAddressRequest a;
+          a.tenantId = batchReq.tenantId;
+          a.sourceRecordId = item.getString("sourceRecordId");
+          a.line1 = item.getString("line1");
+          a.line2 = item.getString("line2");
+          a.city = item.getString("city");
+          a.region = item.getString("region");
+          a.postalCode = item.getString("postalCode");
+          a.country = item.getString("country");
+          batchReq.addresses ~= a;
         }
       }
 
@@ -81,9 +79,9 @@ class AddressController : PlatformController {
       auto arr = results.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-            .set("results", arr)
-            .set("totalCount", Json(results.length))
-            .set("message", "Address cleansing results retrieved successfully");
+        .set("results", arr)
+        .set("totalCount", Json(results.length))
+        .set("message", "Address cleansing results retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -94,14 +92,14 @@ class AddressController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      
+
       auto records = uc.getByTenant(tenantId);
       auto arr = records.map!(r => r.toJson).array;
 
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(records.length))
-            .set("message", "Address records retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", Json(records.length))
+        .set("message", "Address records retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

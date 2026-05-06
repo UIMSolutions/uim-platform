@@ -18,7 +18,7 @@ struct CreatePredictionRequest {
   string predictionType;
   string targetColumn;
   string[] featureColumns;
-  string userId;
+  UserId userId;
 }
 
 Json toJson(CreatePredictionRequest request) {

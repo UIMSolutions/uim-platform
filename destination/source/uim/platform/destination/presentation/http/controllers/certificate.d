@@ -184,8 +184,8 @@ class CertificateController : PlatformController {
       auto result = uc.validateCertificate(id);
 
       auto resp = Json.emptyObject
-        .set("isValid", result.isValid))
-        .set("status", result.status.to!string))
+        .set("isValid", result.isValid)
+        .set("status", result.status.to!string)
         .set("message", (result.message))
         .set("daysUntilExpiry", Json(result.daysUntilExpiry))
         .set("message", "Certificate validation completed");

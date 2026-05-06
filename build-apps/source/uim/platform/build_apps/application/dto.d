@@ -134,7 +134,7 @@ struct ProjectMemberDTO {
     string id;
     TenantId tenantId;
     string applicationId;
-    string userId;
+    UserId userId;
     string displayName;
     string email;
     string role;

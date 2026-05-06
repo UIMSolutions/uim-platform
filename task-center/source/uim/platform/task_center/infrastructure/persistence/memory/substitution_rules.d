@@ -13,15 +13,18 @@ mixin(ShowModule!());
 
 class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
 
-    size_t countByUser(TenantId tenantId, string userId) {
+    size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;
     }
 
-    SubstitutionRule[] findByUser(TenantId tenantId, string userId) {
-        return findByTenant(tenantId).filter!(r => r.userId == userId).array;
+    SubstitutionRule[] filterByUser(SubstitutionRule[] rules, UserId userId) {
+        return rules.filter!(r => r.userId == userId).array;
+    }
+    SubstitutionRule[] findByUser(TenantId tenantId, UserId userId) {
+        return filterByUser(findByTenant(tenantId), userId);
     }
 
-    void removeByUser(TenantId tenantId, string userId) {
+    void removeByUser(TenantId tenantId, UserId userId) {
         findByUser(tenantId, userId).each!(r => remove(r));
     }
 

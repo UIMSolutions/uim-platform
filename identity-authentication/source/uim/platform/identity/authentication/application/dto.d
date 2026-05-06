@@ -29,7 +29,7 @@ struct AuthResult {
   bool mfaRequired;
   MfaType mfaType = MfaType.none;
   string sessionId;
-  string userId;
+  UserId userId;
 }
 
 /// --- User DTOs ---
@@ -52,7 +52,7 @@ struct UpdateUserRequest {
 }
 
 struct UserResponse {
-  string userId;
+  UserId userId;
   string error;
 
   bool isSuccess() const

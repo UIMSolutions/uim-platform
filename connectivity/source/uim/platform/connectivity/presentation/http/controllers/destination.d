@@ -198,22 +198,18 @@ class DestinationController : PlatformController {
   }
 
   private static DestinationProperty[] parseProperties(Json j) {
-    DestinationProperty[] result;
-    if (!j.isArray("properties"))
-      return result;
-    foreach (item; j["properties"].toArray) {
-      if (item.isObject)
-        result ~= DestinationProperty(item.getString("key"), item.getString("value"));
-    }
+    DestinationProperty[] result = j.getArray("properties")
+      .filter!(item => item.isObject)
+      .map!(item => DestinationProperty(item.getString("key"), item.getString("value")))
+      .array;
+
     return result;
   }
 
   private static DestinationProperty[] parseHeaders(Json j) {
     DestinationProperty[] result;
-    if (!j.isArray("additionalHeaders"))
-      return result;
 
-    foreach (item; j["additionalHeaders"].toArray) {
+    foreach (item; j.getArray("additionalHeaders")) {
       if (item.isObject)
         result ~= DestinationProperty(item.getString("key"), item.getString("value"));
     }

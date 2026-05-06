@@ -12,17 +12,12 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-interface SpanRepository {
-  bool existsById(SpanId id);
-  Span findById(SpanId id);
+interface SpanRepository : ITenantRepository!(Span, SpanId) {
 
-  size_t countByTenant(TenantId tenantId);
-  Span[] findByTraceId(TenantId tenantId, TraceId traceId);
+  Span[] findByTrace(TenantId tenantId, TraceId traceId);
   Span[] findByService(TenantId tenantId, string serviceName);
   Span[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName);
 
-  void save(Span s);
-  void saveAll(Span[] spans);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

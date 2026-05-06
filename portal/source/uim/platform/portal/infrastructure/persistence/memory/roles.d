@@ -37,11 +37,11 @@ class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
       }
   }
 
-  size_t countByUser(string userId) {
+  size_t countByUser(UserId userId) {
     return findByUser(userId).length;
   }
 
-  Role[] findByUser(string userId) {
+  Role[] findByUser(UserId userId) {
     Role[] result;
     foreach (r; findAll())
       if (r.userIds.canFind(userId))
@@ -49,7 +49,7 @@ class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
     return result;
   }
 
-  void removeByUser(string userId) {
+  void removeByUser(UserId userId) {
     foreach (r; findAll())
       if (r.userIds.canFind(userId))
         store.remove(r.id);

@@ -21,8 +21,8 @@ struct IngestLogRequest {
   string source;
   string message;
   string[string] structuredData;
-  string traceId;
-  string spanId;
+  TraceId traceId;
+  SpanId spanId;
   string requestId;
   string correlationId;
   string componentName;
@@ -65,8 +65,8 @@ struct SpanEventDTO {
 
 struct IngestSpanRequest {
   TenantId tenantId;
-  string traceId;
-  string parentSpanId;
+  TraceId traceId;
+  SpanId parentSpanId;
   string operationName;
   string serviceName;
   long startTime;
@@ -90,7 +90,7 @@ struct SearchLogsRequest {
   string query;
   string level;
   LogStreamId streamId;
-  string traceId;
+  TraceId traceId;
   string correlationId;
   long startTime;
   long endTime;

@@ -16,7 +16,7 @@ struct AuthorizationCode {
 
     string code;
     string clientId;
-    string userId;
+    UserId userId;
     string redirectUri;
     string scopes;
     AuthCodeStatus status = AuthCodeStatus.active;

@@ -5,9 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.entities.keystore_entity;
 
-import uim.platform.keystore.domain.types;
+import uim.platform.keystore;
+
+mixin(ShowModule!());
 
 @safe:
+
 
 /// A named keystore file containing cryptographic keys and/or certificates.
 /// Corresponds to JKS, JCEKS, P12 or PEM file uploaded to SAP BTP Keystore Service.

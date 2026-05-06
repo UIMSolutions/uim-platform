@@ -10,13 +10,12 @@ module uim.platform.keystore.application.usecases.manage_key_passwords;
 // import uim.platform.keystore.domain.types;
 // import uim.platform.keystore.application.dto;
 
-import uim.platform.keystore.application.dto;
+import uim.platform.keystore;
 
 mixin(ShowModule!());
 
 @safe:
 
-@safe:
 
 class ManageKeyPasswordsUseCase {
   private KeyPasswordRepository repo;

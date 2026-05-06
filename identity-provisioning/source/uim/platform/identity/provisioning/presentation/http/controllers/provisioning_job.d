@@ -10,11 +10,15 @@ module uim.platform.identity.provisioning.presentation.http.provisioning_job;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
-import uim.platform.identity.provisioning.application.dto;
-import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
+// import uim.platform.identity.provisioning.application.dto;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+// import uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class ProvisioningJobController : PlatformController {
   private RunProvisioningJobsUseCase uc;
 

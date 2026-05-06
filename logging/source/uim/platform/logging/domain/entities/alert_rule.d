@@ -39,6 +39,6 @@ struct AlertRule {
       .set("thresholdOperator", thresholdOperator.to!string())
       .set("evaluationWindowSeconds", evaluationWindowSeconds)
       .set("severity", severity.to!string())
-      .set("channelIds", channelIds)
+      .set("channelIds", channelIds.map!(id => id.value).array.toJson)
       .set("isEnabled", isEnabled);
   }}

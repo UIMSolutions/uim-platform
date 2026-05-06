@@ -132,15 +132,15 @@ class AuditLogController : PlatformController {
   private static AuditAttribute[] parseAttributes(Json j) {
     AuditAttribute[] result;
 
-    if (j.hasKey("attributes")) {
-      if (j.isNull)
-        return null;
+    // if (j.hasKey("attributes")) {
+    //   if (j.isNull)
+    //     return null;
         
-      if (!j.isArray)
-        return result;
-    }
+    //   if (!j.isArray)
+    //     return result;
+    // }
 
-    foreach (item; j["attributes"].toArray) {
+    foreach (item; j.getArray("attributes")) {
       if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),
           item.getString("oldValue"), item.getString("newValue"));

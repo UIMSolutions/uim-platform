@@ -26,20 +26,20 @@ class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, Reten
     return RetentionPolicy.init;
   }
   void removeDefault(TenantId tenantId) {
-    findByTenant(tenantId).remove();
+    remove(findByTenant(tenantId));
   }
 
   size_t countByDataType(TenantId tenantId, DataType dt) {
     return findByDataType(tenantId, dt).length;
   }
-  RetentionPolicy[] filterByDataType(RetentionPolicy[] policies, TenantId tenantId, DataType dt) {
-    return policies.filter!(p => p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all)).array;
+  RetentionPolicy[] filterByDataType(RetentionPolicy[] policies, DataType dt) {
+    return policies.filter!(p => p.dataType == dt || p.dataType == DataType.all).array;
   }
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt) {
-    return store.byValue.filter!(p => p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all)).array;
+    return filterByDataType(findByTenant(tenantId), dt);
   }
   void removeByDataType(TenantId tenantId, DataType dt) {
-    findByDataType(tenantId, dt).each!(p => remove(p.id));
+    findByDataType(tenantId, dt).each!(entity => remove(entity));
   }
 
 }

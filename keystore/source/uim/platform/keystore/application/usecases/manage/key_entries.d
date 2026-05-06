@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.keystore.application.usecases.manage_key_entries;
+module uim.platform.keystore.application.usecases.manage.key_entries;
 
 // import uim.platform.keystore.domain.entities.key_entry;
 // import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
 // import uim.platform.keystore.domain.types;
 // import uim.platform.keystore.application.dto;
 
-import uim.platform.keystore.application.dto;
+import uim.platform.keystore;
 
 mixin(ShowModule!());
 

@@ -27,7 +27,7 @@ class Prediction {
   }
 
   static Prediction create(string name, string description, string datasetId,
-      PredictionType ptype, PredictionConfig cfg, string userId) {
+      PredictionType ptype, PredictionConfig cfg, UserId userId) {
     auto p = new Prediction();
     p.id = EntityId.generate();
     p.name = name;

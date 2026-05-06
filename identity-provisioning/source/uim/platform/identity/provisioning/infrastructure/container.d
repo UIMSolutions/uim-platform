@@ -5,38 +5,42 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.container;
 
-import uim.platform.identity.provisioning.infrastructure.config;
+// import uim.platform.identity.provisioning.infrastructure.config;
 
-// Repositories
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.source_system;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.target_system;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entity;
+// // Repositories
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.source_system;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.target_system;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log;
+// import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entity;
 
-// Domain services
-import uim.platform.identity.provisioning.domain.services.provisioning_engine;
-import uim.platform.identity.provisioning.domain.services.transformation_engine;
+// // Domain services
+// import uim.platform.identity.provisioning.domain.services.provisioning_engine;
+// import uim.platform.identity.provisioning.domain.services.transformation_engine;
 
-// Use cases
-import uim.platform.identity.provisioning.application.usecases.manage.source_systems;
-import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
-import uim.platform.identity.provisioning.application.usecases.manage.proxy_systems;
-import uim.platform.identity.provisioning.application.usecases.manage.transformations;
-import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
-import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
+// // Use cases
+// import uim.platform.identity.provisioning.application.usecases.manage.source_systems;
+// import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
+// import uim.platform.identity.provisioning.application.usecases.manage.proxy_systems;
+// import uim.platform.identity.provisioning.application.usecases.manage.transformations;
+// import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
+// import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
 
-// Controllers
-import uim.platform.identity.provisioning.presentation.http.source_system;
-import uim.platform.identity.provisioning.presentation.http.target_system;
-import uim.platform.identity.provisioning.presentation.http.proxy_system;
-import uim.platform.identity.provisioning.presentation.http.transformation;
-import uim.platform.identity.provisioning.presentation.http.provisioning_job;
-import uim.platform.identity.provisioning.presentation.http.monitoring;
-import uim.platform.identity.provisioning.presentation.http.health;
+// // Controllers
+// import uim.platform.identity.provisioning.presentation.http.source_system;
+// import uim.platform.identity.provisioning.presentation.http.target_system;
+// import uim.platform.identity.provisioning.presentation.http.proxy_system;
+// import uim.platform.identity.provisioning.presentation.http.transformation;
+// import uim.platform.identity.provisioning.presentation.http.provisioning_job;
+// import uim.platform.identity.provisioning.presentation.http.monitoring;
+// import uim.platform.identity.provisioning.presentation.http.health;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)

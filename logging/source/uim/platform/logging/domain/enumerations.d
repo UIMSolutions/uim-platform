@@ -4,6 +4,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
+
+// Logging level, used to indicate the severity of a log message.
 enum LoggingLevel {
   trace,
   debug_,
@@ -13,34 +15,16 @@ enum LoggingLevel {
   fatal,
 }
 
+// Type of log source, used to categorize and filter logs.
 enum LogSourceType {
+  custom,
   application,
   request,
   system,
-  custom,
   cloudFoundry,
   kyma,
   kubernetes,
 }
-
-  LogSourceType toLogSourceType(string s) {
-    switch (s) {
-    case "application":
-      return LogSourceType.application;
-    case "request":
-      return LogSourceType.request;
-    case "system":
-      return LogSourceType.system;
-    case "cloudFoundry":
-      return LogSourceType.cloudFoundry;
-    case "kyma":
-      return LogSourceType.kyma;
-    case "kubernetes":
-      return LogSourceType.kubernetes;
-    default:
-      return LogSourceType.custom;
-    }
-  }
 
 enum SpanKind {
   client,
@@ -50,6 +34,7 @@ enum SpanKind {
   internal,
 }
 
+// Status of a trace span, determined by the presence of errors or timeouts.
 enum SpanStatus {
   ok,
   error,
@@ -75,7 +60,15 @@ enum DataType {
   all,
 }
 
+// Type of log query
+enum LogQueryType {
+  logs,
+  metrics,
+  traces,
+  all,
+}
 
+// Type of alert condition
 enum AlertCondition {
   contains,
   regex,
@@ -84,13 +77,15 @@ enum AlertCondition {
   rateChange,
 }
 
+// Overall severity of an alert, determined by the most severe condition that triggered it.
 enum AlertSeverity {
-  info,
   warning,
+  info,
   critical,
   fatal,
 }
 
+// Current state of an alert.
 enum AlertState {
   open,
   acknowledged,

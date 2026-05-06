@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module app;
 
+// import uim.platform.keystore;
+// import uim.platform.keystore.infrastructure.config;
+// import uim.platform.keystore.infrastructure.container;
+// import std.stdio : writefln;
 import uim.platform.keystore;
-import uim.platform.keystore.infrastructure.config;
-import uim.platform.keystore.infrastructure.container;
-import std.stdio : writefln;
+
+mixin(ShowModule!());
+
+@safe:
 
 version (unittest) {
 } else {

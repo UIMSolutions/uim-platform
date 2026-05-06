@@ -69,27 +69,25 @@ class MetricController : PlatformController {
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      if (("metrics" in j) && (j["metrics"].isArray)) {
-        foreach (mj; j["metrics"].toArray) {
-          if (!mj.isObject)
-            continue;
+      foreach (mj; j.getArray("metrics")) {
+        if (!mj.isObject)
+          continue;
 
-          PushMetricRequest r;
-          r.tenantId = tenantId;
-          r.resourceId = mj.getString("resourceId");
-          r.name = mj.getString("name");
-          r.value_ = getDouble(mj, "value");
-          r.unit = mj.getString("unit");
-          r.category = mj.getString("category");
-          batchReq.metrics ~= r;
-        }
+        PushMetricRequest r;
+        r.tenantId = tenantId;
+        r.resourceId = mj.getString("resourceId");
+        r.name = mj.getString("name");
+        r.value_ = getDouble(mj, "value");
+        r.unit = mj.getString("unit");
+        r.category = mj.getString("category");
+        batchReq.metrics ~= r;
       }
 
       auto result = uc.pushMetricBatch(batchReq);
       auto resp = Json.emptyObject
         .set("accepted", batchReq.metrics.length)
         .set("message", "Metrics batch pushed successfully");
-      
+
       res.writeJsonBody(resp, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

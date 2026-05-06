@@ -43,12 +43,12 @@ struct AuditInfo {
   SysTime updatedAt;
   UserId updatedBy;
 
-  static AuditInfo create(string userId) {
+  static AuditInfo create(UserId userId) {
     auto now = Clock.currTime();
     return AuditInfo(now, userId, now, userId);
   }
 
-  AuditInfo touch(string userId) const {
+  AuditInfo touch(UserId userId) const {
     return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
   }
 

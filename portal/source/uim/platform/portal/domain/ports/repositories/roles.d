@@ -20,8 +20,8 @@ interface RoleRepository : ITeanantRepository!(Role, RoleId) {
   Role findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
-  size_t countByUser(string userId);
-  Role[] findByUser(string userId);
-  void removeByUser(string userId);
+  size_t countByUser(UserId userId);
+  Role[] findByUser(UserId userId);
+  void removeByUser(UserId userId);
 
 }

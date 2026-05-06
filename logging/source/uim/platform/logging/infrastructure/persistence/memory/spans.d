@@ -17,50 +17,27 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySpanRepository : SpanRepository {
-  private Span[] store;
+class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
 
-  bool existsById(SpanId id) {
-    return store.any!(s => s.id == id);
-  }
-
-  Span findById(SpanId id) {
-    foreach (s; findAll)
-      if (s.id == id)
-        return s;
-    return Span.init;
-  }
-
-  Span[] findByTraceId(TenantId tenantId, TraceId traceId) {
-    return findAll().filter!(s => s.tenantId == tenantId && s.traceId == traceId).array;
+  Span[] findByTrace(TenantId tenantId, TraceId traceId) {
+    return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;
   }
 
   Span[] findByService(TenantId tenantId, string serviceName) {
-    return findAll().filter!(s => s.tenantId == tenantId && s.serviceName == serviceName).array;
+    return findByTenant(tenantId).filter!(s => s.serviceName == serviceName).array;
   }
 
   Span[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return findAll().filter!(s => s.tenantId == tenantId && s.startTime >= startTime && s.startTime <= endTime).array;
+    return findByTenant(tenantId).filter!(s => s.startTime >= startTime && s.startTime <= endTime).array;
   }
 
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName) {
-    return findAll().filter!(
-        s => s.tenantId == tenantId && s.serviceName == serviceName && s.operationName == operationName).array;
-  }
-
-  void save(Span s) {
-    store ~= s;
-  }
-
-  void saveAll(Span[] spans) {
-    store ~= spans;
+    return findByTenant(tenantId).filter!(
+        s => s.serviceName == serviceName && s.operationName == operationName).array;
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = findAll().filter!(s => !(s.tenantId == tenantId && s.startTime < beforeTimestamp)).array;
+    findByTenant(tenantId).filter!(s => s.startTime >= beforeTimestamp).each!(s => remove(s));
   }
 
-  size_t countByTenant(TenantId tenantId) {
-    return findAll().filter!(s => s.tenantId == tenantId).array.length;
-  }
 }

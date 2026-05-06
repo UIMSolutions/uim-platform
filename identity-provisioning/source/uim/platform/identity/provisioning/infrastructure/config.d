@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.config;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";

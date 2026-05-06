@@ -112,7 +112,7 @@ erDiagram
         string tokenType
         string status
         string clientId FK
-        string userId
+        UserId userId
         string scopes
         long expiresAt
     }
@@ -123,7 +123,7 @@ erDiagram
         string tokenValue
         string status
         string clientId FK
-        string userId
+        UserId userId
         string scopes
         string accessTokenId FK
         long expiresAt
@@ -134,7 +134,7 @@ erDiagram
         TenantId tenantId
         string code
         string clientId FK
-        string userId
+        UserId userId
         string redirectUri
         string scopes
         string status

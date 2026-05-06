@@ -28,7 +28,7 @@ class Widget {
   this() {
   }
 
-  static Widget create(string title, ChartType chartType, string datasetId, string userId) {
+  static Widget create(string title, ChartType chartType, string datasetId, UserId userId) {
     auto w = new Widget();
     w.id = EntityId.generate();
     w.title = title;

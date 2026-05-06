@@ -16,7 +16,7 @@ struct CreateDatasetRequest {
   string name;
   string description;
   string dataSourceId;
-  string userId;
+  UserId userId;
 }
 
 struct DatasetResponse {

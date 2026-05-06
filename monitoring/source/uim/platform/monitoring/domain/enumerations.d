@@ -71,10 +71,10 @@ enum CheckType {
 
 /// Result status of a health check execution.
 enum CheckStatus {
+  unknown,
   ok,
   warning,
   critical,
-  unknown,
   disabled,
 }
 
@@ -113,33 +113,8 @@ enum NotificationChannelType {
 
 /// State of a notification channel.
 enum ChannelState {
-  active,
-  inactive,
-  error,
+  active, // default - active and can be used for notifications
+  inactive, // channel is inactive and won't be used for notifications
+  error, // channel encountered an error and won't be used for notifications
 }
 
-static AlertState parseAlertState(string state) {
-  switch (state) {
-  case "acknowledged":
-    return AlertState.acknowledged;
-  case "resolved":
-    return AlertState.resolved;
-  case "expired":
-    return AlertState.expired;
-  default:
-    return AlertState.open;
-  }
-}
-
-static AlertSeverity parseSeverity(string severity) {
-  switch (severity) {
-  case "info":
-    return AlertSeverity.info;
-  case "critical":
-    return AlertSeverity.critical;
-  case "fatal":
-    return AlertSeverity.fatal;
-  default:
-    return AlertSeverity.warning;
-  }
-}

@@ -25,5 +25,7 @@ class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, Ingesti
         return t;
     return IngestionToken.init;
   }
-
+  void removeByHash(string tokenHash) {
+    remove(findByHash(tokenHash));
+  }
 }

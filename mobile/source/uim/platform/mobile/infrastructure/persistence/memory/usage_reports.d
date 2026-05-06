@@ -54,13 +54,13 @@ class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId
     findByDevice(deviceId).each!(r => remove(r));
   }
 
-  size_t countByUser(string userId) {
+  size_t countByUser(UserId userId) {
     return findByUser(userId).length;
   }
-  UsageReport[] filterByUser(UsageReport[] reports, string userId) {
+  UsageReport[] filterByUser(UsageReport[] reports, UserId userId) {
     return reports.filter!(r => r.userId == userId).array;
   }
-  UsageReport[] findByUser(string userId) {
+  UsageReport[] findByUser(UserId userId) {
     return filterByUser(findAll().array, userId);
   }
 

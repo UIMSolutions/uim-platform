@@ -32,7 +32,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     return Certificate.init;
   }
   void removeByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    findByName(tenantId, subaccountId, name).remove();
+    remove(findByName(tenantId, subaccountId, name));
   }
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {

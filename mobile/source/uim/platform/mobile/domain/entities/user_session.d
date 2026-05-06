@@ -12,7 +12,7 @@ struct UserSession {
 
   MobileAppId appId;
   DeviceRegistrationId deviceId;
-  string userId;
+  UserId userId;
   SessionStatus status;
   string ipAddress;
   string userAgent;

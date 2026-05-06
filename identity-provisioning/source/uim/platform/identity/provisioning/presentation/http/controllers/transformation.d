@@ -10,11 +10,15 @@ module uim.platform.identity.provisioning.presentation.http.transformation;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.identity.provisioning.application.usecases.manage.transformations;
-import uim.platform.identity.provisioning.application.dto;
-import uim.platform.identity.provisioning.domain.entities.transformation;
-import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.application.usecases.manage.transformations;
+// import uim.platform.identity.provisioning.application.dto;
+// import uim.platform.identity.provisioning.domain.entities.transformation;
+// import uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 import uim.platform.identity.provisioning;
 class TransformationController : PlatformController {
   private ManageTransformationsUseCase uc;

@@ -14,17 +14,17 @@ mixin(ShowModule!());
 class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
 
-    size_t countByUser(TenantId tenantId, string userId) {
+    size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;
     }
-    UserTaskFilter[] findByUser(TenantId tenantId, string userId) {
+    UserTaskFilter[] findByUser(TenantId tenantId, UserId userId) {
         UserTaskFilter[] result;
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.userId == userId) result ~= f;
         return result;
     }
-    void removeByUser(TenantId tenantId, string userId) {
+    void removeByUser(TenantId tenantId, UserId userId) {
         if (auto arr = tenantId in store) {
             UserTaskFilter[] filtered;
             foreach (f; *arr)
@@ -33,7 +33,7 @@ class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTas
         }
     }
 
-    UserTaskFilter findDefault(TenantId tenantId, string userId) {
+    UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
         if (auto arr = tenantId in store)
             foreach (f; *arr)
                 if (f.userId == userId && f.isDefault) return f;

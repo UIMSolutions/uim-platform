@@ -13,17 +13,8 @@ mixin(ShowModule!());
 
 Address[] toAddresses(Json json) {
   Address[] result;
-  if (!json.isObject)
-    return null;
 
-  if ("addresses" !in json)
-    return null;
-
-  auto value = json["addresses"];
-  if (!value.isArray)
-    return result;
-
-  return value.toArray.map!(item => Address(
+  return value.getArray("addresses").map!(item => Address(
       item.getString("formatted"), item.getString("streetAddress"),
       item.getString("locality"), item.getString("region"),
       item.getString("postalCode"), item.getString("country"),

@@ -47,7 +47,7 @@ classDiagram
         +TokenType tokenType
         +TokenStatus status
         +string clientId
-        +string userId
+        +UserId userId
         +string scopes
         +long expiresAt
         +string issuedAt
@@ -61,7 +61,7 @@ classDiagram
         +string tokenValue
         +TokenStatus status
         +string clientId
-        +string userId
+        +UserId userId
         +string scopes
         +string accessTokenId
         +long expiresAt
@@ -75,7 +75,7 @@ classDiagram
         +TenantId tenantId
         +string code
         +string clientId
-        +string userId
+        +UserId userId
         +string redirectUri
         +string scopes
         +AuthCodeStatus status

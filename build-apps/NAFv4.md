@@ -154,7 +154,7 @@ erDiagram
     PROJECT_MEMBER {
         string id PK
         string applicationId FK
-        string userId
+        UserId userId
         string role
         string permissions
     }

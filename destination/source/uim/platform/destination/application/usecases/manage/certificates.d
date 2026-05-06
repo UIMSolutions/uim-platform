@@ -86,17 +86,9 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     repo.update(c);
     return CommandResult(true, c.id.value, "");
   }
-
-  Certificate getCertificate(string id) {
-    return getCertificate(CertificateId(id));
-  }
   
   Certificate getCertificate(CertificateId id) {
     return repo.findById(id);
-  }
-
-  Certificate[] listBySubaccount(TenantId tenantId, string subaccountId) {
-    return listBySubaccount(TenantId(tenantId), SubaccountId(subaccountId));
   }
 
   Certificate[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -104,15 +96,11 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   Certificate[] listByType(TenantId tenantId, SubaccountId subaccountId, string typeStr) {
-    return repo.findByType(tenantId, subaccountId, parseCertType(typeStr));
+    return repo.findByType(tenantId, subaccountId, typeStr.to!CertificateType);
   }
 
   Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp) {
     return repo.findExpiring(tenantId, beforeTimestamp);
-  }
-
-  ValidationResult validateCertificate(string id) {
-    return validateCertificate(CertificateId(id));
   }
 
   ValidationResult validateCertificate(CertificateId id) {

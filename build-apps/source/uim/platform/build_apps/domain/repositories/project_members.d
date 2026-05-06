@@ -17,8 +17,8 @@ interface ProjectMemberRepository : ITenantRepository!(ProjectMember, ProjectMem
     ProjectMember[] findByApplication(ApplicationId applicationId);
     void removeByApplication(ApplicationId applicationId);
 
-    size_t countByUserId(string userId);
-    ProjectMember[] findByUserId(string userId);
-    void removeByUserId(string userId);
+    size_t countByUserId(UserId userId);
+    ProjectMember[] findByUserId(UserId userId);
+    void removeByUserId(UserId userId);
 
 }

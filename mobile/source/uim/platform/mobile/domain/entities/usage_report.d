@@ -12,7 +12,7 @@ struct UsageReport {
 
   MobileAppId appId;
   DeviceRegistrationId deviceId;
-  string userId;
+  UserId userId;
   MetricType metricType;
   string metricKey;          // custom metric name
   string metricValue;        // metric value/data

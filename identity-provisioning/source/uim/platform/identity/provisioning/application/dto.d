@@ -5,9 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.application.dto;
 
-import uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
-// --- Source System ---
+mixin(ShowModule!());
+
+@safe:
 
 struct CreateSourceSystemRequest {
   TenantId tenantId;

@@ -10,11 +10,15 @@ module uim.platform.identity.provisioning.presentation.http.controllers.monitori
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
-import uim.platform.identity.provisioning.domain.entities.provisioning_log;
-import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+// import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+// import uim.platform.identity.provisioning.domain.types;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class MonitoringController : PlatformController {
   private MonitorProvisioningUseCase uc;
 

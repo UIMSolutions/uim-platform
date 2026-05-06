@@ -23,7 +23,7 @@ class LogController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/logs", &handleIngest);
     router.post("/api/v1/logs/batch", &handleBatchIngest);
   }
@@ -71,30 +71,28 @@ class LogController : PlatformController {
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      if ("entries" in j && (j["entries"].isArray)) {
-        foreach (ej; j["entries"].toArray) {
-          IngestLogRequest r;
-          r.tenantId = tenantId;
-          r.streamId = getString(ej, "streamId");
-          r.level = getString(ej, "level");
-          r.source = getString(ej, "source");
-          r.message = getString(ej, "message");
-          r.structuredData = jsonStrMap(ej, "structuredData");
-          r.traceId = getString(ej, "traceId");
-          r.spanId = getString(ej, "spanId");
-          r.requestId = getString(ej, "requestId");
-          r.correlationId = getString(ej, "correlationId");
-          r.componentName = getString(ej, "componentName");
-          r.tags = getStrings(ej, "tags");
-          batchReq.entries ~= r;
-        }
+      foreach (ej; j.getArray("entries")) {
+        IngestLogRequest r;
+        r.tenantId = tenantId;
+        r.streamId = getString(ej, "streamId");
+        r.level = getString(ej, "level");
+        r.source = getString(ej, "source");
+        r.message = getString(ej, "message");
+        r.structuredData = jsonStrMap(ej, "structuredData");
+        r.traceId = getString(ej, "traceId");
+        r.spanId = getString(ej, "spanId");
+        r.requestId = getString(ej, "requestId");
+        r.correlationId = getString(ej, "correlationId");
+        r.componentName = getString(ej, "componentName");
+        r.tags = getStrings(ej, "tags");
+        batchReq.entries ~= r;
       }
 
       auto result = uc.ingestBatch(batchReq);
       auto resp = Json.emptyObject
         .set("success", result.success)
         .set("message", result.error);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

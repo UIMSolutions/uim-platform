@@ -147,32 +147,3 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   }
 }
 
-private ComponentType parseComponentType(string componentType) {
-  switch (componentType) {
-  case "developmentPackage":
-    return ComponentType.developmentPackage;
-  case "businessConfiguration":
-    return ComponentType.businessConfiguration;
-  case "extensibility":
-    return ComponentType.extensibility;
-  case "customCode":
-    return ComponentType.customCode;
-  default:
-    return ComponentType.developmentPackage;
-  }
-}
-
-private BranchStrategy parseBranchStrategy(string branchStrategy) {
-  switch (branchStrategy) {
-  case "main":
-    return BranchStrategy.main;
-  case "release":
-    return BranchStrategy.release;
-  case "feature":
-    return BranchStrategy.feature;
-  case "correction":
-    return BranchStrategy.correction;
-  default:
-    return BranchStrategy.main;
-  }
-}

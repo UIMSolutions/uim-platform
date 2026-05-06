@@ -24,5 +24,8 @@ class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), Das
         return d;
     return Dashboard.init;
   }
+  void removeDefault(TenantId tenantId) {
+    remove(findDefault(tenantId));
+  }
 
 }

@@ -47,7 +47,7 @@ struct UpdateUserRequest {
 }
 
 struct UserResponse {
-  string userId;
+  UserId userId;
   string error;
 
   bool isSuccess() const

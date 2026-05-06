@@ -36,7 +36,7 @@ struct StorageAssignment {
 }
 
 struct SpaceMember {
-  string userId;
+  UserId userId;
   string role;
 
   Json toJson() const {

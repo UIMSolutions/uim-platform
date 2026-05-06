@@ -32,22 +32,26 @@ struct LogEntry {
   string[] tags;
 
   Json toJson() const {
-      return entityToJson
-          .set("streamId", streamId.value)
-          .set("timestamp", timestamp)
-          .set("level", level.to!string())
-          .set("source", source)
-          .set("message", message)
-          .set("structuredData", structuredData)
-          .set("traceId", traceId.value)
-          .set("spanId", spanId.value)
-          .set("requestId", requestId)
-          .set("correlationId", correlationId)
-          .set("componentName", componentName)
-          .set("spaceName", spaceName)
-          .set("orgName", orgName)
-          .set("resourceType", resourceType)
-          .set("resourceId", resourceId)
-          .set("tags", tags.array);
+    auto jdata = Json.emptyObject;
+    foreach (key, value; structuredData)
+      jdata.set(key, value);
+
+    return entityToJson
+      .set("streamId", streamId.value)
+      .set("timestamp", timestamp)
+      .set("level", level.to!string())
+      .set("source", source)
+      .set("message", message)
+      .set("structuredData", jdata)
+      .set("traceId", traceId.value)
+      .set("spanId", spanId.value)
+      .set("requestId", requestId)
+      .set("correlationId", correlationId)
+      .set("componentName", componentName)
+      .set("spaceName", spaceName)
+      .set("orgName", orgName)
+      .set("resourceType", resourceType)
+      .set("resourceId", resourceId)
+      .set("tags", tags.toJson());
   }
 }

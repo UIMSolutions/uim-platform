@@ -43,19 +43,19 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
         findByClientId(clientId).each!(e => remove(e));
     }
 
-    size_t countByUserId(string userId) {
+    size_t countByUserId(UserId userId) {
         return findByUserId(userId).length;
     }
 
-    AccessToken[] filterByUserId(AccessToken[] tokens, string userId) {
+    AccessToken[] filterByUserId(AccessToken[] tokens, UserId userId) {
         return tokens.filter!(e => e.userId == userId).array;
     }
 
-    AccessToken[] findByUserId(string userId) {
+    AccessToken[] findByUserId(UserId userId) {
         return findAll().filter!(e => e.userId == userId).array;
     }
 
-    void removeByUserId(string userId) {
+    void removeByUserId(UserId userId) {
         findByUserId(userId).each!(e => remove(e));
     }
 
