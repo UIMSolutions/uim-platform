@@ -86,7 +86,7 @@ class SpaceController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
       auto s = uc.getById(id);
       if (s.isNull) {
@@ -113,7 +113,7 @@ class SpaceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto j = req.json;
 
       UpdateSpaceRequest r;
@@ -141,7 +141,7 @@ class SpaceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.remove(id);

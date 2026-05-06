@@ -10,7 +10,7 @@ import uim.platform.mobile.application.dto;
 
 import uim.platform.mobile;
 
-import std.conv : to;
+
 
 class ClientLogController : PlatformController {
   private ManageClientLogsUseCase uc;

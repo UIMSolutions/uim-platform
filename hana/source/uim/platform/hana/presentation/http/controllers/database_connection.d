@@ -94,7 +94,7 @@ class DatabaseConnectionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = uc.getById(id);
@@ -126,7 +126,7 @@ class DatabaseConnectionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto j = req.json;
       UpdateDatabaseConnectionRequest r;
@@ -157,7 +157,7 @@ class DatabaseConnectionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.removeById(id);

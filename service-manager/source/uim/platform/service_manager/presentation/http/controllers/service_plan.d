@@ -39,7 +39,7 @@ class ServicePlanController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, ServicePlanId(id));
@@ -77,7 +77,7 @@ class ServicePlanController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateServicePlanRequest r;
@@ -95,7 +95,7 @@ class ServicePlanController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(req.getTenantId, ServicePlanId(id));
             if (result.success) {

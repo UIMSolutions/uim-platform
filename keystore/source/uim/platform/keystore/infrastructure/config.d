@@ -6,7 +6,7 @@
 module uim.platform.keystore.infrastructure.config;
 
 import std.process : environment;
-import std.conv : to;
+
 
 struct SrvConfig {
   string host        = "0.0.0.0";

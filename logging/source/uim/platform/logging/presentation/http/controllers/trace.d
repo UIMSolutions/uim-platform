@@ -101,7 +101,7 @@ class TraceController : PlatformController {
 
   private void handleGetTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       TenantId tenantId = req.getTenantId;
       auto traceId = extractIdFromPath(req.requestURI.to!string);

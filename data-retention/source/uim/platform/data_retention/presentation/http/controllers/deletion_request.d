@@ -56,7 +56,7 @@ class DeletionRequestController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto dr = uc.getById(id);
             if (dr.isNull) { writeError(res, 404, "Deletion request not found"); return; }
@@ -74,7 +74,7 @@ class DeletionRequestController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateDeletionRequestRequest r;
@@ -90,7 +90,7 @@ class DeletionRequestController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             uc.removeById(id);
             res.writeJsonBody(Json.emptyObject, 204);

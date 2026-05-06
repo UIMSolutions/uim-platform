@@ -45,7 +45,7 @@ class SkillController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(id);
@@ -90,7 +90,7 @@ class SkillController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SkillDTO dto;
@@ -119,7 +119,7 @@ class SkillController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.removeById(id);

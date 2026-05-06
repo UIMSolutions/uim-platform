@@ -137,7 +137,7 @@ class CredentialController : PlatformController {
 
   private void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
@@ -181,7 +181,7 @@ class CredentialController : PlatformController {
 
   private void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
       credentials.remove(id);

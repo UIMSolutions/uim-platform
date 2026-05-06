@@ -24,16 +24,16 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
 
   LogEntry[] search(SearchLogsRequest req) {
     // Route to the most specific query available
-    if (req.traceId.length > 0)
+    if (!req.traceId.isEmpty)
       return logRepo.findByTrace(req.tenantId, req.traceId);
 
-    if (req.correlationId.length > 0)
+    if (!req.correlationId.isEmpty)
       return logRepo.findByCorrelation(req.tenantId, req.correlationId);
 
-    if (req.streamId.value.length > 0)
+    if (!req.streamId.isEmpty)
       return logRepo.findByStream(req.tenantId, req.streamId);
 
-    if (req.level.length > 0) {
+    if (!req.level.isEmpty) {
       auto level = LogParser.parseLevel(req.level);
       return logRepo.findByLevel(req.tenantId, level);
     } 
@@ -41,7 +41,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
     if (req.startTime > 0 && req.endTime > 0)
       return logRepo.findByTimeRange(req.tenantId, req.startTime, req.endTime);
 
-    if (req.query.length > 0)
+    if (!req.query.isEmpty)
       return logRepo.search(req.tenantId, req.query);
 
     return logRepo.findByTenant(req.tenantId);

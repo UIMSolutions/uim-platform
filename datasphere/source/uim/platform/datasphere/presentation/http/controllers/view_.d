@@ -93,7 +93,7 @@ class ViewController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -125,7 +125,7 @@ class ViewController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto j = req.json;
 
@@ -157,7 +157,7 @@ class ViewController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

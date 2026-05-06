@@ -81,7 +81,7 @@ class ArtifactController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -100,7 +100,7 @@ class ArtifactController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -121,7 +121,7 @@ class ArtifactController : PlatformController {
   }
 
   private Json artifactToJson(Artifact a) {
-    import std.conv : to;
+    
 
     auto lArr = Json.emptyArray;
     foreach (lbl; a.labels) {

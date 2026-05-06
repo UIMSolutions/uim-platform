@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.usage_report;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     private UsageReportRepository repo;

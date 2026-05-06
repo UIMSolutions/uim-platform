@@ -8,7 +8,7 @@ module uim.platform.auditlog.presentation.http.controllers.retention;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// // import std.conv : to;
+// 
 // 
 // import uim.platform.auditlog.application.usecases.manage.retention;
 // import uim.platform.auditlog.application.dto;
@@ -20,7 +20,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetentionController : PlatformController {
+class RetentionController : ManageController {
   private ManageRetentionUseCase useCase;
 
   this(ManageRetentionUseCase useCase) {

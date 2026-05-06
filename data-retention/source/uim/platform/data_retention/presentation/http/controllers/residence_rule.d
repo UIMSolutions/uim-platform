@@ -57,7 +57,7 @@ class ResidenceRuleController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto rr = uc.getById(id);
             if (rr.isNull) { writeError(res, 404, "Residence rule not found"); return; }
@@ -73,7 +73,7 @@ class ResidenceRuleController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateResidenceRuleRequest r;
@@ -90,7 +90,7 @@ class ResidenceRuleController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             uc.removeById(id);
             res.writeJsonBody(Json.emptyObject, 204);

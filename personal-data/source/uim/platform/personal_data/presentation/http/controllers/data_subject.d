@@ -81,7 +81,7 @@ class DataSubjectController : PlatformController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto params = req.queryParams();
             auto firstName = params.get("firstName", "");
@@ -110,7 +110,7 @@ class DataSubjectController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             if (path.length > 6 && path[$ - 6 .. $] == "/block")
@@ -133,7 +133,7 @@ class DataSubjectController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateDataSubjectRequest request;
@@ -165,7 +165,7 @@ class DataSubjectController : PlatformController {
 
     private void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/block"
@@ -188,7 +188,7 @@ class DataSubjectController : PlatformController {
 
     private void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/erase"
@@ -211,7 +211,7 @@ class DataSubjectController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);

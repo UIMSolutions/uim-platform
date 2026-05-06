@@ -45,7 +45,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(RefreshTokenId(id));
@@ -87,7 +87,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.revoke(RefreshTokenId(id));
@@ -106,7 +106,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.remove(RefreshTokenId(id));

@@ -86,7 +86,7 @@ class KeyringController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
       auto k = keyrings.getById(id);
@@ -164,7 +164,7 @@ class KeyringController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
       auto result = keyrings.remove(id);

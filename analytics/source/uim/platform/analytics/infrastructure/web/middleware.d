@@ -20,6 +20,6 @@ void corsMiddleware(scope HTTPServerRequest req, scope HTTPServerResponse res) {
 
 /// Request logging middleware.
 void requestLogger(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  // import std.conv : to;
+  
   logInfo("%s %s", req.method.to!string, req.requestURI);
 }

@@ -79,7 +79,7 @@ class PromptCollectionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto c = uc.getById(id);
@@ -96,7 +96,7 @@ class PromptCollectionController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
@@ -122,7 +122,7 @@ class PromptCollectionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);

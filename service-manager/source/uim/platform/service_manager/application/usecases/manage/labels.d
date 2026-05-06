@@ -26,7 +26,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(TenantId tenantId, CreateLabelRequest dto) {
-        import std.conv : to;
+        
 
         Label e;
         e.id = LabelId(MonoTime.currTime.ticks.to!string);

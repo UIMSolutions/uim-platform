@@ -14,12 +14,18 @@ mixin(ShowModule!());
 /// A label is a key-value tag attached to a BTP resource for
 /// organizing and categorizing global accounts, directories, subaccounts, etc.
 struct Label {
-  LabelId id;
+  mixin IdEntity!LabelId;
+
   LabeledResourceType resourceType;
   string resourceId; // ID of the labeled resource
   string key; // label key, e.g. "costCenter", "project"
   string[] values; // one or more values for this key
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    return entityToJson()
+      .set("resourceType", resourceType.to!string)
+      .set("resourceId", resourceId)
+      .set("key", key)
+      .set("values", values.toJson);
+  }
 }

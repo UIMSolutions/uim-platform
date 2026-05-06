@@ -22,7 +22,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Rule name is required");
 
-        import std.conv : to;
+        
 
         RetentionRule rule;
         rule.id = r.id;
@@ -58,7 +58,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
-        import std.conv : to;
+        
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;

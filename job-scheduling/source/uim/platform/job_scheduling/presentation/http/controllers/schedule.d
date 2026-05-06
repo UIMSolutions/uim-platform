@@ -36,7 +36,7 @@ class ScheduleController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
@@ -75,7 +75,7 @@ class ScheduleController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
@@ -97,7 +97,7 @@ class ScheduleController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
@@ -117,7 +117,7 @@ class ScheduleController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
@@ -154,7 +154,7 @@ class ScheduleController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
@@ -173,7 +173,7 @@ class ScheduleController : PlatformController {
 
     private void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);

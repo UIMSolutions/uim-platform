@@ -27,13 +27,13 @@ module uim.platform.identity.directory.infrastructure.container;
 // import uim.platform.identity.directory.application.usecases.query_audit_log;
 
 // // Controllers
-// import uim.platform.identity_authentication.presentation.http.user;
-// import uim.platform.identity_authentication.presentation.http.group;
-// import uim.platform.identity_authentication.presentation.http.schema;
-// import uim.platform.identity_authentication.presentation.http.password_policy;
-// import uim.platform.identity_authentication.presentation.http.api_client;
-// import uim.platform.identity_authentication.presentation.http.audit;
-// import uim.platform.identity_authentication.presentation.http.health;
+// import uim.platform.identity.authentication.presentation.http.user;
+// import uim.platform.identity.authentication.presentation.http.group;
+// import uim.platform.identity.authentication.presentation.http.schema;
+// import uim.platform.identity.authentication.presentation.http.password_policy;
+// import uim.platform.identity.authentication.presentation.http.api_client;
+// import uim.platform.identity.authentication.presentation.http.audit;
+// import uim.platform.identity.authentication.presentation.http.health;
 import uim.platform.identity.directory;
 
 mixin(ShowModule!());

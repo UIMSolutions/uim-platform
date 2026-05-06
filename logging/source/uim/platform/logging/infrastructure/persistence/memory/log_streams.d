@@ -26,7 +26,7 @@ class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), Log
   }
 
   void removeByName(TenantId tenantId, string name) {
-    remove(findByTenant(tenantId).filter!(s => s.name == name));
+    remove(findByName(tenantId, name));
   }
 
 }

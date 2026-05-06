@@ -33,14 +33,14 @@ class SearchController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       SearchLogsRequest r;
       r.tenantId = req.getTenantId;
       r.query = req.params.get("q", "");
       r.level = req.params.get("level", "");
-      r.streamId = req.params.get("streamId", "");
-      r.traceId = req.params.get("traceId", "");
+      r.streamId = LogStreamId(req.params.get("streamId", ""));
+      r.traceId = TraceId(req.params.get("traceId", ""));
       r.correlationId = req.params.get("correlationId", "");
 
       auto startStr = req.params.get("startTime", "");
@@ -87,9 +87,9 @@ class SearchController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = LogEntryId(extractIdFromPath(req.requestURI.to!string));
       auto entry = uc.getById(id);
 
       if (entry.isNull) {

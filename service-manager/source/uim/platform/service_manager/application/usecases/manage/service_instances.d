@@ -22,7 +22,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(TenantId tenantId, CreateServiceInstanceRequest dto) {
-        import std.conv : to;
+        
 
         ServiceInstance e;
         e.id = ServiceInstanceId(MonoTime.currTime.ticks.to!string);

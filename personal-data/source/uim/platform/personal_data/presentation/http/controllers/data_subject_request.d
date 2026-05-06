@@ -67,7 +67,7 @@ class DataSubjectRequestController : PlatformController {
             if (dataSubjectId.length > 0) {
                 requests = uc.listByDataSubject(dataSubjectId);
             } else if (statusFilter.length > 0) {
-                import std.conv : to;
+                
 
                 try {
                     auto s = statusFilter.to!RequestStatus;
@@ -94,7 +94,7 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.getById(id);
@@ -110,7 +110,7 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateDataSubjectRequestRequest r;
@@ -141,7 +141,7 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.domain.types;
+module uim.platform.identity.authentication.domain.types;
 
 /// Unique identifier type alias for type safety.
 

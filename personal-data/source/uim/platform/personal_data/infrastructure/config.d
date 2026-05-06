@@ -19,7 +19,7 @@ struct SrvConfig {
 
 SrvConfig loadConfig() {
     import std.process : environment;
-    import std.conv : to;
+    
 
     SrvConfig config;
     config.host = environment.get("PERSONAL_DATA_HOST", "0.0.0.0");

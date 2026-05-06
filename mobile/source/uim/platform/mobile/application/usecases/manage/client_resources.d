@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.client_resource;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     private ClientResourceRepository repo;

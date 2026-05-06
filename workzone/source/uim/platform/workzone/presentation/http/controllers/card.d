@@ -207,7 +207,7 @@ private Json serializeCard(Card c) {
     .set("headerTitle", c.manifest.headerTitle)
     .set("maxItems", c.manifest.maxItems);
 
-  // import std.conv : to;
+  
   return Json.emptyObject
     .set("id", c.id)
     .set("tenantId", c.tenantId)

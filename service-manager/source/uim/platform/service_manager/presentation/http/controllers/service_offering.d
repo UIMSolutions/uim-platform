@@ -39,7 +39,7 @@ class ServiceOfferingController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, ServiceOfferingId(id));
@@ -78,7 +78,7 @@ class ServiceOfferingController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateServiceOfferingRequest r;
@@ -97,7 +97,7 @@ class ServiceOfferingController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(req.getTenantId, ServiceOfferingId(id));
             if (result.success) {

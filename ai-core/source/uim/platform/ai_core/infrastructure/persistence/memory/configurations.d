@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryConfigurationRepository : ConfigurationRepository {
   private Configuration[][string] store;
 
-  Configuration findById(ConfigurationId id, ResourceGroupId rgId) {
+  Configuration findById(ResourceGroupId rgId, ConfigurationId id) {
     if (auto rg = rgId in store) {
       foreach (c; *rg) {
         if (c.id == id)
@@ -29,13 +29,13 @@ class MemoryConfigurationRepository : ConfigurationRepository {
     return Configuration.init;
   }
 
-  Configuration[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
+  Configuration[] findByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
     if (auto rg = rgId in store)
       return (rg).filter!(c => c.scenarioId == scenarioId).array;
     return null;
   }
 
-  Configuration[] findByExecutable(ExecutableId execId, ResourceGroupId rgId) {
+  Configuration[] findByExecutable(ResourceGroupId rgId, ExecutableId execId) {
     if (auto rg = rgId in store)
       return (rg).filter!(c => c.executableId == execId).array;
     return null;

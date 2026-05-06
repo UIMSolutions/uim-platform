@@ -11,7 +11,7 @@ module uim.platform.abap_environment.application.usecases.manage.transport_reque
 // import uim.platform.abap_environment.domain.services.transport_release_validator;
 // import uim.platform.abap_environment.domain.types;
 
-// import std.conv : to;
+
 // import std.uuid : randomUUID;
 import uim.platform.abap_environment;
 
@@ -41,7 +41,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.targetSystemId = req.targetSystemId;
     tr.description = req.description;
     tr.owner = req.owner;
-    tr.transportType = parseTransportType(req.transportType);
+    tr.transportType = req.transportType.to!TransportType;
     tr.status = TransportStatus.modifiable;
 
     // import std.datetime.systime : Clock;
@@ -135,8 +135,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return repo.findBySystem(systemId);
   }
 
-  TransportRequest[] listByStatus(SystemInstanceId systemId, string statusStr) {
-    return repo.findByStatus(systemId, parseTransportStatus(statusStr));
+  TransportRequest[] listByStatus(SystemInstanceId systemId, TransportStatus status) {
+    return repo.findByStatus(systemId, status);
   }
 
   CommandResult deleteRequest(TransportRequestId id) {

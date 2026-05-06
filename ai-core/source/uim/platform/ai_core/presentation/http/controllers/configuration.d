@@ -14,7 +14,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ConfigurationController : PlatformController {
+class ConfigurationController : ManageController {
   private ManageConfigurationsUseCase uc;
 
   this(ManageConfigurationsUseCase uc) {
@@ -30,17 +30,15 @@ class ConfigurationController : PlatformController {
     router.delete_("/api/v2/lm/configurations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto j = req.json;
+  override Json createHandler(Json data) {
       CreateConfigurationRequest r;
-      r.tenantId = req.getTenantId;
-      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = j.getString("scenarioId");
-      r.executableId = j.getString("executableId");
-      r.name = j.getString("name");
-      r.parameterValues = jsonKeyValuePairs(j, "parameterBindings");
-      r.inputArtifacts = jsonKeyValuePairs(j, "inputArtifactBindings");
+      r.tenantId = data.getTenantId;
+      r.resourceGroupId = ResourceGroupId(data.get("AI-Resource-Group", ""));
+      r.scenarioId = data.getString("scenarioId");
+      r.executableId = data.getString("executableId");
+      r.name = data.getString("name");
+      r.parameterValues = jsonKeyValuePairs(data, "parameterBindings");
+      r.inputArtifacts = jsonKeyValuePairs(data, "inputArtifactBindings");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -48,13 +46,12 @@ class ConfigurationController : PlatformController {
           .set("id", result.id)
           .set("message", "Configuration created");
 
-        res.writeJsonBody(resp, 201);
+        return resp;
       } else {
-        writeError(res, 400, result.error);
+        auto resp = Json.emptyObject
+          .set("error", result.error);
+        return resp;
       }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -98,7 +95,7 @@ class ConfigurationController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -124,7 +121,7 @@ class ConfigurationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

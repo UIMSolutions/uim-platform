@@ -23,7 +23,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0) return CommandResult(false, "", "Purpose name is required");
         if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
 
-        import std.conv : to;
+        
 
         ProcessingPurpose p;
         p.id = r.id;
@@ -57,7 +57,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Processing purpose not found");
 
-        import std.conv : to;
+        
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;

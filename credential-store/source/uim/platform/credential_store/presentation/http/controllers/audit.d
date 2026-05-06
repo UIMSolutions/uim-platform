@@ -31,7 +31,7 @@ class AuditController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       TenantId tenantId = req.getTenantId;
       auto namespaceId = req.params.get("namespaceId", "");
@@ -70,7 +70,7 @@ class AuditController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = AuditLogEntryId(extractIdFromPath(req.requestURI.to!string));
       auto auditLog = auditLogs.getById(id);

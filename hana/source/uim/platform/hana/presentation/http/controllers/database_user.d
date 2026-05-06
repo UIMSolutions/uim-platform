@@ -88,7 +88,7 @@ class DatabaseUserController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto u = uc.getById(id);
@@ -117,7 +117,7 @@ class DatabaseUserController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto j = req.json;
       UpdateDatabaseUserRequest r;
@@ -146,7 +146,7 @@ class DatabaseUserController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.removeById(id);

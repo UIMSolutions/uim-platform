@@ -46,7 +46,7 @@ class ApplicationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = ApplicationId(extractIdFromPath(path));
             auto e = usecase.getById(id);
@@ -92,7 +92,7 @@ class ApplicationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ApplicationDTO dto;
@@ -120,7 +120,7 @@ class ApplicationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = ApplicationId(extractIdFromPath(path));
             auto result = usecase.remove(id);

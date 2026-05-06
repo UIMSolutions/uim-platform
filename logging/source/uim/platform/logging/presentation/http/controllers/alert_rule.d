@@ -42,7 +42,7 @@ class AlertRuleController : PlatformController {
       r.condition = j.getString("condition");
       r.field = j.getString("field");
       r.pattern = j.getString("pattern");
-      r.thresholdValue = getDouble(j, "thresholdValue");
+      r.thresholdValue = j.getDouble("thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
@@ -89,7 +89,7 @@ class AlertRuleController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       if (!usecase.hasRule(id)) {
@@ -115,7 +115,7 @@ class AlertRuleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -125,7 +125,7 @@ class AlertRuleController : PlatformController {
       r.condition = j.getString("condition");
       r.field = j.getString("field");
       r.pattern = j.getString("pattern");
-      r.thresholdValue = getDouble(j, "thresholdValue");
+      r.thresholdValue = j.getDouble("thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
@@ -135,7 +135,8 @@ class AlertRuleController : PlatformController {
       auto result = usecase.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Alert rule updated successfully");
           
         res.writeJsonBody(resp, 200);
       } else {
@@ -148,11 +149,15 @@ class AlertRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       usecase.removeRule(id);
-      res.writeJsonBody(Json.emptyObject, 204);
+      auto resp = Json.emptyObject
+        .set("id", id)
+        .set("message", "Alert rule deleted successfully");
+        
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

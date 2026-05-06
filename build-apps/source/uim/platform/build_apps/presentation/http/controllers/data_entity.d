@@ -46,7 +46,7 @@ class DataEntityController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));
@@ -95,7 +95,7 @@ class DataEntityController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto j = req.json;
@@ -123,7 +123,7 @@ class DataEntityController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));

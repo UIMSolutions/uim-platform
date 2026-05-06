@@ -23,18 +23,18 @@ long jsonLong(Json j, string key, long defaultValue = 0) {
   return v.isInteger ? v.get!long : defaultValue;
 }
 
-double getDouble(Json j, string key) {
-  if (!j.hasKey(key))
-    return 0.0;
+// double getDouble(Json j, string key) {
+//   if (!j.hasKey(key))
+//     return 0.0;
 
-  auto v = j[key];
-  if (v.isFloat)
-    return v.get!double;
+//   auto v = j[key];
+//   if (v.isFloat)
+//     return v.get!double;
 
-  if (v.isInteger)
-    return cast(double)v.get!long;
-  return 0.0;
-}
+//   if (v.isInteger)
+//     return cast(double)v.get!long;
+//   return 0.0;
+// }
 
 string[][] jsonPairArray(Json j, string key) {
   if (!j.isObject)
@@ -166,7 +166,7 @@ string extractId(string uri) {
 
 /*
  string extractId(scope HTTPServerRequest req) {
-  // import std.conv : to;
+  
   // import std.string : split;
   auto path = req.requestURI;
   auto parts = path.split("/");
@@ -238,7 +238,7 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        // import std.conv : to;
+        
         j[name] = Json(val.tupleof[i].to!string);
       } else static if (is(FT == string[string])) {
         auto obj = Json.emptyObject;
@@ -267,7 +267,7 @@ T jsonEnum(T)(Json j, string key, T default_ = T.init) {
   auto str = j.getString(key);
   if (str.length == 0)
     return default_;
-  // import std.conv : to;
+  
   try
     return str.to!T;
   catch (Exception)
@@ -301,7 +301,7 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        // import std.conv : to;
+        
         j[name] = Json(val.tupleof[i].to!string);
       } else static if (is(FT == string[string])) {
         auto obj = Json.emptyObject;
@@ -438,7 +438,7 @@ string[][] jsonFieldArray(Json j, string key) {
 }
 
 string[][] jsonRegionArray(Json j, string key) {
-  import std.conv : to;
+  
 
   if (!j.isObject)
     return null;
@@ -485,7 +485,7 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        // import std.conv : to;
+        
 
         j[name] = Json(val.tupleof[i].to!string);
       }

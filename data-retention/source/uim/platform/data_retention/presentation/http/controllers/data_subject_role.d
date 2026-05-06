@@ -52,7 +52,7 @@ class DataSubjectRoleController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto dsr = uc.getById(id);
             if (dsr.isNull) { writeError(res, 404, "Data subject role not found"); return; }
@@ -65,7 +65,7 @@ class DataSubjectRoleController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateDataSubjectRoleRequest r;
@@ -82,7 +82,7 @@ class DataSubjectRoleController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             uc.removeById(id);
             res.writeJsonBody(Json.emptyObject, 204);

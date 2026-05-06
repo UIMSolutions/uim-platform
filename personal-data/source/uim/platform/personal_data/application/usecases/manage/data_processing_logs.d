@@ -21,7 +21,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     CommandResult create(CreateDataProcessingLogRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
 
-        import std.conv : to;
+        
 
         DataProcessingLog entry;
         entry.id = r.id;

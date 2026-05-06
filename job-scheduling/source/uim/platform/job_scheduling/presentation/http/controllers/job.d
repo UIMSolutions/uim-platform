@@ -106,7 +106,7 @@ class JobController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
@@ -126,7 +126,7 @@ class JobController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
@@ -159,7 +159,7 @@ class JobController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
@@ -195,7 +195,7 @@ class JobController : PlatformController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             TenantId tenantId = req.getTenantId;
             auto query = req.params.get("q", "");

@@ -11,7 +11,6 @@ module uim.platform.logging.application.usecases.manage.retention_policies;
 // import uim.platform.logging.domain.types;
 // import uim.platform.logging.application.dto;
 
-// import std.conv : to;
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -88,16 +87,4 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  private static DataType parseDataType(string s) {
-    switch (s) {
-    case "logs":
-      return DataType.logs;
-    case "metrics":
-      return DataType.metrics;
-    case "traces":
-      return DataType.traces;
-    default:
-      return DataType.all;
-    }
-  }
 }

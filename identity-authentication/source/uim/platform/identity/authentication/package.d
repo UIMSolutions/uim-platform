@@ -10,6 +10,7 @@ public {
 
   import uim.platform.identity.authentication.application;
   import uim.platform.identity.authentication.domain;
+  import uim.platform.identity.authentication.helpers;
   import uim.platform.identity.authentication.infrastructure;
   import uim.platform.identity.authentication.presentation;
 }

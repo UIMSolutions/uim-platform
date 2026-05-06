@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.application.usecases.manage.users;
+module uim.platform.identity.authentication.application.usecases.manage.users;
 
-// import uim.platform.identity_authentication.domain.entities.user;
-// import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.repositories.user;
-// import uim.platform.identity_authentication.domain.ports.repositories.password_service;
-// import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity.authentication.domain.entities.user;
+// import uim.platform.identity.authentication.domain.types;
+// import uim.platform.identity.authentication.domain.ports.repositories.user;
+// import uim.platform.identity.authentication.domain.ports.repositories.password_service;
+// import uim.platform.identity.authentication.application.dto;
 // 
 // // import std.uuid;
 // // import std.datetime.systime : Clock;
 
-import uim.platform.identity_authentication;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:

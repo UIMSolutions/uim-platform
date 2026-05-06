@@ -5,15 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.application.usecases.manage.applications;
 
-// import uim.platform.identity_authentication.domain.entities.application;
-// import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.repositories.application;
-// import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity.authentication.domain.entities.application;
+// import uim.platform.identity.authentication.domain.types;
+// import uim.platform.identity.authentication.domain.ports.repositories.application;
+// import uim.platform.identity.authentication.application.dto;
 // 
 // // import std.uuid;
 // // import std.datetime.systime : Clock;
 
-import uim.platform.identity_authentication;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:

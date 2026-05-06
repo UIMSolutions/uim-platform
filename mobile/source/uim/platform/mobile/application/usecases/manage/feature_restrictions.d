@@ -11,7 +11,7 @@ import uim.platform.mobile.domain.types;
 import uim.platform.mobile.domain.services.feature_evaluation_service;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     private FeatureRestrictionRepository repo;

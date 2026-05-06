@@ -80,7 +80,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             import std.algorithm : endsWith;
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
@@ -100,7 +100,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskDefinitionRequest r;
@@ -129,7 +129,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
@@ -152,7 +152,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
@@ -175,7 +175,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
             auto result = uc.removeById(tenantId, id);

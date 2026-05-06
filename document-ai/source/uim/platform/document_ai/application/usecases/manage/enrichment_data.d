@@ -11,7 +11,7 @@ import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
   private EnrichmentDataRepository repo;

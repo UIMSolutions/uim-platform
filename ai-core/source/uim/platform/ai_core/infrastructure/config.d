@@ -6,7 +6,7 @@
 module uim.platform.ai_core.infrastructure.config;
 
 import std.process : environment;
-import std.conv : to;
+
 import uim.platform.ai_core;
 
 mixin(ShowModule!()); 

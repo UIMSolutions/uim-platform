@@ -33,7 +33,7 @@ class RunLogController : PlatformController {
 
     private void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto ids = extractIds(path);
@@ -56,7 +56,7 @@ class RunLogController : PlatformController {
 
     private void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto jobId = extractJobId(path);
@@ -78,7 +78,7 @@ class RunLogController : PlatformController {
 
     private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto runLogId = extractIdFromPath(path);
             auto j = req.json;

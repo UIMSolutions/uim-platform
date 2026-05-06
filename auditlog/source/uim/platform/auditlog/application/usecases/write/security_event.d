@@ -77,7 +77,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
   }
 
   private string buildSecurityMessage(WriteSecurityEventRequest req) {
-    // import std.conv : to;
+    
 
     return req.eventType ~ " by user " ~ req.userName ~ " from " ~ req.ipAddress
       ~ " outcome=" ~ req.outcome.to!string;

@@ -79,7 +79,7 @@ class SchemaController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -98,7 +98,7 @@ class SchemaController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -128,7 +128,7 @@ class SchemaController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -145,7 +145,7 @@ class SchemaController : PlatformController {
   }
 
   private Json schemaToJson(Schema s) {
-    import std.conv : to;
+    
 
     auto sj = Json.emptyObject
       .set("id", s.id)

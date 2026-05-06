@@ -47,7 +47,8 @@ class StreamController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Log stream created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -74,7 +75,9 @@ class StreamController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", streams.length);
+        .set("totalCount", streams.length)
+        .set("message", "Log stream list retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -83,9 +86,9 @@ class StreamController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
       auto s = uc.getById(id);
 
       if (s.isNull) {
@@ -109,9 +112,9 @@ class StreamController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateLogStreamRequest r;
       r.description = j.getString("description");
@@ -121,7 +124,8 @@ class StreamController : PlatformController {
       auto result = uc.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Log stream updated");
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -133,9 +137,9 @@ class StreamController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

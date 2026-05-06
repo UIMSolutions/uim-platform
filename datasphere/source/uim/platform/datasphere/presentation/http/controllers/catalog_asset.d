@@ -90,7 +90,7 @@ class CatalogAssetController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto query = req.params.get("q", "");
@@ -120,7 +120,7 @@ class CatalogAssetController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -152,7 +152,7 @@ class CatalogAssetController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

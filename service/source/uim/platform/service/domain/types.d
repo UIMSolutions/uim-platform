@@ -25,3 +25,13 @@ struct UserId {
 
   mixin DomainId;
 }
+
+struct GlobalAccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}

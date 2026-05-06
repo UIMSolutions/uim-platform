@@ -32,17 +32,17 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.application.usecases.manage.translations;
 // 
 // // Controllers
-// import uim.platform.identity_authentication.presentation.http.site;
-// import uim.platform.identity_authentication.presentation.http.page;
-// import uim.platform.identity_authentication.presentation.http.section;
-// import uim.platform.identity_authentication.presentation.http.tile;
-// import uim.platform.identity_authentication.presentation.http.catalog;
-// import uim.platform.identity_authentication.presentation.http.provider;
-// import uim.platform.identity_authentication.presentation.http.role;
-// import uim.platform.identity_authentication.presentation.http.theme;
-// import uim.platform.identity_authentication.presentation.http.menu_item;
-// import uim.platform.identity_authentication.presentation.http.translation;
-// import uim.platform.identity_authentication.presentation.http.health;
+// import uim.platform.identity.authentication.presentation.http.site;
+// import uim.platform.identity.authentication.presentation.http.page;
+// import uim.platform.identity.authentication.presentation.http.section;
+// import uim.platform.identity.authentication.presentation.http.tile;
+// import uim.platform.identity.authentication.presentation.http.catalog;
+// import uim.platform.identity.authentication.presentation.http.provider;
+// import uim.platform.identity.authentication.presentation.http.role;
+// import uim.platform.identity.authentication.presentation.http.theme;
+// import uim.platform.identity.authentication.presentation.http.menu_item;
+// import uim.platform.identity.authentication.presentation.http.translation;
+// import uim.platform.identity.authentication.presentation.http.health;
 
     import uim.platform.portal.application.usecases.manage;
 

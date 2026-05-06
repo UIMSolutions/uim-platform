@@ -23,7 +23,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         if (r.firstName.length == 0 && r.lastName.length == 0)
             return CommandResult(false, "", "First name or last name is required");
 
-        import std.conv : to;
+        
 
         DataSubject ds;
         ds.id = r.id;

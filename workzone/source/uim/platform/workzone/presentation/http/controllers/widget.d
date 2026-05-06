@@ -12,7 +12,7 @@ module uim.platform.workzone.presentation.http.controllers.widget;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.widget;
-// import uim.platform.identity_authentication.presentation.http
+// import uim.platform.identity.authentication.presentation.http
 import uim.platform.workzone;
 
 mixin(ShowModule!());
@@ -178,7 +178,7 @@ private WidgetConfig parseWidgetConfig(Json j) {
 }
 
 private Json serializeWidget(Widget w) {
-  // import std.conv : to;
+  
   auto j = Json.emptyObject
     .set("id", w.id)
     .set("pageId", w.pageId)

@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.push_registration;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     private PushRegistrationRepository repo;

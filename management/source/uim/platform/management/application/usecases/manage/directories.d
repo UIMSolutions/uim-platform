@@ -35,10 +35,6 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  CommandResult update(string id, UpdateDirectoryRequest request) {
-    return update(DirectoryId(id), request);
-  }
-
   CommandResult update(DirectoryId id, UpdateDirectoryRequest request) {
     auto directory = directories.findById(id);
     if (directory.isNull)
@@ -58,32 +54,16 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  Directory getById(string id) {
-    return directories.findById(DirectoryId(id));
-  }
-
   Directory getById(DirectoryId id) {
     return directories.findById(id);
-  }
-
-  Directory[] listByGlobalAccount(string gaId) {
-    return listByGlobalAccount(GlobalAccountId(gaId));
   }
 
   Directory[] listByGlobalAccount(GlobalAccountId gaId) {
     return directories.findByGlobalAccount(gaId);
   }
 
-  Directory[] listByParent(string parentId) {
-    return directories.findByParent(DirectoryId(parentId));
-  }
-
   Directory[] listByParent(DirectoryId parentId) {
     return directories.findByParent(parentId);
-  }
-
-  CommandResult remove(string id) {
-    return remove(DirectoryId(id));
   }
 
   CommandResult remove(DirectoryId id) {

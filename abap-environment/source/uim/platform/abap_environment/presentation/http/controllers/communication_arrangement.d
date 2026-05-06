@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.http.controllers.communication
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// // import std.conv : to;
+// 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.communication_arrangements;
 // import uim.platform.abap_environment.application.dto;
@@ -60,13 +60,10 @@ class CommunicationArrangementController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,10 +77,9 @@ class CommunicationArrangementController : PlatformController {
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", arrangements.length);
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -97,8 +93,7 @@ class CommunicationArrangementController : PlatformController {
         return;
       }
       res.writeJsonBody(arrangement.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -123,13 +118,10 @@ class CommunicationArrangementController : PlatformController {
           .set("status", "updated");
 
         res.writeJsonBody(response, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -140,15 +132,12 @@ class CommunicationArrangementController : PlatformController {
       auto result = uc.deleteArrangement(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-        .set("status", "deleted");
+          .set("status", "deleted");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

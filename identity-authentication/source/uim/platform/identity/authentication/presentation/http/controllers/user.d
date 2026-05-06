@@ -3,16 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.presentation.http.controllers.user;
+module uim.platform.identity.authentication.presentation.http.controllers.user;
 // 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.identity_authentication.application.usecases.manage.users;
-// import uim.platform.identity_authentication.application.dto;
-// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity.authentication.application.usecases.manage.users;
+// import uim.platform.identity.authentication.application.dto;
+// import uim.platform.identity.authentication.domain.entities.user;
 // 
-import uim.platform.identity_authentication;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:
@@ -82,7 +82,7 @@ class UserController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      // import std.conv : to;
+      
 
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);

@@ -8,7 +8,7 @@ module uim.platform.auditlog.presentation.http.controllers.audit_config;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// // import std.conv : to;
+// 
 // 
 // import uim.platform.auditlog.application.usecases.manage.audit_config;
 // import uim.platform.auditlog.application.dto;
@@ -19,7 +19,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class AuditConfigController : PlatformController {
+class AuditConfigController : ManageController {
   private ManageAuditConfigUseCase useCase;
 
   this(ManageAuditConfigUseCase useCase) {
@@ -36,46 +36,42 @@ class AuditConfigController : PlatformController {
     router.delete_("/api/v1/configs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      TenantId tenantId = req.getTenantId;
+  override Json createHandler(Json data) {
+    auto request = CreateAuditConfigRequest();
+    request.tenantId = TenantId(data.getString("tenantId"));
+    request.name = data.getString("name");
+    request.logDataAccess = data.getBoolean("logDataAccess", true);
+    request.logDataModification = data.getBoolean("logDataModification", true);
+    request.logSecurityEvents = data.getBoolean("logSecurityEvents", true);
+    request.logConfigurationChanges = data.getBoolean("logConfigurationChanges", true);
+    request.enableDataMasking = data.getBoolean("enableDataMasking");
+    request.maskedFields = getStrings(data, "maskedFields");
+    request.excludedServices = getStrings(data, "excludedServices");
 
-      auto j = req.json;
-      auto request = CreateAuditConfigRequest();
-      request.tenantId = tenantId;
-      request.name = j.getString("name");
-      request.logDataAccess = j.getBoolean("logDataAccess", true);
-      request.logDataModification = j.getBoolean("logDataModification", true);
-      request.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
-      request.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
-      request.enableDataMasking = j.getBoolean("enableDataMasking");
-      request.maskedFields = getStrings(j, "maskedFields");
-      request.excludedServices = getStrings(j, "excludedServices");
+    auto sevStr = data.getString("minimumSeverity");
+    if (sevStr == "warning")
+      request.minimumSeverity = AuditSeverity.warning;
+    else if (sevStr == "error")
+      request.minimumSeverity = AuditSeverity.error;
+    else if (sevStr == "critical")
+      request.minimumSeverity = AuditSeverity.critical;
+    else
+      request.minimumSeverity = AuditSeverity.info;
 
-      auto sevStr = j.getString("minimumSeverity");
-      if (sevStr == "warning")
-        request.minimumSeverity = AuditSeverity.warning;
-      else if (sevStr == "error")
-        request.minimumSeverity = AuditSeverity.error;
-      else if (sevStr == "critical")
-        request.minimumSeverity = AuditSeverity.critical;
-      else
-        request.minimumSeverity = AuditSeverity.info;
+    request.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
 
-      request.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
+    auto result = useCase.createConfig(request);
+    if (result.isSuccess()) {
+      auto response = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Audit config created successfully")
+        .set("status", 201);
 
-      auto result = useCase.createConfig(request);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Audit config created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      return response;
+    } else {
+      return Json.emptyObject
+        .set("error", "Failed to create audit config")
+        .set("status", 400);
     }
   }
 
@@ -158,13 +154,13 @@ class AuditConfigController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      
+
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
       useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted")
         .set("message", "Audit config deleted successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

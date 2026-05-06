@@ -88,7 +88,7 @@ class CertificateController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             if (path.length > 13 && path[$ - 13 .. $] == "/upload-chain")
@@ -132,7 +132,7 @@ class CertificateController : PlatformController {
 
     private void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
@@ -161,7 +161,7 @@ class CertificateController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
@@ -190,7 +190,7 @@ class CertificateController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
@@ -213,7 +213,7 @@ class CertificateController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = certificates.removeById(id);

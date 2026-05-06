@@ -30,11 +30,12 @@ class MeshBridgeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = uc.list();
-            auto jarr = items.map!(e => e.toJson()).array;
-            
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Mesh bridge list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -44,11 +45,14 @@ class MeshBridgeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = uc.getById(MeshBridgeId(id));
-            if (e.isNull) { writeError(res, 404, "Mesh bridge not found"); return; }
+            if (e.isNull) {
+                writeError(res, 404, "Mesh bridge not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -79,8 +83,8 @@ class MeshBridgeController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Mesh bridge created");
+                    .set("id", result.id)
+                    .set("message", "Mesh bridge created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -93,7 +97,7 @@ class MeshBridgeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             MeshBridgeDTO dto;
@@ -108,8 +112,8 @@ class MeshBridgeController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Mesh bridge updated");
+                    .set("id", result.id)
+                    .set("message", "Mesh bridge updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -122,13 +126,13 @@ class MeshBridgeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = uc.remove(MeshBridgeId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Mesh bridge deleted");
+                    .set("message", "Mesh bridge deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

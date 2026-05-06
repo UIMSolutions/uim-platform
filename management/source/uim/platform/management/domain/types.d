@@ -12,15 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Unique identifier type aliases for type safety.
-struct GlobalAccountId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct DirectoryId {
   string value;

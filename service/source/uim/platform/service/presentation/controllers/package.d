@@ -8,4 +8,5 @@ module uim.platform.service.presentation.controllers;
 public {
   import uim.platform.service.presentation.controllers.health;
   import uim.platform.service.presentation.controllers.controller;
+  import uim.platform.service.presentation.controllers.manage;
 }

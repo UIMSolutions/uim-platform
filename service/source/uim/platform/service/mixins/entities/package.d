@@ -8,4 +8,6 @@ module uim.platform.service.mixins.entities;
 public {
   import uim.platform.service.mixins.entities.id;
   import uim.platform.service.mixins.entities.tenant;
+  import uim.platform.service.mixins.entities.global;
+  import uim.platform.service.mixins.entities.resource;
 }

@@ -45,7 +45,7 @@ class ExecutionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = ExecutionId(extractIdFromPath(path));
             auto e = executions.getById(id);
@@ -84,7 +84,7 @@ class ExecutionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             ExecutionDTO dto;
             dto.executionId = ExecutionId(extractIdFromPath(path));
@@ -106,7 +106,7 @@ class ExecutionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = ExecutionId(extractIdFromPath(path));
             auto result = executions.remove(id);

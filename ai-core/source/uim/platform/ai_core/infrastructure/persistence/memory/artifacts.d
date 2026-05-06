@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryArtifactRepository : ArtifactRepository {
   private Artifact[][string] store;
 
-  Artifact findById(ArtifactId id, ResourceGroupId rgId) {
+  Artifact findById(ResourceGroupId rgId, ArtifactId id) {
     foreach (a; findByResourceGroup(rgId)) {
       if (a.id == id)
         return a;

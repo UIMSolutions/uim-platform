@@ -77,7 +77,7 @@ class RegisteredApplicationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             if (path.length > 9 && path[$ - 9 .. $] == "/activate") return;
@@ -97,7 +97,7 @@ class RegisteredApplicationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateRegisteredApplicationRequest r;
@@ -128,7 +128,7 @@ class RegisteredApplicationController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
@@ -151,7 +151,7 @@ class RegisteredApplicationController : PlatformController {
 
     private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/suspend"
@@ -174,7 +174,7 @@ class RegisteredApplicationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);
             if (result.success) {

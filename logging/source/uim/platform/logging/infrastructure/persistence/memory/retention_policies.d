@@ -26,7 +26,7 @@ class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, Reten
     return RetentionPolicy.init;
   }
   void removeDefault(TenantId tenantId) {
-    remove(findByTenant(tenantId));
+    remove(findDefault(tenantId));
   }
 
   size_t countByDataType(TenantId tenantId, DataType dt) {

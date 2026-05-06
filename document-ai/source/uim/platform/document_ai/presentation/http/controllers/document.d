@@ -80,7 +80,7 @@ class DocumentController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -99,7 +99,7 @@ class DocumentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -117,7 +117,7 @@ class DocumentController : PlatformController {
 
   private void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -145,7 +145,7 @@ class DocumentController : PlatformController {
 
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto docId = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -201,7 +201,7 @@ class DocumentController : PlatformController {
   }
 
   private Json documentToJson(Document d) {
-    import std.conv : to;
+    
 
     auto dj = Json.emptyObject
       .set("id", d.id)

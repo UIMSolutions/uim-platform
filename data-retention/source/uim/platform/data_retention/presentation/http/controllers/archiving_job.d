@@ -56,7 +56,7 @@ class ArchivingJobController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto aj = uc.getById(id);
             if (aj.isNull) { writeError(res, 404, "Archiving job not found"); return; }
@@ -74,7 +74,7 @@ class ArchivingJobController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateArchivingJobRequest r;
@@ -92,7 +92,7 @@ class ArchivingJobController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             uc.removeById(id);
             res.writeJsonBody(Json.emptyObject, 204);

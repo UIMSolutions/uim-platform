@@ -60,7 +60,7 @@ class BusinessPurposeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto bp = uc.getById(id);
             if (bp.isNull) { writeError(res, 404, "Business purpose not found"); return; }
@@ -77,7 +77,7 @@ class BusinessPurposeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateBusinessPurposeRequest r;
@@ -97,7 +97,7 @@ class BusinessPurposeController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             // path: /api/v1/data-retention/business-purposes/{id}/activate
             auto parts = path.split("/");
@@ -113,7 +113,7 @@ class BusinessPurposeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);
             if (result.success) {

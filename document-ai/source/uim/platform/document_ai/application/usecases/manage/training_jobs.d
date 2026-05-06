@@ -12,7 +12,7 @@ import uim.platform.document_ai.domain.ports.repositories.documents;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
   private TrainingJobRepository jobRepo;

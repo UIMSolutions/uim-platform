@@ -75,7 +75,7 @@ class WorkspaceController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto w = uc.getById(id);
@@ -92,7 +92,7 @@ class WorkspaceController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
@@ -118,7 +118,7 @@ class WorkspaceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);

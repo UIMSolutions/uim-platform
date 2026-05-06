@@ -32,17 +32,17 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.application.usecases.manage.widgets;
 
 // // Controllers
-// import uim.platform.identity_authentication.presentation.http.workspace;
-// import uim.platform.identity_authentication.presentation.http.workpage;
-// import uim.platform.identity_authentication.presentation.http.card;
-// import uim.platform.identity_authentication.presentation.http.content;
-// import uim.platform.identity_authentication.presentation.http.feed;
-// import uim.platform.identity_authentication.presentation.http.notification;
-// import uim.platform.identity_authentication.presentation.http.task;
-// import uim.platform.identity_authentication.presentation.http.channel;
-// import uim.platform.identity_authentication.presentation.http.app;
-// import uim.platform.identity_authentication.presentation.http.widget;
-// import uim.platform.identity_authentication.presentation.http.health;
+// import uim.platform.identity.authentication.presentation.http.workspace;
+// import uim.platform.identity.authentication.presentation.http.workpage;
+// import uim.platform.identity.authentication.presentation.http.card;
+// import uim.platform.identity.authentication.presentation.http.content;
+// import uim.platform.identity.authentication.presentation.http.feed;
+// import uim.platform.identity.authentication.presentation.http.notification;
+// import uim.platform.identity.authentication.presentation.http.task;
+// import uim.platform.identity.authentication.presentation.http.channel;
+// import uim.platform.identity.authentication.presentation.http.app;
+// import uim.platform.identity.authentication.presentation.http.widget;
+// import uim.platform.identity.authentication.presentation.http.health;
 import uim.platform.workzone;
 
 mixin(ShowModule!());

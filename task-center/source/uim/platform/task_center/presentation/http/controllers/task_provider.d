@@ -80,7 +80,7 @@ class TaskProviderController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             import std.algorithm : endsWith;
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith("/sync")) return;
@@ -100,7 +100,7 @@ class TaskProviderController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskProviderRequest r;
@@ -130,7 +130,7 @@ class TaskProviderController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
@@ -153,7 +153,7 @@ class TaskProviderController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
@@ -176,7 +176,7 @@ class TaskProviderController : PlatformController {
 
     private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 5]; // remove "/sync"
             auto id = extractIdFromPath(stripped);
@@ -199,7 +199,7 @@ class TaskProviderController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(tenantId, id);

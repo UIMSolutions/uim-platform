@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.presentation.http.schema;
+module uim.platform.identity.authentication.presentation.http.schema;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -143,7 +143,7 @@ private void writeScimError(scope HTTPServerResponse res, int status, string det
   errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
   errRes["detail"] = Json(detail);
 
-  // import std.conv : to;
+  
   errRes["status"] = Json(status.to!string);
   res.writeJsonBody(errRes, status);
 }

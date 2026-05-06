@@ -3,45 +3,45 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.infrastructure.container;
+module uim.platform.identity.authentication.infrastructure.container;
 
-// import uim.platform.identity_authentication.infrastructure.config;
+// import uim.platform.identity.authentication.infrastructure.config;
 // 
 // // Repositories
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.user;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.group;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.tenant;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.app;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.session;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.token;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.policy;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.idp_config;
-// import uim.platform.identity_authentication.infrastructure.persistence.memory.risk_rule;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.user;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.group;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.tenant;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.app;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.session;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.token;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.policy;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.idp_config;
+// import uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rule;
 // 
 // // Services
-// import uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;
-// import uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
-// import uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
+// import uim.platform.identity.authentication.infrastructure.security.bcrypt_password_service;
+// import uim.platform.identity.authentication.infrastructure.security.jwt_token_service;
+// import uim.platform.identity.authentication.infrastructure.security.totp_mfa_service;
 // 
 // // Use Cases
-// import uim.platform.identity_authentication.application.usecases.authenticate_user;
-// import uim.platform.identity_authentication.application.usecases.issue_token;
-// import uim.platform.identity_authentication.application.usecases.manage.users;
-// import uim.platform.identity_authentication.application.usecases.manage.groups;
-// import uim.platform.identity_authentication.application.usecases.manage.applications;
-// import uim.platform.identity_authentication.application.usecases.manage.tenants;
-// import uim.platform.identity_authentication.application.usecases.manage.policies;
-// import uim.platform.identity_authentication.application.usecases.delegated_auth;
+// import uim.platform.identity.authentication.application.usecases.authenticate_user;
+// import uim.platform.identity.authentication.application.usecases.issue_token;
+// import uim.platform.identity.authentication.application.usecases.manage.users;
+// import uim.platform.identity.authentication.application.usecases.manage.groups;
+// import uim.platform.identity.authentication.application.usecases.manage.applications;
+// import uim.platform.identity.authentication.application.usecases.manage.tenants;
+// import uim.platform.identity.authentication.application.usecases.manage.policies;
+// import uim.platform.identity.authentication.application.usecases.delegated_auth;
 // 
 // // Controllers
-// import uim.platform.identity_authentication.presentation.http.controllers.auth;
-// import uim.platform.identity_authentication.presentation.http.controllers.user;
-// import uim.platform.identity_authentication.presentation.http.controllers.group;
-// import uim.platform.identity_authentication.presentation.http.controllers.application;
-// import uim.platform.identity_authentication.presentation.http.controllers.tenant;
-// import uim.platform.identity_authentication.presentation.http.controllers.policy;
+// import uim.platform.identity.authentication.presentation.http.controllers.auth;
+// import uim.platform.identity.authentication.presentation.http.controllers.user;
+// import uim.platform.identity.authentication.presentation.http.controllers.group;
+// import uim.platform.identity.authentication.presentation.http.controllers.application;
+// import uim.platform.identity.authentication.presentation.http.controllers.tenant;
+// import uim.platform.identity.authentication.presentation.http.controllers.policy;
 
-import uim.platform.identity_authentication;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:

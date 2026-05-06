@@ -14,9 +14,10 @@ mixin(ShowModule!());
 /// An environment instance represents a provisioned runtime environment
 /// (Cloud Foundry org, Kyma cluster, ABAP system, etc.) within a subaccount.
 struct EnvironmentInstance {
+  mixin GlobalEntity!(EnvironmentInstanceId);
+
   EnvironmentInstanceId id;
   SubaccountId subaccountId;
-  GlobalAccountId globalAccountId;
   string name;
   string description;
   EnvironmentType environmentType = EnvironmentType.cloudFoundry;
@@ -30,9 +31,37 @@ struct EnvironmentInstance {
   int memoryQuotaMb = 0; // for CF: org memory quota
   int routeQuota = 0;
   int serviceQuota = 0;
-  UserId createdBy;
-  long createdAt;
-  long updatedAt;
   string[string] parameters; // provisioning parameters
   string[string] labels;
+
+  Json toJson() const {
+    auto jParams = Json.emptyObject;
+    foreach (key, value; parameters) {
+      jParams.set(key, value);
+    }
+
+    auto jLabels = Json.emptyObject;
+    foreach (key, value; labels) {
+      jLabels.set(key, value);
+    }
+
+    return entityToJson
+      .set("id", id.value)
+      .set("subaccountId", subaccountId.value)
+      .set("name", name)
+      .set("description", description)
+      .set("environmentType", environmentType.to!string())
+      .set("status", status.to!string())
+      .set("planName", planName)
+      .set("landscapeLabel", landscapeLabel)
+      .set("technicalKey", technicalKey)
+      .set("dashboardUrl", dashboardUrl)
+      .set("platformRegion", platformRegion)
+      .set("services", services)
+      .set("memoryQuotaMb", memoryQuotaMb)
+      .set("routeQuota", routeQuota)
+      .set("serviceQuota", serviceQuota)
+      .set("parameters", jParams)
+      .set("labels", jLabels);
+  }
 }

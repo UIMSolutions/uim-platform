@@ -11,7 +11,7 @@ import uim.platform.mobile.presentation.http
 
 import uim.platform.mobile;
 
-import std.conv : to;
+
 
 class AppVersionController : PlatformController {
   private ManageAppVersionsUseCase uc;

@@ -54,10 +54,10 @@ enum PanelType {
 }
 
 enum DataType {
+  all,
   logs,
   metrics,
   traces,
-  all,
 }
 
 // Type of log query

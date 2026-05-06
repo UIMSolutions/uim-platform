@@ -22,7 +22,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult create(TenantId tenantId, CreateOperationRequest dto) {
-        import std.conv : to;
+        
 
         Operation e;
         e.id = OperationId(MonoTime.currTime.ticks.to!string);

@@ -87,7 +87,7 @@ class DnsRecordController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.getById(id);
@@ -117,7 +117,7 @@ class DnsRecordController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateDnsRecordRequest r;
@@ -143,7 +143,7 @@ class DnsRecordController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);

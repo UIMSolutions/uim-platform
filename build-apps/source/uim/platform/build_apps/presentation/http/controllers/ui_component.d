@@ -45,7 +45,7 @@ class UIComponentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = UIComponentId(extractIdFromPath(path));
             auto e = components.getById(id);
@@ -92,7 +92,7 @@ class UIComponentController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto j = req.json;
             UIComponentDTO dto;
@@ -119,7 +119,7 @@ class UIComponentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto id = UIComponentId(extractIdFromPath(path));
             auto result = components.remove(id);

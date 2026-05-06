@@ -76,7 +76,7 @@ class DeploymentController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -95,7 +95,7 @@ class DeploymentController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -124,7 +124,7 @@ class DeploymentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
@@ -145,7 +145,7 @@ class DeploymentController : PlatformController {
   }
 
   private Json deploymentToJson(Deployment d) {
-    import std.conv : to;
+    
 
     return Json.emptyObject
       .set("id", d.id)

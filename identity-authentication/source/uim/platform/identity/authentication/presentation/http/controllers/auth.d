@@ -3,15 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.presentation.http.controllers.auth;
+module uim.platform.identity.authentication.presentation.http.controllers.auth;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.identity_authentication.application.usecases.authenticate_user;
-// import uim.platform.identity_authentication.application.usecases.issue_token;
-// import uim.platform.identity_authentication.application.dto;
-import uim.platform.identity_authentication;
+// import uim.platform.identity.authentication.application.usecases.authenticate_user;
+// import uim.platform.identity.authentication.application.usecases.issue_token;
+// import uim.platform.identity.authentication.application.dto;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:
@@ -46,7 +46,7 @@ class AuthController : PlatformController {
       response["message"] = Json(result.message);
 
       if (result.mfaRequired) {
-        // import std.conv : to;
+        
 
         response["mfaRequired"] = Json(true);
         response["mfaType"] = Json(result.mfaType.to!string);

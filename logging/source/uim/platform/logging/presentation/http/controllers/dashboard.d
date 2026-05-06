@@ -98,7 +98,7 @@ class DashboardController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
       auto d = uc.getById(id);
@@ -135,7 +135,7 @@ class DashboardController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -161,7 +161,7 @@ class DashboardController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);

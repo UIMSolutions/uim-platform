@@ -11,7 +11,7 @@ import uim.platform.document_ai.domain.ports.repositories.templates;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageTemplatesUseCase { // TODO: UIMUseCase {
   private TemplateRepository repo;

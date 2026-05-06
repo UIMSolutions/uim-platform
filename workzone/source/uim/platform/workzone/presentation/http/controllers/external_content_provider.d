@@ -12,7 +12,7 @@ module uim.platform.workzone.presentation.http.controllers.external_content_prov
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.external_content_provider;
-// import uim.platform.identity_authentication.presentation.http;
+// import uim.platform.identity.authentication.presentation.http;
 import uim.platform.workzone;
 
 mixin(ShowModule!());

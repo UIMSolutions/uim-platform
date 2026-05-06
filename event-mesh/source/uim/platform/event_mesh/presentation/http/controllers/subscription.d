@@ -31,11 +31,11 @@ class SubscriptionController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = items.map!(e => toJson(e)).array;
-            
+
             auto resp = Json.emptyObject
                 .set("count", items.length)
                 .set("resources", jarr);
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -44,12 +44,17 @@ class SubscriptionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(EventSubscriptionId(id));
-            if (e.isNull) { writeError(res, 404, "Subscription not found"); return; }
-            res.writeJsonBody(e.toJsone, 200);
+            auto id = EventSubscriptionId(extractIdFromPath(path));
+            auto e = uc.getById(id);
+            if (e.isNull) {
+                writeError(res, 404, "Subscription not found");
+                return;
+            }
+
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -59,12 +64,12 @@ class SubscriptionController : PlatformController {
         try {
             auto j = req.json;
             SubscriptionDTO dto;
-            dto.id = j.getString("id");
+            dto.eventSubscriptionId = EventSubscriptionId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = j.getString("brokerServiceId");
-            dto.topicId = j.getString("topicId");
-            dto.queueId = j.getString("queueId");
-            dto.applicationId = j.getString("applicationId");
+            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
+            dto.topicId = TopicId(j.getString("topicId"));
+            dto.queueId = QueueId(j.getString("queueId"));
+            dto.eventApplicationId = EventApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
@@ -76,8 +81,8 @@ class SubscriptionController : PlatformController {
             auto result = uc.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Subscription created");
+                    .set("id", result.id)
+                    .set("message", "Subscription created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -90,11 +95,12 @@ class SubscriptionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SubscriptionDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.id = EventSubscriptionId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
@@ -104,8 +110,8 @@ class SubscriptionController : PlatformController {
             auto result = uc.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Subscription updated");
+                    .set("id", result.id)
+                    .set("message", "Subscription updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -118,14 +124,15 @@ class SubscriptionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(EventSubscriptionId(id));
+            auto id = EventSubscriptionId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Subscription deleted");
-                  
+                    .set("message", "Subscription deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

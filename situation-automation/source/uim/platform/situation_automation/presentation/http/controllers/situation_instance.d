@@ -96,7 +96,7 @@ class SituationInstanceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto i = uc.getById(id);
@@ -138,7 +138,7 @@ class SituationInstanceController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateSituationInstanceRequest r;
@@ -165,7 +165,7 @@ class SituationInstanceController : PlatformController {
 
     private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             import std.string : lastIndexOf;
 
             auto path = req.requestURI.to!string;
@@ -204,7 +204,7 @@ class SituationInstanceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);

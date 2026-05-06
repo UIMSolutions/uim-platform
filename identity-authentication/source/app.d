@@ -5,13 +5,15 @@
 *****************************************************************************************************************/
 module app;
 
-// import std.stdio;
-// import std.conv;
-import uim.platform.identity_authentication;
-import uim.platform.identity_authentication.infrastructure.config;
-import uim.platform.identity_authentication.infrastructure.container;
 
-// import vibe.d;
+// import std.conv;
+// import uim.platform.identity.authentication;
+// import uim.platform.identity.authentication.infrastructure.config;
+// import uim.platform.identity.authentication.infrastructure.container;
+
+import uim.platform.identity.authentication;
+
+mixin(ShowModule!());
 @safe:
 
 version (unittest) {
@@ -58,3 +60,4 @@ else {
 
     runApplication();
   }
+}

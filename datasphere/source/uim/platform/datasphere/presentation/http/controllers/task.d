@@ -91,7 +91,7 @@ class TaskController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -125,7 +125,7 @@ class TaskController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));

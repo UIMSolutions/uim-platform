@@ -77,7 +77,7 @@ class ConnectionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto connection = uc.getById(id);
@@ -94,7 +94,7 @@ class ConnectionController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
@@ -120,7 +120,7 @@ class ConnectionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = uc.removeById(id);

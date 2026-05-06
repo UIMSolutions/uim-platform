@@ -23,7 +23,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
         if (r.requestType.length == 0) return CommandResult(false, "", "Request type is required");
 
-        import std.conv : to;
+        
 
         DataSubjectRequest req;
         req.id = r.id;
@@ -65,7 +65,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Request not found");
 
-        import std.conv : to;
+        
 
         if (r.status.length > 0) {
             existing.status = r.status.to!RequestStatus;

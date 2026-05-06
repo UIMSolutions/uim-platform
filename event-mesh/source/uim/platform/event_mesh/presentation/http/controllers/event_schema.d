@@ -20,6 +20,7 @@ class EventSchemaController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/schemas", &handleList);
         router.get("/api/v1/event-mesh/schemas/*", &handleGet);
         router.post("/api/v1/event-mesh/schemas", &handleCreate);
@@ -45,10 +46,10 @@ class EventSchemaController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(EventSchemaId(id));
+            auto id = EventSchemaId(extractIdFromPath(path));
+            auto e = uc.getById(id);
             if (e.isNull) { writeError(res, 404, "Event schema not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -60,7 +61,7 @@ class EventSchemaController : PlatformController {
         try {
             auto j = req.json;
             EventSchemaDTO dto;
-            dto.id = j.getString("id");
+            dto.eventSchemaId = EventSchemaId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -87,11 +88,11 @@ class EventSchemaController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto j = req.json;
             EventSchemaDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.eventSchemaId = EventSchemaId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.schemaContent = j.getString("schemaContent");
@@ -115,10 +116,10 @@ class EventSchemaController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(EventSchemaId(id));
+            auto id = EventSchemaId(extractIdFromPath(path));
+            auto result = uc.remove(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Event schema deleted");

@@ -12,7 +12,7 @@ module uim.platform.workzone.presentation.http.controllers.group_;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.group;
-// import uim.platform.identity_authentication.presentation.http
+// import uim.platform.identity.authentication.presentation.http
 import uim.platform.workzone;
 
 mixin(ShowModule!());

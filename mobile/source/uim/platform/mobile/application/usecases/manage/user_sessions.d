@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.user_session;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     private UserSessionRepository repo;

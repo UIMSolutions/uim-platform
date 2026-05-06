@@ -60,7 +60,7 @@ class AlertController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       auto a = uc.getById(id);
@@ -134,8 +134,6 @@ class AlertController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
-
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);
 

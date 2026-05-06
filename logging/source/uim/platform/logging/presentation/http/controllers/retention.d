@@ -47,7 +47,9 @@ class RetentionController : PlatformController {
       auto result = uc.create(r);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("id", result.id);
+          .set("id", RetentionPolicyId(result.id))
+          .set("message", "Retention policy created");
+
         res.writeJsonBody(response, 201);
       } else {
         writeError(res, 400, result.error);
@@ -84,9 +86,8 @@ class RetentionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       auto p = uc.getById(id);
       if (p.isNull) {
         writeError(res, 404, "Retention policy not found");
@@ -110,9 +111,8 @@ class RetentionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateRetentionPolicyRequest r;
       r.description = j.getString("description");
@@ -137,9 +137,8 @@ class RetentionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       uc.removeById(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

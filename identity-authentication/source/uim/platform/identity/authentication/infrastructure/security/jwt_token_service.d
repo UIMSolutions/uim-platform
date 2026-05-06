@@ -3,19 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
+module uim.platform.identity.authentication.infrastructure.security.jwt_token_service;
 
-// import uim.platform.identity_authentication.domain.entities.user;
-// import uim.platform.identity_authentication.domain.entities.application;
-// import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.repositories.token_service;
+// import uim.platform.identity.authentication.domain.entities.user;
+// import uim.platform.identity.authentication.domain.entities.application;
+// import uim.platform.identity.authentication.domain.types;
+// import uim.platform.identity.authentication.domain.ports.repositories.token_service;
 // 
 // // import std.uuid;
-// // import std.conv : to;
+// 
 // // import std.datetime.systime : Clock;
 // import core.time;
 // // import std.digest.sha : SHA256, toHexString;
-import uim.platform.identity_authentication;
+import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:

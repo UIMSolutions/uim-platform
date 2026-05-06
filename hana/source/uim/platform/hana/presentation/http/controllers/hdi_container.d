@@ -85,7 +85,7 @@ class HDIContainerController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = uc.getById(id);
@@ -116,7 +116,7 @@ class HDIContainerController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto j = req.json;
       UpdateHDIContainerRequest r;
@@ -143,7 +143,7 @@ class HDIContainerController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = uc.removeById(id);

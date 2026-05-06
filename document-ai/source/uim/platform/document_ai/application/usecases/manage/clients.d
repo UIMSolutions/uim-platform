@@ -11,7 +11,7 @@ import uim.platform.document_ai.domain.ports.repositories.clients;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageClientsUseCase { // TODO: UIMUseCase {
   private ClientRepository repo;

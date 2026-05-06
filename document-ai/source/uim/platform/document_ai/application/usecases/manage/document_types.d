@@ -11,7 +11,7 @@ import uim.platform.document_ai.domain.ports.repositories.document_types;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
   private DocumentTypeRepository repo;

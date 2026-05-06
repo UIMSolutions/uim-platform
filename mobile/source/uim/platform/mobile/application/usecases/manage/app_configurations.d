@@ -10,7 +10,7 @@ import uim.platform.mobile.domain.entities.app_configuration;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
-import std.conv : to;
+
 
 class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     private AppConfigurationRepository repo;

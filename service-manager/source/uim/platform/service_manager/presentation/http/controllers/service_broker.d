@@ -38,7 +38,7 @@ class ServiceBrokerController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto e = uc.getById(tenantId, ServiceBrokerId(id));
@@ -69,7 +69,7 @@ class ServiceBrokerController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateServiceBrokerRequest r;
@@ -86,7 +86,7 @@ class ServiceBrokerController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(req.getTenantId, ServiceBrokerId(id));
             if (result.success) {

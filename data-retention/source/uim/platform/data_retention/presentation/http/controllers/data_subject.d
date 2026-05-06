@@ -55,7 +55,7 @@ class DataSubjectController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto ds = uc.getById(id);
             if (ds.isNull) { writeError(res, 404, "Data subject not found"); return; }
@@ -71,7 +71,7 @@ class DataSubjectController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateDataSubjectRequest r;
@@ -87,7 +87,7 @@ class DataSubjectController : PlatformController {
 
     private void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto path = req.requestURI.to!string;
             auto parts = path.split("/");
             string id = "";
@@ -102,7 +102,7 @@ class DataSubjectController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
             auto id = extractIdFromPath(req.requestURI.to!string);
             uc.removeById(id);
             res.writeJsonBody(Json.emptyObject, 204);

@@ -87,7 +87,7 @@ class CustomDomainController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             // Check for /activate or /deactivate suffix — skip
@@ -128,7 +128,7 @@ class CustomDomainController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto j = req.json;
             UpdateCustomDomainRequest r;
@@ -158,7 +158,7 @@ class CustomDomainController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             // path: /api/v1/custom-domain/domains/{id}/activate
@@ -182,7 +182,7 @@ class CustomDomainController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
@@ -204,7 +204,7 @@ class CustomDomainController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.removeById(id);

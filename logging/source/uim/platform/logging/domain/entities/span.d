@@ -19,7 +19,7 @@ struct SpanEvent {
   Json toJson() const {
     auto jAttrs = Json.emptyObject;
     foreach (k, v; attributes)
-      jAttrs.set(k, v); 
+      jAttrs.set(k, v);
 
     return Json.emptyObject
       .set("name", name)
@@ -30,7 +30,7 @@ struct SpanEvent {
 
 struct Span {
   mixin TenantEntity!(SpanId);
-  
+
   TraceId traceId;
   SpanId parentSpanId;
   string operationName;
@@ -45,6 +45,10 @@ struct Span {
   string[string] resourceAttributes;
 
   Json toJson() const {
+    auto jAttr = Json.emptyObject;
+    foreach (k, v; attributes)
+      jAttr.set(k, v);
+
     return entityToJson
       .set("traceId", traceId)
       .set("parentSpanId", parentSpanId)
@@ -55,7 +59,7 @@ struct Span {
       .set("durationMs", durationMs)
       .set("status", status.to!string)
       .set("kind", kind.to!string)
-      .set("attributes", attributes)
+      .set("attributes", jAttr)
       .set("events", events.map!(e => e.toJson()).array)
       .set("resourceAttributes", resourceAttributes);
   }

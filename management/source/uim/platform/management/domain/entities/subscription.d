@@ -14,10 +14,10 @@ mixin(ShowModule!());
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).
 struct Subscription {
-  mixin TenantEntity!(SubscriptionId);
+  mixin GlobalEntity!(SubscriptionId);
 
+  TenantId tenantId; // subaccount ID
   SubaccountId subaccountId;
-  GlobalAccountId globalAccountId;
   string appName; // technical name of the SaaS app
   string appDisplayName;
   string appDescription;
@@ -47,7 +47,7 @@ struct Subscription {
 
       return entityToJson
           .set("subaccountId", subaccountId.value)
-          .set("globalAccountId", globalAccountId.value)
+          .set("tenantId", tenantId.value)
           .set("appName", appName)
           .set("appDisplayName", appDisplayName)
           .set("appDescription", appDescription)

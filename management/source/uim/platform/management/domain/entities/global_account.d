@@ -15,6 +15,7 @@ mixin(ShowModule!());
 /// It represents a contract with SAP and contains directories and subaccounts.
 struct GlobalAccount {
   mixin IdEntity!GlobalAccountId;
+  
   string displayName;
   string description;
   string contractNumber;

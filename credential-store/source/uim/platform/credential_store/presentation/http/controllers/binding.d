@@ -90,7 +90,7 @@ class BindingController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto b = bindings.getById(id);
@@ -119,7 +119,7 @@ class BindingController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;

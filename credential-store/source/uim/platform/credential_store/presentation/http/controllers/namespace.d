@@ -81,7 +81,7 @@ class NamespaceController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto ns = namespaces.getById(id);
@@ -108,7 +108,7 @@ class NamespaceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -131,7 +131,7 @@ class NamespaceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       namespaces.remove(id);

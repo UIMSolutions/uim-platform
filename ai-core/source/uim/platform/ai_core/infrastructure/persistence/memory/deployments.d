@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryDeploymentRepository : DeploymentRepository {
   private Deployment[][string] store;
 
-  Deployment findById(DeploymentId id, ResourceGroupId rgId) {
+  Deployment findById(ResourceGroupId rgId, DeploymentId id) {
     if (auto rg = rgId in store) {
       foreach (d; *rg) {
         if (d.id == id)
@@ -29,19 +29,19 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return Deployment.init;
   }
 
-  Deployment[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId) {
+  Deployment[] findByConfiguration(ResourceGroupId rgId, ConfigurationId confId) {
     if (auto rg = rgId in store)
       return (rg).filter!(d => d.configurationId == confId).array;
     return null;
   }
 
-  Deployment[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
+  Deployment[] findByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
     if (auto rg = rgId in store)
       return (rg).filter!(d => d.scenarioId == scenarioId).array;
     return null;
   }
 
-  Deployment[] findByStatus(DeploymentStatus status, ResourceGroupId rgId) {
+  Deployment[] findByStatus(ResourceGroupId rgId, DeploymentStatus status) {
     if (auto rg = rgId in store)
       return (rg).filter!(d => d.status == status).array;
     return null;
@@ -80,7 +80,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return 0;
   }
 
-  size_t countByStatus(DeploymentStatus status, ResourceGroupId rgId) {
+  size_t countByStatus(ResourceGroupId rgId, DeploymentStatus status) {
     if (auto rg = rgId in store)
       return (rg).filter!(d => d.status == status).array.length;
     return 0;

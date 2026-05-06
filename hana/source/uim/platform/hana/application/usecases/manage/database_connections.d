@@ -11,7 +11,7 @@ module uim.platform.hana.application.usecases.manage.database_connections;
 // import uim.platform.hana.application.dto;
 
 // import uim.platform.service;
-// import std.conv : to;
+
 import uim.platform.hana;
 
 mixin(ShowModule!());

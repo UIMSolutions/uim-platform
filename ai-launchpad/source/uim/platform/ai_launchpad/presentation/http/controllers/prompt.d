@@ -85,7 +85,7 @@ class PromptController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
 
@@ -103,7 +103,7 @@ class PromptController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      import std.conv : to;
+      
 
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
