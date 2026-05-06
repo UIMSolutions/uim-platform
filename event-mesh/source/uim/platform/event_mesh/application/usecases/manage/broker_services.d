@@ -18,23 +18,19 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    BrokerService getById(BrokerServiceId id) {
-        return repo.findById(id);
+    BrokerService getService(TenantId tenantId, BrokerServiceId id) {
+        return repo.findById(tenantId, id);
     }
 
-    BrokerService[] list() {
-        return repo.findAll();
+    BrokerService[] listServices(TenantId tenantId) {
+        return repo.findAll(tenantId);
     }
 
-    BrokerService[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+    BrokerService[] listServicesByStatus(TenantId tenantId, BrokerServiceStatus status) {
+        return repo.findByStatus(tenantId, status);
     }
 
-    BrokerService[] listByStatus(BrokerServiceStatus status) {
-        return repo.findByStatus(status);
-    }
-
-    CommandResult create(BrokerServiceDTO dto) {
+    CommandResult createService(BrokerServiceDTO dto) {
         BrokerService bs;
         bs.id = dto.brokerServiceId;
         bs.tenantId = dto.tenantId;
@@ -54,8 +50,8 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bs.id.value, "");
     }
 
-    CommandResult update(BrokerServiceDTO dto) {
-        auto existing = repo.findById(dto.brokerServiceId);
+    CommandResult updateService(BrokerServiceDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.brokerServiceId);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -69,11 +65,12 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.brokerServiceId.value, "");
     }
 
-    CommandResult remove(BrokerServiceId id) {
-        auto existing = repo.findById(id);
+    CommandResult deleteService(TenantId tenantId, BrokerServiceId id) {
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
-        repo.removeById(id);
+            
+        repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");
     }
 }

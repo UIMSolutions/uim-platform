@@ -13,10 +13,10 @@ import uim.platform.htmls;
 
 
 class OverviewController : PlatformController {
-  private GetOverviewUseCase uc;
+  private GetOverviewUseCase usecase;
 
-  this(GetOverviewUseCase uc) {
-    this.uc = uc;
+  this(GetOverviewUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -27,7 +27,7 @@ class OverviewController : PlatformController {
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getSummary(tenantId);
+      auto summary = usecase.getSummary(tenantId);
       if (summary.isNull) {
         writeError(res, 404, "Overview not available");
         return;

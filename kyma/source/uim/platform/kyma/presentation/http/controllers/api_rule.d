@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ApiRuleController : PlatformController {
-  private ManageApiRulesUseCase uc;
+  private ManageApiRulesUseCase usecase;
 
-  this(ManageApiRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageApiRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -62,7 +62,7 @@ class ApiRuleController : PlatformController {
       // Parse rules array
       r.rules = j.toRuleEntries;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id);
@@ -84,9 +84,9 @@ class ApiRuleController : PlatformController {
 
       ApiRule[] items;
       if (nsId.length > 0)
-        items = uc.listByNamespace(nsId);
+        items = usecase.listByNamespace(nsId);
       else if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = usecase.listByEnvironment(envId);
       else
         items = [];
 
@@ -107,7 +107,7 @@ class ApiRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = uc.getApiRule(id);
+      auto rule = usecase.getApiRule(id);
       if (rule.isNull) {
         writeError(res, 404, "API rule not found");
         return;
@@ -137,7 +137,7 @@ class ApiRuleController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.rules = j.toRuleEntries;
 
-      auto result = uc.updateApiRule(id, r);
+      auto result = usecase.updateApiRule(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -151,7 +151,7 @@ class ApiRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteApiRule(id);
+      auto result = usecase.deleteApiRule(id);
       if (result.success)
         res.writeBody("", 204);
       else

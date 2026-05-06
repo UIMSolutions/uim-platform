@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ReplicationTaskController : PlatformController {
-  private ManageReplicationTasksUseCase uc;
+  private ManageReplicationTasksUseCase usecase;
 
-  this(ManageReplicationTasksUseCase uc) {
-    this.uc = uc;
+  this(ManageReplicationTasksUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class ReplicationTaskController : PlatformController {
       r.scheduleExpression = j.getString("scheduleExpression");
       r.mappings = jsonKeyValuePairs(j, "mappings");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -64,7 +64,7 @@ class ReplicationTaskController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto tasks = uc.list(tenantId);
+      auto tasks = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
@@ -93,7 +93,7 @@ class ReplicationTaskController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto t = uc.getById(id);
+      auto t = usecase.getById(id);
       if (t.isNull) {
         writeError(res, 404, "Replication task not found");
         return;
@@ -135,7 +135,7 @@ class ReplicationTaskController : PlatformController {
       r.mode = j.getString("mode");
       r.scheduleExpression = j.getString("scheduleExpression");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -154,8 +154,8 @@ class ReplicationTaskController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = ReplicationTaskId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteReplicationTask(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ConfigurationController : PlatformController {
-    private ManageConfigurationsUseCase uc;
+    private ManageConfigurationsUseCase usecase;
 
-    this(ManageConfigurationsUseCase uc) {
-        this.uc = uc;
+    this(ManageConfigurationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -31,7 +31,7 @@ class ConfigurationController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto config = uc.getById(tenantId);
+            auto config = usecase.getById(tenantId);
 
             auto resp = Json.emptyObject
                 .set("defaultRetries", config.defaultRetries)
@@ -58,7 +58,7 @@ class ConfigurationController : PlatformController {
             r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);
             r.enableAlertNotifications = j.getBoolean("enableAlertNotifications", false);
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

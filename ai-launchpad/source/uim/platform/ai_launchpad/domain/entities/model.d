@@ -13,7 +13,8 @@ mixin(ShowModule!());
 @safe:
 
 struct Model {
-  ModelId id;
+ mixin IdEntity!ModelId;
+
   ConnectionId connectionId;
   string name;
   string version_;
@@ -26,4 +27,18 @@ struct Model {
   string[] labels;
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("connectionId", connectionId)
+      .set("name", name)
+      .set("version", version_)
+      .set("description", description)
+      .set("scenarioId", scenarioId)
+      .set("executionId", executionId)
+      .set("url", url)
+      .set("size", size)
+      .set("status", status.to!string)
+      .set("labels", labels);
+  }
 }

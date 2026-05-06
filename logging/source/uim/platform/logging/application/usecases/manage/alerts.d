@@ -16,35 +16,21 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageAlertsUseCase { // TODO: UIMUseCase {
-  private AlertRepository repo;
-
-  this(AlertRepository repo) {
-    this.repo = repo;
-  }
-
-  bool hasById(AlertId id) {
-    return repo.existsById(id);
-  }
-
-  Alert getById(AlertId id) {
-    return repo.findById(id);
-  }
-
-  Alert[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) { 
+  this(AlertRepository repository) {
+    super(repository);
   }
 
   Alert[] listByState(TenantId tenantId, AlertState state) {
-    return repo.findByState(tenantId, state);
+    return repository.findByState(tenantId, state);
   }
 
   Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return repo.findBySeverity(tenantId, severity);
+    return repository.findBySeverity(tenantId, severity);
   }
 
   CommandResult acknowledge(AcknowledgeAlertRequest req) {
-    auto a = repo.findById(req.alertId);
+    auto a = repository.findById(req.alertId);
     if (a.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -52,12 +38,12 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.acknowledgedBy = req.acknowledgedBy;
     a.acknowledgedAt = clockSeconds();
 
-    repo.update(a);
+    repository.update(a);
     return CommandResult(true, req.alertId.value, "");
   }
 
   CommandResult resolve(ResolveAlertRequest req) {
-    auto a = repo.findById(req.alertId);
+    auto a = repository.findById(req.alertId);
     if (a.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -65,7 +51,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.resolvedBy = req.resolvedBy;
     a.resolvedAt = clockSeconds();
 
-    repo.update(a);
+    repository.update(a);
     return CommandResult(true, req.alertId.value, "");
   }
 
@@ -85,24 +71,24 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.sampleLogEntryId = sampleId;
     a.triggeredAt = clockSeconds();
 
-    repo.save(a);
+    repository.save(a);
     return CommandResult(true, a.id.value, "");
   }
 
-  CommandResult remove(string id) {
-    return remove(AlertId(id));
-  }
+  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
+    auto alert = repository.findById(id);
+    if (alert.isNull)      
+      return CommandResult(false, "", "Alert not found");
 
-  CommandResult remove(AlertId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repository.removeById(tenantId, id);
+    return CommandResult(true, alert.id.value, "");
   }
 
   size_t countOpen(TenantId tenantId) {
-    return repo.countByState(tenantId, AlertState.open);
+    return repository.countByState(tenantId, AlertState.open);
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repository.countByTenant(tenantId);
   }
 }

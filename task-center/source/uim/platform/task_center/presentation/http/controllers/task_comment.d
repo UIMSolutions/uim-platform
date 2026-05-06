@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskCommentController : PlatformController {
-    private ManageTaskCommentsUseCase uc;
+    private ManageTaskCommentsUseCase usecase;
 
-    this(ManageTaskCommentsUseCase uc) {
-        this.uc = uc;
+    this(ManageTaskCommentsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -37,7 +37,7 @@ class TaskCommentController : PlatformController {
             r.author = j.getString("author");
             r.content = j.getString("content");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class TaskCommentController : PlatformController {
 
             TaskComment[] comments;
             if (taskId.length > 0) {
-                comments = uc.listByTask(tenantId, taskId);
+                comments = usecase.listByTask(tenantId, taskId);
             } else {
                 comments = [];
             }
@@ -83,7 +83,7 @@ class TaskCommentController : PlatformController {
             
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = uc.getById(tenantId, id);
+            auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Comment not found");
                 return;
@@ -104,7 +104,7 @@ class TaskCommentController : PlatformController {
             r.id = id;
             r.content = j.getString("content");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -124,7 +124,7 @@ class TaskCommentController : PlatformController {
             
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto result = usecase.deleteTaskComment(tenantId, TaskCommentId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

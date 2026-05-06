@@ -16,10 +16,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class OverviewController : PlatformController {
-  private GetAccountOverviewUseCase uc;
+  private GetAccountOverviewUseCase usecase;
 
-  this(GetAccountOverviewUseCase uc) {
-    this.uc = uc;
+  this(GetAccountOverviewUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -36,7 +36,7 @@ class OverviewController : PlatformController {
         return;
       }
 
-      auto ov = uc.getOverview(gaId);
+      auto ov = usecase.getOverview(gaId);
 
       auto j = Json.emptyObject
       .set("totalSubaccounts", ov.totalSubaccounts)

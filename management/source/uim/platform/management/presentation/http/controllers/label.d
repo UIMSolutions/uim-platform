@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class LabelController : PlatformController {
-  private ManageLabelsUseCase uc;
+  private ManageLabelsUseCase usecase;
 
-  this(ManageLabelsUseCase uc) {
-    this.uc = uc;
+  this(ManageLabelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class LabelController : PlatformController {
       r.values = getStrings(j, "values");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -66,9 +66,9 @@ class LabelController : PlatformController {
 
       Label[] items;
       if (resourceType.length > 0 && resourceId.length > 0)
-        items = uc.listByResource(resourceType, resourceId);
+        items = usecase.listByResource(resourceType, resourceId);
       else if (resourceType.length > 0 && key.length > 0)
-        items = uc.listByKey(resourceType, key);
+        items = usecase.listByKey(resourceType, key);
 
       auto arr = items.map!(l => l.toJson).array.toJson;
 
@@ -86,7 +86,7 @@ class LabelController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto l = uc.getById(id);
+      auto l = usecase.getById(id);
       if (l.isNull) {
         writeError(res, 404, "Label not found");
         return;
@@ -104,7 +104,7 @@ class LabelController : PlatformController {
       UpdateLabelRequest r;
       r.values = getStrings(j, "values");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -116,8 +116,8 @@ class LabelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.removeById(id);
+      auto id = LabelId(extractId(req.requestURI));
+      auto result = usecase.deleteLabel(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

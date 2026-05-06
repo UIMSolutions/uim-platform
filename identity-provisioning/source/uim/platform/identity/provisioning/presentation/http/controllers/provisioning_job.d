@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ProvisioningJobController : PlatformController {
-  private RunProvisioningJobsUseCase uc;
+  private RunProvisioningJobsUseCase usecase;
 
-  this(RunProvisioningJobsUseCase uc) {
-    this.uc = uc;
+  this(RunProvisioningJobsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class ProvisioningJobController : PlatformController {
       r.schedule = j.getString("schedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createJob(r);
+      auto result = usecase.createJob(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,7 +69,7 @@ class ProvisioningJobController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listJobs(tenantId);
+      auto items = usecase.listJobs(tenantId);
       auto arr = items.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -87,7 +87,7 @@ class ProvisioningJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto job = uc.getJob(tenantId, id);
+      auto job = usecase.getJob(tenantId, id);
       if (job.isNull) {
         writeError(res, 404, "Provisioning job not found");
         return;
@@ -104,7 +104,7 @@ class ProvisioningJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.runJob(tenantId, id);
+      auto result = usecase.runJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -131,7 +131,7 @@ class ProvisioningJobController : PlatformController {
       r.schedule = j.getString("schedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createAndRunJob(r);
+      auto result = usecase.createAndRunJob(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -151,7 +151,7 @@ class ProvisioningJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.cancelJob(tenantId, id);
+      auto result = usecase.cancelJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -171,7 +171,7 @@ class ProvisioningJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteJob(tenantId, id);
+      auto result = usecase.deleteJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

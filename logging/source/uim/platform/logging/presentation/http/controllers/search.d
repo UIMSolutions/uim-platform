@@ -18,10 +18,10 @@ mixin(ShowModule!());
 @safe:
 
 class SearchController : PlatformController {
-  private SearchLogsUseCase uc;
+  private SearchLogsUseCase usecase;
 
-  this(SearchLogsUseCase uc) {
-    this.uc = uc;
+  this(SearchLogsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -58,7 +58,7 @@ class SearchController : PlatformController {
         }
       }
 
-      auto entries = uc.search(r);
+      auto entries = usecase.search(r);
 
       auto jarr = Json.emptyArray;
       foreach (e; entries) {
@@ -90,7 +90,7 @@ class SearchController : PlatformController {
       
 
       auto id = LogEntryId(extractIdFromPath(req.requestURI.to!string));
-      auto entry = uc.getById(id);
+      auto entry = usecase.getById(id);
 
       if (entry.isNull) {
         writeError(res, 404, "Log entry not found");
@@ -114,7 +114,7 @@ class SearchController : PlatformController {
         .set("orgName", entry.orgName)
         .set("resourceType", entry.resourceType)
         .set("resourceId", entry.resourceId)
-        .set("tags", toJsonArray(entry.tags));
+        .set("tags", entry.tags.toJson);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

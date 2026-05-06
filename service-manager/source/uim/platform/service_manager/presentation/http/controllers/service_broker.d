@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceBrokerController : PlatformController {
-    private ManageServiceBrokersUseCase uc;
+    private ManageServiceBrokersUseCase usecase;
 
-    this(ManageServiceBrokersUseCase uc) { this.uc = uc; }
+    this(ManageServiceBrokersUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,7 +23,7 @@ class ServiceBrokerController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -41,7 +41,7 @@ class ServiceBrokerController : PlatformController {
             
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, ServiceBrokerId(id));
+            auto e = usecase.getById(tenantId, ServiceBrokerId(id));
             if (e.isNull) { writeError(res, 404, "Service broker not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
@@ -60,7 +60,7 @@ class ServiceBrokerController : PlatformController {
             r.description = j.getString("description");
             r.brokerUrl = j.getString("brokerUrl");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -77,7 +77,7 @@ class ServiceBrokerController : PlatformController {
             r.description = j.getString("description");
             r.brokerUrl = j.getString("brokerUrl");
 
-            auto result = uc.update(req.getTenantId, ServiceBrokerId(id), r);
+            auto result = usecase.update(req.getTenantId, ServiceBrokerId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -87,8 +87,8 @@ class ServiceBrokerController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, ServiceBrokerId(id));
+            auto id = ServiceBrokerId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.delete(req.getTenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataSubjectController : PlatformController {
-    private ManageDataSubjectsUseCase uc;
+    private ManageDataSubjectsUseCase usecase;
 
-    this(ManageDataSubjectsUseCase uc) {
-        this.uc = uc;
+    this(ManageDataSubjectsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class DataSubjectController : PlatformController {
             r.externalId = j.getString("externalId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -65,7 +65,7 @@ class DataSubjectController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto subjects = uc.list(tenantId);
+            auto subjects = usecase.list(tenantId);
 
             auto jarr = subjects.map!(s => s.toJson).array.toJson;
 
@@ -90,11 +90,11 @@ class DataSubjectController : PlatformController {
 
             DataSubject[] results;
             if (email.length > 0) {
-                auto s = uc.findByEmail(email);
+                auto s = usecase.findByEmail(email);
                 if (s.id.length > 0)
                     results ~= s;
             } else {
-                results = uc.search(firstName, lastName);
+                results = usecase.search(firstName, lastName);
             }
 
             auto jarr = results.map!(s => s.toJson).array.toJson;
@@ -119,12 +119,12 @@ class DataSubjectController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            if (!uc.hasDataSubject(id)) {
+            if (!usecase.hasDataSubject(id)) {
                 writeError(res, 404, "Data subject not found");
                 return;
             }
 
-            auto subject = uc.getDataSubject(id);
+            auto subject = usecase.getDataSubject(id);
             res.writeJsonBody(subject.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -148,7 +148,7 @@ class DataSubjectController : PlatformController {
             request.organizationId = j.getString("organizationId");
             request.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.updateDataSubject(request);
+            auto result = usecase.updateDataSubject(request);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -171,7 +171,7 @@ class DataSubjectController : PlatformController {
             auto stripped = path[0 .. $ - 6]; // remove "/block"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.block(id);
+            auto result = usecase.block(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -194,7 +194,7 @@ class DataSubjectController : PlatformController {
             auto stripped = path[0 .. $ - 6]; // remove "/erase"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.erase(id);
+            auto result = usecase.erase(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -214,7 +214,7 @@ class DataSubjectController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteDataSubject(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

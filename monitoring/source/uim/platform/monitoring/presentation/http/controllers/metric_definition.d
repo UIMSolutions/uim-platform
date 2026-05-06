@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class MetricDefinitionController : PlatformController {
-  private ManageMetricsUseCase uc;
+  private ManageMetricsUseCase usecase;
 
-  this(ManageMetricsUseCase uc) {
-    this.uc = uc;
+  this(ManageMetricsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class MetricDefinitionController : PlatformController {
       r.aggregation = j.getString("aggregation");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createDefinition(r);
+      auto result = usecase.createDefinition(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,7 +68,7 @@ class MetricDefinitionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto defs = uc.listDefinitions(tenantId);
+      auto defs = usecase.listDefinitions(tenantId);
 
       auto arr = defs.map!(d => d.toJson).array.toJson;
 
@@ -86,7 +86,7 @@ class MetricDefinitionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
-      auto d = uc.getDefinition(id);
+      auto d = usecase.getDefinition(id);
       if (d.isNull) {
         writeError(res, 404, "Metric definition not found");
         return;
@@ -107,7 +107,7 @@ class MetricDefinitionController : PlatformController {
       request.aggregation = j.getString("aggregation");
       request.isEnabled = j.getBoolean("isEnabled", true);
 
-      auto result = uc.updateDefinition(id, request);
+      auto result = usecase.updateDefinition(id, request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,7 +125,7 @@ class MetricDefinitionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
-      auto result = uc.removeDefinition(id);
+      auto result = usecase.deleteMetricDefinition(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

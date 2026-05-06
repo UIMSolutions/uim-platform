@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class FunctionController : PlatformController {
-  private ManageFunctionsUseCase uc;
+  private ManageFunctionsUseCase usecase;
 
-  this(ManageFunctionsUseCase uc) {
-    this.uc = uc;
+  this(ManageFunctionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -61,7 +61,7 @@ class FunctionController : PlatformController {
       r.timeoutSeconds = j.getInteger("timeoutSeconds");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -83,9 +83,9 @@ class FunctionController : PlatformController {
 
       ServerlessFunction[] items;
       if (nsId.length > 0)
-        items = uc.listByNamespace(NamespaceId(nsId));
+        items = usecase.listByNamespace(NamespaceId(nsId));
       else if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = usecase.listByEnvironment(envId);
       else
         items = [];
 
@@ -105,11 +105,11 @@ class FunctionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      if (!uc.hasFunction(ServerlessFunctionId(id))) {
+      if (!usecase.hasFunction(ServerlessFunctionId(id))) {
         writeError(res, 404, "Function not found");
         return;
       }
-      auto fn = uc.getFunction(ServerlessFunctionId(id));
+      auto fn = usecase.getFunction(ServerlessFunctionId(id));
       res.writeJsonBody(fn.toJson, 200);
     }
     catch (Exception e) {
@@ -137,7 +137,7 @@ class FunctionController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.timeoutSeconds = j.getInteger("timeoutSeconds");
 
-      auto result = uc.updateFunction(ServerlessFunctionId(id), r);
+      auto result = usecase.updateFunction(ServerlessFunctionId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -151,7 +151,7 @@ class FunctionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteFunction(ServerlessFunctionId(id));
+      auto result = usecase.deleteFunction(ServerlessFunctionId(id));
       if (result.success)
         res.writeBody("", 204);
       else

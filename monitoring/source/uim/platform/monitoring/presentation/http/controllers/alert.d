@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class AlertController : PlatformController {
-  private ManageAlertsUseCase uc;
+  private ManageAlertsUseCase usecase;
 
-  this(ManageAlertsUseCase uc) {
-    this.uc = uc;
+  this(ManageAlertsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,11 +44,11 @@ class AlertController : PlatformController {
 
       Alert[] alerts;
       if (state.length > 0)
-        alerts = uc.listByState(tenantId, state.to!AlertState);
+        alerts = usecase.listByState(tenantId, state.to!AlertState);
       else if (severity.length > 0)
-        alerts = uc.listBySeverity(tenantId, severity.to!AlertSeverity);
+        alerts = usecase.listBySeverity(tenantId, severity.to!AlertSeverity);
       else
-        alerts = uc.listAlerts(tenantId);
+        alerts = usecase.listAlerts(tenantId);
 
       auto arr = alerts.map!(a => a.toJson).array.toJson;
 
@@ -66,7 +66,7 @@ class AlertController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AlertId(extractIdFromPath(req.requestURI));
-      auto a = uc.getAlert(id);
+      auto a = usecase.getAlert(id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;
@@ -85,7 +85,7 @@ class AlertController : PlatformController {
       r.tenantId = req.getTenantId;
       r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.acknowledgeAlert(r);
+      auto result = usecase.acknowledgeAlert(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -109,7 +109,7 @@ class AlertController : PlatformController {
       r.tenantId = req.getTenantId;
       r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.resolveAlert(r);
+      auto result = usecase.resolveAlert(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -128,7 +128,7 @@ class AlertController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AlertId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteAlert(id);
+      auto result = usecase.deleteAlert(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class LabelController : PlatformController {
-    private ManageLabelsUseCase uc;
+    private ManageLabelsUseCase usecase;
 
-    this(ManageLabelsUseCase uc) { this.uc = uc; }
+    this(ManageLabelsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,7 +23,7 @@ class LabelController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -42,7 +42,7 @@ class LabelController : PlatformController {
             
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, LabelId(id));
+            auto e = usecase.getById(tenantId, LabelId(id));
             if (e.isNull) { writeError(res, 404, "Label not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value)
@@ -63,7 +63,7 @@ class LabelController : PlatformController {
             r.key = j.getString("key");
             r.value = j.getString("value");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -79,7 +79,7 @@ class LabelController : PlatformController {
             r.key = j.getString("key");
             r.value = j.getString("value");
 
-            auto result = uc.update(req.getTenantId, LabelId(id), r);
+            auto result = usecase.update(req.getTenantId, LabelId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -90,7 +90,7 @@ class LabelController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, LabelId(id));
+            auto result = usecase.deleteLabel(req.getTenantId, LabelId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }

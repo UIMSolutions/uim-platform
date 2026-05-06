@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class RunLogController : PlatformController {
-    private ManageRunLogsUseCase uc;
+    private ManageRunLogsUseCase usecase;
 
-    this(ManageRunLogsUseCase uc) {
-        this.uc = uc;
+    this(ManageRunLogsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class RunLogController : PlatformController {
             auto ids = extractIds(path);
             TenantId tenantId = req.getTenantId;
 
-            auto logs = uc.listBySchedule(ids[1], ids[0], tenantId);
+            auto logs = usecase.listBySchedule(ids[1], ids[0], tenantId);
 
             auto jarr = logs.map!(l => toJson(l)).array;
 
@@ -62,7 +62,7 @@ class RunLogController : PlatformController {
             auto jobId = extractJobId(path);
             TenantId tenantId = req.getTenantId;
 
-            auto logs = uc.listByJob(jobId, tenantId);
+            auto logs = usecase.listByJob(jobId, tenantId);
 
             auto jarr = logs.map!(log => toJson(log)).array;
             auto resp = Json.emptyObject
@@ -92,7 +92,7 @@ class RunLogController : PlatformController {
             r.completedAt = jsonLong(j, "completedAt");
             r.executionDurationMs = jsonLong(j, "executionDurationMs");
 
-            auto result = uc.updateStatus(r);
+            auto result = usecase.updateStatus(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -11,10 +11,10 @@ import uim.platform.process_automation.application.dto;
 import uim.platform.process_automation;
 
 class ProcessController : PlatformController {
-    private ManageProcessesUseCase uc;
+    private ManageProcessesUseCase usecase;
 
-    this(ManageProcessesUseCase uc) {
-        this.uc = uc;
+    this(ManageProcessesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class ProcessController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -59,7 +59,7 @@ class ProcessController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto processes = uc.list(tenantId);
+            auto processes = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (p; processes) {
@@ -90,7 +90,7 @@ class ProcessController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto p = uc.getById(id);
+            auto p = usecase.getById(id);
             if (p.isNull) {
                 writeError(res, 404, "Process not found");
                 return;
@@ -129,7 +129,7 @@ class ProcessController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -164,7 +164,7 @@ class ProcessController : PlatformController {
             r.id = id;
             r.action = j.getString("action");
 
-            auto result = uc.deploy(r);
+            auto result = usecase.deploy(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -184,7 +184,7 @@ class ProcessController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteProcess(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

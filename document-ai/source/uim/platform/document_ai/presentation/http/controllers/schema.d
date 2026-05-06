@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.schema : Schema;
 import uim.platform.document_ai;
 
 class SchemaController : PlatformController {
-  private ManageSchemasUseCase uc;
+  private ManageSchemasUseCase usecase;
 
-  this(ManageSchemasUseCase uc) {
-    this.uc = uc;
+  this(ManageSchemasUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class SchemaController : PlatformController {
       r.lineItemFields = jsonFieldArray(j, "lineItemFields");
       r.supportedLanguages = getStrings(j, "supportedLanguages");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class SchemaController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto schemas = uc.list(clientId);
+      auto schemas = usecase.list(clientId);
 
       auto jarr = Json.emptyArray;
       foreach (s; schemas) {
@@ -84,7 +84,7 @@ class SchemaController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto s = uc.getById(id, clientId);
+      auto s = usecase.getById(id, clientId);
       if (s.isNull) {
         writeError(res, 404, "Schema not found");
         return;
@@ -111,7 +111,7 @@ class SchemaController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject  
           .set("id", result.id)
@@ -133,7 +133,7 @@ class SchemaController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteSchema(SchemaId(id), clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

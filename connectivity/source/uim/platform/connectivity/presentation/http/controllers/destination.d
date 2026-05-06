@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class DestinationController : PlatformController {
-  private ManageDestinationsUseCase uc;
+  private ManageDestinationsUseCase usecase;
 
-  this(ManageDestinationsUseCase uc) {
-    this.uc = uc;
+  this(ManageDestinationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -58,7 +58,7 @@ class DestinationController : PlatformController {
       r.properties = parseProperties(j);
       r.additionalHeaders = parseHeaders(j);
 
-      auto result = uc.createDestination(r);
+      auto result = usecase.createDestination(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -77,7 +77,7 @@ class DestinationController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       
-      auto dests = uc.listDestinations(tenantId);
+      auto dests = usecase.listDestinations(tenantId);
       auto arr = dests.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -94,7 +94,7 @@ class DestinationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto dest = uc.getDestination(id);
+      auto dest = usecase.getDestination(id);
       if (dest.isNull) {
         writeError(res, 404, "Destination not found");
         return;
@@ -126,7 +126,7 @@ class DestinationController : PlatformController {
       r.properties = parseProperties(j);
       r.additionalHeaders = parseHeaders(j);
 
-      auto result = uc.updateDestination(id, r);
+      auto result = usecase.updateDestination(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -144,7 +144,7 @@ class DestinationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteDestination(id);
+      auto result = usecase.deleteDestination(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

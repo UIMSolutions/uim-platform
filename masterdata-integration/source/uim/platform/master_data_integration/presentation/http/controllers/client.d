@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.types;
 
 class ClientController : PlatformController {
-  private ManageClientsUseCase uc;
+  private ManageClientsUseCase usecase;
 
-  this(ManageClientsUseCase uc) {
-    this.uc = uc;
+  this(ManageClientsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class ClientController : PlatformController {
       r.certificateRef = j.getString("certificateRef");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -76,11 +76,11 @@ class ClientController : PlatformController {
 
       Client[] clients;
       if (status.length > 0)
-        clients = uc.listByStatus(tenantId, status);
+        clients = usecase.listByStatus(tenantId, status);
       else if (type.length > 0)
-        clients = uc.listByType(tenantId, type);
+        clients = usecase.listByType(tenantId, type);
       else
-        clients = uc.listByTenant(tenantId);
+        clients = usecase.listByTenant(tenantId);
 
       auto arr = clients.map!(c => c.toJson).array.toJson;
 
@@ -98,7 +98,7 @@ class ClientController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto client = uc.getClient(id);
+      auto client = usecase.getClient(id);
       if (client.isNull) {
         writeError(res, 404, "Client not found");
         return;
@@ -125,7 +125,7 @@ class ClientController : PlatformController {
       r.clientIdRef = j.getString("clientIdRef");
       r.certificateRef = j.getString("certificateRef");
 
-      auto result = uc.updateClient(id, r);
+      auto result = usecase.updateClient(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Client updated successfully");
@@ -140,7 +140,7 @@ class ClientController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteClient(id);
+      auto result = usecase.deleteClient(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Client deleted successfully");
@@ -155,7 +155,7 @@ class ClientController : PlatformController {
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.connect(id);
+      auto result = usecase.connect(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -168,7 +168,7 @@ class ClientController : PlatformController {
   private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.disconnect(id);
+      auto result = usecase.disconnect(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

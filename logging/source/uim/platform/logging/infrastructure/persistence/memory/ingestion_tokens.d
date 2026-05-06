@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
 
   bool existsByHash(string tokenHash) {
-    return store.byValue.any!(t => t.tokenHash == tokenHash);
+    return findAll().any!(t => t.tokenHash == tokenHash);
   }
 
   IngestionToken findByHash(string tokenHash) {
@@ -25,6 +25,7 @@ class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, Ingesti
         return t;
     return IngestionToken.init;
   }
+  
   void removeByHash(string tokenHash) {
     remove(findByHash(tokenHash));
   }

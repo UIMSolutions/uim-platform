@@ -19,10 +19,10 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 class DatasetController : PlatformController {
-  private ManageDatasetsUseCase uc;
+  private ManageDatasetsUseCase usecase;
 
-  this(ManageDatasetsUseCase uc) {
-    this.uc = uc;
+  this(ManageDatasetsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class DatasetController : PlatformController {
       r.columnDefinitions = j.getString("columnDefinitions");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createDataset(r);
+      auto result = usecase.createDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class DatasetController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       
-      auto items = uc.listDatasets(tenantId);
+      auto items = usecase.listDatasets(tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -84,7 +84,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ds = uc.getDataset(tenantId, id);
+      auto ds = usecase.getDataset(tenantId, id);
       if (ds is null) {
         writeError(res, 404, "Dataset not found");
         return;
@@ -106,7 +106,7 @@ class DatasetController : PlatformController {
       r.description = j.getString("description");
       r.columnDefinitions = j.getString("columnDefinitions");
 
-      auto result = uc.updateDataset(r);
+      auto result = usecase.updateDataset(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -126,7 +126,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.validateDataset(tenantId, id);
+      auto result = usecase.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -147,7 +147,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.processDataset(tenantId, id);
+      auto result = usecase.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -168,7 +168,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDataset(tenantId, id);
+      auto result = usecase.deleteDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)

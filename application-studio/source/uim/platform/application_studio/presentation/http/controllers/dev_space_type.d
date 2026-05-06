@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DevSpaceTypeController : PlatformController {
-    private ManageDevSpaceTypesUseCase uc;
+    private ManageDevSpaceTypesUseCase usecase;
 
-    this(ManageDevSpaceTypesUseCase uc) {
-        this.uc = uc;
+    this(ManageDevSpaceTypesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class DevSpaceTypeController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = DevSpaceTypeId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.devSpaceTypeId.isEmpty) { writeError(res, 404, "Dev space type not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -71,7 +71,7 @@ class DevSpaceTypeController : PlatformController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -98,7 +98,7 @@ class DevSpaceTypeController : PlatformController {
             dto.predefinedExtensions = j.getString("predefinedExtensions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -118,7 +118,7 @@ class DevSpaceTypeController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = DevSpaceTypeId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteDevSpaceType(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Dev space type deleted");

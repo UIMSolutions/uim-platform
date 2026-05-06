@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskAttachmentController : PlatformController {
-    private ManageTaskAttachmentsUseCase uc;
+    private ManageTaskAttachmentsUseCase usecase;
 
-    this(ManageTaskAttachmentsUseCase uc) {
-        this.uc = uc;
+    this(ManageTaskAttachmentsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class TaskAttachmentController : PlatformController {
             r.mimeType = j.getString("mimeType");
             r.uploadedBy = j.getString("uploadedBy");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class TaskAttachmentController : PlatformController {
 
             TaskAttachment[] attachments;
             if (taskId.length > 0) {
-                attachments = uc.listByTask(tenantId, taskId);
+                attachments = usecase.listByTask(tenantId, taskId);
             } else {
                 attachments = [];
             }
@@ -85,7 +85,7 @@ class TaskAttachmentController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(tenantId, id);
+            auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Attachment not found");
                 return;
@@ -101,8 +101,8 @@ class TaskAttachmentController : PlatformController {
             
 
             TenantId tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto id = TaskAttachmentId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteTaskAttachment(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

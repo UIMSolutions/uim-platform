@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.enrichment_data : EnrichmentData
 import uim.platform.document_ai;
 
 class EnrichmentDataController : PlatformController {
-  private ManageEnrichmentDataUseCase uc;
+  private ManageEnrichmentDataUseCase usecase;
 
-  this(ManageEnrichmentDataUseCase uc) {
-    this.uc = uc;
+  this(ManageEnrichmentDataUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class EnrichmentDataController : PlatformController {
       r.subtype = j.getString("subtype");
       r.fields = jsonKeyValuePairs(j, "fields");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,7 +58,7 @@ class EnrichmentDataController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto data = uc.list(clientId);
+      auto data = usecase.list(clientId);
 
       auto jarr = Json.emptyArray;
       foreach (ed; data) {
@@ -83,7 +83,7 @@ class EnrichmentDataController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto ed = uc.getById(id, clientId);
+      auto ed = usecase.getById(id, clientId);
       if (ed.isNull) {
         writeError(res, 404, "Enrichment data not found");
         return;
@@ -110,7 +110,7 @@ class EnrichmentDataController : PlatformController {
       r.description = j.getString("description");
       r.fields = jsonKeyValuePairs(j, "fields");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,7 +132,7 @@ class EnrichmentDataController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteEnrichmentData(EnrichmentDataId(id), clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

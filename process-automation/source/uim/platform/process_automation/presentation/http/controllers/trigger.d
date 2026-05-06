@@ -11,10 +11,10 @@ import uim.platform.process_automation.application.dto;
 import uim.platform.process_automation;
 
 class TriggerController : PlatformController {
-    private ManageTriggersUseCase uc;
+    private ManageTriggersUseCase usecase;
 
-    this(ManageTriggersUseCase uc) {
-        this.uc = uc;
+    this(ManageTriggersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class TriggerController : PlatformController {
             r.filterExpression = j.getString("filterExpression");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class TriggerController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto triggers = uc.list(tenantId);
+            auto triggers = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (t; triggers) {
@@ -91,7 +91,7 @@ class TriggerController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto t = uc.getById(id);
+            auto t = usecase.getById(id);
             if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
                 return;
@@ -133,7 +133,7 @@ class TriggerController : PlatformController {
             r.eventType = j.getString("eventType");
             r.filterExpression = j.getString("filterExpression");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -153,7 +153,7 @@ class TriggerController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteTrigger(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

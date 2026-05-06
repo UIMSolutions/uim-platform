@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TrustedCertificateController : PlatformController {
-    private ManageTrustedCertificatesUseCase uc;
+    private ManageTrustedCertificatesUseCase usecase;
 
-    this(ManageTrustedCertificatesUseCase uc) {
-        this.uc = uc;
+    this(ManageTrustedCertificatesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -37,7 +37,7 @@ class TrustedCertificateController : PlatformController {
             r.authMode = j.getString("authMode");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -55,7 +55,7 @@ class TrustedCertificateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto certs = uc.list(tenantId);
+            auto certs = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
@@ -86,7 +86,7 @@ class TrustedCertificateController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = uc.getById(id);
+            auto c = usecase.getById(id);
             if (c.isNull) {
                 writeError(res, 404, "Trusted certificate not found");
                 return;
@@ -117,7 +117,7 @@ class TrustedCertificateController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteTrustedCertificate(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

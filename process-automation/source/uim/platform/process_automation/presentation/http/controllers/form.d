@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class FormController : PlatformController {
-    private ManageFormsUseCase uc;
+    private ManageFormsUseCase usecase;
 
-    this(ManageFormsUseCase uc) {
-        this.uc = uc;
+    this(ManageFormsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class FormController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class FormController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto forms = uc.list(tenantId);
+            auto forms = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (f; forms) {
@@ -93,7 +93,7 @@ class FormController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto f = uc.getById(id);
+            auto f = usecase.getById(id);
             if (f.isNull) {
                 writeError(res, 404, "Form not found");
                 return;
@@ -130,7 +130,7 @@ class FormController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -150,7 +150,7 @@ class FormController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteForm(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

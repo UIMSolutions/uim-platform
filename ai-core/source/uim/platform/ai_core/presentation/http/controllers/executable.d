@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ExecutableController : PlatformController {
-  private ManageExecutablesUseCase uc;
+  private ManageExecutablesUseCase usecase;
 
-  this(ManageExecutablesUseCase uc) {
-    this.uc = uc;
+  this(ManageExecutablesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ExecutableController : PlatformController {
       r.versionId = j.getString("versionId");
       r.deployable = j.getString("deployable");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -65,8 +65,8 @@ class ExecutableController : PlatformController {
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto executables = scenarioId.length > 0
-        ? uc.listByScenario(scenarioId, rgId)
-        : uc.list(rgId);
+        ? usecase.listByScenario(scenarioId, rgId)
+        : usecase.list(rgId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
@@ -100,7 +100,7 @@ class ExecutableController : PlatformController {
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto e = uc.getbyId(id, rgId);
+      auto e = usecase.getbyId(id, rgId);
       if (e.isNull) {
         writeError(res, 404, "Executable not found");
         return;
@@ -126,12 +126,10 @@ class ExecutableController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(id, rgId);
+      auto result = usecase.deleteExecutable(rgId, id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", id)

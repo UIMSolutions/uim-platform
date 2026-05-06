@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ActivityController : PlatformController {
-    private ManageActivitiesUseCase uc;
+    private ManageActivitiesUseCase usecase;
 
-    this(ManageActivitiesUseCase uc) {
-        this.uc = uc;
+    this(ManageActivitiesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class ActivityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class ActivityController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Activity not found"); return; }
             res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ class ActivityController : PlatformController {
             dto.notes = j.getString("notes");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -107,7 +107,7 @@ class ActivityController : PlatformController {
             dto.feedbackCode = j.getString("feedbackCode");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -126,8 +126,8 @@ class ActivityController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.removeById(id);
+            auto id = ActivityId(extractIdFromPath(path));
+            auto result = usecase.deleteActivity(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Activity deleted");

@@ -20,10 +20,10 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 class SoftwareComponentController : PlatformController {
-  private ManageSoftwareComponentsUseCase uc;
+  private ManageSoftwareComponentsUseCase usecase;
 
-  this(ManageSoftwareComponentsUseCase uc) {
-    this.uc = uc;
+  this(ManageSoftwareComponentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class SoftwareComponentController : PlatformController {
       request.branchStrategy = j.getString("branchStrategy");
       request.namespace = j.getString("namespace");
 
-      auto result = uc.createComponent(request);
+      auto result = usecase.createComponent(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -71,7 +71,7 @@ class SoftwareComponentController : PlatformController {
       if (systemId.isEmpty)
         systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto items = uc.listComponents(systemId);
+      auto items = usecase.listComponents(systemId);
       auto arr = items.map!(comp => comp.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -88,7 +88,7 @@ class SoftwareComponentController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-      auto comp = uc.getComponent(id);
+      auto comp = usecase.getComponent(id);
       if (comp.isNull) {
         writeError(res, 404, "Software component not found");
         return;
@@ -107,7 +107,7 @@ class SoftwareComponentController : PlatformController {
       r.branch = j.getString("branch");
       r.commitId = j.getString("commitId");
 
-      auto result = uc.cloneComponent(id, r);
+      auto result = usecase.cloneComponent(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "cloned");
@@ -128,7 +128,7 @@ class SoftwareComponentController : PlatformController {
       PullSoftwareComponentRequest r;
       r.commitId = j.getString("commitId");
 
-      auto result = uc.pullComponent(id, r);
+      auto result = usecase.pullComponent(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "pulled");
@@ -145,7 +145,7 @@ class SoftwareComponentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteComponent(id);
+      auto result = usecase.deleteComponent(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted");

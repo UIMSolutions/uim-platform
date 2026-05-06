@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class InstanceController : PlatformController {
-  private ManageInstancesUseCase uc;
+  private ManageInstancesUseCase usecase;
 
-  this(ManageInstancesUseCase uc) {
-    this.uc = uc;
+  this(ManageInstancesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class InstanceController : PlatformController {
       r.whitelistedIps = getStrings(j, "whitelistedIps");
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -72,7 +72,7 @@ class InstanceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto instances = uc.list(tenantId);
+      auto instances = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (instance; instances) {
@@ -105,7 +105,7 @@ class InstanceController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto instance = uc.getById(id);
+      auto instance = usecase.getById(id);
       if (instance.isNull) {
         writeError(res, 404, "Instance not found");
         return;
@@ -155,7 +155,7 @@ class InstanceController : PlatformController {
       r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
       r.whitelistedIps = getStrings(j, "whitelistedIps");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -191,7 +191,7 @@ class InstanceController : PlatformController {
       r.id = id;
       r.action = j.getString("action");
 
-      auto result = uc.performAction(r);
+      auto result = usecase.performAction(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -210,8 +210,8 @@ class InstanceController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = InstanceId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteInstance(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

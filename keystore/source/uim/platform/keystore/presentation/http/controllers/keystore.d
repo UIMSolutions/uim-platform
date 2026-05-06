@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 
 class KeystoreController : PlatformController {
-  private ManageKeystoresUseCase  uc;
+  private ManageKeystoresUseCase  usecase;
   private KeystoreSearchService   searchSvc;
 
-  this(ManageKeystoresUseCase uc, KeystoreSearchService searchSvc) {
-    this.uc        = uc;
+  this(ManageKeystoresUseCase usecase, KeystoreSearchService searchSvc) {
+    this.usecase        = usecase;
     this.searchSvc = searchSvc;
   }
 
@@ -47,7 +47,7 @@ class KeystoreController : PlatformController {
       r.content       = j.getString("content");
       r.createdBy     = UserId(j.getString("createdBy"));
 
-      auto result = uc.upload(r);
+      auto result = usecase.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id);
@@ -69,9 +69,9 @@ class KeystoreController : PlatformController {
 
       KeystoreEntity[] keystores;
       if (applicationId.length > 0) {
-        keystores = uc.listByApplication(accountId, applicationId);
+        keystores = usecase.listByApplication(accountId, applicationId);
       } else {
-        keystores = uc.listByAccount(accountId);
+        keystores = usecase.listByAccount(accountId);
       }
 
       auto jarr = Json.emptyArray;
@@ -103,7 +103,7 @@ class KeystoreController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req);
-      auto ks = uc.getById(id);
+      auto ks = usecase.getById(id);
       if (ks.id.length == 0) {
         writeError(res, 404, "Keystore not found");
         return;
@@ -138,7 +138,7 @@ class KeystoreController : PlatformController {
       r.content     = j.getString("content");
       r.updatedBy  = UserId(j.getString("updatedBy"));
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
@@ -152,8 +152,8 @@ class KeystoreController : PlatformController {
   // DELETE /api/v1/keystores/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id     = extractIdFromPath(req);
-      auto result = uc.removeById(id);
+      auto id     = KeystoreId(extractIdFromPath(req));
+      auto result = usecase.deleteKeystore(id);
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {

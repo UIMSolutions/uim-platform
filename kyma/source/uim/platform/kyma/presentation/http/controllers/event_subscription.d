@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class EventSubscriptionController : PlatformController {
-  private ManageEventSubscriptionsUseCase uc;
+  private ManageEventSubscriptionsUseCase usecase;
 
-  this(ManageEventSubscriptionsUseCase uc) {
-    this.uc = uc;
+  this(ManageEventSubscriptionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -59,7 +59,7 @@ class EventSubscriptionController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id);
@@ -82,11 +82,11 @@ class EventSubscriptionController : PlatformController {
 
       EventSubscription[] items;
       if (source.length > 0)
-        items = uc.listBySource(source);
+        items = usecase.listBySource(source);
       else if (nsId.length > 0)
-        items = uc.listByNamespace(nsId);
+        items = usecase.listByNamespace(nsId);
       else if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = usecase.listByEnvironment(envId);
       else
         items = [];
 
@@ -106,7 +106,7 @@ class EventSubscriptionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto sub = uc.getSubscription(id);
+      auto sub = usecase.getSubscription(id);
       if (sub.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
@@ -133,7 +133,7 @@ class EventSubscriptionController : PlatformController {
       r.filterAttributes = jsonStrMap(j, "filterAttributes");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.updateSubscription(id, r);
+      auto result = usecase.updateSubscription(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -147,7 +147,7 @@ class EventSubscriptionController : PlatformController {
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.pauseSubscription(id);
+      auto result = usecase.pauseSubscription(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -161,7 +161,7 @@ class EventSubscriptionController : PlatformController {
   private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.resumeSubscription(id);
+      auto result = usecase.resumeSubscription(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -175,7 +175,7 @@ class EventSubscriptionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteSubscription(id);
+      auto result = usecase.deleteSubscription(id);
       if (result.success)
         res.writeBody("", 204);
       else

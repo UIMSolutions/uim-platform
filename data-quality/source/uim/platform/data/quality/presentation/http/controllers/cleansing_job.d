@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class CleansingJobController : PlatformController {
-  private ManageCleansingJobsUseCase uc;
+  private ManageCleansingJobsUseCase usecase;
 
-  this(ManageCleansingJobsUseCase uc) {
-    this.uc = uc;
+  this(ManageCleansingJobsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class CleansingJobController : PlatformController {
       r.requestedBy = j.getString("requestedBy");
       r.ruleIds = getStrings(j, "ruleIds");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -62,7 +62,7 @@ class CleansingJobController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto jobs = uc.listByTenant(tenantId);
+      auto jobs = usecase.listByTenant(tenantId);
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -80,7 +80,7 @@ class CleansingJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto job = uc.getById(tenantId, id);
+      auto job = usecase.getById(tenantId, id);
       if (job is null) {
         writeError(res, 404, "Cleansing job not found");
         return;

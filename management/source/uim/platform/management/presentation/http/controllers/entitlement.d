@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class EntitlementController : PlatformController {
-  private ManageEntitlementsUseCase uc;
+  private ManageEntitlementsUseCase usecase;
 
-  this(ManageEntitlementsUseCase uc) {
-    this.uc = uc;
+  this(ManageEntitlementsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class EntitlementController : PlatformController {
       r.autoAssign = j.getBoolean("autoAssign");
       r.assignedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.assign(r);
+      auto result = usecase.assign(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -70,11 +70,11 @@ class EntitlementController : PlatformController {
 
       Entitlement[] items;
       if (subId.length > 0)
-        items = uc.listBySubaccount(subId);
+        items = usecase.listBySubaccount(subId);
       else if (dirId.length > 0)
-        items = uc.listByDirectory(dirId);
+        items = usecase.listByDirectory(dirId);
       else if (gaId.length > 0)
-        items = uc.listByGlobalAccount(gaId);
+        items = usecase.listByGlobalAccount(gaId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
   
@@ -91,7 +91,7 @@ class EntitlementController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto ent = uc.getById(id);
+      auto ent = usecase.getById(id);
       if (ent.isNull) {
         writeError(res, 404, "Entitlement not found");
         return;
@@ -109,7 +109,7 @@ class EntitlementController : PlatformController {
       request.quotaAssigned = j.getInteger("quotaAssigned");
       request.unlimited = j.getBoolean("unlimited");
 
-      auto result = uc.updateQuota(id, request);
+      auto result = usecase.updateQuota(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -121,7 +121,7 @@ class EntitlementController : PlatformController {
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.revoke(id);
+      auto result = usecase.revoke(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -132,8 +132,8 @@ class EntitlementController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.removeById(id);
+      auto id = EntitlementId(extractId(req.requestURI));
+      auto result = usecase.deleteEntitlement(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

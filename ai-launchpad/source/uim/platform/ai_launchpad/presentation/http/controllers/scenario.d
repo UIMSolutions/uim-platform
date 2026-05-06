@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ScenarioController : PlatformController {
-  private ManageScenariosUseCase uc;
+  private ManageScenariosUseCase usecase;
 
-  this(ManageScenariosUseCase uc) {
-    this.uc = uc;
+  this(ManageScenariosUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class ScenarioController : PlatformController {
       r.description = j.getString("description");
       r.labels = getStrings(j, "labels");
 
-      auto result = uc.sync(r);
+      auto result = usecase.sync(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,8 +61,8 @@ class ScenarioController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto scenarios = connectionId.length > 0
-        ? uc.listByConnection(connectionId)
-        : uc.listAll();
+        ? usecase.listByConnection(connectionId)
+        : usecase.listAll();
 
       auto jarr = scenarios.map!(s => s.toJson).array.toJson;
 
@@ -83,7 +83,7 @@ class ScenarioController : PlatformController {
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto s = uc.getById(connectionId, id);
+      auto s = usecase.getById(connectionId, id);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
@@ -104,7 +104,7 @@ class ScenarioController : PlatformController {
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(connectionId, id);
+      auto result = usecase.deleteScenario(connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

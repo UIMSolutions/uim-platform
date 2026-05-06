@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class CapabilitiesController : PlatformController {
-  private GetCapabilitiesUseCase uc;
+  private GetCapabilitiesUseCase usecase;
 
-  this(GetCapabilitiesUseCase uc) {
-    this.uc = uc;
+  this(GetCapabilitiesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -28,7 +28,7 @@ class CapabilitiesController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto cap = uc.getById();
+      auto cap = usecase.getById();
 
       auto resp = Json.emptyObject
       .set("serviceName", cap.serviceName)

@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class MonitoringController : PlatformController {
-  private MonitorProvisioningUseCase uc;
+  private MonitorProvisioningUseCase usecase;
 
-  this(MonitorProvisioningUseCase uc) {
-    this.uc = uc;
+  this(MonitorProvisioningUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class MonitoringController : PlatformController {
   private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listJobSummaries(tenantId);
+      auto items = usecase.listJobSummaries(tenantId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
 
@@ -58,7 +58,7 @@ class MonitoringController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getJobSummary(tenantId, id);
+      auto summary = usecase.getJobSummary(tenantId, id);
       if (summary.jobId.isEmpty) {
         writeError(res, 404, "Job not found");
         return;
@@ -74,7 +74,7 @@ class MonitoringController : PlatformController {
       auto jobId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto logs = uc.getJobLogs(tenantId, jobId);
+      auto logs = usecase.getJobLogs(tenantId, jobId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -92,7 +92,7 @@ class MonitoringController : PlatformController {
   private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listProvisionedEntities(tenantId);
+      auto items = usecase.listProvisionedEntities(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -110,7 +110,7 @@ class MonitoringController : PlatformController {
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getPipelineSummary(tenantId);
+      auto summary = usecase.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject
         .set("totalSourceSystems", summary.totalSourceSystems)

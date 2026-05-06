@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class BrandingConfigController : PlatformController {
-    private ManageBrandingConfigsUseCase uc;
+    private ManageBrandingConfigsUseCase usecase;
 
-    this(ManageBrandingConfigsUseCase uc) {
-        this.uc = uc;
+    this(ManageBrandingConfigsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class BrandingConfigController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class BrandingConfigController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(BrandingConfigId(id));
+            auto e = usecase.getById(BrandingConfigId(id));
             if (e.isNull) { writeError(res, 404, "Branding config not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -73,7 +73,7 @@ class BrandingConfigController : PlatformController {
             dto.customCss = j.getString("customCss");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -106,7 +106,7 @@ class BrandingConfigController : PlatformController {
             dto.customCss = j.getString("customCss");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -125,8 +125,8 @@ class BrandingConfigController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(BrandingConfigId(id));
+            auto id = BrandingConfigId(extractIdFromPath(path));
+            auto result = usecase.deleteBrandingConfig(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Branding config deleted");

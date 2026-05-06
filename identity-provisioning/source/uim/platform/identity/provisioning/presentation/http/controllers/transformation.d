@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 import uim.platform.identity.provisioning;
 class TransformationController : PlatformController {
-  private ManageTransformationsUseCase uc;
+  private ManageTransformationsUseCase usecase;
 
-  this(ManageTransformationsUseCase uc) {
-    this.uc = uc;
+  this(ManageTransformationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
     override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class TransformationController : PlatformController {
       r.conditions = j.getString("conditions");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createTransformation(r);
+      auto result = usecase.createTransformation(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -66,7 +66,7 @@ class TransformationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listTransformations(tenantId);
+      auto items = usecase.listTransformations(tenantId);
 
       auto arr = items.map!(t => t.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class TransformationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = uc.getTransformation(tenantId, id);
+      auto t = usecase.getTransformation(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Transformation not found");
         return;
@@ -106,7 +106,7 @@ class TransformationController : PlatformController {
       r.mappingRules = j.getString("mappingRules");
       r.conditions = j.getString("conditions");
 
-      auto result = uc.updateTransformation(r);
+      auto result = usecase.updateTransformation(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -133,7 +133,7 @@ class TransformationController : PlatformController {
         return;
       }
 
-      auto output = uc.testTransformation(tenantId, inputAttributes, systemId);
+      auto output = usecase.testTransformation(tenantId, inputAttributes, systemId);
       auto resp = Json.emptyObject
       .set("output", output);
       res.writeJsonBody(resp, 200);
@@ -146,7 +146,7 @@ class TransformationController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteTransformation(tenantId, id);
+      auto result = usecase.deleteTransformation(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

@@ -59,7 +59,7 @@ struct QueueDTO {
 }
 
 struct TopicDTO {
-    string id;
+    TopicId topicId;
     TenantId tenantId;
     BrokerServiceId brokerServiceId;
     string name;
@@ -159,10 +159,10 @@ struct EventApplicationDTO {
 }
 
 struct MeshBridgeDTO {
-    string id;
+    MeshBridgeId meshBridgeId;
     TenantId tenantId;
-    string sourceBrokerId;
-    string targetBrokerId;
+    BrokerServiceId sourceBrokerId;
+    BrokerServiceId targetBrokerId;
     string name;
     string description;
     string status;

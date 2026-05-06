@@ -45,6 +45,10 @@ TenantId getTenantId(Json json, string key) {
   return TenantId(key in json && json[key].isString ? json[key].get!string : "");
 }
 
+bool hasTenantId(HTTPServerRequest req) {
+  return req.headers.get("X-Tenant-Id", "") != "";
+}
+
 TenantId getTenantId(HTTPServerRequest req) {
   return TenantId(req.headers.get("X-Tenant-Id", ""));
 }

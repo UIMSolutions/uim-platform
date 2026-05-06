@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class EntityTypeController : PlatformController {
-    private ManageEntityTypesUseCase uc;
+    private ManageEntityTypesUseCase usecase;
 
-    this(ManageEntityTypesUseCase uc) {
-        this.uc = uc;
+    this(ManageEntityTypesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class EntityTypeController : PlatformController {
             r.sourceSystem = j.getString("sourceSystem");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class EntityTypeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto types = uc.list(tenantId);
+            auto types = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (et; types) {
@@ -89,7 +89,7 @@ class EntityTypeController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto et = uc.getById(id);
+            auto et = usecase.getById(id);
             if (et.isNull) {
                 writeError(res, 404, "Entity type not found");
                 return;
@@ -126,7 +126,7 @@ class EntityTypeController : PlatformController {
             r.category = j.getString("category");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -145,8 +145,8 @@ class EntityTypeController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteEntityType(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

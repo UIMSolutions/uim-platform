@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class FolderController : PlatformController {
-  private ManageFoldersUseCase uc;
+  private ManageFoldersUseCase usecase;
 
-  this(ManageFoldersUseCase uc) {
-    this.uc = uc;
+  this(ManageFoldersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class FolderController : PlatformController {
       r.description = j.getString("description");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createFolder(r);
+      auto result = usecase.createFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,7 +67,7 @@ class FolderController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listFolders(tenantId);
+      auto items = usecase.listFolders(tenantId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;
 
@@ -85,7 +85,7 @@ class FolderController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto folder = uc.getFolder(tenantId, id);
+      auto folder = usecase.getFolder(tenantId, id);
       if (folder.isNull) {
         writeError(res, 404, "Folder not found");
         return;
@@ -110,7 +110,7 @@ class FolderController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = uc.updateFolder(r);
+      auto result = usecase.updateFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -135,7 +135,7 @@ class FolderController : PlatformController {
       r.tenantId = req.getTenantId;
       r.newParentFolderId = j.getString("newParentFolderId");
 
-      auto result = uc.moveFolder(r);
+      auto result = usecase.moveFolder(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -155,7 +155,7 @@ class FolderController : PlatformController {
     try {
       auto parentId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listChildren(tenantId, parentId);
+      auto items = usecase.listChildren(tenantId, parentId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;
 
@@ -173,7 +173,7 @@ class FolderController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteFolder(req.getTenantId, FolderId(id));
+      auto result = usecase.deleteFolder(req.getTenantId, FolderId(id));
 
       if (result.isSuccess) {
         auto resp = Json.emptyObject

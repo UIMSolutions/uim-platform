@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class OperationController : PlatformController {
-    private ManageOperationsUseCase uc;
+    private ManageOperationsUseCase usecase;
 
-    this(ManageOperationsUseCase uc) { this.uc = uc; }
+    this(ManageOperationsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,7 +23,7 @@ class OperationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -42,7 +42,7 @@ class OperationController : PlatformController {
             
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, OperationId(id));
+            auto e = usecase.getById(tenantId, OperationId(id));
             if (e.isNull) { writeError(res, 404, "Operation not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value)
@@ -65,7 +65,7 @@ class OperationController : PlatformController {
             r.type = j.getString("type");
             r.description = j.getString("description");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -81,7 +81,7 @@ class OperationController : PlatformController {
             r.status = j.getString("status");
             r.errorMessage = j.getString("errorMessage");
 
-            auto result = uc.update(req.getTenantId, OperationId(id), r);
+            auto result = usecase.update(req.getTenantId, OperationId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -92,7 +92,7 @@ class OperationController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, OperationId(id));
+            auto result = usecase.deleteOperation(req.getTenantId, OperationId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }

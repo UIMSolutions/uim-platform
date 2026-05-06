@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class CustomDomainController : PlatformController {
-    private ManageCustomDomainsUseCase uc;
+    private ManageCustomDomainsUseCase usecase;
 
-    this(ManageCustomDomainsUseCase uc) {
-        this.uc = uc;
+    this(ManageCustomDomainsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class CustomDomainController : PlatformController {
             r.environment = j.getString("environment");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -59,7 +59,7 @@ class CustomDomainController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto domains = uc.list(tenantId);
+            auto domains = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; domains) {
@@ -97,7 +97,7 @@ class CustomDomainController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            auto d = uc.getById(id);
+            auto d = usecase.getById(id);
             if (d.isNull) {
                 writeError(res, 404, "Custom domain not found");
                 return;
@@ -141,7 +141,7 @@ class CustomDomainController : PlatformController {
             r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -166,7 +166,7 @@ class CustomDomainController : PlatformController {
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.activate(id);
+            auto result = usecase.activate(id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -188,7 +188,7 @@ class CustomDomainController : PlatformController {
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.deactivate(id);
+            auto result = usecase.deactivate(id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -207,7 +207,7 @@ class CustomDomainController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteCustomDomain(id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

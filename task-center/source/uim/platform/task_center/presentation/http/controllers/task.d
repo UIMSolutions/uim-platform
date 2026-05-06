@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskController : PlatformController {
-    private ManageTasksUseCase uc;
+    private ManageTasksUseCase usecase;
 
-    this(ManageTasksUseCase uc) {
-        this.uc = uc;
+    this(ManageTasksUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class TaskController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -78,13 +78,13 @@ class TaskController : PlatformController {
 
             Task[] tasks;
             if (assignee.length > 0) {
-                tasks = uc.listByAssignee(tenantId, assignee);
+                tasks = usecase.listByAssignee(tenantId, assignee);
             } else if (status.length > 0) {
-                tasks = uc.listByStatus(tenantId, status.to!TaskStatus);
+                tasks = usecase.listByStatus(tenantId, status.to!TaskStatus);
             } else if (providerId.length > 0) {
-                tasks = uc.listByProvider(tenantId, providerId);
+                tasks = usecase.listByProvider(tenantId, providerId);
             } else {
-                tasks = uc.list(tenantId);
+                tasks = usecase.list(tenantId);
             }
 
             auto jarr = tasks.map!(t => toJson(t)).array;
@@ -110,7 +110,7 @@ class TaskController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto t = uc.getById(tenantId, id);
+            auto t = usecase.getById(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Task not found");
                 return;
@@ -137,7 +137,7 @@ class TaskController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -163,7 +163,7 @@ class TaskController : PlatformController {
             auto j = req.json;
             auto userId = j.getString("userId");
 
-            auto result = uc.claim(tenantId, id, userId);
+            auto result = usecase.claim(tenantId, id, userId);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -187,7 +187,7 @@ class TaskController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.release(tenantId, id);
+            auto result = usecase.release(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -214,7 +214,7 @@ class TaskController : PlatformController {
             auto toUser = j.getString("toUser");
             auto comment = j.getString("comment");
 
-            auto result = uc.forward(tenantId, id, toUser, comment);
+            auto result = usecase.forward(tenantId, id, toUser, comment);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -238,7 +238,7 @@ class TaskController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.complete(tenantId, id);
+            auto result = usecase.complete(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -262,7 +262,7 @@ class TaskController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.cancel(tenantId, id);
+            auto result = usecase.cancel(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -283,7 +283,7 @@ class TaskController : PlatformController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
-            auto result = uc.removeById(tenantId, id);
+            auto result = usecase.deleteTask(tenantId, TaskId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

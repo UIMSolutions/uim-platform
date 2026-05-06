@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class FindController : PlatformController {
-  private FindDestinationUseCase uc;
+  private FindDestinationUseCase usecase;
 
-  this(FindDestinationUseCase uc) {
-    this.uc = uc;
+  this(FindDestinationUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -37,7 +37,7 @@ class FindController : PlatformController {
       r.name = req.params.get("name");
       r.headerProvider = req.params.get("headerProvider");
 
-      auto result = uc.find(r);
+      auto result = usecase.find(r);
 
       if (!result.found) {
         writeError(res, 404, result.error);

@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ActivityController : PlatformController {
-  private MonitorActivitiesUseCase uc;
+  private MonitorActivitiesUseCase usecase;
 
-  this(MonitorActivitiesUseCase uc) {
-    this.uc = uc;
+  this(MonitorActivitiesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -36,7 +36,7 @@ class ActivityController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto activities = uc.listActivities(tenantId);
+      auto activities = usecase.listActivities(tenantId);
       auto arr = activities.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -53,7 +53,7 @@ class ActivityController : PlatformController {
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getSummary(tenantId);
+      auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject
         .set("totalCount", Json(summary.totalCount))

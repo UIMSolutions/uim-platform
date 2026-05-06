@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class EventSchemaController : PlatformController {
-    private ManageEventSchemasUseCase uc;
+    private ManageEventSchemasUseCase usecase;
 
-    this(ManageEventSchemasUseCase uc) {
-        this.uc = uc;
+    this(ManageEventSchemasUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,8 +30,8 @@ class EventSchemaController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
-            auto jarr = items.map!(e => e.toJson()).array;
+            auto items = usecase.list();
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -49,7 +49,7 @@ class EventSchemaController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = EventSchemaId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Event schema not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -67,11 +67,11 @@ class EventSchemaController : PlatformController {
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.schemaContent = j.getString("schemaContent");
-            dto.applicationDomainId = j.getString("applicationDomainId");
+            // TODO: dto.applicationDomainId = ApplicationDomainId(j.getString("applicationDomainId"));
             dto.shared_ = j.getString("shared");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -99,7 +99,7 @@ class EventSchemaController : PlatformController {
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -116,10 +116,9 @@ class EventSchemaController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             auto path = req.requestURI.to!string;
             auto id = EventSchemaId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteEventSchema(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Event schema deleted");

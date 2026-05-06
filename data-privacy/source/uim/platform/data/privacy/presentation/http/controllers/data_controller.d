@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class DataControllerController : PlatformController {
-  private ManageDataControllersUseCase uc;
+  private ManageDataControllersUseCase usecase;
 
-  this(ManageDataControllersUseCase uc) {
-    this.uc = uc;
+  this(ManageDataControllersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class DataControllerController : PlatformController {
       r.dpoName = j.getString("dpoName");
       r.dpoEmail = j.getString("dpoEmail");
 
-      auto result = uc.createController(r);
+      auto result = usecase.createController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -63,7 +63,7 @@ class DataControllerController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listControllers(tenantId);
+      auto items = usecase.listControllers(tenantId);
       auto arr = items.map!(controller => controller.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -79,7 +79,7 @@ class DataControllerController : PlatformController {
     try {
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getController(tenantId, id);
+      auto entry = usecase.getController(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data controller not found");
         return;
@@ -105,7 +105,7 @@ class DataControllerController : PlatformController {
       r.dpoName = j.getString("dpoName");
       r.dpoEmail = j.getString("dpoEmail");
 
-      auto result = uc.updateController(r);
+      auto result = usecase.updateController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -122,7 +122,7 @@ class DataControllerController : PlatformController {
     try {
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteController(tenantId, id);
+      usecase.deleteController(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

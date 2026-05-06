@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DeploymentController : PlatformController {
-  private ManageDeploymentsUseCase uc;
+  private ManageDeploymentsUseCase usecase;
 
-  this(ManageDeploymentsUseCase uc) {
-    this.uc = uc;
+  this(ManageDeploymentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class DeploymentController : PlatformController {
       r.resourceGroupId = j.getString("resourceGroupId");
       r.ttl = j.getInteger("ttl");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,9 +63,9 @@ class DeploymentController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(uc.listByConnection(connectionId)) deployments;
+      typeof(usecase.listByConnection(connectionId)) deployments;
       deployments = scenarioId.length > 0
-        ? uc.listByScenario(scenarioId, connectionId) : uc.listByConnection(connectionId);
+        ? usecase.listByScenario(scenarioId, connectionId) : usecase.listByConnection(connectionId);
 
       auto jarr = deployments.map!(d => d.toJson).array.toJson;
 
@@ -86,7 +86,7 @@ class DeploymentController : PlatformController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto d = uc.getById(connectionId, id);
+      auto d = usecase.getById(connectionId, id);
       if (d.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -116,7 +116,7 @@ class DeploymentController : PlatformController {
       r.configurationId = j.getString("configurationId");
       r.ttl = j.getInteger("ttl");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -141,7 +141,7 @@ class DeploymentController : PlatformController {
       r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = uc.bulkPatch(r);
+      auto results = usecase.bulkPatch(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
@@ -169,7 +169,7 @@ class DeploymentController : PlatformController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(connectionId, id);
+      auto result = usecase.deleteDeployment(connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Deployment removed successfully"); 

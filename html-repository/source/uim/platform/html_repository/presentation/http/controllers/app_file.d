@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class AppFileController : PlatformController {
-  private ManageAppFilesUseCase uc;
+  private ManageAppFilesUseCase usecase;
 
-  this(ManageAppFilesUseCase uc) {
-    this.uc = uc;
+  this(ManageAppFilesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class AppFileController : PlatformController {
       r.encoding = j.getString("encoding");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.upload(r);
+      auto result = usecase.upload(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -61,7 +61,7 @@ class AppFileController : PlatformController {
       auto versionId = getString(req.json, "versionId");
       if (versionId.isEmpty)
         versionId = req.headers.get("X-Version-Id", "");
-      auto items = uc.listByVersion(versionId);
+      auto items = usecase.listByVersion(versionId);
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
@@ -92,7 +92,7 @@ class AppFileController : PlatformController {
         writeError(res, 404, "File not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "File not found");
         return;
@@ -130,7 +130,7 @@ class AppFileController : PlatformController {
       r.data = j.getString("data");
       r.encoding = j.getString("encoding");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id)
@@ -145,13 +145,14 @@ class AppFileController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
+      auto id = extractIdFromPath(req.requestURI.to!string);
       if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
       }
-      auto result = uc.removeById(tenantId, id);
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto result = usecase.deleteAppFile(tenantId, AppFileId(id));
       if (result.isSuccess())
         res.writeBody("", 204);
       else

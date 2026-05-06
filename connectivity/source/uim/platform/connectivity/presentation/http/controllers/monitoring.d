@@ -29,10 +29,10 @@ mixin(ShowModule!());
  * - ConnectivityLog[] listBySource(TenantId tenantId, SourceId sourceId) 
  */
 class MonitoringController : PlatformController {
-  private MonitorConnectivityUseCase uc;
+  private MonitorConnectivityUseCase usecase;
 
-  this(MonitorConnectivityUseCase uc) {
-    this.uc = uc;
+  this(MonitorConnectivityUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class MonitoringController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto logs = uc.listLogs(tenantId);
+      auto logs = usecase.listLogs(tenantId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -63,7 +63,7 @@ class MonitoringController : PlatformController {
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getSummary(tenantId);
+      auto summary = usecase.getSummary(tenantId);
 
       auto response = Json.emptyObject
         .set("totalEvents", summary.totalEvents)

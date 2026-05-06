@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class AutomationRuleController : PlatformController {
-    private ManageAutomationRulesUseCase uc;
+    private ManageAutomationRulesUseCase usecase;
 
-    this(ManageAutomationRulesUseCase uc) {
-        this.uc = uc;
+    this(ManageAutomationRulesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class AutomationRuleController : PlatformController {
             r.executionOrder = j.getInteger("executionOrder");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -62,7 +62,7 @@ class AutomationRuleController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto rules = uc.list(tenantId);
+            auto rules = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (r; rules) {
@@ -95,7 +95,7 @@ class AutomationRuleController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.getById(id);
+            auto r = usecase.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "Automation rule not found");
                 return;
@@ -140,7 +140,7 @@ class AutomationRuleController : PlatformController {
             r.enabled = j.getBoolean("enabled", true);
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -159,8 +159,8 @@ class AutomationRuleController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteAutomationRule(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ValidateController : PlatformController {
-  private ValidateDataUseCase uc;
+  private ValidateDataUseCase usecase;
 
-  this(ValidateDataUseCase uc) {
-    this.uc = uc;
+  this(ValidateDataUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class ValidateController : PlatformController {
       r.recordId = j.getString("recordId");
       r.fieldValues = jsonStrMap(j, "fieldValues");
 
-      auto result = uc.validateRecord(r);
+      auto result = usecase.validateRecord(r);
       res.writeJsonBody(result.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -66,7 +66,7 @@ class ValidateController : PlatformController {
         }
       }
 
-      auto results = uc.validateBatch(r);
+      auto results = usecase.validateBatch(r);
       auto arr = results.map!(res_ => res_.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -84,7 +84,7 @@ class ValidateController : PlatformController {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.getResultByRecord(tenantId, recordId);
+      auto result = usecase.getResultByRecord(tenantId, recordId);
       if (result is null) {
         writeError(res, 404, "Validation result not found");
         return;

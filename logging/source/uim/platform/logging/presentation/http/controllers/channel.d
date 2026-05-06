@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ChannelController : PlatformController {
-  private ManageNotificationChannelsUseCase uc;
+  private ManageNotificationChannelsUseCase usecase;
 
-  this(ManageNotificationChannelsUseCase uc) {
-    this.uc = uc;
+  this(ManageNotificationChannelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class ChannelController : PlatformController {
       r.slackChannel = j.getString("slackChannel");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -65,7 +65,7 @@ class ChannelController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto channels = uc.list(tenantId);
+      auto channels = usecase.listChannels(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (ch; channels) {
@@ -91,7 +91,7 @@ class ChannelController : PlatformController {
       
 
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
-      auto ch = uc.getById(id);
+      auto ch = usecase.getChannel(id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
         return;
@@ -110,9 +110,7 @@ class ChannelController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateNotificationChannelRequest r;
       r.description = j.getString("description");
@@ -124,7 +122,7 @@ class ChannelController : PlatformController {
       r.slackWebhookUrl = j.getString("slackWebhookUrl");
       r.slackChannel = j.getString("slackChannel");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -140,10 +138,8 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
-      uc.removeById(id);
+      usecase.deleteChannel(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

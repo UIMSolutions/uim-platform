@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ImportController : PlatformController {
-  private ImportContentUseCase uc;
+  private ImportContentUseCase usecase;
 
-  this(ImportContentUseCase uc) {
-    this.uc = uc;
+  this(ImportContentUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ImportController : PlatformController {
       r.sourceFilePath = j.getString("sourceFilePath");
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.startImport(r);
+      auto result = usecase.startImport(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,7 +63,7 @@ class ImportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto jobs = uc.listImportJobs(tenantId);
+      auto jobs = usecase.listImportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
@@ -81,7 +81,7 @@ class ImportController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto job = uc.getImportJob(id);
+      auto job = usecase.getImportJob(id);
       if (job.isNull) {
         writeError(res, 404, "Import job not found");
         return;

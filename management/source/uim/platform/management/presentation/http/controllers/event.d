@@ -17,10 +17,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class EventController : PlatformController {
-  private QueryPlatformEventsUseCase uc;
+  private QueryPlatformEventsUseCase usecase;
 
-  this(QueryPlatformEventsUseCase uc) {
-    this.uc = uc;
+  this(QueryPlatformEventsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,13 +39,13 @@ class EventController : PlatformController {
 
       PlatformEvent[] items;
       if (subId.length > 0)
-        items = uc.listBySubaccount(subId);
+        items = usecase.listBySubaccount(subId);
       else if (category.length > 0 && gaId.length > 0)
-        items = uc.listByCategory(gaId, category);
+        items = usecase.listByCategory(gaId, category);
       else if (severity.length > 0 && gaId.length > 0)
-        items = uc.listBySeverity(gaId, severity);
+        items = usecase.listBySeverity(gaId, severity);
       else if (gaId.length > 0)
-        items = uc.listByGlobalAccount(gaId);
+        items = usecase.listByGlobalAccount(gaId);
 
       auto arr = items.map!(ev => ev.toJson).array.toJson;
 
@@ -61,7 +61,7 @@ class EventController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto ev = uc.getById(id);
+      auto ev = usecase.getById(id);
       if (ev.isNull) {
         writeError(res, 404, "Event not found");
         return;

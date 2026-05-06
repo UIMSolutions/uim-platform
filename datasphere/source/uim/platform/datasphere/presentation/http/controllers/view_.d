@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ViewController : PlatformController {
-  private ManageViewsUseCase uc;
+  private ManageViewsUseCase usecase;
 
-  this(ManageViewsUseCase uc) {
-    this.uc = uc;
+  this(ManageViewsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class ViewController : PlatformController {
       // r.createdAt = now;
       // r.updatedAt = now;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -65,7 +65,7 @@ class ViewController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto views = uc.list(spaceId);
+      auto views = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (v; views) {
@@ -98,7 +98,7 @@ class ViewController : PlatformController {
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto v = uc.getById(spaceId, id);
+      auto v = usecase.getById(spaceId, id);
       if (v.id.isEmpty) {
         writeError(res, 404, "View not found");
         return;
@@ -140,7 +140,7 @@ class ViewController : PlatformController {
       r.isExposed = j.getBoolean("isExposed", false);
       r.isPersisted = j.getBoolean("isPersisted", false);
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -157,12 +157,11 @@ class ViewController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
 
-      auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+      auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.deleteView(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

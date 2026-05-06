@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class PurposeRecordController : PlatformController {
-  private ManagePurposeRecordsUseCase uc;
+  private ManagePurposeRecordsUseCase usecase;
 
-  this(ManagePurposeRecordsUseCase uc) {
-    this.uc = uc;
+  this(ManagePurposeRecordsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class PurposeRecordController : PlatformController {
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
 
-      auto result = uc.createRecord(r);
+      auto result = usecase.createRecord(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -62,7 +62,7 @@ class PurposeRecordController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listRecords(tenantId);
+      auto items = usecase.listRecords(tenantId);
       auto arr = items.map!(record => record.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -79,7 +79,7 @@ class PurposeRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto record = uc.getRecord(tenantId, id);
+      auto record = usecase.getRecord(tenantId, id);
       if (record.isNull) {
         writeError(res, 404, "Purpose record not found");
         return;
@@ -95,7 +95,7 @@ class PurposeRecordController : PlatformController {
       r.id = extractIdFromPath(req.requestURI);
       r.tenantId = req.getTenantId;
 
-      auto result = uc.deactivateRecord(r);
+      auto result = usecase.deactivateRecord(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -111,7 +111,7 @@ class PurposeRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRecord(tenantId, id);
+      usecase.deleteRecord(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

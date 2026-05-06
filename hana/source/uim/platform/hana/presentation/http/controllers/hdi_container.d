@@ -14,10 +14,10 @@ mixin(ShowModule!());
 @safe:
 
 class HDIContainerController : PlatformController {
-  private ManageHDIContainersUseCase uc;
+  private ManageHDIContainersUseCase usecase;
 
-  this(ManageHDIContainersUseCase uc) {
-    this.uc = uc;
+  this(ManageHDIContainersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class HDIContainerController : PlatformController {
       r.appUser = j.getString("appUser");
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class HDIContainerController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto containers = uc.list(tenantId);
+      auto containers = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (c; containers) {
@@ -88,7 +88,7 @@ class HDIContainerController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto c = uc.getById(id);
+      auto c = usecase.getById(id);
       if (c.isNull) {
         writeError(res, 404, "HDI Container not found");
         return;
@@ -126,7 +126,7 @@ class HDIContainerController : PlatformController {
       r.description = j.getString("description");
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -145,8 +145,8 @@ class HDIContainerController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteHDIContainer(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

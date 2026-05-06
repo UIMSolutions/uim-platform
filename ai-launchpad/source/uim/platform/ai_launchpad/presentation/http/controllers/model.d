@@ -14,10 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 class ModelController : PlatformController {
-  private ManageModelsUseCase uc;
+  private ManageModelsUseCase usecase;
 
-  this(ManageModelsUseCase uc) {
-    this.uc = uc;
+  this(ManageModelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class ModelController : PlatformController {
       r.size = jsonLong(j, "size");
       r.labels = getStrings(j, "labels");
 
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,11 +66,11 @@ class ModelController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(uc.listByConnection(connectionId)) models;
+      typeof(usecase.listByConnection(connectionId)) models;
       if (scenarioId.length > 0)
-        models = uc.listByScenario(connectionId, scenarioId);
+        models = usecase.listByScenario(connectionId, scenarioId);
       else
-        models = uc.listByConnection(connectionId);
+        models = usecase.listByConnection(connectionId);
 
       auto jarr = models.map!(m => m.toJson).array.toJson;
 
@@ -91,7 +91,7 @@ class ModelController : PlatformController {
       auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto model = uc.getById(connectionId, id);
+      auto model = usecase.getById(connectionId, id);
       if (model.isNull) {
         writeError(res, 404, "Model not found");
         return;
@@ -117,7 +117,7 @@ class ModelController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -134,12 +134,10 @@ class ModelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
-      auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.remove(connectionId, id);
+      auto result = usecase.deleteModel(connectionId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -150,20 +148,5 @@ class ModelController : PlatformController {
     }
   }
 
-  private Json serializeModel(Model m) {
-    return Json.emptyObject
-      .set("id", m.id)
-      .set("connectionId", m.connectionId)
-      .set("name", m.name)
-      .set("version", m.version_)
-      .set("description", m.description)
-      .set("scenarioId", m.scenarioId)
-      .set("executionId", m.executionId)
-      .set("url", m.url)
-      .set("size", m.size)
-      .set("status", m.status.to!string)
-      .set("labels", m.labels)
-      .set("createdAt", m.createdAt)
-      .set("updatedAt", m.updatedAt);
-  }
+
 }

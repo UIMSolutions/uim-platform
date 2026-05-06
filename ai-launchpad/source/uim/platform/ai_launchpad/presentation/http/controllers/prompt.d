@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class PromptController : PlatformController {
-  private ManagePromptsUseCase uc;
+  private ManagePromptsUseCase usecase;
 
-  this(ManagePromptsUseCase uc) {
-    this.uc = uc;
+  this(ManagePromptsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class PromptController : PlatformController {
       r.inputParams = getStrings(j, "inputParams");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,8 +67,8 @@ class PromptController : PlatformController {
       auto collectionId = CollectionId(req.headers.get("X-Collection-Id", ""));
 
       auto prompts = collectionId.length > 0
-        ? uc.listByCollection(collectionId)
-        : uc.listAll();
+        ? usecase.listByCollection(collectionId)
+        : usecase.listAll();
 
       auto jarr = prompts.map!(p => p.toJson).array.toJson;
 
@@ -89,7 +89,7 @@ class PromptController : PlatformController {
 
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
 
-      auto p = uc.getById(id);
+      auto p = usecase.getById(id);
       if (p.isNull) {
         writeError(res, 404, "Prompt not found");
         return;
@@ -116,7 +116,7 @@ class PromptController : PlatformController {
       r.temperature = getDouble(j, "temperature");
       r.maxTokens = j.getInteger("maxTokens");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", id)

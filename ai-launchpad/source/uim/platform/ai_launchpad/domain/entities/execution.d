@@ -16,10 +16,18 @@ struct OutputArtifact {
   string name;
   string artifactId;
   string artifactUrl;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("artifactId", artifactId)
+      .set("artifactUrl", artifactUrl);
+  }
 }
 
 struct Execution {
-  ExecutionId id;
+  mixin IdEntity!ExecutionId;
+
   ConnectionId connectionId;
   ConfigurationId configurationId;
   ScenarioId scenarioId;
@@ -32,6 +40,23 @@ struct Execution {
   string duration;
   string logsUrl;
   string statusMessage;
-  long createdAt;
-  long updatedAt;
+
+  Json toJson() const {
+    auto artifacts = outputArtifacts.map!(a => a.toJson).array.toJson;
+
+    return Json.emptyObject
+      .set("id", id)
+      .set("connectionId", connectionId)
+      .set("configurationId", configurationId)
+      .set("scenarioId", scenarioId)
+      .set("resourceGroupId", resourceGroupId)
+      .set("status", status.to!string)
+      .set("targetStatus", targetStatus)
+      .set("outputArtifacts", artifacts)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt)
+      .set("duration", duration)
+      .set("logsUrl", logsUrl)
+      .set("statusMessage", statusMessage);
+  }
 }

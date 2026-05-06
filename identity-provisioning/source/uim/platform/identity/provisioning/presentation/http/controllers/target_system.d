@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class TargetSystemController : PlatformController {
-  private ManageTargetSystemsUseCase uc;
+  private ManageTargetSystemsUseCase usecase;
 
-  this(ManageTargetSystemsUseCase uc) {
-    this.uc = uc;
+  this(ManageTargetSystemsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class TargetSystemController : PlatformController {
       r.connectionConfig = j.getString("connectionConfig");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createTargetSystem(r);
+      auto result = usecase.createTargetSystem(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -66,7 +66,7 @@ class TargetSystemController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listTargetSystems(tenantId);
+      auto items = usecase.listTargetSystems(tenantId);
       auto arr = items.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -83,7 +83,7 @@ class TargetSystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto sys = uc.getTargetSystem(tenantId, id);
+      auto sys = usecase.getTargetSystem(tenantId, id);
       if (sys.isNull) {
         writeError(res, 404, "Target system not found");
         return;
@@ -105,7 +105,7 @@ class TargetSystemController : PlatformController {
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
 
-      auto result = uc.updateTargetSystem(r);
+      auto result = usecase.updateTargetSystem(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -124,7 +124,7 @@ class TargetSystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateSystem(tenantId, id);
+      auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -144,7 +144,7 @@ class TargetSystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateSystem(tenantId, id);
+      auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -162,7 +162,7 @@ class TargetSystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteTargetSystem(tenantId, id);
+      auto result = usecase.deleteTargetSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

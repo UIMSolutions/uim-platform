@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 
 class AlertController : PlatformController {
-  private ManageAlertsUseCase uc;
+  private ManageAlertsUseCase usecase;
 
-  this(ManageAlertsUseCase uc) {
-    this.uc = uc;
+  this(ManageAlertsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -35,7 +35,7 @@ class AlertController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto alerts = uc.list(tenantId);
+      auto alerts = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (a; alerts) {
@@ -49,9 +49,9 @@ class AlertController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-      .set("items", jarr)
-      .set("totalCount", Json(alerts.length));
-      
+        .set("items", jarr)
+        .set("totalCount", Json(alerts.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -60,10 +60,9 @@ class AlertController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      TenantId tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
-      auto a = uc.getById(id);
+      auto a = usecase.getById(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;
@@ -96,11 +95,11 @@ class AlertController : PlatformController {
       r.tenantId = req.getTenantId;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
-      auto result = uc.acknowledge(r);
+      auto result = usecase.acknowledge(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -112,13 +111,14 @@ class AlertController : PlatformController {
 
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto j = req.json;
       ResolveAlertRequest r;
-      r.alertId = j.getString("alertId");
-      r.tenantId = req.getTenantId;
+      r.alertId = AlertId(j.getString("alertId"));
+      r.tenantId = tenantId;
       r.resolvedBy = j.getString("resolvedBy");
 
-      auto result = uc.resolve(r);
+      auto result = usecase.resolve(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -134,8 +134,9 @@ class AlertController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
-      uc.removeById(id);
+      usecase.deleteAlert(tenantId, id);
 
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

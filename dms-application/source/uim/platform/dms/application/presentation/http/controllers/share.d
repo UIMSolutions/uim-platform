@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class ShareController : PlatformController {
-  private ManageSharesUseCase uc;
+  private ManageSharesUseCase usecase;
 
-  this(ManageSharesUseCase uc) {
-    this.uc = uc;
+  this(ManageSharesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class ShareController : PlatformController {
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createShare(r);
+      auto result = usecase.createShare(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class ShareController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto shares = uc.listShares(tenantId);
+      auto shares = usecase.listShares(tenantId);
 
       auto arr = shares.map!(share => share.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class ShareController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto share = uc.getShare(tenantId, id);
+      auto share = usecase.getShare(tenantId, id);
       if (share.isNull) {
         writeError(res, 404, "Share not found");
         return;
@@ -99,7 +99,7 @@ class ShareController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.revokeShare(tenantId, id);
+      auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -118,7 +118,7 @@ class ShareController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteShare(tenantId, id);
+      auto result = usecase.deleteShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

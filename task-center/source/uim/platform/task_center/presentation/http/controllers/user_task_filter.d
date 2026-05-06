@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class UserTaskFilterController : PlatformController {
-    private ManageUserTaskFiltersUseCase uc;
+    private ManageUserTaskFiltersUseCase usecase;
 
-    this(ManageUserTaskFiltersUseCase uc) {
-        this.uc = uc;
+    this(ManageUserTaskFiltersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class UserTaskFilterController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class UserTaskFilterController : PlatformController {
 
             UserTaskFilter[] filters;
             if (userId.length > 0) {
-                filters = uc.listByUser(tenantId, userId);
+                filters = usecase.listByUser(tenantId, userId);
             } else {
                 filters = [];
             }
@@ -90,7 +90,7 @@ class UserTaskFilterController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto f = uc.getById(tenantId, id);
+            auto f = usecase.getById(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Filter not found");
                 return;
@@ -113,7 +113,7 @@ class UserTaskFilterController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -137,7 +137,7 @@ class UserTaskFilterController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.setDefault(tenantId, id);
+            auto result = usecase.setDefault(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -157,8 +157,8 @@ class UserTaskFilterController : PlatformController {
             
 
             TenantId tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteUserTaskFilter(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

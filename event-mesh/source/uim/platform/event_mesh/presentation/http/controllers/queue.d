@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class QueueController : PlatformController {
-    private ManageQueuesUseCase uc;
+    private ManageQueuesUseCase usecase;
 
-    this(ManageQueuesUseCase uc) {
-        this.uc = uc;
+    this(ManageQueuesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,14 +30,14 @@ class QueueController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => toJson(e)).array;
-            
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
+                .set("count", items.length)
+                .set("resources", jarr)
                 .set("message", "Queue list retrieved successfully");
-              
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -46,11 +46,14 @@ class QueueController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = uc.getById(QueueId(id));
-            if (e.isNull) { writeError(res, 404, "Queue not found"); return; }
+            auto id = QueueId(extractIdFromPath(path));
+            auto e = usecase.getById(id);
+            if (e.isNull) {
+                writeError(res, 404, "Queue not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -63,7 +66,7 @@ class QueueController : PlatformController {
             QueueDTO dto;
             dto.queueId = QueueId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = j.getString("brokerServiceId");
+            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.maxMsgSpoolUsage = j.getString("maxMsgSpoolUsage");
@@ -78,11 +81,11 @@ class QueueController : PlatformController {
             dto.ingressEnabled = j.getString("ingressEnabled");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Queue created");
+                    .set("id", result.id)
+                    .set("message", "Queue created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -95,7 +98,7 @@ class QueueController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             QueueDTO dto;
@@ -107,12 +110,12 @@ class QueueController : PlatformController {
             dto.maxMsgSize = j.getString("maxMsgSize");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Queue updated");
-                  
+                    .set("id", result.id)
+                    .set("message", "Queue updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -124,14 +127,14 @@ class QueueController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
             auto id = QueueId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteQueue(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Queue deleted");
-                  
+                    .set("message", "Queue deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ProfileController : PlatformController {
-  private ProfileDataUseCase uc;
+  private ProfileDataUseCase usecase;
 
-  this(ProfileDataUseCase uc) {
-    this.uc = uc;
+  this(ProfileDataUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class ProfileController : PlatformController {
         }
       }
 
-      auto profile = uc.profile(r);
+      auto profile = usecase.profile(r);
       res.writeJsonBody(profile.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -65,7 +65,7 @@ class ProfileController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto profiles = uc.listByTenant(tenantId);
+      auto profiles = usecase.listByTenant(tenantId);
       auto arr = profiles.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -83,7 +83,7 @@ class ProfileController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto profile = uc.getById(tenantId, id);
+      auto profile = usecase.getById(tenantId, id);
       if (profile is null) {
         writeError(res, 404, "Data profile not found");
         return;

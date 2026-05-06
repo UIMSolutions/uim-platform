@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class InformationReportController : PlatformController {
-  private ManageInformationReportsUseCase uc;
+  private ManageInformationReportsUseCase usecase;
 
-  this(ManageInformationReportsUseCase uc) {
-    this.uc = uc;
+  this(ManageInformationReportsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class InformationReportController : PlatformController {
       r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array;
       r.reason = j.getString("reason");
 
-      auto result = uc.createReport(r);
+      auto result = usecase.createReport(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -60,7 +60,7 @@ class InformationReportController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listReports(tenantId);
+      auto items = usecase.listReports(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -77,7 +77,7 @@ class InformationReportController : PlatformController {
     try {
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getReport(tenantId, id);
+      auto entry = usecase.getReport(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Information report not found");
         return;
@@ -100,7 +100,7 @@ class InformationReportController : PlatformController {
       r.downloadUrl = j.getString("downloadUrl");
       r.totalRecords = jsonLong(j, "totalRecords");
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto response = Json.emptyObject
           .set("id", result.id);
@@ -116,7 +116,7 @@ class InformationReportController : PlatformController {
     try {
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteReport(tenantId, id);
+      usecase.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

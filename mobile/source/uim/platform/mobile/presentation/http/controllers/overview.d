@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class OverviewController : PlatformController {
-  private GetOverviewUseCase uc;
+  private GetOverviewUseCase usecase;
 
-  this(GetOverviewUseCase uc) {
-    this.uc = uc;
+  this(GetOverviewUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -27,7 +27,7 @@ class OverviewController : PlatformController {
   private void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getSummary(tenantId);
+      auto summary = usecase.getSummary(tenantId);
       auto resp = Json.emptyObject
         .set("totalApps", Json(summary.totalApps))
         .set("totalDevices", Json(summary.totalDevices))

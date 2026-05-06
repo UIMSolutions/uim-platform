@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DomainDashboardController : PlatformController {
-    private ManageDomainDashboardsUseCase uc;
+    private ManageDomainDashboardsUseCase usecase;
 
-    this(ManageDomainDashboardsUseCase uc) {
-        this.uc = uc;
+    this(ManageDomainDashboardsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -28,7 +28,7 @@ class DomainDashboardController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto d = uc.getById(tenantId);
+            auto d = usecase.getById(tenantId);
 
             auto resp = Json.emptyObject
                 .set("id", Json(d.id))
@@ -52,7 +52,7 @@ class DomainDashboardController : PlatformController {
             RefreshDashboardRequest r;
             r.tenantId = req.getTenantId;
 
-            auto result = uc.refresh(r);
+            auto result = usecase.refresh(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

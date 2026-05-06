@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ExecutionController : PlatformController {
-  private ManageExecutionsUseCase uc;
+  private ManageExecutionsUseCase usecase;
 
-  this(ManageExecutionsUseCase uc) {
-    this.uc = uc;
+  this(ManageExecutionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class ExecutionController : PlatformController {
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,7 +58,7 @@ class ExecutionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto executions = uc.list(rgId);
+      auto executions = usecase.list(rgId);
 
       auto jarr = executions.map!(ex => executionToJson(ex)).array;
 
@@ -80,7 +80,7 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto ex = uc.getById(rgId, id);
+      auto ex = usecase.getById(rgId, id);
       if (ex.isNull) {
         writeError(res, 404, "Execution not found");
         return;
@@ -104,7 +104,7 @@ class ExecutionController : PlatformController {
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -121,12 +121,10 @@ class ExecutionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(rgId, id);
+      auto result = usecase.deleteExecution(rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

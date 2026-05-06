@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 
 class DashboardController : PlatformController {
-  private ManageDashboardsUseCase uc;
+  private ManageDashboardsUseCase usecase;
 
-  this(ManageDashboardsUseCase uc) {
-    this.uc = uc;
+  this(ManageDashboardsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class DashboardController : PlatformController {
 
       foreach (pj; j.getArray("panels")) {
         PanelDTO p;
-        p.id = PanelId(getString(pj, "id"));
+        p.panelId = PanelId(getString(pj, "id"));
         p.title = getString(pj, "title");
         p.panelType = getString(pj, "panelType");
         p.query = getString(pj, "query");
@@ -56,7 +56,7 @@ class DashboardController : PlatformController {
         r.panels ~= p;
       }
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -74,7 +74,7 @@ class DashboardController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto dashboards = uc.list(tenantId);
+      auto dashboards = usecase.listDashboards(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (d; dashboards) {
@@ -88,7 +88,8 @@ class DashboardController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", dashboards.length);
+        .set("totalCount", dashboards.length)
+        .set("message", "Dashboards retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -98,10 +99,8 @@ class DashboardController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
-      auto d = uc.getById(id);
+      auto d = usecase.getDashboard(id);
 
       if (d.isNull) {
         writeError(res, 404, "Dashboard not found");
@@ -135,8 +134,6 @@ class DashboardController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateDashboardRequest r;
@@ -144,7 +141,7 @@ class DashboardController : PlatformController {
       r.description = j.getString("description");
       r.isDefault = j.getBoolean("isDefault");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.updateDashboard(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -161,10 +158,8 @@ class DashboardController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
-      uc.removeById(id);
+      usecase.deleteDashboard(id);
       auto resp = Json.emptyObject
         .set("id", id)
         .set("message", "Dashboard deleted successfully");

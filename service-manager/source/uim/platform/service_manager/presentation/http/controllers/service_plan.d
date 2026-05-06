@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ServicePlanController : PlatformController {
-    private ManageServicePlansUseCase uc;
+    private ManageServicePlansUseCase usecase;
 
-    this(ManageServicePlansUseCase uc) { this.uc = uc; }
+    this(ManageServicePlansUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,7 +23,7 @@ class ServicePlanController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -42,7 +42,7 @@ class ServicePlanController : PlatformController {
             
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, ServicePlanId(id));
+            auto e = usecase.getById(tenantId, ServicePlanId(id));
             if (e.isNull) { writeError(res, 404, "Service plan not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
@@ -68,7 +68,7 @@ class ServicePlanController : PlatformController {
             r.schemas = j.getString("schemas");
             r.metadata = j.getString("metadata");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -86,7 +86,7 @@ class ServicePlanController : PlatformController {
             r.schemas = j.getString("schemas");
             r.metadata = j.getString("metadata");
 
-            auto result = uc.update(req.getTenantId, ServicePlanId(id), r);
+            auto result = usecase.update(req.getTenantId, ServicePlanId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -97,7 +97,7 @@ class ServicePlanController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, ServicePlanId(id));
+            auto result = usecase.deleteServicePlan(req.getTenantId, ServicePlanId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }

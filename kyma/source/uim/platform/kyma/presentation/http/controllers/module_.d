@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ModuleController : PlatformController {
-  private ManageModulesUseCase uc;
+  private ManageModulesUseCase usecase;
 
-  this(ManageModulesUseCase uc) {
-    this.uc = uc;
+  this(ManageModulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,7 +52,7 @@ class ModuleController : PlatformController {
       r.configurationJson = j.getString("configuration");
       r.enabledBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.enableModule(r);
+      auto result = usecase.enableModule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -72,7 +72,7 @@ class ModuleController : PlatformController {
       auto envIdParam = req.params.get("environmentId");
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
-      auto items = uc.listByEnvironment(envId);
+      auto items = usecase.listByEnvironment(envId);
       auto arr = items.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -89,7 +89,7 @@ class ModuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto m = uc.getModule(id);
+      auto m = usecase.getModule(id);
       if (m.isNull) {
         writeError(res, 404, "Module not found");
         return;
@@ -111,7 +111,7 @@ class ModuleController : PlatformController {
       r.customResourcePolicy = j.getString("customResourcePolicy");
       r.configurationJson = j.getString("configuration");
 
-      auto result = uc.updateModule(KymaModuleId(id), r);
+      auto result = usecase.updateModule(KymaModuleId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -125,7 +125,7 @@ class ModuleController : PlatformController {
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.disableModule(id);
+      auto result = usecase.disableModule(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -139,7 +139,7 @@ class ModuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteModule(id);
+      auto result = usecase.deleteModule(id);
       if (result.success)
         res.writeBody("", 204);
       else

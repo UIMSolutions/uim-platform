@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class ResidenceRuleController : PlatformController {
-    private ManageResidenceRulesUseCase uc;
+    private ManageResidenceRulesUseCase usecase;
 
-    this(ManageResidenceRulesUseCase uc) { this.uc = uc; }
+    this(ManageResidenceRulesUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -30,7 +30,7 @@ class ResidenceRuleController : PlatformController {
             r.periodUnit = j.getString("periodUnit");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -40,7 +40,7 @@ class ResidenceRuleController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (rr; items) {
                 jarr ~= Json.emptyObject
@@ -59,7 +59,7 @@ class ResidenceRuleController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto rr = uc.getById(id);
+            auto rr = usecase.getById(id);
             if (rr.isNull) { writeError(res, 404, "Residence rule not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", rr.id.value)
@@ -81,7 +81,7 @@ class ResidenceRuleController : PlatformController {
             r.periodUnit = j.getString("periodUnit");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -92,7 +92,7 @@ class ResidenceRuleController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            usecase.deleteResidenceRule(id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

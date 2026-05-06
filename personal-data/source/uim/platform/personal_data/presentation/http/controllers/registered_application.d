@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class RegisteredApplicationController : PlatformController {
-    private ManageRegisteredApplicationsUseCase uc;
+    private ManageRegisteredApplicationsUseCase usecase;
 
-    this(ManageRegisteredApplicationsUseCase uc) {
-        this.uc = uc;
+    this(ManageRegisteredApplicationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class RegisteredApplicationController : PlatformController {
             r.contactName = j.getString("contactName");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -61,7 +61,7 @@ class RegisteredApplicationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto apps = uc.list(tenantId);
+            auto apps = usecase.list(tenantId);
 
             auto jarr = apps.map!(a => appToJson(a)).array; {
 
@@ -84,7 +84,7 @@ class RegisteredApplicationController : PlatformController {
             if (path.length > 8 && path[$ - 8 .. $] == "/suspend") return;
 
             auto id = extractIdFromPath(path);
-            auto a = uc.getById(id);
+            auto a = usecase.getById(id);
             if (a.isNull) {
                 writeError(res, 404, "Application not found");
                 return;
@@ -111,7 +111,7 @@ class RegisteredApplicationController : PlatformController {
             r.contactName = j.getString("contactName");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -134,7 +134,7 @@ class RegisteredApplicationController : PlatformController {
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.activate(id);
+            auto result = usecase.activate(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -157,7 +157,7 @@ class RegisteredApplicationController : PlatformController {
             auto stripped = path[0 .. $ - 8]; // remove "/suspend"
             auto id = extractIdFromPath(stripped);
 
-            auto result = uc.suspend(id);
+            auto result = usecase.suspend(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -176,7 +176,7 @@ class RegisteredApplicationController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteRegisteredApplication(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

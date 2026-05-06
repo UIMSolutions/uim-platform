@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataRecordController : PlatformController {
-  private ManageDataRecordsUseCase uc;
+  private ManageDataRecordsUseCase usecase;
 
-  this(ManageDataRecordsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataRecordsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class DataRecordController : PlatformController {
       r.labels = j.getString("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createRecord(r);
+      auto result = usecase.createRecord(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -68,7 +68,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto record = uc.getRecord(tenantId, id);
+      auto record = usecase.getRecord(tenantId, id);
       if (record is null) {
         writeError(res, 404, "Record not found");
         return;
@@ -85,7 +85,7 @@ class DataRecordController : PlatformController {
       auto datasetId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       
-      auto items = uc.listByDataset(tenantId, datasetId);
+      auto items = usecase.listByDataset(tenantId, datasetId);
       auto arr = items.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -104,7 +104,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.validateRecord(tenantId, id);
+      auto result = usecase.validateRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -125,7 +125,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.rejectRecord(tenantId, id);
+      auto result = usecase.rejectRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -146,7 +146,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteRecord(tenantId, id);
+      auto result = usecase.deleteRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)

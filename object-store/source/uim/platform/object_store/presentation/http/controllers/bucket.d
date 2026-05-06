@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class BucketController : PlatformController {
-  private ManageBucketsUseCase uc;
+  private ManageBucketsUseCase usecase;
 
-  this(ManageBucketsUseCase uc) {
-    this.uc = uc;
+  this(ManageBucketsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class BucketController : PlatformController {
       r.quotaBytes = jsonLong(j, "quotaBytes");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createBucket(r);
+      auto result = usecase.createBucket(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -69,7 +69,7 @@ class BucketController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto buckets = uc.listBuckets(tenantId);
+      auto buckets = usecase.listBuckets(tenantId);
       auto arr = buckets.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -91,7 +91,7 @@ class BucketController : PlatformController {
         return;
       }
 
-      auto bucket = uc.getBucket(id);
+      auto bucket = usecase.getBucket(id);
       if (bucket.isNull) {
         writeError(res, 404, "Bucket not valid");
         return;
@@ -114,7 +114,7 @@ class BucketController : PlatformController {
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");
 
-      auto result = uc.updateBucket(id, r);
+      auto result = usecase.updateBucket(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,7 +132,7 @@ class BucketController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteBucket(id);
+      auto result = usecase.deleteBucket(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ArtifactController : PlatformController {
-  private ManageArtifactsUseCase uc;
+  private ManageArtifactsUseCase usecase;
 
-  this(ManageArtifactsUseCase uc) {
-    this.uc = uc;
+  this(ManageArtifactsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class ArtifactController : PlatformController {
       r.url = j.getString("url");
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -64,8 +64,8 @@ class ArtifactController : PlatformController {
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto artifacts = scenarioId.length > 0
-        ? uc.listByScenario(scenarioId, rgId)
-        : uc.list(rgId);
+        ? usecase.listByScenario(scenarioId, rgId)
+        : usecase.list(rgId);
 
       auto jarr = artifacts.map!(a => artifactToJson(a)).array;
 
@@ -86,7 +86,7 @@ class ArtifactController : PlatformController {
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto a = uc.getbyId(id, rgId);
+      auto a = usecase.getbyId(id, rgId);
       if (a.isNull) {
         writeError(res, 404, "Artifact not found");
         return;
@@ -100,12 +100,10 @@ class ArtifactController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(id, rgId);
+      auto result = usecase.deleteArtifact(rgId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

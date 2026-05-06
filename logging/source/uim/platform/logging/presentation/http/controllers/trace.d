@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 
 class TraceController : PlatformController {
-  private IngestTracesUseCase uc;
+  private IngestTracesUseCase usecase;
 
-  this(IngestTracesUseCase uc) {
-    this.uc = uc;
+  this(IngestTracesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,11 +47,11 @@ class TraceController : PlatformController {
       r.attributes = jsonStrMap(j, "attributes");
       r.resourceAttributes = jsonStrMap(j, "resourceAttributes");
 
-      auto result = uc.ingestSpan(r);
+      auto result = usecase.ingestSpan(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-        
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -69,30 +69,27 @@ class TraceController : PlatformController {
       IngestSpanBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      auto spansVal = "spans" in j;
-      if (spansVal !is null && (spansVal).isArray) {
-        foreach (sj; *spansVal) {
-          IngestSpanRequest r;
-          r.tenantId = tenantId;
-          r.traceId = getString(sj, "traceId");
-          r.parentSpanId = getString(sj, "parentSpanId");
-          r.operationName = getString(sj, "operationName");
-          r.serviceName = getString(sj, "serviceName");
-          r.startTime = jsonLong(sj, "startTime");
-          r.endTime = jsonLong(sj, "endTime");
-          r.status = getString(sj, "status");
-          r.kind = getString(sj, "kind");
-          r.attributes = jsonStrMap(sj, "attributes");
-          r.resourceAttributes = jsonStrMap(sj, "resourceAttributes");
-          batchReq.spans ~= r;
-        }
+      foreach (sj; j.getArray("spans")) {
+        IngestSpanRequest r;
+        r.tenantId = tenantId;
+        r.traceId = getString(sj, "traceId");
+        r.parentSpanId = getString(sj, "parentSpanId");
+        r.operationName = getString(sj, "operationName");
+        r.serviceName = getString(sj, "serviceName");
+        r.startTime = jsonLong(sj, "startTime");
+        r.endTime = jsonLong(sj, "endTime");
+        r.status = getString(sj, "status");
+        r.kind = getString(sj, "kind");
+        r.attributes = jsonStrMap(sj, "attributes");
+        r.resourceAttributes = jsonStrMap(sj, "resourceAttributes");
+        batchReq.spans ~= r;
       }
 
-      auto result = uc.ingestSpanBatch(batchReq);
+      auto result = usecase.ingestSpanBatch(batchReq);
       auto resp = Json.emptyObject
         .set("success", result.success)
         .set("message", result.error);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -101,12 +98,11 @@ class TraceController : PlatformController {
 
   private void handleGetTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
 
       TenantId tenantId = req.getTenantId;
       auto traceId = extractIdFromPath(req.requestURI.to!string);
 
-      auto spans = uc.getTrace(tenantId, traceId);
+      auto spans = usecase.getTrace(tenantId, traceId);
 
       auto jarr = Json.emptyArray;
       foreach (s; spans) {
@@ -125,7 +121,7 @@ class TraceController : PlatformController {
         .set("traceId", Json(traceId))
         .set("spans", jarr)
         .set("totalSpans", Json(spans.length));
-        
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

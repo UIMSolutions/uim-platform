@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class DeletionController : PlatformController {
-  private ManageDeletionRequestsUseCase uc;
+  private ManageDeletionRequestsUseCase usecase;
 
-  this(ManageDeletionRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageDeletionRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class DeletionController : PlatformController {
       r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -67,11 +67,11 @@ class DeletionController : PlatformController {
 
       DeletionRequest[] items;
       if (statusParam.length > 0)
-        items = uc.listByStatus(tenantId, parseDeletionStatus(statusParam));
+        items = usecase.listByStatus(tenantId, parseDeletionStatus(statusParam));
       else if (subjectParam.length > 0)
-        items = uc.listByDataSubject(tenantId, DataSubjectId(subjectParam));
+        items = usecase.listByDataSubject(tenantId, DataSubjectId(subjectParam));
       else
-        items = uc.listRequests(tenantId);
+        items = usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -89,7 +89,7 @@ class DeletionController : PlatformController {
     try {
       auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Deletion request not found");
         return;
@@ -108,7 +108,7 @@ class DeletionController : PlatformController {
       r.status = parseDeletionStatus(j.getString("status"));
       r.blockerReason = j.getString("blockerReason");
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -125,7 +125,7 @@ class DeletionController : PlatformController {
     try {
       auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

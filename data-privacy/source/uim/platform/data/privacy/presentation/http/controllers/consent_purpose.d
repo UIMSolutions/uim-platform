@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ConsentPurposeController : PlatformController {
-  private ManageConsentPurposesUseCase uc;
+  private ManageConsentPurposesUseCase usecase;
 
-  this(ManageConsentPurposesUseCase uc) {
-    this.uc = uc;
+  this(ManageConsentPurposesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class ConsentPurposeController : PlatformController {
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
 
-      auto result = uc.createPurpose(r);
+      auto result = usecase.createPurpose(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -64,7 +64,7 @@ class ConsentPurposeController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       
-      auto items = uc.listPurposes(tenantId);
+      auto items = usecase.listPurposes(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -81,7 +81,7 @@ class ConsentPurposeController : PlatformController {
     try {
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getPurpose(tenantId, id);
+      auto entry = usecase.getPurpose(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent purpose not found");
         return;
@@ -103,7 +103,7 @@ class ConsentPurposeController : PlatformController {
       r.version_ = j.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
 
-      auto result = uc.updatePurpose(r);
+      auto result = usecase.updatePurpose(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -119,7 +119,7 @@ class ConsentPurposeController : PlatformController {
     try {
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deletePurpose(tenantId, id);
+      usecase.deletePurpose(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

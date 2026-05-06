@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 
 class KeyEntryController : PlatformController {
-  private ManageKeyEntriesUseCase uc;
+  private ManageKeyEntriesUseCase usecase;
 
-  this(ManageKeyEntriesUseCase uc) {
-    this.uc = uc;
+  this(ManageKeyEntriesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class KeyEntryController : PlatformController {
       r.notBefore   = j.getInt("notBefore");
       r.notAfter    = j.getInt("notAfter");
 
-      auto result = uc.importEntry(r);
+      auto result = usecase.importEntry(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id);
@@ -65,7 +65,7 @@ class KeyEntryController : PlatformController {
     try {
       auto path       = req.requestPath.to!string;
       auto keystoreId = extractSegment(path, 4);
-      auto entries    = uc.listByKeystore(keystoreId);
+      auto entries    = usecase.listByKeystore(keystoreId);
 
       auto jarr = Json.emptyArray;
       foreach (e; entries) {
@@ -96,7 +96,7 @@ class KeyEntryController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id    = extractIdFromPath(req);
-      auto entry = uc.getById(id);
+      auto entry = usecase.getById(id);
       if (entry.id.length == 0) {
         writeError(res, 404, "Key entry not found");
         return;
@@ -124,8 +124,8 @@ class KeyEntryController : PlatformController {
   // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id     = extractIdFromPath(req);
-      auto result = uc.removeById(id);
+      auto id     = KeyEntryId(extractIdFromPath(req));
+      auto result = usecase.deleteKeyEntry(id);
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {

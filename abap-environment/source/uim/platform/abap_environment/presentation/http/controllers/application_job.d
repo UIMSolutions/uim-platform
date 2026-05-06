@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class ApplicationJobController : PlatformController {
-  private ManageApplicationJobsUseCase uc;
+  private ManageApplicationJobsUseCase usecase;
 
-  this(ManageApplicationJobsUseCase uc) {
-    this.uc = uc;
+  this(ManageApplicationJobsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class ApplicationJobController : PlatformController {
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.cronExpression = j.getString("cronExpression");
 
-      auto result = uc.createJob(r);
+      auto result = usecase.createJob(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -68,7 +68,7 @@ class ApplicationJobController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto jobs = uc.listJobs(systemId);
+      auto jobs = usecase.listJobs(systemId);
       auto arr = jobs.map!(job => job.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -84,7 +84,7 @@ class ApplicationJobController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-      auto job = uc.getJob(id);
+      auto job = usecase.getJob(id);
       if (job.isNull) {
         writeError(res, 404, "Application job not found");
         return;
@@ -106,7 +106,7 @@ class ApplicationJobController : PlatformController {
       r.cronExpression = j.getString("cronExpression");
       r.active = j.getBoolean("active", true);
 
-      auto result = uc.updateJob(id, r);
+      auto result = usecase.updateJob(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated");
@@ -123,7 +123,7 @@ class ApplicationJobController : PlatformController {
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-      auto result = uc.cancelJob(id);
+      auto result = usecase.cancelJob(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "canceled");
@@ -140,7 +140,7 @@ class ApplicationJobController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteJob(id);
+      auto result = usecase.deleteJob(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted");

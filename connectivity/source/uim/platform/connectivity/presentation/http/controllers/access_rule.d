@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class AccessRuleController : PlatformController {
-  private ManageAccessRulesUseCase uc;
+  private ManageAccessRulesUseCase usecase;
 
-  this(ManageAccessRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageAccessRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class AccessRuleController : PlatformController {
       r.policy = j.getString("policy");
       r.principalPropagation = j.getBoolean("principalPropagation");
 
-      auto result = uc.createRule(r);
+      auto result = usecase.createRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -70,7 +70,7 @@ class AccessRuleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto rules = uc.listByTenant(tenantId);
+      auto rules = usecase.listByTenant(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -87,7 +87,7 @@ class AccessRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto rule = uc.getRule(id);
+      auto rule = usecase.getRule(id);
       if (rule.isNull) {
         writeError(res, 404, "Access rule not found");
         return;
@@ -108,7 +108,7 @@ class AccessRuleController : PlatformController {
       r.policy = j.getString("policy");
       r.principalPropagation = j.getBoolean("principalPropagation");
 
-      auto result = uc.updateRule(id, r);
+      auto result = usecase.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -126,7 +126,7 @@ class AccessRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteRule(id);
+      auto result = usecase.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

@@ -30,19 +30,16 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Dashboard name is required");
 
     Dashboard d;
-    d.id = randomUUID();
-    d.tenantId = req.tenantId;
+    d.initEntity(req.tenantId, req.createdBy);
     d.name = req.name;
     d.description = req.description;
     d.isDefault = req.isDefault;
-    d.createdBy = req.createdBy;
-    d.createdAt = clockSeconds();
 
     foreach (p; req.panels) {
       DashboardPanel panel;
-      panel.id = (p.id.length > 0) ? p.id : randomUUID().to!string;
+      panel.id = !p.panelId.isEmpty ? p.panelId : PanelId(randomUUID().toString);
       panel.title = p.title;
-      panel.panelType = parsePanelType(p.panelType);
+      panel.panelType = p.panelType.to!PanelType;
       panel.query = p.query;
       panel.positionX = p.positionX;
       panel.positionY = p.positionY;
@@ -55,11 +52,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult update(string id, UpdateDashboardRequest req) {
-    return update(DashboardId(id), req);
-  }
-
-  CommandResult update(DashboardId id, UpdateDashboardRequest req) {
+  CommandResult updateDashboard(DashboardId id, UpdateDashboardRequest req) {
     auto d = repo.findById(id);
     if (d.isNull)
       return CommandResult(false, "", "Dashboard not found");
@@ -77,7 +70,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         import std.uuid : randomUUID;
 
         DashboardPanel panel;
-        panel.id = (p.id.length > 0) ? p.id : randomUUID().to!string;
+        panel.id = (!p.panelId.isEmpty) ? p.panelId : PanelId(randomUUID().toString);
         panel.title = p.title;
         panel.panelType = p.panelType.to!PanelType;
         panel.query = p.query;
@@ -97,11 +90,11 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.existsById(id);
   }
 
-  Dashboard getById(DashboardId id) {
+  Dashboard getDashboard(DashboardId id) {
     return repo.findById(id);
   }
 
-  Dashboard[] list(TenantId tenantId) {
+  Dashboard[] listDashboards(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
@@ -109,7 +102,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.findDefault(tenantId);
   }
 
-  CommandResult remove(DashboardId id) {
+  CommandResult removeDashboard(DashboardId id) {
     repo.removeById(id);
     return CommandResult(true, id.value, "");
   }

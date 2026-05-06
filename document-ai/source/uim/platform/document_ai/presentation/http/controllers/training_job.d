@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.training_job : TrainingJob;
 import uim.platform.document_ai;
 
 class TrainingJobController : PlatformController {
-  private ManageTrainingJobsUseCase uc;
+  private ManageTrainingJobsUseCase usecase;
 
-  this(ManageTrainingJobsUseCase uc) {
-    this.uc = uc;
+  this(ManageTrainingJobsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class TrainingJobController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -57,7 +57,7 @@ class TrainingJobController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto jobs = uc.list(clientId);
+      auto jobs = usecase.list(clientId);
 
       auto jarr = Json.emptyArray;
       foreach (tj; jobs) {
@@ -82,7 +82,7 @@ class TrainingJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto tj = uc.getById(id, clientId);
+      auto tj = usecase.getById(id, clientId);
       if (tj.isNull) {
         writeError(res, 404, "Training job not found");
         return;
@@ -107,7 +107,7 @@ class TrainingJobController : PlatformController {
       r.trainingJobId = id;
       r.targetStatus = j.getString("targetStatus");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -129,7 +129,7 @@ class TrainingJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteTrainingJob(id, clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

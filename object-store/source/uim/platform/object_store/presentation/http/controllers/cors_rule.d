@@ -20,10 +20,10 @@ mixin(ShowModule!());
 @safe:
 
 class CorsRuleController : PlatformController {
-  private ManageCorsRulesUseCase uc;
+  private ManageCorsRulesUseCase usecase;
 
-  this(ManageCorsRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageCorsRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class CorsRuleController : PlatformController {
       r.exposedHeaders = j.getString("exposedHeaders");
       r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
-      auto result = uc.createRule(r);
+      auto result = usecase.createRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class CorsRuleController : PlatformController {
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
-      auto rules = uc.listRules(bucketId);
+      auto rules = usecase.listRules(bucketId);
 
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class CorsRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = uc.getRule(id);
+      auto rule = usecase.getRule(id);
       if (rule.isNull || rule.isNull) {
         writeError(res, 404, "CORS rule not found");
         return;
@@ -106,7 +106,7 @@ class CorsRuleController : PlatformController {
       r.exposedHeaders = j.getString("exposedHeaders");
       r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
-      auto result = uc.updateRule(id, r);
+      auto result = usecase.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -123,7 +123,7 @@ class CorsRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteRule(id);
+      auto result = usecase.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true);

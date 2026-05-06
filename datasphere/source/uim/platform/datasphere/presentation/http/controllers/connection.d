@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ConnectionController : PlatformController {
-  private ManageConnectionsUseCase uc;
+  private ManageConnectionsUseCase usecase;
 
-  this(ManageConnectionsUseCase uc) {
-    this.uc = uc;
+  this(ManageConnectionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ConnectionController : PlatformController {
       r.database = j.getString("database");
       r.user = j.getString("user");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,7 +62,7 @@ class ConnectionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto connections = uc.list(spaceId);
+      auto connections = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (c; connections) {
@@ -93,7 +93,7 @@ class ConnectionController : PlatformController {
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto c = uc.getById(id, spaceId);
+      auto c = usecase.getById(id, spaceId);
       if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;
@@ -125,7 +125,7 @@ class ConnectionController : PlatformController {
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(id, spaceId);
+      auto result = usecase.deleteConnection(id, spaceId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

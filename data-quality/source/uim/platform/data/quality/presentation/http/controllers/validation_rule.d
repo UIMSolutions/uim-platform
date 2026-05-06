@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ValidationRuleController : PlatformController {
-  private ManageValidationRulesUseCase uc;
+  private ManageValidationRulesUseCase usecase;
 
-  this(ManageValidationRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageValidationRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -57,7 +57,7 @@ class ValidationRuleController : PlatformController {
       r.category = j.getString("category");
       r.priority = j.getInteger("priority");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -78,7 +78,7 @@ class ValidationRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto rules = uc.listByTenant(tenantId);
+      auto rules = usecase.listByTenant(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -95,7 +95,7 @@ class ValidationRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = uc.getById(id);
+      auto rule = usecase.getById(id);
       if (rule is null) {
         writeError(res, 404, "Validation rule not found");
         return;
@@ -130,7 +130,7 @@ class ValidationRuleController : PlatformController {
       r.category = j.getString("category");
       r.priority = j.getInteger("priority");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -152,7 +152,7 @@ class ValidationRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.removeById(tenantId, id);
+      auto result = usecase.deleteValidationRule(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

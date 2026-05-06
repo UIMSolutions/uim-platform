@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class AlertRuleController : PlatformController {
-  private ManageAlertRulesUseCase uc;
+  private ManageAlertRulesUseCase usecase;
 
-  this(ManageAlertRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageAlertRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -55,7 +55,7 @@ class AlertRuleController : PlatformController {
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createRule(r);
+      auto result = usecase.createRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -73,7 +73,7 @@ class AlertRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto rules = uc.listRules(tenantId);
+      auto rules = usecase.listRules(tenantId);
 
       auto arr = rules.map!(r => r.toJson()).array.toJson;
 
@@ -90,7 +90,7 @@ class AlertRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
-      auto r = uc.getRule(id);
+      auto r = usecase.getRule(id);
       if (r.isNull) {
         writeError(res, 404, "Alert rule not found");
         return;
@@ -115,7 +115,7 @@ class AlertRuleController : PlatformController {
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
-      auto result = uc.updateRule(id, r);
+      auto result = usecase.updateRule(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -132,7 +132,7 @@ class AlertRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteRule(id);
+      auto result = usecase.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true);

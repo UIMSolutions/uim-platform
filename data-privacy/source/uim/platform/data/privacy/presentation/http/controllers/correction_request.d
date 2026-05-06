@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class CorrectionRequestController : PlatformController {
-  private ManageCorrectionRequestsUseCase uc;
+  private ManageCorrectionRequestsUseCase usecase;
 
-  this(ManageCorrectionRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageCorrectionRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class CorrectionRequestController : PlatformController {
       r.correctedValue = j.getString("correctedValue");
       r.reason = j.getString("reason");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -60,7 +60,7 @@ class CorrectionRequestController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRequests(tenantId);
+      auto items = usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -78,7 +78,7 @@ class CorrectionRequestController : PlatformController {
     try {
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Correction request not found");
         return;
@@ -96,7 +96,7 @@ class CorrectionRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.status = parseCorrectionStatus(j.getString("status"));
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -113,7 +113,7 @@ class CorrectionRequestController : PlatformController {
     try {
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

@@ -7,10 +7,10 @@ mixin(ShowModule!());
 @safe:
 
 class EnvironmentController : PlatformController {
-    private ManagePlatformsUseCase uc;
+    private ManagePlatformsUseCase usecase;
 
-    this(ManagePlatformsUseCase uc) {
-        this.uc = uc;
+    this(ManagePlatformsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -33,7 +33,7 @@ class EnvironmentController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -61,7 +61,7 @@ class EnvironmentController : PlatformController {
 
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, PlatformId(id));
+            auto e = usecase.getById(tenantId, PlatformId(id));
             if (e.isNull) {
                 writeError(res, 404, "Platform not found");
                 return;
@@ -92,7 +92,7 @@ class EnvironmentController : PlatformController {
             r.region = j.getString("region");
             r.subaccountId = j.getString("subaccountId");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -121,7 +121,7 @@ class EnvironmentController : PlatformController {
             r.credentials = j.getString("credentials");
             r.region = j.getString("region");
 
-            auto result = uc.update(req.getTenantId, PlatformId(id), r);
+            auto result = usecase.update(req.getTenantId, PlatformId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
@@ -137,7 +137,7 @@ class EnvironmentController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, PlatformId(id));
+            auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {

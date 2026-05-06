@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class RepositoryController : PlatformController {
-  private ManageRepositoriesUseCase uc;
+  private ManageRepositoriesUseCase usecase;
 
-  this(ManageRepositoriesUseCase uc) {
-    this.uc = uc;
+  this(ManageRepositoriesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class RepositoryController : PlatformController {
       r.allowedFileTypes = j.getString("allowedFileTypes");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createRepository(r);
+      auto result = usecase.createRepository(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,7 +67,7 @@ class RepositoryController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRepositories(tenantId);
+      auto items = usecase.listRepositories(tenantId);
 
       auto arr = items.map!(item => item.toJson).array.toJson;
 
@@ -86,7 +86,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto repository = uc.getRepository(tenantId, id);
+      auto repository = usecase.getRepository(tenantId, id);
       if (repository.isNull) {
         writeError(res, 404, "Repository not found");
         return;
@@ -109,7 +109,7 @@ class RepositoryController : PlatformController {
       r.maxFileSize = jsonLong(j, "maxFileSize");
       r.allowedFileTypes = j.getString("allowedFileTypes");
 
-      auto result = uc.updateRepository(r);
+      auto result = usecase.updateRepository(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -129,7 +129,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateRepository(tenantId, id);
+      auto result = usecase.activateRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -148,7 +148,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.archiveRepository(tenantId, id);
+      auto result = usecase.archiveRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -166,7 +166,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteRepository(tenantId, id);
+      auto result = usecase.deleteRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

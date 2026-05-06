@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.types;
 
 class FilterRuleController : PlatformController {
-  private ManageFilterRulesUseCase uc;
+  private ManageFilterRulesUseCase usecase;
 
-  this(ManageFilterRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageFilterRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class FilterRuleController : PlatformController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.conditions = parseConditions(j);
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,11 +68,11 @@ class FilterRuleController : PlatformController {
 
       FilterRule[] rules;
       if (activeOnly == "true")
-        rules = uc.listActive(tenantId);
+        rules = usecase.listActive(tenantId);
       else if (category.length > 0)
-        rules = uc.listByCategory(tenantId, category);
+        rules = usecase.listByCategory(tenantId, category);
       else
-        rules = uc.listByTenant(tenantId);
+        rules = usecase.listByTenant(tenantId);
 
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -90,7 +90,7 @@ class FilterRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = uc.getRule(id);
+      auto rule = usecase.getRule(id);
       if (rule.isNull) {
         writeError(res, 404, "Filter rule not found");
         return;
@@ -112,7 +112,7 @@ class FilterRuleController : PlatformController {
       r.isActive = j.getBoolean("isActive", true);
       r.conditions = parseConditions(j);
 
-      auto result = uc.updateRule(id, r);
+      auto result = usecase.updateRule(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -125,7 +125,7 @@ class FilterRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteRule(id);
+      auto result = usecase.deleteRule(id);
       if (result.success)
         res.writeBody("", 204);
       else

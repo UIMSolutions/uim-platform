@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class RetentionController : PlatformController {
-  private ManageRetentionPoliciesUseCase uc;
+  private ManageRetentionPoliciesUseCase usecase;
 
-  this(ManageRetentionPoliciesUseCase uc) {
-    this.uc = uc;
+  this(ManageRetentionPoliciesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class RetentionController : PlatformController {
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", RetentionPolicyId(result.id))
@@ -62,7 +62,7 @@ class RetentionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto policies = uc.list(tenantId);
+      auto policies = usecase.listPolicies(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (p; policies) {
@@ -86,9 +86,9 @@ class RetentionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-
+      TenantId tenantId = req.getTenantId;
       auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      auto p = uc.getById(id);
+      auto p = usecase.getPolicy(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Retention policy not found");
         return;
@@ -115,16 +115,19 @@ class RetentionController : PlatformController {
       auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateRetentionPolicyRequest r;
+      r.retentionPolicyId = id;
       r.description = j.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.isActive = j.getBoolean("isActive", true);
+      r.tenantId = req.getTenantId;
 
-      auto result = uc.update(id, r);
+      auto result = usecase.updatePolicy(r);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Retention policy updated");
 
         res.writeJsonBody(response, 200);
       } else {
@@ -137,10 +140,15 @@ class RetentionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-
+      TenantId tenantId = req.getTenantId;
       auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      uc.removeById(id);
-      res.writeJsonBody(Json.emptyObject, 204);
+      usecase.deletePolicy(tenantId, id);
+
+      auto response = Json.emptyObject
+        .set("id", id)
+        .set("message", "Retention policy deleted");
+
+      res.writeJsonBody(response, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

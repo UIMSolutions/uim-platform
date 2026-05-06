@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.template_ : Template;
 import uim.platform.document_ai;
 
 class TemplateController : PlatformController {
-  private ManageTemplatesUseCase uc;
+  private ManageTemplatesUseCase usecase;
 
-  this(ManageTemplatesUseCase uc) {
-    this.uc = uc;
+  this(ManageTemplatesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class TemplateController : PlatformController {
       r.description = j.getString("description");
       r.regions = jsonRegionArray(j, "regions");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,7 +58,7 @@ class TemplateController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto templates = uc.list(clientId);
+      auto templates = usecase.list(clientId);
 
       auto jarr = Json.emptyArray;
       foreach (t; templates) {
@@ -83,7 +83,7 @@ class TemplateController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto t = uc.getById(id, clientId);
+      auto t = usecase.getById(id, clientId);
       if (t.isNull) {
         writeError(res, 404, "Template not found");
         return;
@@ -110,7 +110,7 @@ class TemplateController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,7 +132,7 @@ class TemplateController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteTemplate(TemplateId(id), clientId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Template deleted");

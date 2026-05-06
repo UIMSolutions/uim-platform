@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceBindingController : PlatformController {
-  private ManageServiceBindingsUseCase uc;
+  private ManageServiceBindingsUseCase usecase;
 
-  this(ManageServiceBindingsUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceBindingsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class ServiceBindingController : PlatformController {
       r.description = j.getString("description");
       r.bindingType = j.getString("bindingType");
 
-      auto result = uc.createBinding(r);
+      auto result = usecase.createBinding(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class ServiceBindingController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto bindings = uc.listBindings(systemId);
+      auto bindings = usecase.listBindings(systemId);
       auto arr = bindings.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -82,7 +82,7 @@ class ServiceBindingController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      auto binding = uc.getBinding(id);
+      auto binding = usecase.getBinding(id);
       if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -101,7 +101,7 @@ class ServiceBindingController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.updateBinding(id, r);
+      auto result = usecase.updateBinding(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -119,7 +119,7 @@ class ServiceBindingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteBinding(id);
+      auto result = usecase.deleteBinding(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

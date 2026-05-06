@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class CommunicationArrangementController : PlatformController {
-  private ManageCommunicationArrangementsUseCase uc;
+  private ManageCommunicationArrangementsUseCase usecase;
 
-  this(ManageCommunicationArrangementsUseCase uc) {
-    this.uc = uc;
+  this(ManageCommunicationArrangementsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -55,7 +55,7 @@ class CommunicationArrangementController : PlatformController {
       r.tokenEndpoint = j.getString("tokenEndpoint");
       r.certificateId = j.getString("certificateId");
 
-      auto result = uc.createArrangement(r);
+      auto result = usecase.createArrangement(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -71,7 +71,7 @@ class CommunicationArrangementController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto arrangements = uc.listArrangements(systemId);
+      auto arrangements = usecase.listArrangements(systemId);
       auto arr = arrangements.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -87,7 +87,7 @@ class CommunicationArrangementController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
-      auto arrangement = uc.getArrangement(id);
+      auto arrangement = usecase.getArrangement(id);
       if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
         return;
@@ -112,7 +112,7 @@ class CommunicationArrangementController : PlatformController {
       r.clientSecret = j.getString("clientSecret");
       r.tokenEndpoint = j.getString("tokenEndpoint");
 
-      auto result = uc.updateArrangement(id, r);
+      auto result = usecase.updateArrangement(id, r);
       if (result.isSuccess()) {
         auto response = Json.emptyObject
           .set("status", "updated");
@@ -129,7 +129,7 @@ class CommunicationArrangementController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteArrangement(id);
+      auto result = usecase.deleteArrangement(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted");

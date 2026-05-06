@@ -20,10 +20,10 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 class SystemInstanceController : PlatformController {
-  private ManageSystemInstancesUseCase uc;
+  private ManageSystemInstancesUseCase usecase;
 
-  this(ManageSystemInstancesUseCase uc) {
-    this.uc = uc;
+  this(ManageSystemInstancesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -53,7 +53,7 @@ class SystemInstanceController : PlatformController {
       request.softwareVersion = j.getString("softwareVersion");
       request.stackVersion = j.getString("stackVersion");
 
-      auto result = uc.createInstance(request);
+      auto result = usecase.createInstance(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -71,7 +71,7 @@ class SystemInstanceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto instances = uc.listInstances(tenantId);
+      auto instances = usecase.listInstances(tenantId);
       auto arr = instances.map!(inst => inst.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -88,7 +88,7 @@ class SystemInstanceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto inst = uc.getInstance(id);
+      auto inst = usecase.getInstance(id);
       if (inst.isNull) {
         writeError(res, 404, "System instance not found");
         return;
@@ -110,7 +110,7 @@ class SystemInstanceController : PlatformController {
       r.hanaMemorySize = getUshort(j, "hanaMemorySize");
       r.softwareVersion = j.getString("softwareVersion");
 
-      auto result = uc.updateInstance(id, r);
+      auto result = usecase.updateInstance(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -128,7 +128,7 @@ class SystemInstanceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteInstance(id);
+      auto result = usecase.deleteInstance(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleting")

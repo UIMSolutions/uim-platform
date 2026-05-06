@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ConsentRecordController : PlatformController {
-    private ManageConsentRecordsUseCase uc;
+    private ManageConsentRecordsUseCase usecase;
 
-    this(ManageConsentRecordsUseCase uc) {
-        this.uc = uc;
+    this(ManageConsentRecordsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ConsentRecordController : PlatformController {
             r.source = j.getString("source");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -67,9 +67,9 @@ class ConsentRecordController : PlatformController {
 
             ConsentRecord[] consents;
             if (dataSubjectId.length > 0) {
-                consents = uc.listConsentRecordsByDataSubject(dataSubjectId);
+                consents = usecase.listConsentRecordsByDataSubject(dataSubjectId);
             } else {
-                consents = uc.listConsentRecordsByTenant(tenantId);
+                consents = usecase.listConsentRecordsByTenant(tenantId);
             }
 
             auto jarr = consents.map!(c => c.toJson).array.toJson;
@@ -93,12 +93,12 @@ class ConsentRecordController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            if (!uc.hasConsentRecord(id)) {
+            if (!usecase.hasConsentRecord(id)) {
                 writeError(res, 404, "Consent record not found");
                 return;
             }
 
-            auto consent = uc.getConsentRecord(id);
+            auto consent = usecase.getConsentRecord(id);
             res.writeJsonBody(consent.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -119,7 +119,7 @@ class ConsentRecordController : PlatformController {
             r.reason = j.getString("reason");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.withdraw(r);
+            auto result = usecase.withdraw(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -139,7 +139,7 @@ class ConsentRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteConsentRecord(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

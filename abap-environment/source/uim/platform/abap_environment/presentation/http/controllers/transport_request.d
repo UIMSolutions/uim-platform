@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class TransportRequestController : PlatformController {
-  private ManageTransportRequestsUseCase uc;
+  private ManageTransportRequestsUseCase usecase;
 
-  this(ManageTransportRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageTransportRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class TransportRequestController : PlatformController {
       r.owner = j.getString("owner");
       r.transportType = j.getString("transportType");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,7 +68,7 @@ class TransportRequestController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto requests = uc.listRequests(systemId);
+      auto requests = usecase.listRequests(systemId);
       auto arr = requests.map!(tr => tr.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -85,7 +85,7 @@ class TransportRequestController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto tr = uc.getRequest(id);
+      auto tr = usecase.getRequest(id);
       if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
         return;
@@ -105,7 +105,7 @@ class TransportRequestController : PlatformController {
       r.description = j.getString("description");
       r.objectList = getStrings(j, "objectList");
 
-      auto result = uc.addTask(requestId, r);
+      auto result = usecase.addTask(requestId, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("taskId", result.id)
@@ -123,7 +123,7 @@ class TransportRequestController : PlatformController {
   private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto result = uc.releaseRequest(id);
+      auto result = usecase.releaseRequest(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")
@@ -144,7 +144,7 @@ class TransportRequestController : PlatformController {
       auto requestId = TransportRequestId(j.getString("requestId"));
       auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
 
-      auto result = uc.releaseTask(requestId, taskId);
+      auto result = usecase.releaseTask(requestId, taskId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")
@@ -162,7 +162,7 @@ class TransportRequestController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteRequest(id);
+      auto result = usecase.deleteRequest(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

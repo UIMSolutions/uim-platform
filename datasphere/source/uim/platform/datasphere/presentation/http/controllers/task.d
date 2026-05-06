@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskController : PlatformController {
-  private ManageTasksUseCase uc;
+  private ManageTasksUseCase usecase;
 
-  this(ManageTasksUseCase uc) {
-    this.uc = uc;
+  this(ManageTasksUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class TaskController : PlatformController {
       // r.createdAt = now;
       // r.updatedAt = now;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class TaskController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto tasks = uc.list(spaceId);
+      auto tasks = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
@@ -96,7 +96,7 @@ class TaskController : PlatformController {
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto t = uc.getById(id, spaceId);
+      auto t = usecase.getById(id, spaceId);
       if (t.isNull) {
         writeError(res, 404, "Task not found");
         return;
@@ -130,7 +130,7 @@ class TaskController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.deleteTask(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

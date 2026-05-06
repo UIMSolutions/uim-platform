@@ -14,10 +14,10 @@ mixin(ShowModule!());
 @safe:
 
 class DatabaseConnectionController : PlatformController {
-  private ManageDatabaseConnectionsUseCase uc;
+  private ManageDatabaseConnectionsUseCase usecase;
 
-  this(ManageDatabaseConnectionsUseCase uc) {
-    this.uc = uc;
+  this(ManageDatabaseConnectionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class DatabaseConnectionController : PlatformController {
       r.maxConnections = j.getInteger("maxConnections", 10);
       r.properties = jsonKeyValuePairs(j, "properties");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,7 +67,7 @@ class DatabaseConnectionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto conns = uc.list(tenantId);
+      auto conns = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (c; conns) {
@@ -97,7 +97,7 @@ class DatabaseConnectionController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto c = uc.getById(id);
+      auto c = usecase.getById(id);
       if (c.isNull) {
         writeError(res, 404, "Database connection not found");
         return;
@@ -140,7 +140,7 @@ class DatabaseConnectionController : PlatformController {
       r.user = j.getString("user");
       r.password = j.getString("password");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -159,8 +159,8 @@ class DatabaseConnectionController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = DatabaseConnectionId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteDatabaseConnection(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

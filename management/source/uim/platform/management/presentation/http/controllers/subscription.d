@@ -19,10 +19,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class SubscriptionController : PlatformController {
-  private ManageSubscriptionsUseCase uc;
+  private ManageSubscriptionsUseCase usecase;
 
-  this(ManageSubscriptionsUseCase uc) {
-    this.uc = uc;
+  this(ManageSubscriptionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class SubscriptionController : PlatformController {
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.subscribe(r);
+      auto result = usecase.subscribe(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -65,7 +65,7 @@ class SubscriptionController : PlatformController {
       auto subId = req.params.get("subaccountId");
       Subscription[] items;
       if (subId.length > 0)
-        items = uc.listBySubaccount(subId);
+        items = usecase.listBySubaccount(subId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
 
@@ -82,7 +82,7 @@ class SubscriptionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto s = uc.getById(id);
+      auto s = usecase.getById(id);
       if (s.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
@@ -100,7 +100,7 @@ class SubscriptionController : PlatformController {
       r.planName = j.getString("planName");
       r.parameters = jsonStrMap(j, "parameters");
 
-      auto result = uc.updatePlan(id, r);
+      auto result = usecase.updatePlan(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -112,7 +112,7 @@ class SubscriptionController : PlatformController {
   private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.unsubscribe(id);
+      auto result = usecase.unsubscribe(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

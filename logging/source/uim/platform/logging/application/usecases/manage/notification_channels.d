@@ -84,29 +84,17 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, updated.id.value, "");
   }
 
-  NotificationChannel getById(NotificationChannelId id) {
+  NotificationChannel getChannel(NotificationChannelId id) {
     return repo.findById(id);
   }
 
-  NotificationChannel[] list(TenantId tenantId) {
+  NotificationChannel[] listChannels(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(NotificationChannelId id) {
+  CommandResult deleteChannel(NotificationChannelId id) {
     repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 
-  private static ChannelState parseChannelState(string state) {
-    switch (state) {
-    case "active":
-      return ChannelState.active;
-    case "inactive":
-      return ChannelState.inactive;
-    case "error":
-      return ChannelState.error;
-    default:
-      return ChannelState.active;
-    }
-  }
 }

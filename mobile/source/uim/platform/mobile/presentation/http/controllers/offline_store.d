@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class OfflineStoreController : PlatformController {
-  private ManageOfflineStoresUseCase uc;
+  private ManageOfflineStoresUseCase usecase;
 
-  this(ManageOfflineStoresUseCase uc) {
-    this.uc = uc;
+  this(ManageOfflineStoresUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class OfflineStoreController : PlatformController {
       r.storeType = j.getString("storeType");
       r.syncPolicy = j.getString("syncPolicy");
       r.createdBy = UserId(j.getString("createdBy"));
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -57,7 +57,7 @@ class OfflineStoreController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -80,7 +80,7 @@ class OfflineStoreController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
@@ -114,7 +114,7 @@ class OfflineStoreController : PlatformController {
       r.syncPolicy = j.getString("syncPolicy");
       r.status = j.getString("status");
       r.updatedBy = UserId(j.getString("updatedBy"));
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -131,8 +131,8 @@ class OfflineStoreController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = OfflineStoreId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteOfflineStore(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

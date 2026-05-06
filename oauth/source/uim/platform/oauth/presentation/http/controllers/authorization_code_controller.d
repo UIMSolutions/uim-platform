@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationCodeController : PlatformController {
-    private ManageAuthorizationCodesUseCase uc;
+    private ManageAuthorizationCodesUseCase usecase;
 
-    this(ManageAuthorizationCodesUseCase uc) {
-        this.uc = uc;
+    this(ManageAuthorizationCodesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class AuthorizationCodeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = Json.emptyArray;
             foreach (e; items)
                 jarr ~= e.toJson();
@@ -50,7 +50,7 @@ class AuthorizationCodeController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(AuthorizationCodeId(id));
+            auto e = usecase.getById(AuthorizationCodeId(id));
             if (e.isNull) {
                 writeError(res, 404, "Authorization code not found");
                 return;
@@ -75,7 +75,7 @@ class AuthorizationCodeController : PlatformController {
             dto.expiresAt = 0;
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -96,7 +96,7 @@ class AuthorizationCodeController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.markUsed(AuthorizationCodeId(id));
+            auto result = usecase.markUsed(AuthorizationCodeId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", id)
@@ -116,8 +116,8 @@ class AuthorizationCodeController : PlatformController {
             
 
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(AuthorizationCodeId(id));
+            auto id = AuthorizationCodeId(extractIdFromPath(path));
+            auto result = usecase.deleteAuthorizationCode(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Authorization code deleted");

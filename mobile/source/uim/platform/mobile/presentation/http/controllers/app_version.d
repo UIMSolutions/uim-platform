@@ -14,10 +14,10 @@ import uim.platform.mobile;
 
 
 class AppVersionController : PlatformController {
-  private ManageAppVersionsUseCase uc;
+  private ManageAppVersionsUseCase usecase;
 
-  this(ManageAppVersionsUseCase uc) {
-    this.uc = uc;
+  this(ManageAppVersionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class AppVersionController : PlatformController {
       r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
       r.createdBy = UserId(j.getString("createdBy"));
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -60,7 +60,7 @@ class AppVersionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -85,7 +85,7 @@ class AppVersionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.data.id)
@@ -121,7 +121,7 @@ class AppVersionController : PlatformController {
       r.sizeBytes = jsonLong(j, "sizeBytes");
       r.status = j.getString("status");
       r.updatedBy = UserId(j.getString("updatedBy"));
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -138,8 +138,8 @@ class AppVersionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = AppVersionId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteAppVersion(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

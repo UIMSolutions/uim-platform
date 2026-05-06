@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.document_type : DocumentType;
 import uim.platform.document_ai;
 
 class DocumentTypeController : PlatformController {
-  private ManageDocumentTypesUseCase uc;
+  private ManageDocumentTypesUseCase usecase;
 
-  this(ManageDocumentTypesUseCase uc) {
-    this.uc = uc;
+  this(ManageDocumentTypesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class DocumentTypeController : PlatformController {
       r.defaultSchemaId = j.getString("defaultSchemaId");
       r.supportedFileTypes = getStrings(j, "supportedFileTypes");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,7 +58,7 @@ class DocumentTypeController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto types = uc.list(clientId);
+      auto types = usecase.list(clientId);
 
       auto jarr = Json.emptyArray;
       foreach (dt; types) {
@@ -82,7 +82,7 @@ class DocumentTypeController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto dt = uc.getById(id, clientId);
+      auto dt = usecase.getById(id, clientId);
       if (dt.isNull) {
         writeError(res, 404, "Document type not found");
         return;
@@ -110,7 +110,7 @@ class DocumentTypeController : PlatformController {
       r.category = j.getString("category");
       r.defaultSchemaId = j.getString("defaultSchemaId");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,7 +132,7 @@ class DocumentTypeController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteDocumentType(DocumentTypeId(id), clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

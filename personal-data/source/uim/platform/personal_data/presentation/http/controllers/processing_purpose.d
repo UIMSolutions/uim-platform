@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ProcessingPurposeController : PlatformController {
-    private ManageProcessingPurposesUseCase uc;
+    private ManageProcessingPurposesUseCase usecase;
 
-    this(ManageProcessingPurposesUseCase uc) {
-        this.uc = uc;
+    this(ManageProcessingPurposesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class ProcessingPurposeController : PlatformController {
             r.requiresConsent = j.getBoolean("requiresConsent");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -59,7 +59,7 @@ class ProcessingPurposeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto purposes = uc.list(tenantId);
+            auto purposes = usecase.list(tenantId);
 
             auto jarr = purposes.map!(p => toJson(p)).array;
 
@@ -79,7 +79,7 @@ class ProcessingPurposeController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto p = uc.getById(id);
+            auto p = usecase.getById(id);
             if (p.isNull) {
                 writeError(res, 404, "Processing purpose not found");
                 return;
@@ -106,7 +106,7 @@ class ProcessingPurposeController : PlatformController {
             r.requiresConsent = j.getBoolean("requiresConsent");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -126,7 +126,7 @@ class ProcessingPurposeController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteProcessingPurpose(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class BackupController : PlatformController {
-  private ManageBackupsUseCase uc;
+  private ManageBackupsUseCase usecase;
 
-  this(ManageBackupsUseCase uc) {
-    this.uc = uc;
+  this(ManageBackupsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class BackupController : PlatformController {
       r.cronExpression = j.getString("cronExpression");
       r.retentionDays = j.getInteger("retentionDays", 30);
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,7 +62,7 @@ class BackupController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto backups = uc.list(tenantId);
+      auto backups = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (b; backups) {
@@ -91,7 +91,7 @@ class BackupController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto b = uc.getById(id);
+      auto b = usecase.getById(id);
       if (b.isNull) {
         writeError(res, 404, "Backup not found");
         return;
@@ -129,7 +129,7 @@ class BackupController : PlatformController {
       r.cronExpression = j.getString("cronExpression");
       r.retentionDays = j.getInteger("retentionDays", 30);
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -148,8 +148,8 @@ class BackupController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = BackupId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteBackup(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

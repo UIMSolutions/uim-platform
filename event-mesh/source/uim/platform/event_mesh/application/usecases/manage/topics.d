@@ -36,7 +36,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
 
     CommandResult create(TopicDTO dto) {
         Topic t;
-        t.id = TopicId(dto.id);
+        t.id = dto.topicId;
         t.tenantId = dto.tenantId;
         t.brokerServiceId = dto.brokerServiceId;
         t.name = dto.name;
@@ -49,11 +49,11 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidTopic(t))
             return CommandResult(false, "", "Invalid topic data");
         repo.save(t);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.topicId.value, "");
     }
 
     CommandResult update(TopicDTO dto) {
-        auto existing = repo.findById(TopicId(dto.id));
+        auto existing = repo.findById(dto.topicId);
         if (existing.isNull)
             return CommandResult(false, "", "Topic not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -62,7 +62,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.topicId.value, "");
     }
 
     CommandResult remove(TopicId id) {

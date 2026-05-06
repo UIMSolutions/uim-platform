@@ -20,10 +20,10 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class DocumentController : PlatformController {
-  private ManageDocumentsUseCase uc;
+  private ManageDocumentsUseCase usecase;
 
-  this(ManageDocumentsUseCase uc) {
-    this.uc = uc;
+  this(ManageDocumentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -55,7 +55,7 @@ class DocumentController : PlatformController {
       r.properties = j.getString("properties");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createDocument(r);
+      auto result = usecase.createDocument(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -71,7 +71,7 @@ class DocumentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listDocuments(tenantId);
+      auto items = usecase.listDocuments(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
 
@@ -102,7 +102,7 @@ class DocumentController : PlatformController {
         }
       }
 
-      auto items = uc.searchByName(query, tenantId);
+      auto items = usecase.searchByName(query, tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -119,7 +119,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto doc = uc.getDocument(tenantId, id);
+      auto doc = usecase.getDocument(tenantId, id);
       if (doc.isNull) {
         writeError(res, 404, "Document not found");
         return;
@@ -142,7 +142,7 @@ class DocumentController : PlatformController {
       r.tags = j.getString("tags");
       r.properties = j.getString("properties");
 
-      auto result = uc.updateDocument(r);
+      auto result = usecase.updateDocument(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -166,7 +166,7 @@ class DocumentController : PlatformController {
       r.tenantId = req.getTenantId;
       r.newFolderId = j.getString("newFolderId");
 
-      auto result = uc.moveDocument(r);
+      auto result = usecase.moveDocument(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -185,7 +185,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.archiveDocument(tenantId, id);
+      auto result = usecase.archiveDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -203,7 +203,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDocument(tenantId, id);
+      auto result = usecase.deleteDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

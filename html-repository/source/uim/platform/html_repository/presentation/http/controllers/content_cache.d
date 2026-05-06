@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class ContentCacheController : PlatformController {
-  private ManageContentCacheUseCase uc;
+  private ManageContentCacheUseCase usecase;
 
-  this(ManageContentCacheUseCase uc) {
-    this.uc = uc;
+  this(ManageContentCacheUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class ContentCacheController : PlatformController {
       r.etag = j.getString("etag");
       r.ttlSeconds = jsonLong(j, "ttlSeconds");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -60,7 +60,7 @@ class ContentCacheController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByTenant(tenantId);
+      auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
@@ -89,7 +89,7 @@ class ContentCacheController : PlatformController {
         writeError(res, 404, "Cache entry not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -121,7 +121,7 @@ class ContentCacheController : PlatformController {
         writeError(res, 404, "Cache entry not found");
         return;
       }
-      auto result = uc.invalidate(tenantId, id);
+      auto result = usecase.invalidate(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else
@@ -133,7 +133,7 @@ class ContentCacheController : PlatformController {
   private void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto result = uc.purgeExpired(tenantId);
+      auto result = usecase.purgeExpired(tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
         .set("status", "purged");

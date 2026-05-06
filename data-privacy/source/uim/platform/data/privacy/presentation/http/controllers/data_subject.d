@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class DataSubjectController : PlatformController {
-  private ManageDataSubjectsUseCase uc;
+  private ManageDataSubjectsUseCase usecase;
 
-  this(ManageDataSubjectsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataSubjectsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class DataSubjectController : PlatformController {
       r.country = j.getString("country");
       r.subjectType = parseSubjectType(j.getString("subjectType"));
 
-      auto result = uc.createSubject(r);
+      auto result = usecase.createSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -69,8 +69,8 @@ class DataSubjectController : PlatformController {
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
       DataSubject[] items = typeParam.length > 0
-        ? uc.listByType(tenantId, parseSubjectType(typeParam))
-        : uc.listSubjects(tenantId);
+        ? usecase.listByType(tenantId, parseSubjectType(typeParam))
+        : usecase.listSubjects(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -89,7 +89,7 @@ class DataSubjectController : PlatformController {
     try {
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getSubject(tenantId, id);
+      auto entry = usecase.getSubject(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data subject not found");
         return;
@@ -113,7 +113,7 @@ class DataSubjectController : PlatformController {
       r.subjectType = parseSubjectType(j.getString("subjectType"));
       r.isActive = j.getBoolean("isActive", true);
 
-      auto result = uc.updateSubject(r);
+      auto result = usecase.updateSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -132,7 +132,7 @@ class DataSubjectController : PlatformController {
     try {
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteSubject(tenantId, id);
+      usecase.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

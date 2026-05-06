@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class PackageController : PlatformController {
-  private ManageContentPackagesUseCase uc;
+  private ManageContentPackagesUseCase usecase;
 
-  this(ManageContentPackagesUseCase uc) {
-    this.uc = uc;
+  this(ManageContentPackagesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class PackageController : PlatformController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.items = parseContentItems(j);
 
-      auto result = uc.createPackage(r);
+      auto result = usecase.createPackage(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,7 +69,7 @@ class PackageController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto packages = uc.listPackages(tenantId);
+      auto packages = usecase.listPackages(tenantId);
 
       auto arr = packages.map!(p => p.toJson).array.toJson;
 
@@ -87,7 +87,7 @@ class PackageController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto pkg = uc.getPackage(id);
+      auto pkg = usecase.getPackage(id);
       if (pkg.isNull) {
         writeError(res, 404, "Package not found");
         return;
@@ -111,7 +111,7 @@ class PackageController : PlatformController {
       r.tags = getStrings(j, "tags");
       r.items = parseContentItems(j);
 
-      auto result = uc.updatePackage(id, r);
+      auto result = usecase.updatePackage(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -129,7 +129,7 @@ class PackageController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deletePackage(id);
+      auto result = usecase.deletePackage(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
@@ -152,7 +152,7 @@ class PackageController : PlatformController {
       r.tenantId = req.getTenantId;
       r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.assemblePackage(r);
+      auto result = usecase.assemblePackage(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

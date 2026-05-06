@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class PushRegistrationController : PlatformController {
-  private ManagePushRegistrationsUseCase uc;
+  private ManagePushRegistrationsUseCase usecase;
 
-  this(ManagePushRegistrationsUseCase uc) {
-    this.uc = uc;
+  this(ManagePushRegistrationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class PushRegistrationController : PlatformController {
       r.provider = j.getString("provider");
       r.pushToken = j.getString("pushToken");
       r.topics = getStrings(j, "topics");
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -56,7 +56,7 @@ class PushRegistrationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -77,7 +77,7 @@ class PushRegistrationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
@@ -101,8 +101,8 @@ class PushRegistrationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = PushRegistrationId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deletePushRegistration(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

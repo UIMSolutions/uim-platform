@@ -49,6 +49,10 @@ struct Span {
     foreach (k, v; attributes)
       jAttr.set(k, v);
 
+    auto resAttr = Json.emptyObject;
+    foreach (k, v; resourceAttributes)
+      resAttr.set(k, v);
+      
     return entityToJson
       .set("traceId", traceId)
       .set("parentSpanId", parentSpanId)
@@ -60,7 +64,7 @@ struct Span {
       .set("status", status.to!string)
       .set("kind", kind.to!string)
       .set("attributes", jAttr)
-      .set("events", events.map!(e => e.toJson()).array)
-      .set("resourceAttributes", resourceAttributes);
+      .set("events", events.map!(e => e.toJson()).array.toJson)
+      .set("resourceAttributes", resAttr);
   }
 }

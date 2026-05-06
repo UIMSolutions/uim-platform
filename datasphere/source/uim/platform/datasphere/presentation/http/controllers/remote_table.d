@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class RemoteTableController : PlatformController {
-  private ManageRemoteTablesUseCase uc;
+  private ManageRemoteTablesUseCase usecase;
 
-  this(ManageRemoteTablesUseCase uc) {
-    this.uc = uc;
+  this(ManageRemoteTablesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class RemoteTableController : PlatformController {
       r.remoteObjectName = j.getString("remoteObjectName");
       r.replicationMode = j.getString("replicationMode");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,7 +61,7 @@ class RemoteTableController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto tables = uc.list(spaceId);
+      auto tables = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (rt; tables) {
@@ -95,7 +95,7 @@ class RemoteTableController : PlatformController {
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto rt = uc.getById(spaceId, id);
+      auto rt = usecase.getById(spaceId, id);
       if (rt.isNull) {
         writeError(res, 404, "Remote table not found");
         return;
@@ -127,7 +127,7 @@ class RemoteTableController : PlatformController {
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.deleteRemoteTable(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

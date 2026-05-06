@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class DashboardController : PlatformController {
-  private GetDashboardUseCase uc;
+  private GetDashboardUseCase usecase;
 
-  this(GetDashboardUseCase uc) {
-    this.uc = uc;
+  this(GetDashboardUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -33,7 +33,7 @@ class DashboardController : PlatformController {
   private void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getSummary(tenantId);
+      auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject
         .set("totalResources", summary.totalResources)

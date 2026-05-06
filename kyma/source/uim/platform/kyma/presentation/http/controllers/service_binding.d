@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceBindingController : PlatformController {
-  private ManageServiceBindingsUseCase uc;
+  private ManageServiceBindingsUseCase usecase;
 
-  this(ManageServiceBindingsUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceBindingsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,7 +52,7 @@ class ServiceBindingController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -74,9 +74,9 @@ class ServiceBindingController : PlatformController {
 
       ServiceBinding[] items;
       if (instId.length > 0)
-        items = uc.listByServiceInstance(ServiceInstanceId(instId));
+        items = usecase.listByServiceInstance(ServiceInstanceId(instId));
       else if (nsId.length > 0)
-        items = uc.listByNamespace(NamespaceId(nsId));
+        items = usecase.listByNamespace(NamespaceId(nsId));
       else
         items = [];
 
@@ -96,7 +96,7 @@ class ServiceBindingController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto b = uc.getBinding(ServiceBindingId(id));
+      auto b = usecase.getBinding(ServiceBindingId(id));
       if (b.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -118,7 +118,7 @@ class ServiceBindingController : PlatformController {
       r.parametersJson = j.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.updateBinding(ServiceBindingId(id), r);
+      auto result = usecase.updateBinding(ServiceBindingId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -132,7 +132,7 @@ class ServiceBindingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteBinding(ServiceBindingId(id));
+      auto result = usecase.deleteBinding(ServiceBindingId(id));
       if (result.success)
         res.writeBody("", 204);
       else

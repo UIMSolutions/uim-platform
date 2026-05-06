@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ResourceGroupController : PlatformController {
-  private ManageResourceGroupsUseCase uc;
+  private ManageResourceGroupsUseCase usecase;
 
-  this(ManageResourceGroupsUseCase uc) {
-    this.uc = uc;
+  this(ManageResourceGroupsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonPairArray(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -60,8 +60,8 @@ class ResourceGroupController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto groups = connectionId.length > 0
-        ? uc.listByConnection(connectionId)
-        : uc.listAll();
+        ? usecase.listByConnection(connectionId)
+        : usecase.listAll();
 
       auto jarr = groups.map!(g => g.toJson).array.toJson;
 
@@ -83,7 +83,7 @@ class ResourceGroupController : PlatformController {
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto g = uc.getById(id, connectionId);
+      auto g = usecase.getById(id, connectionId);
       if (g.isNull) {
         writeError(res, 404, "Resource group not found");
         return;
@@ -108,7 +108,7 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = id;
       r.labels = jsonPairArray(j, "labels");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -130,7 +130,7 @@ class ResourceGroupController : PlatformController {
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = usecase.deleteResourceGroup(id, connectionId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

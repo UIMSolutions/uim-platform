@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ScenarioController : PlatformController {
-  private ManageScenariosUseCase uc;
+  private ManageScenariosUseCase usecase;
 
-  this(ManageScenariosUseCase uc) {
-    this.uc = uc;
+  this(ManageScenariosUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class ScenarioController : PlatformController {
       r.description = j.getString("description");
       r.labels = getStrings(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class ScenarioController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarios = uc.list(rgId);
+      auto scenarios = usecase.list(rgId);
 
       auto jarr = Json.emptyArray;
       foreach (s; scenarios) {
@@ -89,7 +89,7 @@ class ScenarioController : PlatformController {
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto s = uc.getbyId(id, rgId);
+      auto s = usecase.getbyId(id, rgId);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
@@ -111,12 +111,10 @@ class ScenarioController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(id, rgId);
+      auto result = usecase.deleteScenario(rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

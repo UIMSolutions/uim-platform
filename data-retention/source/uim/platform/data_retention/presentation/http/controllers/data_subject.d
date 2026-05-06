@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class DataSubjectController : PlatformController {
-    private ManageDataSubjectsUseCase uc;
+    private ManageDataSubjectsUseCase usecase;
 
-    this(ManageDataSubjectsUseCase uc) { this.uc = uc; }
+    this(ManageDataSubjectsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -30,7 +30,7 @@ class DataSubjectController : PlatformController {
             r.externalId = j.getString("externalId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -40,7 +40,7 @@ class DataSubjectController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (ds; items) {
                 jarr ~= Json.emptyObject
@@ -57,7 +57,7 @@ class DataSubjectController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto ds = uc.getById(id);
+            auto ds = usecase.getById(id);
             if (ds.isNull) { writeError(res, 404, "Data subject not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", ds.id.value).set("externalId", ds.externalId)
@@ -78,7 +78,7 @@ class DataSubjectController : PlatformController {
             r.lifecycleStatus = j.getString("lifecycleStatus");
             r.roleId = j.getString("roleId");
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -93,7 +93,7 @@ class DataSubjectController : PlatformController {
             string id = "";
             if (parts.length >= 6) id = parts[$ - 2];
 
-            auto result = uc.block(id);
+            auto result = usecase.block(id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("lifecycleStatus", "blocked"), 200);
             } else { writeError(res, 400, result.error); }
@@ -102,9 +102,8 @@ class DataSubjectController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            usecase.deleteDataSubject(DataSubjectId(id));
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

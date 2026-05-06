@@ -105,7 +105,7 @@ struct SearchLogsResponse {
 // --- Dashboard ---
 
 struct PanelDTO {
-  string id;
+  PanelId panelId;
   string title;
   string panelType;
   string query;
@@ -150,6 +150,7 @@ struct UpdateRetentionPolicyRequest {
   double maxSizeGB;
   bool isDefault;
   bool isActive;
+  TenantId tenantId;
 }
 
 // --- Alert Rule ---

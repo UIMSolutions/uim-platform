@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class LifecycleRuleController : PlatformController {
-  private ManageLifecycleRulesUseCase uc;
+  private ManageLifecycleRulesUseCase usecase;
 
-  this(ManageLifecycleRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageLifecycleRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class LifecycleRuleController : PlatformController {
       request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
       request.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createRule(request);
+      auto result = usecase.createRule(request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,7 +69,7 @@ class LifecycleRuleController : PlatformController {
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromRulesPath(req.requestURI);
-      auto rules = uc.listRules(bucketId);
+      auto rules = usecase.listRules(bucketId);
 
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -87,7 +87,7 @@ class LifecycleRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = uc.getRule(id);
+      auto rule = usecase.getRule(id);
       if (rule.isNull) {
         writeError(res, 404, "Lifecycle rule not found");
         return;
@@ -111,7 +111,7 @@ class LifecycleRuleController : PlatformController {
       request.transitionStorageClass = j.getString("transitionStorageClass");
       request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
 
-      auto result = uc.updateRule(id, request);
+      auto result = usecase.updateRule(id, request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -129,7 +129,7 @@ class LifecycleRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteRule(id);
+      auto result = usecase.deleteRule(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

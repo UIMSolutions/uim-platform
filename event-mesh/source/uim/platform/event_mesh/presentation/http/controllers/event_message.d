@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class EventMessageController : PlatformController {
-    private ManageEventMessagesUseCase uc;
+    private ManageEventMessagesUseCase usecase;
 
-    this(ManageEventMessagesUseCase uc) {
-        this.uc = uc;
+    this(ManageEventMessagesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class EventMessageController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class EventMessageController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(EventMessageId(id));
+            auto e = usecase.getById(EventMessageId(id));
             if (e.isNull) { writeError(res, 404, "Event message not found"); return; }
             res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ class EventMessageController : PlatformController {
             dto.timeToLive = j.getString("timeToLive");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.publish(dto);
+            auto result = usecase.publish(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -95,7 +95,7 @@ class EventMessageController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.acknowledge(EventMessageId(id));
+            auto result = usecase.acknowledge(EventMessageId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Event message acknowledged");
@@ -113,8 +113,8 @@ class EventMessageController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(EventMessageId(id));
+            auto id = EventMessageId(extractIdFromPath(path));
+            auto result = usecase.deleteEventMessage(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("message", "Event message deleted");

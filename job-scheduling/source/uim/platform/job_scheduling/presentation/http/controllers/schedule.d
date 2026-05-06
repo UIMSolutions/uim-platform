@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ScheduleController : PlatformController {
-    private ManageSchedulesUseCase uc;
+    private ManageSchedulesUseCase usecase;
 
-    this(ManageSchedulesUseCase uc) {
-        this.uc = uc;
+    this(ManageSchedulesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -57,7 +57,7 @@ class ScheduleController : PlatformController {
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -81,7 +81,7 @@ class ScheduleController : PlatformController {
             auto jobId = extractJobIdFromSchedulePath(path);
             TenantId tenantId = req.getTenantId;
 
-            auto schedules = uc.list(tenantId, jobId);
+            auto schedules = usecase.list(tenantId, jobId);
 
             auto jarr = schedules.map!(s => toJson(s)).array;
 
@@ -103,7 +103,7 @@ class ScheduleController : PlatformController {
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
 
-            auto s = uc.getById(ids[1], ids[0], tenantId);
+            auto s = usecase.getById(ids[1], ids[0], tenantId);
             if (s.isNull) {
                 writeError(res, 404, "Schedule not found");
                 return;
@@ -137,7 +137,7 @@ class ScheduleController : PlatformController {
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -160,7 +160,7 @@ class ScheduleController : PlatformController {
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.remove(tenantId, ids[1], ids[0]);
+            auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
@@ -184,7 +184,7 @@ class ScheduleController : PlatformController {
             r.jobId = jobId;
             r.active = j.getBoolean("active", true);
 
-            auto result = uc.activateAll(r);
+            auto result = usecase.activateAll(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", r.active 
@@ -205,7 +205,7 @@ class ScheduleController : PlatformController {
             TenantId tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
-            auto schedules = uc.search(query, tenantId);
+            auto schedules = usecase.search(query, tenantId);
 
             auto jarr = schedules.map!(s => toJson(s)).array.toJson;
 

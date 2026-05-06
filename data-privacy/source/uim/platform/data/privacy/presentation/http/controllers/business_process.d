@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class BusinessProcessController : PlatformController {
-  private ManageBusinessProcessesUseCase uc;
+  private ManageBusinessProcessesUseCase usecase;
 
-  this(ManageBusinessProcessesUseCase uc) {
-    this.uc = uc;
+  this(ManageBusinessProcessesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class BusinessProcessController : PlatformController {
       r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
-      auto result = uc.createProcess(r);
+      auto result = usecase.createProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -60,7 +60,7 @@ class BusinessProcessController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       
-      auto items = uc.listProcesses(tenantId);
+      auto items = usecase.listProcesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -77,7 +77,7 @@ class BusinessProcessController : PlatformController {
     try {
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getProcess(tenantId, id);
+      auto entry = usecase.getProcess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business process not found");
         return;
@@ -99,7 +99,7 @@ class BusinessProcessController : PlatformController {
       r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
-      auto result = uc.updateProcess(r);
+      auto result = usecase.updateProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -116,7 +116,7 @@ class BusinessProcessController : PlatformController {
     try {
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteProcess(tenantId, id);
+      usecase.deleteProcess(tenantId, id);
 
       auto resp = Json.emptyObject
           .set("message", "Business process deleted successfully");

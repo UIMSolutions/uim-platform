@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TriggerController : PlatformController {
-    private ManageTriggersUseCase uc;
+    private ManageTriggersUseCase usecase;
 
-    this(ManageTriggersUseCase uc) {
-        this.uc = uc;
+    this(ManageTriggersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class TriggerController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.triggerToJson()).array;
             
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class TriggerController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = TriggerId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Trigger not found"); return; }
             res.writeJsonBody(e.triggerToJson(), 200);
         } catch (Exception e) {
@@ -72,7 +72,7 @@ class TriggerController : PlatformController {
             dto.inputMapping = j.getString("inputMapping");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -101,7 +101,7 @@ class TriggerController : PlatformController {
             dto.filterExpression = j.getString("filterExpression");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -121,7 +121,7 @@ class TriggerController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = TriggerId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteTrigger(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Trigger deleted");

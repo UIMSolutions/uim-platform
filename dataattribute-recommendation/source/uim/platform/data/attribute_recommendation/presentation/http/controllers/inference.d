@@ -21,10 +21,10 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 class InferenceController : PlatformController {
-  private ProcessInferenceUseCase uc;
+  private ProcessInferenceUseCase usecase;
 
-  this(ProcessInferenceUseCase uc) {
-    this.uc = uc;
+  this(ProcessInferenceUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class InferenceController : PlatformController {
       r.deploymentId = j.getString("deploymentId");
       r.inputData = j.getString("inputData");
 
-      auto result = uc.submitInference(r);
+      auto result = usecase.submitInference(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("resultId", result.id)
@@ -67,7 +67,7 @@ class InferenceController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       // Try as inference request
-      auto requests = uc.listByDeployment(tenantId, id);
+      auto requests = usecase.listByDeployment(tenantId, id);
       if (requests.length > 0) {
         auto arr = requests.map!(r => r.toJson).array.toJson;
 
@@ -91,10 +91,10 @@ class InferenceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.getResult(tenantId, id);
+      auto result = usecase.getResult(tenantId, id);
       if (result is null) {
         // Try by request id
-        result = uc.getResultByRequest(tenantId, id);
+        result = usecase.getResultByRequest(tenantId, id);
       }
       if (result is null) {
         writeError(res, 404, "Inference result not found");
@@ -110,7 +110,7 @@ class InferenceController : PlatformController {
   private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRequests(tenantId);
+      auto items = usecase.listRequests(tenantId);
       auto arr = items.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject

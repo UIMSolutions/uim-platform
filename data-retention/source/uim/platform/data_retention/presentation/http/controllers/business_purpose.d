@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class BusinessPurposeController : PlatformController {
-    private ManageBusinessPurposesUseCase uc;
+    private ManageBusinessPurposesUseCase usecase;
 
-    this(ManageBusinessPurposesUseCase uc) { this.uc = uc; }
+    this(ManageBusinessPurposesUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -33,7 +33,7 @@ class BusinessPurposeController : PlatformController {
             r.referenceDate = jsonLong(j, "referenceDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
@@ -45,7 +45,7 @@ class BusinessPurposeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (bp; items) {
                 jarr ~= Json.emptyObject
@@ -62,7 +62,7 @@ class BusinessPurposeController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto bp = uc.getById(id);
+            auto bp = usecase.getById(id);
             if (bp.isNull) { writeError(res, 404, "Business purpose not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", bp.id.value).set("name", bp.name)
@@ -88,7 +88,7 @@ class BusinessPurposeController : PlatformController {
             r.legalEntityId = j.getString("legalEntityId");
             r.referenceDate = jsonLong(j, "referenceDate");
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -104,7 +104,7 @@ class BusinessPurposeController : PlatformController {
             string id = "";
             if (parts.length >= 6) id = parts[$ - 2];
 
-            auto result = uc.activate(id);
+            auto result = usecase.activate(id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "active"), 200);
             } else { writeError(res, 400, result.error); }
@@ -115,7 +115,7 @@ class BusinessPurposeController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteBusinessPurpose(id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 400, result.error); }

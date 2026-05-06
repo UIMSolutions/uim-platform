@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ChannelController : PlatformController {
-  private ManageChannelsUseCase uc;
+  private ManageChannelsUseCase usecase;
 
-  this(ManageChannelsUseCase uc) {
-    this.uc = uc;
+  this(ManageChannelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class ChannelController : PlatformController {
       r.backendHost = j.getString("backendHost");
       r.backendPort = getUshort(j, "backendPort");
 
-      auto result = uc.createChannel(r);
+      auto result = usecase.createChannel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,7 +68,7 @@ class ChannelController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto channels = uc.listByTenant(tenantId);
+      auto channels = usecase.listByTenant(tenantId);
       auto arr = channels.map!(ch => ch.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -85,7 +85,7 @@ class ChannelController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ChannelId(extractIdFromPath(req.requestURI));
-      auto ch = uc.getChannel(id);
+      auto ch = usecase.getChannel(id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
         return;
@@ -105,7 +105,7 @@ class ChannelController : PlatformController {
       }
       auto channelId = ChannelId(parts[$ - 2]);
 
-      auto result = uc.openChannel(channelId);
+      auto result = usecase.openChannel(channelId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -130,7 +130,7 @@ class ChannelController : PlatformController {
       }
       auto channelId = ChannelId(parts[$ - 2]);
 
-      auto result = uc.closeChannel(channelId);
+      auto result = usecase.closeChannel(channelId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -149,7 +149,7 @@ class ChannelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ChannelId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteChannel(id);
+      auto result = usecase.deleteChannel(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

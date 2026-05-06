@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class RefreshTokenController : PlatformController {
-    private ManageRefreshTokensUseCase uc;
+    private ManageRefreshTokensUseCase usecase;
 
-    this(ManageRefreshTokensUseCase uc) {
-        this.uc = uc;
+    this(ManageRefreshTokensUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class RefreshTokenController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(RefreshTokenId(id));
+            auto e = usecase.getById(RefreshTokenId(id));
             if (e.isNull) { writeError(res, 404, "Refresh token not found"); return; }
             res.writeJsonBody(e.refreshTokenToJson(), 200);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ class RefreshTokenController : PlatformController {
             dto.expiresAt = 0;
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -90,7 +90,7 @@ class RefreshTokenController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.revoke(RefreshTokenId(id));
+            auto result = usecase.revoke(RefreshTokenId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Refresh token revoked");
@@ -109,7 +109,7 @@ class RefreshTokenController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(RefreshTokenId(id));
+            auto result = usecase.deleteRefreshToken(RefreshTokenId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Refresh token deleted");

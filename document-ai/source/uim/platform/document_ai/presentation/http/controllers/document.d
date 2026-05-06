@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.document : Document;
 import uim.platform.document_ai;
 
 class DocumentController : PlatformController {
-  private ProcessDocumentsUseCase uc;
+  private ProcessDocumentsUseCase usecase;
 
-  this(ProcessDocumentsUseCase uc) {
-    this.uc = uc;
+  this(ProcessDocumentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class DocumentController : PlatformController {
       r.language = j.getString("language");
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = uc.upload(r);
+      auto result = usecase.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,7 +63,7 @@ class DocumentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto docs = uc.list(clientId);
+      auto docs = usecase.list(clientId);
 
         auto jarr = docs.map!(d => toJson(d)).array;
 
@@ -85,7 +85,7 @@ class DocumentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto d = uc.getById(id, clientId);
+      auto d = usecase.getById(id, clientId);
       if (d.isNull) {
         writeError(res, 404, "Document not found");
         return;
@@ -104,7 +104,7 @@ class DocumentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.remove(id, clientId);
+      auto result = usecase.deleteDocument(DocumentId(id), clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -127,7 +127,7 @@ class DocumentController : PlatformController {
       r.documentId = id;
       r.correctedFields = jsonKeyValuePairs(j, "correctedFields");
 
-      auto result = uc.confirm(r);
+      auto result = usecase.confirm(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -150,7 +150,7 @@ class DocumentController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = uc.getExtractionResult(docId, clientId);
+      auto result = usecase.getExtractionResult(docId, clientId);
       if (result.isNull) {
         writeError(res, 404, "Extraction result not found");
         return;

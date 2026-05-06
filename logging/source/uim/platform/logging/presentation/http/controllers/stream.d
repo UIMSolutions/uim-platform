@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 
 class StreamController : PlatformController {
-  private ManageLogStreamsUseCase uc;
+  private ManageLogStreamsUseCase usecase;
 
-  this(ManageLogStreamsUseCase uc) {
-    this.uc = uc;
+  this(ManageLogStreamsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -37,14 +37,14 @@ class StreamController : PlatformController {
     try {
       auto j = req.json;
       CreateLogStreamRequest r;
-      r.tenantId = req.getTenantId;
+      r.initEntity(req.getTenantId);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
       r.retentionPolicyId = j.getString("retentionPolicyId");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.createStream(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,7 +62,7 @@ class StreamController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto streams = uc.list(tenantId);
+      auto streams = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (s; streams) {
@@ -89,7 +89,7 @@ class StreamController : PlatformController {
       
 
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
-      auto s = uc.getById(id);
+      auto s = usecase.getById(id);
 
       if (s.isNull) {
         writeError(res, 404, "Log stream not found");
@@ -112,8 +112,6 @@ class StreamController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateLogStreamRequest r;
@@ -121,7 +119,7 @@ class StreamController : PlatformController {
       r.retentionPolicyId = j.getString("retentionPolicyId");
       r.isActive = j.getBoolean("isActive", true);
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -137,10 +135,8 @@ class StreamController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
-      uc.removeById(id);
+      usecase.deleteStream(id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

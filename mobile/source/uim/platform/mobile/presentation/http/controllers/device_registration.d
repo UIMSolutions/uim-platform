@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class DeviceRegistrationController : PlatformController {
-  private ManageDeviceRegistrationsUseCase uc;
+  private ManageDeviceRegistrationsUseCase usecase;
 
-  this(ManageDeviceRegistrationsUseCase uc) {
-    this.uc = uc;
+  this(ManageDeviceRegistrationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class DeviceRegistrationController : PlatformController {
       r.platform = j.getString("platform");
       r.userId = j.getString("userId");
       r.deviceToken = j.getString("deviceToken");
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -57,7 +57,7 @@ class DeviceRegistrationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -81,7 +81,7 @@ class DeviceRegistrationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.data.id)
@@ -109,7 +109,7 @@ class DeviceRegistrationController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto status = j.getString("status");
-      auto result = uc.updateStatus(id, status);
+      auto result = usecase.updateStatus(id, status);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -126,7 +126,7 @@ class DeviceRegistrationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
       if (result.success) {
         res.writeBody("", 204);
       } else {

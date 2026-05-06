@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class SchemaController : PlatformController {
-  private ManageSchemasUseCase uc;
+  private ManageSchemasUseCase usecase;
 
-  this(ManageSchemasUseCase uc) {
-    this.uc = uc;
+  this(ManageSchemasUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class SchemaController : PlatformController {
       r.owner = j.getString("owner");
       r.type = j.getString("type");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class SchemaController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto schemas = uc.list(tenantId);
+      auto schemas = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (s; schemas) {
@@ -89,7 +89,7 @@ class SchemaController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto s = uc.getById(id);
+      auto s = usecase.getById(id);
       if (s.isNull) {
         writeError(res, 404, "Schema not found");
         return;
@@ -123,7 +123,7 @@ class SchemaController : PlatformController {
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.owner = j.getString("owner");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -142,8 +142,8 @@ class SchemaController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = SchemaId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteSchema(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

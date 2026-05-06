@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class DestinationController : PlatformController {
-  private ManageDestinationsUseCase uc;
+  private ManageDestinationsUseCase usecase;
 
-  this(ManageDestinationsUseCase uc) {
-    this.uc = uc;
+  this(ManageDestinationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -76,7 +76,7 @@ class DestinationController : PlatformController {
       r.fragmentIds = getStrings(j, "fragmentIds");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -98,8 +98,8 @@ class DestinationController : PlatformController {
       auto instanceId = req.params.get("serviceInstanceId");
 
       Destination[] destinations = instanceId.length > 0
-        ? uc.listByServiceInstance(tenantId, ServiceInstanceId(instanceId))
-        : uc.listBySubaccount(tenantId, subaccountId);
+        ? usecase.listByServiceInstance(tenantId, ServiceInstanceId(instanceId))
+        : usecase.listBySubaccount(tenantId, subaccountId);
 
       auto arr = destinations.map!(d => d.toJson).array.toJson;
 
@@ -117,7 +117,7 @@ class DestinationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto d = uc.getDestination(id);
+      auto d = usecase.getDestination(id);
       if (d.isNull) {
         writeError(res, 404, "Destination not found");
         return;
@@ -155,7 +155,7 @@ class DestinationController : PlatformController {
       r.properties = jsonStrMap(j, "properties");
       r.fragmentIds = getStrings(j, "fragmentIds");
 
-      auto result = uc.updateDestination(id, r);
+      auto result = usecase.updateDestination(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -173,7 +173,7 @@ class DestinationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto result = uc.removeDestination(id);
+      auto result = usecase.deleteDestination(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true);

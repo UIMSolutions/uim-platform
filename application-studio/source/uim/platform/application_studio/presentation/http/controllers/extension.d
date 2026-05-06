@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ExtensionController : PlatformController {
-    private ManageExtensionsUseCase uc;
+    private ManageExtensionsUseCase usecase;
 
-    this(ManageExtensionsUseCase uc) {
-        this.uc = uc;
+    this(ManageExtensionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class ExtensionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
@@ -47,7 +47,7 @@ class ExtensionController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.id.isEmpty) { writeError(res, 404, "Extension not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -71,7 +71,7 @@ class ExtensionController : PlatformController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -99,7 +99,7 @@ class ExtensionController : PlatformController {
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -119,7 +119,7 @@ class ExtensionController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteExtension(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Extension deleted");

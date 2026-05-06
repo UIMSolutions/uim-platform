@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class PersonalDataModelController : PlatformController {
-  private ManagePersonalDataModelsUseCase uc;
+  private ManagePersonalDataModelsUseCase usecase;
 
-  this(ManagePersonalDataModelsUseCase uc) {
-    this.uc = uc;
+  this(ManagePersonalDataModelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,7 +52,7 @@ class PersonalDataModelController : PlatformController {
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
       r.legalReference = j.getString("legalReference");
 
-      auto result = uc.createModel(r);
+      auto result = usecase.createModel(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -73,8 +73,8 @@ class PersonalDataModelController : PlatformController {
       auto catParam = req.headers.get("X-Category-Filter", "");
 
       PersonalDataModel[] items = catParam.length > 0
-        ? uc.listByCategory(tenantId, parseCategory(catParam))
-        : uc.listModels(tenantId);
+        ? usecase.listByCategory(tenantId, parseCategory(catParam))
+        : usecase.listModels(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -92,7 +92,7 @@ class PersonalDataModelController : PlatformController {
   private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listSpecialCategories(tenantId);
+      auto items = usecase.listSpecialCategories(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -111,7 +111,7 @@ class PersonalDataModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getModel(tenantId, id);
+      auto entry = usecase.getModel(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Personal data model not found");
         return;
@@ -137,7 +137,7 @@ class PersonalDataModelController : PlatformController {
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
       r.legalReference = j.getString("legalReference");
 
-      auto result = uc.updateModel(r);
+      auto result = usecase.updateModel(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -156,7 +156,7 @@ class PersonalDataModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteModel(tenantId, id);
+      usecase.deleteModel(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class RetentionRuleController : PlatformController {
-  private ManageRetentionRulesUseCase uc;
+  private ManageRetentionRulesUseCase usecase;
 
-  this(ManageRetentionRulesUseCase uc) {
-    this.uc = uc;
+  this(ManageRetentionRulesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class RetentionRuleController : PlatformController {
       r.legalReference = j.getString("legalReference");
       r.isDefault = j.getBoolean("isDefault");
 
-      auto result = uc.createRule(r);
+      auto result = usecase.createRule(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,9 +68,9 @@ class RetentionRuleController : PlatformController {
 
       RetentionRule[] items;
       if (purposeParam.length > 0)
-        items = uc.listByPurpose(tenantId, parsePurpose(purposeParam));
+        items = usecase.listByPurpose(tenantId, parsePurpose(purposeParam));
       else
-        items = uc.listRules(tenantId);
+        items = usecase.listRules(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -88,7 +88,7 @@ class RetentionRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRule(tenantId, id);
+      auto entry = usecase.getRule(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Retention rule not found");
         return;
@@ -110,7 +110,7 @@ class RetentionRuleController : PlatformController {
       r.legalReference = j.getString("legalReference");
       r.status = parseRuleStatus(j.getString("status"));
 
-      auto result = uc.updateRule(r);
+      auto result = usecase.updateRule(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -127,7 +127,7 @@ class RetentionRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRule(tenantId, id);
+      usecase.deleteRule(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

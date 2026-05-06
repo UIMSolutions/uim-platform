@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TopicController : PlatformController {
-    private ManageTopicsUseCase uc;
+    private ManageTopicsUseCase usecase;
 
-    this(ManageTopicsUseCase uc) {
-        this.uc = uc;
+    this(ManageTopicsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,12 +29,12 @@ class TopicController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
-            auto jarr = items.map!(e => topicToJson(e)).array;
-            
+            auto items = usecase.list();
+            auto jarr = items.map!(e => e.toJson).array.toJson;
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -44,12 +44,15 @@ class TopicController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(TopicId(id));
-            if (e.isNull) { writeError(res, 404, "Topic not found"); return; }
-            res.writeJsonBody(topicToJson(e), 200);
+            auto e = usecase.getById(TopicId(id));
+            if (e.isNull) {
+                writeError(res, 404, "Topic not found");
+                return;
+            }
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -59,9 +62,9 @@ class TopicController : PlatformController {
         try {
             auto j = req.json;
             TopicDTO dto;
-            dto.id = j.getString("id");
+            dto.topicId = TopicId(j.getString("id"));
             dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = j.getString("brokerServiceId");
+            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicString = j.getString("topicString");
@@ -70,11 +73,11 @@ class TopicController : PlatformController {
             dto.subscribeEnabled = j.getString("subscribeEnabled");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Topic created");
+                    .set("id", result.id)
+                    .set("message", "Topic created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -87,22 +90,22 @@ class TopicController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             TopicDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.topicId = TopicId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicString = j.getString("topicString");
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Topic updated");
+                    .set("id", result.id)
+                    .set("message", "Topic updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -115,14 +118,14 @@ class TopicController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(TopicId(id));
+            auto id = TopicId(extractIdFromPath(path));
+            auto result = usecase.deleteTopic(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Topic deleted");
-                  
+                    .set("message", "Topic deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

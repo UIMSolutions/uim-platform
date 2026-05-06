@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class UsageReportController : PlatformController {
-  private ManageUsageReportsUseCase uc;
+  private ManageUsageReportsUseCase usecase;
 
-  this(ManageUsageReportsUseCase uc) {
-    this.uc = uc;
+  this(ManageUsageReportsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class UsageReportController : PlatformController {
       r.platform = j.getString("platform");
       r.appVersion = j.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
-      auto result = uc.report(r);
+      auto result = usecase.report(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class UsageReportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -81,7 +81,7 @@ class UsageReportController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.data.id)

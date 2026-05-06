@@ -23,7 +23,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateLogStreamRequest req) {
+  CommandResult createStream(CreateLogStreamRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.length == 0)
@@ -42,8 +42,8 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, stream.id.value, "");
   }
 
-  CommandResult update(LogStreamId id, UpdateLogStreamRequest req) {
-    auto stream = repo.findById(id);
+  CommandResult updateStream(TenantId tenantId, LogStreamId id, UpdateLogStreamRequest req) {
+    auto stream = repo.findById(tenantId, id);
     if (stream.isNull)
       return CommandResult(false, "", "Log stream not found");
 
@@ -58,21 +58,25 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasById(LogStreamId id) {
-    return repo.existsById(id);
+  bool hasStream(TenantId tenantId, LogStreamId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  LogStream getById(LogStreamId id) {
-    return repo.findById(id);
+  LogStream getStream(TenantId tenantId, LogStreamId id) {
+    return repo.findById(tenantId, id);
   }
 
-  LogStream[] list(TenantId tenantId) {
+  LogStream[] listLogStreams(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(LogStreamId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteLogStream(TenantId tenantId, LogStreamId id) {
+    auto stream = repo.findById(tenantId, id);
+    if (stream.isNull)
+      return CommandResult(false, "", "Log stream not found");
+
+    repo.remove(stream);
+    return CommandResult(true, stream.id.value, "");
   }
 
 }

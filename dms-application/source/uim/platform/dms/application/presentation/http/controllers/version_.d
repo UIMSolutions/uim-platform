@@ -21,10 +21,10 @@ mixin(ShowModule!());
 @safe:
 
 class VersionController : PlatformController {
-  private ManageVersionsUseCase uc;
+  private ManageVersionsUseCase usecase;
 
-  this(ManageVersionsUseCase uc) {
-    this.uc = uc;
+  this(ManageVersionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class VersionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.checkOut(doctenantId, id, userId);
+      auto result = usecase.checkOut(doctenantId, id, userId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("documentId", Json(docId))
@@ -74,7 +74,7 @@ class VersionController : PlatformController {
       r.fileSize = jsonLong(j, "fileSize");
       r.checksum = j.getString("checksum");
 
-      auto result = uc.checkIn(r);
+      auto result = usecase.checkIn(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("versionId", result.id)
@@ -97,7 +97,7 @@ class VersionController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.cancelCheckOut(doctenantId, id);
+      auto result = usecase.cancelCheckOut(doctenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("documentId", Json(docId))
@@ -118,7 +118,7 @@ class VersionController : PlatformController {
     try {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto versions = uc.getAllVersions(doctenantId, id);
+      auto versions = usecase.getAllVersions(doctenantId, id);
       auto arr = versions.map!(v => v.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -137,7 +137,7 @@ class VersionController : PlatformController {
     try {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ver = uc.getCurrentVersion(doctenantId, id);
+      auto ver = usecase.getCurrentVersion(doctenantId, id);
       if (ver.isNull) {
         writeError(res, 404, "No current version found");
         return;

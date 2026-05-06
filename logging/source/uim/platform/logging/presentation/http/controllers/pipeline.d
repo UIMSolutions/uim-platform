@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class PipelineController : PlatformController {
-  private ManagePipelinesUseCase uc;
+  private ManagePipelinesUseCase usecase;
 
-  this(ManagePipelinesUseCase uc) {
-    this.uc = uc;
+  this(ManagePipelinesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,10 +52,11 @@ class PipelineController : PlatformController {
         r.processors ~= p;
       }
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Pipeline created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -69,7 +70,7 @@ class PipelineController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto pipelines = uc.list(tenantId);
+      auto pipelines = usecase.listPipelines(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (p; pipelines) {
@@ -82,7 +83,8 @@ class PipelineController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", pipelines.length);
+        .set("totalCount", pipelines.length)
+        .set("message", "Pipeline list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -92,10 +94,9 @@ class PipelineController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto p = uc.getById(id);
+      TenantId tenantId = req.getTenantId;
+      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      auto p = usecase.getPipeline(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Pipeline not found");
         return;
@@ -106,7 +107,8 @@ class PipelineController : PlatformController {
         .set("name", p.name)
         .set("description", p.description)
         .set("isActive", p.isActive)
-        .set("targetStreamId", p.targetStreamId);
+        .set("targetStreamId", p.targetStreamId)
+        .set("message", "Pipeline retrieved successfully");
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -116,20 +118,22 @@ class PipelineController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      TenantId tenantId = req.getTenantId;
+      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdatePipelineRequest r;
+      r.pipelineId = id;
       r.description = j.getString("description");
       r.format = j.getString("format");
       r.targetStreamId = j.getString("targetStreamId");
       r.isActive = j.getBoolean("isActive", true);
+      r.tenantId = tenantId;
 
-      auto result = uc.update(id, r);
+      auto result = usecase.updatePipeline(tenantId, id, r);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Pipeline updated");
 
         res.writeJsonBody(response, 200);
       } else {
@@ -142,11 +146,14 @@ class PipelineController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      TenantId tenantId = req.getTenantId;
+      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      usecase.deletePipeline(tenantId, id);
+      auto response = Json.emptyObject
+        .set("id", id)
+        .set("message", "Pipeline deleted");
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      uc.removeById(id);
-      res.writeJsonBody(Json.emptyObject, 204);
+      res.writeJsonBody(response, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

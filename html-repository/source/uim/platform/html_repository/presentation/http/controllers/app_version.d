@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class AppVersionController : PlatformController {
-  private ManageAppVersionsUseCase uc;
+  private ManageAppVersionsUseCase usecase;
 
-  this(ManageAppVersionsUseCase uc) {
-    this.uc = uc;
+  this(ManageAppVersionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class AppVersionController : PlatformController {
       r.description = j.getString("description");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -59,7 +59,7 @@ class AppVersionController : PlatformController {
       auto appId = getString(req.json, "appId");
       if (appId.isEmpty)
         appId = req.headers.get("X-App-Id", "");
-      auto items = uc.listByApp(appId);
+      auto items = usecase.listByApp(appId);
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
@@ -89,7 +89,7 @@ class AppVersionController : PlatformController {
         writeError(res, 404, "Version not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Version not found");
         return;
@@ -123,7 +123,7 @@ class AppVersionController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id);
@@ -143,7 +143,7 @@ class AppVersionController : PlatformController {
         writeError(res, 404, "Version not found");
         return;
       }
-      auto result = uc.removeById(tenantId, id);
+      auto result = usecase.deleteAppVersion(tenantId, AppVersionId(id));
       if (result.isSuccess())
         res.writeBody("", 204);
       else

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class StatisticsController : PlatformController {
-  private GetUsageStatisticsUseCase uc;
+  private GetUsageStatisticsUseCase usecase;
 
-  this(GetUsageStatisticsUseCase uc) {
-    this.uc = uc;
+  this(GetUsageStatisticsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -33,13 +33,13 @@ class StatisticsController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
 
-      typeof(uc.getAll()) stats;
+      typeof(usecase.getAll()) stats;
       if (scenarioId.length > 0 && connectionId.length > 0)
-        stats = uc.getByScenario(connectionId, scenarioId);
+        stats = usecase.getByScenario(connectionId, scenarioId);
       else if (connectionId.length > 0)
-        stats = uc.getByConnection(connectionId);
+        stats = usecase.getByConnection(connectionId);
       else
-        stats = uc.getAll();
+        stats = usecase.getAll();
 
       auto jarr = stats.map!(s => s.toJson).array.toJson;
 

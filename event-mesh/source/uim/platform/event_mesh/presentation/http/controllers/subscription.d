@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class SubscriptionController : PlatformController {
-    private ManageSubscriptionsUseCase uc;
+    private ManageSubscriptionsUseCase usecase;
 
-    this(ManageSubscriptionsUseCase uc) {
-        this.uc = uc;
+    this(ManageSubscriptionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class SubscriptionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => toJson(e)).array;
 
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class SubscriptionController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = EventSubscriptionId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) {
                 writeError(res, 404, "Subscription not found");
                 return;
@@ -78,7 +78,7 @@ class SubscriptionController : PlatformController {
             dto.maxTtl = j.getString("maxTtl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -100,14 +100,14 @@ class SubscriptionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SubscriptionDTO dto;
-            dto.id = EventSubscriptionId(extractIdFromPath(path));
+            dto.eventSubscriptionId = EventSubscriptionId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
             dto.selector = j.getString("selector");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -128,7 +128,7 @@ class SubscriptionController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = EventSubscriptionId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteSubscription(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Subscription deleted");

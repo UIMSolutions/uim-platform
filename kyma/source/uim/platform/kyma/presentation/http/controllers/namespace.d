@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class NamespaceController : PlatformController {
-  private ManageNamespacesUseCase uc;
+  private ManageNamespacesUseCase usecase;
 
-  this(ManageNamespacesUseCase uc) {
-    this.uc = uc;
+  this(ManageNamespacesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -55,7 +55,7 @@ class NamespaceController : PlatformController {
       r.annotations = jsonStrMap(j, "annotations");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -73,7 +73,7 @@ class NamespaceController : PlatformController {
       auto envIdParam = req.params.get("environmentId");
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
-      auto items = uc.listByEnvironment(KymaEnvironmentId(envId));
+      auto items = usecase.listByEnvironment(KymaEnvironmentId(envId));
       auto arr = items.map!(ns => ns.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -89,7 +89,7 @@ class NamespaceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto ns = uc.getNamespace(NamespaceId(id));
+      auto ns = usecase.getNamespace(NamespaceId(id));
       if (ns.isNull) {
         writeError(res, 404, "Namespace not found");
         return;
@@ -116,7 +116,7 @@ class NamespaceController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.annotations = jsonStrMap(j, "annotations");
 
-      auto result = uc.updateNamespace(NamespaceId(id), r);
+      auto result = usecase.updateNamespace(NamespaceId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -129,7 +129,7 @@ class NamespaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteNamespace(NamespaceId(id));
+      auto result = usecase.deleteNamespace(NamespaceId(id));
       if (result.success)
         res.writeBody("", 204);
       else

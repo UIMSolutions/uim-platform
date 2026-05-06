@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class ArchivingJobController : PlatformController {
-    private ManageArchivingJobsUseCase uc;
+    private ManageArchivingJobsUseCase usecase;
 
-    this(ManageArchivingJobsUseCase uc) { this.uc = uc; }
+    this(ManageArchivingJobsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -30,7 +30,7 @@ class ArchivingJobController : PlatformController {
             r.scheduledAt = jsonLong(j, "scheduledAt");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -40,7 +40,7 @@ class ArchivingJobController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (aj; items) {
                 jarr ~= Json.emptyObject
@@ -58,7 +58,7 @@ class ArchivingJobController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto aj = uc.getById(id);
+            auto aj = usecase.getById(id);
             if (aj.isNull) { writeError(res, 404, "Archiving job not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", aj.id.value)
@@ -83,7 +83,7 @@ class ArchivingJobController : PlatformController {
             r.recordsFailed = jsonInt(j, "recordsFailed");
             r.errorMessage = j.getString("errorMessage");
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -93,8 +93,8 @@ class ArchivingJobController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
+            usecase.deleteArchivingJob(id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

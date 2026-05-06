@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class MetricController : PlatformController {
-  private GetMetricsUseCase uc;
+  private GetMetricsUseCase usecase;
 
-  this(GetMetricsUseCase uc) {
-    this.uc = uc;
+  this(GetMetricsUseCase usecase) {
+    this.usecase = usecase;
   }
   
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class MetricController : PlatformController {
       r.tags = jsonKeyValuePairs(j, "tags");
       r.customInfo = jsonKeyValuePairs(j, "customInfo");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -64,7 +64,7 @@ class MetricController : PlatformController {
         return;
       }
 
-      auto metrics = uc.listByExecution(execId, rgId);
+      auto metrics = usecase.listByExecution(execId, rgId);
 
       auto jarr = Json.emptyArray;
       foreach (m; metrics) {

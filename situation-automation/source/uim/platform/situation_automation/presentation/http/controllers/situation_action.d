@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class SituationActionController : PlatformController {
-    private ManageSituationActionsUseCase uc;
+    private ManageSituationActionsUseCase usecase;
 
-    this(ManageSituationActionsUseCase uc) {
-        this.uc = uc;
+    this(ManageSituationActionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class SituationActionController : PlatformController {
             r.scriptContent = j.getString("scriptContent");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -67,7 +67,7 @@ class SituationActionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto actions = uc.list(tenantId);
+            auto actions = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
@@ -97,7 +97,7 @@ class SituationActionController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(id);
+            auto a = usecase.getById(id);
             if (a.isNull) {
                 writeError(res, 404, "Situation action not found");
                 return;
@@ -149,7 +149,7 @@ class SituationActionController : PlatformController {
             r.emailTemplate = j.getString("emailTemplate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -169,7 +169,7 @@ class SituationActionController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteSituationAction(SituationActionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

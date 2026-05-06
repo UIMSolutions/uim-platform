@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataSubjectRequestController : PlatformController {
-    private ManageDataSubjectRequestsUseCase uc;
+    private ManageDataSubjectRequestsUseCase usecase;
 
-    this(ManageDataSubjectRequestsUseCase uc) {
-        this.uc = uc;
+    this(ManageDataSubjectRequestsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class DataSubjectRequestController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -65,18 +65,18 @@ class DataSubjectRequestController : PlatformController {
 
             DataSubjectRequest[] requests;
             if (dataSubjectId.length > 0) {
-                requests = uc.listByDataSubject(dataSubjectId);
+                requests = usecase.listByDataSubject(dataSubjectId);
             } else if (statusFilter.length > 0) {
                 
 
                 try {
                     auto s = statusFilter.to!RequestStatus;
-                    requests = uc.listByStatus(s);
+                    requests = usecase.listByStatus(s);
                 } catch (Exception) {
-                    requests = uc.list(tenantId);
+                    requests = usecase.list(tenantId);
                 }
             } else {
-                requests = uc.list(tenantId);
+                requests = usecase.list(tenantId);
             }
 
             auto jarr = requests.map!(r => toJson(r)).array;
@@ -97,7 +97,7 @@ class DataSubjectRequestController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.getById(id);
+            auto r = usecase.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "Data subject request not found");
                 return;
@@ -124,7 +124,7 @@ class DataSubjectRequestController : PlatformController {
             r.rejectionReason = j.getString("rejectionReason");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -144,7 +144,7 @@ class DataSubjectRequestController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteDataSubjectRequest(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

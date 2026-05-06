@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ProxySystemController : PlatformController {
-  private ManageProxySystemsUseCase uc;
+  private ManageProxySystemsUseCase usecase;
 
-  this(ManageProxySystemsUseCase uc) {
-    this.uc = uc;
+  this(ManageProxySystemsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class ProxySystemController : PlatformController {
       r.targetSystemId = j.getString("targetSystemId");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createProxySystem(r);
+      auto result = usecase.createProxySystem(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -67,7 +67,7 @@ class ProxySystemController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listProxySystems(tenantId);
+      auto items = usecase.listProxySystems(tenantId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
 
@@ -85,7 +85,7 @@ class ProxySystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto sys = uc.getProxySystem(tenantId, id);
+      auto sys = usecase.getProxySystem(tenantId, id);
       if (sys.isNull) {
         writeError(res, 404, "Proxy system not found");
         return;
@@ -107,7 +107,7 @@ class ProxySystemController : PlatformController {
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
 
-      auto result = uc.updateProxySystem(r);
+      auto result = usecase.updateProxySystem(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -126,7 +126,7 @@ class ProxySystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateSystem(tenantId, id);
+      auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -146,7 +146,7 @@ class ProxySystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateSystem(tenantId, id);
+      auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -165,7 +165,7 @@ class ProxySystemController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteProxySystem(tenantId, id);
+      auto result = usecase.deleteProxySystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);

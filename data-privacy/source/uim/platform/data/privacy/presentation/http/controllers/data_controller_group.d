@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class DataControllerGroupController : PlatformController {
-  private ManageDataControllerGroupsUseCase uc;
+  private ManageDataControllerGroupsUseCase usecase;
 
-  this(ManageDataControllerGroupsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataControllerGroupsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class DataControllerGroupController : PlatformController {
       r.description = j.getString("description");
       r.controllerIds = getStrings(j, "controllerIds");
 
-      auto result = uc.createGroup(r);
+      auto result = usecase.createGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -56,7 +56,7 @@ class DataControllerGroupController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listGroups(tenantId);
+      auto items = usecase.listGroups(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -74,7 +74,7 @@ class DataControllerGroupController : PlatformController {
     try {
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getGroup(tenantId, id);
+      auto entry = usecase.getGroup(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Controller group not found");
         return;
@@ -94,7 +94,7 @@ class DataControllerGroupController : PlatformController {
       r.description = j.getString("description");
       r.controllerIds = getStrings(j, "controllerIds");
 
-      auto result = uc.updateGroup(r);
+      auto result = usecase.updateGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -111,7 +111,7 @@ class DataControllerGroupController : PlatformController {
     try {
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteGroup(tenantId, id);
+      usecase.deleteGroup(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

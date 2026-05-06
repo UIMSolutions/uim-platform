@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ApplicationController : PlatformController {
-  private ManageApplicationsUseCase uc;
+  private ManageApplicationsUseCase usecase;
 
-  this(ManageApplicationsUseCase uc) {
-    this.uc = uc;
+  this(ManageApplicationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -57,7 +57,7 @@ class ApplicationController : PlatformController {
         events = parseEvents(j);
       }
 
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -77,9 +77,9 @@ class ApplicationController : PlatformController {
 
       Application[] items;
       if (envId.length > 0)
-        items = uc.listByEnvironment(envId);
+        items = usecase.listByEnvironment(envId);
       else
-        items = uc.listByTenant(tenantId);
+        items = usecase.listByTenant(tenantId);
 
       auto arr = items.map!(app => app.toJson).array.toJson;
 
@@ -96,12 +96,12 @@ class ApplicationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      if (!uc.hasApplication(id)) {
+      if (!usecase.hasApplication(id)) {
         writeError(res, 404, "Application not found");
         return;
       }
 
-      auto app = uc.getApplication(id);
+      auto app = usecase.getApplication(id);
       res.writeJsonBody(app.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -120,7 +120,7 @@ class ApplicationController : PlatformController {
       r.apis = j.toApis;
       r.events = parseEvents(j);
 
-      auto result = uc.updateApplication(id, r);
+      auto result = usecase.updateApplication(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -133,7 +133,7 @@ class ApplicationController : PlatformController {
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
-      auto result = uc.connectApplication(id);
+      auto result = usecase.connectApplication(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -145,7 +145,7 @@ class ApplicationController : PlatformController {
 
   private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = uc.disconnectApplication(extractIdFromPath(req.requestURI));
+      auto result = usecase.disconnectApplication(extractIdFromPath(req.requestURI));
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -157,7 +157,7 @@ class ApplicationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = uc.deleteApplication(extractIdFromPath(req.requestURI));
+      auto result = usecase.deleteApplication(extractIdFromPath(req.requestURI));
       if (result.success)
         res.writeBody("", 204);
       else

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DatabaseUserController : PlatformController {
-  private ManageDatabaseUsersUseCase uc;
+  private ManageDatabaseUsersUseCase usecase;
 
-  this(ManageDatabaseUsersUseCase uc) {
-    this.uc = uc;
+  this(ManageDatabaseUsersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class DatabaseUserController : PlatformController {
       r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
       r.roles = getStrings(j, "roles");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,7 +63,7 @@ class DatabaseUserController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto users = uc.list(tenantId);
+      auto users = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (u; users) {
@@ -91,7 +91,7 @@ class DatabaseUserController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto u = uc.getById(id);
+      auto u = usecase.getById(id);
       if (u.isNull) {
         writeError(res, 404, "Database user not found");
         return;
@@ -129,7 +129,7 @@ class DatabaseUserController : PlatformController {
       r.forcePasswordChange = j.getBoolean("forcePasswordChange");
       r.roles = getStrings(j, "roles");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -149,7 +149,7 @@ class DatabaseUserController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto result = usecase.deleteDatabaseUser(DatabaseUserId(id));
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

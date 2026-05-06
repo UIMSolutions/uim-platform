@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ConfigurationController : PlatformController {
-  private ManageConfigurationsUseCase uc;
+  private ManageConfigurationsUseCase usecase;
 
-  this(ManageConfigurationsUseCase uc) {
-    this.uc = uc;
+  this(ManageConfigurationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ConfigurationController : PlatformController {
       r.dataType = j.getString("dataType");
       r.description = j.getString("description");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,7 +62,7 @@ class ConfigurationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto configs = uc.list(tenantId);
+      auto configs = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
@@ -91,7 +91,7 @@ class ConfigurationController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto c = uc.getById(id);
+      auto c = usecase.getById(id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -126,7 +126,7 @@ class ConfigurationController : PlatformController {
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.value = j.getString("value");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -145,8 +145,8 @@ class ConfigurationController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteConfiguration(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

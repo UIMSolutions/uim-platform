@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.key_mapping;
 import uim.platform.master_data_integration.domain.types;
 
 class KeyMappingController : PlatformController {
-  private ManageKeyMappingsUseCase uc;
+  private ManageKeyMappingsUseCase usecase;
 
-  this(ManageKeyMappingsUseCase uc) {
-    this.uc = uc;
+  this(ManageKeyMappingsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class KeyMappingController : PlatformController {
       r.objectType = j.getString("objectType");
       r.entries = parseEntries(j);
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -64,11 +64,11 @@ class KeyMappingController : PlatformController {
 
       KeyMapping[] mappings;
       if (objectId.length > 0)
-        mappings = uc.listByObjectId(tenantId, objectId);
+        mappings = usecase.listByObjectId(tenantId, objectId);
       else if (category.length > 0)
-        mappings = uc.listByCategory(tenantId, category);
+        mappings = usecase.listByCategory(tenantId, category);
       else
-        mappings = uc.listByTenant(tenantId);
+        mappings = usecase.listByTenant(tenantId);
 
       auto arr = mappings.map!(m => m.toJson).array.toJson;
 
@@ -97,7 +97,7 @@ class KeyMappingController : PlatformController {
         return;
       }
 
-      auto targetKey = uc.lookupKey(r);
+      auto targetKey = usecase.lookupKey(r);
       if (targetKey.length == 0) {
         writeError(res, 404, "Key mapping not found");
         return;
@@ -118,7 +118,7 @@ class KeyMappingController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto mapping = uc.getMapping(id);
+      auto mapping = usecase.getMapping(id);
       if (mapping.isNull) {
         writeError(res, 404, "Key mapping not found");
         return;
@@ -136,7 +136,7 @@ class KeyMappingController : PlatformController {
       UpdateKeyMappingRequest r;
       r.entries = parseEntries(j);
 
-      auto result = uc.updateMapping(id, r);
+      auto result = usecase.updateMapping(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -149,7 +149,7 @@ class KeyMappingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteMapping(id);
+      auto result = usecase.deleteMapping(id);
       if (result.success)
         res.writeBody("", 204);
       else

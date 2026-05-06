@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.master_data_object;
 import uim.platform.master_data_integration.domain.types;
 
 class MasterDataController : PlatformController {
-  private ManageMasterDataObjectsUseCase uc;
+  private ManageMasterDataObjectsUseCase usecase;
 
-  this(ManageMasterDataObjectsUseCase uc) {
-    this.uc = uc;
+  this(ManageMasterDataObjectsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class MasterDataController : PlatformController {
       r.sourceClient = j.getString("sourceClient");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -71,9 +71,9 @@ class MasterDataController : PlatformController {
 
       MasterDataObject[] objs;
       if (category.length > 0)
-        objs = uc.listByCategory(tenantId, category);
+        objs = usecase.listByCategory(tenantId, category);
       else
-        objs = uc.listByTenant(tenantId);
+        objs = usecase.listByTenant(tenantId);
 
       auto arr = objs.map!(o => o.toJson).array.toJson;
 
@@ -97,7 +97,7 @@ class MasterDataController : PlatformController {
         return;
       }
 
-      auto obj = uc.findByGlobalId(tenantId, globalId);
+      auto obj = usecase.findByGlobalId(tenantId, globalId);
       if (obj.isNull) {
         writeError(res, 404, "Master data object not found");
         return;
@@ -111,7 +111,7 @@ class MasterDataController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto obj = uc.getObject(id);
+      auto obj = usecase.getObject(id);
       if (obj.isNull) {
         writeError(res, 404, "Master data object not found");
         return;
@@ -133,7 +133,7 @@ class MasterDataController : PlatformController {
       r.attributes = jsonStrMap(j, "attributes");
       r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.updateObject(id, r);
+      auto result = usecase.updateObject(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -146,7 +146,7 @@ class MasterDataController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteObject(id);
+      auto result = usecase.deleteObject(id);
       if (result.success)
         res.writeBody("", 204);
       else

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataLakeController : PlatformController {
-  private ManageDataLakesUseCase uc;
+  private ManageDataLakesUseCase usecase;
 
-  this(ManageDataLakesUseCase uc) {
-    this.uc = uc;
+  this(ManageDataLakesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class DataLakeController : PlatformController {
       r.computeNodes = j.getInteger("computeNodes", 1);
       r.storage = jsonKeyValuePairs(j, "storage");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -60,7 +60,7 @@ class DataLakeController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto lakes = uc.list(tenantId);
+      auto lakes = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (d; lakes) {
@@ -90,7 +90,7 @@ class DataLakeController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto d = uc.getById(id);
+      auto d = usecase.getById(id);
       if (d.isNull) {
         writeError(res, 404, "Data lake not found");
         return;
@@ -124,7 +124,7 @@ class DataLakeController : PlatformController {
       r.description = j.getString("description");
       r.computeNodes = j.getInteger("computeNodes", 1);
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id)
@@ -143,8 +143,8 @@ class DataLakeController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = DataLakeId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteDataLake(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class PersonalDataRecordController : PlatformController {
-    private ManagePersonalDataRecordsUseCase uc;
+    private ManagePersonalDataRecordsUseCase usecase;
 
-    this(ManagePersonalDataRecordsUseCase uc) {
-        this.uc = uc;
+    this(ManagePersonalDataRecordsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class PersonalDataRecordController : PlatformController {
             r.retentionRuleId = j.getString("retentionRuleId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -68,13 +68,13 @@ class PersonalDataRecordController : PlatformController {
 
             PersonalDataRecord[] records;
             if (dataSubjectId.length > 0 && applicationId.length > 0) {
-                records = uc.listByDataSubjectAndApplication(dataSubjectId, applicationId);
+                records = usecase.listByDataSubjectAndApplication(dataSubjectId, applicationId);
             } else if (dataSubjectId.length > 0) {
-                records = uc.listByDataSubject(dataSubjectId);
+                records = usecase.listByDataSubject(dataSubjectId);
             } else if (applicationId.length > 0) {
-                records = uc.listByApplication(applicationId);
+                records = usecase.listByApplication(applicationId);
             } else {
-                records = uc.list(tenantId);
+                records = usecase.list(tenantId);
             }
 
             auto jarr = records.map!(r => toJson(r)).array;
@@ -95,7 +95,7 @@ class PersonalDataRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.getById(id);
+            auto r = usecase.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "Personal data record not found");
                 return;
@@ -111,7 +111,7 @@ class PersonalDataRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deletePersonalDataRecord(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

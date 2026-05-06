@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceInstanceController : PlatformController {
-  private ManageServiceInstancesUseCase uc;
+  private ManageServiceInstancesUseCase usecase;
 
-  this(ManageServiceInstancesUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceInstancesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -53,7 +53,7 @@ class ServiceInstanceController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -75,9 +75,9 @@ class ServiceInstanceController : PlatformController {
 
       ServiceInstance[] items;
       if (nsId.length > 0)
-        items = uc.listByNamespace(NamespaceId(nsId));
+        items = usecase.listByNamespace(NamespaceId(nsId));
       else if (envId.length > 0)
-        items = uc.listByEnvironment(KymaEnvironmentId(envId));
+        items = usecase.listByEnvironment(KymaEnvironmentId(envId));
       else
         items = [];
 
@@ -98,7 +98,7 @@ class ServiceInstanceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto inst = uc.getServiceInstance(ServiceInstanceId(id));
+      auto inst = usecase.getServiceInstance(ServiceInstanceId(id));
       if (inst.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -121,7 +121,7 @@ class ServiceInstanceController : PlatformController {
       r.parametersJson = j.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.updateServiceInstance(ServiceInstanceId(id), r);
+      auto result = usecase.updateServiceInstance(ServiceInstanceId(id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,7 +135,7 @@ class ServiceInstanceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteServiceInstance(ServiceInstanceId(id));
+      auto result = usecase.deleteServiceInstance(ServiceInstanceId(id));
       if (result.success)
         res.writeBody("", 204);
       else

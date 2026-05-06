@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class CustomerController : PlatformController {
-    private ManageCustomersUseCase uc;
+    private ManageCustomersUseCase usecase;
 
-    this(ManageCustomersUseCase uc) {
-        this.uc = uc;
+    this(ManageCustomersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class CustomerController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
@@ -47,7 +47,7 @@ class CustomerController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Customer not found"); return; }
             res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ class CustomerController : PlatformController {
             dto.accountNumber = j.getString("accountNumber");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -105,7 +105,7 @@ class CustomerController : PlatformController {
             dto.address = j.getString("address");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -124,8 +124,8 @@ class CustomerController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.removeById(id);
+            auto id = CustomerId(extractIdFromPath(path));
+            auto result = usecase.deleteCustomer(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Customer deleted");

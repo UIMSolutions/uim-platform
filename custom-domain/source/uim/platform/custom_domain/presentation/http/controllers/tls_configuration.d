@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TlsConfigurationController : PlatformController {
-    private ManageTlsConfigurationsUseCase uc;
+    private ManageTlsConfigurationsUseCase usecase;
 
-    this(ManageTlsConfigurationsUseCase uc) {
-        this.uc = uc;
+    this(ManageTlsConfigurationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class TlsConfigurationController : PlatformController {
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class TlsConfigurationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto configs = uc.list(tenantId);
+            auto configs = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; configs) {
@@ -92,7 +92,7 @@ class TlsConfigurationController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = uc.getById(id);
+            auto c = usecase.getById(id);
             if (c.isNull) {
                 writeError(res, 404, "TLS configuration not found");
                 return;
@@ -137,7 +137,7 @@ class TlsConfigurationController : PlatformController {
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -157,7 +157,7 @@ class TlsConfigurationController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteTlsConfiguration(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

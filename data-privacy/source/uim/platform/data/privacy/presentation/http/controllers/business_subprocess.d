@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class BusinessSubprocessController : PlatformController {
-  private ManageBusinessSubprocessesUseCase uc;
+  private ManageBusinessSubprocessesUseCase usecase;
 
-  this(ManageBusinessSubprocessesUseCase uc) {
-    this.uc = uc;
+  this(ManageBusinessSubprocessesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class BusinessSubprocessController : PlatformController {
       r.dataCategories = getStrings(j, "dataCategories");
       r.owner = UserId(j.getString("owner"));
 
-      auto result = uc.createSubprocess(r);
+      auto result = usecase.createSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -60,7 +60,7 @@ class BusinessSubprocessController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listSubprocesses(tenantId);
+      auto items = usecase.listSubprocesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -77,7 +77,7 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getSubprocess(tenantId, id);
+      auto entry = usecase.getSubprocess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business subprocess not found");
         return;
@@ -99,7 +99,7 @@ class BusinessSubprocessController : PlatformController {
       r.dataCategories = getStrings(j, "dataCategories").map!(c => DataCategoryId(c)).array;
       r.owner = UserId(j.getString("owner"));
 
-      auto result = uc.updateSubprocess(r);
+      auto result = usecase.updateSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -116,7 +116,7 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteSubprocess(tenantId, id);
+      usecase.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

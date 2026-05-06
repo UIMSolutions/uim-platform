@@ -13,10 +13,10 @@ import uim.platform.htmls;
 
 
 class HtmlAppController : PlatformController {
-  private ManageHtmlAppsUseCase uc;
+  private ManageHtmlAppsUseCase usecase;
 
-  this(ManageHtmlAppsUseCase uc) {
-    this.uc = uc;
+  this(ManageHtmlAppsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class HtmlAppController : PlatformController {
       r.visibility = j.getString("visibility");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -56,7 +56,7 @@ class HtmlAppController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByTenant(tenantId);
+      auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
@@ -85,7 +85,7 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "App not found");
         return;
@@ -125,7 +125,7 @@ class HtmlAppController : PlatformController {
       r.visibility = j.getString("visibility");
       r.updatedBy = UserId(j.getString("updatedBy"));
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id)
@@ -146,7 +146,7 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto result = uc.removeById(tenantId, id);
+      auto result = usecase.deleteHtmlApp(tenantId, HtmlAppId(id));
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id)

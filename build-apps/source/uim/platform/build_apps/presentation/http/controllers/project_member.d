@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ProjectMemberController : PlatformController {
-    private ManageProjectMembersUseCase uc;
+    private ManageProjectMembersUseCase usecase;
 
-    this(ManageProjectMembersUseCase uc) {
-        this.uc = uc;
+    this(ManageProjectMembersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class ProjectMemberController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -48,7 +48,7 @@ class ProjectMemberController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = ProjectMemberId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Project member not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ class ProjectMemberController : PlatformController {
             dto.permissions = j.getString("permissions");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -97,7 +97,7 @@ class ProjectMemberController : PlatformController {
             dto.permissions = j.getString("permissions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -117,7 +117,7 @@ class ProjectMemberController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = ProjectMemberId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteProjectMember(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Project member removed");

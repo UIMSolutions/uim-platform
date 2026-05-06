@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class FragmentController : PlatformController {
-  private ManageFragmentsUseCase uc;
+  private ManageFragmentsUseCase usecase;
 
-  this(ManageFragmentsUseCase uc) {
-    this.uc = uc;
+  this(ManageFragmentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -59,7 +59,7 @@ class FragmentController : PlatformController {
       r.properties = jsonStrMap(j, "properties");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -78,7 +78,7 @@ class FragmentController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      auto fragments = uc.listBySubaccount(tenantId, subaccountId);
+      auto fragments = usecase.listBySubaccount(tenantId, subaccountId);
       auto arr = fragments.map!(f => f.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -95,7 +95,7 @@ class FragmentController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = FragmentId(extractIdFromPath(req.requestURI));
-      auto f = uc.getFragment(id);
+      auto f = usecase.getFragment(id);
       if (f.isNull) {
         writeError(res, 404, "Fragment not found");
         return;
@@ -125,7 +125,7 @@ class FragmentController : PlatformController {
       r.truststoreId = j.getString("truststoreId");
       r.properties = jsonStrMap(j, "properties");
 
-      auto result = uc.updateFragment(id, r);
+      auto result = usecase.updateFragment(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -143,7 +143,7 @@ class FragmentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = FragmentId(extractIdFromPath(req.requestURI));
-      auto result = uc.removeFragment(id);
+      auto result = usecase.deleteFragment(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

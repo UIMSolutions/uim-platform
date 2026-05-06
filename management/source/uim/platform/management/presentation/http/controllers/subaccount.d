@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class SubaccountController : PlatformController {
-  private ManageSubaccountsUseCase uc;
+  private ManageSubaccountsUseCase usecase;
 
-  this(ManageSubaccountsUseCase uc) {
-    this.uc = uc;
+  this(ManageSubaccountsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class SubaccountController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -74,11 +74,11 @@ class SubaccountController : PlatformController {
 
       Subaccount[] items;
       if (dirId.length > 0)
-        items = uc.listByDirectory(dirId);
+        items = usecase.listByDirectory(dirId);
       else if (region.length > 0 && gaId.length > 0)
-        items = uc.listByRegion(gaId, region);
+        items = usecase.listByRegion(gaId, region);
       else if (gaId.length > 0)
-        items = uc.listByGlobalAccount(gaId);
+        items = usecase.listByGlobalAccount(gaId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
 
@@ -95,7 +95,7 @@ class SubaccountController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto s = uc.getById(id);
+      auto s = usecase.getById(id);
       if (s.isNull) {
         writeError(res, 404, "Subaccount not found");
         return;
@@ -118,7 +118,7 @@ class SubaccountController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -134,7 +134,7 @@ class SubaccountController : PlatformController {
       MoveSubaccountRequest r;
       r.targetDirectoryId = j.getString("targetDirectoryId");
 
-      auto result = uc.moveSubaccount(id, r);
+      auto result = usecase.moveSubaccount(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -146,7 +146,7 @@ class SubaccountController : PlatformController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.suspend(id);
+      auto result = usecase.suspend(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -158,7 +158,7 @@ class SubaccountController : PlatformController {
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.reactivate(id);
+      auto result = usecase.reactivate(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -169,8 +169,8 @@ class SubaccountController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.removeById(id);
+      auto id = SubaccountId(extractId(req.requestURI));
+      auto result = usecase.deleteSubaccount(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

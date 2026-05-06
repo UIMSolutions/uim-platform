@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class AccessPolicyController : PlatformController {
-  private ManageAccessPoliciesUseCase uc;
+  private ManageAccessPoliciesUseCase usecase;
 
-  this(ManageAccessPoliciesUseCase uc) {
-    this.uc = uc;
+  this(ManageAccessPoliciesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class AccessPolicyController : PlatformController {
       r.resources = j.getString("resources");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createPolicy(r);
+      auto result = usecase.createPolicy(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,7 +67,7 @@ class AccessPolicyController : PlatformController {
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
-      auto policies = uc.listPolicies(bucketId);
+      auto policies = usecase.listPolicies(bucketId);
 
       auto arr = policies.map!(p => p.toJson).array.toJson;
 
@@ -85,7 +85,7 @@ class AccessPolicyController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto policy = uc.getPolicy(id);
+      auto policy = usecase.getPolicy(id);
       if (policy.isNull || policy.isNull) {
         writeError(res, 404, "Access policy not found");
         return;
@@ -107,7 +107,7 @@ class AccessPolicyController : PlatformController {
       r.actions = j.getString("actions");
       r.resources = j.getString("resources");
 
-      auto result = uc.updatePolicy(id, r);
+      auto result = usecase.updatePolicy(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -124,7 +124,7 @@ class AccessPolicyController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deletePolicy(id);
+      auto result = usecase.deletePolicy(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

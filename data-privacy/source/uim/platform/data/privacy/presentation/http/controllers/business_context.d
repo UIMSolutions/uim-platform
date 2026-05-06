@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class BusinessContextController : PlatformController {
-  private ManageBusinessContextsUseCase uc;
+  private ManageBusinessContextsUseCase usecase;
 
-  this(ManageBusinessContextsUseCase uc) {
-    this.uc = uc;
+  this(ManageBusinessContextsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class BusinessContextController : PlatformController {
       r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
-      auto result = uc.createContext(r);
+      auto result = usecase.createContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -62,7 +62,7 @@ class BusinessContextController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listContexts(tenantId);
+      auto items = usecase.listContexts(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -79,7 +79,7 @@ class BusinessContextController : PlatformController {
     try {
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getContext(tenantId, id);
+      auto entry = usecase.getContext(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business context not found");
         return;
@@ -102,7 +102,7 @@ class BusinessContextController : PlatformController {
       r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
-      auto result = uc.updateContext(r);
+      auto result = usecase.updateContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -121,7 +121,7 @@ class BusinessContextController : PlatformController {
       r.id = BusinessContextId(extractIdFromPath(req.requestURI));
       r.tenantId = req.getTenantId;
 
-      auto result = uc.activateContext(r);
+      auto result = usecase.activateContext(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -138,7 +138,7 @@ class BusinessContextController : PlatformController {
     try {
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteContext(tenantId, id);
+      usecase.deleteContext(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

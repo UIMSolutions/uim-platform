@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class BusinessUserController : PlatformController {
-  private ManageBusinessUsersUseCase uc;
+  private ManageBusinessUsersUseCase usecase;
 
-  this(ManageBusinessUsersUseCase uc) {
-    this.uc = uc;
+  this(ManageBusinessUsersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class BusinessUserController : PlatformController {
       r.email = j.getString("email");
       r.roleIds = getStrings(j, "roleIds");
 
-      auto result = uc.createUser(r);
+      auto result = usecase.createUser(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -66,7 +66,7 @@ class BusinessUserController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto users = uc.listUsers(systemId);
+      auto users = usecase.listUsers(systemId);
       auto arr = users.map!(user => user.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -82,7 +82,7 @@ class BusinessUserController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
-      auto user = uc.getUser(id);
+      auto user = usecase.getUser(id);
       if (user.isNull) {
         writeError(res, 404, "Business user not found");
         return;
@@ -104,7 +104,7 @@ class BusinessUserController : PlatformController {
       r.status = j.getString("status");
       r.roleIds = getStrings(j, "roleIds");
 
-      auto result = uc.updateUser(id, r);
+      auto result = usecase.updateUser(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -122,7 +122,7 @@ class BusinessUserController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteUser(id);
+      auto result = usecase.deleteUser(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

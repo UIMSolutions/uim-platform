@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class ApplicationGroupController : PlatformController {
-    private ManageApplicationGroupsUseCase uc;
+    private ManageApplicationGroupsUseCase usecase;
 
-    this(ManageApplicationGroupsUseCase uc) { this.uc = uc; }
+    this(ManageApplicationGroupsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -36,7 +36,7 @@ class ApplicationGroupController : PlatformController {
                 }
             }
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -46,7 +46,7 @@ class ApplicationGroupController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (ag; items) {
                 jarr ~= Json.emptyObject
@@ -63,7 +63,7 @@ class ApplicationGroupController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto ag = uc.getById(id);
+            auto ag = usecase.getById(id);
             if (ag.isNull) { writeError(res, 404, "Application group not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", ag.id.value).set("name", ag.name)
@@ -84,7 +84,7 @@ class ApplicationGroupController : PlatformController {
             r.scope_ = j.getString("scope");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -95,7 +95,7 @@ class ApplicationGroupController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            usecase.deleteApplicationGroup(id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

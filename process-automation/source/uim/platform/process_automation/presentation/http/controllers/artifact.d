@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ArtifactController : PlatformController {
-    private ManageArtifactsUseCase uc;
+    private ManageArtifactsUseCase usecase;
 
-    this(ManageArtifactsUseCase uc) {
-        this.uc = uc;
+    this(ManageArtifactsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class ArtifactController : PlatformController {
             r.tags = getStrings(j, "tags");
             r.contentUrl = j.getString("contentUrl");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -62,7 +62,7 @@ class ArtifactController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto artifacts = uc.list();
+            auto artifacts = usecase.list();
 
             auto jarr = Json.emptyArray;
             foreach (a; artifacts) {
@@ -94,7 +94,7 @@ class ArtifactController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(id);
+            auto a = usecase.getById(id);
             if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
                 return;
@@ -134,7 +134,7 @@ class ArtifactController : PlatformController {
             r.version_ = j.getString("version");
             r.contentUrl = j.getString("contentUrl");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -154,7 +154,7 @@ class ArtifactController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteArtifact(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class EventApplicationController : PlatformController {
-    private ManageEventApplicationsUseCase uc;
+    private ManageEventApplicationsUseCase usecase;
 
-    this(ManageEventApplicationsUseCase uc) {
-        this.uc = uc;
+    this(ManageEventApplicationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class EventApplicationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class EventApplicationController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = EventApplicationId(extractIdFromPath(path));
-            auto e = uc.getById(EventApplicationId(id));
+            auto e = usecase.getById(EventApplicationId(id));
             if (e.isNull) {
                 writeError(res, 404, "Event application not found");
                 return;
@@ -84,7 +84,7 @@ class EventApplicationController : PlatformController {
             dto.maxConnections = j.getString("maxConnections");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -116,7 +116,7 @@ class EventApplicationController : PlatformController {
             dto.subscribeTopics = j.getString("subscribeTopics");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -137,7 +137,7 @@ class EventApplicationController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = EventApplicationId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteEventApplication(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Event application deleted");

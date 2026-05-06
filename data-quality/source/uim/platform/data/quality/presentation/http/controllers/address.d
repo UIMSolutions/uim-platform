@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class AddressController : PlatformController {
-  private CleanseAddressesUseCase uc;
+  private CleanseAddressesUseCase usecase;
 
-  this(CleanseAddressesUseCase uc) {
-    this.uc = uc;
+  this(CleanseAddressesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class AddressController : PlatformController {
       r.postalCode = j.getString("postalCode");
       r.country = j.getString("country");
 
-      auto result = uc.cleanse(r);
+      auto result = usecase.cleanse(r);
       res.writeJsonBody(result.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -75,7 +75,7 @@ class AddressController : PlatformController {
         }
       }
 
-      auto results = uc.cleanseBatch(batchReq);
+      auto results = usecase.cleanseBatch(batchReq);
       auto arr = results.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -93,7 +93,7 @@ class AddressController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto records = uc.getByTenant(tenantId);
+      auto records = usecase.getByTenant(tenantId);
       auto arr = records.map!(r => r.toJson).array;
 
       auto resp = Json.emptyObject

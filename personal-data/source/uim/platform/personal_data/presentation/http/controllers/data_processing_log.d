@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataProcessingLogController : PlatformController {
-    private ManageDataProcessingLogsUseCase uc;
+    private ManageDataProcessingLogsUseCase usecase;
 
-    this(ManageDataProcessingLogsUseCase uc) {
-        this.uc = uc;
+    this(ManageDataProcessingLogsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class DataProcessingLogController : PlatformController {
             r.ipAddress = j.getString("ipAddress");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -66,11 +66,11 @@ class DataProcessingLogController : PlatformController {
 
             DataProcessingLog[] logs;
             if (dataSubjectId.length > 0) {
-                logs = uc.listByDataSubject(dataSubjectId);
+                logs = usecase.listByDataSubject(dataSubjectId);
             } else if (requestId.length > 0) {
-                logs = uc.listByRequest(requestId);
+                logs = usecase.listByRequest(requestId);
             } else {
-                logs = uc.list(tenantId);
+                logs = usecase.list(tenantId);
             }
 
             auto jarr = logs.map!(l => logToJson(l)).array;
@@ -90,7 +90,7 @@ class DataProcessingLogController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto l = uc.getById(id);
+            auto l = usecase.getById(id);
             if (l.isNull) {
                 writeError(res, 404, "Processing log entry not found");
                 return;
@@ -105,7 +105,7 @@ class DataProcessingLogController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteDataProcessingLog(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

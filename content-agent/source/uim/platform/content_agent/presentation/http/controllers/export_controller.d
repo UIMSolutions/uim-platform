@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ExportController : PlatformController {
-  private ExportContentUseCase uc;
+  private ExportContentUseCase usecase;
 
-  this(ExportContentUseCase uc) {
-    this.uc = uc;
+  this(ExportContentUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ExportController : PlatformController {
       r.queueId = j.getString("queueId");
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.startExport(r);
+      auto result = usecase.startExport(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,7 +63,7 @@ class ExportController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto jobs = uc.listExportJobs(tenantId);
+      auto jobs = usecase.listExportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
@@ -81,7 +81,7 @@ class ExportController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto job = uc.getExportJob(id);
+      auto job = usecase.getExportJob(id);
       if (job.isNull) {
         writeError(res, 404, "Export job not found");
         return;

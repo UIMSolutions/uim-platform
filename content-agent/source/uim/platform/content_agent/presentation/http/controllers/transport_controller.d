@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class TransportController : PlatformController {
-  private ManageTransportRequestsUseCase uc;
+  private ManageTransportRequestsUseCase usecase;
 
-  this(ManageTransportRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageTransportRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class TransportController : PlatformController {
       r.queueId = j.getString("queueId");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createTransportRequest(r);
+      auto result = usecase.createTransportRequest(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,7 +68,7 @@ class TransportController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto transports = uc.listTransportRequests(tenantId);
+      auto transports = usecase.listTransportRequests(tenantId);
       auto arr = transports.map!(t => t.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -85,7 +85,7 @@ class TransportController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tr = uc.getTransportRequest(id);
+      auto tr = usecase.getTransportRequest(id);
       if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
         return;
@@ -104,7 +104,7 @@ class TransportController : PlatformController {
       r.tenantId = req.getTenantId;
       r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.releaseTransport(r);
+      auto result = usecase.releaseTransport(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,7 +125,7 @@ class TransportController : PlatformController {
       auto j = req.json;
       auto requestId = j.getString("requestId");
 
-      auto result = uc.cancelTransport(requestId);
+      auto result = usecase.cancelTransport(requestId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

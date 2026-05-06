@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class SubstitutionRuleController : PlatformController {
-    private ManageSubstitutionRulesUseCase uc;
+    private ManageSubstitutionRulesUseCase usecase;
 
-    this(ManageSubstitutionRulesUseCase uc) {
-        this.uc = uc;
+    this(ManageSubstitutionRulesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class SubstitutionRuleController : PlatformController {
             r.endDate = j.getString("endDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -66,7 +66,7 @@ class SubstitutionRuleController : PlatformController {
 
             SubstitutionRule[] rules;
             if (userId.length > 0) {
-                rules = uc.listByUser(tenantId, userId);
+                rules = usecase.listByUser(tenantId, userId);
             } else {
                 rules = [];
             }
@@ -97,7 +97,7 @@ class SubstitutionRuleController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto r = uc.getById(tenantId, id);
+            auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Substitution rule not found");
                 return;
@@ -123,7 +123,7 @@ class SubstitutionRuleController : PlatformController {
             r.endDate = j.getString("endDate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -147,7 +147,7 @@ class SubstitutionRuleController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.activate(tenantId, id);
+            auto result = usecase.activate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -171,7 +171,7 @@ class SubstitutionRuleController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.deactivate(tenantId, id);
+            auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -191,8 +191,8 @@ class SubstitutionRuleController : PlatformController {
             
 
             TenantId tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteSubstitutionRule(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

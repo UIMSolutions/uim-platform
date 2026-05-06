@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class ServicePlanController : PlatformController {
-  private ManageServicePlansUseCase uc;
+  private ManageServicePlansUseCase usecase;
 
-  this(ManageServicePlansUseCase uc) {
-    this.uc = uc;
+  this(ManageServicePlansUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class ServicePlanController : PlatformController {
       r.providerDisplayName = j.getString("providerDisplayName");
       r.metadata = jsonStrMap(j, "metadata");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -74,13 +74,13 @@ class ServicePlanController : PlatformController {
 
       ServicePlan[] items;
       if (serviceName.length > 0)
-        items = uc.listByService(serviceName);
+        items = usecase.listByService(serviceName);
       else if (category.length > 0)
-        items = uc.listByCategory(category);
+        items = usecase.listByCategory(category);
       else if (region.length > 0)
-        items = uc.listByRegion(region);
+        items = usecase.listByRegion(region);
       else
-        items = uc.listAll();
+        items = usecase.listAll();
 
       auto arr = items.map!(p => p.toJson).array.toJson;
 
@@ -97,7 +97,7 @@ class ServicePlanController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto p = uc.getById(id);
+      auto p = usecase.getById(id);
       if (p.isNull) {
         writeError(res, 404, "Service plan not found");
         return;
@@ -120,7 +120,7 @@ class ServicePlanController : PlatformController {
       r.provisionable = j.getBoolean("provisionable", true);
       r.metadata = jsonStrMap(j, "metadata");
 
-      auto result = uc.update(id, r);
+      auto result = usecase.update(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Service plan updated successfully"), 200);
       else
@@ -131,8 +131,8 @@ class ServicePlanController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.removeById(id);
+      auto id = ServicePlanId(extractId(req.requestURI));
+      auto result = usecase.deleteServicePlan(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Service plan deleted successfully"), 204);
       else

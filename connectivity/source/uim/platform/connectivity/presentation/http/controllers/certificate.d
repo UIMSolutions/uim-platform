@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class CertificateController : PlatformController {
-  private ManageCertificatesUseCase uc;
+  private ManageCertificatesUseCase usecase;
 
-  this(ManageCertificatesUseCase uc) {
-    this.uc = uc;
+  this(ManageCertificatesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class CertificateController : PlatformController {
       r.validFrom = jsonLong(j, "validFrom");
       r.validTo = jsonLong(j, "validTo");
 
-      auto result = uc.createCertificate(r);
+      auto result = usecase.createCertificate(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -70,7 +70,7 @@ class CertificateController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       
-      auto certs = uc.listCertificates(tenantId);
+      auto certs = usecase.listCertificates(tenantId);
       auto arr = certs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -87,7 +87,7 @@ class CertificateController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto cert = uc.getCertificate(id);
+      auto cert = usecase.getCertificate(id);
       if (cert.isNull) {
         writeError(res, 404, "Certificate not found");
         return;
@@ -106,7 +106,7 @@ class CertificateController : PlatformController {
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
 
-      auto result = uc.updateCertificate(id, r);
+      auto result = usecase.updateCertificate(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -124,7 +124,7 @@ class CertificateController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteCertificate(id);
+      auto result = usecase.deleteCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskActionController : PlatformController {
-    private ManageTaskActionsUseCase uc;
+    private ManageTaskActionsUseCase usecase;
 
-    this(ManageTaskActionsUseCase uc) {
-        this.uc = uc;
+    this(ManageTaskActionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class TaskActionController : PlatformController {
             r.forwardTo = j.getString("forwardTo");
             r.comment = j.getString("comment");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class TaskActionController : PlatformController {
 
             TaskAction[] actions;
             if (taskId.length > 0) {
-                actions = uc.listByTask(tenantId, taskId);
+                actions = usecase.listByTask(tenantId, taskId);
             } else {
                 actions = [];
             }
@@ -88,7 +88,7 @@ class TaskActionController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = uc.getById(tenantId, id);
+            auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Action not found");
                 return;
@@ -104,8 +104,8 @@ class TaskActionController : PlatformController {
             
 
             TenantId tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto id = TaskActionId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteTaskAction(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

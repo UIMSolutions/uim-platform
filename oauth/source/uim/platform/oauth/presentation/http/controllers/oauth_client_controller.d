@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class OAuthClientController : PlatformController {
-    private ManageOAuthClientsUseCase uc;
+    private ManageOAuthClientsUseCase usecase;
 
-    this(ManageOAuthClientsUseCase uc) {
-        this.uc = uc;
+    this(ManageOAuthClientsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class OAuthClientController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = Json.emptyArray;
             foreach (e; items)
                 jarr ~= e.toJson();
@@ -51,7 +51,7 @@ class OAuthClientController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(OAuthClientId(id));
+            auto e = usecase.getById(OAuthClientId(id));
             if (e.isNull) {
                 writeError(res, 404, "OAuth client not found");
                 return;
@@ -82,7 +82,7 @@ class OAuthClientController : PlatformController {
             dto.contacts = j.getString("contacts");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -112,7 +112,7 @@ class OAuthClientController : PlatformController {
             dto.contacts = j.getString("contacts");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -133,7 +133,7 @@ class OAuthClientController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(OAuthClientId(id));
+            auto result = usecase.deleteOAuthClient(OAuthClientId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "OAuth client deleted");

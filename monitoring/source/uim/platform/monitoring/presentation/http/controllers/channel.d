@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ChannelController : PlatformController {
-  private ManageNotificationChannelsUseCase uc;
+  private ManageNotificationChannelsUseCase usecase;
 
-  this(ManageNotificationChannelsUseCase uc) {
-    this.uc = uc;
+  this(ManageNotificationChannelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -54,7 +54,7 @@ class ChannelController : PlatformController {
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createChannel(r);
+      auto result = usecase.createChannel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -73,7 +73,7 @@ class ChannelController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto channels = uc.listChannels(tenantId);
+      auto channels = usecase.listChannels(tenantId);
       auto arr = channels.map!(channel => channel.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -90,7 +90,7 @@ class ChannelController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
-      auto ch = uc.getChannel(id);
+      auto ch = usecase.getChannel(id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
         return;
@@ -116,7 +116,7 @@ class ChannelController : PlatformController {
       r.onPremisePort = j.getInteger("onPremisePort");
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
 
-      auto result = uc.updateChannel(id, r);
+      auto result = usecase.updateChannel(id, r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", result.id)
@@ -134,7 +134,7 @@ class ChannelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteChannel(id);
+      auto result = usecase.deleteChannel(id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("deleted", true)

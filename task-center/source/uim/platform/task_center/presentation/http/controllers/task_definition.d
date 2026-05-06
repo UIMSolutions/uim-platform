@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskDefinitionController : PlatformController {
-    private ManageTaskDefinitionsUseCase uc;
+    private ManageTaskDefinitionsUseCase usecase;
 
-    this(ManageTaskDefinitionsUseCase uc) {
-        this.uc = uc;
+    this(ManageTaskDefinitionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class TaskDefinitionController : PlatformController {
             r.taskSchema = j.getString("taskSchema");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -63,7 +63,7 @@ class TaskDefinitionController : PlatformController {
             auto params = req.queryParams();
             auto providerId = params.get("providerId", "");
 
-            TaskDefinition[] defs = providerId.length > 0 ? uc.listByProvider(tenantId, providerId) : uc.list(tenantId);
+            TaskDefinition[] defs = providerId.length > 0 ? usecase.listByProvider(tenantId, providerId) : usecase.list(tenantId);
 
             auto jarr = defs.map!(d => toJson(d)).array;
 
@@ -87,7 +87,7 @@ class TaskDefinitionController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto d = uc.getById(tenantId, id);
+            auto d = usecase.getById(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Task definition not found");
                 return;
@@ -112,7 +112,7 @@ class TaskDefinitionController : PlatformController {
             r.taskSchema = j.getString("taskSchema");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -135,7 +135,7 @@ class TaskDefinitionController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.activate(tenantId, id);
+            auto result = usecase.activate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -158,7 +158,7 @@ class TaskDefinitionController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.deactivate(tenantId, id);
+            auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -178,7 +178,7 @@ class TaskDefinitionController : PlatformController {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
-            auto result = uc.removeById(tenantId, id);
+            auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

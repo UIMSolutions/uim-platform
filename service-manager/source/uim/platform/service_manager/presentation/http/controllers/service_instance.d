@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceInstanceController : PlatformController {
-    private ManageServiceInstancesUseCase uc;
+    private ManageServiceInstancesUseCase usecase;
 
-    this(ManageServiceInstancesUseCase uc) { this.uc = uc; }
+    this(ManageServiceInstancesUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,7 +23,7 @@ class ServiceInstanceController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.listByTenant(tenantId);
+            auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -42,7 +42,7 @@ class ServiceInstanceController : PlatformController {
             
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = uc.getById(tenantId, ServiceInstanceId(id));
+            auto e = usecase.getById(tenantId, ServiceInstanceId(id));
             if (e.isNull) { writeError(res, 404, "Service instance not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
@@ -69,7 +69,7 @@ class ServiceInstanceController : PlatformController {
             r.parameters = j.getString("parameters");
             r.labels = j.getString("labels");
 
-            auto result = uc.create(req.getTenantId, r);
+            auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -87,7 +87,7 @@ class ServiceInstanceController : PlatformController {
             r.parameters = j.getString("parameters");
             r.labels = j.getString("labels");
 
-            auto result = uc.update(req.getTenantId, ServiceInstanceId(id), r);
+            auto result = usecase.update(req.getTenantId, ServiceInstanceId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -98,7 +98,7 @@ class ServiceInstanceController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.remove(req.getTenantId, ServiceInstanceId(id));
+            auto result = usecase.deleteServiceInstance(req.getTenantId, ServiceInstanceId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }

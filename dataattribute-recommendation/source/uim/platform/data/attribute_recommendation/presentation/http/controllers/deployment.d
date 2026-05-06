@@ -20,10 +20,10 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 class DeploymentController : PlatformController {
-  private ManageDeploymentsUseCase uc;
+  private ManageDeploymentsUseCase usecase;
 
-  this(ManageDeploymentsUseCase uc) {
-    this.uc = uc;
+  this(ManageDeploymentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class DeploymentController : PlatformController {
       r.replicas = j.getInteger("replicas", 1);
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createDeployment(r);
+      auto result = usecase.createDeployment(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -66,7 +66,7 @@ class DeploymentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listDeployments(tenantId);
+      auto items = usecase.listDeployments(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
 
@@ -86,7 +86,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto dep = uc.getDeployment(tenantId, id);
+      auto dep = usecase.getDeployment(tenantId, id);
       if (dep is null) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -102,7 +102,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateDeployment(tenantId, id);
+      auto result = usecase.activateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -126,7 +126,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateDeployment(tenantId, id);
+      auto result = usecase.deactivateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
             .set("id", result.id)
@@ -150,7 +150,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDeployment(tenantId, id);
+      auto result = usecase.deleteDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DecisionController : PlatformController {
-    private ManageDecisionsUseCase uc;
+    private ManageDecisionsUseCase usecase;
 
-    this(ManageDecisionsUseCase uc) {
-        this.uc = uc;
+    this(ManageDecisionsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class DecisionController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -63,7 +63,7 @@ class DecisionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto decisions = uc.list(tenantId);
+            auto decisions = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; decisions) {
@@ -93,7 +93,7 @@ class DecisionController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = uc.getById(id);
+            auto d = usecase.getById(id);
             if (d.isNull) {
                 writeError(res, 404, "Decision not found");
                 return;
@@ -133,7 +133,7 @@ class DecisionController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -153,7 +153,7 @@ class DecisionController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteDecision(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

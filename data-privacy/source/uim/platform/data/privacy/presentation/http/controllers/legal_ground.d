@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class LegalGroundController : PlatformController {
-  private ManageLegalGroundsUseCase uc;
+  private ManageLegalGroundsUseCase usecase;
 
-  this(ManageLegalGroundsUseCase uc) {
-    this.uc = uc;
+  this(ManageLegalGroundsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class LegalGroundController : PlatformController {
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
 
-      auto result = uc.createGround(r);
+      auto result = usecase.createGround(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -73,13 +73,13 @@ class LegalGroundController : PlatformController {
 
       LegalGround[] items;
       if (basisParam.length > 0)
-        items = uc.listByBasis(tenantId, parseLegalBasis(basisParam));
+        items = usecase.listByBasis(tenantId, parseLegalBasis(basisParam));
       else if (purposeParam.length > 0)
-        items = uc.listByPurpose(tenantId, parsePurpose(purposeParam));
+        items = usecase.listByPurpose(tenantId, parsePurpose(purposeParam));
       else if (subjectParam.length > 0)
-        items = uc.listByDataSubject(tenantId, subjectParam);
+        items = usecase.listByDataSubject(tenantId, subjectParam);
       else
-        items = uc.listGrounds(tenantId);
+        items = usecase.listGrounds(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -98,7 +98,7 @@ class LegalGroundController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getGround(tenantId, id);
+      auto entry = usecase.getGround(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Legal ground not found");
         return;
@@ -120,7 +120,7 @@ class LegalGroundController : PlatformController {
       r.isActive = j.getBoolean("isActive", true);
       r.validUntil = jsonLong(j, "validUntil");
 
-      auto result = uc.updateGround(r);
+      auto result = usecase.updateGround(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -139,7 +139,7 @@ class LegalGroundController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteGround(tenantId, id);
+      usecase.deleteGround(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

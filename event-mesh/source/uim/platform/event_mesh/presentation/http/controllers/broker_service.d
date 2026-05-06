@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class BrokerServiceController : PlatformController {
-    private ManageBrokerServicesUseCase uc;
+    private ManageBrokerServicesUseCase usecase;
 
-    this(ManageBrokerServicesUseCase uc) {
-        this.uc = uc;
+    this(ManageBrokerServicesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,8 @@ class BrokerServiceController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            TenantId tenantId = req.getTenantId;
+            auto items = usecase.listServices(tenantId);
             auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
@@ -46,10 +47,10 @@ class BrokerServiceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            TenantId tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(BrokerServiceId(id));
+            auto e = usecase.getService(tenantId, BrokerServiceId(id));
             if (e.isNull) { writeError(res, 404, "Broker service not found"); return; }
 
             auto resp = Json.emptyObject
@@ -66,7 +67,7 @@ class BrokerServiceController : PlatformController {
         try {
             auto j = req.json;
             BrokerServiceDTO dto;
-            dto.id = j.getString("id");
+            dto.brokerServiceId = BrokerServiceId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -79,7 +80,7 @@ class BrokerServiceController : PlatformController {
             dto.msgVpnName = j.getString("msgVpnName");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.createService(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -97,10 +98,12 @@ class BrokerServiceController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            TenantId tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BrokerServiceDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.tenantId = tenantId;
+            dto.brokerServiceId = BrokerServiceId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.region = j.getString("region");
@@ -109,7 +112,7 @@ class BrokerServiceController : PlatformController {
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.updateService(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -126,10 +129,10 @@ class BrokerServiceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            TenantId tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(BrokerServiceId(id));
+            auto result = usecase.deleteService(tenantId, BrokerServiceId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Broker service deleted");

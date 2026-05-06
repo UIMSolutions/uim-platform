@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class EnvironmentController : PlatformController {
-  private ManageEnvironmentsUseCase uc;
+  private ManageEnvironmentsUseCase usecase;
 
-  this(ManageEnvironmentsUseCase uc) {
-    this.uc = uc;
+  this(ManageEnvironmentsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -57,7 +57,7 @@ class EnvironmentController : PlatformController {
       r.administrators = getStrings(j, "administrators");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id);
@@ -77,9 +77,9 @@ class EnvironmentController : PlatformController {
 
       KymaEnvironment[] envs;
       if (subaccountId.length > 0)
-        envs = uc.listBySubaccount(tenantId, SubaccountId(subaccountId));
+        envs = usecase.listBySubaccount(tenantId, SubaccountId(subaccountId));
       else
-        envs = uc.listByTenant(tenantId);
+        envs = usecase.listByTenant(tenantId);
 
       auto arr = envs.map!(e => e.toJson).array.toJson;
 
@@ -96,12 +96,12 @@ class EnvironmentController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
-      if (!uc.hasEnvironment(id)) {
+      if (!usecase.hasEnvironment(id)) {
         writeError(res, 404, "Environment not found");
         return;
       }
 
-      auto env = uc.getEnvironment(id);
+      auto env = usecase.getEnvironment(id);
       res.writeJsonBody(env.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -123,7 +123,7 @@ class EnvironmentController : PlatformController {
       r.oidcClientId = j.getString("oidcClientId");
       r.administrators = getStrings(j, "administrators");
 
-      auto result = uc.updateEnvironment(id, r);
+      auto result = usecase.updateEnvironment(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -136,7 +136,7 @@ class EnvironmentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteEnvironment(id);
+      auto result = usecase.deleteEnvironment(id);
       if (result.success)
         res.writeBody("", 204);
       else

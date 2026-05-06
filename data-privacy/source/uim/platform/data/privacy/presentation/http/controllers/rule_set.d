@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class RuleSetController : PlatformController {
-  private ManageRuleSetsUseCase uc;
+  private ManageRuleSetsUseCase usecase;
 
-  this(ManageRuleSetsUseCase uc) {
-    this.uc = uc;
+  this(ManageRuleSetsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class RuleSetController : PlatformController {
       r.description = j.getString("description");
       r.priority = cast(int) jsonLong(j, "priority");
 
-      auto result = uc.createRuleSet(r);
+      auto result = usecase.createRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -58,7 +58,7 @@ class RuleSetController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRuleSets(tenantId);
+      auto items = usecase.listRuleSets(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -76,7 +76,7 @@ class RuleSetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRuleSet(tenantId, id);
+      auto entry = usecase.getRuleSet(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Rule set not found");
         return;
@@ -96,7 +96,7 @@ class RuleSetController : PlatformController {
       r.description = j.getString("description");
       r.priority = cast(int) jsonLong(j, "priority");
 
-      auto result = uc.updateRuleSet(r);
+      auto result = usecase.updateRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -114,7 +114,7 @@ class RuleSetController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.activateRuleSet(tenantId, id);
+      auto result = usecase.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -131,7 +131,7 @@ class RuleSetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRuleSet(tenantId, id);
+      usecase.deleteRuleSet(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

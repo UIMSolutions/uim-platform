@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DashboardController : PlatformController {
-    private ManageDashboardsUseCase uc;
+    private ManageDashboardsUseCase usecase;
 
-    this(ManageDashboardsUseCase uc) {
-        this.uc = uc;
+    this(ManageDashboardsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class DashboardController : PlatformController {
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class DashboardController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto dashboards = uc.list(tenantId);
+            auto dashboards = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; dashboards) {
@@ -89,7 +89,7 @@ class DashboardController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = uc.getById(id);
+            auto d = usecase.getById(id);
             if (d.isNull) {
                 writeError(res, 404, "Dashboard not found");
                 return;
@@ -125,7 +125,7 @@ class DashboardController : PlatformController {
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -144,8 +144,8 @@ class DashboardController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteDashboard(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

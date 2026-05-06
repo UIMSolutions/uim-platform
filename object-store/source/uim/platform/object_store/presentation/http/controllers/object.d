@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ObjectController : PlatformController {
-  private ManageObjectsUseCase uc;
+  private ManageObjectsUseCase usecase;
 
-  this(ManageObjectsUseCase uc) {
-    this.uc = uc;
+  this(ManageObjectsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,7 +52,7 @@ class ObjectController : PlatformController {
       r.storageClass = j.getString("storageClass");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createObject(r);
+      auto result = usecase.createObject(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -76,9 +76,9 @@ class ObjectController : PlatformController {
 
       StorageObject[] objects;
       if (prefix.length > 0)
-        objects = uc.listObjectsByPrefix(bucketId, prefix);
+        objects = usecase.listObjectsByPrefix(bucketId, prefix);
       else
-        objects = uc.listObjects(bucketId);
+        objects = usecase.listObjects(bucketId);
 
       auto arr = objects.map!(o => o.toJson).array.toJson;
 
@@ -100,7 +100,7 @@ class ObjectController : PlatformController {
       if (id == "versions" || id == "copy")
         return;
 
-      auto obj = uc.getObject(id);
+      auto obj = usecase.getObject(id);
       if (obj.isNull || obj.isNull) {
         writeError(res, 404, "Object not found");
         return;
@@ -120,7 +120,7 @@ class ObjectController : PlatformController {
       r.metadata = j.getString("metadata");
       r.storageClass = j.getString("storageClass");
 
-      auto result = uc.updateObjectMetadata(id, r);
+      auto result = usecase.updateObjectMetadata(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -138,7 +138,7 @@ class ObjectController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteObject(id);
+      auto result = usecase.deleteObject(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -164,7 +164,7 @@ class ObjectController : PlatformController {
       r.destKey = j.getString("destKey");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.copyObject(r);
+      auto result = usecase.copyObject(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -185,7 +185,7 @@ class ObjectController : PlatformController {
       auto path = req.requestURI;
       auto objectId = extractObjectIdFromVersionsPath(path);
 
-      auto versions = uc.listVersions(objectId);
+      auto versions = usecase.listVersions(objectId);
 
       auto arr = versions.map!(v => v.toJson).array.toJson;
 

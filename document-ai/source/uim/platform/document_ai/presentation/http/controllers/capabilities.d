@@ -10,10 +10,10 @@ import uim.platform.document_ai.application.usecases.get_capabilities;
 import uim.platform.document_ai;
 
 class CapabilitiesController : PlatformController {
-  private GetCapabilitiesUseCase uc;
+  private GetCapabilitiesUseCase usecase;
 
-  this(GetCapabilitiesUseCase uc) {
-    this.uc = uc;
+  this(GetCapabilitiesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -23,7 +23,7 @@ class CapabilitiesController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto caps = uc.getById();
+      auto caps = usecase.getById();
 
       auto exMethods = caps.extractionMethods.map!(method => Json(m)).array;
       auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array;

@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class MetricController : PlatformController {
-  private ManageMetricsUseCase uc;
+  private ManageMetricsUseCase usecase;
 
-  this(ManageMetricsUseCase uc) {
-    this.uc = uc;
+  this(ManageMetricsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class MetricController : PlatformController {
       r.unit = j.getString("unit");
       r.category = j.getString("category");
 
-      auto result = uc.pushMetric(r);
+      auto result = usecase.pushMetric(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -83,7 +83,7 @@ class MetricController : PlatformController {
         batchReq.metrics ~= r;
       }
 
-      auto result = uc.pushMetricBatch(batchReq);
+      auto result = usecase.pushMetricBatch(batchReq);
       auto resp = Json.emptyObject
         .set("accepted", batchReq.metrics.length)
         .set("message", "Metrics batch pushed successfully");
@@ -105,7 +105,7 @@ class MetricController : PlatformController {
       qr.resourceId = resourceId;
       qr.metricName = metricName;
 
-      auto metrics = uc.queryMetrics(qr);
+      auto metrics = usecase.queryMetrics(qr);
       auto arr = metrics.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -129,7 +129,7 @@ class MetricController : PlatformController {
       auto now = Clock.currTime().toUnixTime();
       auto windowStart = now - 3600; // Default 1 hour window
 
-      auto summary = uc.computeSummary(tenantId, resourceId, metricName, windowStart, now);
+      auto summary = usecase.computeSummary(tenantId, resourceId, metricName, windowStart, now);
 
       auto resp = Json.emptyObject
         .set("name", summary.name)

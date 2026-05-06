@@ -36,10 +36,10 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
 
     CommandResult create(MeshBridgeDTO dto) {
         MeshBridge b;
-        b.id = MeshBridgeId(dto.id);
+        b.id = dto.meshBridgeId;
         b.tenantId = dto.tenantId;
-        b.sourceBrokerId = BrokerServiceId(dto.sourceBrokerId);
-        b.targetBrokerId = BrokerServiceId(dto.targetBrokerId);
+        b.sourceBrokerId = dto.sourceBrokerId;
+        b.targetBrokerId = dto.targetBrokerId;
         b.name = dto.name;
         b.description = dto.description;
         b.remoteAddress = dto.remoteAddress;
@@ -55,11 +55,11 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (!EventMeshValidator.isValidMeshBridge(b))
             return CommandResult(false, "", "Invalid mesh bridge data");
         repo.save(b);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.meshBridgeId.value, "");
     }
 
     CommandResult update(MeshBridgeDTO dto) {
-        auto existing = repo.findById(MeshBridgeId(dto.id));
+        auto existing = repo.findById(dto.meshBridgeId);
         if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -69,7 +69,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         if (dto.queueBindings.length > 0) existing.queueBindings = dto.queueBindings;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.meshBridgeId.value, "");
     }
 
     CommandResult remove(MeshBridgeId id) {

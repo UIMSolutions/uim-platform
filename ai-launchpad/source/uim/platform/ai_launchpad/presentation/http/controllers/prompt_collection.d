@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class PromptCollectionController : PlatformController {
-  private ManagePromptCollectionsUseCase uc;
+  private ManagePromptCollectionsUseCase usecase;
 
-  this(ManagePromptCollectionsUseCase uc) {
-    this.uc = uc;
+  this(ManagePromptCollectionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class PromptCollectionController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.workspaceId = j.getString("workspaceId");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,8 +61,8 @@ class PromptCollectionController : PlatformController {
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto collections = workspaceId.length > 0
-        ? uc.listByWorkspace(workspaceId)
-        : uc.listAll();
+        ? usecase.listByWorkspace(workspaceId)
+        : usecase.listAll();
 
       auto jarr = collections.map!(c => c.toJson).array.toJson;
 
@@ -82,7 +82,7 @@ class PromptCollectionController : PlatformController {
       
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto c = uc.getById(id);
+      auto c = usecase.getById(id);
       if (c.isNull) {
         writeError(res, 404, "Prompt collection not found");
         return;
@@ -105,7 +105,7 @@ class PromptCollectionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,7 +125,7 @@ class PromptCollectionController : PlatformController {
       
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.removeById(id);
+      auto result = usecase.deletePromptCollection(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

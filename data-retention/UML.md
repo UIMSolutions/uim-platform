@@ -396,23 +396,23 @@ graph TB
 sequenceDiagram
     participant C as API Client
     participant BP as BusinessPurposeController
-    participant UC as ManageBusinessPurposesUC
+    participant usecase as ManageBusinessPurposesUC
     participant R as BusinessPurposeRepository
 
     C->>BP: POST /business-purposes {name, appGroupId, legalEntityId}
-    BP->>UC: create(CreateBusinessPurposeRequest)
-    UC->>R: save(BusinessPurpose)
-    R-->>UC: saved
-    UC-->>BP: CommandResult(success, id)
+    BP->>usecase: create(CreateBusinessPurposeRequest)
+    usecase->>R: save(BusinessPurpose)
+    R-->>usecase: saved
+    usecase-->>BP: CommandResult(success, id)
     BP-->>C: 201 {id}
 
     C->>BP: POST /business-purposes/{id}/activate
-    BP->>UC: activate(id)
-    UC->>R: findById(id)
-    R-->>UC: BusinessPurpose
-    UC->>R: update(bp with status=active)
-    R-->>UC: updated
-    UC-->>BP: CommandResult(success, id)
+    BP->>usecase: activate(id)
+    usecase->>R: findById(id)
+    R-->>usecase: BusinessPurpose
+    usecase->>R: update(bp with status=active)
+    R-->>usecase: updated
+    usecase-->>BP: CommandResult(success, id)
     BP-->>C: 200 {id, status: active}
 ```
 

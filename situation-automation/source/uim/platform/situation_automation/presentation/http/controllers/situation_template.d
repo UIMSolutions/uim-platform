@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class SituationTemplateController : PlatformController {
-    private ManageSituationTemplatesUseCase uc;
+    private ManageSituationTemplatesUseCase usecase;
 
-    this(ManageSituationTemplatesUseCase uc) {
-        this.uc = uc;
+    this(ManageSituationTemplatesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class SituationTemplateController : PlatformController {
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -66,7 +66,7 @@ class SituationTemplateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto templates = uc.list(tenantId);
+            auto templates = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (t; templates) {
@@ -99,7 +99,7 @@ class SituationTemplateController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto t = uc.getById(id);
+            auto t = usecase.getById(id);
             if (t.isNull) {
                 writeError(res, 404, "Situation template not found");
                 return;
@@ -147,7 +147,7 @@ class SituationTemplateController : PlatformController {
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -166,8 +166,8 @@ class SituationTemplateController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteSituationTemplate(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

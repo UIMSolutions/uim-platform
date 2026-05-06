@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class LogController : PlatformController {
-  private IngestLogsUseCase uc;
+  private IngestLogsUseCase usecase;
 
-  this(IngestLogsUseCase uc) {
-    this.uc = uc;
+  this(IngestLogsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class LogController : PlatformController {
       r.resourceId = j.getString("resourceId");
       r.tags = getStrings(j, "tags");
 
-      auto result = uc.ingest(r);
+      auto result = usecase.ingest(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -88,7 +88,7 @@ class LogController : PlatformController {
         batchReq.entries ~= r;
       }
 
-      auto result = uc.ingestBatch(batchReq);
+      auto result = usecase.ingestBatch(batchReq);
       auto resp = Json.emptyObject
         .set("success", result.success)
         .set("message", result.error);

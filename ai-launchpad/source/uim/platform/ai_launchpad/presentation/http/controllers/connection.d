@@ -14,10 +14,10 @@ mixin(ShowModule!());
 @safe:
 
 class ConnectionController : PlatformController {
-  private ManageConnectionsUseCase uc;
+  private ManageConnectionsUseCase usecase;
 
-  this(ManageConnectionsUseCase uc) {
-    this.uc = uc;
+  this(ManageConnectionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class ConnectionController : PlatformController {
       r.description = j.getString("description");
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id)
@@ -59,8 +59,8 @@ class ConnectionController : PlatformController {
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto connections = workspaceId.value.length > 0
-        ? uc.listByWorkspace(workspaceId)
-        : uc.listAll();
+        ? usecase.listByWorkspace(workspaceId)
+        : usecase.listAll();
 
       auto jarr = connections.map!(connection => connection.toJson).array.toJson;
 
@@ -80,7 +80,7 @@ class ConnectionController : PlatformController {
       
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto connection = uc.getById(id);
+      auto connection = usecase.getById(id);
       if (connection.isNull) {
         writeError(res, 404, "Connection not found");
         return;
@@ -104,7 +104,7 @@ class ConnectionController : PlatformController {
       r.description = j.getString("description");
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("message", "Connection updated");
@@ -120,10 +120,8 @@ class ConnectionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
-
-      auto result = uc.removeById(id);
+      auto result = usecase.deleteConnection(id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("message", "Connection deleted");  

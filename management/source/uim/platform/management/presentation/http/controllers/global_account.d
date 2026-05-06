@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class GlobalAccountController : PlatformController {
-  private ManageGlobalAccountsUseCase uc;
+  private ManageGlobalAccountsUseCase usecase;
 
-  this(ManageGlobalAccountsUseCase uc) {
-    this.uc = uc;
+  this(ManageGlobalAccountsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -53,7 +53,7 @@ class GlobalAccountController : PlatformController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -70,9 +70,9 @@ class GlobalAccountController : PlatformController {
       auto statusFilter = req.params.get("status");
       GlobalAccount[] items;
       if (statusFilter.length > 0)
-        items = uc.listByStatus(statusFilter);
+        items = usecase.listByStatus(statusFilter);
       else
-        items = uc.listAll();
+        items = usecase.listAll();
 
       auto arr = items.map!(ga => ga.toJson).array.toJson;
 
@@ -89,12 +89,12 @@ class GlobalAccountController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      if (!uc.existsById(id)) {
+      if (!usecase.existsById(id)) {
         writeError(res, 404, "Global account not found");
         return;
       }
       
-      auto ga = uc.getById(id);
+      auto ga = usecase.getById(id);
       res.writeJsonBody(ga.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -111,7 +111,7 @@ class GlobalAccountController : PlatformController {
       request.contactEmail = j.getString("contactEmail");
       request.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.update(id, request);
+      auto result = usecase.update(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -123,7 +123,7 @@ class GlobalAccountController : PlatformController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.suspend(id);
+      auto result = usecase.suspend(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,7 +135,7 @@ class GlobalAccountController : PlatformController {
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.reactivate(id);
+      auto result = usecase.reactivate(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -146,7 +146,8 @@ class GlobalAccountController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = uc.remove(extractId(req.requestURI));
+      auto id = GlobalAccountId(extractId(req.requestURI));
+      auto result = usecase.deleteGlobalAccount(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

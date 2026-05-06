@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class AccessTokenController : PlatformController {
-    private ManageAccessTokensUseCase uc;
+    private ManageAccessTokensUseCase usecase;
 
-    this(ManageAccessTokensUseCase uc) {
-        this.uc = uc;
+    this(ManageAccessTokensUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class AccessTokenController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class AccessTokenController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(AccessTokenId(id));
+            auto e = usecase.getById(AccessTokenId(id));
             if (e.isNull) { writeError(res, 404, "Access token not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ class AccessTokenController : PlatformController {
             dto.expiresAt = 0;
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -90,7 +90,7 @@ class AccessTokenController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.revoke(AccessTokenId(id));
+            auto result = usecase.revoke(AccessTokenId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Access token revoked");
@@ -108,8 +108,8 @@ class AccessTokenController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.remove(AccessTokenId(id));
+            auto id = AccessTokenId(extractIdFromPath(path));
+            auto result = usecase.delete(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Access token deleted");

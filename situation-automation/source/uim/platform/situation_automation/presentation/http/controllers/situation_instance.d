@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class SituationInstanceController : PlatformController {
-    private ManageSituationInstancesUseCase uc;
+    private ManageSituationInstancesUseCase usecase;
 
-    this(ManageSituationInstancesUseCase uc) {
-        this.uc = uc;
+    this(ManageSituationInstancesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class SituationInstanceController : PlatformController {
             r.sourceInstanceId = j.getString("sourceInstanceId");
             r.dueAt = jsonLong(j, "dueAt");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -66,7 +66,7 @@ class SituationInstanceController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto instances = uc.list(tenantId);
+            auto instances = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
@@ -99,7 +99,7 @@ class SituationInstanceController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto i = uc.getById(id);
+            auto i = usecase.getById(id);
             if (i.isNull) {
                 writeError(res, 404, "Situation instance not found");
                 return;
@@ -148,7 +148,7 @@ class SituationInstanceController : PlatformController {
             r.severity = j.getString("severity");
             r.assignedTo = j.getString("assignedTo");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -187,7 +187,7 @@ class SituationInstanceController : PlatformController {
             r.ruleId = j.getString("ruleId");
             r.outcome = j.getString("outcome");
 
-            auto result = uc.resolve(r);
+            auto result = usecase.resolve(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -206,8 +206,8 @@ class SituationInstanceController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteSituationInstance((id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -13,10 +13,10 @@ import uim.platform.document_ai.domain.entities.client : Client;
 import uim.platform.document_ai;
 
 class ClientController : PlatformController {
-  private ManageClientsUseCase uc;
+  private ManageClientsUseCase usecase;
 
-  this(ManageClientsUseCase uc) {
-    this.uc = uc;
+  this(ManageClientsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -36,7 +36,7 @@ class ClientController : PlatformController {
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", result.id)
@@ -54,7 +54,7 @@ class ClientController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto clients = uc.list(tenantId);
+      auto clients = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (c; clients) {
@@ -78,7 +78,7 @@ class ClientController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
 
-      auto c = uc.getById(tenantId, id);
+      auto c = usecase.getById(tenantId, id);
       if (c.clientId.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
@@ -103,7 +103,7 @@ class ClientController : PlatformController {
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", result.id)
@@ -125,7 +125,7 @@ class ClientController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.removeById(tenantId, id);
+      auto result = usecase.deleteClient(tenantId, ClientId(id));
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

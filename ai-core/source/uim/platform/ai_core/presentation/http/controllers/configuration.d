@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ConfigurationController : ManageController {
-  private ManageConfigurationsUseCase uc;
+  private ManageConfigurationsUseCase usecase;
 
-  this(ManageConfigurationsUseCase uc) {
-    this.uc = uc;
+  this(ManageConfigurationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class ConfigurationController : ManageController {
       r.parameterValues = jsonKeyValuePairs(data, "parameterBindings");
       r.inputArtifacts = jsonKeyValuePairs(data, "inputArtifactBindings");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,11 +59,11 @@ class ConfigurationController : ManageController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
-      typeof(uc.list(rgId)) configs;
+      typeof(usecase.list(rgId)) configs;
       if (scenarioId.length > 0)
-        configs = uc.listByScenario(scenarioId, rgId);
+        configs = usecase.listByScenario(scenarioId, rgId);
       else
-        configs = uc.list(rgId);
+        configs = usecase.list(rgId);
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
@@ -100,7 +100,7 @@ class ConfigurationController : ManageController {
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto c = uc.getbyId(id, rgId);
+      auto c = usecase.getbyId(id, rgId);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -126,7 +126,7 @@ class ConfigurationController : ManageController {
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = uc.remove(id, rgId);
+      auto result = usecase.deleteConfiguration(rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

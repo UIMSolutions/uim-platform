@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class PrivateKeyController : PlatformController {
-    private ManagePrivateKeysUseCase uc;
+    private ManagePrivateKeysUseCase usecase;
 
-    this(ManagePrivateKeysUseCase uc) {
-        this.uc = uc;
+    this(ManagePrivateKeysUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class PrivateKeyController : PlatformController {
             r.keySize = j.getInteger("keySize");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -56,7 +56,7 @@ class PrivateKeyController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto keys = uc.list(tenantId);
+            auto keys = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (k; keys) {
@@ -84,7 +84,7 @@ class PrivateKeyController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto k = uc.getById(id);
+            auto k = usecase.getById(id);
             if (k.isNull) {
                 writeError(res, 404, "Private key not found");
                 return;
@@ -117,7 +117,7 @@ class PrivateKeyController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deletePrivateKey(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

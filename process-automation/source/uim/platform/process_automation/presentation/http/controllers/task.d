@@ -11,10 +11,10 @@ import uim.platform.process_automation.application.dto;
 import uim.platform.process_automation;
 
 class TaskController : PlatformController {
-  private ManageTasksUseCase uc;
+  private ManageTasksUseCase usecase;
 
-  this(ManageTasksUseCase uc) {
-    this.uc = uc;
+  this(ManageTasksUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class TaskController : PlatformController {
       r.formId = j.getString("formId");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -64,7 +64,7 @@ class TaskController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto tasks = uc.list(tenantId);
+      auto tasks = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
@@ -95,7 +95,7 @@ class TaskController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto t = uc.getById(id);
+      auto t = usecase.getById(id);
       if (t.isNull) {
         writeError(res, 404, "Task not found");
         return;
@@ -140,7 +140,7 @@ class TaskController : PlatformController {
       r.assignee = j.getString("assignee");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -175,7 +175,7 @@ class TaskController : PlatformController {
       r.id = id;
       r.userId = j.getString("userId");
 
-      auto result = uc.claim(r);
+      auto result = usecase.claim(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -212,7 +212,7 @@ class TaskController : PlatformController {
       r.outcome = j.getString("outcome");
       r.formData = j.getString("formData");
 
-      auto result = uc.complete(r);
+      auto result = usecase.complete(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -232,7 +232,7 @@ class TaskController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto result = usecase.deleteTask(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

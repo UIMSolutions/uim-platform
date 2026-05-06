@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class EnvironmentController : PlatformController {
-  private ManageEnvironmentInstancesUseCase uc;
+  private ManageEnvironmentInstancesUseCase usecase;
 
-  this(ManageEnvironmentInstancesUseCase uc) {
-    this.uc = uc;
+  this(ManageEnvironmentInstancesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class EnvironmentController : PlatformController {
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -69,9 +69,9 @@ class EnvironmentController : PlatformController {
 
       EnvironmentInstance[] items;
       if (envType.length > 0 && subId.length > 0)
-        items = uc.listByType(subId, envType);
+        items = usecase.listByType(subId, envType);
       else if (subId.length > 0)
-        items = uc.listBySubaccount(subId);
+        items = usecase.listBySubaccount(subId);
 
       auto arr = items.map!(inst => inst.toJson).array.toJson;
 
@@ -88,7 +88,7 @@ class EnvironmentController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto inst = uc.getById(id);
+      auto inst = usecase.getById(id);
       if (inst.isNull) {
         writeError(res, 404, "Environment instance not found");
         return;
@@ -110,7 +110,7 @@ class EnvironmentController : PlatformController {
       request.parameters = jsonStrMap(j, "parameters");
       request.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.update(id, request);
+      auto result = usecase.update(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -122,7 +122,7 @@ class EnvironmentController : PlatformController {
   private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto result = uc.deprovision(id);
+      auto result = usecase.deprovision(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

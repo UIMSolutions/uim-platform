@@ -51,40 +51,40 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult update(string id, UpdateRetentionPolicyRequest req) {
-    return update(RetentionPolicyId(id), req);
-  }
-
-  CommandResult update(RetentionPolicyId id, UpdateRetentionPolicyRequest req) {
-    auto p = repo.findById(id);
-    if (p.isNull)
+  CommandResult updatePolicy(TenantId tenantId, RetentionPolicyId id, UpdateRetentionPolicyRequest req) {
+    auto policy = repo.findById(tenantId, id);
+    if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
 
     if (req.description.length > 0)
-      p.description = req.description;
+      policy.description = req.description;
     if (req.retentionDays > 0)
-      p.retentionDays = req.retentionDays;
+      policy.retentionDays = req.retentionDays;
     if (req.maxSizeGB > 0)
-      p.maxSizeGB = req.maxSizeGB;
-    p.isDefault = req.isDefault;
-    p.isActive = req.isActive;
-    p.updatedAt = clockSeconds();
+      policy.maxSizeGB = req.maxSizeGB;
+    policy.isDefault = req.isDefault;
+    policy.isActive = req.isActive;
+    policy.updatedAt = clockSeconds();
 
-    repo.update(p);
-    return CommandResult(true, id.value, "");
+    repo.update(policy);
+    return CommandResult(true, policy.id.value, "");
   }
 
-  RetentionPolicy getById(RetentionPolicyId id) {
-    return repo.findById(id);
+  RetentionPolicy getPolicy(TenantId tenantId, RetentionPolicyId id) {
+    return repo.findById(tenantId, id);
   }
 
-  RetentionPolicy[] list(TenantId tenantId) {
+  RetentionPolicy[] listPolicies(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(RetentionPolicyId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId id) {
+    auto policy = repo.findById(tenantId, id);
+    if (policy.isNull)
+      return CommandResult(false, "", "Retention policy not found");
+
+    repo.remove(policy);
+    return CommandResult(true, policy.id.value, "");
   }
 
 }

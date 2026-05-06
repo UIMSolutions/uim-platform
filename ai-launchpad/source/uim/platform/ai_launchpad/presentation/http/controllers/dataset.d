@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DatasetController : PlatformController {
-  private ManageDatasetsUseCase uc;
+  private ManageDatasetsUseCase usecase;
 
-  this(ManageDatasetsUseCase uc) {
-    this.uc = uc;
+  this(ManageDatasetsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class DatasetController : PlatformController {
       r.size = jsonLong(j, "size");
       r.labels = getStrings(j, "labels");
 
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -65,9 +65,9 @@ class DatasetController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(uc.listByConnection(connectionId)) datasets = scenarioId.length > 0
-        ? uc.listByScenario(scenarioId, connectionId)
-        : uc.listByConnection(connectionId);
+      typeof(usecase.listByConnection(connectionId)) datasets = scenarioId.length > 0
+        ? usecase.listByScenario(connectionId, scenarioId)
+        : usecase.listByConnection(connectionId);
 
       auto jarr = datasets.map!(ds => ds.toJson).array.toJson;
 
@@ -89,7 +89,7 @@ class DatasetController : PlatformController {
       auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto d = uc.getById(id, connectionId);
+      auto d = usecase.getById(connectionId, id);
       if (d.isNull) {
         writeError(res, 404, "Dataset not found");
         return;
@@ -118,7 +118,7 @@ class DatasetController : PlatformController {
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Dataset updated successfully");
@@ -134,12 +134,11 @@ class DatasetController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
-      auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
+    
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.remove(id, connectionId);
+      auto result = usecase.deleteDataset(connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Dataset removed successfully");

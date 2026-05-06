@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class AlertController : PlatformController {
-  private ManageAlertsUseCase uc;
+  private ManageAlertsUseCase usecase;
 
-  this(ManageAlertsUseCase uc) {
-    this.uc = uc;
+  this(ManageAlertsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class AlertController : PlatformController {
       r.criticalValue = getDouble(j, "criticalValue");
       r.unit = j.getString("unit");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -65,7 +65,7 @@ class AlertController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto alerts = uc.list(tenantId);
+      auto alerts = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (a; alerts) {
@@ -94,7 +94,7 @@ class AlertController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto a = uc.getById(id);
+      auto a = usecase.getById(id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;
@@ -135,7 +135,7 @@ class AlertController : PlatformController {
       r.warningValue = getDouble(j, "warningValue");
       r.criticalValue = getDouble(j, "criticalValue");
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -170,7 +170,7 @@ class AlertController : PlatformController {
       r.id = id;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
-      auto result = uc.acknowledge(r);
+      auto result = usecase.acknowledge(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -189,8 +189,8 @@ class AlertController : PlatformController {
     try {
       
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteAlert(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ProviderController : PlatformController {
-  private ManageContentProvidersUseCase uc;
+  private ManageContentProvidersUseCase usecase;
 
-  this(ManageContentProvidersUseCase uc) {
-    this.uc = uc;
+  this(ManageContentProvidersUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class ProviderController : PlatformController {
       r.authToken = j.getString("authToken");
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.registerProvider(r);
+      auto result = usecase.registerProvider(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class ProviderController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto providers = uc.listProviders(tenantId);
+      auto providers = usecase.listProviders(tenantId);
 
       auto arr = providers.map!(p => p.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class ProviderController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto provider = uc.getProvider(id);
+      auto provider = usecase.getProvider(id);
       if (provider.isNull) {
         writeError(res, 404, "Provider not found");
         return;
@@ -104,7 +104,7 @@ class ProviderController : PlatformController {
       r.endpoint = j.getString("endpoint");
       r.authToken = j.getString("authToken");
 
-      auto result = uc.updateProvider(id, r);
+      auto result = usecase.updateProvider(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -122,7 +122,7 @@ class ProviderController : PlatformController {
   private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deregisterProvider(id);
+      auto result = usecase.deregisterProvider(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -142,7 +142,7 @@ class ProviderController : PlatformController {
       auto j = req.json;
       auto providerId = j.getString("providerId");
 
-      auto result = uc.syncProvider(providerId);
+      auto result = usecase.syncProvider(providerId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

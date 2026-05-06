@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataAccessControlController : PlatformController {
-  private ManageDataAccessControlsUseCase uc;
+  private ManageDataAccessControlsUseCase usecase;
 
-  this(ManageDataAccessControlsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataAccessControlsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class DataAccessControlController : PlatformController {
       r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array;
       r.assignedUserIds = j.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -60,7 +60,7 @@ class DataAccessControlController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto controls = uc.list(spaceId);
+      auto controls = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (dac; controls) {
@@ -89,7 +89,7 @@ class DataAccessControlController : PlatformController {
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto dac = uc.getById(spaceId, id);
+      auto dac = usecase.getById(spaceId, id);
       if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
@@ -118,7 +118,7 @@ class DataAccessControlController : PlatformController {
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.deleteDataAccessControl(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

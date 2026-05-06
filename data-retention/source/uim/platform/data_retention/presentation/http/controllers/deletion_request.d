@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class DeletionRequestController : PlatformController {
-    private ManageDeletionRequestsUseCase uc;
+    private ManageDeletionRequestsUseCase usecase;
 
-    this(ManageDeletionRequestsUseCase uc) { this.uc = uc; }
+    this(ManageDeletionRequestsUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -30,7 +30,7 @@ class DeletionRequestController : PlatformController {
             r.reason = j.getString("reason");
             r.requestedBy = j.getString("requestedBy");
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -40,7 +40,7 @@ class DeletionRequestController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (dr; items) {
                 jarr ~= Json.emptyObject
@@ -58,7 +58,7 @@ class DeletionRequestController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto dr = uc.getById(id);
+            auto dr = usecase.getById(id);
             if (dr.isNull) { writeError(res, 404, "Deletion request not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", dr.id.value)
@@ -81,7 +81,7 @@ class DeletionRequestController : PlatformController {
             r.status = j.getString("status");
             r.errorMessage = j.getString("errorMessage");
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -91,8 +91,8 @@ class DeletionRequestController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            auto id = DeletionRequestId(extractIdFromPath(req.requestURI.to!string));
+            usecase.deleteDeletionRequest(id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

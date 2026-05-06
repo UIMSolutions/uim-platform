@@ -13,10 +13,10 @@ import uim.platform.mobile;
 
 
 class PushNotificationController : PlatformController {
-  private ManagePushNotificationsUseCase uc;
+  private ManagePushNotificationsUseCase usecase;
 
-  this(ManagePushNotificationsUseCase uc) {
-    this.uc = uc;
+  this(ManagePushNotificationsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class PushNotificationController : PlatformController {
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(j.getString("createdBy"));
-      auto result = uc.send(r);
+      auto result = usecase.send(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,7 +61,7 @@ class PushNotificationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -83,7 +83,7 @@ class PushNotificationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
@@ -113,8 +113,8 @@ class PushNotificationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deletePushNotification(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

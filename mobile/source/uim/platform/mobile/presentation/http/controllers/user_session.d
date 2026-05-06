@@ -14,10 +14,10 @@ import uim.platform.mobile;
 
 
 class UserSessionController : PlatformController {
-  private ManageUserSessionsUseCase uc;
+  private ManageUserSessionsUseCase usecase;
 
-  this(ManageUserSessionsUseCase uc) {
-    this.uc = uc;
+  this(ManageUserSessionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class UserSessionController : PlatformController {
       r.userAgent = j.getString("userAgent");
       r.platform = j.getString("platform");
       r.appVersion = j.getString("appVersion");
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -58,7 +58,7 @@ class UserSessionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto results = uc.list(tenantId);
+      auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
         items ~= Json.emptyObject
@@ -81,7 +81,7 @@ class UserSessionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.get(id);
+      auto result = usecase.get(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.data.id)
@@ -107,7 +107,7 @@ class UserSessionController : PlatformController {
   private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.terminate(id);
+      auto result = usecase.terminate(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -123,8 +123,8 @@ class UserSessionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = uc.removeById(id);
+      auto id = UserSessionId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.delete(id);
       if (result.success) {
         res.writeBody("", 204);
       } else {

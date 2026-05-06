@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class ConsentController : PlatformController {
-  private ManageConsentRecordsUseCase uc;
+  private ManageConsentRecordsUseCase usecase;
 
-  this(ManageConsentRecordsUseCase uc) {
-    this.uc = uc;
+  this(ManageConsentRecordsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -50,7 +50,7 @@ class ConsentController : PlatformController {
       r.ipAddress = j.getString("ipAddress");
       r.expiresAt = jsonLong(j, "expiresAt");
 
-      auto result = uc.grantConsent(r);
+      auto result = usecase.grantConsent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -71,11 +71,11 @@ class ConsentController : PlatformController {
 
       ConsentRecord[] items;
       if (subjectParam.length > 0)
-        items = uc.listByDataSubject(tenantId, subjectParam);
+        items = usecase.listByDataSubject(tenantId, subjectParam);
       else if (purposeParam.length > 0)
-        items = uc.listByPurpose(tenantId, parsePurpose(purposeParam));
+        items = usecase.listByPurpose(tenantId, parsePurpose(purposeParam));
       else
-        items = uc.listConsents(tenantId);
+        items = usecase.listConsents(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -96,9 +96,9 @@ class ConsentController : PlatformController {
 
       ConsentRecord[] items;
       if (subjectParam.length > 0)
-        items = uc.listActiveConsents(tenantId, DataSubjectId(subjectParam));
+        items = usecase.listActiveConsents(tenantId, DataSubjectId(subjectParam));
       else
-        items = uc.listConsents(tenantId);
+        items = usecase.listConsents(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -116,7 +116,7 @@ class ConsentController : PlatformController {
     try {
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getConsent(tenantId, id);
+      auto entry = usecase.getConsent(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent record not found");
         return;
@@ -136,7 +136,7 @@ class ConsentController : PlatformController {
       r.id = ConsentRecordId(j.getString("id"));
       r.tenantId = req.getTenantId;
 
-      auto result = uc.revokeConsent(r);
+      auto result = usecase.revokeConsent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -153,7 +153,7 @@ class ConsentController : PlatformController {
     try {
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteConsent(tenantId, id);
+      usecase.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

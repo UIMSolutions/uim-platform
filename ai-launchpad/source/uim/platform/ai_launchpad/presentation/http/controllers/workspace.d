@@ -14,10 +14,10 @@ mixin(ShowModule!());
 @safe:
 
 class WorkspaceController : PlatformController {
-  private ManageWorkspacesUseCase uc;
+  private ManageWorkspacesUseCase usecase;
 
-  this(ManageWorkspacesUseCase uc) {
-    this.uc = uc;
+  this(ManageWorkspacesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -38,7 +38,7 @@ class WorkspaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,8 +58,8 @@ class WorkspaceController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto workspaces = tenantId.length > 0
-        ? uc.listByTenant(tenantId)
-        : uc.listAll();
+        ? usecase.listByTenant(tenantId)
+        : usecase.listAll();
 
       auto jarr = workspaces.map!(w => w.toJson).array.toJson;
 
@@ -78,7 +78,7 @@ class WorkspaceController : PlatformController {
       
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto w = uc.getById(id);
+      auto w = usecase.getById(id);
       if (w.isNull) {
         writeError(res, 404, "Workspace not found");
         return;
@@ -102,7 +102,7 @@ class WorkspaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Workspace updated");
@@ -121,7 +121,7 @@ class WorkspaceController : PlatformController {
       
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.removeById(id);
+      auto result = usecase.deleteWorkspace(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Workspace deleted");

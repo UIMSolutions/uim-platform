@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.distribution_model;
 import uim.platform.master_data_integration.domain.types;
 
 class DistributionController : PlatformController {
-  private ManageDistributionModelsUseCase uc;
+  private ManageDistributionModelsUseCase usecase;
 
-  this(ManageDistributionModelsUseCase uc) {
-    this.uc = uc;
+  this(ManageDistributionModelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class DistributionController : PlatformController {
       r.cronSchedule = j.getString("cronSchedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -72,9 +72,9 @@ class DistributionController : PlatformController {
 
       DistributionModel[] models;
       if (status.length > 0)
-        models = uc.listByStatus(tenantId, status);
+        models = usecase.listByStatus(tenantId, status);
       else
-        models = uc.listByTenant(tenantId);
+        models = usecase.listByTenant(tenantId);
 
       auto arr = models.map!(m => m.toJson).array;
 
@@ -92,7 +92,7 @@ class DistributionController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto model = uc.getModel(id);
+      auto model = usecase.getModel(id);
       if (model.isNull) {
         writeError(res, 404, "Distribution model not found");
         return;
@@ -118,7 +118,7 @@ class DistributionController : PlatformController {
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = j.getString("cronSchedule");
 
-      auto result = uc.updateModel(id, r);
+      auto result = usecase.updateModel(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -135,7 +135,7 @@ class DistributionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteModel(id);
+      auto result = usecase.deleteModel(id);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -152,7 +152,7 @@ class DistributionController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.activate(id);
+      auto result = usecase.activate(id);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -169,7 +169,7 @@ class DistributionController : PlatformController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deactivate(id);
+      auto result = usecase.deactivate(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else

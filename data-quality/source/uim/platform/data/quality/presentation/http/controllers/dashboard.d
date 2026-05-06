@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class DashboardController : PlatformController {
-  private ComputeDashboardUseCase uc;
+  private ComputeDashboardUseCase usecase;
 
-  this(ComputeDashboardUseCase uc) {
-    this.uc = uc;
+  this(ComputeDashboardUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class DashboardController : PlatformController {
       r.datasetId = j.getString("datasetId");
       r.datasetName = j.getString("datasetName");
 
-      auto dashboard = uc.compute(r);
+      auto dashboard = usecase.compute(r);
       res.writeJsonBody(dashboard.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

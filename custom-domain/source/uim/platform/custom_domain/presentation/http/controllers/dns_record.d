@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DnsRecordController : PlatformController {
-    private ManageDnsRecordsUseCase uc;
+    private ManageDnsRecordsUseCase usecase;
 
-    this(ManageDnsRecordsUseCase uc) {
-        this.uc = uc;
+    this(ManageDnsRecordsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class DnsRecordController : PlatformController {
             r.ttl = j.getInteger("ttl");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -58,7 +58,7 @@ class DnsRecordController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto records = uc.list(tenantId);
+            auto records = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (r; records) {
@@ -90,7 +90,7 @@ class DnsRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.getById(id);
+            auto r = usecase.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "DNS record not found");
                 return;
@@ -126,7 +126,7 @@ class DnsRecordController : PlatformController {
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -146,7 +146,7 @@ class DnsRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteDnsRecord(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

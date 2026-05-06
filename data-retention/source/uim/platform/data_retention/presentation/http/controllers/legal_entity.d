@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class LegalEntityController : PlatformController {
-    private ManageLegalEntitiesUseCase uc;
+    private ManageLegalEntitiesUseCase usecase;
 
-    this(ManageLegalEntitiesUseCase uc) { this.uc = uc; }
+    this(ManageLegalEntitiesUseCase usecase) { this.usecase = usecase; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -30,7 +30,7 @@ class LegalEntityController : PlatformController {
             r.region = j.getString("region");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -40,7 +40,7 @@ class LegalEntityController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto items = uc.list(tenantId);
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (le; items) {
                 jarr ~= Json.emptyObject
@@ -57,7 +57,7 @@ class LegalEntityController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto le = uc.getById(id);
+            auto le = usecase.getById(id);
             if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", le.id.value).set("name", le.name)
@@ -79,7 +79,7 @@ class LegalEntityController : PlatformController {
             r.region = j.getString("region");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = uc.update(id, r);
+            auto result = usecase.update(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -90,7 +90,7 @@ class LegalEntityController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            uc.removeById(id);
+            usecase.deleteLegalEntity(id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 
 class KeyPasswordController : PlatformController {
-  private ManageKeyPasswordsUseCase uc;
+  private ManageKeyPasswordsUseCase usecase;
 
-  this(ManageKeyPasswordsUseCase uc) {
-    this.uc = uc;
+  this(ManageKeyPasswordsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class KeyPasswordController : PlatformController {
       r.alias_        = alias_;
       r.passwordValue = j.getString("passwordValue");
 
-      auto result = uc.setPassword(r);
+      auto result = usecase.setPassword(r);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
@@ -58,7 +58,7 @@ class KeyPasswordController : PlatformController {
       auto accountId    = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      auto kp = uc.getPassword(accountId, applicationId, alias_);
+      auto kp = usecase.getPassword(accountId, applicationId, alias_);
       if (kp.id.length == 0) {
         writeError(res, 404, "Password not found");
         return;
@@ -85,7 +85,7 @@ class KeyPasswordController : PlatformController {
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      auto result = uc.deletePassword(accountId, applicationId, alias_);
+      auto result = usecase.deletePassword(accountId, applicationId, alias_);
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {
@@ -101,7 +101,7 @@ class KeyPasswordController : PlatformController {
     try {
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
-      auto passwords     = uc.listByApplication(accountId, applicationId);
+      auto passwords     = usecase.listByApplication(accountId, applicationId);
 
       auto jarr = Json.emptyArray;
       foreach (kp; passwords) {

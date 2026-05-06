@@ -33,10 +33,10 @@ mixin(ShowModule!());
   * Each endpoint expects and returns JSON data, and uses standard HTTP status codes to indicate success or failure.
   */
 class BusinessRoleController : PlatformController {
-  private ManageBusinessRolesUseCase uc;
+  private ManageBusinessRolesUseCase usecase;
 
-  this(ManageBusinessRolesUseCase uc) {
-    this.uc = uc;
+  this(ManageBusinessRolesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -60,7 +60,7 @@ class BusinessRoleController : PlatformController {
       r.roleType = j.getString("roleType");
       r.restrictionTypes = getStrings(j, "restrictionTypes");
 
-      auto result = uc.createRole(r);
+      auto result = usecase.createRole(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -78,7 +78,7 @@ class BusinessRoleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto roles = uc.listRoles(systemId);
+      auto roles = usecase.listRoles(systemId);
       auto arr = roles.map!(r => r.toJson).array.toJson;
 
       auto response = Json.emptyObject
@@ -95,12 +95,12 @@ class BusinessRoleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-      if (!uc.existsRole(id)) {
+      if (!usecase.existsRole(id)) {
         writeError(res, 404, "Business role not found");
         return;
       }
 
-      auto role = uc.getRole(id);
+      auto role = usecase.getRole(id);
       res.writeJsonBody(role.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -116,7 +116,7 @@ class BusinessRoleController : PlatformController {
       r.roleType = j.getString("roleType");
       r.restrictionTypes = getStrings(j, "restrictionTypes");
 
-      auto result = uc.updateRole(id, r);
+      auto result = usecase.updateRole(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -134,7 +134,7 @@ class BusinessRoleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-      auto result = uc.deleteRole(id);
+      auto result = usecase.deleteRole(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

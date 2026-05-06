@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class DataRetrievalController : PlatformController {
-  private ManageDataRetrievalsUseCase uc;
+  private ManageDataRetrievalsUseCase usecase;
 
-  this(ManageDataRetrievalsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataRetrievalsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class DataRetrievalController : PlatformController {
       r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -66,8 +66,8 @@ class DataRetrievalController : PlatformController {
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       DataRetrievalRequest[] items = statusParam.length > 0
-        ? uc.listByStatus(tenantId, parseRetrievalStatus(statusParam))
-        : uc.listRequests(tenantId);
+        ? usecase.listByStatus(tenantId, parseRetrievalStatus(statusParam))
+        : usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class DataRetrievalController : PlatformController {
     try {
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data retrieval request not found");
         return;
@@ -104,7 +104,7 @@ class DataRetrievalController : PlatformController {
       r.downloadUrl = j.getString("downloadUrl");
       r.totalFields = jsonLong(j, "totalFields");
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -121,7 +121,7 @@ class DataRetrievalController : PlatformController {
     try {
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

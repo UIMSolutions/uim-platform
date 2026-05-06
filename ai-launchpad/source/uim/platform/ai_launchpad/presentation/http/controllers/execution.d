@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ExecutionController : PlatformController {
-  private ManageExecutionsUseCase uc;
+  private ManageExecutionsUseCase usecase;
 
-  this(ManageExecutionsUseCase uc) {
-    this.uc = uc;
+  this(ManageExecutionsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class ExecutionController : PlatformController {
       r.configurationId = j.getString("configurationId");
       r.resourceGroupId = j.getString("resourceGroupId");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,11 +63,11 @@ class ExecutionController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(uc.listByConnection(connectionId)) executions;
+      typeof(usecase.listByConnection(connectionId)) executions;
       if (scenarioId.length > 0)
-        executions = uc.listByScenario(connectionId, scenarioId);
+        executions = usecase.listByScenario(connectionId, scenarioId);
       else
-        executions = uc.listByConnection(connectionId);
+        executions = usecase.listByConnection(connectionId);
 
       auto jarr = executions.map!(e => e.toJson).array.toJson;
 
@@ -89,12 +89,12 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      if (!uc.existsById(connectionId, id)) {
+      if (!usecase.existsById(connectionId, id)) {
         writeError(res, 404, "Execution not found");
         return;
       }
 
-      auto ex = uc.getById(connectionId, id);
+      auto ex = usecase.getById(connectionId, id);
       auto resp = ex.toJson
         .set("message", "Execution retrieved successfully");
 
@@ -117,7 +117,7 @@ class ExecutionController : PlatformController {
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");
 
-      auto result = uc.patch(r);
+      auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -142,7 +142,7 @@ class ExecutionController : PlatformController {
       r.executionIds = getStrings(j, "executionIds");
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = uc.bulkPatch(r);
+      auto results = usecase.bulkPatch(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
@@ -171,7 +171,7 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = uc.remove(connectionId, id);
+      auto result = usecase.deleteExecution(connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Execution removed successfully");
@@ -185,33 +185,4 @@ class ExecutionController : PlatformController {
     }
   }
 
-  private Json serializeExecution(Execution ex) {
-    
-    import uim.platform.ai_launchpad.domain.entities.execution : OutputArtifact;
-
-    auto artifacts = Json.emptyArray;
-    foreach (a; ex.outputArtifacts) {
-      artifacts ~= Json.emptyObject
-        .set("name", a.name)
-        .set("artifactId", a.artifactId)
-        .set("artifactUrl", a.artifactUrl);
-    }
-
-    return Json.emptyObject
-      .set("id", ex.id)
-      .set("connectionId", ex.connectionId)
-      .set("configurationId", ex.configurationId)
-      .set("scenarioId", ex.scenarioId)
-      .set("resourceGroupId", ex.resourceGroupId)
-      .set("status", ex.status.to!string)
-      .set("targetStatus", ex.targetStatus)
-      .set("outputArtifacts", artifacts)
-      .set("startedAt", ex.startedAt)
-      .set("completedAt", ex.completedAt)
-      .set("duration", ex.duration)
-      .set("logsUrl", ex.logsUrl)
-      .set("statusMessage", ex.statusMessage)
-      .set("createdAt", ex.createdAt)
-      .set("updatedAt", ex.updatedAt);
-  }
 }

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ArchiveRequestController : PlatformController {
-  private ManageArchiveRequestsUseCase uc;
+  private ManageArchiveRequestsUseCase usecase;
 
-  this(ManageArchiveRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageArchiveRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class ArchiveRequestController : PlatformController {
       r.isTestMode = j.getBoolean("isTestMode", false);
       r.scheduledAt = jsonLong(j, "scheduledAt");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -62,7 +62,7 @@ class ArchiveRequestController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listRequests(tenantId);
+      auto items = usecase.listRequests(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -79,7 +79,7 @@ class ArchiveRequestController : PlatformController {
     try {
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Archive request not found");
         return;
@@ -97,7 +97,7 @@ class ArchiveRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.status = parseArchiveStatus(j.getString("status"));
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -114,7 +114,7 @@ class ArchiveRequestController : PlatformController {
     try {
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

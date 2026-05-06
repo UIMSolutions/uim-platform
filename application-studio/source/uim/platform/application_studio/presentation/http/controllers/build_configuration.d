@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class BuildConfigurationController : PlatformController {
-    private ManageBuildConfigurationsUseCase uc;
+    private ManageBuildConfigurationsUseCase usecase;
 
-    this(ManageBuildConfigurationsUseCase uc) {
-        this.uc = uc;
+    this(ManageBuildConfigurationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,7 @@ class BuildConfigurationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class BuildConfigurationController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = BuildConfigurationId(extractIdFromPath(path));
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Build configuration not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -71,7 +71,7 @@ class BuildConfigurationController : PlatformController {
             dto.mtaDescriptor = j.getString("mtaDescriptor");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -99,7 +99,7 @@ class BuildConfigurationController : PlatformController {
             dto.deployCommand = j.getString("deployCommand");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -119,7 +119,7 @@ class BuildConfigurationController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = BuildConfigurationId(extractIdFromPath(path));
-            auto result = uc.remove(id);
+            auto result = usecase.deleteBuildConfiguration(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Build configuration deleted");

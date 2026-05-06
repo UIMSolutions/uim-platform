@@ -13,10 +13,10 @@ import uim.platform.htmls;
 
 
 class ServiceInstanceController : PlatformController {
-  private ManageServiceInstancesUseCase uc;
+  private ManageServiceInstancesUseCase usecase;
 
-  this(ManageServiceInstancesUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceInstancesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class ServiceInstanceController : PlatformController {
       r.plan = j.getString("plan");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -54,7 +54,7 @@ class ServiceInstanceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByTenant(tenantId);
+      auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
@@ -83,7 +83,7 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto entry = uc.getById(tenantId, id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -122,7 +122,7 @@ class ServiceInstanceController : PlatformController {
       r.description = j.getString("description");
       r.updatedBy = UserId(j.getString("updatedBy"));
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id);
@@ -136,13 +136,13 @@ class ServiceInstanceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto result = uc.removeById(tenantId, id);
+      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteServiceInstance(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

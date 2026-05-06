@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class CertificateController : PlatformController {
-  private ManageCertificatesUseCase uc;
+  private ManageCertificatesUseCase usecase;
 
-  this(ManageCertificatesUseCase uc) {
-    this.uc = uc;
+  this(ManageCertificatesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -57,7 +57,7 @@ class CertificateController : PlatformController {
       r.validTo = jsonLong(j, "validTo");
       r.uploadedBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.upload(r);
+      auto result = usecase.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -80,9 +80,9 @@ class CertificateController : PlatformController {
 
       Certificate[] certs;
       if (typeFilter.length > 0)
-        certs = uc.listByType(tenantId, subaccountId, typeFilter);
+        certs = usecase.listByType(tenantId, subaccountId, typeFilter);
       else
-        certs = uc.listBySubaccount(tenantId, subaccountId);
+        certs = usecase.listBySubaccount(tenantId, subaccountId);
 
       auto arr = certs.map!(c => c.toJson).array.toJson;
 
@@ -105,7 +105,7 @@ class CertificateController : PlatformController {
       auto now = Clock.currTime().toUnixTime();
       auto thirtyDays = now + 30 * 86_400;
 
-      auto certs = uc.listExpiring(tenantId, thirtyDays);
+      auto certs = usecase.listExpiring(tenantId, thirtyDays);
 
       auto arr = certs.map!(c => c.toJson).array.toJson;
 
@@ -123,7 +123,7 @@ class CertificateController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto c = uc.getCertificate(id);
+      auto c = usecase.getCertificate(id);
       if (c.isNull) {
         writeError(res, 404, "Certificate not found");
         return;
@@ -145,7 +145,7 @@ class CertificateController : PlatformController {
       r.validFrom = jsonLong(j, "validFrom");
       r.validTo = jsonLong(j, "validTo");
 
-      auto result = uc.updateCertificate(id, r);
+      auto result = usecase.updateCertificate(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -163,7 +163,7 @@ class CertificateController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = uc.removeCertificate(id);
+      auto result = usecase.deleteCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
@@ -181,7 +181,7 @@ class CertificateController : PlatformController {
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = uc.validateCertificate(id);
+      auto result = usecase.validateCertificate(id);
 
       auto resp = Json.emptyObject
         .set("isValid", result.isValid)

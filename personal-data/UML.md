@@ -233,26 +233,26 @@ sequenceDiagram
     actor DPO as Data Protection Officer
     participant API as REST API
     participant Ctrl as DataSubjectRequestController
-    participant UC as ManageDataSubjectRequestsUseCase
+    participant usecase as ManageDataSubjectRequestsUseCase
     participant Repo as DataSubjectRequestRepository
     participant Log as DataProcessingLogRepository
 
     DPO->>API: POST /api/v1/personal-data/requests
     API->>Ctrl: handleCreate(req, res)
-    Ctrl->>UC: create(CreateDataSubjectRequestRequest)
-    UC->>Repo: save(DataSubjectRequest)
-    Repo-->>UC: ok
-    UC-->>Ctrl: CommandResult{success, id}
+    Ctrl->>usecase: create(CreateDataSubjectRequestRequest)
+    usecase->>Repo: save(DataSubjectRequest)
+    Repo-->>usecase: ok
+    usecase-->>Ctrl: CommandResult{success, id}
     Ctrl-->>API: 201 Created
 
     DPO->>API: PUT /api/v1/personal-data/requests/{id}
     API->>Ctrl: handleUpdate(req, res)
-    Ctrl->>UC: update(UpdateDataSubjectRequestRequest)
-    UC->>Repo: findById(id)
-    Repo-->>UC: DataSubjectRequest
-    UC->>Repo: update(modified request)
-    Repo-->>UC: ok
-    UC-->>Ctrl: CommandResult{success}
+    Ctrl->>usecase: update(UpdateDataSubjectRequestRequest)
+    usecase->>Repo: findById(id)
+    Repo-->>usecase: DataSubjectRequest
+    usecase->>Repo: update(modified request)
+    Repo-->>usecase: ok
+    usecase-->>Ctrl: CommandResult{success}
     Ctrl-->>API: 200 OK
 ```
 
@@ -263,26 +263,26 @@ sequenceDiagram
     actor User as Data Subject
     participant API as REST API
     participant Ctrl as DataSubjectController
-    participant UC as ManageDataSubjectsUseCase
+    participant usecase as ManageDataSubjectsUseCase
     participant Repo as DataSubjectRepository
 
     User->>API: POST /api/v1/personal-data/subjects/{id}/erase
     API->>Ctrl: handleErase(req, res)
-    Ctrl->>UC: erase(id)
-    UC->>Repo: findById(id)
-    Repo-->>UC: DataSubject
+    Ctrl->>usecase: erase(id)
+    usecase->>Repo: findById(id)
+    Repo-->>usecase: DataSubject
 
-    Note over UC: Anonymize personal fields
-    Note over UC: firstName = "***"
-    Note over UC: lastName = "***"
-    Note over UC: email = ""
-    Note over UC: phone = ""
-    Note over UC: dateOfBirth = ""
-    Note over UC: status = erased
+    Note over usecase: Anonymize personal fields
+    Note over usecase: firstName = "***"
+    Note over usecase: lastName = "***"
+    Note over usecase: email = ""
+    Note over usecase: phone = ""
+    Note over usecase: dateOfBirth = ""
+    Note over usecase: status = erased
 
-    UC->>Repo: update(anonymized subject)
-    Repo-->>UC: ok
-    UC-->>Ctrl: CommandResult{success}
+    usecase->>Repo: update(anonymized subject)
+    Repo-->>usecase: ok
+    usecase-->>Ctrl: CommandResult{success}
     Ctrl-->>API: 200 OK {"message": "Data subject erased (anonymized)"}
 ```
 

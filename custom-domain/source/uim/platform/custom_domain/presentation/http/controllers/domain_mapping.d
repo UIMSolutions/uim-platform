@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class DomainMappingController : PlatformController {
-    private ManageDomainMappingsUseCase uc;
+    private ManageDomainMappingsUseCase usecase;
 
-    this(ManageDomainMappingsUseCase uc) {
-        this.uc = uc;
+    this(ManageDomainMappingsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class DomainMappingController : PlatformController {
             r.spaceId = j.getString("spaceId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class DomainMappingController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto mappings = uc.list(tenantId);
+            auto mappings = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (m; mappings) {
@@ -90,7 +90,7 @@ class DomainMappingController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto m = uc.getById(id);
+            auto m = usecase.getById(id);
             if (m.isNull) {
                 writeError(res, 404, "Domain mapping not found");
                 return;
@@ -120,8 +120,8 @@ class DomainMappingController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteDomainMapping(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.replication_job;
 import uim.platform.master_data_integration.domain.types;
 
 class ReplicationController : PlatformController {
-  private ManageReplicationJobsUseCase uc;
+  private ManageReplicationJobsUseCase usecase;
 
-  this(ManageReplicationJobsUseCase uc) {
-    this.uc = uc;
+  this(ManageReplicationJobsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class ReplicationController : PlatformController {
       r.isInitialLoad = j.getBoolean("isInitialLoad");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -71,11 +71,11 @@ class ReplicationController : PlatformController {
 
       ReplicationJob[] jobs;
       if (status.length > 0)
-        jobs = uc.listByStatus(tenantId, status);
+        jobs = usecase.listByStatus(tenantId, status);
       else if (modelId.length > 0)
-        jobs = uc.listByDistributionModel(tenantId, modelId);
+        jobs = usecase.listByDistributionModel(tenantId, modelId);
       else
-        jobs = uc.listByTenant(tenantId);
+        jobs = usecase.listByTenant(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
@@ -93,7 +93,7 @@ class ReplicationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto job = uc.getJob(id);
+      auto job = usecase.getJob(id);
       if (job.isNull) {
         writeError(res, 404, "Replication job not found");
         return;
@@ -107,7 +107,7 @@ class ReplicationController : PlatformController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.startJob(id);
+      auto result = usecase.startJob(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -124,7 +124,7 @@ class ReplicationController : PlatformController {
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.pauseJob(id);
+      auto result = usecase.pauseJob(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -141,7 +141,7 @@ class ReplicationController : PlatformController {
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.cancelJob(id);
+      auto result = usecase.cancelJob(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -158,7 +158,7 @@ class ReplicationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteJob(id);
+      auto result = usecase.deleteJob(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

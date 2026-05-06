@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceCallController : PlatformController {
-    private ManageServiceCallsUseCase uc;
+    private ManageServiceCallsUseCase usecase;
 
-    this(ManageServiceCallsUseCase uc) {
-        this.uc = uc;
+    this(ManageServiceCallsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,7 +29,7 @@ class ServiceCallController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
+            auto items = usecase.list();
             auto jarr = items.map!(e => toJson(e)).array;
             
             auto resp = Json.emptyObject
@@ -47,7 +47,7 @@ class ServiceCallController : PlatformController {
             
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.getById(id);
+            auto e = usecase.getById(id);
             if (e.isNull) { writeError(res, 404, "Service call not found"); return; }
             res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {
@@ -76,7 +76,7 @@ class ServiceCallController : PlatformController {
             dto.longitude = j.getString("longitude");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -106,7 +106,7 @@ class ServiceCallController : PlatformController {
             dto.resolution = j.getString("resolution");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -125,8 +125,8 @@ class ServiceCallController : PlatformController {
         try {
             
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = uc.removeById(id);
+            auto id = ServiceCallId(extractIdFromPath(path));
+            auto result = usecase.deleteServiceCall(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service call deleted");

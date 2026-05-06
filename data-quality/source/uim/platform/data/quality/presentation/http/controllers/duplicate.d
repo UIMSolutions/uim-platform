@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class DuplicateController : PlatformController {
-  private DetectDuplicatesUseCase uc;
+  private DetectDuplicatesUseCase usecase;
 
-  this(DetectDuplicatesUseCase uc) {
-    this.uc = uc;
+  this(DetectDuplicatesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -55,7 +55,7 @@ class DuplicateController : PlatformController {
         }
       }
 
-      auto groups = uc.detect(r);
+      auto groups = usecase.detect(r);
       auto arr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -77,7 +77,7 @@ class DuplicateController : PlatformController {
       r.groupId = j.getString("groupId");
       r.survivorRecordId = j.getString("survivorRecordId");
 
-      auto result = uc.resolve(r);
+      auto result = usecase.resolve(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -96,7 +96,7 @@ class DuplicateController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto groups = uc.getUnresolved(tenantId);
+      auto groups = usecase.getUnresolved(tenantId);
       auto arr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -114,7 +114,7 @@ class DuplicateController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto group = uc.getById(tenantId, id);
+      auto group = usecase.getById(tenantId, id);
       if (group is null) {
         writeError(res, 404, "Match group not found");
         return;

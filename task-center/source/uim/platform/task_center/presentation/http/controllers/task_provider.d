@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskProviderController : PlatformController {
-    private ManageTaskProvidersUseCase uc;
+    private ManageTaskProvidersUseCase usecase;
 
-    this(ManageTaskProvidersUseCase uc) {
-        this.uc = uc;
+    this(ManageTaskProvidersUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class TaskProviderController : PlatformController {
             r.clientId = j.getString("clientId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -63,7 +63,7 @@ class TaskProviderController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto providers = uc.list(tenantId);
+            auto providers = usecase.list(tenantId);
 
             auto jarr = providers.map!(p => toJson(p)).array;{
 
@@ -87,7 +87,7 @@ class TaskProviderController : PlatformController {
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
-            auto p = uc.getById(tenantId, id);
+            auto p = usecase.getById(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Provider not found");
                 return;
@@ -113,7 +113,7 @@ class TaskProviderController : PlatformController {
             r.clientId = j.getString("clientId");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -136,7 +136,7 @@ class TaskProviderController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.activate(tenantId, id);
+            auto result = usecase.activate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -159,7 +159,7 @@ class TaskProviderController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.deactivate(tenantId, id);
+            auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -182,7 +182,7 @@ class TaskProviderController : PlatformController {
             auto id = extractIdFromPath(stripped);
             TenantId tenantId = req.getTenantId;
 
-            auto result = uc.sync(tenantId, id);
+            auto result = usecase.sync(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -202,7 +202,7 @@ class TaskProviderController : PlatformController {
             
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(tenantId, id);
+            auto result = usecase.deleteTaskProvider(tenantId, TaskProviderId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

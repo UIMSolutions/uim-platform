@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class QueueController : PlatformController {
-  private ManageTransportQueuesUseCase uc;
+  private ManageTransportQueuesUseCase usecase;
 
-  this(ManageTransportQueuesUseCase uc) {
-    this.uc = uc;
+  this(ManageTransportQueuesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class QueueController : PlatformController {
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createQueue(r);
+      auto result = usecase.createQueue(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -71,7 +71,7 @@ class QueueController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto queues = uc.listQueues(tenantId);
+      auto queues = usecase.listQueues(tenantId);
       auto arr = queues.map!(q => q.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -89,7 +89,7 @@ class QueueController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto queue = uc.getQueue(id);
+      auto queue = usecase.getQueue(id);
       if (queue.isNull) {
         writeError(res, 404, "Queue not found");
         return;
@@ -111,7 +111,7 @@ class QueueController : PlatformController {
       r.authToken = j.getString("authToken");
       r.isDefault = j.getBoolean("isDefault");
 
-      auto result = uc.updateQueue(id, r);
+      auto result = usecase.updateQueue(id, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,7 +132,7 @@ class QueueController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteQueue(id);
+      auto result = usecase.deleteQueue(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

@@ -12,10 +12,10 @@ import uim.platform.process_automation.presentation.http
 import uim.platform.process_automation;
 
 class AutomationController : PlatformController {
-    private ManageAutomationsUseCase uc;
+    private ManageAutomationsUseCase usecase;
 
-    this(ManageAutomationsUseCase uc) {
-        this.uc = uc;
+    this(ManageAutomationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class AutomationController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class AutomationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto automations = uc.list(tenantId);
+            auto automations = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; automations) {
@@ -91,12 +91,12 @@ class AutomationController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            if (!uc.existsById(id)) {
+            if (!usecase.existsById(id)) {
                 writeError(res, 404, "Automation not found");
                 return;
             }
 
-            auto a = uc.getById(id);
+            auto a = usecase.getById(id);
             auto resp = Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
@@ -132,7 +132,7 @@ class AutomationController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -152,7 +152,7 @@ class AutomationController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteAutomation(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)

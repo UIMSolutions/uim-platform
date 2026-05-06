@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class DestructionRequestController : PlatformController {
-  private ManageDestructionRequestsUseCase uc;
+  private ManageDestructionRequestsUseCase usecase;
 
-  this(ManageDestructionRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageDestructionRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class DestructionRequestController : PlatformController {
       r.reason = j.getString("reason");
       r.scheduledAt = jsonLong(j, "scheduledAt");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -60,7 +60,7 @@ class DestructionRequestController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listRequests(tenantId);
+      auto items = usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -77,7 +77,7 @@ class DestructionRequestController : PlatformController {
     try {
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Destruction request not found");
         return;
@@ -95,7 +95,7 @@ class DestructionRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.status = parseDestructionStatus(j.getString("status"));
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -112,7 +112,7 @@ class DestructionRequestController : PlatformController {
     try {
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

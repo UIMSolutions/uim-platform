@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceBindingController : PlatformController {
-  private ManageServiceBindingsUseCase uc;
+  private ManageServiceBindingsUseCase usecase;
 
-  this(ManageServiceBindingsUseCase uc) {
-    this.uc = uc;
+  this(ManageServiceBindingsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ServiceBindingController : PlatformController {
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = uc.createBinding(r);
+      auto result = usecase.createBinding(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,7 +63,7 @@ class ServiceBindingController : PlatformController {
     try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
 
-      auto bindings = uc.listBindings(bucketId);
+      auto bindings = usecase.listBindings(bucketId);
       auto arr = bindings.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -83,7 +83,7 @@ class ServiceBindingController : PlatformController {
       if (id == "revoke")
         return;
 
-      auto binding = uc.getBinding(id);
+      auto binding = usecase.getBinding(id);
       if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -111,7 +111,7 @@ class ServiceBindingController : PlatformController {
       auto slashPos = rest.indexOf('/');
       auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
 
-      auto result = uc.revokeBinding(id);
+      auto result = usecase.revokeBinding(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("revoked", true)
@@ -129,7 +129,7 @@ class ServiceBindingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteBinding(id);
+      auto result = usecase.deleteBinding(id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("deleted", true);

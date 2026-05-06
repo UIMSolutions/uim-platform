@@ -18,10 +18,10 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class DirectoryController : PlatformController {
-  private ManageDirectoriesUseCase uc;
+  private ManageDirectoriesUseCase usecase;
 
-  this(ManageDirectoriesUseCase uc) {
-    this.uc = uc;
+  this(ManageDirectoriesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class DirectoryController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,9 +69,9 @@ class DirectoryController : PlatformController {
 
       Directory[] items;
       if (parentId.length > 0)
-        items = uc.listByParent(parentId);
+        items = usecase.listByParent(parentId);
       else if (gaId.length > 0)
-        items = uc.listByGlobalAccount(gaId);
+        items = usecase.listByGlobalAccount(gaId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
 
@@ -88,7 +88,7 @@ class DirectoryController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto d = uc.getById(id);
+      auto d = usecase.getById(id);
       if (d.isNull) {
         writeError(res, 404, "Directory not found");
         return;
@@ -108,7 +108,7 @@ class DirectoryController : PlatformController {
       request.labels = jsonStrMap(j, "labels");
       request.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.update(id, request);
+      auto result = usecase.update(id, request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -123,7 +123,8 @@ class DirectoryController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = uc.remove(extractId(req.requestURI));
+      auto id = DirectoryId(extractId(req.requestURI));
+      auto result = usecase.deleteDirectory(id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

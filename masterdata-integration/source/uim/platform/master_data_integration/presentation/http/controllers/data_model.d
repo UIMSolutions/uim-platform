@@ -16,10 +16,10 @@ import uim.platform.master_data_integration.domain.entities.data_model;
 import uim.platform.master_data_integration.domain.types;
 
 class DataModelController : PlatformController {
-  private ManageDataModelsUseCase uc;
+  private ManageDataModelsUseCase usecase;
 
-  this(ManageDataModelsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataModelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -64,7 +64,7 @@ class DataModelController : PlatformController {
       }
       r.fields = fields;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -84,7 +84,7 @@ class DataModelController : PlatformController {
       auto category = req.params.get("category", "");
 
       DataModel[] models = category.length > 0
-        ? uc.listByCategory(tenantId, category) : uc.listByTenant(tenantId);
+        ? usecase.listByCategory(tenantId, category) : usecase.listByTenant(tenantId);
 
       auto arr = models.map!(m => m.toJson).array.toJson;
 
@@ -102,7 +102,7 @@ class DataModelController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto model = uc.getModel(id);
+      auto model = usecase.getModel(id);
       if (model.isNull) {
         writeError(res, 404, "Data model not found");
         return;
@@ -140,7 +140,7 @@ class DataModelController : PlatformController {
       }
       r.fields = fields;
 
-      auto result = uc.updateModel(id, r);
+      auto result = usecase.updateModel(id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -153,7 +153,7 @@ class DataModelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteModel(id);
+      auto result = usecase.deleteModel(id);
       if (result.success)
         res.writeBody("", 204);
       else

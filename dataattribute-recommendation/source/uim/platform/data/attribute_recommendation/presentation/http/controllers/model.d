@@ -19,10 +19,10 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 class ModelController : PlatformController {
-  private ManageModelsUseCase uc;
+  private ManageModelsUseCase usecase;
 
-  this(ManageModelsUseCase uc) {
-    this.uc = uc;
+  this(ManageModelsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class ModelController : PlatformController {
       r.hyperparameters = j.getString("hyperparameters");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.createModelConfig(r);
+      auto result = usecase.createModelConfig(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -71,7 +71,7 @@ class ModelController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto items = uc.listModelConfigs(tenantId);
+      auto items = usecase.listModelConfigs(tenantId);
       auto arr = items.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -90,7 +90,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto config = uc.getModelConfig(tenantId, id);
+      auto config = usecase.getModelConfig(tenantId, id);
       if (config is null) {
         writeError(res, 404, "Model configuration not found");
         return;
@@ -116,7 +116,7 @@ class ModelController : PlatformController {
       r.featureColumns = j.getString("featureColumns");
       r.hyperparameters = j.getString("hyperparameters");
 
-      auto result = uc.updateModelConfig(r);
+      auto result = usecase.updateModelConfig(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -139,7 +139,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateConfig(tenantId, id);
+      auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -167,7 +167,7 @@ class ModelController : PlatformController {
       r.tenantId = req.getTenantId;
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = uc.startTraining(r);
+      auto result = usecase.startTraining(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("jobId", result.id)
@@ -188,7 +188,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteModelConfig(tenantId, id);
+      auto result = usecase.deleteModelConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("deleted", true)

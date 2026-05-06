@@ -23,10 +23,10 @@ mixin(ShowModule!());
 @safe:
 
 class BrowseController : PlatformController {
-  private BrowseContentUseCase uc;
+  private BrowseContentUseCase usecase;
 
-  this(BrowseContentUseCase uc) {
-    this.uc = uc;
+  this(BrowseContentUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -43,7 +43,7 @@ class BrowseController : PlatformController {
     try {
       auto folderId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto contents = uc.browseFolderContents(tenantId, folderId);
+      auto contents = usecase.browseFolderContents(tenantId, folderId);
 
       auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
       auto dArr = contents.documents.map!(d => d.toJson).array.toJson;
@@ -65,7 +65,7 @@ class BrowseController : PlatformController {
     try {
       auto repoId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getRepositorySummary(tenantId, repoId);
+      auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
       if (summary.repositoryId.isEmpty) {
         writeError(res, 404, "Repository not found");
@@ -95,7 +95,7 @@ class BrowseController : PlatformController {
       r.resourceId = j.getString("resourceId");
       r.resourceType = parseResourceType(j.getString("resourceType"));
 
-      auto result = uc.addFavorite(r);
+      auto result = usecase.addFavorite(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -113,7 +113,7 @@ class BrowseController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
-      auto items = uc.getFavorites(tenantId, userId);
+      auto items = usecase.getFavorites(tenantId, userId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;
 
@@ -132,7 +132,7 @@ class BrowseController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.removeFavorite(tenantId, id);
+      auto result = usecase.deleteFavorite(tenantId, FavoriteId(id));
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true)

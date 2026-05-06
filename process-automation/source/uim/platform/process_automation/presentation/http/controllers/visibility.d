@@ -11,10 +11,10 @@ import uim.platform.process_automation.application.dto;
 import uim.platform.process_automation;
 
 class VisibilityController : PlatformController {
-    private ManageVisibilitiesUseCase uc;
+    private ManageVisibilitiesUseCase usecase;
 
-    this(ManageVisibilitiesUseCase uc) {
-        this.uc = uc;
+    this(ManageVisibilitiesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class VisibilityController : PlatformController {
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -57,7 +57,7 @@ class VisibilityController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto dashboards = uc.list(tenantId);
+            auto dashboards = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (v; dashboards) {
@@ -85,7 +85,7 @@ class VisibilityController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto v = uc.getById(id);
+            auto v = usecase.getById(id);
             if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;
@@ -123,7 +123,7 @@ class VisibilityController : PlatformController {
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -143,7 +143,7 @@ class VisibilityController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteVisibilityDashboard(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

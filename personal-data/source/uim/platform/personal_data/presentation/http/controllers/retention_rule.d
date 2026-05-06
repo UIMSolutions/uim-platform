@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class RetentionRuleController : PlatformController {
-    private ManageRetentionRulesUseCase uc;
+    private ManageRetentionRulesUseCase usecase;
 
-    this(ManageRetentionRulesUseCase uc) {
-        this.uc = uc;
+    this(ManageRetentionRulesUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -42,7 +42,7 @@ class RetentionRuleController : PlatformController {
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = uc.create(r);
+            auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,7 +60,7 @@ class RetentionRuleController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             TenantId tenantId = req.getTenantId;
-            auto rules = uc.list(tenantId);
+            auto rules = usecase.list(tenantId);
 
             auto jarr = rules.map!(r => toJson(r)).array;
 
@@ -80,7 +80,7 @@ class RetentionRuleController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = uc.getById(id);
+            auto r = usecase.getById(id);
             if (r.isNull) {
                 writeError(res, 404, "Retention rule not found");
                 return;
@@ -108,7 +108,7 @@ class RetentionRuleController : PlatformController {
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = uc.update(r);
+            auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -128,7 +128,7 @@ class RetentionRuleController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = uc.removeById(id);
+            auto result = usecase.deleteRetentionRule(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

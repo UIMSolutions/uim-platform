@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataFlowController : PlatformController {
-  private ManageDataFlowsUseCase uc;
+  private ManageDataFlowsUseCase usecase;
 
-  this(ManageDataFlowsUseCase uc) {
-    this.uc = uc;
+  this(ManageDataFlowsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class DataFlowController : PlatformController {
       r.scheduleExpression = j.getString("scheduleExpression");
       r.scheduleFrequency = j.getString("scheduleFrequency");
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,7 +59,7 @@ class DataFlowController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto flows = uc.list(spaceId);
+      auto flows = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (df; flows) {
@@ -89,7 +89,7 @@ class DataFlowController : PlatformController {
       auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto df = uc.getById(spaceId, id);
+      auto df = usecase.getById(spaceId, id);
       if (df.id.isEmpty) {
         writeError(res, 404, "Data flow not found");
         return;
@@ -118,7 +118,7 @@ class DataFlowController : PlatformController {
       auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.deleteDataFlow(spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

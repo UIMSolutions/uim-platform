@@ -26,7 +26,7 @@ struct RetentionPolicy {
       return entityToJson
           .set("name", name)
           .set("description", description)
-          .set("dataType", dataType)
+          .set("dataType", dataType.to!string)
           .set("retentionDays", retentionDays)
           .set("maxSizeGB", maxSizeGB)
           .set("isDefault", isDefault)

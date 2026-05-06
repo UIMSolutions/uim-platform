@@ -6,14 +6,28 @@ mixin(ShowModule!());
 
 @safe:
 
-class TenantUseCase {
-  this() {
-    // Initialization logic for the tenant use case
+class TenantUseCase(TRepository, TEntity, TId) {
+  protected TRepository repository;
+
+  this(TRepository repository) {
+    this.repository = repository;
   }
 
   bool execute(Json[string] parameters) {
     // Business logic for the tenant use case
 
     return true;
+  }
+
+  bool hasById(TenantId tenantId, TId id) {
+    return repository.existsById(id);
+  }
+
+  TEntity getById(TenantId tenantId, TId id) {
+    return repository.findById(id);
+  }
+
+  TEntity[] list(TenantId tenantId) {
+    return repository.findByTenant(tenantId);
   }
 }

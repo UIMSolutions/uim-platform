@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class EncryptionController : PlatformController {
-  private EncryptDekUseCase uc;
+  private EncryptDekUseCase usecase;
 
-  this(EncryptDekUseCase uc) {
-    this.uc = uc;
+  this(EncryptDekUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -37,7 +37,7 @@ class EncryptionController : PlatformController {
       r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.keyringName = j.getString("keyringName");
 
-      auto result = uc.generate(r);
+      auto result = usecase.generate(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("dek", Json(result.dek))
@@ -63,7 +63,7 @@ class EncryptionController : PlatformController {
       r.keyringName = j.getString("keyringName");
       r.dek = j.getString("dek");
 
-      auto result = uc.encrypt(r);
+      auto result = usecase.encrypt(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("encryptedDek", Json(result.encryptedDek))
@@ -89,7 +89,7 @@ class EncryptionController : PlatformController {
       r.encryptedDek = j.getString("encryptedDek");
       r.keyringVersion = jsonLong(j, "keyringVersion");
 
-      auto result = uc.decrypt(r);
+      auto result = usecase.decrypt(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("dek", Json(result.dek));

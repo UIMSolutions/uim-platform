@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskChainController : PlatformController {
-  private ManageTaskChainsUseCase uc;
+  private ManageTaskChainsUseCase usecase;
 
-  this(ManageTaskChainsUseCase uc) {
-    this.uc = uc;
+  this(ManageTaskChainsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class TaskChainController : PlatformController {
       // r.createdAt = now;
       // r.updatedAt = now;
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -62,7 +62,7 @@ class TaskChainController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto chains = uc.list(spaceId);
+      auto chains = usecase.list(spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (tc; chains) {
@@ -93,7 +93,7 @@ class TaskChainController : PlatformController {
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto tc = uc.getById(spaceId, id);
+      auto tc = usecase.getById(spaceId, id);
       if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;
@@ -124,7 +124,7 @@ class TaskChainController : PlatformController {
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = uc.remove(spaceId, id);
+      auto result = usecase.delete (spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

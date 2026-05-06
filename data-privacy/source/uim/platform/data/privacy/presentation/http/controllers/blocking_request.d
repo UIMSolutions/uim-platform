@@ -20,10 +20,10 @@ mixin(ShowModule!());
 
 @safe:
 class BlockingController : PlatformController {
-  private ManageBlockingRequestsUseCase uc;
+  private ManageBlockingRequestsUseCase usecase;
 
-  this(ManageBlockingRequestsUseCase uc) {
-    this.uc = uc;
+  this(ManageBlockingRequestsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class BlockingController : PlatformController {
       r.targetSystems = getStrings(j, "targetSystems");
       r.reason = j.getString("reason");
 
-      auto result = uc.createRequest(r);
+      auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -65,8 +65,8 @@ class BlockingController : PlatformController {
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
       BlockingRequest[] items = statusParam.length > 0 
-        ? uc.listByStatus(tenantId, parseBlockingStatus(statusParam)) 
-        : uc.listRequests(tenantId);
+        ? usecase.listByStatus(tenantId, parseBlockingStatus(statusParam)) 
+        : usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class BlockingController : PlatformController {
     try {
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRequest(tenantId, id);
+      auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Blocking request not found");
         return;
@@ -102,7 +102,7 @@ class BlockingController : PlatformController {
       r.tenantId = req.getTenantId;
       r.status = parseBlockingStatus(j.getString("status"));
 
-      auto result = uc.updateStatus(r);
+      auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -119,7 +119,7 @@ class BlockingController : PlatformController {
     try {
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      uc.deleteRequest(tenantId, id);
+      usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

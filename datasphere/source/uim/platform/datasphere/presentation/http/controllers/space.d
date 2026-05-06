@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class SpaceController : PlatformController {
-  private ManageSpacesUseCase uc;
+  private ManageSpacesUseCase usecase;
 
-  this(ManageSpacesUseCase uc) {
-    this.uc = uc;
+  this(ManageSpacesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class SpaceController : PlatformController {
       r.businessName = j.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
-      auto result = uc.create(r);
+      auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -59,7 +59,7 @@ class SpaceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto spaces = uc.list(tenantId);
+      auto spaces = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (s; spaces) {
@@ -88,7 +88,7 @@ class SpaceController : PlatformController {
     try {
       
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
-      auto s = uc.getById(id);
+      auto s = usecase.getById(id);
       if (s.isNull) {
         writeError(res, 404, "Space not found");
         return;
@@ -124,7 +124,7 @@ class SpaceController : PlatformController {
       r.businessName = j.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
-      auto result = uc.update(r);
+      auto result = usecase.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -144,7 +144,7 @@ class SpaceController : PlatformController {
       
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = uc.remove(id);
+      auto result = usecase.delete(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
