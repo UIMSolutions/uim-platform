@@ -41,7 +41,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Residence rule not found");
 
-        auto rr = repo.findById(id);
+        auto rr = repo.findById(tenantId, id);
         if (req.duration > 0)
             rr.duration = req.duration;
         if (req.periodUnit.length > 0)
@@ -58,7 +58,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     ResidenceRule getById(ResidenceRuleId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ResidenceRule[] list(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteResidenceRule(ResidenceRuleId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.id.isEmpty)
             return CommandResult(false, "", "Residence rule not found");
 

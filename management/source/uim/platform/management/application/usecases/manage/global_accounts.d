@@ -64,7 +64,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
 
-    auto globalAccount = repo.findById(id);
+    auto globalAccount = repo.findById(tenantId, id);
     if (req.displayName.length > 0)
       globalAccount.displayName = req.displayName;
     if (req.description.length > 0)
@@ -117,19 +117,11 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.status = GlobalAccountStatus.active;
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
-    return CommandResult(true, accountid.value, "");
-  }
-
-  bool existsById(string id) {
-    return existsById(GlobalAccountId(id));
+    return CommandResult(true, accountId.value, "");
   }
 
   bool existsById(GlobalAccountId accountId) {
     return repo.existsById(accountId);
-  }
-
-  GlobalAccount getById(string id) {
-    return getById(GlobalAccountId(id));
   }
 
   GlobalAccount getById(GlobalAccountId accountId) {
@@ -144,16 +136,13 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return repo.findByStatus(status.to!GlobalAccountStatus);
   }
 
-  CommandResult remove(string id) {
-    return remove(GlobalAccountId(id));
-  }
-
-  CommandResult remove(GlobalAccountId accountId) {
-    if (!repo.existsById(accountId))
+  CommandResult deleteGlobalAccount(GlobalAccountId accountId) {
+    auto entity = repo.findById(accountId);
+    if (entity.isNull)
       return CommandResult(false, "", "Global account not found");
 
-    repo.removeById(accountId);
-    return CommandResult(true, accountid.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
 }

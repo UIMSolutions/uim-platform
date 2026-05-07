@@ -56,8 +56,8 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cc.id.value, "");
   }
 
-  CommandResult heartbeat(ConnectorId id, HeartbeatRequest req) {
-    auto cc = repo.findById(id);
+  CommandResult heartbeat(TenantId tenantId, ConnectorId id, HeartbeatRequest req) {
+    auto cc = repo.findById(tenantId, id);
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
@@ -69,8 +69,8 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cc.id.value, "");
   }
 
-  CommandResult disconnect(ConnectorId id) {
-    auto cc = repo.findById(id);
+  CommandResult disconnect(TenantId tenantId, ConnectorId id) {
+    auto cc = repo.findById(tenantId, id);
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
@@ -83,23 +83,23 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
   
-  CloudConnector getConnector(ConnectorId id) {
-    return repo.findById(id);
+  CloudConnector getConnector(TenantId tenantId, ConnectorId id) {
+    return repo.findById(tenantId, id);
   }
 
-  CloudConnector[] listBySubaccount(SubaccountId subaccountId) {
-    return repo.findBySubaccount(subaccountId);
+  CloudConnector[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return repo.findBySubaccount(tenantId, subaccountId);
   }
   CloudConnector[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult unregister(ConnectorId id) {
-    auto cc = repo.findById(id);
+  CommandResult unregister(TenantId tenantId, ConnectorId id) {
+    auto cc = repo.findById(tenantId, id);
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
-    repo.removeById(id);
+    repo.removeById(tenantId, id);
 
     recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id.value,
         "CloudConnector", "Connector unregistered: " ~ cc.locationId);

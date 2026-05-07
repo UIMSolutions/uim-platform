@@ -12,26 +12,26 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProjectsUseCase { // TODO: UIMUseCase {
-    private ProjectRepository repo;
+    private Projectprojectssitory projects;
 
-    this(ProjectRepository repo) {
-        this.repo = repo;
+    this(Projectprojectssitory projects) {
+        this.projects = projects;
     }
 
     Project getById(ProjectId id) {
-        return repo.findById(id);
+        return projects.findById(tenantId, id);
     }
 
     Project[] list() {
-        return repo.findAll();
+        return projects.findAll();
     }
 
     Project[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return projects.findByTenant(tenantId);
     }
 
     Project[] listByDevSpace(DevSpaceId devSpaceId) {
-        return repo.findByDevSpace(devSpaceId);
+        return projects.findByDevSpace(devSpaceId);
     }
 
     CommandResult create(ProjectDTO dto) {
@@ -43,35 +43,35 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         e.description = dto.description;
         e.templateId = ProjectTemplateId(dto.templateId);
         e.rootPath = dto.rootPath;
-        e.gitRepositoryUrl = dto.gitRepositoryUrl;
+        e.gitprojectssitoryUrl = dto.gitprojectssitoryUrl;
         e.gitBranch = dto.gitBranch;
         e.namespace_ = dto.namespace_;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidProject(e))
             return CommandResult(false, "", "Invalid project data");
-        repo.save(e);
+        projects.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(ProjectDTO dto) {
-        if (!repo.existsById(ProjectId(dto.id)))
+        if (!projects.existsById(ProjectId(dto.id)))
             return CommandResult(false, "", "Project not found");
-        auto existing = repo.findById(ProjectId(dto.id));
+        auto existing = projects.findById(ProjectId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.gitRepositoryUrl.length > 0) existing.gitRepositoryUrl = dto.gitRepositoryUrl;
+        if (dto.gitprojectssitoryUrl.length > 0) existing.gitprojectssitoryUrl = dto.gitprojectssitoryUrl;
         if (dto.gitBranch.length > 0) existing.gitBranch = dto.gitBranch;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
+        projects.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteProject(ProjectId id) {
-        auto entity = repo.findById(id);
-        if (entity.isNull)
+        auto project = projects.findById(tenantId, id);
+        if (project.isNull)
             return CommandResult(false, "", "Project not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        projects.remove(project);
+        return CommandResult(true, project.id.value, "");
     }
 }

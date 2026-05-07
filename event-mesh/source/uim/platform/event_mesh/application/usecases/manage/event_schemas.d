@@ -19,7 +19,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
     }
 
     EventSchema getById(EventSchemaId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     EventSchema[] list() {
@@ -65,11 +65,12 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.eventSchemaId.value, "");
     }
 
-    CommandResult remove(EventSchemaId id) {
-        auto existing = repo.findById(id);
-        if (existing.id.isEmpty)
+    CommandResult deleteEventSchema(EventSchemaId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Event schema not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

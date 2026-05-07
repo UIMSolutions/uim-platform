@@ -19,7 +19,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     Application getById(ApplicationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Application[] list() {
@@ -68,7 +68,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteApplication(ApplicationId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Application not found");
             

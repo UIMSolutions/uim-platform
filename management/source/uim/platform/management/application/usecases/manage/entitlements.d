@@ -68,7 +68,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
 
-    auto ent = repo.findById(id);
+    auto ent = repo.findById(tenantId, id);
     ent.quotaAssigned = request.quotaAssigned;
     ent.unlimited = request.unlimited;
     ent.quotaRemaining = evaluator.calculateRemaining(request.quotaAssigned, ent.quotaUsed);
@@ -85,7 +85,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
 
-    auto ent = repo.findById(id);
+    auto ent = repo.findById(tenantId, id);
     ent.status = EntitlementStatus.revoked;
     ent.updatedAt = clockSeconds();
     repo.update(ent);
@@ -97,42 +97,27 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   }
 
   Entitlement getById(EntitlementId id) {
-    return repo.findById(id);
-  }
-
-  Entitlement[] listByGlobalAccount(string gaId) {
-    return listByGlobalAccount(GlobalAccountId(gaId));
+    return repo.findById(tenantId, id);
   }
 
   Entitlement[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }
 
-  Entitlement[] listBySubaccount(string subId) {
-    return listBySubaccount(SubaccountId(subId));
-  }
-
   Entitlement[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
-  }
-
-  Entitlement[] listByDirectory(string dirId) {
-    return listByDirectory(DirectoryId(dirId));
   }
 
   Entitlement[] listByDirectory(DirectoryId dirId) {
     return repo.findByDirectory(dirId);
   }
 
-  CommandResult remove(string id) {
-    return remove(EntitlementId(id));
-  }
-
-  CommandResult remove(EntitlementId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteEntitlement(EntitlementId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Entitlement not found");
-      
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

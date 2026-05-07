@@ -71,7 +71,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
-    auto pkg = packages.findById(id);
+    auto pkg = packages.findById(tenantId, id);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
@@ -126,7 +126,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   ContentPackage getPackage(ContentPackageId id) {
-    return packages.findById(id);
+    return packages.findById(tenantId, id);
   }
 
   ContentPackage[] listPackages(TenantId tenantId) {
@@ -139,7 +139,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePackage(ContentPackageId id) {
-    auto pkg = packages.findById(id);
+    auto pkg = packages.findById(tenantId, id);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 

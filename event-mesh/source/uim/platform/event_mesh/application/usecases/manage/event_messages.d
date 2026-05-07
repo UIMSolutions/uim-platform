@@ -19,7 +19,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
     }
 
     EventMessage getById(EventMessageId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     EventMessage[] list() {
@@ -60,7 +60,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult acknowledge(EventMessageId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Event message not found");
         existing.status = MessageStatus.acknowledged;
@@ -68,11 +68,12 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(EventMessageId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteEventMessage(EventMessageId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Event message not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

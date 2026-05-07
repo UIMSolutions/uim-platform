@@ -53,7 +53,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDashboard(DashboardId id, UpdateDashboardRequest req) {
-    auto d = repo.findById(id);
+    auto d = repo.findById(tenantId, id);
     if (d.isNull)
       return CommandResult(false, "", "Dashboard not found");
 
@@ -91,7 +91,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   }
 
   Dashboard getDashboard(DashboardId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Dashboard[] listDashboards(TenantId tenantId) {
@@ -102,9 +102,13 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.findDefault(tenantId);
   }
 
-  CommandResult removeDashboard(DashboardId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteDashboard(DashboardId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Dashboard not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   private static PanelType parsePanelType(string s) {

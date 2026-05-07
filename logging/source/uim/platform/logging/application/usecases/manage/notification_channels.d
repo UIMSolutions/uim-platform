@@ -53,7 +53,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(NotificationChannelId id, UpdateNotificationChannelRequest req) {
-    auto channel = repo.findById(id);
+    auto channel = repo.findById(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
@@ -85,7 +85,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel getChannel(NotificationChannelId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {

@@ -50,7 +50,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     SituationTemplate getById(SituationTemplateId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     SituationTemplate[] list(TenantId tenantId) {
@@ -81,12 +81,12 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(SituationTemplateId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteSituationTemplate(SituationTemplateId id) {
+        auto templ = repo.findById(tenantId, id);
+        if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(templ);
+        return CommandResult(true, templ.id.value, "");
     }
 }

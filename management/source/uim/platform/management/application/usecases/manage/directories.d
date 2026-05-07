@@ -36,7 +36,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(DirectoryId id, UpdateDirectoryRequest request) {
-    auto directory = directories.findById(id);
+    auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
 
@@ -55,7 +55,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   Directory getById(DirectoryId id) {
-    return directories.findById(id);
+    return directories.findById(tenantId, id);
   }
 
   Directory[] listByGlobalAccount(GlobalAccountId gaId) {
@@ -66,13 +66,15 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return directories.findByParent(parentId);
   }
 
-  CommandResult remove(DirectoryId id) {
-    auto directory = directories.findById(id);
+  CommandResult deleteDirectory(DirectoryId id) {
+    auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
+
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
-    directories.removeById(id);
+
+    directories.remove(directory);
     return CommandResult(true, directory.id.value, "");
   }
 

@@ -19,7 +19,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceAccount getById(ServiceAccountId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceAccount[] list() {
@@ -59,7 +59,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteServiceAccount(ServiceAccountId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Service account not found");
             

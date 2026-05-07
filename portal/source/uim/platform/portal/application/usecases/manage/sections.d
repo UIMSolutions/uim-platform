@@ -59,7 +59,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
   }
 
   PortalSection getSection(SectionId id) {
-    return sectionRepo.findById(id);
+    return sectionRepo.findById(tenantId, id);
   }
 
   PortalSection[] listSections(PageId pageId) {

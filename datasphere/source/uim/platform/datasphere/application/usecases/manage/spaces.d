@@ -52,7 +52,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   Space getById(SpaceId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Space[] list(TenantId tenantId) {
@@ -77,7 +77,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSpace(SpaceId id) {
-    auto entity = repo.findById(id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Space not found");
 

@@ -46,7 +46,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     TrustedCertificate getById(TrustedCertificateId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     TrustedCertificate[] list(TenantId tenantId) {
@@ -58,7 +58,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteTrustedCertificate(TrustedCertificateId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Trusted certificate not found");
 

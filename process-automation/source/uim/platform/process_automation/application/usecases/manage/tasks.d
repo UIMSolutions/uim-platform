@@ -43,7 +43,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     Task getById(TaskId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Task[] list(TenantId tenantId) {
@@ -104,12 +104,12 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TaskId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTask(TaskId id) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
-        repo.removeById(id);
+        repo.remove(task);
         return CommandResult(true, id.value, "");
     }
 }

@@ -110,7 +110,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult cancelTransport(TransportRequestId id) {
-    auto tr = requestRepo.findById(id);
+    auto tr = requestRepo.findById(tenantId, id);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
@@ -122,7 +122,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   TransportRequest getTransportRequest(TransportRequestId id) {
-    return requestRepo.findById(id);
+    return requestRepo.findById(tenantId, id);
   }
 
   TransportRequest[] listTransportRequests(TenantId tenantId) {

@@ -82,29 +82,29 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult addMember(AddMemberRequest req) {
-    auto ws = repo.findById(req.tenantId, req.workspaceId);
-    if (ws.isNull)
+    auto workspace = repo.findById(req.tenantId, req.workspaceId);
+    if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     // Check duplicate
-    foreach (m; ws.members)
+    foreach (m; workspace.members)
       if (m.userId == req.userId)
         return CommandResult(false, "", "User is already a member");
 
-    ws.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
-    ws.updatedAt = Clock.currStdTime();
-    repo.update(ws);
-    return CommandResult(true, ws.id.value, "");
+    workspace.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
+    workspace.updatedAt = Clock.currStdTime();
+    repo.update(workspace);
+    return CommandResult(true, workspace.id.value, "");
   }
 
-  CommandResult removeMember(TenantId tenantId, WorkspaceId workspaceId, UserId userId) {
-    auto ws = repo.findById(tenantId, workspaceId);
-    if (ws.isNull)
+  CommandResult deleteMember(TenantId tenantId, WorkspaceId workspaceId, UserId userId) {
+    auto workspace = repo.findById(tenantId, workspaceId);
+    if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     // import std.algorithm : remove;
     size_t idx = size_t.max;
-    foreach (i, ref m; ws.members)
+    foreach (i, ref m; workspace.members)
       if (m.userId == userId) {
         idx = i;
         break;
@@ -112,10 +112,10 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (idx == size_t.max)
       return CommandResult(false, "", "Member not found");
 
-    ws.members = ws.members.remove(idx);
-    ws.updatedAt = Clock.currStdTime();
-    repo.update(ws);
-    return CommandResult(true, ws.id.value, "");
+    workspace.members = workspace.members.remove(idx);
+    workspace.updatedAt = Clock.currStdTime();
+    repo.update(workspace);
+    return CommandResult(true, workspace.id.value, "");
   }
 
   CommandResult archiveWorkspace(TenantId tenantId, WorkspaceId id) {
@@ -129,11 +129,11 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
-    auto ws = repo.findById(tenantId, id);
-    if (ws.isNull)
+    auto workspace = repo.findById(tenantId, id);
+    if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, workspace.id.value, "");
   }
 }

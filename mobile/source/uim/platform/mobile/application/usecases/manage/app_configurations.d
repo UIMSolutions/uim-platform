@@ -40,7 +40,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(AppConfigurationId id, UpdateAppConfigurationRequest r) {
-        auto config = repo.findById(id);
+        auto config = repo.findById(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
         if (r.value.length > 0) config.value = r.value;
@@ -52,7 +52,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     AppConfiguration get_(AppConfigurationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AppConfiguration getByKey(MobileAppId appId, string key) {

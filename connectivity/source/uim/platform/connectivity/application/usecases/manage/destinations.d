@@ -79,7 +79,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
-    auto dest = destinations.findById(id);
+    auto dest = destinations.findById(tenantId, id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -130,7 +130,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   Destination getDestination(DestinationId id) {
-    return destinations.findById(id);
+    return destinations.findById(tenantId, id);
   }
 
   Destination getByName(TenantId tenantId, string name) {
@@ -142,7 +142,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDestination(DestinationId id) {
-    auto dest = destinations.findById(id);
+    auto dest = destinations.findById(tenantId, id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 

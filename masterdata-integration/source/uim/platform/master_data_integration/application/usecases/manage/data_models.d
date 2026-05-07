@@ -45,7 +45,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateModel(DataModelId id, UpdateDataModelRequest req) {
-    auto model = repo.findById(id);
+    auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
 
@@ -66,7 +66,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   DataModel getModel(DataModelId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DataModel[] listByTenant(TenantId tenantId) {
@@ -82,7 +82,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteModel(DataModelId id) {
-    auto model = repo.findById(id);
+    auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
     repo.removeById(id);

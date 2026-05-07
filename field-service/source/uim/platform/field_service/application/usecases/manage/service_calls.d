@@ -19,7 +19,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceCall getById(ServiceCallId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceCall[] list() {
@@ -59,7 +59,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidServiceCall(sc))
             return CommandResult(false, "", "Invalid service call data");
         repo.save(sc);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, sc.id.value, "");
     }
 
     CommandResult update(ServiceCallDTO dto) {
@@ -74,14 +74,15 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         if (dto.resolution.length > 0) existing.resolution = dto.resolution;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ServiceCallId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteServiceCall(ServiceCallId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Service call not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

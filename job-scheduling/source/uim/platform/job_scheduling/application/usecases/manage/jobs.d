@@ -101,12 +101,13 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, JobId id) {
-        if (!repo.existsById(tenantId, id))
+    CommandResult deleteJob(TenantId tenantId, JobId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Job not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
     size_t count(TenantId tenantId) {

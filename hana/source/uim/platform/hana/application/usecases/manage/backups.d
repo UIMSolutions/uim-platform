@@ -52,7 +52,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   Backup getById(BackupId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Backup[] list(TenantId tenantId) {
@@ -73,12 +73,13 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(BackupId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteBackup(BackupId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Backup not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

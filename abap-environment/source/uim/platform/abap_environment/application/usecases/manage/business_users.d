@@ -73,11 +73,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, user.id.value, "");
   }
 
-  CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateUser(UpdateBusinessUserRequest req) {
+    auto user = repo.findById(req.tenantId, req.id);
+    if (user.isNull)
       return CommandResult(false, "", "Business user not found");
 
-    auto user = repo.findById(id);
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
     if (req.lastName.length > 0)
@@ -104,23 +104,23 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = Clock.currStdTime();
 
     repo.update(user);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, user.id.value, "");
   }
 
-  BusinessUser getUser(BusinessUserId id) {
-    return repo.findById(id);
+  BusinessUser getUser(TenantId tenantId, BusinessUserId id) {
+    return repo.findById(tenantId, id);
   }
 
   BusinessUser[] listUsers(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteUser(BusinessUserId id) {
-      auto entity = repo.findById(id);
-    if (entity.isNull)
+  CommandResult deleteBusinessUser(TenantId tenantId, BusinessUserId id) {
+      auto user = repo.findById(tenantId, id);
+    if (user.isNull)
       return CommandResult(false, "", "Business user not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(user);
+    return CommandResult(true, user.id.value, "");
   }
 }

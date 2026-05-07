@@ -97,7 +97,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
-    auto obj = objectRepo.findById(id);
+    auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull || obj.isNull)
       return CommandResult(false, "", "Object not found");
 
@@ -114,7 +114,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
   }
 
   StorageObject getObject(ObjectId id) {
-    return objectRepo.findById(id);
+    return objectRepo.findById(tenantId, id);
   }
 
   StorageObject getObjectByKey(BucketId bucketId, string key) {
@@ -134,7 +134,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteObject(ObjectId id) {
-    auto obj = objectRepo.findById(id);
+    auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 

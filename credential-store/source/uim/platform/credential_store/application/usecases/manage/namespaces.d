@@ -48,7 +48,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(NamespaceId id, UpdateNamespaceRequest r) {
-    auto ns = namespaces.findById(id);
+    auto ns = namespaces.findById(tenantId, id);
     if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
@@ -64,7 +64,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
 
 
   Namespace getById(NamespaceId id) {
-    return namespaces.findById(id);
+    return namespaces.findById(tenantId, id);
   }
 
   Namespace getByName(TenantId tenantId, string name) {

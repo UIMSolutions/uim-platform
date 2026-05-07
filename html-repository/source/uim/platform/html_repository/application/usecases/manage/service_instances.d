@@ -44,7 +44,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
-        auto inst = repo.findById(id);
+        auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");
 
@@ -59,7 +59,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     ServiceInstance getById(ServiceInstanceId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceInstance[] listByTenant(TenantId tenantId) {

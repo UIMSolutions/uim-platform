@@ -49,7 +49,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     Trigger getById(TriggerId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Trigger[] list(TenantId tenantId) {
@@ -77,12 +77,12 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TriggerId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTrigger(TriggerId id) {
+        auto trigger = repo.findById(tenantId, id);
+        if (trigger.isNull)
             return CommandResult(false, "", "Trigger not found");
 
-        repo.removeById(id);
+        repo.remove(trigger);
         return CommandResult(true, id.value, "");
     }
 }

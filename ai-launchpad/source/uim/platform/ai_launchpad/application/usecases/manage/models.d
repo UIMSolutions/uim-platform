@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.models;
 
-// import uim.platform.ai_launchpad.domain.ports.repositories.models;
+// import uim.platform.ai_launchpad.domain.ports.modelssitories.models;
 // import uim.platform.ai_launchpad.domain.entities.model : Model;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageModelsUseCase { // TODO: UIMUseCase {
-  private IModelRepository repo;
+  private IModelmodelssitory models;
 
-  this(IModelRepository repo) {
-    this.repo = repo;
+  this(IModelmodelssitory models) {
+    this.models = models;
   }
 
   CommandResult register(RegisterModelRequest r) {
@@ -41,38 +41,38 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     m.labels = r.labels;
     m.createdAt = "now";
     m.updatedAt = "now";
-    repo.save(m);
+    models.save(m);
     return CommandResult(true, m.id.value, "");
   }
 
   Model getById(ConnectionId connectionId, ModelId id) {
-    return repo.findById(connectionId, id);
+    return models.findById(connectionId, id);
   }
 
   Model[] listByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+    return models.findByConnection(connectionId);
   }
 
   Model[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
-    return repo.findByScenario(connectionId, scenarioId);
+    return models.findByScenario(connectionId, scenarioId);
   }
 
   CommandResult patch(PatchModelRequest r) {
-    auto m = repo.findById(r.connectionId, r.modelId);
+    auto m = models.findById(r.connectionId, r.modelId);
     if (m.isNull) return CommandResult(false, "", "Model not found");
     if (r.description.length > 0) m.description = r.description;
     if (r.status == "archived") m.status = ModelStatus.archived;
     else if (r.status == "deprecated") m.status = ModelStatus.deprecated_;
     m.updatedAt = "now";
-    repo.save(m);
+    models.save(m);
     return CommandResult(true, m.id.value, "");
   }
 
   CommandResult deleteModel(ConnectionId connectionId, ModelId id) {
-    auto entity = repo.findById(connectionId, id);
-    if (entity.isNull) return CommandResult(false, "", "Model not found");
+    auto model = models.findById(connectionId, id);
+    if (model.isNull) return CommandResult(false, "", "Model not found");
     
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    models.remove(model);
+    return CommandResult(true, model.id.value, "");
   }
 }

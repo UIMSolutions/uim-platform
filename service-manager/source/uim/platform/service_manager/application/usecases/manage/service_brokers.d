@@ -53,15 +53,15 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ServiceBrokerId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteServiceBroker(TenantId tenantId, ServiceBrokerId id) {
+        auto broker = repo.findById(tenantId, id);
+        if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(broker);
+        return CommandResult(true, broker.id.value, "");
     }
 }

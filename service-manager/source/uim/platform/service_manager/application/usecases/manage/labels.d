@@ -56,12 +56,12 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, LabelId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteLabel(TenantId tenantId, LabelId id) {
+        auto label = repo.findById(tenantId, id);
+        if (label.isNull)
             return CommandResult(false, "", "Label not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(label);
+        return CommandResult(true, label.id.value, "");
     }
 }

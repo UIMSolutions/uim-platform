@@ -48,7 +48,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     Artifact getById(ArtifactId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Artifact[] list() {
@@ -76,11 +76,12 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(ArtifactId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteArtifact(ArtifactId id) {
+        auto artifact = repo.findById(tenantId, id);
+        if (artifact.isNull)
             return CommandResult(false, "", "Artifact not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(artifact);
+        return CommandResult(true, artifact.id.value, "");
     }
 }

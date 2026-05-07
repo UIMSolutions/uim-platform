@@ -19,7 +19,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     }
 
     Assignment getById(AssignmentId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Assignment[] list() {
@@ -52,7 +52,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidAssignment(a))
             return CommandResult(false, "", "Invalid assignment data");
         repo.save(a);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, a.id.value, "");
     }
 
     CommandResult update(AssignmentDTO dto) {
@@ -66,14 +66,15 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         if (dto.notes.length > 0) existing.notes = dto.notes;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(AssignmentId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteAssignment(AssignmentId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Assignment not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

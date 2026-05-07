@@ -71,7 +71,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     if (r.templateId.isEmpty)
       return CommandResult(false, "", "Template ID is required");
 
-    auto existing = repo.findById(r.templateId, r.clientId);
+    auto existing = repo.findById(r.clientId, r.templateId);
     if (existing.isNull)
       return CommandResult(false, "", "Template not found");
 
@@ -94,32 +94,32 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  Template getById(TemplateId id, ClientId clientId) {
-    return repo.findById(id, clientId);
+  Template getById(ClientId clientId, TemplateId id) {
+    return repo.findById(clientId, id);
   }
 
   Template[] list(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  Template[] listBySchema(SchemaId schemaId, ClientId clientId) {
-    return repo.findBySchema(schemaId, clientId);
+  Template[] listBySchema(ClientId clientId, SchemaId schemaId) {
+    return repo.findBySchema(clientId, schemaId);
   }
 
-  Template[] listByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    return repo.findByDocumentType(typeId, clientId);
+  Template[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    return repo.findByDocumentType(clientId, typeId);
   }
-
-  CommandResult remove(TemplateId id, ClientId clientId) {
-    auto existing = repo.findById(id, clientId);
-    if (existing.isNull)
-      return CommandResult(false, "", "Template not found");
-
-    repo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
-  }
-
   size_t count(ClientId clientId) {
     return repo.countByClient(clientId);
   }
+  CommandResult deleteTemplate(ClientId clientId, TemplateId id) {
+    auto entity = repo.findById(clientId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Template not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
+  }
+
+
 }

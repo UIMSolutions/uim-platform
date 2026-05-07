@@ -46,7 +46,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     Visibility getById(VisibilityId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Visibility[] list(TenantId tenantId) {
@@ -70,11 +70,12 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(VisibilityId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteVisibility(VisibilityId id) {
+        auto visibility = repo.findById(tenantId, id);
+        if (visibility.isNull)
             return CommandResult(false, "", "Visibility dashboard not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(visibility);
+        return CommandResult(true, visibility.id.value, "");
     }
 }

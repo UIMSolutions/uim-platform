@@ -28,7 +28,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
     }
 
     RunLog getById(RunLogId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     RunLog[] listBySchedule(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {

@@ -48,7 +48,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
   }
 
   Catalog getCatalog(CatalogId id) {
-    return catalogRepo.findById(id);
+    return catalogRepo.findById(tenantId, id);
   }
 
   Catalog[] listCatalogs(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

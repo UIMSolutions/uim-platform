@@ -38,7 +38,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     }
 
     UsageReport get_(UsageReportId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     UsageReport[] listByApp(MobileAppId appId) {

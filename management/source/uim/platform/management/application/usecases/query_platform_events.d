@@ -28,7 +28,7 @@ class QueryPlatformEventsUseCase { // TODO: UIMUseCase {
   }
 
   PlatformEvent getById(PlatformEventId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   PlatformEvent[] listByGlobalAccount(string gaId) {

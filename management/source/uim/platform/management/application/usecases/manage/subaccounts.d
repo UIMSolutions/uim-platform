@@ -78,7 +78,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(id);
+    auto subaccount = repository.findById(tenantId, id);
     if (req.displayName.length > 0)
       subaccount.displayName = req.displayName;
     if (req.description.length > 0)
@@ -105,7 +105,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Subaccount must be active to move");
 
@@ -128,7 +128,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Only active subaccounts can be suspended");
 
@@ -146,7 +146,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.suspended)
       return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
 
@@ -161,7 +161,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   }
 
   Subaccount getById(SubaccountId id) {
-    return repository.findById(id);
+    return repository.findById(tenantId, id);
   }
 
   Subaccount[] listByGlobalAccount(string gaId) {
@@ -188,17 +188,16 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     return repository.findByRegion(gaId, region);
   }
 
-  CommandResult remove(string id) {
-    return remove(SubaccountId(id));
-  }
-
-  CommandResult remove(SubaccountId id) {
-    if (!repository.existsById(id))
+  CommandResult deleteSubaccount(SubaccountId id) {
+    auto subaccount = repository.findById(tenantId, id);
+    if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(id);
-    repository.removeById(id);
-    emitEvent(subaccount.globalAccountid.value, id.value, PlatformEventCategory.subaccountLifecycle,
+    if (subaccount.status == SubaccountStatus.deleting)
+      return CommandResult(false, "", "Subaccount is already being deleted");
+
+    repository.remove(subaccount);
+    emitEvent(subaccount.globalAccountId.value, id.value, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, UserId("system"));
     return CommandResult(true, id.value, "");
   }

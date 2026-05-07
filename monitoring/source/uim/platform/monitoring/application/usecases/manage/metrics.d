@@ -59,7 +59,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (!definitions.existsById(id))
       return CommandResult(false, "", "Metric definition not found");
 
-    auto def = definitions.findById(id);
+    auto def = definitions.findById(tenantId, id);
     if (req.displayName.length > 0)
       def.displayName = req.displayName;
     if (req.description.length > 0)
@@ -73,20 +73,20 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   MetricDefinition getDefinition(MetricDefinitionId id) {
-    return definitions.findById(id);
+    return definitions.findById(tenantId, id);
   }
 
   MetricDefinition[] listDefinitions(TenantId tenantId) {
     return definitions.findByTenant(tenantId);
   }
 
-  CommandResult removeDefinition(MetricDefinitionId id) {
-    auto def = definitions.findById(id);
-    if (def.isNull)
+  CommandResult deleteMetricDefinition(MetricDefinitionId id) {
+    auto definition = definitions.findById(tenantId, id);
+    if (definition.isNull)
       return CommandResult(false, "", "Metric definition not found");
 
-    definitions.remove(def);
-    return CommandResult(true, def.id.value, "");
+    definitions.remove(definition);
+    return CommandResult(true, definition.id.value, "");
   }
 
   // --- Metric Data Points ---

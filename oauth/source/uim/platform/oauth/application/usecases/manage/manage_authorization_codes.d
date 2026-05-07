@@ -19,7 +19,7 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
     }
 
     AuthorizationCode getById(AuthorizationCodeId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AuthorizationCode getByCode(string code) {
@@ -54,16 +54,18 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
     CommandResult markUsed(AuthorizationCodeId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Authorization code not found");
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         existing.status = AuthCodeStatus.used;
         repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(AuthorizationCodeId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteAuthorizationCode(AuthorizationCodeId id) {
+        auto code = repo.findById(tenantId, id);
+        if (code.isNull)            
             return CommandResult(false, "", "Authorization code not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(code);
+        return CommandResult(true, code.id.value, "");
     }
 }

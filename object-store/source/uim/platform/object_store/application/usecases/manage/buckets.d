@@ -57,7 +57,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBucket(BucketId id, UpdateBucketRequest req) {
-    auto bucket = repo.findById(id);
+    auto bucket = repo.findById(tenantId, id);
     if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
@@ -81,7 +81,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   Bucket getBucket(BucketId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Bucket[] listBuckets(TenantId tenantId) {
@@ -89,7 +89,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteBucket(BucketId id) {
-    auto bucket = repo.findById(id);
+    auto bucket = repo.findById(tenantId, id);
     if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 

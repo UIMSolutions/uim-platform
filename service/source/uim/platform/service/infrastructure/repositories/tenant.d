@@ -6,11 +6,19 @@ mixin(ShowModule!());
 
 @safe:
 
-class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
+class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantRepository!(TEntity, TId) {
   protected TEntity[TId][TenantId] store;
 
   this() {
-    initialize();
+    super();
+  }
+
+  override bool initialize(Json initData = Json(null)) {
+    if (!super.initialize(initData)) {
+      return false;
+    }
+
+    return true;
   }
 
   bool existsByTenant(TenantId tenantId) {
@@ -19,10 +27,6 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
 
   bool isTenantEmpty(TenantId tenantId) {
     return !existsByTenant(tenantId) || store[tenantId].empty;
-  }
-
-  bool initialize(Json initData = Json(null)) {
-    return true;
   }
 
   TenantId[] findAllTenants() {
@@ -36,64 +40,32 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     }
   }
 
-  bool exists(TEntity entity) {
+  override bool exists(TEntity entity) {
     return findAll().any!(e => e == entity);
   }
 
-  size_t indexOf(TEntity entity) {
+  override size_t indexOf(TEntity entity) {
     auto tenants = findAllTenants();
     auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array).array.flat();
     return tenantsItems.countUntil!(e => e == entity);
   }
 
-  size_t countAll() {
-    return findAll().length;
+  override size_t countAll() {
+    return findAll().length;  
   }
 
-  TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
+  override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     auto tenants = findAllTenants();
     auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array).array.flat();
     return limit == 0
       ? tenantsItems.skip(offset) : tenantsItems.skip(offset).take(limit);
   }
 
-  void removeAll() {
+  override void removeAll() {
     findAll().each!(e => remove(e));
   }
 
   // #region ById
-  bool existsById(TId id) {
-    return findAll().any!(e => e.id == id);
-  }
-
-  bool existsAllById(TId[] ids) {
-    return ids.all!(id => existsById(id));
-  }
-
-  TEntity findById(TId id) {
-    foreach (tenantId, entities; store) {
-      if (id in entities)
-        return entities[id];
-    }
-    return TEntity.init;
-  }
-
-  TEntity[] findAllById(TId[] ids, bool onlyExisting = true) {
-    return onlyExisting
-      ? ids.filter!(id => existsById(id))
-      .map!(id => findById(id))
-      .array : ids.map!(id => findById(id)).array;
-  }
-
-  void removeById(TId id) {
-    if (existsById(id))
-      remove(findById(id));
-  }
-
-  void removeAllById(TId[] ids) {
-    ids.each!(id => removeById(id));
-  }
-
   bool existsById(TenantId tenantId, TId id) {
     return existsByTenant(tenantId) && (id in store[tenantId]);
   }
@@ -157,7 +129,7 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     findByTenant(tenantId).each!(e => remove(e));
   }
 
-  void save(TEntity item) {
+  override void save(TEntity item) {
     if (!existsByTenant(item.tenantId)) {
       TEntity[TId] entities;
       store[item.tenantId] = entities;
@@ -165,25 +137,25 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     store[item.tenantId][item.id] = item;
   }
 
-  void saveAll(TEntity[] items) {
+  override void saveAll(TEntity[] items) {
     items.each!(item => save(item));
   }
 
-  void update(TEntity item) {
+  override void update(TEntity item) {
     if (existsById(item.tenantId, item.id)) {
       store[item.tenantId][item.id] = item;
     }
   }
 
-  void updateAll(TEntity[] items) {
+  override void updateAll(TEntity[] items) {
     items.each!(item => update(item));
   }
 
-  void remove(TEntity item) {
+  override void remove(TEntity item) {
     removeById(item.tenantId, item.id);
   }
 
-  void removeAll(TEntity[] items) {
+  override void removeAll(TEntity[] items) {
     items.each!(item => remove(item));
   }
 }

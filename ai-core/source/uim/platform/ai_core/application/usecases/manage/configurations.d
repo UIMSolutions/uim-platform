@@ -41,7 +41,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;
     c.name = r.name;
-
+    c.description = r.description;
     // Parse parameter values from key-value pairs
     ParameterValue[] params;
     foreach (pair; r.parameterValues) {
@@ -73,25 +73,25 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Configuration getById(ConfigurationId id, ResourceGroupId rgId) {
-    return repo.findById(id, rgId);
+  Configuration getById(ResourceGroupId rgId, ConfigurationId id) {
+    return repo.findById(rgId, id);
   }
 
-  Configuration[] listByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    return repo.findByScenario(scenarioId, rgId);
+  Configuration[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
+    return repo.findByScenario(rgId, scenarioId);
   }
 
   Configuration[] list(ResourceGroupId rgId) {
     return repo.findByResourceGroup(rgId);
   }
 
-  CommandResult deleteConfiguration(ConfigurationId id, ResourceGroupId rgId) {
-    auto entity = repo.findById(id, rgId);
-    if (entity.isNull)
+  CommandResult deleteConfiguration(ResourceGroupId rgId, ConfigurationId id) {
+    auto config = repo.findById(rgId, id);
+    if (config.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(config);
+    return CommandResult(true, config.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

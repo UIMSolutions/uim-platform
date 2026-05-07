@@ -62,7 +62,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseInstance getById(DatabaseInstanceId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DatabaseInstance[] list(TenantId tenantId) {
@@ -117,12 +117,13 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DatabaseInstanceId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteInstance(DatabaseInstanceId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Instance not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

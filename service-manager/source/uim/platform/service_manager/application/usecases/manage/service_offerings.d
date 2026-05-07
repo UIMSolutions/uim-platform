@@ -59,12 +59,12 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ServiceOfferingId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteServiceOffering(TenantId tenantId, ServiceOfferingId id) {
+        auto offering = repo.findById(tenantId, id);
+        if (offering.isNull)
             return CommandResult(false, "", "Service offering not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(offering);
+        return CommandResult(true, offering.id.value, "");
     }
 }

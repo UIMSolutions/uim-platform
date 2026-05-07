@@ -37,7 +37,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
   }
 
   Tenant getTenant(TenantId id) {
-    return tenantRepo.findById(id);
+    return tenantRepo.findById(tenantId, id);
   }
 
   Tenant[] listTenants(size_t offset = 0, size_t limit = 100) {

@@ -38,7 +38,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   Application getApplication(ApplicationId id) {
-    return appRepo.findById(id);
+    return appRepo.findById(tenantId, id);
   }
 
   Application[] listApplications(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

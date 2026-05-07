@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.executions;
 
-// import uim.platform.ai_launchpad.domain.ports.repositories.executions;
+// import uim.platform.ai_launchpad.domain.ports.executionssitories.executions;
 // import uim.platform.ai_launchpad.domain.entities.execution : Execution;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageExecutionsUseCase { // TODO: UIMUseCase {
-  private IExecutionRepository repo;
+  private IExecutionexecutionssitory executions;
 
-  this(IExecutionRepository repo) {
-    this.repo = repo;
+  this(IExecutionexecutionssitory executions) {
+    this.executions = executions;
   }
 
   CommandResult create(CreateExecutionRequest r) {
@@ -33,24 +33,24 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.status = ExecutionStatus.pending;
     e.createdAt = "now";
     e.updatedAt = "now";
-    repo.save(e);
+    executions.save(e);
     return CommandResult(true, e.id.value, "");
   }
 
   Execution getById(ConnectionId connectionId, ExecutionId id) {
-    return repo.findById(connectionId, id);
+    return executions.findById(connectionId, id);
   }
 
   Execution[] listByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+    return executions.findByConnection(connectionId);
   }
 
   Execution[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
-    return repo.findByScenario(connectionId, scenarioId);
+    return executions.findByScenario(connectionId, scenarioId);
   }
 
   CommandResult patch(PatchExecutionRequest r) {
-    auto e = repo.findById(r.connectionId, r.executionId);
+    auto e = executions.findById(r.connectionId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
@@ -59,7 +59,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     else if (r.targetStatus == "deleted")
       e.status = ExecutionStatus.dead;
     e.updatedAt = "now";
-    repo.save(e);
+    executions.save(e);
     return CommandResult(true, e.id.value, "");
   }
 
@@ -76,11 +76,11 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteExecution(ConnectionId connectionId, ExecutionId id) {
-    auto entity = repo.findById(connectionId, id);
-    if (entity.isNull)
+    auto execution = executions.findById(connectionId, id);
+    if (execution.isNull)
       return CommandResult(false, "", "Execution not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    executions.remove(execution);
+    return CommandResult(true, execution.id.value, "");
   }
 }

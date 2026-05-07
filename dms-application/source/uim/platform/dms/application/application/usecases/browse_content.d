@@ -96,18 +96,19 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   Favorite[] getFavorites(TenantId tenantId, UserId userId) {
     return favorites.findByUser(tenantId, userId);
   }
-
-  /// Remove a favorite.
-  CommandResult removeFavorite(TenantId tenantId, FavoriteId favoriteId) {
-    if (!favorites.existsById(tenantId, favoriteId))
-      return CommandResult(false, "", "Favorite not found");
-
-    favorites.removeById(tenantId, favoriteId);
-    return CommandResult(true, favoriteid.value, "");
-  }
-}
-
 struct FolderContents {
   Folder[] subfolders;
   Document[] documents;
 }
+  /// Remove a favorite.
+  CommandResult deleteFavorite(TenantId tenantId, FavoriteId favoriteId) {
+    auto entity = favorites.findById(tenantId, favoriteId);
+    if (entity.isNull)
+      return CommandResult(false, "", "Favorite not found");
+
+    favorites.remove(entity);
+    return CommandResult(true, entity.id.value, "");
+  }
+}
+
+

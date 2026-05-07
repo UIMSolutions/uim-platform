@@ -48,7 +48,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateStatus(DeviceRegistrationId id, string status) {
-        auto reg = repo.findById(id);
+        auto reg = repo.findById(tenantId, id);
         if (reg.isNull)
             return CommandResult(false, "", "Device not found");
         switch (status) {
@@ -63,7 +63,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     DeviceRegistration get_(DeviceRegistrationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     DeviceRegistration[] listByApp(MobileAppId appId) {

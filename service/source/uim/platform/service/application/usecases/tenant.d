@@ -24,7 +24,7 @@ class TenantUseCase(TRepository, TEntity, TId) {
   }
 
   TEntity getById(TenantId tenantId, TId id) {
-    return repository.findById(id);
+    return repository.findById(tenantId, id);
   }
 
   TEntity[] list(TenantId tenantId) {

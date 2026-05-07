@@ -50,7 +50,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
-    auto rule = rules.findById(id);
+    auto rule = rules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");
 
@@ -74,8 +74,8 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, updated.id.value, "");
   }
 
-  AccessRule getRule(RuleId id) {
-    return rules.findById(id);
+  AccessRule getRule(TenantId tenantId, RuleId id) {
+    return rules.findById(tenantId, id);
   }
 
   AccessRule[] listByConnector(ConnectorId connectorId) {
@@ -86,11 +86,12 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     return rules.findByTenant(tenantId);
   }
 
-  CommandResult deleteRule(RuleId id) {
-    if (!rules.existsById(id))
+  CommandResult deleteRule(TenantId tenantId, RuleId id) {
+    auto rule = rules.findById(tenantId, id);
+    if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");
 
-    rules.removeById(id);
-    return CommandResult(true, id.value, "");
+    rules.remove(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 }

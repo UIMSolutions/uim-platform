@@ -57,7 +57,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   Connection getById(ConnectionId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Connection[] listByWorkspace(WorkspaceId workspaceId) {
@@ -84,11 +84,11 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteConnection(ConnectionId id) {
-    auto entity = repo.findById(id);
-    if (entity.isNull)
+    auto connection = repo.findById(tenantId, id);
+    if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(connection);
+    return CommandResult(true, connection.id.value, "");
   }
 }

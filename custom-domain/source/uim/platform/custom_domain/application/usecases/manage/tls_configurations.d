@@ -48,7 +48,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     TlsConfiguration getById(TlsConfigurationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     TlsConfiguration[] list(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteTlsConfiguration(TlsConfigurationId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 

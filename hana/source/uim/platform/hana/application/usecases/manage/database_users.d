@@ -51,7 +51,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseUser getById(DatabaseUserId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DatabaseUser[] list(TenantId tenantId) {
@@ -74,12 +74,13 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DatabaseUserId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteDatabaseUser(DatabaseUserId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Database user not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

@@ -19,7 +19,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
     }
 
     OAuthClient getById(OAuthClientId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     OAuthClient getByClientId(string clientId) {
@@ -73,10 +73,12 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(OAuthClientId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteOAuthClient(OAuthClientId id) {
+        auto client = repo.findById(tenantId, id);
+        if (client.isNull)
             return CommandResult(false, "", "OAuth client not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(client);
+        return CommandResult(true, client.id.value, "");
     }
 }

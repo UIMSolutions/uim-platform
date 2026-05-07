@@ -66,11 +66,11 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteConfiguration(ConnectionId connectionId, ConfigurationId id) {
-    auto entity = repo.findById(connectionId, id);
-    if (entity.isNull)
+    auto config = repo.findById(connectionId, id);
+    if (config.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(config);
+    return CommandResult(true, config.id.value, "");
   }
 }

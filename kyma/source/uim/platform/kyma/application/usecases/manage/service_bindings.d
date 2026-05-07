@@ -56,7 +56,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
 
-    auto binding = repo.findById(id);
+    auto binding = repo.findById(tenantId, id);
     if (req.description.length > 0)
       binding.description = req.description;
     if (req.secretName.length > 0)
@@ -84,7 +84,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceBinding getBinding(ServiceBindingId id) {
-      return repo.findById(id);
+      return repo.findById(tenantId, id);
     }
 
   ServiceBinding[] listByNamespace(string nsId) {

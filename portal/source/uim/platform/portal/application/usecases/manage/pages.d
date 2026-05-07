@@ -69,7 +69,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
   }
 
   Page getPage(PageId id) {
-    return pageRepo.findById(id);
+    return pageRepo.findById(tenantId, id);
   }
 
   Page[] listPages(SiteId siteId, size_t offset = 0, size_t limit = 100) {

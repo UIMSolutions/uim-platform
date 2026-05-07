@@ -70,7 +70,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deactivate(CertificateId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
@@ -80,7 +80,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     Certificate getById(CertificateId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Certificate[] list(TenantId tenantId) {
@@ -96,7 +96,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCertificate(CertificateId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Certificate not found");
 

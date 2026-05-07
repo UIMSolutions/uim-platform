@@ -81,11 +81,11 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDeployment(ConnectionId connectionId, DeploymentId id) {
-    auto entity = repo.findById(connectionId, id);
-    if (entity.isNull)
+    auto deployment = repo.findById(connectionId, id);
+    if (deployment.isNull)
       return CommandResult(false, "", "Deployment not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(deployment);
+    return CommandResult(true, deployment.id.value, "");
   }
 }

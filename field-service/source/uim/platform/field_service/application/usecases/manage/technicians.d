@@ -19,7 +19,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
     }
 
     Technician getById(TechnicianId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Technician[] list() {
@@ -58,7 +58,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidTechnician(t))
             return CommandResult(false, "", "Invalid technician data");
         repo.save(t);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, t.id.value, "");
     }
 
     CommandResult update(TechnicianDTO dto) {
@@ -73,14 +73,15 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         if (dto.address.length > 0) existing.address = dto.address;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TechnicianId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTechnician(TechnicianId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Technician not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

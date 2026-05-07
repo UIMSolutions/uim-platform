@@ -61,8 +61,8 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ch.id.value, "");
   }
 
-  CommandResult openChannel(ChannelId id) {
-    auto ch = channels.findById(id);
+  CommandResult openChannel(TenantId tenantId, ChannelId id) {
+    auto ch = channels.findById(tenantId, id);
     if (ch.isNull)
       return CommandResult(false, "", "Channel not found");
 
@@ -82,8 +82,8 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult closeChannel(ChannelId id) {
-    auto channel = channels.findById(id);
+  CommandResult closeChannel(TenantId tenantId, ChannelId id) {
+    auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
@@ -96,25 +96,25 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  ServiceChannel getChannel(ChannelId id) {
-    return channels.findById(id);
+  ServiceChannel getChannel(TenantId tenantId, ChannelId id) {
+    return channels.findById(tenantId, id);
   }
 
-  ServiceChannel[] listByConnector(ConnectorId connectorId) {
-    return channels.findByConnector(connectorId);
+  ServiceChannel[] listByConnector(TenantId tenantId, ConnectorId connectorId) {
+    return channels.findByConnector(tenantId, connectorId);
   }
 
   ServiceChannel[] listByTenant(TenantId tenantId) {
     return channels.findByTenant(tenantId);
   }
 
-  CommandResult deleteChannel(ChannelId id) {
-    auto channel = channels.findById(id);
+  CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
+    auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
-    channels.removeById(id);
-    return CommandResult(true, id.value, "");
+    channels.remove(channel);
+    return CommandResult(true, channel.id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

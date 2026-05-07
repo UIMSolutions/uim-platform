@@ -8,11 +8,15 @@ mixin(ShowModule!());
 class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     private DataSubjectRoleRepository repo;
 
-    this(DataSubjectRoleRepository repo) { this.repo = repo; }
+    this(DataSubjectRoleRepository repo) {
+        this.repo = repo;
+    }
 
     CommandResult create(CreateDataSubjectRoleRequest req) {
         import std.uuid : randomUUID;
-        if (req.name.length == 0) return CommandResult(false, "", "Data subject role name is required");
+
+        if (req.name.length == 0)
+            return CommandResult(false, "", "Data subject role name is required");
 
         DataSubjectRole dsr;
         dsr.id = DataSubjectRoleId(randomUUID().toString());
@@ -27,14 +31,19 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dsr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateDataSubjectRoleRequest req) { return update(DataSubjectRoleId(id), req); }
+    CommandResult update(string id, UpdateDataSubjectRoleRequest req) {
+        return update(DataSubjectRoleId(id), req);
+    }
 
     CommandResult update(DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
-        if (!repo.existsById(id)) return CommandResult(false, "", "Data subject role not found");
+        if (!repo.existsById(id))
+            return CommandResult(false, "", "Data subject role not found");
 
-        auto dsr = repo.findById(id);
-        if (req.name.length > 0) dsr.name = req.name;
-        if (req.description.length > 0) dsr.description = req.description;
+        auto dsr = repo.findById(tenantId, id);
+        if (req.name.length > 0)
+            dsr.name = req.name;
+        if (req.description.length > 0)
+            dsr.description = req.description;
         dsr.isActive = req.isActive;
         dsr.updatedAt = clockSeconds();
 
@@ -42,12 +51,24 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(string id) { return hasById(DataSubjectRoleId(id)); }
-    bool hasById(DataSubjectRoleId id) { return repo.existsById(id); }
-    DataSubjectRole getById(string id) { return getById(DataSubjectRoleId(id)); }
-    DataSubjectRole getById(DataSubjectRoleId id) { return repo.findById(id); }
-    DataSubjectRole[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
-    DataSubjectRole[] list(TenantId tenantId) { return repo.findAll(tenantId); }
-    CommandResult remove(string id) { return remove(DataSubjectRoleId(id)); }
-    CommandResult remove(DataSubjectRoleId id) { repo.removeById(id); return CommandResult(true, id.value, ""); }
+    bool hasById(DataSubjectRoleId id) {
+        return repo.existsById(id);
+    }
+
+    DataSubjectRole getById(DataSubjectRoleId id) {
+        return repo.findById(tenantId, id);
+    }
+
+    DataSubjectRole[] list(TenantId tenantId) {
+        return repo.findAll(tenantId);
+    }
+
+    CommandResult deleteDataSubjectRole(DataSubjectRoleId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Data subject role not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
+    }
 }

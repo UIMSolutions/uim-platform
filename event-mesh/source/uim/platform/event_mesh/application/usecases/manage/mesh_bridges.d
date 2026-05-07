@@ -19,7 +19,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
     }
 
     MeshBridge getById(MeshBridgeId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     MeshBridge[] list() {
@@ -73,7 +73,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteMeshBridge(MeshBridgeId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
         repo.remove(existing);

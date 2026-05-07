@@ -19,7 +19,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     LogicFlow getById(LogicFlowId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     LogicFlow[] list() {
@@ -72,7 +72,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteLogicFlow(LogicFlowId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Logic flow not found");
             

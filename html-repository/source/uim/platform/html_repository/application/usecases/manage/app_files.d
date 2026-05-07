@@ -48,7 +48,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(AppFileId id, UpdateAppFileRequest r) {
-        auto file = repo.findById(id);
+        auto file = repo.findById(tenantId, id);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 
@@ -66,7 +66,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     AppFile getById(AppFileId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AppFile getByPath(AppVersionId versionId, string filePath) {

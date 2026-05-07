@@ -51,7 +51,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     SituationInstance getById(SituationInstanceId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     SituationInstance[] list(TenantId tenantId) {
@@ -101,12 +101,12 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(SituationInstanceId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteSituationInstance(SituationInstanceId id) {
+        auto instance = repo.findById(tenantId, id);
+        if (instance.isNull)
             return CommandResult(false, "", "Situation instance not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(instance);
+        return CommandResult(true, instance.id.value, "");
     }
 }

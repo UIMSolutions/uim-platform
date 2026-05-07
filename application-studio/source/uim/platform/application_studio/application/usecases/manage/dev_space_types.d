@@ -12,22 +12,22 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
-    private DevSpaceTypeRepository repo;
+    private DevSpaceTypespaceTypessitory spaceTypes;
 
-    this(DevSpaceTypeRepository repo) {
-        this.repo = repo;
+    this(DevSpaceTypespaceTypessitory spaceTypes) {
+        this.spaceTypes = spaceTypes;
     }
 
     DevSpaceType getById(DevSpaceTypeId id) {
-        return repo.findById(id);
+        return spaceTypes.findById(tenantId, id);
     }
 
     DevSpaceType[] list() {
-        return repo.findAll();
+        return spaceTypes.findAll();
     }
 
     DevSpaceType[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return spaceTypes.findByTenant(tenantId);
     }
 
     CommandResult create(DevSpaceTypeDTO dto) {
@@ -43,28 +43,28 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidDevSpaceType(e))
             return CommandResult(false, "", "Invalid dev space type data");
-        repo.save(e);
+        spaceTypes.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(DevSpaceTypeDTO dto) {
-        if (!repo.existsById(DevSpaceTypeId(dto.id)))
+        if (!spaceTypes.existsById(DevSpaceTypeId(dto.id)))
             return CommandResult(false, "", "Dev space type not found");
-        auto existing = repo.findById(DevSpaceTypeId(dto.id));
+        auto existing = spaceTypes.findById(DevSpaceTypeId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.predefinedExtensions.length > 0) existing.predefinedExtensions = dto.predefinedExtensions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
+        spaceTypes.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult deleteDevSpaceType(DevSpaceTypeId id) {
-        auto entity = repo.findById(id);
-        if (entity.isNull)
+        auto type = spaceTypes.findById(tenantId, id);
+        if (type.isNull)
             return CommandResult(false, "", "Dev space type not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        spaceTypes.remove(type);
+        return CommandResult(true, type.id.value, "");
     }
 }

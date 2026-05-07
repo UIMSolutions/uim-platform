@@ -16,7 +16,6 @@ interface IBaseRepository(TEntity) {
   // TODO: bool existsAll(TEntity[] entities);
   // TODO: bool existsAny(TEntity[] entities);
 
-  size_t indexOf(TEntity entity);
 
   size_t countAll();
   TEntity[] findAll(size_t offset = 0, size_t limit = 0);

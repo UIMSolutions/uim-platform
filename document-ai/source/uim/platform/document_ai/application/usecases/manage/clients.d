@@ -87,23 +87,23 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   Client getById(ClientId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Client[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
-
-  CommandResult remove(ClientId id) {
-    auto existing = repo.findById(id);
-    if (existing.isNull)
-      return CommandResult(false, "", "Client not found");
-
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
-  }
-
   size_t countByTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
+  CommandResult deleteClient(ClientId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Client not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
+  }
+
+
 }

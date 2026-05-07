@@ -45,7 +45,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     PushNotification get_(PushNotificationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     PushNotification[] listByApp(MobileAppId appId) {

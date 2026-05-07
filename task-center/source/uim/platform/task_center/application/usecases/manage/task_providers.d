@@ -62,35 +62,39 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult activate(TenantId tenantId, string id) {
-        auto p = repo.findById(tenantId, id);
-        if (p == TaskProvider.init)
+    CommandResult activate(TenantId tenantId, TaskProviderId id) {
+        auto provider = repo.findById(tenantId, id);
+        if (provider == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
-        p.status = ProviderStatus.active;
-        repo.update(tenantId, p);
+        provider.status = ProviderStatus.active;
+        repo.update(tenantId, provider);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivate(TenantId tenantId, string id) {
-        auto p = repo.findById(tenantId, id);
-        if (p == TaskProvider.init)
+    CommandResult deactivate(TenantId tenantId, TaskProviderId id) {
+        auto provider = repo.findById(tenantId, id);
+        if (provider == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
-        p.status = ProviderStatus.inactive;
-        repo.update(tenantId, p);
+        provider.status = ProviderStatus.inactive;
+        repo.update(tenantId, provider);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult sync(TenantId tenantId, string id) {
-        auto p = repo.findById(tenantId, id);
-        if (p == TaskProvider.init)
+    CommandResult sync(TenantId tenantId, TaskProviderId id) {
+        auto provider = repo.findById(tenantId, id);
+        if (provider == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
-        p.status = ProviderStatus.syncing;
-        repo.update(tenantId, p);
+        provider.status = ProviderStatus.syncing;
+        repo.update(tenantId, provider);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteTaskProvider(TenantId tenantId, TaskProviderId id) {
+        auto provider = repo.findById(tenantId, id);
+        if (provider.isNull)
+            return CommandResult(false, "", "Provider not found");
+
+        repo.remove(provider);
+        return CommandResult(true, provider.id.value, "");
     }
 }

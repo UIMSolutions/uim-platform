@@ -59,7 +59,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Service instance not found");
 
-    auto inst = repo.findById(id);
+    auto inst = repo.findById(tenantId, id);
     if (req.description.length > 0)
       inst.description = req.description;
     if (req.servicePlanName.length > 0)
@@ -90,7 +90,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
   }
 
   ServiceInstance getServiceInstance(ServiceInstanceId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   ServiceInstance[] listByNamespace(string nsId) {

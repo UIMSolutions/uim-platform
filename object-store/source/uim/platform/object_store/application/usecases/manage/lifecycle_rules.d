@@ -58,7 +58,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
-    auto rule = ruleRepo.findById(id);
+    auto rule = ruleRepo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Rule not found");
 
@@ -83,7 +83,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   }
 
   LifecycleRule getRule(LifecycleRuleId id) {
-    return ruleRepo.findById(id);
+    return ruleRepo.findById(tenantId, id);
   }
 
   LifecycleRule[] listRules(BucketId bucketId) {
@@ -91,7 +91,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRule(LifecycleRuleId id) {
-    auto rule = ruleRepo.findById(id);
+    auto rule = ruleRepo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Rule not found");
 

@@ -51,7 +51,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   HDIContainer getById(HDIContainerId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   HDIContainer[] list(TenantId tenantId) {
@@ -74,12 +74,13 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(HDIContainerId id) {
-    if (!repo.existsById(r.id))
+  CommandResult deleteHDIContainer(HDIContainerId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "HDI Container not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

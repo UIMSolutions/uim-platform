@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.workspaces;
 
-// import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
+// import uim.platform.ai_launchpad.domain.ports.workspacessitories.workspaces;
 // import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageWorkspacesUseCase { // TODO: UIMUseCase {
-  private IWorkspaceRepository repo;
+  private IWorkspaceworkspacessitory workspaces;
 
-  this(IWorkspaceRepository repo) {
-    this.repo = repo;
+  this(IWorkspaceworkspacessitory workspaces) {
+    this.workspaces = workspaces;
   }
 
   CommandResult create(CreateWorkspaceRequest r) {
@@ -37,24 +37,24 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     w.connectionCount = 0;
     w.createdAt = "now";
     w.updatedAt = "now";
-    repo.save(w);
+    workspaces.save(w);
     return CommandResult(true, w.id.value, "");
   }
 
-  Workspace getById(WorkspaceId id) {
-    return repo.findById(id);
+  Workspace getById(TenantId tenantId, WorkspaceId id) {
+    return workspaces.findById(tenantId, id);
   }
 
   Workspace[] listByTenant(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return workspaces.findByTenant(tenantId);
   }
 
-  Workspace[] listAll() {
-    return repo.findAll();
+  Workspace[] listAll(TenantId tenantId) {
+    return workspaces.findAll(tenantId);
   }
 
   CommandResult patch(PatchWorkspaceRequest r) {
-    auto w = repo.findById(r.workspaceId);
+    auto w = workspaces.findById(r.tenantId, r.workspaceId);
     if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
     if (r.name.length > 0)
@@ -62,16 +62,16 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (r.description.length > 0)
       w.description = r.description;
     w.updatedAt = "now";
-    repo.save(w);
+    workspaces.save(w);
     return CommandResult(true, w.id.value, "");
   }
 
-  CommandResult deleteWorkspace(WorkspaceId id) {
-    auto entity = repo.findById(id);
-    if (entity.isNull)
+  CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
+    auto workspace = workspaces.findById(tenantId, id);
+    if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
       
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    workspaces.remove(workspace);
+    return CommandResult(true, workspace.id.value, "");
   }
 }

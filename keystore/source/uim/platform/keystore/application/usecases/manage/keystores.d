@@ -57,7 +57,7 @@ class ManageKeystoresUseCase {
 
   // Update description and/or content of an existing keystore.
   CommandResult update(KeystoreId id, UpdateKeystoreRequest r) {
-    auto ks = repo.findById(id);
+    auto ks = repo.findById(tenantId, id);
     if (ks.id.length == 0)
       return CommandResult(false, "", "Keystore not found");
 
@@ -73,7 +73,7 @@ class ManageKeystoresUseCase {
   }
 
   KeystoreEntity getById(KeystoreId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   KeystoreEntity getByName(string accountId, string applicationId, string level, string name) {
@@ -89,16 +89,17 @@ class ManageKeystoresUseCase {
   }
 
   // Delete by ID
-  CommandResult remove(KeystoreId id) {
-    auto ks = repo.findById(id);
-    if (ks.id.length == 0)
+  CommandResult deleteKeystore(KeystoreId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.id.length == 0)
       return CommandResult(false, "", "Keystore not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   // Delete by name + scope (console-style delete-keystore command)
-  CommandResult removeByName(string accountId, string applicationId, string level, string name) {
+  CommandResult deleteKeystoreByName(string accountId, string applicationId, string level, string name) {
     auto ks = repo.findByName(accountId, applicationId, parseKeystoreLevel(level), name);
     if (ks.id.length == 0)
       return CommandResult(false, "", "Keystore not found");

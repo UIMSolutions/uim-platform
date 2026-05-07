@@ -79,8 +79,12 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteTaskDefinition(TenantId tenantId, TaskDefinitionId id) {
+        auto definition = repo.findById(tenantId, id);
+        if (definition == TaskDefinition.init)
+            return CommandResult(false, "", "Task definition not found");
+
+        repo.remove(definition);
+        return CommandResult(true, definition.id.value, "");
     }
 }

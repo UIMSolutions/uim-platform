@@ -63,7 +63,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Fragment not found");
 
-    auto fragment = repo.findById(id);
+    auto fragment = repo.findById(tenantId, id);
     if (req.description.length > 0)
       fragment.description = req.description;
     if (req.url.length > 0)
@@ -97,19 +97,20 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
   }
 
   DestinationFragment getFragment(FragmentId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DestinationFragment[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  CommandResult removeFragment(FragmentId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteFragment(FragmentId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Fragment not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   private static DestinationLevel parseLevel(string s) {

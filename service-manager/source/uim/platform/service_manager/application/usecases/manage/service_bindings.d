@@ -60,12 +60,12 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ServiceBindingId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+        auto binding = repo.findById(tenantId, id);
+        if (binding.isNull)
             return CommandResult(false, "", "Service binding not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(binding);
+        return CommandResult(true, binding.id.value, "");
     }
 }

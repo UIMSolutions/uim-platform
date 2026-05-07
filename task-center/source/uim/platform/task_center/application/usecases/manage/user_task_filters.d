@@ -18,7 +18,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UserTaskFilter getById(TenantId tenantId, string id) {
+    UserTaskFilter getById(TenantId tenantId, UserTaskFilterId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -44,7 +44,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateUserTaskFilterRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
-        if (existing == UserTaskFilter.init)
+        if (existing.isNull)
             return CommandResult(false, "", "Filter not found");
         if (req.name.length > 0) existing.name = req.name;
         if (req.description.length > 0) existing.description = req.description;
@@ -53,17 +53,21 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult setDefault(TenantId tenantId, string id) {
-        auto f = repo.findById(tenantId, id);
-        if (f == UserTaskFilter.init)
+    CommandResult setDefault(TenantId tenantId, UserTaskFilterId id) {
+        auto fil = repo.findById(tenantId, id);
+        if (fil.isNull)
             return CommandResult(false, "", "Filter not found");
-        f.isDefault = true;
-        repo.update(tenantId, f);
+        fil.isDefault = true;
+        repo.update(tenantId, fil);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteUserTaskFilter(TenantId tenantId, UserTaskFilterId id) {
+        auto fil = repo.findById(tenantId, id);
+        if (fil.isNull)
+            return CommandResult(false, "", "Filter not found");
+
+        repo.remove(fil);
+        return CommandResult(true, fil.id.value, "");
     }
 }

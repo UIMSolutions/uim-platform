@@ -39,15 +39,19 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
 
     CommandResult update(UpdateTaskCommentRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
-        if (existing == TaskComment.init)
+        if (existing.isNull)
             return CommandResult(false, "", "Comment not found");
         if (req.content.length > 0) existing.content = req.content;
         repo.update(req.tenantId, existing);
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteTaskComment(TenantId tenantId, TaskCommentId id) {
+        auto comment = repo.findById(tenantId, id);
+        if (comment.isNull)
+            return CommandResult(false, "", "Comment not found");
+
+        repo.remove(comment);
+        return CommandResult(true, comment.id.value, "");
     }
 }

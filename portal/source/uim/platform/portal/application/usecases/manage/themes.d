@@ -50,7 +50,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   Theme getTheme(ThemeId id) {
-    return themeRepo.findById(id);
+    return themeRepo.findById(tenantId, id);
   }
 
   Theme getDefaultTheme(TenantId tenantId) {
@@ -89,7 +89,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   string deleteTheme(ThemeId id) {
-    auto theme = themeRepo.findById(id);
+    auto theme = themeRepo.findById(tenantId, id);
     if (theme == Theme.init)
       return "Theme not found";
 

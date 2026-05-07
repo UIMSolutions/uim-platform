@@ -57,7 +57,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
-    auto plan = servicePlans.findById(id);
+    auto plan = servicePlans.findById(tenantId, id);
     if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
 
@@ -84,7 +84,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   ServicePlan getById(ServicePlanId id) {
-    return servicePlans.findById(id);
+    return servicePlans.findById(tenantId, id);
   }
 
   ServicePlan[] listAll() {
@@ -103,16 +103,13 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     return servicePlans.findByRegion(region);
   }
 
-  CommandResult remove(string id) {
-    return remove(ServicePlanId(id));
-  }
-
-  CommandResult remove(ServicePlanId id) {
-    auto plan = servicePlans.findById(id);
-    if (plan.isNull)
+  CommandResult deleteServicePlan(ServicePlanId id) {
+    auto entity = servicePlans.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Service plan not found");
-    servicePlans.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    servicePlans.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   private ServicePlanCategory parseCategory(string s) {

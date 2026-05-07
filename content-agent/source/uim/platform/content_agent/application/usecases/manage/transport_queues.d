@@ -53,7 +53,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req) {
-    auto queue = queueRepo.findById(id);
+    auto queue = queueRepo.findById(tenantId, id);
     if (queue.isNull)
       return CommandResult(false, "", "Queue not found");
 
@@ -71,7 +71,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteQueue(TransportQueueId id) {
-    auto queue = queueRepo.findById(id);
+    auto queue = queueRepo.findById(tenantId, id);
     if (queue.isNull)
       return CommandResult(false, "", "Queue not found");
 
@@ -80,7 +80,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   }
 
   TransportQueue getQueue(TransportQueueId id) {
-    return queueRepo.findById(id);
+    return queueRepo.findById(tenantId, id);
   }
 
   TransportQueue[] listQueues(TenantId tenantId) {

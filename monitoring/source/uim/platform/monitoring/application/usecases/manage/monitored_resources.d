@@ -56,7 +56,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Resource not found");
 
-    auto resource = repo.findById(id);
+    auto resource = repo.findById(tenantId, id);
     if (req.description.length > 0)
       resource.description = req.description;
     if (req.url.length > 0)
@@ -80,7 +80,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   MonitoredResource getResource(MonitoredResourceId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   MonitoredResource[] listResources(TenantId tenantId) {
@@ -91,13 +91,13 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     return repo.findByType(tenantId, parseResourceType(typeStr));
   }
 
-  CommandResult removeResource(MonitoredResourceId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteMonitoredResource(MonitoredResourceId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Resource not found");
 
-    auto resource = repo.findById(id);
-    repo.removeById(id);
-    return CommandResult(true, resource.id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   private static ResourceType parseResourceType(string resourceType) {

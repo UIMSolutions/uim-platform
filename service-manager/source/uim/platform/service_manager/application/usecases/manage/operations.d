@@ -50,12 +50,12 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, OperationId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteOperation(TenantId tenantId, OperationId id) {
+        auto operation = repo.findById(tenantId, id);
+        if (operation.isNull)
             return CommandResult(false, "", "Operation not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(operation);
+        return CommandResult(true, operation.id.value, "");
     }
 }

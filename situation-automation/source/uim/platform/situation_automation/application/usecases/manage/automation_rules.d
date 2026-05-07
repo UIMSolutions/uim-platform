@@ -47,7 +47,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     AutomationRule getById(AutomationRuleId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AutomationRule[] list(TenantId tenantId) {
@@ -80,12 +80,12 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(AutomationRuleId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteAutomationRule(AutomationRuleId id) {
+        auto rule = repo.findById(tenantId, id);
+        if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 }

@@ -60,7 +60,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Alert rule not found");
 
-    auto rule = repo.findById(id);
+    auto rule = repo.findById(tenantId, id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.query.length > 0)
@@ -93,7 +93,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   AlertRule getRule(AlertRuleId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   AlertRule[] listRules(TenantId tenantId) {
@@ -104,9 +104,13 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult removeRule(AlertRuleId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteAlertRule(AlertRuleId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Alert rule not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   

@@ -72,7 +72,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
 
   // Update with conditional support via ifMatch header
   CommandResult update(CredentialId id, UpdateCredentialRequest r) {
-    auto cred = credentials.findById(id);
+    auto cred = credentials.findById(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Credential not found");
 
@@ -100,7 +100,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   Credential getById(CredentialId id) {
-    return credentials.findById(id);
+    return credentials.findById(tenantId, id);
   }
 
   Credential getByName(NamespaceId namespaceId, string name, string type) {

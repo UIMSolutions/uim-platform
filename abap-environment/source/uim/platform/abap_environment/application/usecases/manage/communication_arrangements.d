@@ -60,12 +60,11 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommandResult updateArrangement(CommunicationArrangementId id,
-    UpdateCommunicationArrangementRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateArrangement(UpdateCommunicationArrangementRequest req) {
+    auto arr = repo.findById(req.tenantId, req.id);
+    if (arr.isNull)
       return CommandResult(false, "", "Communication arrangement not found");
 
-    auto arr = repo.findById(id);
     if (req.description.length > 0)
       arr.description = req.description;
     if (req.status.length > 0)
@@ -94,21 +93,21 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommunicationArrangement getArrangement(CommunicationArrangementId id) {
-    return repo.findById(id);
+  CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id) {
+    return repo.findById(tenantId, id);
   }
 
   CommunicationArrangement[] listArrangements(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteArrangement(CommunicationArrangementId id) {
-    auto entity = repo.findById(id);
-    if (entity.isNull)      
+  CommandResult deleteCommunicationArrangement(TenantId tenantId, CommunicationArrangementId id) {
+    auto arrangement = repo.findById(tenantId, id);
+    if (arrangement.isNull)      
       return CommandResult(false, "", "Communication arrangement not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(arrangement);
+    return CommandResult(true, arrangement.id.value, "");
   }
 }
 

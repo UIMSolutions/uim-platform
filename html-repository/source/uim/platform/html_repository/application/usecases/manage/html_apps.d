@@ -50,7 +50,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(HtmlAppId id, UpdateHtmlAppRequest r) {
-        auto app = repo.findById(id);
+        auto app = repo.findById(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 
@@ -64,7 +64,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     HtmlApp getById(HtmlAppId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     HtmlApp[] listByTenant(TenantId tenantId) {

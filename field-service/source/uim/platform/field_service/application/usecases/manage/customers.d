@@ -19,7 +19,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
     }
 
     Customer getById(CustomerId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Customer[] list() {
@@ -53,7 +53,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidCustomer(c))
             return CommandResult(false, "", "Invalid customer data");
         repo.save(c);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, c.id.value, "");
     }
 
     CommandResult update(CustomerDTO dto) {
@@ -68,14 +68,15 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         if (dto.address.length > 0) existing.address = dto.address;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(CustomerId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteCustomer(CustomerId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Customer not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

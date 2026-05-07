@@ -50,7 +50,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   DataLake getById(DataLakeId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DataLake[] list(TenantId tenantId) {
@@ -73,12 +73,13 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DataLakeId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteDataLake(DataLakeId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
       return CommandResult(false, "", "Data lake not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

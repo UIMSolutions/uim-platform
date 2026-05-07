@@ -19,7 +19,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
     }
 
     Topic getById(TopicId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Topic[] list() {
@@ -65,11 +65,12 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.topicId.value, "");
     }
 
-    CommandResult remove(TopicId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteTopic(TopicId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Topic not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

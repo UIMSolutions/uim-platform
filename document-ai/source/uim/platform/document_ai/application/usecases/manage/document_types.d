@@ -78,13 +78,13 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     return repo.findByCategory(category, clientId);
   }
 
-  CommandResult remove(DocumentTypeId id, ClientId clientId) {
-    auto existing = repo.findById(id, clientId);
-    if (existing.isNull)
+  CommandResult deleteDocumentType(ClientId clientId, DocumentTypeId id) {
+    auto entity = repo.findById(clientId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Document type not found");
 
-    repo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ClientId clientId) {

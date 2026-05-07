@@ -19,7 +19,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     ScheduledExecution getById(ScheduledExecutionId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ScheduledExecution[] list() {
@@ -65,7 +65,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteScheduledExecution(ScheduledExecutionId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Scheduled execution not found");
             

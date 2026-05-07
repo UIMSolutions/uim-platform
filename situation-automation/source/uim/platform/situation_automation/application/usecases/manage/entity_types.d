@@ -44,7 +44,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
     }
 
     EntityType getById(EntityTypeId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     EntityType[] list(TenantId tenantId) {
@@ -67,12 +67,12 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(EntityTypeId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteEntityType(EntityTypeId id) {
+        auto type = repo.findById(tenantId, id);
+        if (type.isNull)
             return CommandResult(false, "", "Entity type not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(type);
+        return CommandResult(true, type.id.value, "");
     }
 }

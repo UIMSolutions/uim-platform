@@ -80,33 +80,33 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, a.id.value, "");
   }
 
-  Artifact getById(ArtifactId id, ResourceGroupId rgId) {
-    return repo.findById(id, rgId);
+  Artifact getById(ResourceGroupId rgId, ArtifactId id) {
+    return repo.findById(rgId, id);
   }
 
   Artifact[] list(ResourceGroupId rgId) {
     return repo.findByResourceGroup(rgId);
   }
 
-  Artifact[] listByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    return repo.findByScenario(scenarioId, rgId);
+  Artifact[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
+    return repo.findByScenario(rgId, scenarioId);
   }
 
-  Artifact[] listByKind(ArtifactKind kind, ResourceGroupId rgId) {
-    return repo.findByKind(kind, rgId);
+  Artifact[] listByKind(ResourceGroupId rgId, ArtifactKind kind) {
+    return repo.findByKind(rgId, kind);
   }
 
-  Artifact[] listByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return repo.findByExecution(execId, rgId);
+  Artifact[] listByExecution(ResourceGroupId rgId, ExecutionId execId) {
+    return repo.findByExecution(rgId, execId);
   }
 
-  CommandResult deleteArtifact(ArtifactId id, ResourceGroupId rgId) {
-    auto entity = repo.findById(id, rgId);
-    if (entity.isNull)
+  CommandResult deleteArtifact(ResourceGroupId rgId, ArtifactId id) {
+    auto artifact = repo.findById(rgId, id);
+    if (artifact.isNull)
       return CommandResult(false, "", "Artifact not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(artifact);
+    return CommandResult(true, artifact.id.value, "");
   }
 
   size_t count(ResourceGroupId rgId) {

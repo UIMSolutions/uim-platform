@@ -33,7 +33,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     CommandResult update(DataSubjectId id, UpdateDataSubjectRequest req) {
         if (!repo.existsById(id)) return CommandResult(false, "", "Data subject not found");
 
-        auto ds = repo.findById(id);
+        auto ds = repo.findById(tenantId, id);
         if (req.lifecycleStatus.length > 0) ds.lifecycleStatus = parseLifecycleStatus(req.lifecycleStatus);
         if (req.roleId.length > 0) ds.roleId = DataSubjectRoleId(req.roleId);
         ds.updatedAt = clockSeconds();
@@ -46,7 +46,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult block(DataSubjectId id) {
         if (!repo.existsById(id)) return CommandResult(false, "", "Data subject not found");
-        auto ds = repo.findById(id);
+        auto ds = repo.findById(tenantId, id);
         ds.lifecycleStatus = DataLifecycleStatus.blocked;
         ds.blockedAt = clockSeconds();
         ds.updatedAt = clockSeconds();
@@ -57,14 +57,14 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     bool hasById(string id) { return hasById(DataSubjectId(id)); }
     bool hasById(DataSubjectId id) { return repo.existsById(id); }
     DataSubject getById(string id) { return getById(DataSubjectId(id)); }
-    DataSubject getById(DataSubjectId id) { return repo.findById(id); }
+    DataSubject getById(DataSubjectId id) { return repo.findById(tenantId, id); }
     DataSubject[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
     DataSubject[] list(TenantId tenantId) { return repo.findAll(tenantId); }
     DataSubject[] listByStatus(TenantId tenantId, DataLifecycleStatus status) {
         return repo.findByLifecycleStatus(tenantId, status);
     }
     CommandResult deleteDataSubject(DataSubjectId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data subject not found");
 

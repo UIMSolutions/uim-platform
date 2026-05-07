@@ -11,7 +11,7 @@ module uim.platform.ai_core.application.usecases.manage.resource_groups;
 // import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
@@ -77,23 +77,24 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   ResourceGroup getById(ResourceGroupId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   ResourceGroup[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(ResourceGroupId id) {
-    auto existing = repo.findById(id);
-    if (existing.isNull)
-      return CommandResult(false, "", "Resource group not found");
-
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
-  }
-
   size_t count(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
+
+  CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId id) {
+    auto group = repo.findById(tenantId, id);
+    if (group.isNull)
+      return CommandResult(false, "", "Resource group not found");
+
+    repo.remove(group);
+    return CommandResult(true, group.id.value, "");
+  }
+
 }

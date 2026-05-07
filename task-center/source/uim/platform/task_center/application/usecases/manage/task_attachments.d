@@ -18,11 +18,11 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAttachment getById(TenantId tenantId, string id) {
+    TaskAttachment getById(TenantId tenantId, TaskAttachmentId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskAttachment[] listByTask(TenantId tenantId, string taskId) {
+    TaskAttachment[] listByTask(TenantId tenantId, TaskId taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
@@ -39,8 +39,12 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteTaskAttachment(TenantId tenantId, TaskAttachmentId id) {
+        auto attachment = repo.findById(tenantId, id);
+        if (attachment.isNull)
+            return CommandResult(false, "", "Task attachment not found");
+
+        repo.remove(attachment);
+        return CommandResult(true, attachment.id.value, "");
     }
 }

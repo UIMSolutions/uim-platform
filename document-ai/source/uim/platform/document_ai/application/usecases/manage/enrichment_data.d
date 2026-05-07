@@ -59,7 +59,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     if (r.enrichmentDataId.isEmpty)
       return CommandResult(false, "", "Enrichment data ID is required");
 
-    auto existing = repo.findById(r.enrichmentDataId, r.clientId);
+    auto existing = repo.findById(r.clientId, r.enrichmentDataId);
     if (existing.isNull)
       return CommandResult(false, "", "Enrichment data not found");
 
@@ -86,31 +86,32 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  EnrichmentData getById(EnrichmentDataId id, ClientId clientId) {
-    return repo.findById(id, clientId);
+  EnrichmentData getById(ClientId clientId, EnrichmentDataId id) {
+    return repo.findById(clientId, id);
   }
 
   EnrichmentData[] list(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  EnrichmentData[] listByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    return repo.findByDocumentType(typeId, clientId);
+  EnrichmentData[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    return repo.findByDocumentType(clientId, typeId);
   }
 
-  EnrichmentData[] listBySubtype(string subtype, ClientId clientId) {
-    return repo.findBySubtype(subtype, clientId);
+  EnrichmentData[] listBySubtype(ClientId clientId, string subtype) {
+    return repo.findBySubtype(clientId, subtype);
   }
-
-  CommandResult remove(EnrichmentDataId id, ClientId clientId) {
-    if (!repo.existsById(id, clientId))
-      return CommandResult(false, "", "Enrichment data not found");
-
-    repo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
-  }
-
   size_t count(ClientId clientId) {
     return repo.countByClient(clientId);
   }
+  CommandResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id) {
+    auto entity = repo.findById(clientId, id);
+    if (entity.isNull)
+      return CommandResult(false, "", "Enrichment data not found");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
+  }
+
+
 }

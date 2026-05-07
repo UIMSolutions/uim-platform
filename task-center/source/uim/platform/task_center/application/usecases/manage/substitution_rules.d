@@ -18,7 +18,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    SubstitutionRule getById(TenantId tenantId, string id) {
+    SubstitutionRule getById(TenantId tenantId, SubstitutionRuleId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -26,7 +26,7 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return repo.findByUser(tenantId, userId);
     }
 
-    SubstitutionRule[] listBySubstitute(TenantId tenantId, string substituteId) {
+    SubstitutionRule[] listBySubstitute(TenantId tenantId, SubstitutionId substituteId) {
         return repo.findBySubstitute(tenantId, substituteId);
     }
 
@@ -63,26 +63,30 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult activate(TenantId tenantId, string id) {
+    CommandResult activate(TenantId tenantId, SubstitutionRuleId id) {
         auto r = repo.findById(tenantId, id);
         if (r == SubstitutionRule.init)
             return CommandResult(false, "", "Substitution rule not found");
         r.status = SubstitutionStatus.active;
         repo.update(tenantId, r);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, r.id.value, "");
     }
 
-    CommandResult deactivate(TenantId tenantId, string id) {
+    CommandResult deactivate(TenantId tenantId, SubstitutionRuleId id) {
         auto r = repo.findById(tenantId, id);
         if (r == SubstitutionRule.init)
             return CommandResult(false, "", "Substitution rule not found");
         r.status = SubstitutionStatus.inactive;
         repo.update(tenantId, r);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, r.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteSubstitutionRule(TenantId tenantId, SubstitutionRuleId id) {
+        auto rule = repo.findById(tenantId, id);
+        if (rule == SubstitutionRule.init)
+            return CommandResult(false, "", "Substitution rule not found");
+
+        repo.remove(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 }

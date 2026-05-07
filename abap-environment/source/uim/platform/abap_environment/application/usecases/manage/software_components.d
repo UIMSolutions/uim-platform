@@ -69,11 +69,11 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return cloneComponent(SoftwareComponentId(id), req);
   }
 
-  CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
-    if (!repo.existsById(id))
+  CommandResult cloneComponent(CloneSoftwareComponentRequest req) {
+    auto comp = repo.findById(req.tenantId, req.id);
+    if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
-    auto comp = repo.findById(id);
     if (comp.status != ComponentStatus.notCloned && comp.status != ComponentStatus.error)
       return CommandResult(false, "", "Component is already cloned or cloning in progress");
 
@@ -100,11 +100,11 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
-    if (!repo.existsById(id))
+  CommandResult pullComponent(PullSoftwareComponentRequest req) {
+    auto comp = repo.findById(req.tenantId, req.id);
+    if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
-    auto comp = repo.findById(id);
     if (comp.status != ComponentStatus.cloned)
       return CommandResult(false, "", "Component must be cloned before pulling");
 
@@ -130,16 +130,17 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  SoftwareComponent getComponent(SoftwareComponentId id) {
-    return repo.findById(id);
+  SoftwareComponent getComponent(TenantId tenantId, SoftwareComponentId id) {
+    return repo.findById(tenantId, id);
   }
 
   SoftwareComponent[] listComponents(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteComponent(SoftwareComponentId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteComponent(TenantId tenantId, SoftwareComponentId id) {
+    auto comp = repo.findById(tenantId, id);
+    if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
     repo.removeById(id);

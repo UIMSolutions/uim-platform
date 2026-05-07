@@ -52,7 +52,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationTask getById(ReplicationTaskId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   ReplicationTask[] list(TenantId tenantId) {
@@ -75,12 +75,13 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(ReplicationTaskId id) {
-    if (!repo.existsById(r.id))
+  CommandResult deleteReplicationTask(ReplicationTaskId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Replication task not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

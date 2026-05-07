@@ -19,7 +19,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     }
 
     DataConnection getById(DataConnectionId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     DataConnection[] list() {
@@ -69,7 +69,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDataConnection(DataConnectionId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data connection not found");
             

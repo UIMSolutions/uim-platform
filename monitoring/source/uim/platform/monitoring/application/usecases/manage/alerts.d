@@ -29,7 +29,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   Alert getAlert(AlertId id) {
-    return alerts.findById(id);
+    return alerts.findById(tenantId, id);
   }
 
   Alert[] listAlerts(TenantId tenantId) {
@@ -81,7 +81,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAlert(AlertId id) {
-    auto alert = alerts.findById(id);
+    auto alert = alerts.findById(tenantId, id);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 

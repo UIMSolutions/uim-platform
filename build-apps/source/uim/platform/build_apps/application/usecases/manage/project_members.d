@@ -19,7 +19,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
     }
 
     ProjectMember getById(ProjectMemberId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ProjectMember[] list() {
@@ -63,7 +63,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProjectMember(ProjectMemberId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Project member not found");
             

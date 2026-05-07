@@ -37,7 +37,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         if (!appGroupRepository.existsById(id))
             return CommandResult(false, "", "Application group not found");
 
-        auto ag = appGroupRepository.findById(id);
+        auto ag = appGroupRepository.findById(tenantId, id);
         if (req.name.length > 0)
             ag.name = req.name;
         if (req.description.length > 0)
@@ -58,7 +58,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     }
 
     ApplicationGroup getAppGroupById(ApplicationGroupId id) {
-        return appGroupRepository.findById(id);
+        return appGroupRepository.findById(tenantId, id);
     }
 
     ApplicationGroup[] list(TenantId tenantId) {
@@ -66,7 +66,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAppGroup(ApplicationGroupId id) {
-        auto entity = appGroupRepository.findById(id);
+        auto entity = appGroupRepository.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Application group not found");
 

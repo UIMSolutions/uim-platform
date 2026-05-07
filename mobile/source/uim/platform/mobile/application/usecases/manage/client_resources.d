@@ -39,7 +39,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(ClientResourceId id, UpdateClientResourceRequest r) {
-        auto resource = repo.findById(id);
+        auto resource = repo.findById(tenantId, id);
         if (resource.isNull)
             return CommandResult(false, "", "Client resource not found");
         if (r.description.length > 0) resource.description = r.description;
@@ -54,7 +54,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     ClientResource get_(ClientResourceId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ClientResource[] listByApp(MobileAppId appId) {

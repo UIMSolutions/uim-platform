@@ -53,7 +53,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
     }
 
     CustomDomain getById(CustomDomainId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     CustomDomain[] list(TenantId tenantId) {
@@ -80,7 +80,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activate(CustomDomainId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Custom domain not found");
         existing.status = DomainStatus.active;
@@ -93,7 +93,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deactivate(CustomDomainId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Custom domain not found");
         existing.status = DomainStatus.deactivated;
@@ -106,7 +106,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCustomDomain(CustomDomainId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Custom domain not found");
 

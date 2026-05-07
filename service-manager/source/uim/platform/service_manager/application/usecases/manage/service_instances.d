@@ -62,12 +62,12 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ServiceInstanceId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+        auto instance = repo.findById(tenantId, id);
+        if (instance.isNull)
             return CommandResult(false, "", "Service instance not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(instance);
+        return CommandResult(true, instance.id.value, "");
     }
 }

@@ -6,36 +6,40 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
+class IdRepository(TEntity, TId) : BaseRepository!(TEntity), IIdRepository!(TEntity, TId) {
   protected TEntity[TId] store;
 
   this() {
-    initialize();
+    super();
   }
 
-  bool initialize(Json initData = Json(null)) {
+  override bool initialize(Json initData = Json(null)) {
+    if (!super.initialize(initData)) {
+      return false;
+    }
+
     return true;
   }
 
-  bool exists(TEntity entity) {
+  override bool exists(TEntity entity) {
     return store.byValue.any!(e => e == entity);
   }
 
   // @disable
-  size_t indexOf(TEntity entity) {
+  override size_t indexOf(TEntity entity) {
     return store.byValue.countUntil!(e => e == entity);
   }
 
-  size_t countAll() {
+  override size_t countAll() {
     return findAll().length;
   }
 
-  TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
+  override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     return limit == 0
       ? store.byValue.array.skip(offset).array : store.byValue.array.skip(offset).take(limit).array;
   }
 
-  void removeAll() {
+  override void removeAll() {
     store.clear();
   }
 
@@ -70,31 +74,31 @@ class IdRepository(TEntity, TId) : IIdRepository!(TEntity, TId) {
     findAllById(ids).each!(e => remove(e));
   }
 
-  void save(TEntity entity) {
+  override void save(TEntity entity) {
     store[entity.id] = entity;
   }
 
-  void update(TEntity entity) {
+  override void update(TEntity entity) {
     if (existsById(entity.id)) {
       store[entity.id] = entity;
     }
   }
 
-  void remove(TEntity entity) {
+  override void remove(TEntity entity) {
     if (existsById(entity.id)) {
       store.remove(entity.id);
     }
   }
 
-  void saveAll(TEntity[] entities) {
+  override void saveAll(TEntity[] entities) {
     entities.each!(entity => save(entity));
   }
 
-  void updateAll(TEntity[] entities) {
+  override void updateAll(TEntity[] entities) {
     entities.each!(entity => update(entity));
   }
 
-  void removeAll(TEntity[] entities) {
+  override void removeAll(TEntity[] entities) {
     entities.each!(entity => remove(entity));
   }
 }

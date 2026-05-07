@@ -87,7 +87,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
-    auto d = repo.findById(id);
+    auto d = repo.findById(tenantId, id);
     if (d.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -143,7 +143,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   Destination getDestination(DestinationId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Destination[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -158,12 +158,13 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return repo.findByName(tenantId, subaccountId, name);
   }
 
-  CommandResult removeDestination(DestinationId id) {
-    auto d = repo.findById(id);
-    if (d.isNull)
+  CommandResult deleteDestination(DestinationId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Destination not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   private static DestinationType parseDestType(string s) {

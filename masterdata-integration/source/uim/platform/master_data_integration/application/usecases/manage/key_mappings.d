@@ -46,7 +46,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req) {
-    auto mapping = repo.findById(id);
+    auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
@@ -70,7 +70,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   KeyMapping getMapping(KeyMappingId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   KeyMapping[] listByTenant(TenantId tenantId) {
@@ -86,7 +86,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteMapping(KeyMappingId id) {
-    auto mapping = repo.findById(id);
+    auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
     repo.removeById(id);

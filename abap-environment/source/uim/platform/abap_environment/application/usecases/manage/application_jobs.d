@@ -60,11 +60,11 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return updateJob(ApplicationJobId(id), request);
   }
 
-  CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest request) {
-    if (!jobs.existsById(id))
+  CommandResult updateJob(UpdateApplicationJobRequest request) {
+    auto job = jobs.findById(request.tenantId, request.id);
+    if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 
-    auto job = jobs.findById(id);
     if (request.description.length > 0)
       job.description = request.description;
     if (request.frequency.length > 0)
@@ -88,11 +88,11 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return cancelJob(ApplicationJobId(id));
   }
 
-  CommandResult cancelJob(ApplicationJobId id) {
-    if (!jobs.existsById(id))
+  CommandResult cancelJob(TenantId tenantId, ApplicationJobId id) {
+    auto job = jobs.findById(tenantId, id);
+    if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 
-    auto job = jobs.findById(id);
     if (job.status != JobStatus.scheduled && job.status != JobStatus.running)
       return CommandResult(false, "", "Job can only be canceled when scheduled or running");
 
@@ -110,8 +110,8 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return getJob(ApplicationJobId(id));
   }
 
-  ApplicationJob getJob(ApplicationJobId id) {
-    return jobs.findById(id);
+  ApplicationJob getJob(TenantId tenantId, ApplicationJobId id) {
+    return jobs.findById(tenantId, id);
   }
 
   ApplicationJob[] listJobs(string systemId) {
@@ -126,11 +126,12 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return deleteJob(ApplicationJobId(id));
   }
 
-  CommandResult deleteJob(ApplicationJobId id) {
-    if (!jobs.existsById(id))
+  CommandResult deleteJob(TenantId tenantId, ApplicationJobId id) {
+    auto job = jobs.findById(tenantId, id);
+    if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 
-    jobs.removeById(id);
-    return CommandResult(true, id.value, "");
+    jobs.remove(job);
+    return CommandResult(true, job.id.value, "");
   }
 }

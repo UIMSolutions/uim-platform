@@ -42,7 +42,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
-        auto restriction = repo.findById(id);
+        auto restriction = repo.findById(tenantId, id);
         if (restriction.isNull)
             return CommandResult(false, "", "Feature restriction not found");
         if (r.description.length > 0) restriction.description = r.description;
@@ -67,7 +67,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     }
 
     FeatureRestriction get_(FeatureRestrictionId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     FeatureRestriction[] listByApp(MobileAppId appId) {

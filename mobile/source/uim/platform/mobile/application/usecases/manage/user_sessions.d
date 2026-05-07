@@ -38,7 +38,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult terminate(UserSessionId id) {
-        auto session = repo.findById(id);
+        auto session = repo.findById(tenantId, id);
         if (session.isNull)
             return CommandResult(false, "", "Session not found");
         session.status = SessionStatus.terminated;
@@ -49,7 +49,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     }
 
     UserSession get_(UserSessionId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     UserSession[] listByApp(MobileAppId appId) {

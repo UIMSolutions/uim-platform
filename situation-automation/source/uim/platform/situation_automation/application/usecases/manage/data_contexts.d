@@ -46,7 +46,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
     }
 
     DataContext getById(DataContextId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     DataContext[] list(TenantId tenantId) {
@@ -57,16 +57,16 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         return repo.findByInstance(instanceId);
     }
 
-    CommandResult remove(DataContextId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteDataContext(DataContextId id) {
+        auto context = repo.findById(tenantId, id);
+        if (context.isNull)
             return CommandResult(false, "", "Data context not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(context);
+        return CommandResult(true, context.id.value, "");
     }
 
-    CommandResult removePersonalData(TenantId tenantId) {
+    CommandResult deletePersonalData(TenantId tenantId) {
         auto items = repo.findPersonalData(tenantId);
         foreach (item; items) {
             repo.remove(item.id);

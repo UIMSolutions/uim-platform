@@ -50,7 +50,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
-    auto rule = corsRules.findById(id);
+    auto rule = corsRules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
@@ -71,7 +71,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   }
 
   CorsRule getRule(CorsRuleId id) {
-    return corsRules.findById(id);
+    return corsRules.findById(tenantId, id);
   }
 
   CorsRule[] listRules(BucketId bucketId) {
@@ -79,7 +79,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRule(CorsRuleId id) {
-    auto rule = corsRules.findById(id);
+    auto rule = corsRules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 

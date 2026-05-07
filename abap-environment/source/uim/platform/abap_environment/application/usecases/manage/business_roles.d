@@ -55,11 +55,11 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, role.id.value, "");
   }
 
-  CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateRole(UpdateBusinessRoleRequest req) {
+    auto role = repo.findById(req.tenantId, req.id);
+    if (role.isNull)
       return CommandResult(false, "", "Business role not found");
 
-    auto role = repo.findById(id);
     if (req.description.length > 0)
       role.description = req.description;
     if (req.roleType.length > 0)
@@ -80,20 +80,20 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return repo.existsById(id);
   }
 
-  BusinessRole getRole(BusinessRoleId id) {
-    return repo.findById(id);
+  BusinessRole getRole(TenantId tenantId, BusinessRoleId id) {
+    return repo.findById(tenantId, id);
   }
 
   BusinessRole[] listRoles(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteRole(BusinessRoleId roleId) {
-    auto entity = repo.findById(roleId);
-    if (entity.isNull)
+  CommandResult deleteBusinessRole(TenantId tenantId, BusinessRoleId id) {
+    auto role = repo.findById(tenantId, id);
+    if (role.isNull)
       return CommandResult(false, "", "Business role not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(role);
+    return CommandResult(true, role.id.value, "");
   }
 }

@@ -62,7 +62,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     if (!namespaceRepository.existsById(id))
       return CommandResult(false, "", "Namespace not found");
 
-    auto ns = namespaceRepository.findById(id);
+    auto ns = namespaceRepository.findById(tenantId, id);
     if (req.description.length > 0)
       ns.description = req.description;
     if (req.cpuLimit.length > 0)

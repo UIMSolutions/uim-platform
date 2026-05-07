@@ -16,8 +16,8 @@ struct CreateRetentionPolicyRequest {
 
 
 struct UpdateRetentionPolicyRequest {
-  RetentionPolicyId retentionPolicyId;
   TenantId tenantId;
+  RetentionPolicyId retentionPolicyId;
   string name;
   string description;
   int retentionDays;

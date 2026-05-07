@@ -12,26 +12,26 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
-    private RunConfigurationRepository repo;
+    private RunConfigurationconfigurationssitory configurations;
 
-    this(RunConfigurationRepository repo) {
-        this.repo = repo;
+    this(RunConfigurationconfigurationssitory configurations) {
+        this.configurations = configurations;
     }
 
     RunConfiguration getById(RunConfigurationId id) {
-        return repo.findById(id);
+        return configurations.findById(tenantId, id);
     }
 
     RunConfiguration[] list() {
-        return repo.findAll();
+        return configurations.findAll();
     }
 
     RunConfiguration[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return configurations.findByTenant(tenantId);
     }
 
     RunConfiguration[] listByProject(ProjectId projectId) {
-        return repo.findByProject(projectId);
+        return configurations.findByProject(projectId);
     }
 
     CommandResult create(RunConfigurationDTO dto) {
@@ -49,29 +49,29 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidRunConfiguration(e))
             return CommandResult(false, "", "Invalid run configuration data");
-        repo.save(e);
+        configurations.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(RunConfigurationDTO dto) {
-        if (!repo.existsById(RunConfigurationId(dto.id)))
+        if (!configurations.existsById(RunConfigurationId(dto.id)))
             return CommandResult(false, "", "Run configuration not found");
-        auto existing = repo.findById(RunConfigurationId(dto.id));
+        auto existing = configurations.findById(RunConfigurationId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.entryPoint.length > 0) existing.entryPoint = dto.entryPoint;
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
+        configurations.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult deleteRunConfiguration(RunConfigurationId id) {
-        auto entity = repo.findById(id);
-        if (entity.isNull)
+        auto config = configurations.findById(tenantId, id);
+        if (config.isNull)
             return CommandResult(false, "", "Run configuration not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        configurations.remove(config);
+        return CommandResult(true, config.id.value, "");
     }
 }

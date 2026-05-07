@@ -41,7 +41,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Archiving job not found");
 
-        auto aj = repo.findById(id);
+        auto aj = repo.findById(tenantId, id);
         if (req.status.length > 0)
             aj.status = toArchivingJobStatus(req.status);
         if (req.recordsProcessed > 0)
@@ -66,7 +66,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     ArchivingJob getById(ArchivingJobId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ArchivingJob[] list(TenantId tenantId) {
@@ -77,9 +77,13 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult remove(ArchivingJobId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteArchivingJob(ArchivingJobId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Archiving job not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
 

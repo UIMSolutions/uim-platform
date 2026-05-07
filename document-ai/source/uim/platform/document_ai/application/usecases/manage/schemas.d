@@ -112,13 +112,13 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return repo.findByDocumentType(typeId, clientId);
   }
 
-  CommandResult remove(SchemaId id, ClientId clientId) {
-    auto existing = repo.findById(id, clientId);
-    if (existing.isNull)
+  CommandResult deleteSchema(SchemaId id, ClientId clientId) {
+    auto entity = repo.findById(id, clientId);
+    if (entity.isNull)
       return CommandResult(false, "", "Schema not found");
 
-    repo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ClientId clientId) {

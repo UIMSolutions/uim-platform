@@ -60,7 +60,7 @@ class AuditConfigController : ManageController {
 
     request.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
 
-    auto result = useCase.createConfig(request);
+    auto result = useCase.createAuditConfig(request);
     if (result.isSuccess()) {
       auto response = Json.emptyObject
         .set("id", result.id)
@@ -77,7 +77,7 @@ class AuditConfigController : ManageController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto configs = useCase.listConfigs();
+      auto configs = useCase.listAuditConfigs();
       auto arr = configs.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -95,11 +95,11 @@ class AuditConfigController : ManageController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      if (!useCase.existsConfig(tenantId)) {
+      if (!useCase.existsAuditConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
       }
-      auto cfg = useCase.getConfig(tenantId);
+      auto cfg = useCase.getAuditConfig(tenantId);
       res.writeJsonBody(cfg.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -136,7 +136,7 @@ class AuditConfigController : ManageController {
       else
         r.minimumSeverity = AuditSeverity.info;
 
-      auto result = useCase.updateConfig(r);
+      auto result = useCase.updateAuditConfig(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -156,7 +156,7 @@ class AuditConfigController : ManageController {
       TenantId tenantId = req.getTenantId;
 
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
-      useCase.deleteConfig(tenantId, id);
+      useCase.deleteAuditConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted")
         .set("message", "Audit config deleted successfully");

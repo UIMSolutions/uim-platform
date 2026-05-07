@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.scenarios;
 
-// import uim.platform.ai_launchpad.domain.ports.repositories.scenarios;
+// import uim.platform.ai_launchpad.domain.ports.scenariossitories.scenarios;
 // import uim.platform.ai_launchpad.domain.entities.scenario : Scenario;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageScenariosUseCase { // TODO: UIMUseCase {
-  private IScenarioRepository repo;
+  private IScenarioscenariossitory scenarios;
 
-  this(IScenarioRepository repo) {
-    this.repo = repo;
+  this(IScenarioscenariossitory scenarios) {
+    this.scenarios = scenarios;
   }
 
   CommandResult sync(SyncScenarioRequest r) {
@@ -29,28 +29,28 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     s.name = r.name;
     s.description = r.description;
     s.labels = r.labels;
-    repo.save(s);
+    scenarios.save(s);
     return CommandResult(true, s.id.value, "");
   }
 
   Scenario getById(ConnectionId connectionId, ScenarioId id) {
-    return repo.findById(connectionId, id);
+    return scenarios.findById(connectionId, id);
   }
 
   Scenario[] listByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+    return scenarios.findByConnection(connectionId);
   }
 
   Scenario[] listAll() {
-    return repo.findAll();
+    return scenarios.findAll();
   }
 
   CommandResult deleteScenario(ConnectionId connectionId, ScenarioId id) {
-    auto entity = repo.findById(connectionId, id);
-    if (entity.isNull)
+    auto scenario = scenarios.findById(connectionId, id);
+    if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    scenarios.remove(scenario);
+    return CommandResult(true, scenario.id.value, "");
   }
 }

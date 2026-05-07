@@ -46,32 +46,16 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, cr.id.value, "");
     }
 
-    bool hasById(string id) {
-        return hasById(ConsentRecordId(id));
-    }
-
     bool hasById(ConsentRecordId id) {
         return repo.existsById(id);
     }
 
-    ConsentRecord getById(string id) {
-        return getById(ConsentRecordId(id));
-    }
-
     ConsentRecord getById(ConsentRecordId id) {
-        return repo.findById(id);
-    }
-
-    ConsentRecord[] listByTenant(TenantId tenantId) {
-        return listByTenant(TenantId(tenantId));
+        return repo.findById(tenantId, id);
     }
 
     ConsentRecord[] listByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
-    }
-
-    ConsentRecord[] listByDataSubject(string dataSubjectId) {
-        return listByDataSubject(DataSubjectId(dataSubjectId));
     }
 
     ConsentRecord[] listByDataSubject(DataSubjectId dataSubjectId) {
@@ -91,15 +75,12 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult removeById(string id) {
-        return removeById(ConsentRecordId(id));
-    }
-
-    CommandResult removeById(ConsentRecordId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteConsentRecord(ConsentRecordId id) {
+        auto record = repo.findById(tenantId, id);
+        if (record.isNull)
             return CommandResult(false, "", "Consent record not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(record);
+        return CommandResult(true, record.id.value, "");
     }
 }

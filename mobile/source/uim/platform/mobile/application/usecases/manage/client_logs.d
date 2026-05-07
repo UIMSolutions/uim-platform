@@ -39,7 +39,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     ClientLogEntry get_(ClientLogEntryId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ClientLogEntry[] listByApp(MobileAppId appId) {

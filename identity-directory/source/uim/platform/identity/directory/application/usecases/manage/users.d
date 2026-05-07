@@ -79,7 +79,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Get user by ID.
   User getUser(UserId id) {
-    return userRepo.findById(id);
+    return userRepo.findById(tenantId, id);
   }
 
   /// List users for a tenant (SCIM paginated).
@@ -133,7 +133,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Deactivate (soft-delete) a user.
   string deactivateUser(UserId id) {
-    auto user = userRepo.findById(id);
+    auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
       return "User not found";
 
@@ -151,7 +151,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Delete a user permanently.
   string deleteUser(UserId id) {
-    auto user = userRepo.findById(id);
+    auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
       return "User not found";
 
@@ -166,7 +166,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Change user password.
   string changePassword(UserId id, string oldPassword, string newPassword) {
-    auto user = userRepo.findById(id);
+    auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
       return "User not found";
 

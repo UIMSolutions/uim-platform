@@ -19,7 +19,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
     }
 
     Queue getById(QueueId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Queue[] list() {

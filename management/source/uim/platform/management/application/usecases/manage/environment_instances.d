@@ -86,7 +86,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
-    auto instance = repo.findById(id);
+    auto instance = repo.findById(tenantId, id);
     if (req.description.length > 0)
       instance.description = req.description;
     if (req.memoryQuotaMb > 0)
@@ -113,7 +113,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
-    auto instance = repo.findById(id);
+    auto instance = repo.findById(tenantId, id);
     if (!provisioner.canDelete(instance))
       return CommandResult(false, "", "Environment cannot be deleted in current status");
 
@@ -131,7 +131,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
   }
 
   EnvironmentInstance getById(EnvironmentInstanceId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   EnvironmentInstance[] listBySubaccount(string subId) {

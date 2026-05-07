@@ -19,7 +19,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     AccessToken getById(AccessTokenId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AccessToken getByTokenValue(string tokenValue) {
@@ -57,16 +57,18 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     CommandResult revoke(AccessTokenId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Access token not found");
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         existing.status = TokenStatus.revoked;
         repo.update(existing);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(AccessTokenId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteAccessToken(AccessTokenId id) {
+        auto token = repo.findById(tenantId, id);
+        if (token.isNull)            
             return CommandResult(false, "", "Access token not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(token);
+        return CommandResult(true, token, id.value, "");
     }
 }

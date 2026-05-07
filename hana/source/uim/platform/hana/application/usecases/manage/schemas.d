@@ -49,7 +49,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   Schema getById(SchemaId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Schema[] list(TenantId tenantId) {
@@ -70,12 +70,13 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(SchemaId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteSchema(SchemaId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Schema not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

@@ -94,7 +94,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCleansingRule(TenantId tenantId, CleansingRuleId id) {
-    auto entity = repo.findById(id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Cleansing rule not found");
     if (entity.tenantId != tenantId)
@@ -105,7 +105,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CleansingRule getById(CleansingRuleId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   CleansingRule[] listByTenant(TenantId tenantId) {

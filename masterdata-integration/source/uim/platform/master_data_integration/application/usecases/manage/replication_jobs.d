@@ -44,7 +44,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult startJob(ReplicationJobId id) {
-    auto job = repo.findById(id);
+    auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.pending && job.status != ReplicationJobStatus.paused)
@@ -58,7 +58,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult completeJob(ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
-    auto job = repo.findById(id);
+    auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
 
@@ -76,7 +76,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult cancelJob(ReplicationJobId id) {
-    auto job = repo.findById(id);
+    auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
@@ -86,7 +86,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult pauseJob(ReplicationJobId id) {
-    auto job = repo.findById(id);
+    auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.running)
@@ -97,7 +97,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationJob getJob(ReplicationJobId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   ReplicationJob[] listByTenant(TenantId tenantId) {
@@ -113,7 +113,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteJob(ReplicationJobId id) {
-    auto job = repo.findById(id);
+    auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     repo.removeById(id);

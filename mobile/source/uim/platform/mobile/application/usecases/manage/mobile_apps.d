@@ -45,7 +45,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(MobileAppId id, UpdateMobileAppRequest r) {
-        auto app = repo.findById(id);
+        auto app = repo.findById(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
         if (r.description.length > 0) app.description = r.description;
@@ -61,7 +61,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     MobileApp get_(MobileAppId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     MobileApp[] listByTenant(TenantId tenantId) {

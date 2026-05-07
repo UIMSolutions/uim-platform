@@ -49,7 +49,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   Configuration getById(ConfigurationId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Configuration[] list(TenantId tenantId) {
@@ -77,13 +77,13 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(ConfigurationId id) {
-    auto existing = repo.findById(id);
+  CommandResult deleteConfiguration(ConfigurationId id) {
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

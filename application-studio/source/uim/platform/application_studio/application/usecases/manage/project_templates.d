@@ -19,7 +19,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     ProjectTemplate getById(ProjectTemplateId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     ProjectTemplate[] list() {
@@ -61,7 +61,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProjectTemplate(ProjectTemplateId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Project template not found");
 

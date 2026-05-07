@@ -19,7 +19,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
     }
 
     OAuthScope getById(OAuthScopeId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     OAuthScope[] list() {
@@ -60,10 +60,12 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(OAuthScopeId id) {
-        if (!repo.existsById(id))
+    CommandResult deleteOAuthScope(OAuthScopeId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "OAuth scope not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

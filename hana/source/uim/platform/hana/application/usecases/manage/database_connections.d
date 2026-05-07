@@ -58,7 +58,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseConnection getById(DatabaseConnectionId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   DatabaseConnection[] list(TenantId tenantId) {
@@ -84,12 +84,13 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult remove(DatabaseConnectionId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteDatabaseConnection(DatabaseConnectionId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Database connection not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

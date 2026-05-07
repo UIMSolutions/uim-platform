@@ -30,7 +30,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document type ID is required");
 
     // Count confirmed documents available for training
-    auto docs = docRepo.findByDocumentType(r.documentTypeId, r.clientId);
+    auto docs = docRepo.findByDocumentType(r.clientId, r.documentTypeId);
     int confirmedCount = 0;
     foreach (d; docs) {
       if (d.status == DocumentStatus.confirmed)
@@ -62,7 +62,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     if (r.trainingJobId.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
-    auto existing = jobRepo.findById(r.trainingJobId, r.clientId);
+    auto existing = jobRepo.findById(r.clientId, r.trainingJobId);
     if (existing.isNull)
       return CommandResult(false, "", "Training job not found");
 
@@ -92,31 +92,32 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  TrainingJob getById(TrainingJobId id, ClientId clientId) {
-    return jobRepo.findById(id, clientId);
+  TrainingJob getById(ClientId clientId, TrainingJobId id) {
+    return jobRepo.findById(clientId, id);
   }
 
   TrainingJob[] list(ClientId clientId) {
     return jobRepo.findByClient(clientId);
   }
 
-  TrainingJob[] listByStatus(TrainingJobStatus status, ClientId clientId) {
-    return jobRepo.findByStatus(status, clientId);
+  TrainingJob[] listByStatus(ClientId clientId, TrainingJobStatus status) {
+    return jobRepo.findByStatus(clientId, status);
   }
 
-  TrainingJob[] listByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    return jobRepo.findByDocumentType(typeId, clientId);
+  TrainingJob[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+    return jobRepo.findByDocumentType(clientId, typeId);
   }
 
-  CommandResult remove(TrainingJobId id, ClientId clientId) {
-    auto existing = jobRepo.findById(id, clientId);
-    if (existing.isNull)
+  CommandResult deleteTrainingJob(ClientId clientId, TrainingJobId id) {
+    auto entity = jobRepo.findById(clientId, id);
+    if (entity.isNull)
       return CommandResult(false, "", "Training job not found");
-    if (existing.status == TrainingJobStatus.running)
+
+    if (entity.status == TrainingJobStatus.running)
       return CommandResult(false, "", "Cannot delete running training job");
 
-    jobRepo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
+    jobRepo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   size_t count(ClientId clientId) {

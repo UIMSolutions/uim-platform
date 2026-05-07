@@ -19,7 +19,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
     }
 
     UIComponent getById(UIComponentId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     UIComponent[] list() {
@@ -64,7 +64,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteUIComponent(UIComponentId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "UI component not found");
             

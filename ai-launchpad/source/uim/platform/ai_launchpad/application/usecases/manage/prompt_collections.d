@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
-  private IPromptCollectionRepository collectionRepository;
+  private IPromptcollections collections;
 
-  this(IPromptCollectionRepository repo) {
-    this.collectionRepository = repo;
+  this(IPromptcollections repo) {
+    this.collections = repo;
   }
 
   CommandResult create(CreatePromptCollectionRequest r) {
@@ -37,42 +37,42 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     pc.promptCount = 0;
     pc.createdAt = "now";
     pc.updatedAt = "now";
-    collectionRepository.save(pc);
+    collections.save(pc);
     return CommandResult(true, pc.id.value, "");
   }
 
-  PromptCollection getById(PromptCollectionId id) {
-    return collectionRepository.findById(id);
+  PromptCollection getById(TenantId tenantId, PromptCollectionId id) {
+    return collections.findById(tenantId, id);
   }
 
-  PromptCollection[] listByWorkspace(WorkspaceId workspaceId) {
-    return collectionRepository.findByWorkspace(workspaceId);
+  PromptCollection[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return collections.findByWorkspace(tenantId, workspaceId);
   }
 
-  PromptCollection[] listAll() {
-    return collectionRepository.findAll();
+  PromptCollection[] listAll(TenantId tenantId) {
+    return collections.findAll(tenantId);
   }
 
   CommandResult patch(PatchPromptCollectionRequest r) {
-    if (!collectionRepository.existsById(r.collectionId))
+    if (!collections.existsById(r.collectionId))
       return CommandResult(false, "", "Prompt collection not found");
       
-    auto pc = collectionRepository.findById(r.collectionId);
+    auto pc = collections.findById(r.collectionId);
     if (r.name.length > 0)
       pc.name = r.name;
     if (r.description.length > 0)
       pc.description = r.description;
     pc.updatedAt = "now";
-    collectionRepository.save(pc);
+    collections.save(pc);
     return CommandResult(true, pc.id.value, "");
   }
 
-  CommandResult deletePromptCollection(PromptCollectionId id) {
-    auto entity = collectionRepository.findById(id);
-    if (entity.isNull)
+  CommandResult deletePromptCollection(TenantId tenantId, PromptCollectionId id) {
+    auto collection = collections.findById(tenantId, id);
+    if (collection.isNull)
       return CommandResult(false, "", "Prompt collection not found");
 
-    collectionRepository.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    collections.remove(collection);
+    return CommandResult(true, collection.id.value, "");
   }
 }

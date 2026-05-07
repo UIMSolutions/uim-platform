@@ -52,7 +52,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     if (!labels.existsById(id))
       return CommandResult(false, "", "Label not found");
 
-    Label label = labels.findById(id);
+    Label label = labels.findById(tenantId, id);
     label.values = req.values;
     label.updatedAt = clockSeconds();
     labels.update(label);
@@ -64,7 +64,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
   }
 
   Label getById(LabelId id) {
-    return labels.findById(id);
+    return labels.findById(tenantId, id);
   }
 
   Label[] listByResource(string resourceType, string resourceId) {
@@ -75,16 +75,13 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return labels.findByKey(resourceType.to!LabeledResourceType, key);
   }
 
-  CommandResult remove(string id) {
-    return remove(LabelId(id));
-  }
-
-  CommandResult remove(LabelId id) {
-    if (!labels.existsById(id))
+  CommandResult deleteLabel(LabelId id) {
+    auto label = labels.findById(tenantId, id);
+    if (label.isNull)            
       return CommandResult(false, "", "Label not found");
 
-    labels.removeById(id);
-    return CommandResult(true, id.value, "");
+    labels.remove(label);
+    return CommandResult(true, label.id.value, "");
   }
 
   CommandResult removeByResource(string resourceType, string resourceId) {

@@ -46,7 +46,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     RetentionRule getById(RetentionRuleId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     RetentionRule[] list(TenantId tenantId) {
@@ -74,11 +74,12 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(RetentionRuleId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteRetentionRule(RetentionRuleId id) {
+        auto rule = repo.findById(tenantId, id);
+        if (rule.isNull)
             return CommandResult(false, "", "Retention rule not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 }

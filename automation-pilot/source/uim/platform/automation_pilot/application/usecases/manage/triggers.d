@@ -19,7 +19,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     Trigger getById(TriggerId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Trigger[] list() {
@@ -67,7 +67,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteTrigger(TriggerId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Trigger not found");
 

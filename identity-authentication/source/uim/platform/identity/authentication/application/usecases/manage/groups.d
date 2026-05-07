@@ -37,7 +37,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   IdaGroup getGroup(GroupId id) {
-    return groupRepo.findById(id);
+    return groupRepo.findById(tenantId, id);
   }
 
   IdaGroup[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

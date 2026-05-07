@@ -44,7 +44,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     PushRegistration get_(PushRegistrationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     PushRegistration[] listByApp(MobileAppId appId) {

@@ -49,8 +49,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cert.id.value, "");
   }
 
-  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
-    auto cert = certificates.findById(id);
+  CommandResult updateCertificate(TenantId tenantId, CertificateId id, UpdateCertificateRequest req) {
+    auto cert = certificates.findById(tenantId, id);
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 
@@ -62,8 +62,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cert.id.value, "");
   }
 
-  Certificate getCertificate(CertificateId id) {
-    return certificates.findById(id);
+  Certificate getCertificate(TenantId tenantId, CertificateId id) {
+    return certificates.findById(tenantId, id);
   }
 
   Certificate[] listCertificates(TenantId tenantId) {
@@ -74,12 +74,12 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return certificates.findExpiring(tenantId, now, withinDays);
   }
 
-  CommandResult deleteCertificate(CertificateId id) {
-    auto cert = certificates.findById(id);
+  CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
+    auto cert = certificates.findById(tenantId, id);
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 
     certificates.remove(cert);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, cert.id.value, "");
   }
 }

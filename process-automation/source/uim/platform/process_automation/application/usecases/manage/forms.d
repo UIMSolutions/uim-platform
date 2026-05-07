@@ -47,7 +47,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
     }
 
     Form getById(FormId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Form[] list(TenantId tenantId) {
@@ -71,12 +71,12 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(FormId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteForm(FormId id) {
+        auto form = repo.findById(tenantId, id);
+        if (form.isNull)
             return CommandResult(false, "", "Form not found");
 
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        repo.remove(form);
+        return CommandResult(true, form.id.value, "");
     }
 }

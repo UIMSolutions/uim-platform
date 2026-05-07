@@ -19,7 +19,7 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
   }
 
   ChangeLogEntry getEntry(ChangeLogEntryId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   ChangeLogEntry[] query(ChangeLogQueryRequest req) {

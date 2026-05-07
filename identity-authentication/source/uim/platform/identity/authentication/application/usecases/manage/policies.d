@@ -33,7 +33,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
   }
 
   AuthorizationPolicy getPolicy(PolicyId id) {
-    return policyRepo.findById(id);
+    return policyRepo.findById(tenantId, id);
   }
 
   AuthorizationPolicy[] listPolicies(TenantId tenantId) {

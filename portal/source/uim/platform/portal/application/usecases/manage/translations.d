@@ -39,7 +39,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
   }
 
   Translation getTranslation(TranslationId id) {
-    return translationRepo.findById(id);
+    return translationRepo.findById(tenantId, id);
   }
 
   Translation[] getTranslationsForResource(string resourceType,

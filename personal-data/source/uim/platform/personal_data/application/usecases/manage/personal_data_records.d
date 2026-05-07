@@ -45,7 +45,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
     }
 
     PersonalDataRecord getById(PersonalDataRecordId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     PersonalDataRecord[] list(TenantId tenantId) {
@@ -64,11 +64,12 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         return repo.findByDataSubjectAndApplication(dataSubjectId, appId);
     }
 
-    CommandResult remove(PersonalDataRecordId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deletePersonalDataRecord(PersonalDataRecordId id) {
+        auto record = repo.findById(tenantId, id);
+        if (record.isNull)
             return CommandResult(false, "", "Personal data record not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(record);
+        return CommandResult(true, record.id.value, "");
     }
 }

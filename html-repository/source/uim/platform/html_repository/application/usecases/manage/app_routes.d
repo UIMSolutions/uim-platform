@@ -59,7 +59,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Route not found");
 
-        auto route = repo.findById(id);
+        auto route = repo.findById(tenantId, id);
         if (request.pathPrefix.length > 0)
             route.pathPrefix = request.pathPrefix;
         if (request.targetPath.length > 0)
@@ -74,7 +74,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     AppRoute getById(AppRouteId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     AppRoute[] listByApp(HtmlAppId appId) {

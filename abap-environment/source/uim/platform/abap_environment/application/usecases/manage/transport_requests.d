@@ -51,11 +51,11 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tr.id.value, "");
   }
 
-  CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
-    if (!repo.existsById(requestId))
+  CommandResult addTask(TenantId tenantId, TransportRequestId requestId, AddTransportTaskRequest req) {
+    if (!repo.existsById(tenantId, requestId))
       return CommandResult(false, "", "Transport request not found");
 
-    auto tr = repo.findById(requestId);
+    auto tr = repo.findById(tenantId, requestId);
     if (tr.status != TransportStatus.modifiable)
       return CommandResult(false, "", "Transport request is not modifiable");
 
@@ -75,11 +75,11 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, task.id.value, "");
   }
 
-  CommandResult releaseTask(TransportRequestId requestId, TransportTaskId taskId) {
-    if (!repo.existsById(requestId))
+  CommandResult releaseTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
+    if (!repo.existsById(tenantId, requestId))
       return CommandResult(false, "", "Transport request not found");
 
-    auto transportRequest = repo.findById(requestId);
+    auto transportRequest = repo.findById(tenantId, requestId);
     foreach (task; transportRequest.tasks) {
       if (task.id == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
@@ -103,11 +103,11 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(false, "", "Task not found");
   }
 
-  CommandResult releaseRequest(TransportRequestId id) {
-    if (!repo.existsById(id))
+  CommandResult releaseRequest(TenantId tenantId, TransportRequestId id) {
+    if (!repo.existsById(tenantId, id))
       return CommandResult(false, "", "Transport request not found");
 
-    auto tr = repo.findById(id);
+    auto tr = repo.findById(tenantId, id);
     auto validation = TransportReleaseValidator.validateRelease(tr);
     if (!validation.valid) {
       string msg;
@@ -127,28 +127,28 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  TransportRequest getRequest(TransportRequestId id) {
-    return repo.findById(id);
+  TransportRequest getRequest(TenantId tenantId, TransportRequestId id) {
+    return repo.findById(tenantId, id);
   }
 
-  TransportRequest[] listRequests(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+  TransportRequest[] listRequests(TenantId tenantId, SystemInstanceId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
-  TransportRequest[] listByStatus(SystemInstanceId systemId, TransportStatus status) {
-    return repo.findByStatus(systemId, status);
+  TransportRequest[] listByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
+    return repo.findByStatus(tenantId, systemId, status);
   }
 
-  CommandResult deleteRequest(TransportRequestId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteRequest(TenantId tenantId, TransportRequestId id) {
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
       return CommandResult(false, "", "Transport request not found");
 
-    auto tr = repo.findById(id);
-    if (tr.status != TransportStatus.modifiable)
+    if (request.status != TransportStatus.modifiable)
       return CommandResult(false, "", "Only modifiable transport requests can be deleted");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(request);
+    return CommandResult(true, request.id.value, "");
   }
 }
 

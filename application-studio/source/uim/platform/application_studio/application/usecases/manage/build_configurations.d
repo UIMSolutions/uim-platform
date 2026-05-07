@@ -12,26 +12,26 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
-    private BuildConfigurationRepository repo;
+    private BuildConfigurationconfigurationssitory configurations;
 
-    this(BuildConfigurationRepository repo) {
-        this.repo = repo;
+    this(BuildConfigurationconfigurationssitory configurations) {
+        this.configurations = configurations;
     }
 
     BuildConfiguration getById(BuildConfigurationId id) {
-        return repo.findById(id);
+        return configurations.findById(tenantId, id);
     }
 
     BuildConfiguration[] list() {
-        return repo.findAll();
+        return configurations.findAll();
     }
 
     BuildConfiguration[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return configurations.findByTenant(tenantId);
     }
 
     BuildConfiguration[] listByProject(ProjectId projectId) {
-        return repo.findByProject(projectId);
+        return configurations.findByProject(projectId);
     }
 
     CommandResult create(BuildConfigurationDTO dto) {
@@ -48,29 +48,29 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidBuildConfiguration(e))
             return CommandResult(false, "", "Invalid build configuration data");
-        repo.save(e);
+        configurations.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(BuildConfigurationDTO dto) {
-        if (!repo.existsById(BuildConfigurationId(dto.id)))
+        if (!configurations.existsById(BuildConfigurationId(dto.id)))
             return CommandResult(false, "", "Build configuration not found");
-        auto existing = repo.findById(BuildConfigurationId(dto.id));
+        auto existing = configurations.findById(BuildConfigurationId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.buildCommand.length > 0) existing.buildCommand = dto.buildCommand;
         if (dto.deployCommand.length > 0) existing.deployCommand = dto.deployCommand;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
+        configurations.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult deleteBuildConfiguration(BuildConfigurationId id) {
-        auto entity = repo.findById(id);
-        if (entity.isNull)
+        auto config = configurations.findById(tenantId, id);
+        if (config.isNull)
             return CommandResult(false, "", "Build configuration not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        configurations.remove(config);
+        return CommandResult(true, config.id.value, "");
     }
 }

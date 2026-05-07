@@ -62,7 +62,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Pipeline not found");
 
-    auto p = repo.findById(id);
+    auto p = repo.findById(tenantId, id);
     if (req.description.length > 0)
       p.description = req.description;
     if (req.format.length > 0)
@@ -93,7 +93,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   Pipeline getById(PipelineId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Pipeline[] listPipelines(TenantId tenantId) {

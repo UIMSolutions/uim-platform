@@ -45,7 +45,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubjectRequest getById(DataSubjectRequestId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     DataSubjectRequest[] list(TenantId tenantId) {
@@ -63,7 +63,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
     CommandResult update(UpdateDataSubjectRequestRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
-            return CommandResult(false, "", "Request not found");
+            return CommandResult(false, "", "Data subject request not found");
 
         
 
@@ -90,11 +90,12 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(DataSubjectRequestId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
-            return CommandResult(false, "", "Request not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteDataSubjectRequest(DataSubjectRequestId id) {
+        auto request = repo.findById(tenantId, id);
+        if (request.isNull)
+            return CommandResult(false, "", "Data subject request not found");
+
+        repo.remove(request);
+        return CommandResult(true, request.id.value, "");
     }
 }

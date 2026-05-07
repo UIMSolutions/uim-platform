@@ -19,7 +19,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     EventApplication getById(EventApplicationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     EventApplication[] list() {
@@ -73,11 +73,12 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.eventApplicationId.value, "");
     }
 
-    CommandResult remove(EventApplicationId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteEventApplication(EventApplicationId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Event application not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

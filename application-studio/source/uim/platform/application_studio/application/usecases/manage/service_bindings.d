@@ -12,26 +12,26 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-    private ServiceBindingRepository repo;
+    private ServiceBindingserviceBindingssitory serviceBindings;
 
-    this(ServiceBindingRepository repo) {
-        this.repo = repo;
+    this(ServiceBindingserviceBindingssitory serviceBindings) {
+        this.serviceBindings = serviceBindings;
     }
 
     ServiceBinding getById(ServiceBindingId id) {
-        return repo.findById(id);
+        return serviceBindings.findById(tenantId, id);
     }
 
     ServiceBinding[] list() {
-        return repo.findAll();
+        return serviceBindings.findAll();
     }
 
     ServiceBinding[] listByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return serviceBindings.findByTenant(tenantId);
     }
 
     ServiceBinding[] listByDevSpace(DevSpaceId devSpaceId) {
-        return repo.findByDevSpace(devSpaceId);
+        return serviceBindings.findByDevSpace(devSpaceId);
     }
 
     CommandResult create(ServiceBindingDTO dto) {
@@ -49,14 +49,14 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidServiceBinding(e))
             return CommandResult(false, "", "Invalid service binding data");
-        repo.save(e);
+        serviceBindings.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult update(ServiceBindingDTO dto) {
-        if (!repo.existsById(ServiceBindingId(dto.id)))
+        if (!serviceBindings.existsById(ServiceBindingId(dto.id)))
             return CommandResult(false, "", "Service binding not found");
-        auto existing = repo.findById(ServiceBindingId(dto.id));
+        auto existing = serviceBindings.findById(ServiceBindingId(dto.id));
         if (dto.name.length > 0)
             existing.name = dto.name;
         if (dto.description.length > 0)
@@ -65,16 +65,16 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
             existing.serviceUrl = dto.serviceUrl;
         if (!dto.updatedBy.isNull)
             existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
+        serviceBindings.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult deleteServiceBinding(ServiceBindingId id) {
-        auto entity = repo.findById(id);
-        if (entity.isNull)
+        auto binding = serviceBindings.findById(tenantId, id);
+        if (binding.isNull)
             return CommandResult(false, "", "Service binding not found");
             
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        serviceBindings.remove(binding);
+        return CommandResult(true, binding.id.value, "");
     }
 }

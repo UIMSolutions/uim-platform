@@ -96,7 +96,7 @@ class RetentionController : ManageController {
     try {
       auto json = req.json;
       auto policyRequest = UpdateRetentionPolicyRequest();
-      policyRequest.id = RetentionPolicyId(extractIdFromPath(req.requestURI));
+      policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
       policyRequest.tenantId = req.getTenantId;
       policyRequest.name = json.getString("name");
       policyRequest.description = json.getString("description");

@@ -42,7 +42,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Retention rule not found");
 
-        auto rr = repo.findById(id);
+        auto rr = repo.findById(tenantId, id);
         if (req.duration > 0)
             rr.duration = req.duration;
         if (req.periodUnit.length > 0)
@@ -61,7 +61,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     RetentionRule getById(RetentionRuleId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     RetentionRule[] list(TenantId tenantId) {
@@ -72,9 +72,13 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult remove(RetentionRuleId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteRetentionRule(RetentionRuleId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Retention rule not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
     private static PeriodUnit parsePeriodUnit(string s) {

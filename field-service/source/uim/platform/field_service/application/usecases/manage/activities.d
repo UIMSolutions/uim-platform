@@ -19,7 +19,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
     }
 
     Activity getById(ActivityId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     Activity[] list() {
@@ -76,11 +76,12 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult remove(ActivityId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteActivity(ActivityId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
             return CommandResult(false, "", "Activity not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+            
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 }

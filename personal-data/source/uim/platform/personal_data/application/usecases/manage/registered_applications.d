@@ -42,7 +42,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     RegisteredApplication getById(RegisteredApplicationId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     RegisteredApplication[] list(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activate(RegisteredApplicationId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
@@ -78,7 +78,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult suspend(RegisteredApplicationId id) {
-        auto existing = repo.findById(id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.suspended;
@@ -87,11 +87,12 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(RegisteredApplicationId id) {
-        auto existing = repo.findById(id);
-        if (existing.isNull)
+    CommandResult deleteRegisteredApplication(RegisteredApplicationId id) {
+        auto application = repo.findById(tenantId, id);
+        if (application.isNull)
             return CommandResult(false, "", "Application not found");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(application);
+        return CommandResult(true, application.id.value, "");
     }
 }

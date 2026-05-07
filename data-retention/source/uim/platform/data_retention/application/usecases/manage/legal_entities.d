@@ -41,7 +41,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Legal entity not found");
 
-        auto le = repo.findById(id);
+        auto le = repo.findById(tenantId, id);
         if (req.name.length > 0)
             le.name = req.name;
         if (req.description.length > 0)
@@ -62,7 +62,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     LegalEntity getById(LegalEntityId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     LegalEntity[] list(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteLegalEntity(LegalEntityId id) {
-        auto entity = repo.findById(id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Legal entity not found");
 

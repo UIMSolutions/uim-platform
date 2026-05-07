@@ -70,7 +70,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Get group by ID.
   Group getGroup(GroupId id) {
-    return groupRepo.findById(id);
+    return groupRepo.findById(tenantId, id);
   }
 
   /// List groups for a tenant.
@@ -159,7 +159,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Delete a group.
   string deleteGroup(GroupId id) {
-    auto group = groupRepo.findById(id);
+    auto group = groupRepo.findById(tenantId, id);
     if (group == Group.init)
       return "Group not found";
 

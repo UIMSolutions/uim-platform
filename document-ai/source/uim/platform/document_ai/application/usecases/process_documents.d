@@ -107,17 +107,17 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     return docRepo.findByStatus(status, clientId);
   }
 
-  Document[] listByDocumentType(DocumentTypeId typeId, ClientId clientId) {
+  Document[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
     return docRepo.findByDocumentType(typeId, clientId);
   }
 
-  CommandResult remove(DocumentId id, ClientId clientId) {
-    auto existing = docRepo.findById(id, clientId);
-    if (existing.isNull)
+  CommandResult deleteDocument(ClientId clientId, DocumentId id) {
+    auto entity = docRepo.findById(id, clientId);
+    if (entity.isNull)
       return CommandResult(false, "", "Document not found");
 
-    docRepo.remove(id, clientId);
-    return CommandResult(true, id.value, "");
+    docRepo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 
   ExtractionResult getExtractionResult(DocumentId docId, ClientId clientId) {

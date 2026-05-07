@@ -43,7 +43,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(OfflineStoreId id, UpdateOfflineStoreRequest r) {
-        auto store = repo.findById(id);
+        auto store = repo.findById(tenantId, id);
         if (store.isNull)
             return CommandResult(false, "", "Offline store not found");
         if (r.description.length > 0) store.description = r.description;
@@ -58,7 +58,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
     }
 
     OfflineStore get_(OfflineStoreId id) {
-        return repo.findById(id);
+        return repo.findById(tenantId, id);
     }
 
     OfflineStore[] listByApp(MobileAppId appId) {

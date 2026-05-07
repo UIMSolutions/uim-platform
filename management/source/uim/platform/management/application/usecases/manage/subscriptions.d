@@ -72,7 +72,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult unsubscribe(SubscriptionId id) {
-    auto subscription = repo.findById(id);
+    auto subscription = repo.findById(tenantId, id);
     if (subscription.isNull)
       return CommandResult(false, "", "Subscription not found");
     if (subscription.status != SubscriptionStatus.subscribed)
@@ -97,7 +97,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
-    auto subscription = repo.findById(id);
+    auto subscription = repo.findById(tenantId, id);
     if (subscription.isNull)
       return CommandResult(false, "", "Subscription not found");
 
@@ -116,7 +116,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   Subscription getById(SubscriptionId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   Subscription[] listBySubaccount(string subId) {

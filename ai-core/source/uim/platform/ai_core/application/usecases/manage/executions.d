@@ -103,16 +103,17 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return execRepo.findByStatus(rgId, status, rgId);
   }
 
-  CommandResult deleteExecution(ResourceGroupId rgId, ExecutionId id) {
-    auto entity = execRepo.findById(rgId, id);
-    if (entity.isNull)
-      return CommandResult(false, "", "Execution not found");
-
-    execRepo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
-  }
-
   size_t count(ResourceGroupId rgId) {
     return execRepo.countByResourceGroup(rgId);
   }
+
+  CommandResult deleteExecution(ResourceGroupId rgId, ExecutionId id) {
+    auto execution = execRepo.findById(rgId, id);
+    if (execution.isNull)
+      return CommandResult(false, "", "Execution not found");
+
+    execRepo.remove(execution);
+    return CommandResult(true, execution.id.value, "");
+  }
+
 }

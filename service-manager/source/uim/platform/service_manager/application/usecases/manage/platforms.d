@@ -59,12 +59,12 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, PlatformId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deletePlatform(TenantId tenantId, PlatformId id) {
+        auto platform = repo.findById(tenantId, id);
+        if (platform.isNull)
             return CommandResult(false, "", "Platform not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(platform);
+        return CommandResult(true, platform.id.value, "");
     }
 }

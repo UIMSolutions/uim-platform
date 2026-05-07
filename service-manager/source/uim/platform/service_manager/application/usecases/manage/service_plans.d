@@ -57,15 +57,15 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ServicePlanId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
+        auto plan = repo.findById(tenantId, id);
+        if (plan.isNull)
             return CommandResult(false, "", "Service plan not found");
 
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        repo.remove(plan);
+        return CommandResult(true, plan.id.value, "");
     }
 }

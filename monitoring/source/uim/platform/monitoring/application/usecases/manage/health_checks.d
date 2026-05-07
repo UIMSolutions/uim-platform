@@ -71,7 +71,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
-    auto check = checkRepo.findById(id);
+    auto check = checkRepo.findById(tenantId, id);
     if (check.isNull)
       return CommandResult(false, "", "Health check not found");
 
@@ -117,7 +117,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   HealthCheck getCheck(HealthCheckId id) {
-    return checkRepo.findById(id);
+    return checkRepo.findById(tenantId, id);
   }
 
   HealthCheck[] listChecks(TenantId tenantId) {

@@ -71,20 +71,20 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  Prompt getById(PromptId id) {
-    return repo.findById(id);
+  Prompt getById(TenantId tenantId, TPromptId id) {
+    return repo.findById(tenantId, id);
   }
 
-  Prompt[] listByCollection(PromptCollectionId collectionId) {
-    return repo.findByCollection(collectionId);
+  Prompt[] listByCollection(TenantId tenantId, PromptCollectionId collectionId) {
+    return repo.findByCollection(tenantId, collectionId);
   }
 
-  Prompt[] listAll() {
-    return repo.findAll();
+  Prompt[] listAll(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 
   CommandResult patch(PatchPromptRequest r) {
-    auto p = repo.findById(r.promptId);
+    auto p = repo.findById(r.tenantId, r.promptId);
     if (p.isNull)
       return CommandResult(false, "", "Prompt not found");
     if (r.name.length > 0)
@@ -117,12 +117,12 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult deletePrompt(PromptId id) {
-    auto entity = repo.findById(id);
-    if (entity.isNull)
+  CommandResult deletePrompt(TenantId tenantId, PromptId id) {
+    auto prompt = repo.findById(tenantId, id);
+    if (prompt.isNull)
       return CommandResult(false, "", "Prompt not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(prompt);
+    return CommandResult(true, prompt.id.value, "");
   }
 }

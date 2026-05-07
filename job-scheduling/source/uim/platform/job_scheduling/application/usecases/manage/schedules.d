@@ -105,13 +105,13 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult remove(TenantId tenantId, ScheduleId id, JobId jobId) {
+    CommandResult deleteSchedule(TenantId tenantId, ScheduleId id, JobId jobId) {
         auto existing = schedules.findById(tenantId, id, jobId);
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
-        schedules.removeById(tenantId, id, jobId);
-        return CommandResult(true, id.value, "");
+        schedules.remove(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult removeAllByJob(TenantId tenantId, JobId jobId) {
