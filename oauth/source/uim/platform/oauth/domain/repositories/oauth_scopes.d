@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface OAuthScopeRepository  : ITenantRepository!(OAuthScope, OAuthScopeId) {
 
-    size_t countByApplication(string applicationId);
-    OAuthScope[] findByApplication(string applicationId);
-    void removeByApplication(string applicationId);
+    size_t countByApplication(TenantId tenantId, string applicationId);
+    OAuthScope[] findByApplication(TenantId tenantId, string applicationId);
+    void removeByApplication(TenantId tenantId, string applicationId);
 
-    size_t countByStatus(ScopeStatus status);
-    OAuthScope[] findByStatus(ScopeStatus status);
-    void removeByStatus(ScopeStatus status);
+    size_t countByStatus(TenantId tenantId, ScopeStatus status);
+    OAuthScope[] findByStatus(TenantId tenantId, ScopeStatus status);
+    void removeByStatus(TenantId tenantId, ScopeStatus status);
 
 }

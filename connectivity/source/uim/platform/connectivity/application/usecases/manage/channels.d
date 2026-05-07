@@ -32,7 +32,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
 
   CommandResult createChannel(CreateChannelRequest req) {
     // Validate connector exists
-    auto cc = connectorRepo.findById(req.connectorId);
+    auto cc = connectorRepo.findById(req.tenantId, req.connectorId);
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
@@ -62,24 +62,24 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult openChannel(TenantId tenantId, ChannelId id) {
-    auto ch = channels.findById(tenantId, id);
-    if (ch.isNull)
+    auto channel = channels.findById(tenantId, id);
+    if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
     // Verify connector is connected
-    auto cc = connectorRepo.findById(ch.connectorId);
-    if (cc.isNull)
+    auto connector = connectorRepo.findById(channel.tenantId, channel.connectorId);
+    if (connector.isNull)
       return CommandResult(false, "", "Associated connector not found");
-    if (cc.status != ConnectorStatus.connected)
+    if (connector.status != ConnectorStatus.connected)
       return CommandResult(false, "", "Connector is not connected");
 
-    ch.status = ChannelStatus.open;
-    channels.update(ch);
+    channel.status = ChannelStatus.open;
+    channels.update(channel);
 
-    recordLog(ch.tenantId, ConnectivityEventType.channelOpened, id.value,
-        "ServiceChannel", "Channel opened: " ~ ch.name);
+    recordLog(channel.tenantId, ConnectivityEventType.channelOpened, id.value,
+        "ServiceChannel", "Channel opened: " ~ channel.name);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, channel.id.value, "");
   }
 
   CommandResult closeChannel(TenantId tenantId, ChannelId id) {
@@ -93,7 +93,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id.value,
         "ServiceChannel", "Channel closed: " ~ channel.name);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, channel.id.value, "");
   }
 
   ServiceChannel getChannel(TenantId tenantId, ChannelId id) {

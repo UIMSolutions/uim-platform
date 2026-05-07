@@ -18,33 +18,33 @@ mixin(ShowModule!());
 @safe:
 class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
  
-  bool existsByLocationId(SubaccountId subaccountId, string locationId) {
-    return findAll.any!(e => e.subaccountId == subaccountId && e.locationId == locationId);
+  bool existsByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
+    return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.locationId == locationId);
   }
 
-  CloudConnector findByLocationId(SubaccountId subaccountId, string locationId) {
-    foreach (e; findAll)
+  CloudConnector findByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
+    foreach (e; findByTenant(tenantId))
       if (e.subaccountId == subaccountId && e.locationId == locationId)
         return e;
     return CloudConnector.init;
   }
 
-  void removeByLocationId(SubaccountId subaccountId, string locationId) {
-    foreach (e; findAll)
+  void removeByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
+    foreach (e; findByTenant(tenantId))
       if (e.subaccountId == subaccountId && e.locationId == locationId)
          return remove(e);
   }
 
-  size_t countBySubaccount(SubaccountId subaccountId) {
-    return findBySubaccount(subaccountId).length;
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
   }
 
-  CloudConnector[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll.filter!(e => e.subaccountId == subaccountId).array;
+  CloudConnector[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e));
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
 
 }

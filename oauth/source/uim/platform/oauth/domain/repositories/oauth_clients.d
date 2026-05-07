@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
 
-    size_t countByClientId(string clientId);
-    OAuthClient findByClientId(string clientId);
-    void removeByClientId(string clientId);
+    bool existsByClient(TenantId tenantId, string clientId);
+    OAuthClient findByClient(TenantId tenantId, string clientId);
+    void removeByClient(TenantId tenantId, string clientId);
 
-    size_t countByStatus(ClientStatus status);
-    OAuthClient[] findByStatus(ClientStatus status);
-    void removeByStatus(ClientStatus status);
+    size_t countByStatus(TenantId tenantId, ClientStatus status);
+    OAuthClient[] findByStatus(TenantId tenantId, ClientStatus status);
+    void removeByStatus(TenantId tenantId, ClientStatus status);
 
 }

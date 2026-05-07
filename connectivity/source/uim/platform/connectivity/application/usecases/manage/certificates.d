@@ -49,8 +49,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cert.id.value, "");
   }
 
-  CommandResult updateCertificate(TenantId tenantId, CertificateId id, UpdateCertificateRequest req) {
-    auto cert = certificates.findById(tenantId, id);
+  CommandResult updateCertificate(UpdateCertificateRequest req) {
+    auto cert = certificates.findById(req.tenantId, req.certificateId);
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 

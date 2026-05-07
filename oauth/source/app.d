@@ -7,7 +7,13 @@ module app;
 
 import uim.platform.oauth;
 
-void main() {
+mixin(ShowModule!());
+
+@safe:
+
+version (unittest) {
+} else {
+    void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -67,4 +73,5 @@ void main() {
     auto listener = listenHTTP(settings, router);
     scope (exit) listener.stopListening();
     runApplication();
+}
 }

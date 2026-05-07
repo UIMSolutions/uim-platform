@@ -454,7 +454,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
 
     interface ConnectorRepository << (P,#42A5F5) >> {
       + findById(id) : CloudConnector
-      + findByLocationId(subaccountId, locationId) : CloudConnector
+      + findByLocation(subaccountId, locationId) : CloudConnector
       + findBySubaccount(subaccountId) : CloudConnector[]
       + findByTenant(tenantId) : CloudConnector[]
       + save(entity) : void

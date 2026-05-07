@@ -25,7 +25,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     this.namespaces = namespaces;
   }
 
-  CommandResult create(CreateNamespaceRequest r) {
+  CommandResult createNamespace(CreateNamespaceRequest r) {
     if (!CredentialValidator.validateNamespaceName(r.name))
       return CommandResult(false, "", "Invalid namespace name (1-100 chars, allowed: letters, digits, _ - . : ! ~)");
 
@@ -34,21 +34,16 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace already exists");
 
     Namespace ns;
-    ns.initEntity(r.tenantId);
+    ns.initEntity(r.tenantId, r.createdBy);
     ns.name = r.name;
     ns.description = r.description;
-    ns.createdBy = r.createdBy;
 
     namespaces.save(ns);
     return CommandResult(true, ns.id.value, "");
   }
 
-  CommandResult update(string id, UpdateNamespaceRequest r) {
-    return update(NamespaceId(id), r);
-  }
-
-  CommandResult update(NamespaceId id, UpdateNamespaceRequest r) {
-    auto ns = namespaces.findById(tenantId, id);
+  CommandResult updateNamespace(UpdateNamespaceRequest r) {
+    auto ns = namespaces.findById(r.tenantId, r.id);
     if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
@@ -58,26 +53,26 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ns.id.value, "");
   }
 
-  bool hasById(NamespaceId id) {
-    return namespaces.existsById(id);
+  bool hasNamespace(TenantId tenantId, NamespaceId id) {
+    return namespaces.existsById(tenantId, id);
   }
 
 
-  Namespace getById(NamespaceId id) {
+  Namespace getNamespace(TenantId tenantId, NamespaceId id) {
     return namespaces.findById(tenantId, id);
   }
 
-  Namespace getByName(TenantId tenantId, string name) {
+  Namespace getNamespace(TenantId tenantId, string name) {
     return namespaces.findByName(tenantId, name);
   }
 
-  Namespace[] list(TenantId tenantId) {
+  Namespace[] listNamespaces(TenantId tenantId) {
     return namespaces.findByTenant(tenantId);
   }
 
 
-  void remove(NamespaceId id) {
-    namespaces.removeById(id);
+  CommandResult deleteNamespace(TenantId tenantId, NamespaceId id) {
+    namespaces.removeById(tenantId, id);
   }
 
 

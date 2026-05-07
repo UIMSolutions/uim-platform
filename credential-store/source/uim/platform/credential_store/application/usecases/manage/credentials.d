@@ -26,7 +26,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   // Create or create-or-update based on ifNoneMatch header
-  CommandResult create(CreateCredentialRequest r) {
+  CommandResult createCredential(CreateCredentialRequest r) {
     auto credType = parseCredentialType(r.type);
 
     auto validationError = CredentialValidator.validate(r.name, r.value, credType, r.metadata, r.format, r.username);
@@ -71,7 +71,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   // Update with conditional support via ifMatch header
-  CommandResult update(CredentialId id, UpdateCredentialRequest r) {
+  CommandResult updateCredential(TenantId tenantId, CredentialId id, UpdateCredentialRequest r) {
     auto cred = credentials.findById(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Credential not found");
@@ -99,31 +99,36 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cred.id.value, "");
   }
 
-  Credential getById(CredentialId id) {
+  Credential getCredential(TenantId tenantId, CredentialId id) {
     return credentials.findById(tenantId, id);
   }
 
-  Credential getByName(NamespaceId namespaceId, string name, string type) {
+  Credential getCredentialByName(NamespaceId namespaceId, string name, string type) {
     return credentials.findByName(namespaceId, name, parseCredentialType(type));
   }
 
-  Credential[] listByNamespace(NamespaceId namespaceId) {
+  Credential[] listCredentialsByNamespace(NamespaceId namespaceId) {
     return credentials.findByNamespace(namespaceId);
   }
 
-  Credential[] listByType(NamespaceId namespaceId, string type) {
+  Credential[] listCredentialsByType(NamespaceId namespaceId, string type) {
     return credentials.findByNamespaceAndType(namespaceId, parseCredentialType(type));
   }
 
-  void remove(CredentialId id) {
-    credentials.removeById(id);
+  CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
+    auto credential = credentials.findById(tenantId, id);
+    if (credential.isNull)
+      return CommandResult(false, "", "Credential not found");
+
+    credentials.remove(credential);
+    return CommandResult(true, credential.id.value, "");
   }
 
-  size_t countByNamespace(NamespaceId namespaceId) {
+  size_t countCredentialsByNamespace(NamespaceId namespaceId) {
     return credentials.countByNamespace(namespaceId);
   }
 
-  size_t countByTenant(TenantId tenantId) {
+  size_t countCredentialsByTenant(TenantId tenantId) {
     return credentials.countByTenant(tenantId);
   }
 

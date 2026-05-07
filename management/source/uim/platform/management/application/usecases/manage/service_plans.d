@@ -52,10 +52,6 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     return CommandResult(true, plan.id.value, "");
   }
 
-  CommandResult update(string id, UpdateServicePlanRequest req) {
-    return update(ServicePlanId(id), req);
-  }
-
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
     auto plan = servicePlans.findById(tenantId, id);
     if (plan.isNull)

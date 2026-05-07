@@ -30,6 +30,8 @@ struct RegisterResourceRequest {
 }
 
 struct UpdateResourceRequest {
+  TenantId tenantId;
+  MonitoredResourceId resourceId;
   string description;
   string url;
   string runtime;
@@ -52,6 +54,9 @@ struct CreateMetricDefinitionRequest {
 }
 
 struct UpdateMetricDefinitionRequest {
+  TenantId tenantId;
+  MetricDefinitionId id;
+
   string displayName;
   string description;
   string aggregation;
@@ -105,6 +110,8 @@ struct CreateHealthCheckRequest {
 }
 
 struct UpdateHealthCheckRequest {
+  TenantId tenantId;
+  HealthCheckId id; 
   string description;
   bool isEnabled;
   int intervalSeconds;
@@ -119,6 +126,7 @@ struct RecordCheckResultRequest {
   TenantId tenantId;
   HealthCheckId checkId;
   MonitoredResourceId resourceId;
+
   string status; // "ok", "warning", "critical", "unknown"
   double value_;
   string message;
@@ -131,6 +139,7 @@ struct RecordCheckResultRequest {
 struct CreateAlertRuleRequest {
   TenantId tenantId;
   MonitoredResourceId resourceId;
+
   string name;
   string description;
   string metricName;
@@ -146,6 +155,9 @@ struct CreateAlertRuleRequest {
 }
 
 struct UpdateAlertRuleRequest {
+  TenantId tenantId;
+  AlertRuleId alertRuleId;
+
   string description;
   double warningThreshold;
   double criticalThreshold;
@@ -203,6 +215,8 @@ struct CreateNotificationChannelRequest {
 }
 
 struct UpdateNotificationChannelRequest {
+  TenantId tenantId;
+  NotificationChannelId id;
   string description;
   string state; // "active", "inactive"
   string[] emailRecipients;

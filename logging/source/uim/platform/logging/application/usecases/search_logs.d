@@ -22,7 +22,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
     this.logRepo = logRepo;
   }
 
-  LogEntry[] search(SearchLogsRequest req) {
+  LogEntry[] searchLogs(SearchLogsRequest req) {
     // Route to the most specific query available
     if (!req.traceId.isEmpty)
       return logRepo.findByTrace(req.tenantId, req.traceId);
@@ -47,7 +47,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
     return logRepo.findByTenant(req.tenantId);
   }
 
-  LogEntry getById(LogEntryId id) {
+  LogEntry getLog(TenantId tenantId, LogEntryId id) {
     return logRepo.findById(tenantId, id);
   }
 

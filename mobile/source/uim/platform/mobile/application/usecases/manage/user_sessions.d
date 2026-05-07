@@ -60,7 +60,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         return repo.findActive(appId);
     }
 
-    void remove(UserSessionId id) {
+    CommandResult remove(UserSessionId id) {
         repo.removeById(id);
     }
 

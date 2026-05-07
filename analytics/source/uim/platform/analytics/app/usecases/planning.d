@@ -65,7 +65,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  void remove(string id) {
+  CommandResult remove(string id) {
     repo.remove(EntityId(id));
   }
 }

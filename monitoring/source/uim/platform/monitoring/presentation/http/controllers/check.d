@@ -94,8 +94,10 @@ class CheckController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
-      auto c = usecase.getCheck(id);
+
+      auto c = usecase.getCheck(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Health check not found");
         return;
@@ -108,9 +110,12 @@ class CheckController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateHealthCheckRequest r;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.intervalSeconds = j.getInteger("intervalSeconds");
@@ -120,7 +125,7 @@ class CheckController : PlatformController {
       r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.thresholdOperator = j.getString("thresholdOperator");
 
-      auto result = usecase.updateCheck(id, r);
+      auto result = usecase.updateCheck(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -137,8 +142,10 @@ class CheckController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteCheck(id);
+
+      auto result = usecase.deleteCheck(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", id)
@@ -160,7 +167,7 @@ class CheckController : PlatformController {
       RecordCheckResultRequest r;
       r.tenantId = req.getTenantId;
       r.checkId = HealthCheckId(j.getString("checkId"));
-      r.resourceId = j.getString("resourceId");
+      r.resourceId = MonitoredResourceId(j.getString("resourceId"));
       r.status = j.getString("status");
       r.value_ = getDouble(j, "value");
       r.message = j.getString("message");
@@ -189,7 +196,6 @@ class CheckController : PlatformController {
       auto results = usecase.getResults(tenantId, checkId);
 
       auto arr = results.map!(result => result.toJson).array.toJson;
-
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(results.length))
@@ -201,40 +207,4 @@ class CheckController : PlatformController {
     }
   }
 
-  private static Json serializeCheck(const ref HealthCheck c) {
-    return Json.emptyObject
-      .set("id", c.id)
-      .set("tenantId", c.tenantId)
-      .set("resourceId", c.resourceId)
-      .set("name", c.name)
-      .set("description", c.description)
-      .set("checkType", c.checkType.to!string)
-      .set("isEnabled", c.isEnabled)
-      .set("intervalSeconds", c.intervalSeconds)
-      .set("url", c.url)
-      .set("expectedStatus", c.expectedStatus)
-      .set("mbeanName", c.mbeanName)
-      .set("mbeanAttribute", c.mbeanAttribute)
-      .set("customUrl", c.customUrl)
-      .set("warningThreshold", c.warningThreshold)
-      .set("criticalThreshold", c.criticalThreshold)
-      .set("thresholdOperator", c.thresholdOperator.to!string)
-      .set("createdBy", c.createdBy)
-      .set("createdAt", c.createdAt)
-      .set("updatedAt", c.updatedAt);
-  }
-
-  private static Json serializeResult(const ref HealthCheckResult r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("checkId", r.checkId)
-      .set("resourceId", r.resourceId)
-      .set("status", r.status.to!string)
-      .set("value", r.value_)
-      .set("message", r.message)
-      .set("responseTimeMs", r.responseTimeMs)
-      .set("httpStatusCode", r.httpStatusCode)
-      .set("executedAt", r.executedAt);
-  }
 }

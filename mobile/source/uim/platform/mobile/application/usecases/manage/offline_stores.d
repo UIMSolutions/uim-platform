@@ -65,7 +65,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         return repo.findByApp(appId);
     }
 
-    void remove(OfflineStoreId id) {
+    CommandResult remove(OfflineStoreId id) {
         repo.removeById(id);
     }
 

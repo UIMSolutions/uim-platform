@@ -24,11 +24,11 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     this.alerts = alerts;
   }
 
-  bool existsAlert(AlertId id) {
-    return alerts.existsById(id);
+  bool hasAlert(TenantId tenantId, AlertId id) {
+    return alerts.existsById(tenantId, id);
   }
 
-  Alert getAlert(AlertId id) {
+  Alert getAlert(TenantId tenantId, AlertId id) {
     return alerts.findById(tenantId, id);
   }
 
@@ -49,7 +49,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
-    auto alert = alerts.findById(req.alertId);
+    auto alert = alerts.findById(req.tenantId, req.alertId);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -65,7 +65,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult resolveAlert(ResolveAlertRequest req) {
-    auto alert = alerts.findById(req.alertId);
+    auto alert = alerts.findById(req.tenantId, req.alertId);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -80,12 +80,12 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, alert.id.value, "");
   }
 
-  CommandResult deleteAlert(AlertId id) {
+  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
     auto alert = alerts.findById(tenantId, id);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
-    alerts.removeById(id);
+    alerts.removeById(tenantId, id);
     return CommandResult(true, alert.id.value, "");
   }
 

@@ -16,7 +16,7 @@ mixin(ShowModule!());
 interface DirectoryRepository : IIdRepository!(Directory, DirectoryId) {
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId);
-  Directory[] findByParent(DirectoryId parentDirectoryId);
+  Directory[] findByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId);  
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status);
 
 }

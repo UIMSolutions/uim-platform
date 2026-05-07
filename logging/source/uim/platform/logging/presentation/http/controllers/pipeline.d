@@ -52,7 +52,7 @@ class PipelineController : PlatformController {
         r.processors ~= p;
       }
 
-      auto result = usecase.create(r);
+      auto result = usecase.createPipeline(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -121,6 +121,7 @@ class PipelineController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdatePipelineRequest r;
       r.pipelineId = id;
       r.description = j.getString("description");
@@ -129,7 +130,7 @@ class PipelineController : PlatformController {
       r.isActive = j.getBoolean("isActive", true);
       r.tenantId = tenantId;
 
-      auto result = usecase.updatePipeline(tenantId, id, r);
+      auto result = usecase.updatePipeline(r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", result.id)
@@ -146,11 +147,12 @@ class PipelineController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
-      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deletePipeline(tenantId, id);
+      auto tenantId = req.getTenantId;
+      auto pipelineId = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      
+      usecase.deletePipeline(tenantId, pipelineId);
       auto response = Json.emptyObject
-        .set("id", id)
+        .set("id", pipelineId)
         .set("message", "Pipeline deleted");
 
       res.writeJsonBody(response, 204);

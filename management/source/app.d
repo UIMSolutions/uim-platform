@@ -17,13 +17,12 @@ module app;
 import uim.platform.management;
 
 mixin(ShowModule!());
-@safe:
 
 @safe:
+
 version (unittest) {
-}
-else {
-void main() {
+} else {
+    void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
 

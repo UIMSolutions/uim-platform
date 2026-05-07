@@ -61,7 +61,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         return repo.findByApp(appId);
     }
 
-    void remove(ClientResourceId id) {
+    CommandResult remove(ClientResourceId id) {
         repo.removeById(id);
     }
 

@@ -23,16 +23,16 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
     }
 
     BrokerService[] listServices(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
-    BrokerService[] listServicesByStatus(TenantId tenantId, BrokerServiceStatus status) {
+    BrokerService[] listServices(TenantId tenantId, BrokerServiceStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createBrokerService(BrokerServiceDTO dto) {
+    CommandResult createService(BrokerServiceDTO dto) {
         BrokerService bs;
-        bs.id = dto.brokerServiceId;
+        bs.id = dto.serviceId;
         bs.tenantId = dto.tenantId;
         bs.name = dto.name;
         bs.description = dto.description;
@@ -50,10 +50,11 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bs.id.value, "");
     }
 
-    CommandResult updateBrokerService(BrokerServiceDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.brokerServiceId);
+    CommandResult updateService(BrokerServiceDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.serviceId);
         if (existing.isNull)
             return CommandResult(false, "", "Broker service not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.region.length > 0) existing.region = dto.region;
@@ -61,16 +62,17 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
         if (dto.maxQueueDepth.length > 0) existing.maxQueueDepth = dto.maxQueueDepth;
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBrokerService(TenantId tenantId, BrokerServiceId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteService(TenantId tenantId, BrokerServiceId id) {
+        auto service = repo.findById(tenantId, id);
+        if (service.isNull)
             return CommandResult(false, "", "Broker service not found");
 
-        repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.remove(service);
+        return CommandResult(true, service.id.value, "");
     }
 }

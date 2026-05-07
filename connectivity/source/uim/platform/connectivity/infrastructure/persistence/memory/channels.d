@@ -20,16 +20,16 @@ mixin(ShowModule!());
 
 class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), ChannelRepository {
 
-  size_t countByConnector(ConnectorId connectorId) {
-    return findByConnector(connectorId).length;
+  size_t countByConnector(TenantId tenantId, ConnectorId connectorId) {
+    return findByConnector(tenantId, connectorId).length;
   }
 
-  ServiceChannel[] findByConnector(ConnectorId connectorId) {
-    return findAll().filter!(e => e.connectorId == connectorId).array;
+  ServiceChannel[] findByConnector(TenantId tenantId, ConnectorId connectorId) {
+    return findByTenant(tenantId).filter!(e => e.connectorId == connectorId).array;
   }
 
-  void removeByConnector(ConnectorId connectorId) {
-    findByConnector(connectorId).each!(e => remove(e));
+  void removeByConnector(TenantId tenantId, ConnectorId connectorId) {
+    findByConnector(tenantId, connectorId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, ChannelStatus status) {

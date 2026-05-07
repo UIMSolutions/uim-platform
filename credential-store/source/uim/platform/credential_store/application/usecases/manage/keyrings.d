@@ -71,7 +71,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult rotate(RotateKeyringRequest r) {
-    auto cred = credRepo.findById(r.keyringId);
+    auto cred = credRepo.findById(r.tenantId, r.keyringId);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
     if (cred.type != CredentialType.keyring)
@@ -105,23 +105,23 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ver.id.value, "");
   }
 
-  Credential getById(CredentialId id) {
+  Credential getCredential(TenantId tenantId, CredentialId id) {
     return credRepo.findById(tenantId, id);
   }
 
-  Credential[] listByNamespace(NamespaceId namespaceId) {
-    return credRepo.findByNamespaceAndType(namespaceId, CredentialType.keyring);
+  Credential[] listCredentials(TenantId tenantId, NamespaceId namespaceId) {
+    return credRepo.findByNamespaceAndType(tenantId, namespaceId, CredentialType.keyring);
   }
 
-  KeyringVersion[] getVersions(CredentialId keyringId) {
-    return versionRepo.findByKeyring(keyringId);
+  KeyringVersion[] getKeyringVersions(TenantId tenantId, CredentialId keyringId) {
+    return versionRepo.findByKeyring(tenantId, keyringId);
   }
 
-  KeyringVersion getActiveVersion(CredentialId keyringId) {
-    return versionRepo.findActiveVersion(keyringId);
+  KeyringVersion getActiveKeyringVersion(TenantId tenantId, CredentialId keyringId) {
+    return versionRepo.findActiveVersion(tenantId, keyringId);
   }
 
-  CommandResult disable(CredentialId id) {
+  CommandResult disableCredential(TenantId tenantId, CredentialId id) {
     auto cred = credRepo.findById(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
@@ -132,7 +132,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cred.id.value, "");
   }
 
-  CommandResult deleteKeyring(CredentialId id) {
+  CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
     auto cred = credRepo.findById(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
@@ -144,7 +144,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     if (!KeyringManager.canDelete(cred.updatedAt, currentTimestamp()))
       return CommandResult(false, "", "Keyring must be disabled for at least 7 days before deletion");
 
-    versionRepo.removeByKeyring(id);
+    versionRepo.removeByKeyring(tenantId, id);
     credRepo.remove(cred);
     return CommandResult(true, cred.id.value, "");
   }

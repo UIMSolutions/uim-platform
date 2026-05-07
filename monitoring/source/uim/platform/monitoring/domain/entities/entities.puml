@@ -1,0 +1,72 @@
+@startuml
+
+entity AlertRule {
+    tenantId : TenantId
+    * id : AlertRuleId
+
+    resourceId : MonitoredResourceId
+    metricDefinitionId : MetricDefinitionId
+    channelIds : NotificationChannelId[]
+}
+
+entity Alert {
+    tenantId : TenantId
+    * id : AlertId
+
+    ruleId : AlertRuleId
+    resourceId : MonitoredResourceId
+}
+
+entity HealthCheckResult {
+    tenantId : TenantId
+    * id : HealthCheckResultId
+
+    checkId : HealthCheckId
+    resourceId : MonitoredResourceId
+}
+
+entity HealthCheck {
+    tenantId : TenantId
+    * id : HealthCheckId
+
+    resourceId : MonitoredResourceId
+}
+
+
+entity MetricDefinition {
+    tenantId : TenantId
+    * id : MetricDefinitionId
+}
+
+entity MonitoredResourceId {
+    tenantId : TenantId
+    * id : string
+
+    subaccountId : SubaccountId
+}
+
+entity Metric {
+    tenantId : TenantId
+    * id : MetricId
+
+    resourceId : MonitoredResourceId
+    definitionId : MetricDefinitionId
+}
+
+entity NotificationChannel {
+    tenantId : TenantId
+    * id : NotificationChannelId
+}
+
+AlertRule "1" -- "0..*" Alert : triggers >
+MonitoredResourceId "1" -- "0..*" AlertRule : has >
+MonitoredResourceId "1" -- "0..*" Alert : related to >
+MonitoredResourceId "1" -- "0..*" HealthCheck : related to >
+MonitoredResourceId "1" -- "0..*" HealthCheckResult : related to >
+HealthCheck "1" -- "0..*" HealthCheckResult : produces >
+MetricDefinition "1" -- "0..*" AlertRule : used by >
+NotificationChannel "1" -- "0..*" AlertRule : notifies >
+MetricDefinition "1" -- "0..*" Metric : defines >
+Metric "1" -- "1" MonitoredResourceId : belongs to >
+
+@enduml

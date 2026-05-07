@@ -63,7 +63,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, certificate.id.value, "");
   }
 
-  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
+  CommandResult updateCertificate(TenantId tenantId, CertificateId id, UpdateCertificateRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Certificate not found");
 
@@ -87,7 +87,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
   
-  Certificate getCertificate(CertificateId id) {
+  Certificate getCertificate(TenantId tenantId, CertificateId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -103,15 +103,15 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return repo.findExpiring(tenantId, beforeTimestamp);
   }
 
-  ValidationResult validateCertificate(CertificateId id) {
-    if (!repo.existsById(id))
+  ValidationResult validateCertificate(TenantId tenantId, CertificateId id) {
+    auto certificate = repo.findById(tenantId, id);
+    if (certificate.isNull)
       return ValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
 
-    auto c = repo.findById(tenantId, id);
-    return CertificateValidator.validate(c);
+    return CertificateValidator.validate(certificate);
   }
 
-  CommandResult deleteCertificate(CertificateId id) {
+  CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Certificate not found");

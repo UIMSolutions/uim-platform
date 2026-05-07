@@ -84,8 +84,9 @@ class ChannelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
-      auto ch = usecase.getChannel(id);
+      auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
         return;
@@ -104,8 +105,9 @@ class ChannelController : PlatformController {
         return;
       }
       auto channelId = ChannelId(parts[$ - 2]);
+      TenantId tenantId = req.getTenantId;
 
-      auto result = usecase.openChannel(channelId);
+      auto result = usecase.openChannel(tenantId, channelId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -128,9 +130,10 @@ class ChannelController : PlatformController {
         writeError(res, 400, "Invalid path");
         return;
       }
+      TenantId tenantId = req.getTenantId;
       auto channelId = ChannelId(parts[$ - 2]);
 
-      auto result = usecase.closeChannel(channelId);
+      auto result = usecase.closeChannel(tenantId, channelId);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -148,8 +151,9 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteChannel(id);
+      auto result = usecase.deleteChannel(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

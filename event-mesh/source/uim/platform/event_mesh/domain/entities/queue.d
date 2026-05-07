@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct Queue {
     mixin TenantEntity!QueueId;
 
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     string name;
     string description;
     QueueType queueType = QueueType.durable;
@@ -34,9 +34,9 @@ struct Queue {
     string messageCount;
     string bindCount;
 
-    Json queueToJson() {
+    Json toJson() {
         return entityToJson
-            .set("brokerServiceId", brokerServiceId)
+            .set("brokerServiceId", serviceId)
             .set("name", name)
             .set("description", description)
             .set("queueType", queueType.to!string)

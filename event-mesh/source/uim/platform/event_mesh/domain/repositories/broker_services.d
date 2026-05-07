@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface BrokerServiceRepository : ITenantRepository!(BrokerService, BrokerServiceId) {
 
-    size_t countByStatus(BrokerServiceStatus status);
-    BrokerService[] findByStatus(BrokerServiceStatus status);
-    void removeByStatus(BrokerServiceStatus status);
+    size_t countByStatus(TenantId tenantId, BrokerServiceStatus status);
+    BrokerService[] findByStatus(TenantId tenantId, BrokerServiceStatus status);
+    void removeByStatus(TenantId tenantId, BrokerServiceStatus status);
 
-    size_t countByCloudProvider(CloudProvider provider);
-    BrokerService[] findByCloudProvider(CloudProvider provider);
-    void removeByCloudProvider(CloudProvider provider);
+    size_t countByCloudProvider(TenantId tenantId, CloudProvider provider);
+    BrokerService[] findByCloudProvider(TenantId tenantId, CloudProvider provider);
+    void removeByCloudProvider(TenantId tenantId, CloudProvider provider);
 
 }

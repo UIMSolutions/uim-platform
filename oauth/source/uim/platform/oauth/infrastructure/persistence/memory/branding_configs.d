@@ -12,6 +12,21 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, BrandingConfigId), BrandingConfigRepository {
+    
+    bool existsByName(TenantId tenantId, string name) {
+        return findByName(tenantId, name).id != BrandingConfigId.init;
+    }
+    BrandingConfig findByName(TenantId tenantId, string name) {
+        foreach (e; findByTenant(tenantId))
+            if (e.name == name) return e;
+        return BrandingConfig.init;
+    }
+    void removeByName(TenantId tenantId, string name) {
+        foreach (e; findByTenant(tenantId))
+            if (e.name == name) {
+                remove(e);
+                return;
+            }   
+    }
 
-    // TODO: Implement query methods for clientId and other relevant fields as needed.
 }

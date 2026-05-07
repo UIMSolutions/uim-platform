@@ -30,13 +30,14 @@ class EventMessageController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listMessages(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Event message list retrieved successfully");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Event message list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -46,12 +47,15 @@ class EventMessageController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = usecase.getById(EventMessageId(id));
-            if (e.isNull) { writeError(res, 404, "Event message not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            auto message = usecase.getMessage(tenantId, EventMessageId(id));
+            if (message.isNull) {
+                writeError(res, 404, "Event message not found");
+                return;
+            }
+            res.writeJsonBody(message.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -59,14 +63,15 @@ class EventMessageController : PlatformController {
 
     private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             EventMessageDTO dto;
-            dto.eventMessageId = EventMessageId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = j.getString("brokerServiceId");
+            dto.messageId = EventMessageId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.serviceId = BrokerServiceId(j.getString("serviceId"));
             dto.topicId = j.getString("topicId");
             dto.queueId = j.getString("queueId");
-            dto.publisherId = j.getString("publisherId");
+            // TODO: dto.publisherId = j.getString("publisherId");
             dto.correlationId = j.getString("correlationId");
             dto.contentType = j.getString("contentType");
             dto.payload = j.getString("payload");
@@ -75,11 +80,11 @@ class EventMessageController : PlatformController {
             dto.timeToLive = j.getString("timeToLive");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.publish(dto);
+            auto result = usecase.publishMessage(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Event message published");
+                    .set("id", result.id)
+                    .set("message", "Event message published");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -92,14 +97,14 @@ class EventMessageController : PlatformController {
 
     private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = usecase.acknowledge(EventMessageId(id));
+            auto result = usecase.acknowledgeMessage(tenantId, EventMessageId(id));
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Event message acknowledged");
-                  
+                    .set("message", "Event message acknowledged");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -111,14 +116,15 @@ class EventMessageController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EventMessageId(extractIdFromPath(path));
-            auto result = usecase.deleteEventMessage(id);
+
+            auto result = usecase.deleteMessage(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("message", "Event message deleted");
-                
+                    .set("message", "Event message deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

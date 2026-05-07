@@ -26,8 +26,8 @@ struct AccessToken {
     Json toJson() const {
         return entityToJson
             .set("tokenValue", tokenValue)
-            .set("tokenType", tokenType.toString())
-            .set("status", status.toString())
+            .set("tokenType", tokenType.to!string())
+            .set("status", status.to!string())
             .set("clientId", clientId)
             .set("userId", userId)
             .set("scopes", scopes)

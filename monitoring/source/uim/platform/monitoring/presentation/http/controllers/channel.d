@@ -71,8 +71,7 @@ class ChannelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
-
+      auto tenantId = req.getTenantId;
       auto channels = usecase.listChannels(tenantId);
       auto arr = channels.map!(channel => channel.toJson).array.toJson;
 
@@ -89,8 +88,9 @@ class ChannelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
-      auto ch = usecase.getChannel(id);
+      auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
         return;
@@ -103,9 +103,13 @@ class ChannelController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+      
       UpdateNotificationChannelRequest r;
+      r.tenantId = tenantId;
+      r.id = id;
       r.description = j.getString("description");
       r.state = j.getString("state");
       r.emailRecipients = getStrings(j, "emailRecipients");
@@ -116,7 +120,7 @@ class ChannelController : PlatformController {
       r.onPremisePort = j.getInteger("onPremisePort");
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
 
-      auto result = usecase.updateChannel(id, r);
+      auto result = usecase.updateChannel(r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", result.id)
@@ -133,8 +137,10 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteChannel(id);
+
+      auto result = usecase.deleteChannel(tenantId, id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("deleted", true)

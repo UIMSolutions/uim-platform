@@ -13,20 +13,20 @@ mixin(ShowModule!());
 
 interface EventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId);
-    EventMessage[] findByBrokerService(BrokerServiceId brokerServiceId);
-    void removeByBrokerService(BrokerServiceId brokerServiceId);
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    EventMessage[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
-    size_t countByTopic(TopicId topicId);
-    EventMessage[] findByTopic(TopicId topicId);
-    void removeByTopic(TopicId topicId);
+    size_t countByTopic(TenantId tenantId, TopicId topicId);
+    EventMessage[] findByTopic(TenantId tenantId, TopicId topicId);
+    void removeByTopic(TenantId tenantId, TopicId topicId);
 
-    size_t countByQueue(QueueId queueId);
-    EventMessage[] findByQueue(QueueId queueId);
-    void removeByQueue(QueueId queueId);
+    size_t countByQueue(TenantId tenantId, QueueId queueId);
+    EventMessage[] findByQueue(TenantId tenantId, QueueId queueId);
+    void removeByQueue(TenantId tenantId, QueueId queueId);
 
-    size_t countByStatus(MessageStatus status);
-    EventMessage[] findByStatus(MessageStatus status);
-    void removeByStatus(MessageStatus status);
+    size_t countByStatus(TenantId tenantId, MessageStatus status);
+    EventMessage[] findByStatus(TenantId tenantId, MessageStatus status);
+    void removeByStatus(TenantId tenantId, MessageStatus status);
 
 }

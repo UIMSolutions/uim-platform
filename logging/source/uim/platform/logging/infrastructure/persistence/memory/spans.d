@@ -19,7 +19,7 @@ mixin(ShowModule!());
 
 class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
 
-  Span[] findByTrace(TenantId tenantId, TraceId traceId) {
+  Span[] findByTrace(TenantId tenantId, string traceId) {
     return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;
   }
 

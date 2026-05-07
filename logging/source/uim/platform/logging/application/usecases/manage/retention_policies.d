@@ -51,8 +51,8 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult updatePolicy(TenantId tenantId, RetentionPolicyId id, UpdateRetentionPolicyRequest req) {
-    auto policy = repo.findById(tenantId, id);
+  CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
+    auto policy = repo.findById(req.tenantId, req.policyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
 
@@ -78,8 +78,8 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId id) {
-    auto policy = repo.findById(tenantId, id);
+  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+    auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
 

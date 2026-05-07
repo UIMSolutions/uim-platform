@@ -1,0 +1,47 @@
+@startuml
+entity Tenant {
+    * id : TenantId
+    string name : string
+}
+
+entity AuditConfig {
+    tenantId : UUID
+    id : AuditConfigId
+
+    name : string
+    description : string
+    status : ConfigStatus
+    logDataAccess : bool
+    logDataModification : bool
+    logSecurityEvents : bool
+    logConfigurationChanges : bool
+    enableDataMasking : bool
+    maskedFields : string[]
+    excludedServices : string[]
+    minimumSeverity : AuditSeverity
+    rateLimitPerSecond : int
+}
+
+entity Connection {
+    tenantId : UUID
+    id : ConnectionId
+
+    workspaceId : WorkspaceId
+    type : ConnectionType
+    status : ConnectionStatus
+    name : string
+    url : string
+    authUrl : string
+    clientId : string
+    clientSecretMasked : string
+    statusMessage : string
+    defaultResourceGroupId : string
+    description : string
+}
+
+
+
+Tenant "1" -- "0..1" AuditConfig : configuration
+Tenant "1" -- "0..*" Connection : connections
+
+@enduml

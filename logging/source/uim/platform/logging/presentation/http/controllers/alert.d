@@ -25,6 +25,7 @@ class AlertController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/alerts", &handleList);
     router.get("/api/v1/alerts/*", &handleGet);
     router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);
@@ -34,7 +35,7 @@ class AlertController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto alerts = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -60,7 +61,7 @@ class AlertController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       auto a = usecase.getById(tenantId, id);
       if (a.isNull) {
@@ -95,7 +96,7 @@ class AlertController : PlatformController {
       r.tenantId = req.getTenantId;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
-      auto result = usecase.acknowledge(r);
+      auto result = usecase.acknowledgeAlert(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -111,14 +112,14 @@ class AlertController : PlatformController {
 
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
       r.tenantId = tenantId;
       r.resolvedBy = j.getString("resolvedBy");
 
-      auto result = usecase.resolve(r);
+      auto result = usecase.resolveAlert(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -134,7 +135,7 @@ class AlertController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       usecase.deleteAlert(tenantId, id);
 

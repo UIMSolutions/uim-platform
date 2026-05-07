@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct Topic {
     mixin TenantEntity!(TopicId);
     
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     string name;
     string description;
     TopicStatus status = TopicStatus.active;
@@ -29,7 +29,7 @@ struct Topic {
     
     Json toJson() const {
         return entityToJson
-            .set("brokerServiceId", brokerServiceId.value)
+            .set("serviceId", serviceId.value)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)

@@ -16,11 +16,23 @@ mixin(ShowModule!());
 struct ParameterBinding {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct InputArtifactBinding {
   string key;
   string artifactId;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("artifactId", artifactId);
+  }
 }
 
 struct Configuration {
@@ -32,4 +44,19 @@ struct Configuration {
   ParameterBinding[] parameters;
   InputArtifactBinding[] inputArtifacts;
   long createdAt;
+
+  Json toJson() const {
+    auto paramJson = parameters.map!(p => p.toJson()).array;
+    auto artifactJson = inputArtifacts.map!(a => a.toJson()).array;
+
+    return Json.emptyObject
+      .set("id", id.value)
+      .set("connectionId", connectionId.value)
+      .set("scenarioId", scenarioId.value)
+      .set("executableId", executableId)
+      .set("name", name)
+      .set("parameters", paramJson)
+      .set("inputArtifacts", artifactJson)
+      .set("createdAt", createdAt);
+  }
 }

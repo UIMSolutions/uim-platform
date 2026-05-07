@@ -18,59 +18,58 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    EventSchema getById(EventSchemaId id) {
-        return repo.findById(tenantId, id);
+    EventSchema getSchema(TenantId tenantId, EventSchemaId schemaId) {
+        return repo.findById(tenantId, schemaId);
     }
 
-    EventSchema[] list() {
-        return repo.findAll();
-    }
-
-    EventSchema[] listByTenant(TenantId tenantId) {
+    EventSchema[] listSchemas(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    EventSchema[] listByFormat(SchemaFormat format) {
-        return repo.findByFormat(format);
+    EventSchema[] listSchemas(TenantId tenantId, SchemaFormat format) {
+        return repo.findByFormat(tenantId, format);
     }
 
-    CommandResult create(EventSchemaDTO dto) {
-        EventSchema s;
-        s.id = dto.eventSchemaId;
-        s.tenantId = dto.tenantId;
-        s.name = dto.name;
-        s.description = dto.description;
-        s.version_ = dto.version_;
-        s.schemaContent = dto.schemaContent;
-        s.applicationDomainId = dto.applicationDomainId;
-        s.shared_ = dto.shared_;
-        s.createdBy = dto.createdBy;
-        if (!EventMeshValidator.isValidEventSchema(s))
+    CommandResult createSchema(EventSchemaDTO dto) {
+        EventSchema schema;
+
+        schema.id = dto.schemaId;
+        schema.tenantId = dto.tenantId;
+        schema.name = dto.name;
+        schema.description = dto.description;
+        schema.version_ = dto.version_;
+        schema.schemaContent = dto.schemaContent;
+        schema.applicationDomainId = dto.applicationDomainId;
+        schema.shared_ = dto.shared_;
+        schema.createdBy = dto.createdBy;
+        if (!EventMeshValidator.isValidEventSchema(schema))
             return CommandResult(false, "", "Invalid event schema data");
-        repo.save(s);
-        return CommandResult(true, dto.eventSchemaId.value, "");
+
+        repo.save(schema);
+        return CommandResult(true, schema.id.value, "");
     }
 
-    CommandResult update(EventSchemaDTO dto) {
-        auto existing = repo.findById(dto.eventSchemaId);
-        if (existing.isNull)
+    CommandResult updateSchema(EventSchemaDTO dto) {
+        auto schema = repo.findById(dto.tenantId, dto.schemaId);
+        if (schema.isNull)
             return CommandResult(false, "", "Event schema not found");
             
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.schemaContent.length > 0) existing.schemaContent = dto.schemaContent;
-        if (dto.version_.length > 0) existing.version_ = dto.version_;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, dto.eventSchemaId.value, "");
+        if (dto.name.length > 0) schema.name = dto.name;
+        if (dto.description.length > 0) schema.description = dto.description;
+        if (dto.schemaContent.length > 0) schema.schemaContent = dto.schemaContent;
+        if (dto.version_.length > 0) schema.version_ = dto.version_;
+        if (!dto.updatedBy.isNull) schema.updatedBy = dto.updatedBy;
+        
+        repo.update(schema);
+        return CommandResult(true, schema.id.value, "");
     }
 
-    CommandResult deleteEventSchema(EventSchemaId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteSchema(TenantId tenantId, EventSchemaId schemaId) {
+        auto schema = repo.findById(tenantId, schemaId);
+        if (schema.isNull)
             return CommandResult(false, "", "Event schema not found");
             
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(schema);
+        return CommandResult(true, schema.id.value, "");
     }
 }

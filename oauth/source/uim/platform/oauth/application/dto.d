@@ -12,9 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 struct OAuthClientDTO {
-    string id;
+    OAuthClientId clientId;
     TenantId tenantId;
-    string clientId;
+    OAuthClientId parentClientId;
+
     string clientSecret;
     string name;
     string description;
@@ -30,7 +31,7 @@ struct OAuthClientDTO {
 }
 
 struct OAuthScopeDTO {
-    string id;
+    OAuthScopeId scopeId;
     TenantId tenantId;
     string applicationId;
     string name;
@@ -40,10 +41,11 @@ struct OAuthScopeDTO {
 }
 
 struct AccessTokenDTO {
-    string id;
+    AccessTokenId tokenId;
     TenantId tenantId;
+    OAuthClientId clientId;
+
     string tokenValue;
-    string clientId;
     UserId userId;
     string scopes;
     long expiresAt;
@@ -51,10 +53,11 @@ struct AccessTokenDTO {
 }
 
 struct RefreshTokenDTO {
-    string id;
+    RefreshTokenId tokenId;
     TenantId tenantId;
+    OAuthClientId clientId;
+
     string tokenValue;
-    string clientId;
     UserId userId;
     string scopes;
     string accessTokenId;
@@ -63,10 +66,11 @@ struct RefreshTokenDTO {
 }
 
 struct AuthorizationCodeDTO {
-    string id;
+    AuthorizationCodeId codeId;
     TenantId tenantId;
+
     string code;
-    string clientId;
+    OAuthClientId clientId;
     UserId userId;
     string redirectUri;
     string scopes;
@@ -75,8 +79,9 @@ struct AuthorizationCodeDTO {
 }
 
 struct BrandingConfigDTO {
-    string id;
+    BrandingConfigId configId;
     TenantId tenantId;
+
     string name;
     string description;
     string logoUrl;

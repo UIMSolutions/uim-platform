@@ -13,40 +13,51 @@ mixin(ShowModule!());
 
 class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
 
-    bool existsByCode(string code) {
-        return findByCode(code).id != AuthorizationCodeId.init;
+    // #region ByCode
+    bool existsByCode(TenantId tenantId, string code) {
+        return findByCode(tenantId, code).id != AuthorizationCodeId.init;
     }
-    AuthorizationCode findByCode(string code) {
-        foreach (e; findAll)
+    AuthorizationCode findByCode(TenantId tenantId, string code) {
+        foreach (e; findByTenant(tenantId))
             if (e.code == code) return e;
         return AuthorizationCode.init;
     }
-    void removeByCode(string code) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.code == code);
+    void removeByCode(TenantId tenantId, string code) {
+        foreach (e; findByTenant(tenantId))
+            if (e.code == code) {
+                remove(e);
+                return;
+            }   
     }
+    // #endregion ByCode
 
-    // #region ByClientId
-    size_t countByClientId(string clientId) {
-        return findByClientId(clientId).length;
+    // #region ByClient
+    size_t countByClient(TenantId tenantId, string clientId) {
+        return findByClient(tenantId, clientId).length;
     }
-    AuthorizationCode[] findByClientId(string clientId) {
-        return findAll().filter!(e => e.clientId == clientId).array;
+    AuthorizationCode[] filterByClient(AuthorizationCode[] codes, string clientId) {
+        return codes.filter!(e => e.clientId == clientId).array;
     }
-    void removeByClientId(string clientId) {
-        findByClientId(clientId).each!(e => remove(e));
+    AuthorizationCode[] findByClient(TenantId tenantId, string clientId) {
+        return filterByClient(findByTenant(tenantId), clientId);
     }
-    // #endregion ByClientId
+    void removeByClient(TenantId tenantId, string clientId) {
+        findByClient(tenantId, clientId).each!(e => remove(e));
+    }
+    // #endregion ByClient
 
     // #region ByStatus
-    size_t countByStatus(AuthCodeStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, AuthCodeStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    AuthorizationCode[] findByStatus(AuthCodeStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    AuthorizationCode[] filterByStatus(AuthorizationCode[] codes, AuthCodeStatus status) {
+        return codes.filter!(e => e.status == status).array;
     }
-    void removeByStatus(AuthCodeStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    AuthorizationCode[] findByStatus(TenantId tenantId, AuthCodeStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, AuthCodeStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
     // #endregion ByStatus
 

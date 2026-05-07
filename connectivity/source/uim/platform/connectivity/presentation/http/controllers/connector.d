@@ -51,7 +51,8 @@ class ConnectorController : PlatformController {
       auto result = usecase.registerConnector(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Connector registered successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -71,7 +72,9 @@ class ConnectorController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(conns.length));
+        .set("totalCount", Json(conns.length))
+        .set("message", "Connectors retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -80,8 +83,9 @@ class ConnectorController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
-      auto cc = usecase.getConnector(id);
+      auto cc = usecase.getConnector(tenantId, id);
       if (cc.isNull) {
         writeError(res, 404, "Connector not found");
         return;
@@ -105,12 +109,14 @@ class ConnectorController : PlatformController {
 
       auto j = req.json;
       auto r = HeartbeatRequest();
+      TenantId tenantId = req.getTenantId;
       r.connectorVersion = j.getString("connectorVersion");
 
-      auto result = usecase.heartbeat(connectorId, r);
+      auto result = usecase.heartbeat(tenantId, connectorId, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("status", "acknowledged");
+          .set("status", "acknowledged")
+          .set("message", "Heartbeat received");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -123,11 +129,13 @@ class ConnectorController : PlatformController {
 
   private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
-      auto result = usecase.unregister(id);
+      auto result = usecase.unregister(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Connector unregistered successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

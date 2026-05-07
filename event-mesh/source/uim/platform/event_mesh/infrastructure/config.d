@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.infrastructure.config;
 
+    import std.process : environment;
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -17,9 +18,6 @@ struct SrvConfig {
 }
 
 SrvConfig loadConfig() {
-    import std.process : environment;
-    
-
     SrvConfig config;
     auto host = environment.get("EVENT_MESH_HOST", "0.0.0.0");
     auto port = environment.get("EVENT_MESH_PORT", "8108");

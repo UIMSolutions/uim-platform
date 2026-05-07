@@ -38,10 +38,7 @@ struct Pipeline {
   bool isActive = true;
   
   Json toJson() const {
-    auto procsJson = Json.emptyArray;
-    foreach (proc; processors) {
-      procsJson ~= proc.toJson();
-    }
+    auto procsJson = processors.map!(p => p.toJson()).array.toJson();
 
     return entityToJson
       .set("name", name)

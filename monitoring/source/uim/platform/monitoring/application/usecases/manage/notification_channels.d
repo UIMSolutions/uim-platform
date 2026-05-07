@@ -29,9 +29,8 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Channel name is required");
 
     NotificationChannel channel;
-    
-    channel.id = randomUUID();
-    channel.tenantId = request.tenantId;
+
+    channel.initEntity(request.tenantId, request.createdBy);
     channel.name = request.name;
     channel.description = request.description;
     channel.channelType = request.channelType.to!NotificationChannelType;
@@ -51,23 +50,15 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     channel.onPremisePort = request.onPremisePort;
     channel.onPremiseProtocol = request.onPremiseProtocol;
 
-    channel.createdBy = request.createdBy;
-    channel.createdAt = clockSeconds();
-    channel.updatedAt = channel.createdAt;
-
     channels.save(channel);
     return CommandResult(true, channel.id.value, "");
   }
 
-  CommandResult updateChannel(string id, UpdateNotificationChannelRequest request) {
-    return updateChannel(NotificationChannelId(id), request);
-  }
+  CommandResult updateChannel(UpdateNotificationChannelRequest request) {
+    NotificationChannel channel = channels.findById(request.tenantId, request.id);
 
-  CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest request) {
-    if (!channels.existsById(id))
+    if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
-
-    NotificationChannel channel = channels.findById(tenantId, id);
 
     if (request.description.length > 0)
       channel.description = request.description;
@@ -96,11 +87,11 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, channel.id.value, "");
   }
 
-  bool existsChannel(NotificationChannelId id) {
-    return channels.existsById(id);
+  bool existsChannel(TenantId tenantId, NotificationChannelId id) {
+    return channels.existsById(tenantId, id);
   }
 
-  NotificationChannel getChannel(NotificationChannelId id) {
+  NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id) {
     return channels.findById(tenantId, id);
   }
 
@@ -108,26 +99,28 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return channels.findByTenant(tenantId);
   }
 
-  NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
-    return channels.findByType(tenantId, typeStr.to!NotificationChannelType);
-  }
-
   NotificationChannel[] listActive(TenantId tenantId) {
     return channels.findActive(tenantId);
   }
 
-  CommandResult deleteChannel(string id) {
-    return deleteChannel(NotificationChannelId(id));
-  }
-
-  CommandResult deleteChannel(NotificationChannelId id) {
-    auto ch = channels.findById(tenantId, id);
-    if (ch.isNull)
+  CommandResult activateChannel(TenantId tenantId, NotificationChannelId id) {
+    auto channel = channels.findById(tenantId, id);
+    if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
-    channels.removeById(id);
-    return CommandResult(true, id.value, "");
+    channel.state = ChannelState.active;
+    channel.updatedAt = clockSeconds();
+    channels.update(channel);
+    return CommandResult(true, channel.id.value, "");
   }
 
+  CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
+    auto channel = channels.findById(tenantId, id);
+    if (channel.isNull)
+      return CommandResult(false, "", "Notification channel not found");
+
+    channels.remove(channel);
+    return CommandResult(true, channel.id.value, "");
+  }
 
 }

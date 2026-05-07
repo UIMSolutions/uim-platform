@@ -76,9 +76,11 @@ class CredentialController : PlatformController {
 
   private void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateCredentialRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
       r.name = j.getString("name");
       r.type = type;
@@ -89,7 +91,7 @@ class CredentialController : PlatformController {
       r.createdBy = UserId(j.getString("createdBy"));
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto result = credentials.create(r);
+      auto result = credentials.createCredential(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -106,11 +108,12 @@ class CredentialController : PlatformController {
 
   private void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
+      auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
       Credential[] creds;
       if (namespaceId.length > 0) {
-        creds = credentials.listByType(namespaceId, type);
+        creds = credentials.listCredentials(tenantId, namespaceId, type);
       }
 
       auto jarr = Json.emptyArray;
@@ -137,14 +140,13 @@ class CredentialController : PlatformController {
 
   private void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
       // Support conditional read via If-None-Match
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto c = credentials.getById(id);
+      auto c = credentials.getCredential(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Credential not found");
         return;
@@ -181,10 +183,9 @@ class CredentialController : PlatformController {
 
   private void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
-      credentials.remove(id);
+      credentials.deleteCredential(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

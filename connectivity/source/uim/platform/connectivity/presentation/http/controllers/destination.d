@@ -93,8 +93,9 @@ class DestinationController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto dest = usecase.getDestination(id);
+      auto dest = usecase.getDestination(tenantId, id);
       if (dest.isNull) {
         writeError(res, 404, "Destination not found");
         return;
@@ -107,6 +108,7 @@ class DestinationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateDestinationRequest();
@@ -126,7 +128,8 @@ class DestinationController : PlatformController {
       r.properties = parseProperties(j);
       r.additionalHeaders = parseHeaders(j);
 
-      auto result = usecase.updateDestination(id, r);
+      r.tenantId = tenantId;
+      auto result = usecase.updateDestination(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -143,8 +146,9 @@ class DestinationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteDestination(id);
+      auto result = usecase.deleteDestination(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

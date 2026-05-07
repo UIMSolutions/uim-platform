@@ -18,62 +18,62 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    EventMessage getById(EventMessageId id) {
+    EventMessage getMessage(TenantId tenantId, EventMessageId id) {
         return repo.findById(tenantId, id);
     }
 
-    EventMessage[] list() {
-        return repo.findAll();
-    }
-
-    EventMessage[] listByTenant(TenantId tenantId) {
+    EventMessage[] listMessages(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    EventMessage[] listByTopic(TopicId topicId) {
-        return repo.findByTopic(topicId);
+    EventMessage[] listMessages(TenantId tenantId, TopicId topicId) {
+        return repo.findByTopic(tenantId, topicId);
     }
 
-    EventMessage[] listByQueue(QueueId queueId) {
-        return repo.findByQueue(queueId);
+    EventMessage[] listMessages(TenantId tenantId, QueueId queueId) {
+        return repo.findByQueue(tenantId, queueId);
     }
 
-    CommandResult publish(EventMessageDTO dto) {
-        EventMessage m;
-        m.id = dto.eventMessageId;
-        m.tenantId = dto.tenantId;
-        m.brokerServiceId = dto.brokerServiceId;
-        m.topicId = dto.topicId;
-        m.queueId = dto.queueId;
-        m.publisherId = dto.publisherId;
-        m.correlationId = dto.correlationId;
-        m.contentType = dto.contentType;
-        m.payload = dto.payload;
-        m.topicString = dto.topicString;
-        m.replyTo = dto.replyTo;
-        m.timeToLive = dto.timeToLive;
-        m.createdBy = dto.createdBy;
-        if (!EventMeshValidator.isValidEventMessage(m))
+    CommandResult publishMessage(EventMessageDTO dto) {
+        EventMessage message;
+
+        message.id = dto.messageId;
+        message.tenantId = dto.tenantId;
+        message.serviceId = dto.serviceId;
+        message.topicId = dto.topicId;
+        message.queueId = dto.queueId;
+        // TODO: message.publisherId = dto.publisherId;
+        message.correlationId = dto.correlationId;
+        message.contentType = dto.contentType;
+        message.payload = dto.payload;
+        message.topicString = dto.topicString;
+        message.replyTo = dto.replyTo;
+        message.timeToLive = dto.timeToLive;
+        message.createdBy = dto.createdBy;
+        if (!EventMeshValidator.isValidEventMessage(message))
             return CommandResult(false, "", "Invalid event message data");
-        repo.save(m);
-        return CommandResult(true, m.id.value, "");
+
+        repo.save(message);
+        return CommandResult(true, message.id.value, "");
     }
 
-    CommandResult acknowledge(EventMessageId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult acknowledgeMessage(TenantId tenantId, EventMessageId messageId) {
+        auto message = repo.findById(tenantId, messageId);
+        if (message.isNull)
             return CommandResult(false, "", "Event message not found");
-        existing.status = MessageStatus.acknowledged;
-        repo.update(existing);
-        return CommandResult(true, id.value, "");
+
+        message.status = MessageStatus.acknowledged;
+
+        repo.update(message);
+        return CommandResult(true, message.id.value, "");
     }
 
-    CommandResult deleteEventMessage(EventMessageId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteMessage(TenantId tenantId, EventMessageId messageId) {
+        auto message = repo.findById(tenantId, messageId);
+        if (message.isNull)
             return CommandResult(false, "", "Event message not found");
-            
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+
+        repo.remove(message);
+        return CommandResult(true, message.id.value, "");
     }
 }

@@ -25,7 +25,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     this.connectors = connectors;
   }
 
-  CommandResult createRule(CreateAccessRuleRequest req) {
+  CommandResult createAccessRule(CreateAccessRuleRequest req) {
     auto tenantId = req.tenantId;
     // Validate connector exists
     if (!connectors.existsById(tenantId, req.connectorId))
@@ -49,8 +49,8 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
-    auto rule = rules.findById(tenantId, id);
+  CommandResult updateAccessRule(UpdateAccessRuleRequest req) {
+    auto rule = rules.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");
 
@@ -74,19 +74,19 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, updated.id.value, "");
   }
 
-  AccessRule getRule(TenantId tenantId, RuleId id) {
+  AccessRule getAccessRule(TenantId tenantId, RuleId id) {
     return rules.findById(tenantId, id);
   }
 
-  AccessRule[] listByConnector(ConnectorId connectorId) {
-    return rules.findByConnector(connectorId);
+  AccessRule[] listAccessRules(TenantId tenantId, ConnectorId connectorId) {
+    return rules.findByConnector(tenantId, connectorId);
   }
 
-  AccessRule[] listByTenant(TenantId tenantId) {
+  AccessRule[] listAccessRules(TenantId tenantId) {
     return rules.findByTenant(tenantId);
   }
 
-  CommandResult deleteRule(TenantId tenantId, RuleId id) {
+  CommandResult deleteAccessRule(TenantId tenantId, RuleId id) {
     auto rule = rules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");

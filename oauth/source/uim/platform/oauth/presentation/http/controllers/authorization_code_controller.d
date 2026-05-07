@@ -20,6 +20,7 @@ class AuthorizationCodeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/oauth/authorization-codes", &handleList);
         router.get("/api/v1/oauth/authorization-codes/*", &handleGet);
         router.post("/api/v1/oauth/authorization-codes", &handleCreate);
@@ -29,6 +30,8 @@ class AuthorizationCodeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto items = usecase.list();
             auto jarr = Json.emptyArray;
             foreach (e; items)
@@ -46,11 +49,11 @@ class AuthorizationCodeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = usecase.getById(AuthorizationCodeId(id));
+            auto e = usecase.getCode(req.getTenantId, AuthorizationCodeId(id));
             if (e.isNull) {
                 writeError(res, 404, "Authorization code not found");
                 return;
@@ -63,6 +66,8 @@ class AuthorizationCodeController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             AuthorizationCodeDTO dto;
             dto.id = j.getString("id");

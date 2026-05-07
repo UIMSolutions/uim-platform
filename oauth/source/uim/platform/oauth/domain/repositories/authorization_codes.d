@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface AuthorizationCodeRepository : ITenantRepository!(AuthorizationCode, AuthorizationCodeId) {
 
-    bool existsByCode(string code);
-    AuthorizationCode findByCode(string code);
-    void removeByCode(string code);
+    bool existsByCode(TenantId tenantId, string code);
+    AuthorizationCode findByCode(TenantId tenantId, string code);
+    void removeByCode(TenantId tenantId, string code);
 
-    size_t countByClientId(string clientId);
-    AuthorizationCode[] findByClientId(string clientId);
-    void removeByClientId(string clientId);
+    size_t countByClient(TenantId tenantId, string clientId);
+    AuthorizationCode[] findByClient(TenantId tenantId, string clientId);
+    void removeByClient(TenantId tenantId, string clientId);
 
-    size_t countByStatus(AuthCodeStatus status);
-    AuthorizationCode[] findByStatus(AuthCodeStatus status);
-    void removeByStatus(AuthCodeStatus status);
+    size_t countByStatus(TenantId tenantId, AuthCodeStatus status);
+    AuthorizationCode[] findByStatus(TenantId tenantId, AuthCodeStatus status);
+    void removeByStatus(TenantId tenantId, AuthCodeStatus status);
 
 }

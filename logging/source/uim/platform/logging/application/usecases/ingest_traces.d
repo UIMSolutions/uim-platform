@@ -37,8 +37,8 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     s.startTime = req.startTime;
     s.endTime = req.endTime;
     s.durationMs = (req.endTime > req.startTime) ? (req.endTime - req.startTime) : 0;
-    s.status = parseSpanStatus(req.status);
-    s.kind = parseSpanKind(req.kind);
+    s.status = req.status.to!SpanStatus;
+    s.kind = req.kind.to!SpanKind;
     s.attributes = cast(string[string]) req.attributes;
     s.resourceAttributes = cast(string[string]) req.resourceAttributes;
 
@@ -71,7 +71,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, "", format("Ingested %d spans", count));
   }
 
-  Span[] getTrace(TenantId tenantId, TraceId traceId) {
+  Span[] getTrace(TenantId tenantId, string traceId) {
     return spanRepo.findByTrace(tenantId, traceId);
   }
 
@@ -83,31 +83,4 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     return spanRepo.findByTimeRange(tenantId, startTime, endTime);
   }
 
-  private static SpanStatus parseSpanStatus(string s) {
-    switch (s) {
-    case "ok":
-      return SpanStatus.ok;
-    case "error":
-      return SpanStatus.error;
-    case "timeout":
-      return SpanStatus.timeout;
-    default:
-      return SpanStatus.unset;
-    }
-  }
-
-  private static SpanKind parseSpanKind(string s) {
-    switch (s) {
-    case "client":
-      return SpanKind.client;
-    case "server":
-      return SpanKind.server;
-    case "producer":
-      return SpanKind.producer;
-    case "consumer":
-      return SpanKind.consumer;
-    default:
-      return SpanKind.internal;
-    }
-  }
 }

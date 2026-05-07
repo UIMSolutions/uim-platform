@@ -62,7 +62,7 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
 
   /// Evaluate a single rule by ID. Returns whether an alert was triggered.
   bool evaluateRule(TenantId tenantId, AlertRuleId ruleId) {
-    auto rule = rules.findById(ruleId);
+    auto rule = rules.findById(tenantId, ruleId);
     if (rule.isNull || !rule.isEnabled)
       return false;
 

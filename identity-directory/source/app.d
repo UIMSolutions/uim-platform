@@ -12,13 +12,13 @@ module app;
 import uim.platform.identity.directory.infrastructure.config;
 import uim.platform.identity.directory.infrastructure.container;
 
-// import std.stdio : writefln;
+mixin(ShowModule!());
+
 @safe:
 
 version (unittest) {
-}
-else {
-  void main() {
+} else {
+    void main() {
     // Load configuration
     auto config = loadConfig();
 
@@ -62,3 +62,4 @@ else {
 
     runApplication();
   }
+}

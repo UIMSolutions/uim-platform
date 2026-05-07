@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface RefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshTokenId) {
 
-    bool existsByTokenValue(string tokenValue);
-    RefreshToken findByTokenValue(string tokenValue);
-    void removeByTokenValue(string tokenValue);
+    bool existsByTokenValue(TenantId tenantId, string tokenValue);
+    RefreshToken findByTokenValue(TenantId tenantId, string tokenValue);
+    void removeByTokenValue(TenantId tenantId, string tokenValue);
 
-    size_t countByClientId(string clientId);
-    RefreshToken[] findByClientId(string clientId);
-    void removeByClientId(string clientId);
+    size_t countByClientId(TenantId tenantId, string clientId);
+    RefreshToken[] findByClientId(TenantId tenantId, string clientId);
+    void removeByClientId(TenantId tenantId, string clientId);
 
-    size_t countByStatus(TokenStatus status);
-    RefreshToken[] findByStatus(TokenStatus status);
-    void removeByStatus(TokenStatus status);
+    size_t countByStatus(TenantId tenantId, TokenStatus status);
+    RefreshToken[] findByStatus(TenantId tenantId, TokenStatus status);
+    void removeByStatus(TenantId tenantId, TokenStatus status);
 
 }

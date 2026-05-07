@@ -51,7 +51,7 @@ class AccessRuleController : PlatformController {
       r.policy = j.getString("policy");
       r.principalPropagation = j.getBoolean("principalPropagation");
 
-      auto result = usecase.createRule(r);
+      auto result = usecase.createAccessRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -70,7 +70,7 @@ class AccessRuleController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
 
-      auto rules = usecase.listByTenant(tenantId);
+      auto rules = usecase.listAccessRules(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -87,7 +87,8 @@ class AccessRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto rule = usecase.getRule(id);
+      TenantId tenantId = req.getTenantId;
+      auto rule = usecase.getAccessRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Access rule not found");
         return;
@@ -103,12 +104,13 @@ class AccessRuleController : PlatformController {
       auto id = RuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateAccessRuleRequest();
+      r.tenantId = req.getTenantId;
       r.description = j.getString("description");
       r.urlPathPrefix = j.getString("urlPathPrefix");
       r.policy = j.getString("policy");
       r.principalPropagation = j.getBoolean("principalPropagation");
 
-      auto result = usecase.updateRule(id, r);
+      auto result = usecase.updateAccessRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,8 +127,9 @@ class AccessRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteRule(id);
+      auto result = usecase.deleteAccessRule(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

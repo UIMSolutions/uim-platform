@@ -86,8 +86,10 @@ class CertificateController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;  
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto cert = usecase.getCertificate(id);
+
+      auto cert = usecase.getCertificate(tenantId, id);
       if (cert.isNull) {
         writeError(res, 404, "Certificate not found");
         return;
@@ -100,13 +102,14 @@ class CertificateController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateCertificateRequest();
+      r.certificateId = CertificateId(extractIdFromPath(req.requestURI));
+      r.tenantId = req.getTenantId;
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
 
-      auto result = usecase.updateCertificate(id, r);
+      auto result = usecase.updateCertificate(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -123,8 +126,9 @@ class CertificateController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      TenantId tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteCertificate(id);
+      auto result = usecase.deleteCertificate(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -18,28 +18,24 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    EventApplication getById(EventApplicationId id) {
+    EventApplication getApplication(TenantId tenantId, EventApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
-    EventApplication[] list() {
-        return repo.findAll();
-    }
-
-    EventApplication[] listByTenant(TenantId tenantId) {
+    EventApplication[] listApplications(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    EventApplication[] listByBrokerService(BrokerServiceId brokerServiceId) {
-        return repo.findByBrokerService(brokerServiceId);
+    EventApplication[] listApplications(TenantId tenantId, BrokerServiceId serviceId) {
+        return repo.findByBrokerService(tenantId, serviceId);
     }
 
-    CommandResult create(EventApplicationDTO dto) {
+    CommandResult createApplication(EventApplicationDTO dto) {
         EventApplication a;
-        a.id = dto.eventApplicationId;
+        a.id = dto.applicationId;
         a.tenantId = dto.tenantId;
-        a.brokerServiceId = dto.brokerServiceId;
-        a.name = dto.name;
+        a.brokerServiceId = dto.serviceId;
+        a.name = dto.name;  
         a.description = dto.description;
         a.applicationDomainId = dto.applicationDomainId;
         a.clientUsername = dto.clientUsername;
@@ -57,10 +53,11 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    CommandResult update(EventApplicationDTO dto) {
-        auto existing = repo.findById(dto.eventApplicationId);
+    CommandResult updateApplication(EventApplicationDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Event application not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.clientUsername.length > 0) existing.clientUsername = dto.clientUsername;
@@ -69,11 +66,12 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
         if (dto.publishTopics.length > 0) existing.publishTopics = dto.publishTopics;
         if (dto.subscribeTopics.length > 0) existing.subscribeTopics = dto.subscribeTopics;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        
         repo.update(existing);
-        return CommandResult(true, dto.eventApplicationId.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteEventApplication(EventApplicationId id) {
+    CommandResult deleteApplication(TenantId tenantId, EventApplicationId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Event application not found");

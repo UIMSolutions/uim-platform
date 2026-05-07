@@ -10,27 +10,34 @@ module uim.platform.logging.application.usecases.manage.alerts;
 // import uim.platform.logging.domain.types;
 // import uim.platform.logging.application.dto;
 
-
 import uim.platform.logging;
 
 mixin(ShowModule!());
 
 @safe:
-class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) { 
+class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
   this(AlertRepository repository) {
     super(repository);
   }
 
-  Alert[] listByState(TenantId tenantId, AlertState state) {
+  size_t countOpen(TenantId tenantId) {
+    return repository.countByState(tenantId, AlertState.open);
+  }
+
+  size_t countByTenant(TenantId tenantId) {
+    return repository.countByTenant(tenantId);
+  }
+
+  Alert[] listAlerts(TenantId tenantId, AlertState state) {
     return repository.findByState(tenantId, state);
   }
 
-  Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
+  Alert[] listAlerts(TenantId tenantId, AlertSeverity severity) {
     return repository.findBySeverity(tenantId, severity);
   }
 
-  CommandResult acknowledge(AcknowledgeAlertRequest req) {
-    auto a = repository.findById(req.alertId);
+  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
+    auto a = repository.findById(req.tenantId, req.alertId);
     if (a.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -42,8 +49,8 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
     return CommandResult(true, req.alertId.value, "");
   }
 
-  CommandResult resolve(ResolveAlertRequest req) {
-    auto a = repository.findById(req.alertId);
+  CommandResult resolveAlert(ResolveAlertRequest req) {
+    auto a = repository.findById(req.tenantId, req.alertId);
     if (a.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -56,12 +63,11 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
   }
 
   CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,
-      AlertSeverity severity, string message, long matchCount, LogEntryId sampleId) {
+    AlertSeverity severity, string message, long matchCount, LogEntryId sampleId) {
     import std.uuid : randomUUID;
 
     Alert a;
-    a.id = randomUUID();
-    a.tenantId = tenantId;
+    a.initEntity(tenantId);
     a.ruleId = ruleId;
     a.ruleName = ruleName;
     a.severity = severity;
@@ -69,7 +75,6 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
     a.message = message;
     a.matchCount = matchCount;
     a.sampleLogEntryId = sampleId;
-    a.triggeredAt = clockSeconds();
 
     repository.save(a);
     return CommandResult(true, a.id.value, "");
@@ -77,18 +82,11 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
 
   CommandResult deleteAlert(TenantId tenantId, AlertId id) {
     auto alert = repository.findById(tenantId, id);
-    if (alert.isNull)      
+    if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
     repository.removeById(tenantId, id);
     return CommandResult(true, alert.id.value, "");
   }
 
-  size_t countOpen(TenantId tenantId) {
-    return repository.countByState(tenantId, AlertState.open);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return repository.countByTenant(tenantId);
-  }
 }

@@ -20,6 +20,7 @@ class EventApplicationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/applications", &handleList);
         router.get("/api/v1/event-mesh/applications/*", &handleGet);
         router.post("/api/v1/event-mesh/applications", &handleCreate);
@@ -29,7 +30,8 @@ class EventApplicationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listApplications(tenantId);
             auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
@@ -45,11 +47,10 @@ class EventApplicationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EventApplicationId(extractIdFromPath(path));
-            auto e = usecase.getById(EventApplicationId(id));
+            auto e = usecase.getApplication(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Event application not found");
                 return;
@@ -66,11 +67,12 @@ class EventApplicationController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             EventApplicationDTO dto;
-            dto.eventApplicationId = EventApplicationId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
+            dto.applicationId = EventApplicationId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.serviceId = BrokerServiceId(j.getString("serviceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.applicationDomainId = j.getString("applicationDomainId");
@@ -84,7 +86,7 @@ class EventApplicationController : PlatformController {
             dto.maxConnections = j.getString("maxConnections");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createApplication(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -101,12 +103,13 @@ class EventApplicationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             EventApplicationDTO dto;
-            dto.eventApplicationId = EventApplicationId(extractIdFromPath(path));
+            dto.applicationId = EventApplicationId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.clientUsername = j.getString("clientUsername");
@@ -116,7 +119,7 @@ class EventApplicationController : PlatformController {
             dto.subscribeTopics = j.getString("subscribeTopics");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateApplication(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -133,11 +136,11 @@ class EventApplicationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EventApplicationId(extractIdFromPath(path));
-            auto result = usecase.deleteEventApplication(id);
+
+            auto result = usecase.deleteApplication(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Event application deleted");

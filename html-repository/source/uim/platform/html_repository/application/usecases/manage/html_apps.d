@@ -75,7 +75,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         return repo.findPublic(tenantId);
     }
 
-    void remove(HtmlAppId id) {
+    CommandResult remove(HtmlAppId id) {
         repo.removeById(id);
     }
 

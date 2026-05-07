@@ -12,43 +12,61 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), RefreshTokenRepository {
-    
+
     // #region ByTokenValue
-    bool existsByTokenValue(string tokenValue) {
-        return findByTokenValue(tokenValue).id != RefreshTokenId.init;
+    bool existsByTokenValue(TenantId tenantId, string tokenValue) {
+        return findByTokenValue(tenantId, tokenValue).id != RefreshTokenId.init;
     }
-    RefreshToken findByTokenValue(string tokenValue) {
-        foreach (e; findAll)
-            if (e.tokenValue == tokenValue) return e;
+
+    RefreshToken findByTokenValue(TenantId tenantId, string tokenValue) {
+        foreach (e; findByTenant(tenantId))
+            if (e.tokenValue == tokenValue)
+                return e;
         return RefreshToken.init;
     }
-    void removeByTokenValue(string tokenValue) {
-        import std.algorithm : remove;
-        store = store.remove!(e => e.tokenValue == tokenValue);
+
+    void removeByTokenValue(TenantId tenantId, string tokenValue) {
+        foreach (e; findByTenant(tenantId))
+            if (e.tokenValue == tokenValue) {
+                remove(e);
+                return;
+            }
     }
     // #endregion ByTokenValue
 
     // #region ByClientId
-    size_t countByClientId(string clientId) {
-        return findByClientId(clientId).length;
+    size_t countByClientId(TenantId tenantId, string clientId) {
+        return findByClientId(tenantId, clientId).length;
     }
-    RefreshToken[] findByClientId(string clientId) {
-        return findAll().filter!(e => e.clientId == clientId).array;
+
+    RefreshToken[] filterByClientId(TenantId tenantId, string clientId) {
+        return findByTenant(tenantId).filter!(e => e.clientId == clientId).array;
     }
-    void removeByClientId(string clientId) {
-        findByClientId(clientId).each!(e => remove(e));
+
+    RefreshToken[] findByClientId(TenantId tenantId, string clientId) {
+        return filterByClientId(tenantId, clientId);
+    }
+
+    void removeByClientId(TenantId tenantId, string clientId) {
+        findByClientId(tenantId, clientId).each!(e => remove(e));
     }
     // #endregion ByClientId
 
     // #region ByStatus
-    size_t countByStatus(TokenStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, TokenStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    RefreshToken[] findByStatus(TokenStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+
+    RefreshToken[] filterByStatus(TenantId tenantId, TokenStatus status) {
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
-    void removeByStatus(TokenStatus status) {
-        findByStatus(status).each!(e => remove(e));
+
+    RefreshToken[] findByStatus(TenantId tenantId, TokenStatus status) {
+        return filterByStatus(tenantId, status);
+    }
+
+    void removeByStatus(TenantId tenantId, TokenStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
     // #endregion ByStatus
 

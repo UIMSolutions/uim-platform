@@ -24,8 +24,6 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createStream(CreateLogStreamRequest req) {
-    import std.uuid : randomUUID;
-
     if (req.name.length == 0)
       return CommandResult(false, "", "Stream name is required");
 
@@ -42,8 +40,8 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, stream.id.value, "");
   }
 
-  CommandResult updateStream(TenantId tenantId, LogStreamId id, UpdateLogStreamRequest req) {
-    auto stream = repo.findById(tenantId, id);
+  CommandResult updateStream(UpdateLogStreamRequest req) {
+    auto stream = repo.findById(req.tenantId, req.streamId);
     if (stream.isNull)
       return CommandResult(false, "", "Log stream not found");
 
@@ -55,7 +53,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     stream.updatedAt = clockSeconds();
 
     repo.update(stream);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, stream.id.value, "");
   }
 
   bool hasStream(TenantId tenantId, LogStreamId id) {
@@ -66,11 +64,11 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  LogStream[] listLogStreams(TenantId tenantId) {
+  LogStream[] listStreams(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteLogStream(TenantId tenantId, LogStreamId id) {
+  CommandResult deleteStream(TenantId tenantId, LogStreamId id) {
     auto stream = repo.findById(tenantId, id);
     if (stream.isNull)
       return CommandResult(false, "", "Log stream not found");

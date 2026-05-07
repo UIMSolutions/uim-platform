@@ -8,7 +8,6 @@ module uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.destination : DestinationProperty;
 
-
 import uim.platform.connectivity;
 
 mixin(ShowModule!());
@@ -18,6 +17,7 @@ mixin(ShowModule!());
 
 struct CreateDestinationRequest {
   TenantId tenantId;
+  
   string name;
   string description;
   string url;
@@ -39,6 +39,9 @@ struct CreateDestinationRequest {
 }
 
 struct UpdateDestinationRequest {
+  TenantId tenantId;
+  DestinationId destinationId;
+
   string description;
   string url;
   string authType;
@@ -59,8 +62,9 @@ struct UpdateDestinationRequest {
 /// --- Cloud Connector DTOs ---
 
 struct RegisterConnectorRequest {
-  SubaccountId subaccountId;
   TenantId tenantId;
+  SubaccountId subaccountId;
+
   string locationId;
   string description;
   string connectorVersion;
@@ -70,14 +74,17 @@ struct RegisterConnectorRequest {
 }
 
 struct HeartbeatRequest {
+  TenantId tenantId;
+
   string connectorVersion;
 }
 
 /// --- Service Channel DTOs ---
 
 struct CreateChannelRequest {
-  ConnectorId connectorId;
   TenantId tenantId;
+  ConnectorId connectorId;
+
   string name;
   string channelType; // "http", "rfc", "tcp"
   string virtualHost;
@@ -89,8 +96,9 @@ struct CreateChannelRequest {
 /// --- Access Rule DTOs ---
 
 struct CreateAccessRuleRequest {
-  ConnectorId connectorId;
   TenantId tenantId;
+  ConnectorId connectorId;
+
   string description;
   string protocol; // "http", "https", "rfc", "tcp", "ldap"
   string virtualHost;
@@ -102,6 +110,9 @@ struct CreateAccessRuleRequest {
 }
 
 struct UpdateAccessRuleRequest {
+  TenantId tenantId;
+  RuleId ruleId;
+
   string description;
   string urlPathPrefix;
   string policy;
@@ -115,6 +126,7 @@ struct UpdateAccessRuleRequest {
 
 struct CreateCertificateRequest {
   TenantId tenantId;
+
   string name;
   string description;
   string certType; // "x509", "pkcs12", "pem", "jks"
@@ -128,6 +140,9 @@ struct CreateCertificateRequest {
 }
 
 struct UpdateCertificateRequest {
+  TenantId tenantId;
+  CertificateId certificateId;
+
   string description;
   bool active;
 }

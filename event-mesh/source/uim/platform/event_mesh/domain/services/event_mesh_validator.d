@@ -17,19 +17,19 @@ struct EventMeshValidator {
     }
 
     static bool isValidQueue(Queue q) {
-        return q.name.length > 0 && !q.tenantId.isNull && !q.brokerServiceId.isNull;
+        return q.name.length > 0 && !q.tenantId.isNull && !q.serviceId.isNull;
     }
 
     static bool isValidTopic(Topic t) {
-        return t.name.length > 0 && !t.tenantId.isNull && !t.brokerServiceId.isNull;
+        return t.name.length > 0 && !t.tenantId.isNull && !t.serviceId.isNull;
     }
 
     static bool isValidSubscription(EventSubscription s) {
-        return s.name.length > 0 && !s.tenantId.isNull && !s.brokerServiceId.isNull;
+        return s.name.length > 0 && !s.tenantId.isNull && !s.serviceId.isNull;
     }
 
     static bool isValidEventMessage(EventMessage m) {
-        return !m.tenantId.isNull && !m.brokerServiceId.isNull && m.payload.length > 0;
+        return !m.tenantId.isNull && !m.serviceId.isNull && m.payload.length > 0;
     }
 
     static bool isValidEventSchema(EventSchema s) {
@@ -37,10 +37,10 @@ struct EventMeshValidator {
     }
 
     static bool isValidEventApplication(EventApplication a) {
-        return a.name.length > 0 && !a.tenantId.isNull && !a.brokerServiceId.isNull;
+        return a.name.length > 0 && !a.tenantId.isNull /* && !a.serviceId.isNull */; // TODO: add serviceId to EventApplication
     }
 
     static bool isValidMeshBridge(MeshBridge b) {
-        return b.name.length > 0 && !b.tenantId.isNull && !b.sourceBrokerId.isNull && !b.targetBrokerId.isNull;
+        return b.name.length > 0 && !b.tenantId.isNull && !b.sourceServiceId.isNull && !b.targetServiceId.isNull;
     }
 }

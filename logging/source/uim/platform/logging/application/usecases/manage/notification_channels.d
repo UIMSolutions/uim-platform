@@ -23,14 +23,14 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateNotificationChannelRequest req) {
+  CommandResult createChannel(CreateNotificationChannelRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
     NotificationChannel channel;
-    channel.initEntity(req.tenantId);
+    channel.initEntity(req.tenantId, req.createdBy);
     channel.name = req.name;
     channel.description = req.description;
     channel.channelType = req.channelType.to!ChannelType;
@@ -42,18 +42,13 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     channel.webhookMethod = req.webhookMethod;
     channel.slackWebhookUrl = req.slackWebhookUrl;
     channel.slackChannel = req.slackChannel;
-    channel.createdBy = req.createdBy;
 
     repo.save(channel);
     return CommandResult(true, channel.id.value, "");
   }
 
-  CommandResult update(string id, UpdateNotificationChannelRequest req) {
-    return update(NotificationChannelId(id), req);
-  }
-
-  CommandResult update(NotificationChannelId id, UpdateNotificationChannelRequest req) {
-    auto channel = repo.findById(tenantId, id);
+  CommandResult updateChannel(UpdateNotificationChannelRequest req) {
+    auto channel = repo.findById(req.tenantId, req.channelId);
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
@@ -84,7 +79,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, updated.id.value, "");
   }
 
-  NotificationChannel getChannel(NotificationChannelId id) {
+  NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -92,9 +87,13 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteChannel(NotificationChannelId id) {
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+  CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
+    auto channel = repo.findById(tenantId, id);
+    if (channel.isNull)
+      return CommandResult(false, "", "Notification channel not found");
+
+    repo.remove(channel);
+    return CommandResult(true, channel.id.value, "");
   }
 
 }

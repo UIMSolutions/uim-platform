@@ -14,8 +14,8 @@ mixin(ShowModule!());
 struct MeshBridge {
     mixin TenantEntity!(MeshBridgeId);
     
-    BrokerServiceId sourceBrokerId;
-    BrokerServiceId targetBrokerId;
+    BrokerServiceId sourceServiceId;
+    BrokerServiceId targetServiceId;
     string name;
     string description;
     BridgeStatus status = BridgeStatus.provisioning;
@@ -35,8 +35,8 @@ struct MeshBridge {
     
     Json toJson() const {
         return entityToJson
-            .set("sourceBrokerId", sourceBrokerId)
-            .set("targetBrokerId", targetBrokerId)
+            .set("sourceBrokerServiceId", sourceServiceId)
+            .set("targetBrokerServiceId", targetServiceId)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)

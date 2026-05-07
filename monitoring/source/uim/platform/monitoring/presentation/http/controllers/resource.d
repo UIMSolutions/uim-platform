@@ -70,7 +70,7 @@ class ResourceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto resources = usecase.listResources(tenantId);
 
       auto arr = resources.map!(resource => resource.toJson).array.toJson;
@@ -88,13 +88,15 @@ class ResourceController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
-      if (!usecase.existsResource(id)) {
+
+      if (!usecase.existsResource(tenantId, id)) {
         writeError(res, 404, "Resource not found");
         return;
       }
 
-      auto resource = usecase.getResource(id);
+      auto resource = usecase.getResource(tenantId, id);
       res.writeJsonBody(resource.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -103,9 +105,13 @@ class ResourceController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateResourceRequest r;
+      r.tenantId = tenantId;
+      r.resourceId = id;
       r.description = j.getString("description");
       r.url = j.getString("url");
       r.runtime = j.getString("runtime");
@@ -113,7 +119,7 @@ class ResourceController : PlatformController {
       r.instanceCount = j.getInteger("instanceCount");
       r.tags = getStrings(j, "tags");
 
-      auto result = usecase.updateResource(id, r);
+      auto result = usecase.updateResource(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -130,8 +136,10 @@ class ResourceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
-      auto result = usecase.removeResource(id);
+
+      auto result = usecase.deleteMonitoredResource(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -18,27 +18,23 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Topic getById(TopicId id) {
-        return repo.findById(tenantId, id);
+    Topic getTopic(TenantId tenantId, TopicId topicId) {
+        return repo.findById(tenantId, topicId);
     }
 
-    Topic[] list() {
-        return repo.findAll();
-    }
-
-    Topic[] listByTenant(TenantId tenantId) {
+    Topic[] listTopics(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Topic[] listByBrokerService(BrokerServiceId brokerServiceId) {
-        return repo.findByBrokerService(brokerServiceId);
+    Topic[] listTopics(TenantId tenantId, BrokerServiceId serviceId) {
+        return repo.findByBrokerService(tenantId, serviceId);
     }
 
-    CommandResult create(TopicDTO dto) {
+    CommandResult createTopic(TopicDTO dto) {
         Topic t;
         t.id = dto.topicId;
         t.tenantId = dto.tenantId;
-        t.brokerServiceId = dto.brokerServiceId;
+        // TODO: t.serviceId = dto.serviceId;
         t.name = dto.name;
         t.description = dto.description;
         t.topicString = dto.topicString;
@@ -48,14 +44,16 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         t.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidTopic(t))
             return CommandResult(false, "", "Invalid topic data");
+
         repo.save(t);
         return CommandResult(true, dto.topicId.value, "");
     }
 
-    CommandResult update(TopicDTO dto) {
-        auto existing = repo.findById(dto.topicId);
+    CommandResult updateTopic(TopicDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.topicId);
         if (existing.isNull)
             return CommandResult(false, "", "Topic not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.topicString.length > 0) existing.topicString = dto.topicString;
@@ -65,8 +63,8 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.topicId.value, "");
     }
 
-    CommandResult deleteTopic(TopicId id) {
-        auto entity = repo.findById(tenantId, id);
+    CommandResult deleteTopic(TenantId tenantId, TopicId topicId) {
+        auto entity = repo.findById(tenantId, topicId);
         if (entity.isNull)
             return CommandResult(false, "", "Topic not found");
 

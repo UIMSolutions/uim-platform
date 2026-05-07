@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface TopicRepository : ITenantRepository!(Topic, TopicId) {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId);
-    Topic[] findByBrokerService(BrokerServiceId brokerServiceId);
-    void removeByBrokerService(BrokerServiceId brokerServiceId);
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    Topic[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
-    size_t countByStatus(TopicStatus status);
-    Topic[] findByStatus(TopicStatus status);
-    void removeByStatus(TopicStatus status);
+    size_t countByStatus(TenantId tenantId, TopicStatus status);
+    Topic[] findByStatus(TenantId tenantId, TopicStatus status);
+    void removeByStatus(TenantId tenantId, TopicStatus status);
 
 }

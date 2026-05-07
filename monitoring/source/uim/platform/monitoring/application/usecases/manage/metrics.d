@@ -55,11 +55,11 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, definition.id.value, "");
   }
 
-  CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
-    if (!definitions.existsById(id))
+  CommandResult updateDefinition(UpdateMetricDefinitionRequest req) {
+    auto def = definitions.findById(req.tenantId, req.id);
+    if (def.isNull)
       return CommandResult(false, "", "Metric definition not found");
 
-    auto def = definitions.findById(tenantId, id);
     if (req.displayName.length > 0)
       def.displayName = req.displayName;
     if (req.description.length > 0)
@@ -69,10 +69,10 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     def.isEnabled = req.isEnabled;
 
     definitions.update(def);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, def.id.value, "");
   }
 
-  MetricDefinition getDefinition(MetricDefinitionId id) {
+  MetricDefinition getDefinition(TenantId tenantId, MetricDefinitionId id) {
     return definitions.findById(tenantId, id);
   }
 
@@ -80,7 +80,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     return definitions.findByTenant(tenantId);
   }
 
-  CommandResult deleteMetricDefinition(MetricDefinitionId id) {
+  CommandResult deleteMetricDefinition(TenantId tenantId, MetricDefinitionId id) {
     auto definition = definitions.findById(tenantId, id);
     if (definition.isNull)
       return CommandResult(false, "", "Metric definition not found");

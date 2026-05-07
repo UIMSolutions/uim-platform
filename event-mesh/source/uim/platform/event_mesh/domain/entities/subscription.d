@@ -14,10 +14,11 @@ mixin(ShowModule!());
 struct EventSubscription {
     mixin TenantEntity!EventSubscriptionId;
 
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     TopicId topicId;
     QueueId queueId;
     EventApplicationId applicationId;
+    
     string name;
     string description;
     SubscriptionStatus status = SubscriptionStatus.active;
@@ -32,7 +33,7 @@ struct EventSubscription {
 
     Json toJson() const {
         return entityToJson()
-            .set("brokerServiceId", brokerServiceId)
+            .set("brokerServiceId", serviceId)
             .set("topicId", topicId)
             .set("queueId", queueId)
             .set("applicationId", applicationId)

@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing - access rule persistence.
 interface AccessRuleRepository : ITenantRepository!(AccessRule, RuleId) {
   
-  size_t countByConnector(ConnectorId connectorId);
-  AccessRule[] findByConnector(ConnectorId connectorId);
-  void removeByConnector(ConnectorId connectorId);
+  size_t countByConnector(TenantId tenantId, ConnectorId connectorId);
+  AccessRule[] findByConnector(TenantId tenantId, ConnectorId connectorId);
+  void removeByConnector(TenantId tenantId, ConnectorId connectorId);
 
 }

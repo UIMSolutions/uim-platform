@@ -13,66 +13,73 @@ mixin(ShowModule!());
 
 class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
 
-    bool existsByTokenValue(string tokenValue) {
-        foreach (e; findAll)
+    bool existsByTokenValue(TenantId tenantId, string tokenValue) {
+        foreach (e; findByTenant(tenantId))
             if (e.tokenValue == tokenValue)
                 return true;
         return false;
     }
 
-    AccessToken findByTokenValue(string tokenValue) {
-        foreach (e; findAll)
+    AccessToken findByTokenValue(TenantId tenantId, string tokenValue) {
+        foreach (e; findByTenant(tenantId))
             if (e.tokenValue == tokenValue)
                 return e;
         return AccessToken.init;
     }
+    void removeByTokenValue(TenantId tenantId, string tokenValue) {
+        foreach (e; findByTenant(tenantId))
+            if (e.tokenValue == tokenValue) {
+                remove(e);
+                return;
+            }
+    }
 
-    size_t countByClientId(string clientId) {
-        return findByClientId(clientId).length;
+    size_t countByClientId(TenantId tenantId, string clientId) {
+        return findByClientId(tenantId, clientId).length;
     }
 
     AccessToken[] filterByClientId(AccessToken[] tokens, string clientId) {
         return tokens.filter!(e => e.clientId == clientId).array;
     }
 
-    AccessToken[] findByClientId(string clientId) {
-        return findAll().filter!(e => e.clientId == clientId).array;
+    AccessToken[] findByClientId(TenantId tenantId, string clientId) {
+        return filterByClientId(findByTenant(tenantId), clientId);
     }
 
-    void removeByClientId(string clientId) {
-        findByClientId(clientId).each!(e => remove(e));
+    void removeByClientId(TenantId tenantId, string clientId) {
+        findByClientId(tenantId, clientId).each!(e => remove(e));
     }
 
-    size_t countByUserId(UserId userId) {
-        return findByUserId(userId).length;
+    size_t countByUserId(TenantId tenantId, UserId userId) {
+        return findByUserId(tenantId, userId).length;
     }
 
     AccessToken[] filterByUserId(AccessToken[] tokens, UserId userId) {
         return tokens.filter!(e => e.userId == userId).array;
     }
 
-    AccessToken[] findByUserId(UserId userId) {
-        return findAll().filter!(e => e.userId == userId).array;
+    AccessToken[] findByUserId(TenantId tenantId, UserId userId) {
+        return filterByUserId(findByTenant(tenantId), userId);
     }
 
-    void removeByUserId(UserId userId) {
-        findByUserId(userId).each!(e => remove(e));
+    void removeByUserId(TenantId tenantId, UserId userId) {
+        findByUserId(tenantId, userId).each!(e => remove(e));
     }
 
-    size_t countByStatus(TokenStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, TokenStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
     AccessToken[] filterByStatus(AccessToken[] tokens, TokenStatus status) {
         return tokens.filter!(e => e.status == status).array;
     }
 
-    AccessToken[] findByStatus(TokenStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    AccessToken[] findByStatus(TenantId tenantId, TokenStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
-    void removeByStatus(TokenStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, TokenStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

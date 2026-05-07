@@ -17,6 +17,7 @@ mixin(ShowModule!());
 struct IngestLogRequest {
   TenantId tenantId;
   LogStreamId streamId;
+
   string level;
   string source;
   string message;
@@ -35,6 +36,7 @@ struct IngestLogRequest {
 
 struct IngestLogBatchRequest {
   TenantId tenantId;
+
   IngestLogRequest[] entries;
 }
 
@@ -42,6 +44,7 @@ struct IngestLogBatchRequest {
 
 struct CreateLogStreamRequest {
   TenantId tenantId;
+
   string name;
   string description;
   string sourceType;
@@ -50,13 +53,15 @@ struct CreateLogStreamRequest {
 }
 
 struct UpdateLogStreamRequest {
+  TenantId tenantId;
+  LogStreamId streamId;
+
   string description;
   string retentionPolicyId;
   bool isActive;
 }
 
 // --- Trace / Span Ingestion ---
-
 struct SpanEventDTO {
   string name;
   long timestamp;
@@ -65,8 +70,9 @@ struct SpanEventDTO {
 
 struct IngestSpanRequest {
   TenantId tenantId;
-  TraceId traceId;
+  string traceId;
   SpanId parentSpanId;
+
   string operationName;
   string serviceName;
   long startTime;
@@ -87,6 +93,7 @@ struct IngestSpanBatchRequest {
 
 struct SearchLogsRequest {
   TenantId tenantId;
+
   string query;
   string level;
   LogStreamId streamId;
@@ -105,7 +112,9 @@ struct SearchLogsResponse {
 // --- Dashboard ---
 
 struct PanelDTO {
+  TenantId tenantId;
   PanelId panelId;
+
   string title;
   string panelType;
   string query;
@@ -117,6 +126,7 @@ struct PanelDTO {
 
 struct CreateDashboardRequest {
   TenantId tenantId;
+
   string name;
   string description;
   bool isDefault;
@@ -125,6 +135,9 @@ struct CreateDashboardRequest {
 }
 
 struct UpdateDashboardRequest {
+  TenantId tenantId;
+  DashboardId dashboardId;
+
   string name;
   string description;
   bool isDefault;
@@ -135,6 +148,7 @@ struct UpdateDashboardRequest {
 
 struct CreateRetentionPolicyRequest {
   TenantId tenantId;
+
   string name;
   string description;
   string dataType;
@@ -145,12 +159,14 @@ struct CreateRetentionPolicyRequest {
 }
 
 struct UpdateRetentionPolicyRequest {
+  TenantId tenantId;
+  RetentionPolicyId policyId;
+
   string description;
   int retentionDays;
   double maxSizeGB;
   bool isDefault;
   bool isActive;
-  TenantId tenantId;
 }
 
 // --- Alert Rule ---
@@ -172,6 +188,9 @@ struct CreateAlertRuleRequest {
 }
 
 struct UpdateAlertRuleRequest {
+  TenantId tenantId;
+  AlertRuleId ruleId;
+
   string description;
   string query;
   string condition;
@@ -203,6 +222,7 @@ struct ResolveAlertRequest {
 
 struct CreateNotificationChannelRequest {
   TenantId tenantId;
+
   string name;
   string description;
   string channelType;
@@ -217,6 +237,9 @@ struct CreateNotificationChannelRequest {
 }
 
 struct UpdateNotificationChannelRequest {
+  TenantId tenantId;
+  NotificationChannelId channelId;
+
   string description;
   string state;
   string[] emailRecipients;
@@ -248,6 +271,8 @@ struct CreatePipelineRequest {
 }
 
 struct UpdatePipelineRequest {
+  TenantId tenantId;
+  PipelineId pipelineId;
   string description;
   string format;
   ProcessorDTO[] processors;

@@ -39,9 +39,11 @@ class MetricDefinitionController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateMetricDefinitionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.displayName = j.getString("displayName");
       r.description = j.getString("description");
@@ -67,11 +69,10 @@ class MetricDefinitionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto defs = usecase.listDefinitions(tenantId);
 
       auto arr = defs.map!(d => d.toJson).array.toJson;
-
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", defs.length)
@@ -85,8 +86,10 @@ class MetricDefinitionController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
-      auto d = usecase.getDefinition(id);
+
+      auto d = usecase.getDefinition(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Metric definition not found");
         return;
@@ -99,15 +102,19 @@ class MetricDefinitionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateMetricDefinitionRequest request;
+      request.tenantId = tenantId;
+      request.id = id;
       request.displayName = j.getString("displayName");
       request.description = j.getString("description");
       request.aggregation = j.getString("aggregation");
       request.isEnabled = j.getBoolean("isEnabled", true);
 
-      auto result = usecase.updateDefinition(id, request);
+      auto result = usecase.updateDefinition(request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -124,8 +131,10 @@ class MetricDefinitionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteMetricDefinition(id);
+
+      auto result = usecase.deleteMetricDefinition(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

@@ -1,0 +1,27 @@
+erDiagram
+    Tenant {
+        TenantId id PK
+        string name
+    }
+    
+    Workspace {
+        WorkspaceId id PK
+        TenantId tenantId
+        string name
+    }
+    
+    PromptCollection {
+        PromptCollectionId id PK
+        TenantId tenantId
+        WorkspaceId workspaceId
+        string name
+    }
+    
+    Prompt {
+        PromptId id PK
+        TenantId tenantId
+        PromptCollectionId collectionId
+        string name
+        string content
+    }
+

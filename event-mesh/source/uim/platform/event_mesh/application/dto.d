@@ -12,8 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 struct BrokerServiceDTO {
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     TenantId tenantId;
+
     string name;
     string description;
     string status;
@@ -36,7 +37,8 @@ struct BrokerServiceDTO {
 struct QueueDTO {
     QueueId queueId;
     TenantId tenantId;
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
+
     string name;
     string description;
     string queueType;
@@ -61,7 +63,8 @@ struct QueueDTO {
 struct TopicDTO {
     TopicId topicId;
     TenantId tenantId;
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
+
     string name;
     string description;
     string status;
@@ -76,12 +79,13 @@ struct TopicDTO {
 }
 
 struct SubscriptionDTO {
-    EventSubscriptionId eventSubscriptionId;
+    EventSubscriptionId subscriptionId;
     TenantId tenantId;
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     TopicId topicId;
     QueueId queueId;
-    EventApplicationId eventApplicationId;
+    EventApplicationId applicationId;
+
     string name;
     string description;
     string status;
@@ -98,12 +102,13 @@ struct SubscriptionDTO {
 }
 
 struct EventMessageDTO {
-    EventMessageId eventMessageId;
+    EventMessageId messageId;
     TenantId tenantId;
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     TopicId topicId;
     QueueId queueId;
-    EventApplicationId publisherId;
+    EventApplicationId applicationId;
+
     string correlationId;
     string contentType;
     string payload;
@@ -118,8 +123,9 @@ struct EventMessageDTO {
 }
 
 struct EventSchemaDTO {
-    EventSchemaId eventSchemaId;
     TenantId tenantId;
+    EventSchemaId schemaId;
+
     string name;
     string description;
     string format;
@@ -135,14 +141,15 @@ struct EventSchemaDTO {
 }
 
 struct EventApplicationDTO {
-    EventApplicationId eventApplicationId;
+    EventApplicationId applicationId;
     TenantId tenantId;
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
+    string applicationDomainId;
+
     string name;
     string description;
     string status;
     string applicationType;
-    string applicationDomainId;
     string clientUsername;
     string clientProfile;
     string aclProfile;
@@ -159,10 +166,11 @@ struct EventApplicationDTO {
 }
 
 struct MeshBridgeDTO {
-    MeshBridgeId meshBridgeId;
+    MeshBridgeId bridgeId;
     TenantId tenantId;
-    BrokerServiceId sourceBrokerId;
-    BrokerServiceId targetBrokerId;
+    BrokerServiceId sourceServiceId;
+    BrokerServiceId targetServiceId;
+    
     string name;
     string description;
     string status;

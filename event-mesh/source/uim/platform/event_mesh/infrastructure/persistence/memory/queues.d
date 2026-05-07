@@ -13,30 +13,30 @@ mixin(ShowModule!());
 
 class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
-        return findByBrokerService(brokerServiceId).length;
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return findByBrokerService(tenantId, serviceId).length;
     }
-    Queue[] filterByBrokerService(Queue[] queues, BrokerServiceId brokerServiceId) {
-        return queues.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    Queue[] filterByBrokerService(Queue[] queues, BrokerServiceId serviceId) {
+        return queues.filter!(e => e.serviceId == serviceId).array;
     }
-    Queue[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return filterByBrokerService(findAll(), brokerServiceId);
+    Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
-    void removeByBrokerService(BrokerServiceId brokerServiceId) {
-        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        findByBrokerService(tenantId, serviceId).each!(e => remove(e));
     }
 
-    size_t countByStatus(QueueStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, QueueStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     Queue[] filterByStatus(Queue[] queues, QueueStatus status) {
         return queues.filter!(e => e.status == status).array;
     }
-    Queue[] findByStatus(QueueStatus status) {
-        return filterByStatus(findAll(), status);
+    Queue[] findByStatus(TenantId tenantId, QueueStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(QueueStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, QueueStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

@@ -35,7 +35,7 @@ struct NotificationChannel {
       .set("description", description)
       .set("channelType", channelType.to!string())
       .set("state", state.to!string())
-      .set("emailRecipients", emailRecipients)
+      .set("emailRecipients", emailRecipients.toJson)
       .set("emailSubjectPrefix", emailSubjectPrefix)
       .set("webhookUrl", webhookUrl)
       .set("webhookSecret", webhookSecret)

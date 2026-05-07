@@ -30,7 +30,7 @@ struct AuthorizationCode {
             .set("userId", userId)
             .set("redirectUri", redirectUri)
             .set("scopes", scopes)
-            .set("status", status.toString())
+            .set("status", status.to!string())
             .set("expiresAt", expiresAt)
             .set("issuedAt", issuedAt);
     }

@@ -74,7 +74,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return repo.findByApp(appId);
     }
 
-    void remove(FeatureRestrictionId id) {
+    CommandResult remove(FeatureRestrictionId id) {
         repo.removeById(id);
     }
 

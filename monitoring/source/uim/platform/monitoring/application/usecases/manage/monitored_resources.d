@@ -32,31 +32,28 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource name is required");
 
     MonitoredResource resource;
-    resource.id = randomUUID();
-    resource.tenantId = req.tenantId;
+    resource.initEntity(req.tenantId, req.registeredBy);
     resource.subaccountId = req.subaccountId;
     resource.name = req.name;
     resource.description = req.description;
-    resource.resourceType = parseResourceType(req.resourceType);
+    resource.resourceType = req.resourceType.to!ResourceType;
     resource.state = ResourceState.unknown;
     resource.url = req.url;
     resource.runtime = req.runtime;
     resource.region = req.region;
     resource.instanceCount = req.instanceCount;
     resource.tags = req.tags;
-    resource.registeredBy = req.registeredBy;
-    resource.registeredAt = clockSeconds();
     resource.lastSeenAt = resource.registeredAt;
 
     repo.save(resource);
     return CommandResult(true, resource.id.value, "");
   }
 
-  CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateResource(UpdateResourceRequest req) {
+    auto resource = repo.findById(req.tenantId, req.resourceId);
+    if (resource.isNull)
       return CommandResult(false, "", "Resource not found");
 
-    auto resource = repo.findById(tenantId, id);
     if (req.description.length > 0)
       resource.description = req.description;
     if (req.url.length > 0)
@@ -64,7 +61,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     if (req.runtime.length > 0)
       resource.runtime = req.runtime;
     if (req.state.length > 0)
-      resource.state = parseResourceState(req.state);
+      resource.state = req.state.to!ResourceState;
     if (req.instanceCount > 0)
       resource.instanceCount = req.instanceCount;
     if (req.tags.length > 0)
@@ -75,11 +72,11 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, resource.id.value, "");
   }
 
-  bool existsResource(MonitoredResourceId id) {
-    return repo.existsById(id);
+  bool existsResource(TenantId tenantId, MonitoredResourceId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  MonitoredResource getResource(MonitoredResourceId id) {
+  MonitoredResource getResource(TenantId tenantId, MonitoredResourceId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -88,47 +85,16 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
-    return repo.findByType(tenantId, parseResourceType(typeStr));
+    return repo.findByType(tenantId, typeStr.to!ResourceType);
   }
 
-  CommandResult deleteMonitoredResource(MonitoredResourceId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteMonitoredResource(TenantId tenantId, MonitoredResourceId id) {
+    auto resource = repo.findById(tenantId, id);
+    if (resource.isNull)
       return CommandResult(false, "", "Resource not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(resource);
+    return CommandResult(true, resource.id.value, "");
   }
 
-  private static ResourceType parseResourceType(string resourceType) {
-    switch (resourceType) {
-    case "html5Application":
-      return ResourceType.html5Application;
-    case "hanaXsApplication":
-      return ResourceType.hanaXsApplication;
-    case "databaseSystem":
-      return ResourceType.databaseSystem;
-    case "nodeApplication":
-      return ResourceType.nodeApplication;
-    case "customApplication":
-      return ResourceType.customApplication;
-    case "service":
-      return ResourceType.service;
-    default:
-      return ResourceType.javaApplication;
-    }
-  }
-
-  private static ResourceState parseResourceState(string resourceState) {
-    switch (resourceState) {
-    case "started":
-      return ResourceState.started;
-    case "stopped":
-      return ResourceState.stopped;
-    case "error":
-      return ResourceState.error;
-    default:
-      return ResourceState.unknown;
-    }
-  }
 }

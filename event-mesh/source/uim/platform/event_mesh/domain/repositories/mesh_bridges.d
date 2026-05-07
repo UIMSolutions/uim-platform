@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface MeshBridgeRepository : ITenantRepository!(MeshBridge, MeshBridgeId) {
 
-    size_t countBySourceBroker(BrokerServiceId sourceBrokerId);
-    MeshBridge[] findBySourceBroker(BrokerServiceId sourceBrokerId);
-    void removeBySourceBroker(BrokerServiceId sourceBrokerId);
+    size_t countBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceBrokerId);
+    MeshBridge[] findBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceBrokerId);
+    void removeBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceBrokerId);
 
-    size_t countByTargetBroker(BrokerServiceId targetBrokerId);
-    MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId);
-    void removeByTargetBroker(BrokerServiceId targetBrokerId);
+    size_t countByTargetBrokerService(TenantId tenantId, BrokerServiceId targetBrokerId);
+    MeshBridge[] findByTargetBrokerService(TenantId tenantId, BrokerServiceId targetBrokerId);
+    void removeByTargetBrokerService(TenantId tenantId, BrokerServiceId targetBrokerId);
 
-    size_t countByStatus(BridgeStatus status);
-    MeshBridge[] findByStatus(BridgeStatus status);
-    void removeByStatus(BridgeStatus status);
+    size_t countByStatus(TenantId tenantId, BridgeStatus status);
+    MeshBridge[] findByStatus(TenantId tenantId, BridgeStatus status);
+    void removeByStatus(TenantId tenantId, BridgeStatus status);
 
 }

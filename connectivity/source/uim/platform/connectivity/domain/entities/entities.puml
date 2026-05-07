@@ -1,0 +1,65 @@
+@startuml
+
+entity Tenant {
+    * id : TenantId
+    name : string
+}
+
+entity AccessRule {
+  tenantId : TenantId
+  * id : RuleId
+
+  connectorId : ConnectorId
+}
+
+entity Connector {
+  tenantId : TenantId
+  * id : ConnectorId
+
+  workspaceId : WorkspaceId
+} 
+
+entity Certificate {
+  tenantId : TenantId
+  * id : CertificateId
+
+  workspaceId : WorkspaceId
+}
+
+entity ConnectivityLog {
+  tenantId : TenantId
+  * id : LogId
+  connectorId : ConnectorId
+  accessRuleId : RuleId
+}
+
+entity Destination {
+  tenantId : TenantId
+  * id : DestinationId
+
+  connectorId : ConnectorId
+}
+
+entity ServiceChannel {
+  tenantId : TenantId
+  * id : ServiceChannelId
+
+  workspaceId : WorkspaceId
+}
+
+entity Workspace {
+    * id : WorkspaceId
+    + tenantId : TenantId
+    + name : string
+}
+
+Tenant "1" -- "0..*" Workspace : has
+Connector "1" -- "0..*" AccessRule : has  
+Connector "1" -- "0..*" ConnectivityLog : has
+Connector "1" -- "0..*" Destination : has
+Workspace "1" -- "0..*" ServiceChannel : has
+Workspace "1" -- "0..*" Connector : has
+Workspace "1" -- "0..*" Certificate : has
+AccessRule "1" -- "0..*" ConnectivityLog : generates
+
+@enduml

@@ -55,7 +55,7 @@ class StoryUseCases {
     return StoryResponse.fromEntity(s);
   }
 
-  void remove(string id) {
+  CommandResult remove(string id) {
     repo.remove(EntityId(id));
   }
 }

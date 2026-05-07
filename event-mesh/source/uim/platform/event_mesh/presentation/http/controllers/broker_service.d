@@ -30,14 +30,14 @@ class BrokerServiceController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto items = usecase.listServices(tenantId);
             auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Broker service list retrieved successfully");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Broker service list retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -47,16 +47,19 @@ class BrokerServiceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getService(tenantId, BrokerServiceId(id));
-            if (e.isNull) { writeError(res, 404, "Broker service not found"); return; }
+            if (e.isNull) {
+                writeError(res, 404, "Broker service not found");
+                return;
+            }
 
             auto resp = Json.emptyObject
-              .set("message", "Broker service retrieved successfully")
-              .set("resource", e.toJson);
-              
+                .set("message", "Broker service retrieved successfully")
+                .set("resource", e.toJson);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -65,10 +68,12 @@ class BrokerServiceController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             BrokerServiceDTO dto;
-            dto.brokerServiceId = BrokerServiceId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.serviceId = BrokerServiceId(j.getString("id"));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.region = j.getString("region");
@@ -83,8 +88,8 @@ class BrokerServiceController : PlatformController {
             auto result = usecase.createService(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Broker service created");
+                    .set("id", result.id)
+                    .set("message", "Broker service created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -97,13 +102,14 @@ class BrokerServiceController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
+            auto serviceId = BrokerServiceId(extractIdFromPath(path));
             auto j = req.json;
+
             BrokerServiceDTO dto;
             dto.tenantId = tenantId;
-            dto.brokerServiceId = BrokerServiceId(extractIdFromPath(path));
+            dto.serviceId = serviceId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.region = j.getString("region");
@@ -115,9 +121,9 @@ class BrokerServiceController : PlatformController {
             auto result = usecase.updateService(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Broker service updated");
-                  
+                    .set("id", result.id)
+                    .set("message", "Broker service updated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -129,13 +135,14 @@ class BrokerServiceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = usecase.deleteService(tenantId, BrokerServiceId(id));
+            auto id = BrokerServiceId(extractIdFromPath(path));
+
+            auto result = usecase.deleteService(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Broker service deleted");
+                    .set("message", "Broker service deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

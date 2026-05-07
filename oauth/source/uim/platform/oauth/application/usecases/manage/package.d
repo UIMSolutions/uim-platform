@@ -6,10 +6,10 @@
 module uim.platform.oauth.application.usecases.manage;
 
 public {
-    import uim.platform.oauth.application.usecases.manage.manage_oauth_clients;
-    import uim.platform.oauth.application.usecases.manage.manage_oauth_scopes;
-    import uim.platform.oauth.application.usecases.manage.manage_access_tokens;
-    import uim.platform.oauth.application.usecases.manage.manage_refresh_tokens;
-    import uim.platform.oauth.application.usecases.manage.manage_authorization_codes;
-    import uim.platform.oauth.application.usecases.manage.manage_branding_configs;
+    import uim.platform.oauth.application.usecases.manage.oauth_clients;
+    import uim.platform.oauth.application.usecases.manage.oauth_scopes;
+    import uim.platform.oauth.application.usecases.manage.access_tokens;
+    import uim.platform.oauth.application.usecases.manage.refresh_tokens;
+    import uim.platform.oauth.application.usecases.manage.authorization_codes;
+    import uim.platform.oauth.application.usecases.manage.branding_configs;
 }

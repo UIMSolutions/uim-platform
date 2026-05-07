@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface QueueRepository : ITenantRepository!(Queue, QueueId) {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId);
-    Queue[] findByBrokerService(BrokerServiceId brokerServiceId);
-    void removeByBrokerService(BrokerServiceId brokerServiceId);
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
-    size_t countByStatus(QueueStatus status);
-    Queue[] findByStatus(QueueStatus status);
-    void removeByStatus(QueueStatus status);
+    size_t countByStatus(TenantId tenantId, QueueStatus status);
+    Queue[] findByStatus(TenantId tenantId, QueueStatus status);
+    void removeByStatus(TenantId tenantId, QueueStatus status);
 
 }

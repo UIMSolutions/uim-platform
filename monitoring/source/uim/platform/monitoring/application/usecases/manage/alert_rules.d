@@ -32,8 +32,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Metric name is required");
 
     AlertRule rule;
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    rule.initEntity(req.tenantId, req.createdBy);
     rule.resourceId = req.resourceId;
     rule.name = req.name;
     rule.description = req.description;
@@ -48,19 +47,16 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.severity = parseSeverity(req.severity);
     rule.isEnabled = true;
     rule.channelIds = req.channelIds;
-    rule.createdBy = req.createdBy;
-    rule.createdAt = clockSeconds();
-    rule.updatedAt = rule.createdAt;
 
     alertRules.save(rule);
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
-    if (!alertRules.existsById(id))
+  CommandResult updateRule(UpdateAlertRuleRequest req) {
+    auto rule = alertRules.findById(req.tenantId, req.alertRuleId);
+    if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 
-    auto rule = alertRules.findById(tenantId, id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.warningThreshold != 0)
@@ -82,7 +78,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  AlertRule getRule(AlertRuleId id) {
+  AlertRule getRule(TenantId tenantId, AlertRuleId id) {
     return alertRules.findById(tenantId, id);
   }
 
@@ -98,7 +94,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return alertRules.findEnabled(tenantId);
   }
 
-  CommandResult deleteRule(AlertRuleId id) {
+  CommandResult deleteRule(TenantId tenantId, AlertRuleId id) {
     auto rule = alertRules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");

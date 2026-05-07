@@ -13,21 +13,20 @@ mixin(ShowModule!());
 
 interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId) {
 
-    bool existsByTokenValue(string tokenValue);
-    AccessToken findByTokenValue(string tokenValue);
-    void removeByTokenValue(string tokenValue);
+    bool existsByTokenValue(TenantId tenantId, string tokenValue);
+    AccessToken findByTokenValue(TenantId tenantId, string tokenValue);
+    void removeByTokenValue(TenantId tenantId, string tokenValue);
 
-    AccessToken[] findByClientId(string clientId);
-    AccessToken[] findByClientId(string clientId);
-    AccessToken[] findByClientId(string clientId);
+    size_t countByClientId(TenantId tenantId, string clientId);
+    AccessToken[] findByClientId(TenantId tenantId, string clientId);
+    void removeByClientId(TenantId tenantId, string clientId);
 
-    AccessToken[] findByUserId(UserId userId);
-    AccessToken[] findByUserId(UserId userId);
-    AccessToken[] findByUserId(UserId userId);
+    size_t countByUserId(TenantId tenantId, UserId userId);
+    AccessToken[] findByUserId(TenantId tenantId, UserId userId);
+    void removeByUserId(TenantId tenantId, UserId userId);
 
-    AccessToken[] findByStatus(TokenStatus status);
-    AccessToken[] findByStatus(TokenStatus status);
-    AccessToken[] findByStatus(TokenStatus status);
-
+    size_t countByStatus(TenantId tenantId, TokenStatus status);
+    AccessToken[] findByStatus(TenantId tenantId, TokenStatus status);
+    void removeByStatus(TenantId tenantId, TokenStatus status);
 
 }

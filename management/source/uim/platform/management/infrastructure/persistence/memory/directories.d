@@ -37,20 +37,20 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   // #endregion ByGlobalAccount
 
   // #region ByParent
-  size_t countByParent(DirectoryId parentDirectoryId) {
-    return findByParent(parentDirectoryId).length;
+  size_t countByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    return findByParent(globalAccountId, parentDirectoryId).length;
   }
 
   Directory[] filterByParent(Directory[] dirs, DirectoryId parentDirectoryId) {
     return dirs.filter!(d => d.parentDirectoryId == parentDirectoryId).array;
   }
 
-  Directory[] findByParent(DirectoryId parentDirectoryId) {
-    return filterByParent(findAll(), parentDirectoryId);
+  Directory[] findByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    return filterByParent(findByGlobalAccount(globalAccountId), parentDirectoryId);
   }
 
-  void removeByParent(DirectoryId parentDirectoryId) {
-    findByParent(parentDirectoryId).each!(d => remove(d));
+  void removeByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    findByParent(globalAccountId, parentDirectoryId).each!(d => remove(d));
   }
 
   // #endregion ByParent
@@ -60,12 +60,12 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
     return findByStatus(globalAccountId, status).length;
   }
 
-  Directory[] filterByStatus(Directory[] dirs, GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return dirs.filter!(d => d.globalAccountId == globalAccountId && d.status == status).array;
+  Directory[] filterByStatus(Directory[] dirs, DirectoryStatus status) {
+    return dirs.filter!(d => d.status == status).array;
   }
 
   Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return filterByStatus(findAll(), globalAccountId, status);
+    return filterByStatus(findByGlobalAccount(globalAccountId), status);
   }
 
   void removeByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {

@@ -13,30 +13,31 @@ mixin(ShowModule!());
 
 class MemoryEventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId), EventSchemaRepository {
 
-    size_t countByFormat(SchemaFormat format) {
-        return findByFormat(format).length;
+    size_t countByFormat(TenantId tenantId, SchemaFormat format) {
+        return findByFormat(tenantId, format).length;
     }
     EventSchema[] filterByFormat(EventSchema[] schemas, SchemaFormat format) {
         return schemas.filter!(e => e.format == format).array;
     }
-    EventSchema[] findByFormat(SchemaFormat format) {
-        return findAll().filter!(e => e.format == format).array;
+    EventSchema[] findByFormat(TenantId tenantId, SchemaFormat format) {
+        return filterByFormat(findByTenant(tenantId), format);
     }
-    void removeByFormat(SchemaFormat format) {
-        findByFormat(format).each!(e => remove(e));
+    void removeByFormat(TenantId tenantId, SchemaFormat format) {
+        findByFormat(tenantId, format).each!(e => remove(e));
     }
 
-    size_t countByStatus(SchemaStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, SchemaStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     EventSchema[] filterByStatus(EventSchema[] schemas, SchemaStatus status) {
         return schemas.filter!(e => e.status == status).array;
     }
-    EventSchema[] findByStatus(SchemaStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    EventSchema[] findByStatus(TenantId tenantId, SchemaStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(SchemaStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    
+    void removeByStatus(TenantId tenantId, SchemaStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

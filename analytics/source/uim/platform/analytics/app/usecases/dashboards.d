@@ -57,7 +57,7 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  void remove(string id) {
+  CommandResult remove(string id) {
     repo.remove(EntityId(id));
   }
 }

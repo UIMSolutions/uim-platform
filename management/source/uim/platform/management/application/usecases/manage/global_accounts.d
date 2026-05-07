@@ -56,10 +56,6 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult update(string id, UpdateGlobalAccountRequest req) {
-    return update(GlobalAccountId(id), req);
-  }
-
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
@@ -81,10 +77,6 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult suspend(string id) {
-    return suspend(GlobalAccountId(id));
-  }
-
   CommandResult suspend(GlobalAccountId accountId) {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
@@ -100,10 +92,6 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     emitEvent(eventRepo, accountid.value, "", PlatformEventCategory.globalAccountChange,
       "globalAccount.suspended", "Global account suspended", UserId("system"));
     return CommandResult(true, accountid.value, "");
-  }
-
-  CommandResult reactivate(string id) {
-    return reactivate(GlobalAccountId(id));
   }
 
   CommandResult reactivate(GlobalAccountId accountId) {

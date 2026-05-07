@@ -20,6 +20,7 @@ class TopicController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/topics", &handleList);
         router.get("/api/v1/event-mesh/topics/*", &handleGet);
         router.post("/api/v1/event-mesh/topics", &handleCreate);
@@ -29,7 +30,8 @@ class TopicController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listTopics(tenantId);
             auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
@@ -44,10 +46,10 @@ class TopicController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = usecase.getById(TopicId(id));
+            auto e = usecase.getTopic(tenantId, TopicId(id));
             if (e.isNull) {
                 writeError(res, 404, "Topic not found");
                 return;
@@ -60,11 +62,12 @@ class TopicController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             TopicDTO dto;
             dto.topicId = TopicId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
+            dto.tenantId = tenantId;
+            dto.serviceId = BrokerServiceId(j.getString("brokerServiceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicString = j.getString("topicString");
@@ -73,7 +76,7 @@ class TopicController : PlatformController {
             dto.subscribeEnabled = j.getString("subscribeEnabled");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createTopic(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -90,18 +93,20 @@ class TopicController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             TopicDTO dto;
             dto.topicId = TopicId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicString = j.getString("topicString");
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateTopic(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -118,10 +123,10 @@ class TopicController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = TopicId(extractIdFromPath(path));
-            auto result = usecase.deleteTopic(id);
+            auto result = usecase.deleteTopic(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Topic deleted");

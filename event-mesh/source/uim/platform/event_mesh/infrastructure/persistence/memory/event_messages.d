@@ -13,61 +13,67 @@ mixin(ShowModule!());
 
 class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessageId), EventMessageRepository {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
-        return findByBrokerService(brokerServiceId).length;
-    }
-    EventMessage[] filterByBrokerService(EventMessage[] messages, BrokerServiceId brokerServiceId) {
-        return messages.filter!(e => e.brokerServiceId == brokerServiceId).array;
-    }   
-    EventMessage[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
-    }
-    void removeByBrokerService(BrokerServiceId brokerServiceId) {
-        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {
+        return findByBrokerService(tenantId, brokerServiceId).length;
     }
 
-    size_t countByTopic(TopicId topicId) {
-        return findByTopic(topicId).length;
+    EventMessage[] filterByBrokerService(EventMessage[] messages, BrokerServiceId serviceId) {
+        return messages.filter!(e => e.serviceId == serviceId).array;
+    }
+
+    EventMessage[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
+    }
+
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        findByBrokerService(tenantId, serviceId).each!(e => remove(e));
+    }
+
+    size_t countByTopic(TenantId tenantId, TopicId topicId) {
+        return findByTopic(tenantId, topicId).length;
     }
 
     EventMessage[] filterByTopic(EventMessage[] messages, TopicId topicId) {
         return messages.filter!(e => e.topicId == topicId).array;
     }
 
-    EventMessage[] findByTopic(TopicId topicId) {
-        return findAll().filter!(e => e.topicId == topicId).array;
-    }
-    void removeByTopic(TopicId topicId) {
-        findByTopic(topicId).each!(e => remove(e));
+    EventMessage[] findByTopic(TenantId tenantId, TopicId topicId) {
+        return filterByTopic(findByTenant(tenantId), topicId);
     }
 
-
-    size_t countByQueue(QueueId queueId) {
-        return findByQueue(queueId).length;
-    }
-        EventMessage[] filterByQueue(EventMessage[] messages, QueueId queueId) {
-            return messages.filter!(e => e.queueId == queueId).array;
-        }
-    EventMessage[] findByQueue(QueueId queueId) {
-        return findAll().filter!(e => e.queueId == queueId).array;
-    }
-    void removeByQueue(QueueId queueId) {
-        findByQueue(queueId).removeAll;
+    void removeByTopic(TenantId tenantId, TopicId topicId) {
+        findByTopic(tenantId, topicId).each!(e => remove(e));
     }
 
-     size_t countByStatus(MessageStatus status) {
-        return findByStatus(status).length;
+    size_t countByQueue(TenantId tenantId, QueueId queueId) {
+        return findByQueue(tenantId, queueId).length;
     }
 
-        EventMessage[] filterByStatus(EventMessage[] messages, MessageStatus status) {
-            return messages.filter!(e => e.status == status).array;
-        }
-
-    EventMessage[] findByStatus(MessageStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    EventMessage[] filterByQueue(EventMessage[] messages, QueueId queueId) {
+        return messages.filter!(e => e.queueId == queueId).array;
     }
 
-    void removeByStatus(MessageStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    EventMessage[] findByQueue(TenantId tenantId, QueueId queueId) {
+        return filterByQueue(findByTenant(tenantId), queueId);
+    }
+
+    void removeByQueue(TenantId tenantId, QueueId queueId) {
+        findByQueue(tenantId, queueId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(TenantId tenantId, MessageStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    EventMessage[] filterByStatus(EventMessage[] messages, MessageStatus status) {
+        return messages.filter!(e => e.status == status).array;
+    }
+
+    EventMessage[] findByStatus(TenantId tenantId, MessageStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, MessageStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 }

@@ -14,6 +14,6 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing - service channel persistence.
 interface ChannelRepository : ITenantRepository!(ServiceChannel, ChannelId) {
-  ServiceChannel[] findByConnector(ConnectorId connectorId);
+  ServiceChannel[] findByConnector(TenantId tenantId, ConnectorId connectorId);
   ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status);
 }

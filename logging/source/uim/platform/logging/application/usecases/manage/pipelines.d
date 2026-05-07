@@ -10,7 +10,6 @@ module uim.platform.logging.application.usecases.manage.pipelines;
 // import uim.platform.logging.domain.types;
 // import uim.platform.logging.application.dto;
 
-
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -23,27 +22,24 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreatePipelineRequest req) {
+  CommandResult createPipeline(CreatePipelineRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Pipeline name is required");
 
     Pipeline p;
-    p.id = randomUUID();
-    p.tenantId = req.tenantId;
+    p.initEntity(req.tenantId, req.createdBy);
     p.name = req.name;
     p.description = req.description;
-    p.sourceType = toLogSourceType(req.sourceType);
-    p.format = parseFormat(req.format);
+    p.sourceType = req.sourceType.to!PipelineSourceType;
+    p.format = req.format.to!PipelineFormat;
     p.targetStreamId = req.targetStreamId;
     p.isActive = true;
-    p.createdBy = req.createdBy;
-    p.createdAt = clockSeconds();
 
     foreach (proc; req.processors) {
       PipelineProcessor pp;
-      pp.type = parseProcessorType(proc.type);
+      pp.type = proc.type.to!ProcessorType;
       pp.name = proc.name;
       pp.config = proc.config;
       pp.order_ = proc.order_;
@@ -54,19 +50,15 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult update(string id, UpdatePipelineRequest req) {
-    return update(PipelineId(id), req);
-  }
-
-  CommandResult update(PipelineId id, UpdatePipelineRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updatePipeline(UpdatePipelineRequest req) {
+    auto p = repo.findById(req.tenantId, req.pipelineId);
+    if (p.isNull)
       return CommandResult(false, "", "Pipeline not found");
 
-    auto p = repo.findById(tenantId, id);
     if (req.description.length > 0)
       p.description = req.description;
     if (req.format.length > 0)
-      p.format = parseFormat(req.format);
+      p.format = req.format.to!PipelineFormat;
     if (req.targetStreamId.value.length > 0)
       p.targetStreamId = req.targetStreamId;
     p.isActive = req.isActive;
@@ -76,7 +68,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
       p.processors = [];
       foreach (proc; req.processors) {
         PipelineProcessor pp;
-        pp.type = parseProcessorType(proc.type);
+        pp.type = proc.type.to!ProcessorType;
         pp.name = proc.name;
         pp.config = proc.config;
         pp.order_ = proc.order_;
@@ -85,14 +77,14 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, p.id.value, "");
   }
 
-  bool hasById(PipelineId id) {
-    return repo.existsById(id);
+  bool hasPipeline(TenantId tenantId, PipelineId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  Pipeline getById(PipelineId id) {
+  Pipeline getPipeline(TenantId tenantId, PipelineId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -100,61 +92,17 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Pipeline[] listActive(TenantId tenantId) {
+  Pipeline[] listActivePipelines(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
   CommandResult deletePipeline(TenantId tenantId, PipelineId id) {
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
-  }
+    auto p = repo.findById(tenantId, id);
+    if (p.isNull)
+      return CommandResult(false, "", "Pipeline not found");
 
-  private static PipelineSourceType toLogSourceType(string s) {
-    switch (s) {
-    case "cloudFoundry":
-      return PipelineSourceType.cloudFoundry;
-    case "kyma":
-      return PipelineSourceType.kyma;
-    case "kubernetes":
-      return PipelineSourceType.kubernetes;
-    case "otel":
-      return PipelineSourceType.otel;
-    default:
-      return PipelineSourceType.custom;
-    }
+    repo.remove(p);
+    return CommandResult(true, p.id.value, "");
   }
-
-  private static PipelineFormat parseFormat(string s) {
-    switch (s) {
-    case "json":
-      return PipelineFormat.json;
-    case "otel":
-      return PipelineFormat.otel;
-    case "syslog":
-      return PipelineFormat.syslog;
-    case "plaintext":
-      return PipelineFormat.plaintext;
-    default:
-      return PipelineFormat.json;
-    }
-  }
-
-  private static ProcessorType parseProcessorType(string s) {
-    switch (s) {
-    case "filter":
-      return ProcessorType.filter;
-    case "transform":
-      return ProcessorType.transform;
-    case "enrich":
-      return ProcessorType.enrich;
-    case "sample":
-      return ProcessorType.sample;
-    case "redact":
-      return ProcessorType.redact;
-    default:
-      return ProcessorType.filter;
-    }
-  }
-
 
 }

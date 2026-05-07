@@ -33,9 +33,10 @@ class RetentionController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRetentionPolicyRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataType = j.getString("dataType");
@@ -61,7 +62,7 @@ class RetentionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto policies = usecase.listPolicies(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -77,7 +78,9 @@ class RetentionController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", policies.length);
+        .set("totalCount", policies.length)
+        .set("message", "Retention policies retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -87,8 +90,8 @@ class RetentionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      auto p = usecase.getPolicy(tenantId, id);
+      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      auto p = usecase.getPolicy(tenantId, policyId);
       if (p.isNull) {
         writeError(res, 404, "Retention policy not found");
         return;
@@ -111,17 +114,18 @@ class RetentionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-
-      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      auto tenantId = req.getTenantId;
+      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdateRetentionPolicyRequest r;
-      r.retentionPolicyId = id;
+      r.policyId = policyId;
       r.description = j.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.isActive = j.getBoolean("isActive", true);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
 
       auto result = usecase.updatePolicy(r);
       if (result.success) {
@@ -141,11 +145,11 @@ class RetentionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deletePolicy(tenantId, id);
+      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      usecase.deletePolicy(tenantId, policyId);
 
       auto response = Json.emptyObject
-        .set("id", id)
+        .set("id", policyId)
         .set("message", "Retention policy deleted");
 
       res.writeJsonBody(response, 204);

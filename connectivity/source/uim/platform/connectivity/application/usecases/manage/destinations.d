@@ -78,8 +78,8 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dest.id.value, "");
   }
 
-  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
-    auto dest = destinations.findById(tenantId, id);
+  CommandResult updateDestination(UpdateDestinationRequest req) {
+    auto dest = destinations.findById(req.tenantId, req.destinationId);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -129,7 +129,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dest.id.value, "");
   }
 
-  Destination getDestination(DestinationId id) {
+  Destination getDestination(TenantId tenantId, DestinationId id) {
     return destinations.findById(tenantId, id);
   }
 
@@ -141,12 +141,12 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return destinations.findByTenant(tenantId);
   }
 
-  CommandResult deleteDestination(DestinationId id) {
+  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto dest = destinations.findById(tenantId, id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 
-    destinations.removeById(id);
+    destinations.remove(dest);
     return CommandResult(true, dest.id.value, "");
   }
 }

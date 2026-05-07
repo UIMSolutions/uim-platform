@@ -21,27 +21,27 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  AuditLogEntry[] list(TenantId tenantId) {
+  AuditLogEntry[] listLogs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  AuditLogEntry[] listByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+  AuditLogEntry[] listLogs(TenantId tenantId, NamespaceId namespaceId) {
     return repo.findByNamespace(tenantId, namespaceId);
   }
 
-  AuditLogEntry[] listByResourceType(TenantId tenantId, string resourceType) {
+  AuditLogEntry[] listLogs(TenantId tenantId, string resourceType) {
     return repo.findByResourceType(tenantId, parseResourceType(resourceType));
   }
 
-  AuditLogEntry[] listByTimeRange(TenantId tenantId, long startTime, long endTime) {
+  AuditLogEntry[] listLogs(TenantId tenantId, long startTime, long endTime) {
     return repo.findByTimeRange(tenantId, startTime, endTime);
   }
 
-  AuditLogEntry getById(AuditLogEntryId id) {
+  AuditLogEntry getLog(TenantId tenantId, AuditLogEntryId id) {
     return repo.findById(tenantId, id);
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countLogs(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 

@@ -68,7 +68,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    void remove(MobileAppId id) {
+    CommandResult remove(MobileAppId id) {
         repo.removeById(id);
     }
 

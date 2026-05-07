@@ -52,8 +52,8 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult updateDashboard(DashboardId id, UpdateDashboardRequest req) {
-    auto d = repo.findById(tenantId, id);
+  CommandResult updateDashboard(UpdateDashboardRequest req) {
+    auto d = repo.findById(req.tenantId, req.dashboardId);
     if (d.isNull)
       return CommandResult(false, "", "Dashboard not found");
 
@@ -83,15 +83,15 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     repo.update(d);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, d.id.value, "");
   }
 
-  bool hasById(DashboardId id) {
-    return repo.existsById(id);
+  bool hasById(TenantId tenantId, DashboardId dashboardId) {
+    return repo.existsById(tenantId, dashboardId);
   }
 
-  Dashboard getDashboard(DashboardId id) {
-    return repo.findById(tenantId, id);
+  Dashboard getDashboard(TenantId tenantId, DashboardId dashboardId) {
+    return repo.findById(tenantId, dashboardId);
   }
 
   Dashboard[] listDashboards(TenantId tenantId) {
@@ -102,34 +102,13 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.findDefault(tenantId);
   }
 
-  CommandResult deleteDashboard(DashboardId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
+    auto dashboard = repo.findById(tenantId, dashboardId);
+    if (dashboard.isNull)
       return CommandResult(false, "", "Dashboard not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
-  }
-
-  private static PanelType parsePanelType(string s) {
-    switch (s) {
-    case "lineChart":
-      return PanelType.lineChart;
-    case "barChart":
-      return PanelType.barChart;
-    case "pieChart":
-      return PanelType.pieChart;
-    case "table":
-      return PanelType.table;
-    case "counter":
-      return PanelType.counter;
-    case "traceView":
-      return PanelType.traceView;
-    case "heatmap":
-      return PanelType.heatmap;
-    default:
-      return PanelType.logView;
-    }
+    repo.remove(dashboard);
+    return CommandResult(true, dashboard.id.value, "");
   }
 
 

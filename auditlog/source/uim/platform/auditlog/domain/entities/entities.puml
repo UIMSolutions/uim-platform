@@ -1,0 +1,32 @@
+@startuml
+    entity Tenant {
+        * id : TenantId
+        string name : string
+    }
+    
+    entity Workspace {
+        * id : WorkspaceId
+        + tenantId : TenantId
+        + name : string
+    }
+    
+    entity PromptCollection {
+        *  id : PromptCollectionId
+        + tenantId : TenantId
+        + workspaceId : WorkspaceId
+        + name : string
+    }
+    
+    entity Prompt {
+        + id : PromptId
+        + tenantId : TenantId
+        + collectionId : PromptCollectionId
+        + name : string
+        + content : string
+    }
+
+    Tenant "1" -- "0..*" Workspace : has
+    Workspace "1" -- "0..*" PromptCollection : has
+    PromptCollection "1" -- "0..*" Prompt : has
+    
+@enduml

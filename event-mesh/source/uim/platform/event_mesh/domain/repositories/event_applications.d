@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface EventApplicationRepository : ITenantRepository!(EventApplication, EventApplicationId) {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId);
-    EventApplication[] findByBrokerService(BrokerServiceId brokerServiceId);
-    void removeByBrokerService(BrokerServiceId brokerServiceId);
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    EventApplication[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
-    size_t countByStatus(EventApplicationStatus status);
-    EventApplication[] findByStatus(EventApplicationStatus status);
-    void removeByStatus(EventApplicationStatus status);
+    size_t countByStatus(TenantId tenantId, EventApplicationStatus status);
+    EventApplication[] findByStatus(TenantId tenantId, EventApplicationStatus status);
+    void removeByStatus(TenantId tenantId, EventApplicationStatus status);
 
-    size_t countByType(EventApplicationType appType);
-    EventApplication[] findByType(EventApplicationType appType);
-    void removeByType(EventApplicationType appType);
+    size_t countByType(TenantId tenantId, EventApplicationType appType);
+    EventApplication[] findByType(TenantId tenantId, EventApplicationType appType);
+    void removeByType(TenantId tenantId, EventApplicationType appType);
 
 }

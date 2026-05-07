@@ -79,7 +79,8 @@ class AlertRuleController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", rules.length);
+        .set("totalCount", rules.length)
+        .set("message", "Alert rules retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -89,8 +90,9 @@ class AlertRuleController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
-      auto r = usecase.getRule(id);
+      auto r = usecase.getRule(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Alert rule not found");
         return;
@@ -103,9 +105,14 @@ class AlertRuleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateAlertRuleRequest r;
+      r.tenantId = tenantId;
+      r.alertRuleId = id;
+      // r.name = j.getString("name");
       r.description = j.getString("description");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
@@ -115,10 +122,11 @@ class AlertRuleController : PlatformController {
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
-      auto result = usecase.updateRule(id, r);
+      auto result = usecase.updateRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", result.id);
+        .set("id", result.id)
+        .set("message", "Alert rule updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -131,11 +139,13 @@ class AlertRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteRule(id);
+      auto result = usecase.deleteRule(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("deleted", true);
+          .set("deleted", true)
+          .set("message", "Alert rule deleted successfully");
 
         res.writeJsonBody(resp, 200);
       } else {

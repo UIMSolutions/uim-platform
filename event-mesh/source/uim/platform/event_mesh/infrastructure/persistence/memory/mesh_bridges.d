@@ -13,43 +13,43 @@ mixin(ShowModule!());
 
 class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), MeshBridgeRepository {
 
-    size_t countBySourceBroker(BrokerServiceId sourceBrokerId) {
-        return findBySourceBroker(sourceBrokerId).length;
+    size_t countBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
+        return findBySourceBrokerService(tenantId, sourceServiceId).length;
     }
-    MeshBridge[] filterBySourceBroker(MeshBridge[] bridges, BrokerServiceId sourceBrokerId) {
-        return bridges.filter!(e => e.sourceBrokerId == sourceBrokerId).array;
+    MeshBridge[] filterBySourceBrokerService(MeshBridge[] bridges, BrokerServiceId sourceServiceId) {
+        return bridges.filter!(e => e.sourceServiceId == sourceServiceId).array;
     }
-    MeshBridge[] findBySourceBroker(BrokerServiceId sourceBrokerId) {
-        return findAll().filter!(e => e.sourceBrokerId == sourceBrokerId).array;
+    MeshBridge[] findBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
+        return filterBySourceBrokerService(findByTenant(tenantId), sourceServiceId);
     }
-    void removeBySourceBroker(BrokerServiceId sourceBrokerId) {
-        findBySourceBroker(sourceBrokerId).each!(e => remove(e));
-    }
-
-    size_t countByTargetBroker(BrokerServiceId targetBrokerId) {
-        return findByTargetBroker(targetBrokerId).length;
-    }
-    MeshBridge[] filterByTargetBroker(MeshBridge[] bridges, BrokerServiceId targetBrokerId) {
-        return bridges.filter!(e => e.targetBrokerId == targetBrokerId).array;
-    }
-    MeshBridge[] findByTargetBroker(BrokerServiceId targetBrokerId) {
-        return findAll().filter!(e => e.targetBrokerId == targetBrokerId).array;
-    }
-    void removeByTargetBroker(BrokerServiceId targetBrokerId) {
-        findByTargetBroker(targetBrokerId).each!(e => remove(e));
+    void removeBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
+        findBySourceBrokerService(tenantId, sourceServiceId).each!(e => remove(e));
     }
 
-    size_t countByStatus(BridgeStatus status) {
-        return findByStatus(status).length;
+    size_t countByTargetBrokerService(TenantId tenantId, BrokerServiceId targetServiceId) {
+        return findByTargetBrokerService(tenantId, targetServiceId).length;
+    }
+    MeshBridge[] filterByTargetBrokerService(MeshBridge[] bridges, BrokerServiceId targetServiceId) {
+        return bridges.filter!(e => e.targetServiceId == targetServiceId).array;
+    }
+    MeshBridge[] findByTargetBrokerService(TenantId tenantId, BrokerServiceId targetServiceId) {
+        return filterByTargetBrokerService(findByTenant(tenantId), targetServiceId);
+    }
+    void removeByTargetBrokerService(TenantId tenantId, BrokerServiceId targetServiceId) {
+        findByTargetBrokerService(tenantId, targetServiceId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(TenantId tenantId, BridgeStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     MeshBridge[] filterByStatus(MeshBridge[] bridges, BridgeStatus status) {
         return bridges.filter!(e => e.status == status).array;
     }
-    MeshBridge[] findByStatus(BridgeStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    MeshBridge[] findByStatus(TenantId tenantId, BridgeStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(BridgeStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, BridgeStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

@@ -52,7 +52,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return resp;
   }
 
-  CommandResult update(ServiceBindingId id, UpdateServiceBindingRequest r) {
+  CommandResult update(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest r) {
     auto binding = bindings.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
@@ -70,7 +70,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  ServiceBinding getById(ServiceBindingId id) {
+  ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
     return bindings.findById(tenantId, id);
   }
 
@@ -78,8 +78,13 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return bindings.findByTenant(tenantId);
   }
 
-  void remove(ServiceBindingId id) {
-    bindings.removeById(id);
+  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
+    auto binding = bindings.findById(tenantId, id);
+    if (binding.isNull)
+      return CommandResult(false, "", "Service binding not found");
+
+    bindings.removeById(tenantId, id);
+    return CommandResult(true, binding.id.value, "");
   }
 
   size_t count(TenantId tenantId) {

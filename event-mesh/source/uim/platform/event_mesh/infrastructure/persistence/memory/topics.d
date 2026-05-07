@@ -13,30 +13,30 @@ mixin(ShowModule!());
 
 class MemoryTopicRepository : TenantRepository!(Topic, TopicId), TopicRepository {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
-        return findByBrokerService(brokerServiceId).length;
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return findByBrokerService(tenantId, serviceId).length;
     }
-    Topic[] filterByBrokerService(Topic[] topics, BrokerServiceId brokerServiceId) {
-        return topics.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    Topic[] filterByBrokerService(Topic[] topics, BrokerServiceId serviceId) {
+        return topics.filter!(e => e.serviceId == serviceId).array;
     }
-    Topic[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return findAll().filter!(e => e.brokerServiceId == brokerServiceId).array;
+    Topic[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
-    void removeByBrokerService(BrokerServiceId brokerServiceId) {
-        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        findByBrokerService(tenantId, serviceId).each!(e => remove(e));
     }
 
-    size_t countByStatus(TopicStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, TopicStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     Topic[] filterByStatus(Topic[] topics, TopicStatus status) {
         return topics.filter!(e => e.status == status).array;
     }
-    Topic[] findByStatus(TopicStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    Topic[] findByStatus(TenantId tenantId, TopicStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(TopicStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, TopicStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

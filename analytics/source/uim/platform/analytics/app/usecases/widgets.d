@@ -47,7 +47,7 @@ class WidgetUseCases {
     return result;
   }
 
-  void remove(string id) {
+  CommandResult remove(string id) {
     repo.remove(EntityId(id));
   }
 }

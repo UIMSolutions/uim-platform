@@ -13,20 +13,20 @@ mixin(ShowModule!());
 
 interface SubscriptionRepository : ITenantRepository!(EventSubscription, EventSubscriptionId) {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId);
-    EventSubscription[] findByBrokerService(BrokerServiceId brokerServiceId);
-    void removeByBrokerService(BrokerServiceId brokerServiceId);
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    EventSubscription[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
-    size_t countByTopic(TopicId topicId);
-    EventSubscription[] findByTopic(TopicId topicId);
-    void removeByTopic(TopicId topicId);
+    size_t countByTopic(TenantId tenantId, TopicId topicId);
+    EventSubscription[] findByTopic(TenantId tenantId, TopicId topicId);
+    void removeByTopic(TenantId tenantId, TopicId topicId);
 
-    size_t countByApplication(EventApplicationId applicationId);
-    EventSubscription[] findByApplication(EventApplicationId applicationId);
-    void removeByApplication(EventApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, EventApplicationId applicationId);
+    EventSubscription[] findByApplication(TenantId tenantId, EventApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, EventApplicationId applicationId);
 
-    size_t countByStatus(SubscriptionStatus status);
-    EventSubscription[] findByStatus(SubscriptionStatus status);
-    void removeByStatus(SubscriptionStatus status);
+    size_t countByStatus(TenantId tenantId, SubscriptionStatus status);
+    EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status);
+    void removeByStatus(TenantId tenantId, SubscriptionStatus status);
 
 }

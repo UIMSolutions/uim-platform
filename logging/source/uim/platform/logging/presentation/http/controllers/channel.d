@@ -33,9 +33,11 @@ class ChannelController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+ 
       CreateNotificationChannelRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.channelType = j.getString("channelType");
@@ -48,7 +50,7 @@ class ChannelController : PlatformController {
       r.slackChannel = j.getString("slackChannel");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createChannel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -64,7 +66,8 @@ class ChannelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
+
       auto channels = usecase.listChannels(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -77,7 +80,7 @@ class ChannelController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", channels.length)
+        .set("totalCount", Json(channels.length))
         .set("message", "Notification channels retrieved successfully");
         
       res.writeJsonBody(resp, 200);
@@ -88,10 +91,11 @@ class ChannelController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       
 
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
-      auto ch = usecase.getChannel(id);
+      auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
         return;
@@ -110,9 +114,12 @@ class ChannelController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateNotificationChannelRequest r;
+      r.channelId = id;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.state = j.getString("state");
       r.emailRecipients = getStrings(j, "emailRecipients");
@@ -122,7 +129,7 @@ class ChannelController : PlatformController {
       r.slackWebhookUrl = j.getString("slackWebhookUrl");
       r.slackChannel = j.getString("slackChannel");
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateChannel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -138,8 +145,10 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deleteChannel(id);
+      auto tenantId = req.getTenantId;
+      auto channelId = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
+
+      usecase.deleteChannel(tenantId, channelId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

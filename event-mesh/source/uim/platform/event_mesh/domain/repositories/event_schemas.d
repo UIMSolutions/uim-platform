@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface EventSchemaRepository : ITenantRepository!(EventSchema, EventSchemaId) {
 
-    size_t countByFormat(SchemaFormat format);
-    EventSchema[] findByFormat(SchemaFormat format);
-    void removeByFormat(SchemaFormat format);
+    size_t countByFormat(TenantId tenantId, SchemaFormat format);
+    EventSchema[] findByFormat(TenantId tenantId, SchemaFormat format);
+    void removeByFormat(TenantId tenantId, SchemaFormat format);
 
-    size_t countByStatus(SchemaStatus status);
-    EventSchema[] findByStatus(SchemaStatus status);
-    void removeByStatus(SchemaStatus status);
+    size_t countByStatus(TenantId tenantId, SchemaStatus status);
+    EventSchema[] findByStatus(TenantId tenantId, SchemaStatus status);
+    void removeByStatus(TenantId tenantId, SchemaStatus status);
 
 }

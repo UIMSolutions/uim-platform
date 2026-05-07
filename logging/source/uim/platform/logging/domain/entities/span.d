@@ -31,7 +31,7 @@ struct SpanEvent {
 struct Span {
   mixin TenantEntity!(SpanId);
 
-  TraceId traceId;
+  string traceId;
   SpanId parentSpanId;
   string operationName;
   string serviceName;

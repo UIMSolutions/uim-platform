@@ -28,7 +28,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   CommandResult registerConnector(RegisterConnectorRequest req) {
     // Check for duplicate location ID within subaccount
-    auto existing = repo.findByLocationId(req.subaccountId, req.locationId);
+    auto existing = repo.findByLocation(req.tenantId, req.subaccountId, req.locationId);
     if (!existing.isNull)
       return CommandResult(false, "",
           "Connector with locationId '" ~ req.locationId ~ "' already registered");
@@ -70,17 +70,17 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult disconnect(TenantId tenantId, ConnectorId id) {
-    auto cc = repo.findById(tenantId, id);
-    if (cc.isNull)
+    auto connector = repo.findById(tenantId, id);
+    if (connector.isNull)
       return CommandResult(false, "", "Connector not found");
 
-    cc.status = ConnectorStatus.disconnected;
-    repo.update(cc);
+    connector.status = ConnectorStatus.disconnected;
+    repo.update(connector);
 
-    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id.value,
-        "CloudConnector", "Connector disconnected: " ~ cc.locationId);
+    recordLog(connector.tenantId, ConnectivityEventType.connectionLost, connector.id.value,
+        "CloudConnector", "Connector disconnected: " ~ connector.locationId);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, connector.id.value, "");
   }
   
   CloudConnector getConnector(TenantId tenantId, ConnectorId id) {
@@ -95,16 +95,16 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult unregister(TenantId tenantId, ConnectorId id) {
-    auto cc = repo.findById(tenantId, id);
-    if (cc.isNull)
+    auto connector = repo.findById(tenantId, id);
+    if (connector.isNull)
       return CommandResult(false, "", "Connector not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(connector);
 
-    recordLog(cc.tenantId, ConnectivityEventType.connectionLost, id.value,
-        "CloudConnector", "Connector unregistered: " ~ cc.locationId);
+    recordLog(connector.tenantId, ConnectivityEventType.connectionLost, id.value,
+        "CloudConnector", "Connector unregistered: " ~ connector.locationId);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, connector.id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

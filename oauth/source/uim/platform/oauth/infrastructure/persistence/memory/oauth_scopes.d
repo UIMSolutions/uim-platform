@@ -13,40 +13,46 @@ mixin(ShowModule!());
 
 class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), OAuthScopeRepository {
 
-    bool existsByName(string name) {
-        return findAll().any!(e => e.name == name);
+    bool existsByName(TenantId tenantId, string name) {
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
-    OAuthScope findByName(string name) {
-        foreach (e; findAll)
+    OAuthScope findByName(TenantId tenantId, string name) {
+        foreach (e; findByTenant(tenantId))
             if (e.name == name) return e;
         return OAuthScope.init;
     }
-    void removeByName(string name) {
-        foreach (e; findAll)
+    void removeByName(TenantId tenantId, string name) {
+        foreach (e; findByTenant(tenantId))
             if (e.name == name) {
                 remove(e);
                 return;
             }
     }
     
-    size_t countByApplication(string applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, string applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
-    OAuthScope[] findByApplication(string applicationId) {
-        return findAll().filter!(e => e.applicationId == applicationId).array;
+    OAuthScope[] filterByApplication(OAuthScope[] scopes, string applicationId) {
+        return scopes.filter!(e => e.applicationId == applicationId).array;
     }
-    void removeByApplication(string applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    OAuthScope[] findByApplication(TenantId tenantId, string applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
+    }
+    void removeByApplication(TenantId tenantId, string applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
 
-    size_t countByStatus(ScopeStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, ScopeStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    OAuthScope[] findByStatus(ScopeStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    OAuthScope[] filterByStatus(OAuthScope[] scopes, ScopeStatus status) {
+        return scopes.filter!(e => e.status == status).array;
     }
-    void removeByStatus(ScopeStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    OAuthScope[] findByStatus(TenantId tenantId, ScopeStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, ScopeStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 

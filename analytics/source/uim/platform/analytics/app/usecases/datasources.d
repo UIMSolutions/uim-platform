@@ -67,7 +67,7 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  void remove(string id) {
+  CommandResult remove(string id) {
     repo.remove(EntityId(id));
   }
 }

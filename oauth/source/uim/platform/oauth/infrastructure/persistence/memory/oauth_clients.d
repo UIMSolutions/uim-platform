@@ -13,30 +13,39 @@ mixin(ShowModule!());
 
 class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
 
-    bool existsByClientId(string clientId) {
-        return findAll().any!(e => e.clientId == clientId);
+    // #region ByClient
+    bool existsByClient(TenantId tenantId, string clientId) {
+        return findByClient(tenantId, clientId).id != OAuthClientId.init;
     }
-    OAuthClient findByClientId(string clientId) {
-        foreach (e; findAll)
+    OAuthClient findByClient(TenantId tenantId, string clientId) {
+        foreach (e; findByTenant(tenantId))
             if (e.clientId == clientId) return e;
         return OAuthClient.init;
     }
-    void removeByClientId(string clientId) {
-        foreach (e; findAll)
+    void removeByClient(TenantId tenantId, string clientId) {
+        foreach (e; findByTenant(tenantId))
             if (e.clientId == clientId) {
                 remove(e);
                 return;
             }
     }
+    // #endregion ByClient
 
-    size_t countByStatus(ClientStatus status) {
-        return findByStatus(status).length;
+    // #region ByStatus
+    size_t countByStatus(TenantId tenantId, ClientStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    OAuthClient[] findByStatus(ClientStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+
+    OAuthClient[] filterByStatus(OAuthClient[] clients, ClientStatus status) {
+        return clients.filter!(e => e.status == status).array;
     }
-    void removeByStatus(ClientStatus status) {
-        findByStatus(status).each!(entity => remove(entity));
+
+    OAuthClient[] findByStatus(TenantId tenantId, ClientStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
+    void removeByStatus(TenantId tenantId, ClientStatus status) {
+        findByStatus(tenantId, status).each!(entity => remove(entity));
+    }
+    // #endregion ByStatus
 
 }

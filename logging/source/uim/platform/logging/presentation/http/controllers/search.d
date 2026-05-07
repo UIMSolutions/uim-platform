@@ -58,7 +58,7 @@ class SearchController : PlatformController {
         }
       }
 
-      auto entries = usecase.search(r);
+      auto entries = usecase.searchLogs(r);
 
       auto jarr = Json.emptyArray;
       foreach (e; entries) {
@@ -90,7 +90,7 @@ class SearchController : PlatformController {
       
 
       auto id = LogEntryId(extractIdFromPath(req.requestURI.to!string));
-      auto entry = usecase.getById(id);
+      auto entry = usecase.getLog(req.getTenantId, id);
 
       if (entry.isNull) {
         writeError(res, 404, "Log entry not found");

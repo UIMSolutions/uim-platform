@@ -18,64 +18,62 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Queue getById(QueueId id) {
+    Queue getQueue(TenantId tenantId, QueueId id) {
         return repo.findById(tenantId, id);
     }
 
-    Queue[] list() {
-        return repo.findAll();
-    }
-
-    Queue[] listByTenant(TenantId tenantId) {
+    Queue[] listQueues(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Queue[] listByBrokerService(BrokerServiceId brokerServiceId) {
-        return repo.findByBrokerService(brokerServiceId);
+    Queue[] listQueues(TenantId tenantId, BrokerServiceId serviceId) {
+        return repo.findByBrokerService(tenantId, serviceId);
     }
 
     CommandResult createQueue(QueueDTO dto) {
-        Queue q;
-        q.id = QueueId(dto.id);
-        q.tenantId = dto.tenantId;
-        q.brokerServiceId = dto.brokerServiceId;
-        q.name = dto.name;
-        q.description = dto.description;
-        q.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
-        q.maxBindCount = dto.maxBindCount;
-        q.maxMsgSize = dto.maxMsgSize;
-        q.maxRedeliveryCount = dto.maxRedeliveryCount;
-        q.maxTtl = dto.maxTtl;
-        q.deadMessageQueue = dto.deadMessageQueue;
-        q.owner = dto.owner;
-        q.permission = dto.permission;
-        q.egressEnabled = dto.egressEnabled;
-        q.ingressEnabled = dto.ingressEnabled;
-        q.createdBy = dto.createdBy;
-        if (!EventMeshValidator.isValidQueue(q))
+        Queue queue;
+
+        queue.id = dto.queueId;
+        queue.tenantId = dto.tenantId;
+        queue.serviceId = dto.serviceId;
+        queue.name = dto.name;
+        queue.description = dto.description;
+        queue.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
+        queue.maxBindCount = dto.maxBindCount;
+        queue.maxMsgSize = dto.maxMsgSize;
+        queue.maxRedeliveryCount = dto.maxRedeliveryCount;
+        queue.maxTtl = dto.maxTtl;
+        queue.deadMessageQueue = dto.deadMessageQueue;
+        queue.owner = dto.owner;
+        queue.permission = dto.permission;
+        queue.egressEnabled = dto.egressEnabled;
+        queue.ingressEnabled = dto.ingressEnabled;
+        queue.createdBy = dto.createdBy;
+        if (!EventMeshValidator.isValidQueue(queue))
             return CommandResult(false, "", "Invalid queue data");
             
-        repo.save(q);
-        return CommandResult(true, q.id.value, "");
+        repo.save(queue);
+        return CommandResult(true, queue.id.value, "");
     }
 
     CommandResult updateQueue(QueueDTO dto) {
-        auto existing = repo.findById(dto.queueId);
-        if (existing.isNull)
+        auto queue = repo.findById(dto.tenantId, dto.queueId);
+        if (queue.isNull)
             return CommandResult(false, "", "Queue not found");
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.maxMsgSpoolUsage.length > 0) existing.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
-        if (dto.maxBindCount.length > 0) existing.maxBindCount = dto.maxBindCount;
-        if (dto.maxMsgSize.length > 0) existing.maxMsgSize = dto.maxMsgSize;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        if (dto.name.length > 0) queue.name = dto.name;
+        if (dto.description.length > 0) queue.description = dto.description;
+        if (dto.maxMsgSpoolUsage.length > 0) queue.maxMsgSpoolUsage = dto.maxMsgSpoolUsage;
+        if (dto.maxBindCount.length > 0) queue.maxBindCount = dto.maxBindCount;
+        if (dto.maxMsgSize.length > 0) queue.maxMsgSize = dto.maxMsgSize;
+        if (!dto.updatedBy.isNull) queue.updatedBy = dto.updatedBy;
+
+        repo.update(queue);
+        return CommandResult(true, queue.id.value, "");
     }
 
-    CommandResult deleteQueue(TenantId tenantId, QueueId id) {
-        auto queue = repo.findById(tenantId, id);
+    CommandResult deleteQueue(TenantId tenantId, QueueId queueId) {
+        auto queue = repo.findById(tenantId, queueId);
         if (queue.isNull)
             return CommandResult(false, "", "Queue not found");
 

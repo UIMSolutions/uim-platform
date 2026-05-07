@@ -20,6 +20,7 @@ class MeshBridgeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/event-mesh/bridges", &handleList);
         router.get("/api/v1/event-mesh/bridges/*", &handleGet);
         router.post("/api/v1/event-mesh/bridges", &handleCreate);
@@ -29,7 +30,8 @@ class MeshBridgeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listBridges(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -45,10 +47,11 @@ class MeshBridgeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(MeshBridgeId(id));
+            auto id = MeshBridgeId(extractIdFromPath(path));
+
+            auto e = usecase.getBridge(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Mesh bridge not found");
                 return;
@@ -62,11 +65,13 @@ class MeshBridgeController : PlatformController {
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto j = req.json;
+            auto tenantId = req.getTenantId;
+
             MeshBridgeDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.sourceBrokerId = j.getString("sourceBrokerId");
-            dto.targetBrokerId = j.getString("targetBrokerId");
+            dto.bridgeId = MeshBridgeId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.sourceServiceId = BrokerServiceId(j.getString("sourceServiceId"));
+            dto.targetServiceId = BrokerServiceId(j.getString("targetServiceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.remoteAddress = j.getString("remoteAddress");
@@ -80,7 +85,7 @@ class MeshBridgeController : PlatformController {
             dto.retryDelay = j.getString("retryDelay");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createBridge(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -97,11 +102,13 @@ class MeshBridgeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             MeshBridgeDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.bridgeId = MeshBridgeId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.remoteAddress = j.getString("remoteAddress");
@@ -109,7 +116,7 @@ class MeshBridgeController : PlatformController {
             dto.queueBindings = j.getString("queueBindings");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateBridge(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -126,10 +133,10 @@ class MeshBridgeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = usecase.deleteMeshBridge(MeshBridgeId(id));
+            auto bridgeId = MeshBridgeId(extractIdFromPath(path));
+            auto result = usecase.deleteBridge(tenantId, bridgeId);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Mesh bridge deleted");

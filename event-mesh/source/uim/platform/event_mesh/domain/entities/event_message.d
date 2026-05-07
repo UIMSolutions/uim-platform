@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct EventMessage {
     mixin TenantEntity!EventMessageId;
 
-    BrokerServiceId brokerServiceId;
+    BrokerServiceId serviceId;
     TopicId topicId;
     QueueId queueId;
     EventApplicationId publisherId;
@@ -37,7 +37,7 @@ struct EventMessage {
 
     Json toJson() const {
         return entityToJson
-            .set("brokerServiceId", brokerServiceId)
+            .set("serviceId", serviceId)
             .set("topicId", topicId)
             .set("queueId", queueId)
             .set("publisherId", publisherId)

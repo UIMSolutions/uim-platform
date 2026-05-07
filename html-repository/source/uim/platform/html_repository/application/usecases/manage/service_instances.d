@@ -66,7 +66,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    void remove(ServiceInstanceId id) {
+    CommandResult remove(ServiceInstanceId id) {
         repo.removeById(id);
     }
 

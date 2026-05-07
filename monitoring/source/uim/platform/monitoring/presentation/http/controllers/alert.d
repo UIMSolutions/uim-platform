@@ -38,7 +38,7 @@ class AlertController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto state = req.params.get("state", "");
       auto severity = req.params.get("severity", "");
 
@@ -65,8 +65,9 @@ class AlertController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));
-      auto a = usecase.getAlert(id);
+      auto a = usecase.getAlert(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;
@@ -127,8 +128,9 @@ class AlertController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteAlert(id);
+      auto result = usecase.deleteAlert(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

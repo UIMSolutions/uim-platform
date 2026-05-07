@@ -18,65 +18,65 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    MeshBridge getById(MeshBridgeId id) {
-        return repo.findById(tenantId, id);
+    MeshBridge getBridge(TenantId tenantId,  MeshBridgeId bridgeId) {
+        return repo.findById(tenantId, bridgeId);
     }
 
-    MeshBridge[] list() {
-        return repo.findAll();
-    }
-
-    MeshBridge[] listByTenant(TenantId tenantId) {
+    MeshBridge[] listBridges(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    MeshBridge[] listBySourceBroker(BrokerServiceId sourceBrokerId) {
-        return repo.findBySourceBroker(sourceBrokerId);
+    MeshBridge[] listBridges(TenantId tenantId, BrokerServiceId serviceId) {
+        return repo.findBySourceBrokerService(tenantId, serviceId);
     }
 
-    CommandResult create(MeshBridgeDTO dto) {
-        MeshBridge b;
-        b.id = dto.meshBridgeId;
-        b.tenantId = dto.tenantId;
-        b.sourceBrokerId = dto.sourceBrokerId;
-        b.targetBrokerId = dto.targetBrokerId;
-        b.name = dto.name;
-        b.description = dto.description;
-        b.remoteAddress = dto.remoteAddress;
-        b.remoteVpnName = dto.remoteVpnName;
-        b.topicSubscriptions = dto.topicSubscriptions;
-        b.queueBindings = dto.queueBindings;
-        b.tlsEnabled = dto.tlsEnabled;
-        b.compressedDataEnabled = dto.compressedDataEnabled;
-        b.maxTtl = dto.maxTtl;
-        b.retryCount = dto.retryCount;
-        b.retryDelay = dto.retryDelay;
-        b.createdBy = dto.createdBy;
-        if (!EventMeshValidator.isValidMeshBridge(b))
+    CommandResult createBridge(MeshBridgeDTO dto) {
+        MeshBridge bridge;
+        bridge.id = dto.bridgeId;
+        bridge.tenantId = dto.tenantId;
+        bridge.sourceServiceId = dto.sourceServiceId;
+        bridge.targetServiceId = dto.targetServiceId;
+        bridge.name = dto.name;
+        bridge.description = dto.description;
+        bridge.remoteAddress = dto.remoteAddress;
+        bridge.remoteVpnName = dto.remoteVpnName;
+        bridge.topicSubscriptions = dto.topicSubscriptions;
+        bridge.queueBindings = dto.queueBindings;
+        bridge.tlsEnabled = dto.tlsEnabled;
+        bridge.compressedDataEnabled = dto.compressedDataEnabled;
+        bridge.maxTtl = dto.maxTtl;
+        bridge.retryCount = dto.retryCount;
+        bridge.retryDelay = dto.retryDelay;
+        bridge.createdBy = dto.createdBy;
+        if (!EventMeshValidator.isValidMeshBridge(bridge))
             return CommandResult(false, "", "Invalid mesh bridge data");
-        repo.save(b);
-        return CommandResult(true, b.id.value, "");
+
+        repo.save(bridge);
+        return CommandResult(true, bridge.id.value, "");
     }
 
-    CommandResult updateMeshBridge(MeshBridgeDTO dto) {
-        auto existing = repo.findById(dto.meshBridgeId);
-        if (existing.isNull)
+    CommandResult updateBridge(MeshBridgeDTO dto) {
+        auto bridge = repo.findById(dto.tenantId, dto.bridgeId);
+        if (bridge.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.remoteAddress.length > 0) existing.remoteAddress = dto.remoteAddress;
-        if (dto.topicSubscriptions.length > 0) existing.topicSubscriptions = dto.topicSubscriptions;
-        if (dto.queueBindings.length > 0) existing.queueBindings = dto.queueBindings;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+
+        if (dto.name.length > 0) bridge.name = dto.name;
+        if (dto.description.length > 0) bridge.description = dto.description;
+        if (dto.remoteAddress.length > 0) bridge.remoteAddress = dto.remoteAddress;
+        if (dto.topicSubscriptions.length > 0) bridge.topicSubscriptions = dto.topicSubscriptions;
+        if (dto.queueBindings.length > 0) bridge.queueBindings = dto.queueBindings;
+        if (!dto.updatedBy.isNull) bridge.updatedBy = dto.updatedBy;
+
+        repo.update(bridge);
+        return CommandResult(true, bridge.id.value, "");
     }
 
-    CommandResult deleteMeshBridge(MeshBridgeId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteBridge(TenantId tenantId, MeshBridgeId bridgeId) {
+        auto bridge = repo.findById(tenantId, bridgeId);
+        if (bridge.isNull)
             return CommandResult(false, "", "Mesh bridge not found");
-        repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+
+        repo.remove(bridge);
+        return CommandResult(true, bridge.id.value, "");
     }
 }

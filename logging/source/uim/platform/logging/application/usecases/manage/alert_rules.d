@@ -9,8 +9,6 @@ module uim.platform.logging.application.usecases.manage.alert_rules;
 // import uim.platform.logging.domain.ports.repositories.alert_rules;
 // import uim.platform.logging.domain.types;
 // import uim.platform.logging.application.dto;
-// 
-
 
 import uim.platform.logging;
 
@@ -25,14 +23,11 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult create(CreateAlertRuleRequest req) {
-    import std.uuid : randomUUID;
-
     if (req.name.length == 0)
       return CommandResult(false, "", "Alert rule name is required");
 
     AlertRule rule;
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    rule.initEntity(req.tenantId, req.createdBy);
     rule.name = req.name;
     rule.description = req.description;
     rule.query = req.query;
@@ -45,22 +40,16 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.severity = req.severity.to!AlertSeverity;
     rule.channelIds = cast(NotificationChannelId[]) req.channelIds;
     rule.isEnabled = true;
-    rule.createdBy = req.createdBy;
-    rule.createdAt = clockSeconds();
 
     repo.save(rule);
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(string id, UpdateAlertRuleRequest req) {
-    return updateRule(AlertRuleId(id), req);
-  }
-
-  CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateRule(UpdateAlertRuleRequest req) {
+    auto rule = repo.findById(req.tenantId, req.ruleId);
+    if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 
-    auto rule = repo.findById(tenantId, id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.query.length > 0)
@@ -85,15 +74,15 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  bool hasRule(AlertRuleId id) {
-    return repo.existsById(id);
+  bool hasRule(TenantId tenantId, AlertRuleId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  AlertRule getRule(AlertRuleId id) {
-    return repo.findById(tenantId, id);
+  AlertRule getRule(TenantId tenantId, AlertRuleId ruleId) {
+    return repo.findById(tenantId, ruleId);
   }
 
   AlertRule[] listRules(TenantId tenantId) {
@@ -104,13 +93,13 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult deleteAlertRule(AlertRuleId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteRule(TenantId tenantId, AlertRuleId id) {
+    auto rule = repo.findById(tenantId, id);
+    if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   

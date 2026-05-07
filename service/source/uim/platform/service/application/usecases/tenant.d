@@ -20,7 +20,7 @@ class TenantUseCase(TRepository, TEntity, TId) {
   }
 
   bool hasById(TenantId tenantId, TId id) {
-    return repository.existsById(id);
+    return repository.existsById(tenantId, id);
   }
 
   TEntity getById(TenantId tenantId, TId id) {

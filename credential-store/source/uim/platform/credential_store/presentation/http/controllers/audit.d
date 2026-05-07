@@ -31,19 +31,18 @@ class AuditController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;  
 
-      TenantId tenantId = req.getTenantId;
       auto namespaceId = req.params.get("namespaceId", "");
       auto resourceType = req.params.get("resourceType", "");
 
       AuditLogEntry[] entries;
       if (namespaceId.length > 0) {
-        entries = auditLogs.listByNamespace(tenantId, NamespaceId(namespaceId));
+        entries = auditLogs.listLogs(tenantId, NamespaceId(namespaceId));
       } else if (resourceType.length > 0) {
-        entries = auditLogs.listByResourceType(tenantId, resourceType);
+        entries = auditLogs.listLogs(tenantId, resourceType);
       } else {
-        entries = auditLogs.list(tenantId);
+        entries = auditLogs.listLogs(tenantId);
       }
 
       auto jarr = Json.emptyArray;
@@ -70,10 +69,9 @@ class AuditController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;  
       auto id = AuditLogEntryId(extractIdFromPath(req.requestURI.to!string));
-      auto auditLog = auditLogs.getById(id);
+      auto auditLog = auditLogs.getLog(tenantId, id);
 
       if (auditLog.isNull) {
         writeError(res, 404, "Audit log entry not found");

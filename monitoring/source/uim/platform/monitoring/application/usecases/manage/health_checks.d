@@ -34,8 +34,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Check name is required");
 
     HealthCheck check;
-    check.id = randomUUID();
-    check.tenantId = req.tenantId;
+    check.initEntity(req.tenantId, req.createdBy);
     check.resourceId = req.resourceId;
     check.name = req.name;
     check.description = req.description;
@@ -51,8 +50,6 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     check.warningThreshold = req.warningThreshold;
     check.criticalThreshold = req.criticalThreshold;
     check.thresholdOperator = req.thresholdOperator.to!ThresholdOperator;
-    check.createdBy = req.createdBy;
-    check.createdAt = clockSeconds();
     check.updatedAt = check.createdAt;
 
     auto validation = HealthChecker.validate(check);
@@ -70,8 +67,8 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, check.id.value, "");
   }
 
-  CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
-    auto check = checkRepo.findById(tenantId, id);
+  CommandResult updateCheck(UpdateHealthCheckRequest req) {
+    auto check = checkRepo.findById(req.tenantId, req.id);
     if (check.isNull)
       return CommandResult(false, "", "Health check not found");
 
@@ -93,7 +90,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     check.updatedAt = clockSeconds();
 
     checkRepo.update(check);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, check.id.value, "");
   }
 
   CommandResult recordResult(RecordCheckResultRequest req) {
@@ -116,7 +113,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, r.id.value, "");
   }
 
-  HealthCheck getCheck(HealthCheckId id) {
+  HealthCheck getCheck(TenantId tenantId, HealthCheckId id) {
     return checkRepo.findById(tenantId, id);
   }
 
@@ -140,12 +137,13 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     return resultRepo.findLatestByCheck(tenantId, checkId);
   }
 
-  CommandResult deleteCheck(HealthCheckId id) {
-    if (!checkRepo.existsById(id))
+  CommandResult deleteCheck(TenantId tenantId, HealthCheckId id) {
+    auto check = checkRepo.findById(tenantId, id);
+    if (check.isNull)
       return CommandResult(false, "", "Health check not found");
 
-    checkRepo.removeById(id);
-    return CommandResult(true, id.value, "");
+    checkRepo.remove(check);
+    return CommandResult(true, check.id.value, "");
   }
 
 }

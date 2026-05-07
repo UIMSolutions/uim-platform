@@ -85,7 +85,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    void remove(AppRouteId id) {
+    CommandResult remove(AppRouteId id) {
         repo.removeById(id);
     }
 

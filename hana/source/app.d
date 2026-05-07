@@ -18,6 +18,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
+
 version (unittest) {
 } else {
     void main() {

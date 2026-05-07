@@ -13,33 +13,33 @@ mixin(ShowModule!());
 
 class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId), BrokerServiceRepository {
 
-    size_t countByStatus(BrokerServiceStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, BrokerServiceStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     BrokerService[] filterByStatus(BrokerService[] services, BrokerServiceStatus status) {
         return services.filter!(e => e.status == status).array;
     }    
-    BrokerService[] findByStatus(BrokerServiceStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    BrokerService[] findByStatus(TenantId tenantId, BrokerServiceStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(BrokerServiceStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, BrokerServiceStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
-    size_t countByCloudProvider(CloudProvider provider) {
-        return findByCloudProvider(provider).length;
+    size_t countByCloudProvider(TenantId tenantId, CloudProvider provider) {
+        return findByCloudProvider(tenantId, provider).length;
     }
 
     BrokerService[] filterByCloudProvider(BrokerService[] services, CloudProvider provider) {
         return services.filter!(e => e.cloudProvider == provider).array;
     }
 
-    BrokerService[] findByCloudProvider(CloudProvider provider) {
-        return findAll().filter!(e => e.cloudProvider == provider).array;
+    BrokerService[] findByCloudProvider(TenantId tenantId, CloudProvider provider) {
+        return filterByCloudProvider(findByTenant(tenantId), provider);
     }
 
-    void removeByCloudProvider(CloudProvider provider) {
-        findByCloudProvider(provider).each!(e => remove(e));
+    void removeByCloudProvider(TenantId tenantId, CloudProvider provider) {
+        findByCloudProvider(tenantId, provider).each!(e => remove(e));
     }
 
 }

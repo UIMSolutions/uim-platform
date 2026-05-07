@@ -89,15 +89,15 @@ class AlertRuleController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
-      if (!usecase.hasRule(id)) {
+
+      if (!usecase.hasRule(tenantId, id)) {
         writeError(res, 404, "Alert rule not found");
         return;
       }
 
-      auto r = usecase.getRule(id);
+      auto r = usecase.getRule(tenantId, id);
       auto response = Json.emptyObject
         .set("id", r.id)
         .set("name", r.name)
@@ -115,11 +115,13 @@ class AlertRuleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdateAlertRuleRequest r;
+      r.tenantId = tenantId;
+      r.ruleId = id;
       r.description = j.getString("description");
       r.query = j.getString("query");
       r.condition = j.getString("condition");
@@ -132,7 +134,7 @@ class AlertRuleController : PlatformController {
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 
-      auto result = usecase.updateRule(id, r);
+      auto result = usecase.updateRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -149,10 +151,10 @@ class AlertRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
-      usecase.removeRule(id);
+      
+      usecase.deleteRule(tenantId, id);
       auto resp = Json.emptyObject
         .set("id", id)
         .set("message", "Alert rule deleted successfully");

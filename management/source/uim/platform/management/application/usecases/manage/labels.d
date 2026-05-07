@@ -44,10 +44,6 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, label.id.value, "");
   }
 
-  CommandResult update(string id, UpdateLabelRequest req) {
-    return update(LabelId(id), req);
-  }
-
   CommandResult update(LabelId id, UpdateLabelRequest req) {
     if (!labels.existsById(id))
       return CommandResult(false, "", "Label not found");
@@ -57,10 +53,6 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     label.updatedAt = clockSeconds();
     labels.update(label);
     return CommandResult(true, label.id.value, "");
-  }
-
-  Label getById(string id) {
-    return getById(LabelId(id));
   }
 
   Label getById(LabelId id) {

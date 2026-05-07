@@ -49,7 +49,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         return repo.findByDevice(deviceId);
     }
 
-    void remove(UsageReportId id) {
+    CommandResult remove(UsageReportId id) {
         repo.removeById(id);
     }
 

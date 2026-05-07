@@ -63,7 +63,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         return repo.findByApp(appId);
     }
 
-    void remove(AppConfigurationId id) {
+    CommandResult remove(AppConfigurationId id) {
         repo.removeById(id);
     }
 

@@ -27,28 +27,28 @@ enum LogSourceType {
 }
 
 enum SpanKind {
+  internal,
   client,
   server,
   producer,
   consumer,
-  internal,
 }
 
 // Status of a trace span, determined by the presence of errors or timeouts.
 enum SpanStatus {
+  unset,
   ok,
   error,
   timeout,
-  unset,
 }
 
 enum PanelType {
+  logView,
   lineChart,
   barChart,
   pieChart,
   table,
   counter,
-  logView,
   traceView,
   heatmap,
 }
@@ -146,54 +146,3 @@ enum TokenScope {
   readTraces,
   admin,
 }
-
-private static AlertCondition parseCondition(string condition) {
-    switch (condition) {
-    case "contains":
-      return AlertCondition.contains;
-    case "regex":
-      return AlertCondition.regex;
-    case "threshold":
-      return AlertCondition.threshold;
-    case "absence":
-      return AlertCondition.absence;
-    case "rateChange":
-      return AlertCondition.rateChange;
-    default:
-      return AlertCondition.contains;
-    }
-  }
-
-  private static ThresholdOperator parseOperator(string s) {
-    switch (s) {
-    case "greaterThan":
-      return ThresholdOperator.greaterThan;
-    case "greaterOrEqual":
-      return ThresholdOperator.greaterOrEqual;
-    case "lessThan":
-      return ThresholdOperator.lessThan;
-    case "lessOrEqual":
-      return ThresholdOperator.lessOrEqual;
-    case "equal":
-      return ThresholdOperator.equal;
-    case "notEqual":
-      return ThresholdOperator.notEqual;
-    default:
-      return ThresholdOperator.greaterThan;
-    }
-  }
-
-  private static AlertSeverity parseSeverity(string s) {
-    switch (s) {
-    case "info":
-      return AlertSeverity.info;
-    case "warning":
-      return AlertSeverity.warning;
-    case "critical":
-      return AlertSeverity.critical;
-    case "fatal":
-      return AlertSeverity.fatal;
-    default:
-      return AlertSeverity.warning;
-    }
-  }

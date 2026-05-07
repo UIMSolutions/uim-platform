@@ -99,9 +99,10 @@ class DashboardController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
-      auto d = usecase.getDashboard(id);
 
+      auto d = usecase.getDashboard(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Dashboard not found");
         return;
@@ -134,14 +135,18 @@ class DashboardController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdateDashboardRequest r;
+      r.tenantId = tenantId;
+      r.dashboardId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = j.getBoolean("isDefault");
 
-      auto result = usecase.updateDashboard(id, r);
+      auto result = usecase.updateDashboard(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -158,8 +163,10 @@ class DashboardController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deleteDashboard(id);
+
+      usecase.deleteDashboard(tenantId, id);
       auto resp = Json.emptyObject
         .set("id", id)
         .set("message", "Dashboard deleted successfully");

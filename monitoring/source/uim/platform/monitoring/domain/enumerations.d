@@ -13,10 +13,10 @@ enum ResourceType {
 
 /// Current state of a monitored resource.
 enum ResourceState {
+  unknown,
   started,
   stopped,
   error,
-  unknown,
 }
 
 /// Category of a metric.

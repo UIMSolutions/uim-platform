@@ -18,58 +18,57 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    EventSubscription getById(EventSubscriptionId id) {
+    EventSubscription getSubscription(TenantId tenantId, EventSubscriptionId id) {
         return repo.findById(tenantId, id);
     }
 
-    EventSubscription[] list() {
-        return repo.findAll();
-    }
-
-    EventSubscription[] listByTenant(TenantId tenantId) {
+    EventSubscription[] listSubscriptions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    EventSubscription[] listByTopic(TopicId topicId) {
-        return repo.findByTopic(topicId);
+    EventSubscription[] listSubscriptions(TenantId tenantId, TopicId topicId) {
+        return repo.findByTopic(tenantId, topicId);
     }
 
-    EventSubscription[] listByApplication(EventApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    EventSubscription[] listSubscriptions(TenantId tenantId, EventApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult create(SubscriptionDTO dto) {
-        EventSubscription s;
-        s.id = dto.eventSubscriptionId;
-        s.tenantId = dto.tenantId;
-        s.brokerServiceId = dto.brokerServiceId;
-        s.topicId = dto.topicId;
-        s.queueId = dto.queueId;
-        s.applicationId = dto.publisherId;
-        s.name = dto.name;
-        s.description = dto.description;
-        s.topicFilter = dto.topicFilter;
-        s.selector = dto.selector;
-        s.maxRedeliveryCount = dto.maxRedeliveryCount;
-        s.maxTtl = dto.maxTtl;
-        s.createdBy = dto.createdBy;
-        if (!EventMeshValidator.isValidSubscription(s))
+    CommandResult createSubscription(SubscriptionDTO dto) {
+        EventSubscription subscription;
+        subscription.id = dto.subscriptionId;
+        subscription.tenantId = dto.tenantId;
+        subscription.serviceId = dto.serviceId;
+        subscription.topicId = dto.topicId;
+        subscription.queueId = dto.queueId;
+        subscription.applicationId = dto.applicationId;
+        subscription.name = dto.name;
+        subscription.description = dto.description;
+        subscription.topicFilter = dto.topicFilter;
+        subscription.selector = dto.selector;
+        subscription.maxRedeliveryCount = dto.maxRedeliveryCount;
+        subscription.maxTtl = dto.maxTtl;
+        subscription.createdBy = dto.createdBy;
+        if (!EventMeshValidator.isValidSubscription(subscription))
             return CommandResult(false, "", "Invalid subscription data");
-        repo.save(s);
-        return CommandResult(true, s.id.value, "");
+
+        repo.save(subscription);
+        return CommandResult(true, subscription.id.value, "");
     }
 
-    CommandResult update(SubscriptionDTO dto) {
-        auto existing = repo.findById(dto.eventSubscriptionId);
-        if (existing.isNull)
+    CommandResult updateSubscription(SubscriptionDTO dto) {
+        auto subscription = repo.findById(dto.tenantId, dto.subscriptionId);
+        if (subscription.isNull)
             return CommandResult(false, "", "Subscription not found");
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.topicFilter.length > 0) existing.topicFilter = dto.topicFilter;
-        if (dto.selector.length > 0) existing.selector = dto.selector;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, dto.eventSubscriptionId.value, "");
+
+        if (dto.name.length > 0) subscription.name = dto.name;
+        if (dto.description.length > 0) subscription.description = dto.description;
+        if (dto.topicFilter.length > 0) subscription.topicFilter = dto.topicFilter;
+        if (dto.selector.length > 0) subscription.selector = dto.selector;
+        if (!dto.updatedBy.isNull) subscription.updatedBy = dto.updatedBy;
+
+        repo.update(subscription);
+        return CommandResult(true, dto.subscriptionId.value, "");
     }
 
     CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId id) {

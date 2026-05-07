@@ -67,7 +67,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return repo.findByApp(appId);
     }
 
-    void remove(AppVersionId id) {
+    CommandResult remove(AppVersionId id) {
         repo.removeById(id);
     }
 

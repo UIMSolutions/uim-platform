@@ -14,12 +14,12 @@ module app;
 import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
+
 @safe:
 
 version (unittest) {
-}
-else {
-  void main() {
+} else {
+    void main() {
     // Load configuration
     auto config = loadConfig();
 

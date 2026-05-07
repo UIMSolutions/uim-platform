@@ -20,6 +20,7 @@ class SubscriptionController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/event-mesh/subscriptions", &handleList);
         router.get("/api/v1/event-mesh/subscriptions/*", &handleGet);
         router.post("/api/v1/event-mesh/subscriptions", &handleCreate);
@@ -29,8 +30,9 @@ class SubscriptionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
-            auto jarr = items.map!(e => toJson(e)).array;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listSubscriptions(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -44,11 +46,11 @@ class SubscriptionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EventSubscriptionId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+
+            auto e = usecase.getSubscription(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Subscription not found");
                 return;
@@ -62,14 +64,16 @@ class SubscriptionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             SubscriptionDTO dto;
-            dto.eventSubscriptionId = EventSubscriptionId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.brokerServiceId = BrokerServiceId(j.getString("brokerServiceId"));
+            dto.subscriptionId = EventSubscriptionId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.serviceId = BrokerServiceId(j.getString("serviceId"));
             dto.topicId = TopicId(j.getString("topicId"));
             dto.queueId = QueueId(j.getString("queueId"));
-            dto.eventApplicationId = EventApplicationId(j.getString("applicationId"));
+            dto.applicationId = EventApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
@@ -78,7 +82,7 @@ class SubscriptionController : PlatformController {
             dto.maxTtl = j.getString("maxTtl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createSubscription(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -95,19 +99,19 @@ class SubscriptionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SubscriptionDTO dto;
-            dto.eventSubscriptionId = EventSubscriptionId(extractIdFromPath(path));
+            dto.subscriptionId = EventSubscriptionId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.topicFilter = j.getString("topicFilter");
             dto.selector = j.getString("selector");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateSubscription(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -124,11 +128,11 @@ class SubscriptionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EventSubscriptionId(extractIdFromPath(path));
-            auto result = usecase.deleteSubscription(id);
+
+            auto result = usecase.deleteSubscription(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Subscription deleted");

@@ -13,56 +13,64 @@ mixin(ShowModule!());
 
 class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventSubscriptionId), SubscriptionRepository {
 
-    size_t countByBrokerService(BrokerServiceId brokerServiceId) {
-        return findByBrokerService(brokerServiceId).length;
+    // #region ByBrokerService
+    size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {
+        return findByBrokerService(tenantId, brokerServiceId).length;
     }
-    EventSubscription[] filterByBrokerService(EventSubscription[] subscriptions, BrokerServiceId brokerServiceId) { 
-        return subscriptions.filter!(e => e.brokerServiceId == brokerServiceId).array;
+    EventSubscription[] filterByBrokerService(EventSubscription[] subscriptions, BrokerServiceId serviceId) { 
+        return subscriptions.filter!(e => e.serviceId == serviceId).array;
     }   
-    EventSubscription[] findByBrokerService(BrokerServiceId brokerServiceId) {
-        return filterByBrokerService(findAll(), brokerServiceId);
+    EventSubscription[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
-    void removeByBrokerService(BrokerServiceId brokerServiceId) {
-        findByBrokerService(brokerServiceId).each!(e => remove(e));
+    void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+        findByBrokerService(tenantId, serviceId).each!(e => remove(e));
     }
+    // #endregion ByBrokerService
 
-    size_t countByTopic(TopicId topicId) {
-        return findByTopic(topicId).length;
+    // #region ByTopic
+    size_t countByTopic(TenantId tenantId, TopicId topicId) {
+        return findByTopic(tenantId, topicId).length;
     }
     EventSubscription[] filterByTopic(EventSubscription[] subscriptions, TopicId topicId) {
         return subscriptions.filter!(e => e.topicId == topicId).array;
     }
-    EventSubscription[] findByTopic(TopicId topicId) {
-        return filterByTopic(findAll(), topicId);
+    EventSubscription[] findByTopic(TenantId tenantId, TopicId topicId) {
+        return filterByTopic(findByTenant(tenantId), topicId);
     }
-    void removeByTopic(TopicId topicId) {
-        findByTopic(topicId).each!(e => remove(e));
+    void removeByTopic(TenantId tenantId, TopicId topicId) {
+        findByTopic(tenantId, topicId).each!(e => remove(e));
     }
+    // #endregion ByTopic
 
-    size_t countByApplication(EventApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    // #region ByApplication
+    size_t countByApplication(TenantId tenantId, EventApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
     EventSubscription[] filterByApplication(EventSubscription[] subscriptions, EventApplicationId applicationId) {
         return subscriptions.filter!(e => e.applicationId == applicationId).array;
     }
-    EventSubscription[] findByApplication(EventApplicationId applicationId) {
-        return filterByApplication(findAll(), applicationId);
+    EventSubscription[] findByApplication(TenantId tenantId, EventApplicationId applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
-    void removeByApplication(EventApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    void removeByApplication(TenantId tenantId, EventApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
+    // #endregion ByApplication
 
-    size_t countByStatus(SubscriptionStatus status) {
-        return findByStatus(status).length;
+    // #region ByStatus
+    size_t countByStatus(TenantId tenantId, SubscriptionStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     EventSubscription[] filterByStatus(EventSubscription[] subscriptions, SubscriptionStatus status) {
         return subscriptions.filter!(e => e.status == status).array;
     } 
-    EventSubscription[] findByStatus(SubscriptionStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(SubscriptionStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, SubscriptionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
+    // #endregion ByStatus
 
 }

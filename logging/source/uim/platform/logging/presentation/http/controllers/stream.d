@@ -35,9 +35,10 @@ class StreamController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateLogStreamRequest r;
-      r.initEntity(req.getTenantId);
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
@@ -61,8 +62,8 @@ class StreamController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
-      auto streams = usecase.list(tenantId);
+      auto tenantId = req.getTenantId;
+      auto streams = usecase.listStreams(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (s; streams) {
@@ -86,10 +87,9 @@ class StreamController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
-      auto s = usecase.getById(id);
+      auto s = usecase.getStream(tenantId, id);
 
       if (s.isNull) {
         writeError(res, 404, "Log stream not found");
@@ -112,18 +112,22 @@ class StreamController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateLogStreamRequest r;
+      r.tenantId = tenantId;
+      r.streamId = id;
       r.description = j.getString("description");
       r.retentionPolicyId = j.getString("retentionPolicyId");
       r.isActive = j.getBoolean("isActive", true);
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateStream(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Log stream updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -135,8 +139,10 @@ class StreamController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deleteStream(id);
+      auto tenantId = req.getTenantId;
+      auto streamId = LogStreamId(extractIdFromPath(req.requestURI.to!string));
+      usecase.deleteStream(tenantId, streamId);
+
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
