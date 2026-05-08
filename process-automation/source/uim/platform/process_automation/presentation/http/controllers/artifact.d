@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ArtifactController : PlatformController {
-    private ManageArtifactsUseCase usecase;
+    private ManageArtifactsUseCase artifactUsecase;
 
-    this(ManageArtifactsUseCase usecase) {
-        this.usecase = usecase;
+    this(ManageArtifactsUseCase artifactUsecase) {
+        this.artifactUsecase = artifactUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -48,7 +48,7 @@ class ArtifactController : PlatformController {
             r.tags = getStrings(j, "tags");
             r.contentUrl = j.getString("contentUrl");
 
-            auto result = usecase.create(r);
+            auto result = artifactUsecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -67,7 +67,7 @@ class ArtifactController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto artifacts = usecase.listArtifacts(tenantId);
+            auto artifacts = artifactUsecase.listArtifacts(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; artifacts) {
@@ -100,7 +100,7 @@ class ArtifactController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
-            auto a = usecase.getById(tenantId, id);
+            auto a = artifactUsecase.getArtifact(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
                 return;
@@ -142,7 +142,7 @@ class ArtifactController : PlatformController {
             r.version_ = j.getString("version");
             r.contentUrl = j.getString("contentUrl");
 
-            auto result = usecase.update(r);
+            auto result = artifactUsecase.updateArtifact(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -163,7 +163,7 @@ class ArtifactController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteArtifact(tenantId, id);
+            auto result = artifactUsecase.deleteArtifact(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class TaskController : PlatformController {
-  private ManageTaskstasks tasks;
+  private ManageTasksUseCase taskUsecase;
 
-  this(ManageTaskstasks tasks) {
-    this.tasks = tasks;
+  this(ManageTasksUseCase taskUsecase) {
+    this.taskUsecase = taskUsecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -52,7 +52,7 @@ class TaskController : PlatformController {
       r.formId = j.getString("formId");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = tasks.create(r);
+      auto result = taskUsecase.createTask(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -71,7 +71,7 @@ class TaskController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto results = tasks.listTasks(tenantId);
+      auto results = taskUsecase.listTasks(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (t; results) {
@@ -102,7 +102,7 @@ class TaskController : PlatformController {
       auto tenantId = req.getTenantId;
 
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
-      auto t = tasks.getById(tenantId, id);
+      auto t = taskUsecase.getTask(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "PATask not found");
         return;
@@ -112,9 +112,9 @@ class TaskController : PlatformController {
         .set("id", t.id)
         .set("name", t.name)
         .set("description", t.description)
-        .set("type", t.type.t!string)
-        .set("status", t.status.t!string)
-        .set("priority", t.priority.t!string)
+        .set("type", t.type.to!string)
+        .set("status", t.status.to!string)
+        .set("priority", t.priority.to!string)
         .set("assignee", t.assignee)
         .set("processInstanceId", t.processInstanceId)
         .set("formId", t.formId)
@@ -148,7 +148,7 @@ class TaskController : PlatformController {
       r.assignee = j.getString("assignee");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = tasks.update(r);
+      auto result = taskUsecase.updateTask(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -183,7 +183,7 @@ class TaskController : PlatformController {
       r.taskId = id;
       r.userId = j.getString("userId");
 
-      auto result = tasks.claim(r);
+      auto result = taskUsecase.claimTask(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -221,7 +221,7 @@ class TaskController : PlatformController {
       r.outcome = j.getString("outcome");
       r.formData = j.getString("formData");
 
-      auto result = tasks.complete(r);
+      auto result = taskUsecase.completeTask(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -241,7 +241,7 @@ class TaskController : PlatformController {
       auto tenantId = req.getTenantId;
 
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
-      auto result = tasks.deleteTask(tenantId, id);
+      auto result = taskUsecase.deleteTask(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

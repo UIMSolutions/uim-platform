@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ProcessController : PlatformController {
-    private ManageProcessesprocesses processes;
+    private ManageProcessesUseCase processUsecase;
 
-    this(ManageProcessesprocesses processes) {
-        this.processes = processes;
+    this(ManageProcessesUseCase processUsecase) {
+        this.processUsecase = processUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class ProcessController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = processes.create(r);
+            auto result = processUsecase.createProcess(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -66,7 +66,7 @@ class ProcessController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto results = processes.listProcesses(tenantId);
+            auto results = processUsecase.listProcesses(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (p; results) {
@@ -97,7 +97,7 @@ class ProcessController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
-            auto p = processes.getById(tenantId, id);
+            auto p = processUsecase.getProcess(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Process not found");
                 return;
@@ -137,7 +137,7 @@ class ProcessController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = processes.update(r);
+            auto result = processUsecase.updateProcess(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -173,7 +173,7 @@ class ProcessController : PlatformController {
             r.processId = id;
             r.action = j.getString("action");
 
-            auto result = processes.deploy(r);
+            auto result = processUsecase.deploy(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -193,7 +193,7 @@ class ProcessController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
-            auto result = processes.deleteProcess(tenantId, id);
+            auto result = processUsecase.deleteProcess(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

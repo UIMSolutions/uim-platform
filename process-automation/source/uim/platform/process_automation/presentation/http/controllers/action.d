@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class ActionController : PlatformController {
-    private ManageActionsUseCase usecase;
+    private ManageActionsUseCase actionUsecase;
 
-    this(ManageActionsUseCase usecase) {
-        this.usecase = usecase;
+    this(ManageActionsUseCase actionUsecase) {
+        this.actionUsecase = actionUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -51,7 +51,7 @@ class ActionController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = actionUsecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -69,7 +69,7 @@ class ActionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto actions = usecase.listActions(tenantId);
+            auto actions = actionUsecase.listActions(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
@@ -101,7 +101,7 @@ class ActionController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
 
-            auto a = usecase.getAction(tenantId, id);
+            auto a = actionUsecase.getAction(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Action not found");
                 return;
@@ -146,7 +146,7 @@ class ActionController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = actionUsecase.updateAction(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -166,7 +166,7 @@ class ActionController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteAction(tenantId, id);
+            auto result = actionUsecase.deleteAction(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DecisionController : PlatformController {
-    private ManageDecisionsUseCase usecase;
+    private ManageDecisionsUseCase decisionUsecase;
 
-    this(ManageDecisionsUseCase usecase) {
-        this.usecase = usecase;
+    this(ManageDecisionsUseCase decisionUsecase) {
+        this.decisionUsecase = decisionUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class DecisionController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = decisionUsecase.createDecision(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -66,7 +66,7 @@ class DecisionController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto decisions = usecase.listDecisions(tenantId);
+            auto decisions = decisionUsecase.listDecisions(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; decisions) {
@@ -97,7 +97,7 @@ class DecisionController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
-            auto d = usecase.getById(tenantId, id);
+            auto d = decisionUsecase.getDecision(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Decision not found");
                 return;
@@ -137,7 +137,7 @@ class DecisionController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = decisionUsecase.updateDecision(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -158,7 +158,7 @@ class DecisionController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteDecision(tenantId, id);
+            auto result = decisionUsecase.deleteDecision(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

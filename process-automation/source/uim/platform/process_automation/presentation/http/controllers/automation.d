@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class AutomationController : PlatformController {
-    private ManageAutomationsUseCase usecase;
+    private ManageAutomationsUseCase automationUsecase;
 
-    this(ManageAutomationsUseCase usecase) {
-        this.usecase = usecase;
+    this(ManageAutomationsUseCase automationUsecase) {
+        this.automationUsecase = automationUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -47,7 +47,7 @@ class AutomationController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = automationUsecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -64,9 +64,9 @@ class AutomationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-                        auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
-            auto automations = usecase.listAutomations(tenantId);
+            auto automations = automationUsecase.listAutomations(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; automations) {
@@ -83,8 +83,8 @@ class AutomationController : PlatformController {
             }
 
             auto resp = Json.emptyObject
-            .set("count", automations.length)
-            .set("resources", jarr);
+                .set("count", automations.length)
+                .set("resources", jarr);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -94,16 +94,16 @@ class AutomationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto tenantId = req.getTenantId;
 
             auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
-            if (!usecase.existsById(tenantId, id)) {
+            if (!automationUsecase.hasAutomation(tenantId, id)) {
                 writeError(res, 404, "Automation not found");
                 return;
             }
 
-            auto a = usecase.getById(tenantId, id);
+            auto a = automationUsecase.getAutomation(tenantId, id);
             auto resp = Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
@@ -127,7 +127,6 @@ class AutomationController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            
 
             auto j = req.json;
             UpdateAutomationRequest r;
@@ -140,11 +139,11 @@ class AutomationController : PlatformController {
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = automationUsecase.updateAutomation(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Automation updated");
+                    .set("id", result.id)
+                    .set("message", "Automation updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -157,15 +156,15 @@ class AutomationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             auto tenantId = req.getTenantId;
 
             auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteAutomation(tenantId, id);
+            auto result = automationUsecase.deleteAutomation(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Automation deleted");
+                    .set("id", result.id)
+                    .set("message", "Automation deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

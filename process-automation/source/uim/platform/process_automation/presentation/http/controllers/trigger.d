@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class TriggerController : PlatformController {
-    private ManageTriggerstriggers triggers;
+    private ManageTriggersUseCase triggerUsecase;
 
-    this(ManageTriggerstriggers triggers) {
-        this.triggers = triggers;
+    this(ManageTriggersUseCase triggerUsecase) {
+        this.triggerUsecase = triggerUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -49,7 +49,7 @@ class TriggerController : PlatformController {
             r.filterExpression = j.getString("filterExpression");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = triggers.create(r);
+            auto result = triggerUsecase.createTrigger(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -68,7 +68,7 @@ class TriggerController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto triggers = triggers.list(tenantId);
+            auto triggers = triggerUsecase.listTriggers(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (t; triggers) {
@@ -99,7 +99,7 @@ class TriggerController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
-            auto t = triggers.getById(tenantId, id);
+            auto t = triggerUsecase.getTrigger(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
                 return;
@@ -141,7 +141,7 @@ class TriggerController : PlatformController {
             r.eventType = j.getString("eventType");
             r.filterExpression = j.getString("filterExpression");
 
-            auto result = triggers.update(r);
+            auto result = triggerUsecase.updateTrigger(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -161,7 +161,7 @@ class TriggerController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
-            auto result = triggers.deleteTrigger(tenantId, id);
+            auto result = triggerUsecase.deleteTrigger(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

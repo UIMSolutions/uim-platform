@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class VisibilityController : PlatformController {
-    private ManageVisibilitiesvisibilities visibilities;
+    private ManageVisibilitiesUseCase visibilityUsecase;
 
-    this(ManageVisibilitiesvisibilities visibilities) {
-        this.visibilities = visibilities;
+    this(ManageVisibilitiesUseCase visibilityUsecase) {
+        this.visibilityUsecase = visibilityUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -45,7 +45,7 @@ class VisibilityController : PlatformController {
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = visibilities.create(r);
+            auto result = visibilityUsecase.createVisibility(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -64,7 +64,7 @@ class VisibilityController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto items = visibilities.listVisibilities(tenantId);
+            auto items = visibilityUsecase.listVisibilities(tenantId);
             auto jarr = Json.emptyArray;
             foreach (v; items) {
                 jarr ~= Json.emptyObject
@@ -91,7 +91,7 @@ class VisibilityController : PlatformController {
 
             auto tenantId = req.getTenantId;
             auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
-            auto v = visibilities.getVisibility(tenantId, id);
+            auto v = visibilityUsecase.getVisibility(tenantId, id);
             if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;
@@ -129,7 +129,7 @@ class VisibilityController : PlatformController {
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = visibilities.update(r);
+            auto result = visibilityUsecase.updateVisibility(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -150,7 +150,7 @@ class VisibilityController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
-            auto result = visibilities.deleteVisibility(tenantId, id);
+            auto result = visibilityUsecase.deleteVisibility(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

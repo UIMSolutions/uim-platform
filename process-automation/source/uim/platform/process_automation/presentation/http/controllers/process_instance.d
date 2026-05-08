@@ -14,10 +14,10 @@ mixin(ShowModule!());
 @safe:
 
 class ProcessInstanceController : PlatformController {
-    private ManageProcessInstancesUseCase usecase;
+    private ManageProcessInstancesUseCase processInstanceUsecase;
 
-    this(ManageProcessInstancesUseCase usecase) {
-        this.usecase = usecase;
+    this(ManageProcessInstancesUseCase processInstanceUsecase) {
+        this.processInstanceUsecase = processInstanceUsecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -44,7 +44,7 @@ class ProcessInstanceController : PlatformController {
             r.dueDate = jsonLong(j, "dueDate");
             r.context = jsonKeyValuePairs(j, "context");
 
-            auto result = usecase.start(r);
+            auto result = processInstanceUsecase.startProcessInstance(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -63,7 +63,7 @@ class ProcessInstanceController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto instances = usecase.list(tenantId);
+            auto instances = processInstanceUsecase.listProcessInstances(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
@@ -94,7 +94,7 @@ class ProcessInstanceController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = ProcessInstanceId(extractIdFromPath(req.requestURI.to!string));
-            auto i = usecase.getById(tenantId, id);
+            auto i = processInstanceUsecase.getProcessInstance(tenantId, id);
             if (i.isNull) {
                 writeError(res, 404, "Process instance not found");
                 return;
@@ -140,7 +140,7 @@ class ProcessInstanceController : PlatformController {
             r.id = id;
             r.action = j.getString("action");
 
-            auto result = usecase.performAction(r);
+            auto result = processInstanceUsecase.performProcessInstanceAction(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -157,9 +157,9 @@ class ProcessInstanceController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-
             auto id = ProcessInstanceId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteProcessInstance(tenantId, id);
+            
+            auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
