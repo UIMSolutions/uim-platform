@@ -5,9 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.application.dto;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation.domain.types;import uim.platform.process_automation;
 
+mixin(ShowModule!());
 
+@safe:
 
 
 
@@ -15,8 +17,8 @@ import uim.platform.process_automation.domain.types;
 
 struct CreateProcessRequest {
     TenantId tenantId;
-    string projectId;
-    string id;
+    ProjectId projectId;
+    ProcessId processId;
     string name;
     string description;
     string category;
@@ -26,7 +28,7 @@ struct CreateProcessRequest {
 
 struct UpdateProcessRequest {
     TenantId tenantId;
-    string id;
+    ProcessId processId;
     string name;
     string description;
     string category;
@@ -36,7 +38,7 @@ struct UpdateProcessRequest {
 
 struct DeployProcessRequest {
     TenantId tenantId;
-    string id;
+    ProcessId processId;
     string action;
 }
 
@@ -44,8 +46,8 @@ struct DeployProcessRequest {
 
 struct StartProcessInstanceRequest {
     TenantId tenantId;
-    string processId;
-    string id;
+    ProcessId processId;
+    ProcessInstanceId processInstanceId;
     UserId startedBy;
     string priority;
     string[][] context;
@@ -54,28 +56,28 @@ struct StartProcessInstanceRequest {
 
 struct UpdateProcessInstanceRequest {
     TenantId tenantId;
-    string id;
+    ProcessInstanceId processInstanceId;
     string status;
     string currentStepId;
 }
 
 struct ProcessInstanceActionRequest {
     TenantId tenantId;
-    string id;
+    ProcessInstanceId processInstanceId;
     string action;
 }
 
-// --- Task ---
+// --- PATask ---
 
 struct CreateTaskRequest {
     TenantId tenantId;
-    string processInstanceId;
-    string id;
+    ProcessInstanceId processInstanceId;
+    TaskId taskId;
     string name;
     string description;
     string type;
     string priority;
-    string assignee;
+    UserId assignee;
     string[] candidateUsers;
     string[] candidateGroups;
     string formId;
@@ -84,17 +86,17 @@ struct CreateTaskRequest {
 
 struct UpdateTaskRequest {
     TenantId tenantId;
-    string id;
+    TaskId taskId;
     string name;
     string description;
     string priority;
-    string assignee;
+    UserId assignee;
     long dueDate;
 }
 
 struct CompleteTaskRequest {
     TenantId tenantId;
-    string id;
+    TaskId taskId;
     UserId completedBy;
     string outcome;
     string formData;
@@ -102,7 +104,7 @@ struct CompleteTaskRequest {
 
 struct ClaimTaskRequest {
     TenantId tenantId;
-    string id;
+    TaskId taskId;
     UserId userId;
 }
 
@@ -111,7 +113,7 @@ struct ClaimTaskRequest {
 struct CreateDecisionRequest {
     TenantId tenantId;
     string projectId;
-    string id;
+    DecisionId decisionId;
     string name;
     string description;
     string type;
@@ -122,7 +124,7 @@ struct CreateDecisionRequest {
 
 struct UpdateDecisionRequest {
     TenantId tenantId;
-    string id;
+    DecisionId decisionId;
     string name;
     string description;
     string hitPolicy;
@@ -134,8 +136,8 @@ struct UpdateDecisionRequest {
 
 struct CreateFormRequest {
     TenantId tenantId;
-    string projectId;
-    string id;
+    ProjectId projectId;
+    FormId formId;
     string name;
     string description;
     string version_;
@@ -144,7 +146,7 @@ struct CreateFormRequest {
 
 struct UpdateFormRequest {
     TenantId tenantId;
-    string id;
+    FormId formId;
     string name;
     string description;
     string version_;
@@ -155,8 +157,8 @@ struct UpdateFormRequest {
 
 struct CreateAutomationRequest {
     TenantId tenantId;
-    string projectId;
-    string id;
+    ProjectId projectId;
+    AutomationId automationId;
     string name;
     string description;
     string type;
@@ -167,7 +169,7 @@ struct CreateAutomationRequest {
 
 struct UpdateAutomationRequest {
     TenantId tenantId;
-    string id;
+    AutomationId automationId;
     string name;
     string description;
     string type;
@@ -178,7 +180,7 @@ struct UpdateAutomationRequest {
 
 struct RunAutomationRequest {
     TenantId tenantId;
-    string id;
+    AutomationId automationId;
     UserId triggeredBy;
     string inputData;
 }
@@ -187,8 +189,8 @@ struct RunAutomationRequest {
 
 struct CreateTriggerRequest {
     TenantId tenantId;
-    string processId;
-    string id;
+    ProcessId processId;
+    TriggerId triggerId;
     string name;
     string description;
     string type;
@@ -201,7 +203,7 @@ struct CreateTriggerRequest {
 
 struct UpdateTriggerRequest {
     TenantId tenantId;
-    string id;
+    TriggerId triggerId;
     string name;
     string description;
     string cronExpression;
@@ -213,8 +215,8 @@ struct UpdateTriggerRequest {
 
 struct CreateActionRequest {
     TenantId tenantId;
-    string projectId;
-    string id;
+    ProjectId projectId;
+    ActionId actionId;
     string name;
     string description;
     string type;
@@ -229,7 +231,7 @@ struct CreateActionRequest {
 
 struct UpdateActionRequest {
     TenantId tenantId;
-    string id;
+    ActionId actionId;
     string name;
     string description;
     string baseUrl;
@@ -244,7 +246,7 @@ struct UpdateActionRequest {
 
 struct CreateVisibilityRequest {
     TenantId tenantId;
-    string id;
+    VisibilityId visibilityId;
     string name;
     string description;
     string dashboardType;
@@ -255,7 +257,7 @@ struct CreateVisibilityRequest {
 
 struct UpdateVisibilityRequest {
     TenantId tenantId;
-    string id;
+    VisibilityId visibilityId;
     string name;
     string description;
     string refreshIntervalSeconds;
@@ -265,7 +267,9 @@ struct UpdateVisibilityRequest {
 // --- Artifact Store ---
 
 struct CreateArtifactRequest {
-    string id;
+    ArtifactId artifactId;
+    TenantId tenantId;
+    UserId createdBy;
     string name;
     string description;
     string type;
@@ -277,7 +281,9 @@ struct CreateArtifactRequest {
 }
 
 struct UpdateArtifactRequest {
-    string id;
+    ArtifactId artifactId;
+    TenantId tenantId;
+    UserId updatedBy;   
     string name;
     string description;
     string version_;
@@ -286,5 +292,5 @@ struct UpdateArtifactRequest {
 
 struct InstallArtifactRequest {
     TenantId tenantId;
-    string artifactId;
+    ArtifactId artifactId;  
 }

@@ -33,11 +33,13 @@ class FormController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateFormRequest r;
-            r.tenantId = req.getTenantId;
-            r.projectId = j.getString("projectId");
-            r.id = j.getString("id");
+            r.tenantId = tenantId;
+            r.projectId = ProjectId(j.getString("projectId"));
+            r.id = FormId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -60,7 +62,8 @@ class FormController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
+
             auto forms = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -90,10 +93,10 @@ class FormController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto f = usecase.getById(id);
+            auto id = FormId(extractIdFromPath(req.requestURI.to!string));
+            auto f = usecase.getById(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Form not found");
                 return;
@@ -119,12 +122,13 @@ class FormController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateFormRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = FormId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -147,15 +151,16 @@ class FormController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteForm(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = FormId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteForm(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Form deleted");
-                    
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

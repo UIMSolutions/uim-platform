@@ -41,7 +41,7 @@ class BrowseController : PlatformController {
 
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto folderId = extractIdFromPath(req.requestURI);
+      auto folderId = FolderId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto contents = usecase.browseFolderContents(tenantId, folderId);
 
@@ -63,7 +63,7 @@ class BrowseController : PlatformController {
 
   private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto repoId = extractIdFromPath(req.requestURI);
+      auto repoId = RepositoryId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
@@ -93,7 +93,7 @@ class BrowseController : PlatformController {
       r.tenantId = req.getTenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.resourceId = j.getString("resourceId");
-      r.resourceType = parseResourceType(j.getString("resourceType"));
+      r.resourceType = j.getString("resourceType").to!ResourceType;
 
       auto result = usecase.addFavorite(r);
       if (result.isSuccess) {
@@ -130,9 +130,9 @@ class BrowseController : PlatformController {
 
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FavoriteId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto result = usecase.deleteFavorite(tenantId, FavoriteId(id));
+      auto result = usecase.deleteFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true)

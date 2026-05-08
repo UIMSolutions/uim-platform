@@ -21,12 +21,12 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageDocumentsUseCase { // TODO: UIMUseCase {
-  private IDocumentRepository docs;
-  private IDocumentVersionRepository versions;
-  private IFolderRepository folders;
+  private MemoryDocumentRepository docs;
+  private MemoryDocumentVersionRepository versions;
+  private MemoryFolderRepository folders;
 
-  this(IDocumentRepository docs, IDocumentVersionRepository versions,
-      IFolderRepository folders) {
+  this(MemoryDocumentRepository docs, MemoryDocumentVersionRepository versions,
+      MemoryFolderRepository folders) {
     this.docs = docs;
     this.versions = versions;
     this.folders = folders;
@@ -39,16 +39,15 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository ID is required");
 
     // Validate folder exists if provided
-    if (r.folderId.length > 0) {
+    if (!r.folderId.isEmpty) {
       if (!folders.existsById(r.tenantId, r.folderId))
         return CommandResult(false, "", "Folder not found");
     }
 
     auto now = Clock.currStdTime();
 
-    auto doc = new Document();
-    doc.id = randomUUID();
-    doc.tenantId = r.tenantId;
+    auto doc = Document();
+    doc.initEntity(r.tenantId, r.createdBy);
     doc.repositoryId = r.repositoryId;
     doc.folderId = r.folderId;
     doc.name = r.name;
@@ -59,14 +58,10 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.status = DocumentStatus.draft;
     doc.tags = r.tags;
     doc.properties = r.properties;
-    doc.createdBy = r.createdBy;
-    doc.createdAt = now;
-    doc.updatedAt = now;
 
     // Create initial version (v1)
-    auto ver = new DocumentVersion();
-    ver.id = randomUUID();
-    ver.tenantId = r.tenantId;
+    auto ver = DocumentVersion();
+    ver.initEntity(r.tenantId, r.createdBy);
     ver.documentId = doc.id;
     ver.versionNumber = 1;
     ver.isMajor = true;
@@ -75,8 +70,6 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     ver.fileSize = r.fileSize;
     ver.status = VersionStatus.current;
     ver.comment = "Initial version";
-    ver.createdBy = r.createdBy;
-    ver.createdAt = now;
 
     doc.currentVersionId = ver.id;
     doc.status = DocumentStatus.active;
@@ -108,10 +101,9 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDocument(UpdateDocumentRequest request) {
-    if (!docs.existsById(request.tenantId, request.id))
+    auto doc = docs.findById(request.tenantId, request.documentId);
+    if (doc.isNull)
       return CommandResult(false, "", "Document not found");
-
-    auto doc = docs.findById(request.tenantId, request.id);
 
     if (request.name.length > 0)
       doc.name = request.name;
@@ -133,11 +125,11 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult moveDocument(MoveDocumentRequest request) {
-    auto doc = docs.findById(request.tenantId, request.id);
+    auto doc = docs.findById(request.tenantId, request.documentId);
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
-    if (request.newFolderId.value.length > 0) {
+    if (!request.newFolderId.isEmpty) {
       auto folder = folders.findById(request.tenantId, request.newFolderId);
       if (folder.isNull)
         return CommandResult(false, "", "Target folder not found");
@@ -149,8 +141,8 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, doc.id.value, "");
   }
 
-  CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
-    auto doc = docs.findById(tenantId, id);
+  CommandResult archiveDocument(TenantId tenantId, DocumentId documentId) {
+    auto doc = docs.findById(tenantId, documentId);
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
@@ -160,14 +152,14 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, doc.id.value, "");
   }
 
-  CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
-    auto doc = docs.findById(tenantId, id);
+  CommandResult deleteDocument(TenantId tenantId, DocumentId documentId) {
+    auto doc = docs.findById(tenantId, documentId);
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
     // Cascade delete versions
-    versions.removeByDocument(tenantId, id);
-    docs.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    versions.removeByDocument(tenantId, documentId);
+    docs.remove(doc);
+    return CommandResult(true, doc.id.value, "");
   }
 }

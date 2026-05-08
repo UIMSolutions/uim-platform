@@ -26,36 +26,46 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
     foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId)
         return e;
-    return null;
+    return Favorite.init;
   }
 
   void removeByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
     foreach (e; findByTenant(tenantId))
-      if (e.userId == userId && e.resourceId == resourceId)
-        remove(e.id);
+      if (e.userId == userId && e.resourceId == resourceId) {
+        remove(e);
+        return;
+      }
   }
 
   size_t countByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(e => e.userId == userId).length;
+    return findByUser(tenantId, userId).length;
+  }
+
+  Favorite[] filterByUser(Favorite[] favorites, UserId userId) {
+    return favorites.filter!(e => e.userId == userId).array;
   }
 
   Favorite[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
+    return filterByUser(findByTenant(tenantId), userId);
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
-    findByTenant(tenantId).filter!(e => e.userId == userId).each!(e => remove(e.id));
+    findByUser(tenantId, userId).each!(e => remove(e));
   }
 
   size_t countByResource(TenantId tenantId, string resourceId) {
-    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).length;
+    return findByResource(tenantId, resourceId).length;
+  }
+
+  Favorite[] filterByResource(Favorite[] favorites, string resourceId) {
+    return favorites.filter!(e => e.resourceId == resourceId).array;
   }
 
   Favorite[] findByResource(TenantId tenantId, string resourceId) {
-    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
+    return filterByResource(findByTenant(tenantId), resourceId);
   }
 
   void removeByResource(TenantId tenantId, string resourceId) {
-    findByTenant(tenantId).filter!(e => e.resourceId == resourceId).each!(e => remove(e.id));
+    findByResource(tenantId, resourceId).each!(e => remove(e));
   }
 }

@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.task;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct TaskComment {
     TaskCommentId id;
@@ -15,7 +19,7 @@ struct TaskComment {
 }
 
 struct TaskAttachment {
-    string id;
+    TaskAttachmentId id;
     string name;
     string contentType;
     long sizeBytes;
@@ -23,7 +27,7 @@ struct TaskAttachment {
     long uploadedAt;
 }
 
-struct Task {
+struct PATask {
     mixin TenantEntity!(TaskId);
 
     ProcessInstanceId processInstanceId;
@@ -32,8 +36,8 @@ struct Task {
     TaskType type;
     TaskStatus status;
     TaskPriority priority;
-    string assignee;
-    string[] candidateUsers;
+    UserId assignee;
+    UserId[] candidateUsers;
     string[] candidateGroups;
     string formId;
     string formData;
@@ -49,17 +53,17 @@ struct Task {
             .set("processInstanceId", processInstanceId.value)
             .set("name", name)
             .set("description", description)
-            .set("type", type.toString())
-            .set("status", status.toString())
-            .set("priority", priority.toString())
+            .set("type", type.to!string())
+            .set("status", status.to!string())
+            .set("priority", priority.to!string())
             .set("assignee", assignee)
-            .set("candidateUsers", candidateUsers.array)
-            .set("candidateGroups", candidateGroups.array)
+            .set("candidateUsers", candidateUsers.map!(u => u.value).array.toJson)
+            .set("candidateGroups", candidateGroups.toJson)
             .set("formId", formId)
             .set("formData", formData)
-            .set("comments", comments.map!(c => c.toJson()).array)
-            .set("attachments", attachments.map!(a => a.toJson()).array)
-            .set("completedBy", completedBy)
+            .set("comments", comments.map!(c => c.toJson()).array.toJson)
+            .set("attachments", attachments.map!(a => a.toJson()).array.toJson)
+            .set("completedBy", completedBy.value)
             .set("outcome", outcome)
             .set("dueDate", dueDate)
             .set("completedAt", completedAt);

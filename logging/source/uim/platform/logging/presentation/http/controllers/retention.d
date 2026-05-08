@@ -45,7 +45,7 @@ class RetentionController : PlatformController {
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createRetentionPolicy(r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", RetentionPolicyId(result.id))
@@ -63,7 +63,7 @@ class RetentionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto policies = usecase.listPolicies(tenantId);
+      auto policies = usecase.listRetentionPolicies(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (p; policies) {
@@ -91,20 +91,20 @@ class RetentionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      auto p = usecase.getPolicy(tenantId, policyId);
-      if (p.isNull) {
+      auto policy = usecase.getRetentionPolicy(tenantId, policyId);
+      if (policy.isNull) {
         writeError(res, 404, "Retention policy not found");
         return;
       }
 
       auto response = Json.emptyObject
-        .set("id", p.id)
-        .set("name", p.name)
-        .set("description", p.description)
-        .set("retentionDays", p.retentionDays)
-        .set("maxSizeGB", p.maxSizeGB)
-        .set("isDefault", p.isDefault)
-        .set("isActive", p.isActive);
+        .set("id", policy.id)
+        .set("name", policy.name)
+        .set("description", policy.description)
+        .set("retentionDays", policy.retentionDays)
+        .set("maxSizeGB", policy.maxSizeGB)
+        .set("isDefault", policy.isDefault)
+        .set("isActive", policy.isActive);
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -127,7 +127,7 @@ class RetentionController : PlatformController {
       r.isActive = j.getBoolean("isActive", true);
       r.tenantId = tenantId;
 
-      auto result = usecase.updatePolicy(r);
+      auto result = usecase.updateRetentionPolicy(r);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", result.id)
@@ -146,7 +146,7 @@ class RetentionController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
-      usecase.deletePolicy(tenantId, policyId);
+      usecase.deleteRetentionPolicy(tenantId, policyId);
 
       auto response = Json.emptyObject
         .set("id", policyId)

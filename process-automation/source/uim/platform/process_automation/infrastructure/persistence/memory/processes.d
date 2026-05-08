@@ -11,22 +11,28 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryProcessRepository : TenantRepository!(Process, ProcessId), ProcessRepository {
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }
 
-    Process[] findByProject(ProjectId projectId) {
-        return findAll().filter!(p => p.projectId == projectId).array;
+    Process[] findByProject(TenantId tenantId, ProjectId projectId) {
+        return filterByProject(findByTenant(tenantId), projectId);
     }
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(p => remove(p));
+    Process[] filterByProject(Process[] processes, ProjectId projectId) {
+        return processes.filter!(p => p.projectId == projectId).array;
+    }
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(p => remove(p));
     }
 
     size_t countByCategory(TenantId tenantId, ProcessCategory category) {
         return findByCategory(tenantId, category).length;
     }
     Process[] findByCategory(TenantId tenantId, ProcessCategory category) {
-        return findAll().filter!(p => p.tenantId == tenantId && p.category == category).array;
+        return filterByCategory(findByTenant(tenantId), category);
+    }
+    Process[] filterByCategory(Process[] processes, ProcessCategory category) {
+        return processes.filter!(p => p.category == category).array;
     }
     void removeByCategory(TenantId tenantId, ProcessCategory category) {
         findByCategory(tenantId, category).each!(p => remove(p));

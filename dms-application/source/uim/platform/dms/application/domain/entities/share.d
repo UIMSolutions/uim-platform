@@ -24,10 +24,10 @@ struct Share {
   Json toJson() const {
     return entityToJson
       .set("documentId", documentId.value)
-      .set("shareType", shareType.toString())
+      .set("shareType", shareType.to!string())
       .set("sharedWith", sharedWith)
-      .set("permissionLevel", permissionLevel.toString())
-      .set("status", status.toString())
+      .set("permissionLevel", permissionLevel.to!string())
+      .set("status", status.to!string())
       .set("expiresAt", expiresAt);
   }
 }

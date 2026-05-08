@@ -4,8 +4,11 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.form;
+import uim.platform.process_automation;
 
-import uim.platform.process_automation.domain.types;
+mixin(ShowModule!());
+
+@safe:
 
 struct FormFieldOption {
     string label;
@@ -36,14 +39,14 @@ struct FormField {
             .set("id", id.value)
             .set("name", name)
             .set("label", label)
-            .set("type", type.toString())
+            .set("type", type.to!string())
             .set("required", required)
             .set("defaultValue", defaultValue)
             .set("placeholder", placeholder)
             .set("validationRegex", validationRegex)
             .set("helpText", helpText)
             .set("sortOrder", sortOrder)
-            .set("options", options.map!(o => o.toJson()).array);
+            .set("options", options.map!(o => o.toJson()).array.toJson);
 
         return j;
     }
@@ -83,7 +86,7 @@ struct Form {
             .set("projectId", projectId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status.toString())
+            .set("status", status.to!string())
             .set("version", version_)
             .set("sections", sections.map!(s => s.toJson()).array);
 

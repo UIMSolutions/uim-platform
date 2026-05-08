@@ -41,14 +41,15 @@ class DocumentController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenanId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDocumentRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenanId;
       r.repositoryId = j.getString("repositoryId");
       r.folderId = j.getString("folderId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.contentCategory = parseContentCategory(j.getString("contentCategory"));
+      r.contentCategory = j.getString("contentCategory").to!ContentCategory;
       r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
       r.tags = j.getString("tags");
@@ -102,7 +103,7 @@ class DocumentController : PlatformController {
         }
       }
 
-      auto items = usecase.searchByName(query, tenantId);
+      auto items = usecase.searchByName(tenantId, query);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -117,7 +118,7 @@ class DocumentController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto doc = usecase.getDocument(tenantId, id);
       if (doc.isNull) {
@@ -132,10 +133,10 @@ class DocumentController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateDocumentRequest();
-      r.id = randomUUID();
+      r.documentId = id;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -159,10 +160,10 @@ class DocumentController : PlatformController {
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = MoveDocumentRequest();
-      r.id = id;
+      r.documentId = id;
       r.tenantId = req.getTenantId;
       r.newFolderId = j.getString("newFolderId");
 
@@ -183,7 +184,7 @@ class DocumentController : PlatformController {
 
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.archiveDocument(tenantId, id);
       if (result.isSuccess) {
@@ -201,7 +202,7 @@ class DocumentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.deleteDocument(tenantId, id);
       if (result.isSuccess) {

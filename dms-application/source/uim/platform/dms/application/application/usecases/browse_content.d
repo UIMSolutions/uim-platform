@@ -24,7 +24,7 @@ mixin(ShowModule!());
 @safe:
 /// Browsing summary for a repository.
 struct RepositorySummary {
-  string repositoryId;
+  RepositoryId repositoryId;
   string name;
   long totalDocuments;
   long totalFolders;
@@ -61,15 +61,15 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
 
   /// Get repository summary.
   RepositorySummary getRepositorySummary(TenantId tenantId, RepositoryId repositoryId) {
+    auto repo = repositories.findById(tenantId, repositoryId);
     RepositorySummary summary;
-    if (!repositories.existsById(tenantId, repositoryId))
+    if (repo.isNull)
       return summary;
 
-    auto repo = repositories.findById(tenantId, repositoryId);
-    summary.repositoryId = RepositoryId(repositoryId);
+    summary.repositoryId = repo.id;
     summary.name = repo.name;
     summary.totalDocuments = docs.countByRepository(tenantId, repositoryId);
-    summary.totalFolders = folders.findByRepository(tenantId, repositoryId).length;
+    summary.totalFolders = folders.countByRepository(tenantId, repositoryId);
     summary.status = repo.status;
     return summary;
   }
@@ -77,16 +77,15 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
   /// Add a favorite.
   CommandResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
-    if (favorites.existsByUserAndResource(r.tenantId, r.userId, r.resourceId))
-      return CommandResult(true, existing.id.value, "");
+    auto fav = favorites.findByUserAndResource(r.tenantId, r.userId, r.resourceId);
+    if (!fav.isNull)      
+      return CommandResult(true, fav.id.value, "");
 
-    auto fav = new Favorite();
-    fav.id = randomUUID();
-    fav.tenantId = r.tenantId;
+    fav = Favorite();
+    fav.initEntity(r.tenantId);
     fav.userId = r.userId;
     fav.resourceId = r.resourceId;
     fav.resourceType = r.resourceType;
-    fav.createdAt = Clock.currStdTime();
 
     favorites.save(fav);
     return CommandResult(true, fav.id.value, "");
@@ -102,12 +101,12 @@ struct FolderContents {
 }
   /// Remove a favorite.
   CommandResult deleteFavorite(TenantId tenantId, FavoriteId favoriteId) {
-    auto entity = favorites.findById(tenantId, favoriteId);
-    if (entity.isNull)
+    auto favorite = favorites.findById(tenantId, favoriteId);
+    if (favorite.isNull)
       return CommandResult(false, "", "Favorite not found");
 
-    favorites.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    favorites.remove(favorite);
+    return CommandResult(true, favorite.id.value, "");
   }
 }
 

@@ -23,7 +23,7 @@ struct CreateRepositoryRequest {
 }
 
 struct UpdateRepositoryRequest {
-  RepositoryId id;
+  RepositoryId repositoryId;
   TenantId tenantId;
   string name;
   string description;
@@ -43,14 +43,14 @@ struct CreateFolderRequest {
 }
 
 struct UpdateFolderRequest {
-  FolderId id;
+  FolderId folderId;
   TenantId tenantId;
   string name;
   string description;
 }
 
 struct MoveFolderRequest {
-  FolderId id;
+  FolderId folderId;
   TenantId tenantId;
   FolderId newParentFolderId;
 }
@@ -72,17 +72,20 @@ struct CreateDocumentRequest {
 }
 
 struct UpdateDocumentRequest {
-  DocumentId id;
+  DocumentId documentId;
   TenantId tenantId;
+
+  ContentCategory contentCategory;
   string name;
   string description;
   string tags;
   string properties;
   string mimeType;
+  long fileSize;
 }
 
 struct MoveDocumentRequest {
-  DocumentId id;
+  DocumentId documentId;
   TenantId tenantId;
   FolderId newFolderId;
 

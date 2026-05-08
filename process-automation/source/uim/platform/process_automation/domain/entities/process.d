@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.process;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ProcessStep {
     ProcessStepId id;
     string name;
     StepType type;
     string description;
-    string assignee;
+    UserId assignee;
     string formId;
     string decisionId;
     string automationId;
@@ -24,13 +28,13 @@ struct ProcessStep {
         return Json.emptyObject
             .set("id", id.value)
             .set("name", name)
-            .set("type", type.toString())
+            .set("type", type.to!string())
             .set("description", description)
             .set("assignee", assignee)
             .set("formId", formId)
             .set("decisionId", decisionId)
             .set("automationId", automationId)
-            .set("nextSteps", nextSteps.array)
+            .set("nextSteps", nextSteps.toJson)
             .set("condition", condition)
             .set("timeoutMinutes", timeoutMinutes);
 
@@ -71,8 +75,8 @@ struct Process {
             .set("projectId", projectId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status.toString())
-            .set("category", category.toString())
+            .set("status", status.to!string())
+            .set("category", category.to!string())
             .set("version", version_)
             .set("steps", steps.map!(step => step.toJson()).array)
             .set("variables", variables.map!(var => var.toJson()).array);

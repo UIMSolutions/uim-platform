@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.decisions;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.decision;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.decision;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface DecisionRepository : ITenantRepository!(Decision, DecisionId) {
 
-    size_t countByProject(ProjectId projectId);
-    Decision[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    Decision[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
 }

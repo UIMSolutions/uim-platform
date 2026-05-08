@@ -12,14 +12,17 @@ mixin(ShowModule!());
 @safe:
 class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
-    size_t countByProcess(ProcessId processId) {
-        return findByProcess(processId).length;
+    size_t countByProcess(TenantId tenantId, ProcessId processId) {
+        return findByProcess(tenantId, processId).length;
     }
-    Trigger[] findByProcess(ProcessId processId) {
-        return findAll().filter!(t => t.processId == processId).array;
+    Trigger[] filterByProcess(Trigger[] triggers, ProcessId processId) {
+        return triggers.filter!(t => t.processId == processId).array;
     }
-    void removeByProcess(ProcessId processId) {
-        findByProcess(processId).each!(t => remove(t));
+    Trigger[] findByProcess(TenantId tenantId, ProcessId processId) {
+        return filterByProcess(filterByTenant(tenantId), processId);
+    }
+    void removeByProcess(TenantId tenantId, ProcessId processId) {
+        findByProcess(tenantId, processId).each!(t => remove(t));
     }
 
 }

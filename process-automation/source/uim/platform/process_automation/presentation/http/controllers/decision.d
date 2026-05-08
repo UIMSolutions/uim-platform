@@ -33,11 +33,13 @@ class DecisionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateDecisionRequest r;
-            r.tenantId = req.getTenantId;
-            r.projectId = j.getString("projectId");
-            r.id = j.getString("id");
+            r.tenantId = tenantId;
+            r.projectId = ProjectId(j.getString("projectId"));
+            r.id = DecisionId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -48,8 +50,8 @@ class DecisionController : PlatformController {
             auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Decision created");
+                    .set("id", result.id)
+                    .set("message", "Decision created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -62,8 +64,9 @@ class DecisionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto decisions = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+
+            auto decisions = usecase.listDecisions(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; decisions) {
@@ -81,7 +84,7 @@ class DecisionController : PlatformController {
             auto resp = Json.emptyObject
                 .set("count", decisions.length)
                 .set("resources", jarr);
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -90,10 +93,11 @@ class DecisionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = usecase.getById(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            auto d = usecase.getById(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Decision not found");
                 return;
@@ -121,12 +125,12 @@ class DecisionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateDecisionRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = DecisionId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.hitPolicy = j.getString("hitPolicy");
@@ -136,8 +140,8 @@ class DecisionController : PlatformController {
             auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Decision updated");
+                    .set("id", result.id)
+                    .set("message", "Decision updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -150,14 +154,15 @@ class DecisionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteDecision(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteDecision(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Decision deleted");
+                    .set("id", result.id)
+                    .set("message", "Decision deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

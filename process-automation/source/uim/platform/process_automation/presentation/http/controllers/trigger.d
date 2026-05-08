@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.trigger;
 
-import uim.platform.process_automation.application.usecases.manage.triggers;
-import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.application.triggerss.manage.triggers;
+// import uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation;
 
-class TriggerController : PlatformController {
-    private ManageTriggersUseCase usecase;
+mixin(ShowModule!());
 
-    this(ManageTriggersUseCase usecase) {
-        this.usecase = usecase;
+@safe:
+
+class TriggerController : PlatformController {
+    private ManageTriggerstriggers triggers;
+
+    this(ManageTriggerstriggers triggers) {
+        this.triggers = triggers;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -29,9 +33,11 @@ class TriggerController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateTriggerRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.processId = j.getString("processId");
             r.id = j.getString("id");
             r.name = j.getString("name");
@@ -43,7 +49,7 @@ class TriggerController : PlatformController {
             r.filterExpression = j.getString("filterExpression");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = triggers.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,20 +66,21 @@ class TriggerController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto triggers = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+
+            auto triggers = triggers.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (t; triggers) {
                 jarr ~= Json.emptyObject
-                .set("id", t.id)
-                .set("name", t.name)
-                .set("type", t.type.to!string)
-                .set("status", t.status.to!string)
-                .set("processId", t.processId)
-                .set("eventType", t.eventType)
-                .set("lastFiredAt", t.lastFiredAt)
-                .set("fireCount", t.fireCount);
+                    .set("id", t.id)
+                    .set("name", t.name)
+                    .set("type", t.type.to!string)
+                    .set("status", t.status.to!string)
+                    .set("processId", t.processId)
+                    .set("eventType", t.eventType)
+                    .set("lastFiredAt", t.lastFiredAt)
+                    .set("fireCount", t.fireCount);
             }
 
             auto resp = Json.emptyObject
@@ -88,10 +95,11 @@ class TriggerController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto t = usecase.getById(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
+            auto t = triggers.getById(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
                 return;
@@ -112,7 +120,7 @@ class TriggerController : PlatformController {
                 .set("updatedAt", t.updatedAt)
                 .set("lastFiredAt", t.lastFiredAt)
                 .set("fireCount", t.fireCount);
-            
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -121,19 +129,19 @@ class TriggerController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateTriggerRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.triggerId = TriggerId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.cronExpression = j.getString("cronExpression");
             r.eventType = j.getString("eventType");
             r.filterExpression = j.getString("filterExpression");
 
-            auto result = usecase.update(r);
+            auto result = triggers.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -150,10 +158,10 @@ class TriggerController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteTrigger(id);
+            auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
+            auto result = triggers.deleteTrigger(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

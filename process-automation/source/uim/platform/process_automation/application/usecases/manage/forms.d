@@ -18,35 +18,30 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createForm(CreateFormRequest r) {
-        if (r.isNull)
+        if (r.formId.isEmpty)
             return CommandResult(false, "", "Form ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Form name is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.formId);
         if (!existing.isNull)
             return CommandResult(false, "", "Form already exists");
 
         Form f;
-        f.id = r.id;
-        f.tenantId = r.tenantId;
+        f.initEntity(r.tenantId, r.createdBy);
+        f.id = r.formId;
         f.projectId = r.projectId;
         f.name = r.name;
         f.description = r.description;
         f.status = FormStatus.draft;
         f.version_ = r.version_;
-        f.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        f.createdAt = now;
-        f.updatedAt = now;
+        f.updatedAt = f.createdAt;
 
         repo.save(f);
         return CommandResult(true, f.id.value, "");
     }
 
-    Form getForm(FormId id) {
+    Form getForm(TenantId tenantId, FormId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -55,23 +50,23 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateForm(UpdateFormRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto form = repo.findById(r.tenantId, r.formId);
+        if (form.isNull)
             return CommandResult(false, "", "Form not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.version_ = r.version_;
-        existing.updatedBy = r.updatedBy;
+        form.name = r.name;
+        form.description = r.description;
+        form.version_ = r.version_;
+        form.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        form.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(form);
+        return CommandResult(true, form.id.value, "");
     }
 
-    CommandResult deleteForm(FormId id) {
+    CommandResult deleteForm(TenantId tenantId, FormId id) {
         auto form = repo.findById(tenantId, id);
         if (form.isNull)
             return CommandResult(false, "", "Form not found");

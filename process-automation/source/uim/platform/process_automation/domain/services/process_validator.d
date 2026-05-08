@@ -4,10 +4,16 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.services.process_validator;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct ProcessValidator {
-    static string validate(string id, string name) {
-        if (id.isEmpty)
+    static string validate(TenantId tenantId, ProcessId processId, string name) {
+        if (tenantId.isEmpty)
+            return "Tenant ID is required";
+        if (processId.isEmpty)
             return "Process ID is required";
         if (name.length == 0)
             return "Process name is required";
@@ -16,7 +22,9 @@ struct ProcessValidator {
         return "";
     }
 
-    static string validateInstance(string processId, UserId startedBy) {
+    static string validateInstance(TenantId tenantId, ProcessId processId, UserId startedBy) {
+        if (tenantId.isEmpty)
+            return "Tenant ID is required";
         if (processId.isEmpty)
             return "Process ID is required";
         if (startedBy.length == 0)
@@ -24,7 +32,11 @@ struct ProcessValidator {
         return "";
     }
 
-    static string validateTask(string name, string assignee) {
+    static string validateTask(TenantId tenantId, TaskId taskId, string name, UserId assignee) {
+        if (tenantId.isEmpty)
+            return "Tenant ID is required";
+        if (taskId.isEmpty)
+            return "Task ID is required";
         if (name.length == 0)
             return "Task name is required";
         return "";

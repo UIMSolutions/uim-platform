@@ -39,14 +39,14 @@ class VersionController : PlatformController {
 
   private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = extractIdFromPath(req.requestURI);
+      auto docId = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.checkOut(doctenantId, id, userId);
+      auto result = usecase.checkOut(tenantId, docId, userId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("documentId", Json(docId))
+          .set("documentId", docId.value)
           .set("status", Json("locked"))
           .set("message", "Document checked out successfully");
 
@@ -64,7 +64,7 @@ class VersionController : PlatformController {
     try {
       auto j = req.json;
       auto r = CheckInRequest();
-      r.documentId = j.getString("documentId");
+      r.documentId = DocumentId(j.getString("documentId"));
       r.tenantId = req.getTenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.isMajor = j.getBoolean("isMajor", true);
@@ -78,7 +78,7 @@ class VersionController : PlatformController {
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("versionId", result.id)
-          .set("documentId", Json(r.documentId))
+          .set("documentId", r.documentId.value)
           .set("status", Json("active"))
           .set("message", "Document checked in successfully");
 
@@ -94,13 +94,13 @@ class VersionController : PlatformController {
 
   private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = extractIdFromPath(req.requestURI);
+      auto docId = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
 
-      auto result = usecase.cancelCheckOut(doctenantId, id);
+      auto result = usecase.cancelCheckOut(tenantId, docId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
-          .set("documentId", Json(docId))
+          .set("documentId", docId.value)
           .set("status", Json("active"))
           .set("message", "Document checkout cancelled successfully");
 
@@ -116,9 +116,9 @@ class VersionController : PlatformController {
 
   private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = extractIdFromPath(req.requestURI);
+      auto docId = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto versions = usecase.getAllVersions(doctenantId, id);
+      auto versions = usecase.getAllVersions(tenantId, docId);
       auto arr = versions.map!(v => v.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -135,9 +135,9 @@ class VersionController : PlatformController {
 
   private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = extractIdFromPath(req.requestURI);
+      auto docId = DocumentId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto ver = usecase.getCurrentVersion(doctenantId, id);
+      auto ver = usecase.getCurrentVersion(tenantId, docId);
       if (ver.isNull) {
         writeError(res, 404, "No current version found");
         return;

@@ -11,16 +11,21 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDecisionRepository : TenantRepository!(Decision, DecisionId), DecisionRepository {
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }
 
-    Decision[] findByProject(ProjectId projectId) {
-        return findAll().filter!(d => d.projectId == projectId).array;
+    Decision[] findByProject(TenantId tenantId, ProjectId projectId) {
+        return filterByProject(findByTenant(tenantId), projectId);
     }
 
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(d => remove(d));
+    Decision[] filterByProject(Decision[] decisions, ProjectId projectId) {
+        return decisions.filter!(d => d.projectId == projectId).array;
+    }
+
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(d => remove(d));
     }
 
 }

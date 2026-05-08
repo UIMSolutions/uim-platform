@@ -43,9 +43,9 @@ class PermissionController : PlatformController {
       auto r = CreatePermissionRequest();
       r.tenantId = req.getTenantId;
       r.resourceId = j.getString("resourceId");
-      r.resourceType = parseResourceType(j.getString("resourceType"));
-      r.userId = j.getString("userId");
-      r.level = parsePermissionLevel(j.getString("level"));
+      r.resourceType = j.getString("resourceType").to!ResourceType;
+      r.userId = UserId(j.getString("userId"));
+      r.level = j.getString("level").to!PermissionLevel;
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = permissions.grantPermission(r);
@@ -69,9 +69,9 @@ class PermissionController : PlatformController {
       auto resourceId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
-      auto resourceType = parseResourceType(resourceTypeStr);
+      auto resourceType = resourceTypeStr.to!ResourceType;
 
-      auto items = permissions.listByResource(resourceId, resourceType, tenantId);
+      auto items = permissions.listByResource(tenantId, resourceId, resourceType);
       auto arr = items.map!(item => item.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -88,7 +88,7 @@ class PermissionController : PlatformController {
 
   private void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = extractIdFromPath(req.requestURI);
+      auto userId = UserId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
 
       auto items = permissions.listByUser(tenantId, userId);
@@ -111,16 +111,17 @@ class PermissionController : PlatformController {
       auto j = req.json;
       TenantId tenantId = req.getTenantId;
       auto resourceId = j.getString("resourceId");
-      auto resourceType = parseResourceType(j.getString("resourceType"));
-      auto userId = j.getString("userId");
-      auto required = parsePermissionLevel(j.getString("requiredLevel"));
+      auto resourceType = j.getString("resourceType").to!ResourceType;
+      auto userId = UserId(j.getString("userId"));
+      auto required = j.getString("requiredLevel").to!PermissionLevel;
 
-      auto allowed = permissions.checkAccess(resourceId, resourceType, userId, required, tenantId);
+      auto allowed = permissions.checkAccess(tenantId, resourceId, resourceType, userId, required);
 
       auto resp = Json.emptyObject
         .set("allowed", allowed ? Json(true) : Json(false))
         .set("resourceId", Json(resourceId))
-        .set("userId", Json(userId))
+        .set("resourceType", Json(resourceType.to!string))
+        .set("userId", Json(userId.value))
         .set("requiredLevel", Json(required.to!string))
         .set("message", "Access check completed");
 
@@ -133,12 +134,12 @@ class PermissionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = PermissionId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdatePermissionRequest();
       r.id = id;
       r.tenantId = req.getTenantId;
-      r.level = parsePermissionLevel(j.getString("level"));
+      r.level = j.getString("level").to!PermissionLevel;
 
       auto result = permissions.updatePermission(r);
       if (result.isSuccess) {
@@ -158,7 +159,7 @@ class PermissionController : PlatformController {
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = PermissionId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {

@@ -5,21 +5,25 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.process;
 
-import uim.platform.process_automation.application.usecases.manage.processes;
-import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.application.processess.manage.processes;
+// import uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation;
 
-class ProcessController : PlatformController {
-    private ManageProcessesUseCase usecase;
+mixin(ShowModule!());
 
-    this(ManageProcessesUseCase usecase) {
-        this.usecase = usecase;
+@safe:
+
+class ProcessController : PlatformController {
+    private ManageProcessesprocesses processes;
+
+    this(ManageProcessesprocesses processes) {
+        this.processes = processes;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/process-automation/processes", &handleList);
         router.get("/api/v1/process-automation/processes/*", &handleGet);
         router.post("/api/v1/process-automation/processes", &handleCreate);
@@ -30,22 +34,24 @@ class ProcessController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateProcessRequest r;
-            r.tenantId = req.getTenantId;
-            r.projectId = j.getString("projectId");
-            r.id = j.getString("id");
+            r.tenantId = tenantId;
+            r.projectId = ProjectId(j.getString("projectId"));
+            r.id = ProcessId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = processes.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Process created");
+                    .set("id", result.id)
+                    .set("message", "Process created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -58,25 +64,26 @@ class ProcessController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto processes = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+
+            auto results = processes.listProcesses(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (p; processes) {
+            foreach (p; results) {
                 jarr ~= Json.emptyObject
-                .set("id", p.id)
-                .set("name", p.name)
-                .set("description", p.description)
-                .set("status", p.status.to!string)
-                .set("category", p.category.to!string)
-                .set("version", p.version_)
-                .set("createdBy", p.createdBy)
-                .set("createdAt", p.createdAt)
-                .set("updatedAt", p.updatedAt);
+                    .set("id", p.id)
+                    .set("name", p.name)
+                    .set("description", p.description)
+                    .set("status", p.status.to!string)
+                    .set("category", p.category.to!string)
+                    .set("version", p.version_)
+                    .set("createdBy", p.createdBy)
+                    .set("createdAt", p.createdAt)
+                    .set("updatedAt", p.updatedAt);
             }
 
             auto resp = Json.emptyObject
-                .set("count", processes.length)
+                .set("count", results.length)
                 .set("resources", jarr);
 
             res.writeJsonBody(resp, 200);
@@ -87,10 +94,10 @@ class ProcessController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto p = usecase.getById(id);
+            auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            auto p = processes.getById(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Process not found");
                 return;
@@ -117,19 +124,20 @@ class ProcessController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateProcessRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = ProcessId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.version_ = j.getString("version");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = processes.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -146,7 +154,8 @@ class ProcessController : PlatformController {
 
     private void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+
             import std.string : lastIndexOf;
 
             auto path = req.requestURI.to!string;
@@ -160,11 +169,11 @@ class ProcessController : PlatformController {
 
             auto j = req.json;
             DeployProcessRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = id;
+            r.tenantId = tenantId;
+            r.processId = id;
             r.action = j.getString("action");
 
-            auto result = usecase.deploy(r);
+            auto result = processes.deploy(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -181,10 +190,10 @@ class ProcessController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteProcess(id);
+            auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            auto result = processes.deleteProcess(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

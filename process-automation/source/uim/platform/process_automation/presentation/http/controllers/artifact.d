@@ -33,9 +33,12 @@ class ArtifactController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateArtifactRequest r;
-            r.id = j.getString("id");
+            r.tenantId = tenantId;
+            r.artifactId = ArtifactId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -62,7 +65,9 @@ class ArtifactController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto artifacts = usecase.list();
+            auto tenantId = req.getTenantId;
+
+            auto artifacts = usecase.listArtifacts(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; artifacts) {
@@ -92,9 +97,10 @@ class ArtifactController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = usecase.getById(id);
+            auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
                 return;
@@ -125,10 +131,12 @@ class ArtifactController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateArtifactRequest r;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -152,9 +160,10 @@ class ArtifactController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteArtifact(id);
+            auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteArtifact(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.visibility;
 
-import uim.platform.process_automation.application.usecases.manage.visibilities;
-import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.application.visibilitiess.manage.visibilities;
+// import uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation;
 
-class VisibilityController : PlatformController {
-    private ManageVisibilitiesUseCase usecase;
+mixin(ShowModule!());
 
-    this(ManageVisibilitiesUseCase usecase) {
-        this.usecase = usecase;
+@safe:
+
+class VisibilityController : PlatformController {
+    private ManageVisibilitiesvisibilities visibilities;
+
+    this(ManageVisibilitiesvisibilities visibilities) {
+        this.visibilities = visibilities;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -28,9 +32,11 @@ class VisibilityController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateVisibilityRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -39,7 +45,7 @@ class VisibilityController : PlatformController {
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = visibilities.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -56,23 +62,23 @@ class VisibilityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto dashboards = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
 
+            auto items = visibilities.listVisibilities(tenantId);
             auto jarr = Json.emptyArray;
-            foreach (v; dashboards) {
+            foreach (v; items) {
                 jarr ~= Json.emptyObject
-                .set("id", v.id)
-                .set("name", v.name)
-                .set("description", v.description)
-                .set("status", v.status.to!string)
-                .set("dashboardType", v.dashboardType.to!string)
-                .set("createdAt", v.createdAt)
-                .set("updatedAt", v.updatedAt);
+                    .set("id", v.id)
+                    .set("name", v.name)
+                    .set("description", v.description)
+                    .set("status", v.status.to!string)
+                    .set("dashboardType", v.dashboardType.to!string)
+                    .set("createdAt", v.createdAt)
+                    .set("updatedAt", v.updatedAt);
             }
 
             auto resp = Json.emptyObject
-                .set("count", dashboards.length)
+                .set("count", items.length)
                 .set("resources", jarr);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -82,10 +88,10 @@ class VisibilityController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto v = usecase.getById(id);
+            auto tenantId = req.getTenantId;
+            auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
+            auto v = visibilities.getVisibility(tenantId, id);
             if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;
@@ -103,7 +109,7 @@ class VisibilityController : PlatformController {
                 .set("updatedBy", Json(v.updatedBy))
                 .set("createdAt", Json(v.createdAt))
                 .set("updatedAt", Json(v.updatedAt));
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -112,18 +118,18 @@ class VisibilityController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateVisibilityRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.visibilityId = VisibilityId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = visibilities.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -140,10 +146,11 @@ class VisibilityController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteVisibilityDashboard(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
+            auto result = visibilities.deleteVisibility(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -19,11 +19,11 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageSharesUseCase { // TODO: UIMUseCase {
-  private IShareRepository shareRepo;
-  private IDocumentRepository docs;
+  protected IShareRepository shares;
+  protected IDocumentRepository docs;
 
-  this(IShareRepository shareRepo, IDocumentRepository docs) {
-    this.shareRepo = shareRepo;
+  this(IShareRepository shares, IDocumentRepository docs) {
+    this.shares = shares;
     this.docs = docs;
   }
 
@@ -31,53 +31,51 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     if (r.documentId.isEmpty)
       return CommandResult(false, "", "Document ID is required");
 
-    auto doc = docs.findById(r.documentId, r.tenantId);
+    auto doc = docs.findById(r.tenantId, r.documentId);
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
-    auto entity = new Share();
-    entity.id = randomUUID();
-    entity.tenantId = r.tenantId;
+    auto entity = Share();
+    entity.initEntity(r.tenantId, r.createdBy);
     entity.documentId = r.documentId;
     entity.shareType = r.shareType;
     entity.sharedWith = r.sharedWith;
     entity.permissionLevel = r.permissionLevel;
     entity.status = ShareStatus.active;
     entity.expiresAt = r.expiresAt;
-    entity.createdBy = r.createdBy;
-    entity.createdAt = Clock.currStdTime();
 
-    shareRepo.save(entity);
+    shares.save(entity);
     return CommandResult(true, entity.id.value, "");
   }
 
   Share[] listShares(TenantId tenantId) {
-    return shareRepo.findByTenant(tenantId);
+    return shares.findByTenant(tenantId);
   }
 
   Share[] listByDocument(TenantId tenantId, DocumentId documentId) {
-    return shareRepo.findByDocument(tenantId, documentId);
+    return shares.findByDocument(tenantId, documentId);
   }
 
   Share getShare(TenantId tenantId, ShareId id) {
-    return shareRepo.findById(tenantId, id);
+    return shares.findById(tenantId, id);
   }
 
-  CommandResult revokeShare(TenantId tenantId, ShareId id) {
-    if (!shareRepo.existsById(tenantId, id))
+  CommandResult revokeShare(TenantId tenantId, ShareId shareId) {
+    auto share = shares.findById(tenantId, shareId);
+    if (share.isNull)
       return CommandResult(false, "", "Share not found");
 
-    auto entity = shareRepo.findById(tenantId, id);
-    entity.status = ShareStatus.revoked;
-    shareRepo.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    share.status = ShareStatus.revoked;
+    shares.update(share);
+    return CommandResult(true, share.id.value, "");
   }
 
-  CommandResult deleteShare(TenantId tenantId, ShareId id) {
-    if (!shareRepo.existsById(tenantId, id))
+  CommandResult deleteShare(TenantId tenantId, ShareId shareId) {
+    auto share = shares.findById(tenantId, shareId);
+    if (share.isNull)
       return CommandResult(false, "", "Share not found");
 
-    shareRepo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    shares.remove(share);
+    return CommandResult(true, share.id.value, "");
   }
 }

@@ -18,17 +18,17 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAction(CreateActionRequest r) {
-        if (r.isNull)
+        if (r.actionId.isEmpty)
             return CommandResult(false, "", "Action ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Action name is required");
 
-        if (repo.existsById(r.id))
+        if (repo.existsById(r.tenantId, r.actionId))
             return CommandResult(false, "", "Action already exists");
 
         Action a;
-        a.id = r.id;
-        a.tenantId = r.tenantId;
+        a.initEntity(r.tenantId, r.createdBy);
+        a.id = r.actionId;
         a.projectId = r.projectId;
         a.name = r.name;
         a.description = r.description;
@@ -38,7 +38,6 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         a.authType = r.authType;
         a.destinationName = r.destinationName;
         a.version_ = r.version_;
-        a.createdBy = r.createdBy;
 
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
@@ -49,7 +48,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    Action getAction(ActionId id) {
+    Action getAction(TenantId tenantId, ActionId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -58,28 +57,28 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAction(UpdateActionRequest r) {
-        if (!repo.existsById(r.id))
+        auto action = repo.findById(r.tenantId, r.actionId);
+        if (action.isNull)
             return CommandResult(false, "", "Action not found");
 
-        auto existing = repo.findById(r.id);
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.baseUrl = r.baseUrl;
-        existing.path = r.path;
-        existing.authType = r.authType;
-        existing.destinationName = r.destinationName;
-        existing.version_ = r.version_;
-        existing.updatedBy = r.updatedBy;
+        action.name = r.name;
+        action.description = r.description;
+        action.baseUrl = r.baseUrl;
+        action.path = r.path;
+        action.authType = r.authType;
+        action.destinationName = r.destinationName;
+        action.version_ = r.version_;
+        action.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        action.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(action);
+        return CommandResult(true, action.id.value, "");
     }
 
-    CommandResult deleteAction(ActionId id) {
-        auto action = repo.findById(tenantId, id);
+    CommandResult deleteAction(TenantId tenantId, ActionId actionId) {
+        auto action = repo.findById(tenantId, actionId);
         if (action.isNull)
             return CommandResult(false, "", "Action not found");
 

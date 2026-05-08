@@ -5,10 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.process_instance;
 
-import uim.platform.process_automation.application.usecases.manage.process_instances;
-import uim.platform.process_automation.application.dto;
-
+// import uim.platform.process_automation.application.usecases.manage.process_instances;
+// import uim.platform.process_automation.application.dto;
 import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class ProcessInstanceController : PlatformController {
     private ManageProcessInstancesUseCase usecase;
@@ -19,7 +22,7 @@ class ProcessInstanceController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/process-automation/instances", &handleList);
         router.get("/api/v1/process-automation/instances/*", &handleGet);
         router.post("/api/v1/process-automation/instances", &handleStart);
@@ -29,9 +32,11 @@ class ProcessInstanceController : PlatformController {
 
     private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             StartProcessInstanceRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.processId = j.getString("processId");
             r.id = j.getString("id");
             r.startedBy = j.getString("startedBy");
@@ -56,20 +61,21 @@ class ProcessInstanceController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
+
             auto instances = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
                 jarr ~= Json.emptyObject
-                .set("id", i.id)
-                .set("processId", i.processId)
-                .set("processName", i.processName)
-                .set("status", i.status.to!string)
-                .set("priority", i.priority.to!string)
-                .set("startedBy", i.startedBy)
-                .set("startedAt", i.startedAt)
-                .set("completedAt", i.completedAt);
+                    .set("id", i.id)
+                    .set("processId", i.processId)
+                    .set("processName", i.processName)
+                    .set("status", i.status.to!string)
+                    .set("priority", i.priority.to!string)
+                    .set("startedBy", i.startedBy)
+                    .set("startedAt", i.startedAt)
+                    .set("completedAt", i.completedAt);
             }
 
             auto resp = Json.emptyObject
@@ -84,10 +90,11 @@ class ProcessInstanceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto i = usecase.getById(id);
+            auto tenantId = req.getTenantId;
+
+            auto id = ProcessInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto i = usecase.getById(tenantId, id);
             if (i.isNull) {
                 writeError(res, 404, "Process instance not found");
                 return;
@@ -115,7 +122,7 @@ class ProcessInstanceController : PlatformController {
 
     private void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             import std.string : lastIndexOf;
 
             auto path = req.requestURI.to!string;
@@ -129,7 +136,7 @@ class ProcessInstanceController : PlatformController {
 
             auto j = req.json;
             ProcessInstanceActionRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.action = j.getString("action");
 
@@ -149,15 +156,15 @@ class ProcessInstanceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteProcessInstance(id);
+            auto id = ProcessInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteProcessInstance(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process instance deleted");
-                    
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

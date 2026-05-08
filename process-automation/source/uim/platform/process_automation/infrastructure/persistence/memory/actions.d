@@ -11,15 +11,20 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryActionRepository : TenantRepository!(Action, ActionId), ActionRepository {
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }
 
-    Action[] findByProject(ProjectId projectId) {
-        return findAll().filter!(a => a.projectId == projectId).array;
+    Action[] filterByProject(Action[] actions, ProjectId projectId) {
+        return actions.filter!(a => a.projectId == projectId).array;
     }
 
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(a => remove(a));
+    Action[] findByProject(TenantId tenantId, ProjectId projectId) {
+        return filterByProject(findByTenant(tenantId), projectId);
+    }
+
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(a => remove(a));
     }
 }

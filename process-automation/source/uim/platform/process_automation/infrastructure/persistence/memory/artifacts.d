@@ -10,47 +10,38 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryArtifactRepository : ArtifactRepository {
-    private Artifact[] store;
+class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), ArtifactRepository {
 
-    Artifact findById(ArtifactId id) {
-        foreach (a; findAll) {
-            if (a.id == id)
-                return a;
-        }
-        return Artifact.init;
+    size_t countByType(TenantId tenantId, ArtifactType type) {
+        return findByType(tenantId, type).length;
     }
 
-    Artifact[] findAll() {
-        return store.dup;
+    Artifact[] filterByType(Artifact[] items, ArtifactType type) {
+        return items.filter!(a => a.type == type).array;
     }
 
-    Artifact[] findByType(ArtifactType type) {
-        return findAll().filter!(a => a.type == type).array;
+    Artifact[] findByType(TenantId tenantId, ArtifactType type) {
+        return filterByType(findByTenant(tenantId), type);
     }
 
-    Artifact[] findByCategory(string category) {
-        return findAll().filter!(a => a.category == category).array;
+    void removeByType(TenantId tenantId, ArtifactType type) {
+        findByType(tenantId, type).each!(a => remove(a));
     }
 
-    void save(Artifact a) {
-        store ~= a;
+    size_t countByCategory(TenantId tenantId, string category) {
+        return findByCategory(tenantId, category).length;
     }
 
-    void update(Artifact a) {
-        foreach (existing; findAll) {
-            if (existing.id == a.id) {
-                existing = a;
-                return;
-            }
-        }
+    Artifact[] filterByCategory(Artifact[] items, string category) {
+        return items.filter!(a => a.category == category).array;
     }
 
-    void remove(ArtifactId id) {
-        store = findAll().filter!(a => a.id != id).array;
+    Artifact[] findByCategory(TenantId tenantId, string category) {
+        return filterByCategory(findByTenant(tenantId), category);
     }
 
-    size_t countAll() {
-        return store.length;
+    void removeByCategory(TenantId tenantId, string category) {
+        findByCategory(tenantId, category).each!(a => remove(a));
     }
+
 }

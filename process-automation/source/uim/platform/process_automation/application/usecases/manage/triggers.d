@@ -18,50 +18,44 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTrigger(CreateTriggerRequest r) {
-        if (r.isNull)
+        if (r.triggerId.isEmpty)
             return CommandResult(false, "", "Trigger ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Trigger name is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.triggerId);
         if (!existing.isNull)
             return CommandResult(false, "", "Trigger already exists");
 
         Trigger t;
-        t.id = r.id;
+        t.initEntity(r.tenantId, r.createdBy);
+        t.id = r.triggerId;
         t.processId = r.processId;
-        t.tenantId = r.tenantId;
         t.name = r.name;
         t.description = r.description;
         t.status = TriggerStatus.active;
         t.eventType = r.eventType;
         t.eventSource = r.eventSource;
         t.filterExpression = r.filterExpression;
-        t.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        t.createdAt = now;
-        t.updatedAt = now;
 
         repo.save(t);
         return CommandResult(true, t.id.value, "");
     }
 
-    Trigger getTrigger(TriggerId id) {
-        return repo.findById(tenantId, id);
+    Trigger getTrigger(TenantId tenantId, TriggerId triggerId) {
+        return repo.findById(tenantId, triggerId);
     }
 
     Trigger[] listTriggers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Trigger[] listTriggers(ProcessId processId) {
-        return repo.findByProcess(processId);
+    Trigger[] listTriggers(TenantId tenantId, ProcessId processId) {
+        return repo.findByProcess(tenantId, processId);
     }
 
     CommandResult updateTrigger(UpdateTriggerRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.triggerId);
         if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");
 
@@ -77,12 +71,12 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTrigger(TriggerId id) {
-        auto trigger = repo.findById(tenantId, id);
+    CommandResult deleteTrigger(TenantId tenantId, TriggerId triggerId) {
+        auto trigger = repo.findById(tenantId, triggerId);
         if (trigger.isNull)
             return CommandResult(false, "", "Trigger not found");
 
         repo.remove(trigger);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, trigger.id.value, "");
     }
 }

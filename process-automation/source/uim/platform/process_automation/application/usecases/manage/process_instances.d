@@ -17,13 +17,13 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult start(StartProcessInstanceRequest r) {
-        auto err = ProcessValidator.validateInstance(r.processId, r.startedBy);
+    CommandResult startProcessInstance(StartProcessInstanceRequest r) {
+        auto err = ProcessValidator.validateInstance(r.tenantId, r.processId, r.startedBy);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
         ProcessInstance i;
-        i.id = r.id;
+        i.id = r.processInstanceId;
         i.processId = r.processId;
         i.tenantId = r.tenantId;
         i.status = InstanceStatus.running;
@@ -37,24 +37,24 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, i.id.value, "");
     }
 
-    ProcessInstance getById(ProcessInstanceId id) {
+    ProcessInstance getProcessInstance(TenantId tenantId, ProcessInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
-    ProcessInstance[] list(TenantId tenantId) {
+    ProcessInstance[] listProcessInstances(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ProcessInstance[] listByProcess(ProcessId processId) {
-        return repo.findByProcess(processId);
+    ProcessInstance[] listProcessInstances(TenantId tenantId, ProcessId processId) {
+        return repo.findByProcess(tenantId, processId);
     }
 
-    ProcessInstance[] listByStatus(TenantId tenantId, InstanceStatus status) {
+    ProcessInstance[] listProcessInstances(TenantId tenantId, InstanceStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult performAction(ProcessInstanceActionRequest r) {
-        auto existing = repo.findById(r.id);
+    CommandResult performProcessInstanceAction(ProcessInstanceActionRequest r) {
+        auto existing = repo.findById(r.tenantId, r.processInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Process instance not found");
 
@@ -82,7 +82,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProcessInstance(ProcessInstanceId id) {
+    CommandResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id) {
         auto instance = repo.findById(tenantId, id);
         if (instance.isNull)
             return CommandResult(false, "", "Process instance not found");

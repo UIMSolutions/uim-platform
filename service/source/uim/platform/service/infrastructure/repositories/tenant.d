@@ -41,17 +41,22 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
   }
 
   override bool exists(TEntity entity) {
-    return findAll().any!(e => e == entity);
+    return existsById(entity.tenantId, entity.id);
   }
 
   override size_t indexOf(TEntity entity) {
-    auto tenants = findAllTenants();
-    auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array).array.flat();
-    return tenantsItems.countUntil!(e => e == entity);
+    size_t idx = 0;
+    foreach (item; findByTenant(entity.tenantId)) {
+      if (item.tenantId == entity.tenantId && item.id == entity.id) {
+        return idx;
+      }
+      idx++;
+    }
+    return size_t.max;
   }
 
   override size_t countAll() {
-    return findAll().length;  
+    return findAll().length;
   }
 
   override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
@@ -193,7 +198,7 @@ unittest {
   repo.save(entity2);
 
   assert(repo.exists(entity1));
-  assert(repo.findAll().canFind(entity1));
+  assert(repo.existsById(entity1.tenantId, entity1.id));
   assert(repo.countAll() == 2);
 
   repo.remove(entity1);

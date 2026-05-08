@@ -18,17 +18,17 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAutomation(CreateAutomationRequest r) {
-        if (r.isNull)
+        if (r.automationId.isEmpty)
             return CommandResult(false, "", "Automation ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Automation name is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.automationId);
         if (!existing.isNull)
             return CommandResult(false, "", "Automation already exists");
 
         Automation a;
-        a.id = r.id;
+        a.id = r.automationId;
         a.tenantId = r.tenantId;
         a.projectId = r.projectId;
         a.name = r.name;
@@ -47,7 +47,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    Automation getAutomation(AutomationId id) {
+    Automation getAutomation(TenantId tenantId, AutomationId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -56,7 +56,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAutomation(UpdateAutomationRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.automationId);
         if (existing.isNull)
             return CommandResult(false, "", "Automation not found");
 
@@ -73,7 +73,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAutomation(AutomationId id) {
+    CommandResult deleteAutomation(TenantId tenantId, AutomationId id) {
         auto automation = repo.findById(tenantId, id);
         if (automation.isNull)
             return CommandResult(false, "", "Automation not found");

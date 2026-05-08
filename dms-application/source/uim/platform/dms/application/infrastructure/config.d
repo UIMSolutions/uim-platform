@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.config;
-
+import std.process : environment;
 import uim.platform.dms.application;
 
 mixin(ShowModule!());

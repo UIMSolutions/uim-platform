@@ -19,7 +19,7 @@ interface IFavoriteRepository : ITenantRepository!(Favorite, FavoriteId) {
   size_t countByUser(TenantId tenantId, UserId userId);
   Favorite[] findByUser(TenantId tenantId, UserId userId);
   void removeByUser(TenantId tenantId, UserId userId);
-  
+
   size_t countByResource(TenantId tenantId, string resource);
   Favorite[] findByResource(TenantId tenantId, string resource);
   void removeByResource(TenantId tenantId, string resource);

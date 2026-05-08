@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.automation;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct AutomationStep {
     AutomationStepId id;
@@ -25,15 +29,15 @@ struct AutomationStep {
             .set("type", type)
             .set("application", application)
             .set("activity", activity)
-            .set("parameters", parameters.array)
-            .set("nextSteps", nextSteps.array)
+            .set("parameters", parameters.toJson)
+            .set("nextSteps", nextSteps.toJson)
             .set("retryCount", retryCount)
             .set("timeoutSeconds", timeoutSeconds);
     }
 }
 
 struct AutomationRun {
-    AutomationRunId id;
+    mixin IdEntity!AutomationRunId;
     AutomationId automationId;
     AutomationRunStatus status;
     UserId triggeredBy;
@@ -48,7 +52,7 @@ struct AutomationRun {
         return Json.emptyObject
             .set("id", id.value)
             .set("automationId", automationId.value)
-            .set("status", status)
+            .set("status", status.to!string())
             .set("triggeredBy", triggeredBy)
             .set("agentId", agentId)
             .set("inputData", inputData)
@@ -76,18 +80,9 @@ struct Automation {
             .set("projectId", projectId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status)
-            .set("type", type)
-            .set("steps", steps.map!(s => Json.init
-                .set("id", s.id.value)
-                .set("name", s.name)
-                .set("type", s.type)
-                .set("application", s.application)
-                .set("activity", s.activity)
-                .set("parameters", s.parameters.array)
-                .set("nextSteps", s.nextSteps.array)
-                .set("retryCount", s.retryCount)
-                .set("timeoutSeconds", s.timeoutSeconds)).array)
+            .set("status", status.to!string())
+            .set("type", type.to!string())
+            .set("steps", steps.map!(s => s.toJson()).array.toJson)
             .set("targetApplication", targetApplication)
             .set("version", version_);
     }

@@ -44,15 +44,12 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(true, existing.id.value, "");
     }
 
-    auto entity = new Permission();
-    entity.id = randomUUID();
-    entity.tenantId = r.tenantId;
+    auto entity = Permission();
+    entity.initEntity(r.tenantId, r.createdBy);
     entity.resourceId = r.resourceId;
     entity.resourceType = r.resourceType;
     entity.userId = r.userId;
     entity.level = r.level;
-    entity.createdBy = r.createdBy;
-    entity.createdAt = Clock.currStdTime();
 
     permissions.save(entity);
     return CommandResult(true, entity.id.value, "");
@@ -72,20 +69,21 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    if (!permissions.existsById(r.tenantId, r.id))
+    auto permission = permissions.findById(r.tenantId, r.id);
+    if (permission.isNull)
       return CommandResult(false, "", "Permission not found");
 
-    auto entity = permissions.findById(r.tenantId, r.id);
-    entity.level = r.level;
-    permissions.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    permission.level = r.level;
+    permissions.update(permission);
+    return CommandResult(true, permission.id.value, "");
   }
 
   CommandResult revokePermission(TenantId tenantId, PermissionId id) {
-    if (!permissions.existsById(tenantId, id))
+    auto permission = permissions.findById(tenantId, id);
+    if (permission.isNull)
       return CommandResult(false, "", "Permission not found");
 
-    permissions.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    permissions.remove(permission);
+    return CommandResult(true, permission.id.value, "");
   }
 }

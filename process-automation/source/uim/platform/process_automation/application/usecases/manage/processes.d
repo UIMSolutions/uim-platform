@@ -18,91 +18,85 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createProcess(CreateProcessRequest r) {
-        auto err = ProcessValidator.validate(r.id, r.name);
+        auto err = ProcessValidator.validate(r.tenantId, r.processId, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.processId);
         if (!existing.isNull)
             return CommandResult(false, "", "Process already exists");
 
         Process p;
-        p.id = r.id;
-        p.tenantId = r.tenantId;
+        p.initEntity(r.tenantId, r.createdBy);
+        p.id = r.processId;
         p.projectId = r.projectId;
         p.name = r.name;
         p.description = r.description;
         p.status = ProcessStatus.draft;
         p.version_ = r.version_;
-        p.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        p.createdAt = now;
-        p.updatedAt = now;
 
         repo.save(p);
         return CommandResult(true, p.id.value, "");
     }
 
-    Process getProcess(ProcessId id) {
-        return repo.findById(tenantId, id);
+    Process getProcess(TenantId tenantId, ProcessId processId) {
+        return repo.findById(tenantId, processId);
     }
 
     Process[] listProcesses(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Process[] listProcesses(ProjectId projectId) {
-        return repo.findByProject(projectId);
+    Process[] listProcesses(TenantId tenantId, ProjectId projectId) {
+        return repo.findByProject(tenantId, projectId);
     }
 
     CommandResult updateProcess(UpdateProcessRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto process = repo.findById(r.tenantId, r.processId);
+        if (process.isNull)
             return CommandResult(false, "", "Process not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.version_ = r.version_;
-        existing.updatedBy = r.updatedBy;
+        process.name = r.name;
+        process.description = r.description;
+        process.version_ = r.version_;
+        process.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        process.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(process);
+        return CommandResult(true, process.id.value, "");
     }
 
     CommandResult deployProcess(DeployProcessRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto process = repo.findById(r.tenantId, r.processId);
+        if (process.isNull)
             return CommandResult(false, "", "Process not found");
 
         switch (r.action) {
         case "activate":
-            existing.status = ProcessStatus.active;
+            process.status = ProcessStatus.active;
             break;
         case "deactivate":
-            existing.status = ProcessStatus.inactive;
+            process.status = ProcessStatus.inactive;
             break;
         default:
             return CommandResult(false, "", "Unknown action: " ~ r.action);
         }
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        process.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(process);
+        return CommandResult(true, process.id.value, "");
     }
 
-    CommandResult deleteProcess(ProcessId id) {
-        auto process = repo.findById(tenantId, id);
+    CommandResult deleteProcess(TenantId tenantId, ProcessId processId) {
+        auto process = repo.findById(tenantId, processId);
         if (process.isNull)
             return CommandResult(false, "", "Process not found");
 
         repo.remove(process);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, process.id.value, "");
     }
 }

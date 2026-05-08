@@ -53,4 +53,5 @@ enum ContentCategory {
   file,
   link,
   reference,
+  unknown
 }

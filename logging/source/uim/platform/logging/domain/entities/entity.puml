@@ -1,0 +1,82 @@
+@startuml
+
+entity AlertRule {
+    tentantId : TenantId
+    * id : AlertRuleId
+    channelIds : NotificationChannelId[]
+}
+
+entity Alert {
+    tentantId : TenantId
+    * id : AlertId
+
+    ruleId : AlertRuleId
+    sampleLogEntryId : LogEntryId
+}
+
+entity Dashboard {
+    tentantId : TenantId
+    * id : DashboardId
+}
+
+entity IngestionToken {
+    tentantId : TenantId
+    * id : IngestionTokenId
+}
+
+entity LogEntry {
+    tentantId : TenantId
+    * id : LogEntryId
+
+    streamId : LogStreamId
+    traceId : TraceId
+    spanId : SpanId
+    requestId : string
+    correlationId : string
+    resourceId : string
+}
+
+entity LogStream {
+  tentantId : TenantId
+  * id : LogStreamId
+
+  retentionPolicyId : RetentionPolicyId
+}
+
+entity NotificationChannel {
+  tentantId : TenantId
+  * id : NotificationChannelId
+}
+
+entity Pipeline {
+  tentantId : TenantId
+  * id : PipelineId
+
+  targetStreamId : LogStreamId
+}
+
+entity RetentionPolicy {
+  tentantId : TenantId
+  * id : RetentionPolicyId
+}
+
+entity Span {
+  tentantId : TenantId
+  * id : SpanId
+
+  traceId : TraceId
+  parentSpanId : SpanId
+}
+
+AlertRule "1" -- "0..*" Alert : triggers >
+NotificationChannel "1" -- "0..*" AlertRule : sends to >
+LogStream "1" -- "0..*" LogEntry : contains >   
+LogEntry "1" -- "0..1" Alert : sample log entry for >
+RetentionPolicy "1" -- "0..*" LogStream : applies to >
+Span "1" -- "0..*" LogEntry : contains >
+Pipeline "1" -- "0..1" LogStream : writes to >
+Dashboard "1" -- "0..*" Alert : displays >
+IngestionToken "1" -- "0..*" LogStream : allows writing to >
+
+@enduml
+

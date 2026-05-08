@@ -10,36 +10,46 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
+class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {
 
-    size_t countByAssignee(TenantId tenantId, string assignee) {
+    size_t countByAssignee(TenantId tenantId, UserId assignee) {
         return findByAssignee(tenantId, assignee).length;
     }
-    Task[] findByAssignee(TenantId tenantId, string assignee) {
-        return findAll().filter!(t => t.tenantId == tenantId && t.assignee == assignee).array;
+
+    PATask[] findByAssignee(TenantId tenantId, UserId assignee) {
+        return filterByAssignee(findByTenant(tenantId), assignee);
     }
-    void removeByAssignee(TenantId tenantId, string assignee) {
-        findByAssignee(tenantId, assignee).each!(t => remove(t.id));
+    PATask[] filterByAssignee(PATask[] tasks, UserId assignee) {
+        return tasks.filter!(t => t.assignee == assignee).array;
+    }
+    void removeByAssignee(TenantId tenantId, UserId assignee) {
+        findByAssignee(tenantId, assignee).each!(t => remove(t));
     }
 
-    size_t countByProcessInstance(ProcessInstanceId instanceId) {
-        return findByProcessInstance(instanceId).length;
+    size_t countByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId) {
+        return findByProcessInstance(tenantId, instanceId).length;
     }
-    Task[] findByProcessInstance(ProcessInstanceId instanceId) {
-        return findAll().filter!(t => t.processInstanceId == instanceId).array;
+    PATask[] findByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId) {
+        return filterByProcessInstance(findByTenant(tenantId), instanceId);
     }
-    void removeByProcessInstance(ProcessInstanceId instanceId) {
-        findByProcessInstance(instanceId).each!(t => remove(t.id));
+    PATask[] filterByProcessInstance(PATask[] tasks, ProcessInstanceId instanceId) {
+        return tasks.filter!(t => t.processInstanceId == instanceId).array;
+    }
+    void removeByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId) {
+        findByProcessInstance(tenantId, instanceId).each!(t => remove(t));
     }
 
     size_t countByStatus(TenantId tenantId, TaskStatus status) {
         return findByStatus(tenantId, status).length;
     }
-    Task[] findByStatus(TenantId tenantId, TaskStatus status) {
-        return findAll().filter!(t => t.tenantId == tenantId && t.status == status).array;
+    PATask[] findByStatus(TenantId tenantId, TaskStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    PATask[] filterByStatus(PATask[] tasks, TaskStatus status) {
+        return tasks.filter!(t => t.status == status).array;
     }
     void removeByStatus(TenantId tenantId, TaskStatus status) {
-        findByStatus(tenantId, status).each!(t => remove(t.id));
+        findByStatus(tenantId, status).each!(t => remove(t));
     }
 
 }

@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.process_instances;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.process_instance;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.process_instance;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface ProcessInstanceRepository : ITenantRepository!(ProcessInstance, ProcessInstanceId) {
 
-    size_t countByProcess(ProcessId processId);
-    ProcessInstance[] findByProcess(ProcessId processId);
-    void removeByProcess(ProcessId processId);
+    size_t countByProcess(TenantId tenantId, ProcessId processId);
+    ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId);
+    void removeByProcess(TenantId tenantId, ProcessId processId);
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status);
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status);

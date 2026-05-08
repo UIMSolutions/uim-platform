@@ -47,16 +47,13 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       path = parent.path ~ "/" ~ r.name;
     }
 
-    auto entity = new Folder();
-    entity.id = randomUUID();
-    entity.tenantId = r.tenantId;
+    Folder entity;
+    entity.initEntity(r.tenantId, r.createdBy);
     entity.repositoryId = r.repositoryId;
     entity.parentFolderId = r.parentFolderId;
     entity.name = r.name;
     entity.description = r.description;
     entity.path = path;
-    entity.createdBy = r.createdBy;
-    entity.createdAt = Clock.currStdTime();
     entity.updatedAt = entity.createdAt;
 
     folders.save(entity);
@@ -71,7 +68,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     return folders.findByRepository(tenantId, repositoryId);
   }
 
-  Folder[] listChildren(TenantId tenantId, FolderId parentFolderId) {
+  Folder[] listSubfolders(TenantId tenantId, FolderId parentFolderId) {
     return folders.findByParent(tenantId, parentFolderId);
   }
 
@@ -80,55 +77,52 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
-    if (!folders.existsById(r.tenantId, r.id))
+    auto folder = folders.findById(r.tenantId, r.folderId);
+    if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
-    auto entity = folders.findById(r.tenantId, r.id);
     if (r.name.length > 0) {
-      entity.name = r.name;
+      folder.name = r.name;
       // Update path
-      auto lastSlash = lastIndexOf(entity.path, '/');
-      if (lastSlash >= 0)
-        entity.path = entity.path[0 .. cast(size_t)(lastSlash + 1)] ~ r.name;
-      else
-        entity.path = "/" ~ r.name;
+      auto lastSlash = lastIndexOf(folder.path, '/');
+      folder.path = (lastSlash >= 0)
+        ? folder.path[0 .. cast(size_t)(lastSlash + 1)] ~ r.name : "/" ~ r.name;
     }
     if (r.description.length > 0)
-      entity.description = r.description;
-    entity.updatedAt = Clock.currStdTime();
+      folder.description = r.description;
+    folder.updatedAt = Clock.currStdTime();
 
-    folders.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    folders.update(folder);
+    return CommandResult(true, folder.id.value, "");
   }
 
   CommandResult moveFolder(MoveFolderRequest r) {
-    if (!folders.existsById(r.tenantId, r.id))
+    auto folder = folders.findById(r.tenantId, r.folderId);
+    if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
-    auto entity = folders.findById(r.tenantId, r.id);
     if (r.newParentFolderId.value.length > 0) {
       auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
       if (newParent.isNull)
         return CommandResult(false, "", "New parent folder not found");
-      entity.parentFolderId = r.newParentFolderId;
-      entity.path = newParent.path ~ "/" ~ entity.name;
+      folder.parentFolderId = r.newParentFolderId;
+      folder.path = newParent.path ~ "/" ~ folder.name;
+    } else {
+      folder.parentFolderId = "";
+      folder.path = "/" ~ folder.name;
     }
-    else
-    {
-      entity.parentFolderId = "";
-      entity.path = "/" ~ entity.name;
-    }
-    entity.updatedAt = Clock.currStdTime();
+    folder.updatedAt = Clock.currStdTime();
 
-    folders.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    folders.update(folder);
+    return CommandResult(true, folder.id.value, "");
   }
 
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
-    if (!folders.existsById(tenantId, id))
+    auto folder = folders.findById(tenantId, id);
+    if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
-    folders.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    folders.remove(folder);
+    return CommandResult(true, folder.id.value, "");
   }
 }

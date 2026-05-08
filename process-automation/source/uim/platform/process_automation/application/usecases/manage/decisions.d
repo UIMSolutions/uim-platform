@@ -18,35 +18,30 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDecision(CreateDecisionRequest r) {
-        if (r.isNull)
+        if (r.decisionId.isEmpty)
             return CommandResult(false, "", "Decision ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Decision name is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.decisionId);
         if (!existing.isNull)
             return CommandResult(false, "", "Decision already exists");
 
         Decision d;
-        d.id = r.id;
-        d.tenantId = r.tenantId;
+        d.initEntity(r.tenantId, r.createdBy);
+        d.id = r.decisionId;
         d.projectId = r.projectId;
         d.name = r.name;
         d.description = r.description;
         d.status = DecisionStatus.draft;
         d.version_ = r.version_;
-        d.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        d.createdAt = now;
-        d.updatedAt = now;
+        d.updatedAt = d.createdAt;
 
         repo.save(d);
         return CommandResult(true, d.id.value, "");
     }
 
-    Decision getDecision(DecisionId id) {
+    Decision getDecision(TenantId tenantId, DecisionId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -55,23 +50,23 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDecision(UpdateDecisionRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto decision = repo.findById(r.tenantId, r.decisionId);
+        if (decision.isNull)
             return CommandResult(false, "", "Decision not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.version_ = r.version_;
-        existing.updatedBy = r.updatedBy;
+        decision.name = r.name;
+        decision.description = r.description;
+        decision.version_ = r.version_;
+        decision.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        decision.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(decision);
+        return CommandResult(true, decision.id.value, "");
     }
 
-    CommandResult deleteDecision(DecisionId id) {
+    CommandResult deleteDecision(TenantId tenantId, DecisionId id) {
         auto decision = repo.findById(tenantId, id);
         if (decision.isNull)
             return CommandResult(false, "", "Decision not found");

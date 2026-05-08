@@ -18,35 +18,29 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createVisibility(CreateVisibilityRequest r) {
-        if (r.isNull)
+        if (r.visibilityId.isEmpty)
             return CommandResult(false, "", "Visibility ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Visibility name is required");
 
-        if (repo.existsById(r.id))
+        if (repo.existsById(r.tenantId, r.visibilityId))
             return CommandResult(false, "", "Visibility dashboard already exists");
 
         Visibility v;
-        v.id = r.id;
-        v.tenantId = r.tenantId;
+        v.initEntity(r.tenantId, r.createdBy);
+        v.id = r.visibilityId;
         v.name = r.name;
         v.description = r.description;
         v.status = VisibilityStatus.active;
-        v.processIds = r.processIds;
+        v.processIds = r.processIds.map!(pid => ProcessId(pid)).array;
         v.refreshIntervalSeconds = r.refreshIntervalSeconds;
-        v.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        v.createdAt = now;
-        v.updatedAt = now;
 
         repo.save(v);
         return CommandResult(true, v.id.value, "");
     }
 
-    Visibility getVisibility(VisibilityId id) {
-        return repo.findById(tenantId, id);
+    Visibility getVisibility(TenantId tenantId, VisibilityId visibilityId) {
+        return repo.findById(tenantId, visibilityId);
     }
 
     Visibility[] listVisibilities(TenantId tenantId) {
@@ -54,10 +48,10 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateVisibility(UpdateVisibilityRequest r) {
-        if (!repo.existsById(r.id))
+        if (!repo.existsById(r.tenantId, r.visibilityId))
             return CommandResult(false, "", "Visibility dashboard not found");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.visibilityId);
         existing.name = r.name;
         existing.description = r.description;
         existing.refreshIntervalSeconds = r.refreshIntervalSeconds;
@@ -70,8 +64,8 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteVisibility(VisibilityId id) {
-        auto visibility = repo.findById(tenantId, id);
+    CommandResult deleteVisibility(TenantId tenantId, VisibilityId visibilityId) {
+        auto visibility = repo.findById(tenantId, visibilityId);
         if (visibility.isNull)
             return CommandResult(false, "", "Visibility dashboard not found");
 

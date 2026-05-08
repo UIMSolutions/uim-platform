@@ -84,7 +84,7 @@ class RepositoryController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RepositoryId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto repository = usecase.getRepository(tenantId, id);
       if (repository.isNull) {
@@ -99,10 +99,10 @@ class RepositoryController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
-      r.id = id;
+      r.repositoryId = id;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -127,7 +127,7 @@ class RepositoryController : PlatformController {
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RepositoryId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.activateRepository(tenantId, id);
       if (result.isSuccess) {
@@ -146,7 +146,7 @@ class RepositoryController : PlatformController {
 
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RepositoryId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.archiveRepository(tenantId, id);
       if (result.isSuccess) {
@@ -164,32 +164,18 @@ class RepositoryController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = RepositoryId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.deleteRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true);
-          
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeRepo(const Repository r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("name", r.name)
-      .set("description", r.description)
-      .set("status", r.status.to!string)
-      .set("maxFileSize", r.maxFileSize)
-      .set("allowedFileTypes", r.allowedFileTypes)
-      .set("createdBy", r.createdBy)
-      .set("createdAt", r.createdAt)
-      .set("updatedAt", r.updatedAt);
   }
 }

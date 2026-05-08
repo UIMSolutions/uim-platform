@@ -23,16 +23,24 @@ class BaseRepository(TEntity) : IBaseRepository!(TEntity) {
   }
 
   bool exists(TEntity entity) {
-    return store.any!(e => e == entity);
+    return store.any!(e => e.id == entity.id);
   }
 
   size_t indexOf(TEntity entity) {
-    return store.countUntil!(e => e == entity);
+    size_t idx = 0;
+    foreach (e; store) {
+      if (e.id == entity.id) {
+        return idx;
+      }
+      idx++;
+    }
+    return size_t.max; // Not found
   }
 
   size_t countAll() {
     return store.length;
   }
+
   TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     if (limit == 0) {
       return store.skip(offset);

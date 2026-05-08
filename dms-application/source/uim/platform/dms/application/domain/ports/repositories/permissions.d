@@ -20,6 +20,8 @@ interface IPermissionRepository : ITenantRepository!(Permission, PermissionId) {
   Permission[] findByUser(TenantId tenantId, UserId userId);
   void removeByUser(TenantId tenantId, UserId userId);
   
+  bool existsByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
+      UserId userId);
   Permission findByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
       UserId userId);
 

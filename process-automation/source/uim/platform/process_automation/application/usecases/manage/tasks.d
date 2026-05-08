@@ -18,48 +18,45 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTask(CreateTaskRequest r) {
-        auto err = ProcessValidator.validateTask(r.name, r.assignee);
+        auto err = ProcessValidator.validateTask(r.tenantId, r.taskId, r.name, r.assignee);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        Task t;
-        t.id = r.id;
+        PATask t;
+        t.initEntity(r.tenantId); // TODO: createdBy);
+        t.id = r.taskId;
         t.processInstanceId = r.processInstanceId;
-        t.tenantId = r.tenantId;
         t.name = r.name;
         t.description = r.description;
         t.status = TaskStatus.ready;
         t.assignee = r.assignee;
-        t.candidateUsers = r.candidateUsers;
+        t.candidateUsers = r.candidateUsers.map!(u => UserId(u)).array;
         t.candidateGroups = r.candidateGroups;
         t.formId = r.formId;
         t.dueDate = r.dueDate;
-
-        import core.time : MonoTime;
-        t.createdAt = MonoTime.currTime.ticks;
 
         repo.save(t);
         return CommandResult(true, t.id.value, "");
     }
 
-    Task getTask(TaskId id) {
+    PATask getTask(TenantId tenantId, TaskId id) {
         return repo.findById(tenantId, id);
     }
 
-    Task[] listTasks(TenantId tenantId) {
+    PATask[] listTasks(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Task[] listTasksByAssignee(TenantId tenantId, string assignee) {
+    PATask[] listTasksByAssignee(TenantId tenantId, UserId assignee) {
         return repo.findByAssignee(tenantId, assignee);
     }
 
-    Task[] listTasksByProcessInstance(ProcessInstanceId instanceId) {
-        return repo.findByProcessInstance(instanceId);
+    PATask[] listTasksByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId) {
+        return repo.findByProcessInstance(tenantId, instanceId);
     }
 
     CommandResult claimTask(ClaimTaskRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -74,7 +71,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult completeTask(CompleteTaskRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -91,25 +88,25 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTask(UpdateTaskRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto task = repo.findById(r.tenantId, r.taskId);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.assignee = r.assignee;
-        existing.dueDate = r.dueDate;
+        task.name = r.name;
+        task.description = r.description;
+        task.assignee = r.assignee;
+        task.dueDate = r.dueDate;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
-    CommandResult deleteTask(TaskId id) {
-        auto task = repo.findById(tenantId, id);
+    CommandResult deleteTask(TenantId tenantId, TaskId taskId) {
+        auto task = repo.findById(tenantId, taskId);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
         repo.remove(task);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, task.id.value, "");
     }
 }

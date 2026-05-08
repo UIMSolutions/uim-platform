@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.actions;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.action;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.action;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface ActionRepository : ITenantRepository!(Action, ActionId) {
 
-    size_t countByProject(ProjectId projectId);
-    Action[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    Action[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
 }

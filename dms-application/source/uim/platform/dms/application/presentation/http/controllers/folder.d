@@ -83,7 +83,7 @@ class FolderController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FolderId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto folder = usecase.getFolder(tenantId, id);
       if (folder.isNull) {
@@ -102,10 +102,10 @@ class FolderController : PlatformController {
     */
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FolderId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateFolderRequest();
-      r.id = id;
+      r.folderId = id;
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -128,10 +128,10 @@ class FolderController : PlatformController {
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FolderId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = MoveFolderRequest();
-      r.id = id;
+      r.folderId = id;
       r.tenantId = req.getTenantId;
       r.newParentFolderId = j.getString("newParentFolderId");
 
@@ -153,27 +153,27 @@ class FolderController : PlatformController {
 
   private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto parentId = extractIdFromPath(req.requestURI);
+      auto parentId = FolderId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      auto items = usecase.listChildren(tenantId, parentId);
 
-      auto arr = items.map!(f => f.toJson).array.toJson;
+      auto subfolders = usecase.listSubfolders(tenantId, parentId);
+      auto arr = subfolders.map!(f => f.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length)
+        .set("totalCount", subfolders.length)
         .set("message", "Child folders retrieved successfully");
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+        res.writeJsonBody(resp, 200);
+      } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteFolder(req.getTenantId, FolderId(id));
+      auto id = FolderId(extractIdFromPath(req.requestURI));
+      auto result = usecase.deleteFolder(req.getTenantId, id);
 
       if (result.isSuccess) {
         auto resp = Json.emptyObject

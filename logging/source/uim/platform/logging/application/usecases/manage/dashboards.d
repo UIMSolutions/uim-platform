@@ -90,11 +90,11 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return repo.existsById(tenantId, dashboardId);
   }
 
-  Dashboard getDashboardById(TenantId tenantId, DashboardId dashboardId) {
+  Dashboard getDashboard(TenantId tenantId, DashboardId dashboardId) {
     return repo.findById(tenantId, dashboardId);
   }
 
-  Dashboard[] listDashboardsByTenant(TenantId tenantId) {
+  Dashboard[] listDashboards(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 

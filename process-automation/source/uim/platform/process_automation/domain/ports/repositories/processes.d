@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.processes;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.process;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.process;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface ProcessRepository : ITenantRepository!(Process, ProcessId) {
 
-    size_t countByProject(ProjectId projectId);
-    Process[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    Process[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
     size_t countByCategory(TenantId tenantId, ProcessCategory category);
     Process[] findByCategory(TenantId tenantId, ProcessCategory category);

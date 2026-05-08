@@ -56,7 +56,7 @@ class DashboardController : PlatformController {
         r.panels ~= p;
       }
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDashboard(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

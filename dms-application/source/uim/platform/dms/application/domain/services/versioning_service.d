@@ -31,10 +31,10 @@ class VersioningService {
 
   /// Check out a document (lock it for editing).
   bool checkOut(TenantId tenantId, DocumentId docId, UserId userId) {
-    if (!docs.existsById(tenantId, docId))
+    auto doc = docs.findById(tenantId, docId);
+    if (doc.isNull)
       return false;
 
-    auto doc = docs.findById(tenantId, docId);
     if (doc.status == DocumentStatus.locked)
       return false; // already checked out
 
@@ -47,12 +47,12 @@ class VersioningService {
   /// Check in a document, creating a new version.
   DocumentVersion checkIn(TenantId tenantId, DocumentId docId, UserId userId, bool isMajor,
       string comment, string fileName, string mimeType, long fileSize, string checksum) {
-    if (!docs.existsById(tenantId, docId))
-      return null;
-
     auto doc = docs.findById(tenantId, docId);
+    if (doc.isNull)
+      return DocumentVersion.init; // document not found
+
     if (doc.status != DocumentStatus.locked)
-      return null; // must be checked out first
+      return DocumentVersion.init; // must be checked out first
 
     // Determine version number
     auto existingVersions = versions.findByDocument(tenantId, docId);
@@ -67,9 +67,8 @@ class VersioningService {
     }
 
     // Create new version
-    auto ver = new DocumentVersion();
-    ver.id = randomUUID();
-    ver.tenantId = tenantId;
+    auto ver = DocumentVersion.init;
+    ver.initEntity(tenantId, userId);
     ver.documentId = docId;
     ver.versionNumber = nextVersion;
     ver.isMajor = isMajor;
@@ -80,7 +79,6 @@ class VersioningService {
     ver.comment = comment;
     ver.checksum = checksum;
     ver.createdBy = userId;
-    ver.createdAt = Clock.currStdTime();
     versions.save(ver);
 
     // Unlock document and update reference

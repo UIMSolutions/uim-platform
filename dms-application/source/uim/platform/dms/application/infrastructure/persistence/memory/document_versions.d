@@ -19,18 +19,22 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
     return findByDocument(tenantId, documentId).length;
   }
 
+  DocumentVersion[] filterByDocument(DocumentVersion[] versions, DocumentId documentId) {
+    return versions.filter!(e => e.documentId == documentId).array;
+  }
+
   DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
-    return findByTenant(tenantId).filter!(e => e.documentId == documentId);
+    return filterByDocument(findByTenant(tenantId), documentId);
   }
 
   void removeByDocument(TenantId tenantId, DocumentId documentId) {
-    findByDocument(tenantId, documentId).each!(e => remove(e.id));
+    findByDocument(tenantId, documentId).each!(e => remove(e));
   }
 
   DocumentVersion findLatest(TenantId tenantId, DocumentId documentId) {
-    foreach (e; findByTenant(tenantId))
-      if (e.documentId == documentId && e.status == VersionStatus.current)
+    foreach (e; findByDocument(tenantId, documentId))
+      if (e.status == VersionStatus.current)
         return e;
-    return null;
+    return DocumentVersion.init;
   }
 }

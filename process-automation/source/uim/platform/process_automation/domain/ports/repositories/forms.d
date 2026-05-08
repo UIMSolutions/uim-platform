@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.forms;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.form;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.form;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface FormRepository : ITenantRepository!(Form, FormId) {
 
-    size_t countByProject(ProjectId projectId);
-    Form[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    Form[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
 }

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.visibilities;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.visibility;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.visibility;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface VisibilityRepository : ITenantRepository!(Visibility, VisibilityId) {
 
-    size_t countByProcess(ProcessId processId);
-    Visibility[] findByProcess(ProcessId processId);
-    void removeByProcess(ProcessId processId);
+    size_t countByProcess(TenantId tenantId, ProcessId processId);
+    Visibility[] findByProcess(TenantId tenantId, ProcessId processId);
+    void removeByProcess(TenantId tenantId, ProcessId processId);
 
 }

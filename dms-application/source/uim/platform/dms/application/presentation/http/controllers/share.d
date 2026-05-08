@@ -42,10 +42,10 @@ class ShareController : PlatformController {
       auto j = req.json;
       auto r = CreateShareRequest();
       r.tenantId = req.getTenantId;
-      r.documentId = j.getString("documentId");
-      r.shareType = parseShareType(j.getString("shareType"));
+      r.documentId = DocumentId(j.getString("documentId"));
+      r.shareType = j.getString("shareType").to!ShareType;
       r.sharedWith = j.getString("sharedWith");
-      r.permissionLevel = parsePermissionLevel(j.getString("permissionLevel"));
+      r.permissionLevel = j.getString("permissionLevel").to!PermissionLevel;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
@@ -82,7 +82,7 @@ class ShareController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ShareId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto share = usecase.getShare(tenantId, id);
       if (share.isNull) {
@@ -97,7 +97,7 @@ class ShareController : PlatformController {
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ShareId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
@@ -116,7 +116,7 @@ class ShareController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ShareId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
       auto result = usecase.deleteShare(tenantId, id);
       if (result.isSuccess) {

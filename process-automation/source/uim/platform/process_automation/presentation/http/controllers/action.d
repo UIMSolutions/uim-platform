@@ -33,11 +33,13 @@ class ActionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateActionRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.projectId = j.getString("projectId");
-            r.id = j.getString("id");
+            r.actionId = ActionId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -66,8 +68,8 @@ class ActionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto actions = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+            auto actions = usecase.listActions(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
@@ -95,31 +97,32 @@ class ActionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            if (!usecase.existsById(id)) {
+            auto tenantId = req.getTenantId;
+            auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
+
+            auto a = usecase.getAction(tenantId, id);
+            if (a.isNull) {
                 writeError(res, 404, "Action not found");
                 return;
             }
 
-            auto a = usecase.getById(id);
             auto resp = Json.emptyObject
-            .set("id", a.id)
-            .set("name", a.name)
-            .set("description", a.description)
-            .set("status", a.status.to!string)
-            .set("type", a.type.to!string)
-            .set("baseUrl", a.baseUrl)
-            .set("path", a.path)
-            .set("authType", a.authType)
-            .set("destinationName", a.destinationName)
-            .set("version", a.version_)
-            .set("projectId", a.projectId)
-            .set("createdBy", a.createdBy)
-            .set("updatedBy", a.updatedBy)
-            .set("createdAt", a.createdAt)
-            .set("updatedAt", a.updatedAt);
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("status", a.status.to!string)
+                .set("type", a.type.to!string)
+                .set("baseUrl", a.baseUrl)
+                .set("path", a.path)
+                .set("authType", a.authType)
+                .set("destinationName", a.destinationName)
+                .set("version", a.version_)
+                .set("projectId", a.projectId)
+                .set("createdBy", a.createdBy)
+                .set("updatedBy", a.updatedBy)
+                .set("createdAt", a.createdAt)
+                .set("updatedAt", a.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -129,12 +132,11 @@ class ActionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             UpdateActionRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = ActionId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.baseUrl = j.getString("baseUrl");
@@ -147,8 +149,8 @@ class ActionController : PlatformController {
             auto result = usecase.update(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Action updated");
+                    .set("id", result.id)
+                    .set("message", "Action updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -161,15 +163,15 @@ class ActionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteAction(id);
+            auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteAction(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Action deleted");
-                  
+                    .set("id", result.id)
+                    .set("message", "Action deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

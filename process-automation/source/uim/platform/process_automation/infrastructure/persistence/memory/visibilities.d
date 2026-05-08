@@ -12,5 +12,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), VisibilityRepository {
 
-    // TODO: 
+    size_t countByProcess(TenantId tenantId, ProcessId processId) {
+        return findByProcess(tenantId, processId).length;
+    }
+
+    Visibility[] filterByProcess(Visibility[] items, ProcessId processId) {
+        return items.filter!(v => v.processId == processId).array;
+    }
+
+    Visibility[] findByProcess(TenantId tenantId, ProcessId processId) {
+        return filterByProcess(findByTenant(tenantId), processId);
+    }
+
+    void removeByProcess(TenantId tenantId, ProcessId processId) {
+        findByProcess(tenantId, processId).each!(entity => remove(entity));
+    }
 }

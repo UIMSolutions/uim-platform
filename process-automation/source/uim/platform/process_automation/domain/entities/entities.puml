@@ -1,0 +1,107 @@
+@startuml
+
+entity Action {
+    tenantId : TenantId
+    * id : ActionId
+
+    projectId : ProjectId
+}
+
+entity Artifact {
+    * id : ArtifactId
+}
+
+entity Process {
+    tenantId : TenantId
+    * id : ProcessId
+
+    projectId : ProjectId
+}
+
+entity Decision {
+    tenantId : TenantId
+    * id : DecisionId
+
+    projectId : ProjectId
+}
+
+entity Form {
+    tenantId : TenantId
+    * id : FormId
+
+    projectId : ProjectId
+}
+
+entity ProcessInstance {
+    tenantId : TenantId
+    * id : ProcessInstanceId
+
+    processId : ProcessId
+    currentStepId : string
+}
+
+entity Process {
+    tenantId : TenantId
+    * id : ProcessId
+
+    projectId : ProjectId
+}
+
+entity PATask {
+    tenantId : TenantId
+    * id : TaskId
+
+    processInstanceId : ProcessInstanceId
+}
+
+entity Trigger {
+    tenantId : TenantId
+    * id : TriggerId
+
+    processId : ProcessId
+}
+
+entity Visibility {
+    tenantId : TenantId
+    * id : VisibilityId
+
+    projectId : ProjectId
+}
+
+Visibility -- Process : "1..*"
+Visibility -- PATask : "0..*"
+Visibility -- ProcessInstance : "0..*"
+
+Trigger -- Process : "1..*"
+Trigger -- PATask : "0..*"
+Trigger -- ProcessInstance : "0..*"
+
+PATask -- ProcessInstance : "1..*"
+PATask -- Form : "0..1"
+PATask -- Decision : "0..1"
+PATask -- Action : "0..*"
+
+Process -- Project : "1..*"
+Action -- Project : "1..*"
+Decision -- Project : "1..*"
+Form -- Project : "1..*"
+
+ProcessInstance -- Process : "1..1"
+ProcessInstance -- Project : "1..1" 
+
+Form -- Project : "1..*"
+Decision -- Project : "1..*"
+Action -- Project : "1..*"
+
+Decision -- Process : "0..*"
+Action -- Process : "0..*"
+Form -- Process : "0..*"
+
+Process -- Artifact : "0..*"
+
+Artifact -- Process : "0..*"
+Artifact -- Action : "0..*"
+
+Action -- Artifact : "0..*"
+
+@enduml

@@ -5,15 +5,26 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.artifact;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ArtifactDependency {
-    string artifactId;
+    ArtifactId artifactId;
     string minVersion;
+
+    Json toJson() const {
+        return Json()
+            .set("artifactId", artifactId.value)
+            .set("minVersion", minVersion);
+    }
 }
 
 struct Artifact {
-    ArtifactId id;
+    mixin TenantEntity!ArtifactId;
+
     string name;
     string description;
     ArtifactType type;
@@ -27,5 +38,23 @@ struct Artifact {
     long downloadCount;
     double rating;
     long publishedAt;
-    long updatedAt;
+
+    Json toJson() const {
+        return entityToJson
+            .set("name", name)
+            .set("description", description)
+            .set("type", type.to!string())
+            .set("status", status.to!string())
+            .set("version", version_)
+            .set("author", author)
+            .set("category", category)
+            .set("tags", tags.toJson)
+            .set("dependencies", dependencies.map!(d => d.toJson()).array)
+            .set("contentUrl", contentUrl)
+            .set("downloadCount", downloadCount)
+            .set("rating", rating)
+            .set("publishedAt", publishedAt);
+    }
+
+
 }

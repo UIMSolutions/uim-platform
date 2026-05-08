@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.trigger;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ScheduleConfig {
     ScheduleFrequency frequency;
@@ -17,7 +21,7 @@ struct ScheduleConfig {
 
     Json toJson() const {
         return Json()
-            .set("frequency", frequency.toString())
+            .set("frequency", frequency.to!string())
             .set("cronExpression", cronExpression)
             .set("startDate", startDate)
             .set("endDate", endDate)
@@ -36,7 +40,7 @@ struct WebhookConfig {
         return Json()
             .set("url", url)
             .set("secret", secret)
-            .set("allowedIps", allowedIps.array)
+            .set("allowedIps", allowedIps.toJson)
             .set("authType", authType);
     }
 }
@@ -62,8 +66,8 @@ struct Trigger {
             .set("processId", processId.value)
             .set("name", name)
             .set("description", description)
-            .set("type", type.toString())
-            .set("status", status.toString())
+            .set("type", type.to!string())
+            .set("status", status.to!string())
             .set("schedule", schedule.toJson())
             .set("webhook", webhook.toJson())
             .set("eventType", eventType)

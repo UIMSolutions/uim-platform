@@ -10,7 +10,7 @@ module uim.platform.dms.application.application.usecases.manage.repositories;
 
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.repository;
-// import uim.platform.dms.application.domain.ports.repositoriess;
+// import uim.platform.dms.application.domain.ports.repositories;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
 
@@ -29,21 +29,17 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findByName(r.name, r.tenantId);
+    auto existing = repo.findByName(r.tenantId, r.name);
     if (!existing.isNull)
       return CommandResult(false, "", "Repository with this name already exists");
 
-    auto entity = new Repository();
-    entity.id = randomUUID();
-    entity.tenantId = r.tenantId;
+    Repository entity;
+    entity.initEntity(r.tenantId, r.createdBy);
     entity.name = r.name;
     entity.description = r.description;
     entity.status = RepositoryStatus.active;
     entity.maxFileSize = r.maxFileSize > 0 ? r.maxFileSize : 104_857_600;
     entity.allowedFileTypes = r.allowedFileTypes;
-    entity.createdBy = r.createdBy;
-    entity.createdAt = Clock.currStdTime();
-    entity.updatedAt = entity.createdAt;
 
     repo.save(entity);
     return CommandResult(true, entity.id.value, "");
@@ -58,7 +54,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
-    auto entity = repo.findById(r.id, r.tenantId);
+    auto entity = repo.findById(r.tenantId, r.repositoryId);
     if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
@@ -83,6 +79,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
     entity.status = RepositoryStatus.archived;
     entity.updatedAt = Clock.currStdTime();
+
     repo.update(entity);
     return CommandResult(true, entity.id.value, "");
   }
@@ -94,6 +91,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
     entity.status = RepositoryStatus.active;
     entity.updatedAt = Clock.currStdTime();
+    
     repo.update(entity);
     return CommandResult(true, entity.id.value, "");
   }
@@ -103,7 +101,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 
-    repo.removeById(tenantId, repositoryId);
-    return CommandResult(true, repositoryid.value, "");
+    repo.remove(entity);
+    return CommandResult(true, entity.id.value, "");
   }
 }

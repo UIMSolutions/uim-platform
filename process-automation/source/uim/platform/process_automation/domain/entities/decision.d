@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.decision;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct DecisionColumn {
     DecisionColumnId decisionColumnId;
@@ -21,7 +25,7 @@ struct DecisionColumn {
             .set("name", name)
             .set("type", type)
             .set("isInput", isInput)
-            .set("conditionType", conditionType.toString())
+            .set("conditionType", conditionType.to!string())
             .set("description", description);
     }
 }
@@ -59,9 +63,9 @@ struct Decision {
             .set("projectId", projectId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status.toString())
-            .set("type", type.toString())
-            .set("hitPolicy", hitPolicy.toString())
+            .set("status", status.to!string())
+            .set("type", type.to!string())
+            .set("hitPolicy", hitPolicy.to!string())
             .set("columns", columns.map!(col => col.toJson()).array)
             .set("rows", rows.map!(row => row.toJson()).array)
             .set("version", version_);

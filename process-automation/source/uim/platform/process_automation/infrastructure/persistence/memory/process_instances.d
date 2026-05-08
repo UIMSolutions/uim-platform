@@ -12,21 +12,27 @@ mixin(ShowModule!());
 @safe:
 class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, ProcessInstanceId), ProcessInstanceRepository {
 
-    size_t countByProcess(ProcessId processId) {
-        return findByProcess(processId).length;
+    size_t countByProcess(TenantId tenantId, ProcessId processId) {
+        return findByProcess(tenantId, processId).length;
     }
-    ProcessInstance[] findByProcess(ProcessId processId) {
-        return findAll().filter!(i => i.processId == processId).array;
+    ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId) {
+        return filterByProcess(findByTenant(tenantId), processId);
     }
-    void removeByProcess(ProcessId processId) {
-        findByProcess(processId).each!(i => remove(i.id));
+    ProcessInstance[] filterByProcess(ProcessInstance[] instances, ProcessId processId) {
+        return instances.filter!(i => i.processId == processId).array;
+    }
+    void removeByProcess(TenantId tenantId, ProcessId processId) {
+        findByProcess(tenantId, processId).each!(i => remove(i.id));
     }
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
         return findByStatus(tenantId, status).length;
     }
+    ProcessInstance[] filterByStatus(ProcessInstance[] instances, InstanceStatus status) {
+        return instances.filter!(i => i.status == status).array;
+    }   
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
         findByStatus(tenantId, status).each!(i => remove(i.id));

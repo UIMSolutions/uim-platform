@@ -22,6 +22,6 @@ struct Favorite {
     return entityToJson
       .set("userId", userId.value)
       .set("resourceId", resourceId)
-      .set("resourceType", resourceType.toString);
+      .set("resourceType", resourceType.to!string);
   }
 }

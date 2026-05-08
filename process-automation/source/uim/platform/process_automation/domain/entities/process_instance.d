@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.entities.process_instance;
 
-import uim.platform.process_automation.domain.types;
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ContextVariable {
     string name;
@@ -21,7 +25,7 @@ struct ContextVariable {
 }
 
 struct ExecutionLog {
-    ExecutionLogId stepId;
+    ProcessStepId stepId;
     string stepName;
     string status;
     string message;
@@ -47,7 +51,7 @@ struct ProcessInstance {
     InstanceStatus status;
     InstancePriority priority;
     UserId startedBy;
-    string currentStepId;
+    ProcessStepId currentStepId;
     ContextVariable[] context;
     ExecutionLog[] executionLogs;
     string errorMessage;
@@ -60,12 +64,12 @@ struct ProcessInstance {
         auto j = entityToJson
             .set("processId", processId.value)
             .set("processName", processName)
-            .set("status", status.toString())
-            .set("priority", priority.toString())
+            .set("status", status.to!string())
+            .set("priority", priority.to!string())
             .set("startedBy", startedBy)
-            .set("currentStepId", currentStepId)
-            .set("context", context.map!(c => c.toJson()).array)
-            .set("executionLogs", executionLogs.map!(log => log.toJson()).array)
+            .set("currentStepId", currentStepId.value)
+            .set("context", context.map!(c => c.toJson()).array.toJson)
+            .set("executionLogs", executionLogs.map!(log => log.toJson()).array.toJson)
             .set("errorMessage", errorMessage)
             .set("retryCount", retryCount)
             .set("startedAt", startedAt)

@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.task;
 
-import uim.platform.process_automation.application.usecases.manage.tasks;
-import uim.platform.process_automation.application.dto;
+// import uim.platform.process_automation.application.taskss.manage.tasks;
+// import uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation;
 
-class TaskController : PlatformController {
-  private ManageTasksUseCase usecase;
+mixin(ShowModule!());
 
-  this(ManageTasksUseCase usecase) {
-    this.usecase = usecase;
+@safe:
+
+class TaskController : PlatformController {
+  private ManageTaskstasks tasks;
+
+  this(ManageTaskstasks tasks) {
+    this.tasks = tasks;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -31,9 +35,11 @@ class TaskController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateTaskRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.processInstanceId = j.getString("processInstanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -46,12 +52,12 @@ class TaskController : PlatformController {
       r.formId = j.getString("formId");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = usecase.create(r);
+      auto result = tasks.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task created");
-        
+          .set("id", result.id)
+          .set("message", "PATask created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -63,11 +69,12 @@ class TaskController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
-      auto tasks = usecase.list(tenantId);
+      auto tenantId = req.getTenantId;
+
+      auto results = tasks.listTasks(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (t; tasks) {
+      foreach (t; results) {
         jarr ~= Json.emptyObject
           .set("id", t.id)
           .set("name", t.name)
@@ -81,8 +88,8 @@ class TaskController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-          .set("count", tasks.length)
-          .set("resources", jarr);
+        .set("count", results.length)
+        .set("resources", jarr);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -92,12 +99,12 @@ class TaskController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto t = usecase.getById(id);
+      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      auto t = tasks.getById(tenantId, id);
       if (t.isNull) {
-        writeError(res, 404, "Task not found");
+        writeError(res, 404, "PATask not found");
         return;
       }
 
@@ -105,9 +112,9 @@ class TaskController : PlatformController {
         .set("id", t.id)
         .set("name", t.name)
         .set("description", t.description)
-        .set("type", t.type.t!string))
-        .set("status", t.status.t!string))
-        .set("priority", t.priority.t!string))
+        .set("type", t.type.t!string)
+        .set("status", t.status.t!string)
+        .set("priority", t.priority.t!string)
         .set("assignee", t.assignee)
         .set("processInstanceId", t.processInstanceId)
         .set("formId", t.formId)
@@ -128,23 +135,24 @@ class TaskController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+
+      auto tenantId = req.getTenantId;
 
       auto j = req.json;
       UpdateTaskRequest r;
-      r.tenantId = req.getTenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.tenantId = tenantId;
+      r.id = TaskId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");
       r.assignee = j.getString("assignee");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto result = usecase.update(r);
+      auto result = tasks.update(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task updated");
+          .set("id", result.id)
+          .set("message", "PATask updated");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -157,8 +165,8 @@ class TaskController : PlatformController {
 
   private void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-      import std.string : lastIndexOf;
+
+      auto tenantId = req.getTenantId;
 
       auto path = req.requestURI.to!string;
       auto claimIdx = lastIndexOf(path, "/claim");
@@ -167,19 +175,19 @@ class TaskController : PlatformController {
         return;
       }
       auto sub = path[0 .. claimIdx];
-      auto id = extractIdFromPath(sub);
+      auto id = TaskId(extractIdFromPath(sub));
 
       auto j = req.json;
       ClaimTaskRequest r;
-      r.tenantId = req.getTenantId;
-      r.id = id;
+      r.tenantId = tenantId;
+      r.taskId = id;
       r.userId = j.getString("userId");
 
-      auto result = usecase.claim(r);
+      auto result = tasks.claim(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task claimed");
+          .set("id", result.id)
+          .set("message", "PATask claimed");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -192,7 +200,8 @@ class TaskController : PlatformController {
 
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;
+
       import std.string : lastIndexOf;
 
       auto path = req.requestURI.to!string;
@@ -202,22 +211,22 @@ class TaskController : PlatformController {
         return;
       }
       auto sub = path[0 .. completeIdx];
-      auto id = extractIdFromPath(sub);
+      auto id = TaskId(extractIdFromPath(sub));
 
       auto j = req.json;
       CompleteTaskRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.completedBy = j.getString("completedBy");
       r.outcome = j.getString("outcome");
       r.formData = j.getString("formData");
 
-      auto result = usecase.complete(r);
+      auto result = tasks.complete(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task completed");
-            
+          .set("id", result.id)
+          .set("message", "PATask completed");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -229,14 +238,14 @@ class TaskController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = usecase.deleteTask(id);
+      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      auto result = tasks.deleteTask(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "Task deleted");
+          .set("message", "PATask deleted");
 
         res.writeJsonBody(resp, 200);
       } else {

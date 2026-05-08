@@ -18,17 +18,18 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createArtifact(CreateArtifactRequest r) {
-        if (r.isNull)
+        if (r.artifactId.isEmpty)
             return CommandResult(false, "", "Artifact ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Artifact name is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.artifactId);
         if (!existing.isNull)
             return CommandResult(false, "", "Artifact already exists");
 
         Artifact a;
-        a.id = r.id;
+        a.initEntity(r.tenantId, r.createdBy);
+        a.id = r.artifactId;
         a.name = r.name;
         a.description = r.description;
         a.status = ArtifactStatus.available;
@@ -37,46 +38,42 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         a.category = r.category;
         a.tags = r.tags;
         a.contentUrl = r.contentUrl;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        a.publishedAt = now;
-        a.updatedAt = now;
+        a.publishedAt = a.createdAt;
 
         repo.save(a);
         return CommandResult(true, a.id.value, "");
     }
 
-    Artifact getArtifact(ArtifactId id) {
+    Artifact getArtifact(TenantId tenantId, ArtifactId id) {
         return repo.findById(tenantId, id);
     }
 
-    Artifact[] listArtifacts() {
-        return repo.findAll();
+    Artifact[] listArtifacts(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
     }
 
-    Artifact[] listArtifacts(ArtifactType type) {
-        return repo.findByType(type);
+    Artifact[] listArtifacts(TenantId tenantId, ArtifactType type) {
+        return repo.findByType(tenantId, type);
     }
 
     CommandResult updateArtifact(UpdateArtifactRequest r) {
-        if (!repo.existsById(r.id))
+        auto artifact = repo.findById(r.tenantId, r.artifactId);
+        if (artifact.isNull)
             return CommandResult(false, "", "Artifact not found");
 
-        auto existing = repo.findById(r.id);
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.version_ = r.version_;
-        existing.contentUrl = r.contentUrl;
+        artifact.name = r.name;
+        artifact.description = r.description;
+        artifact.version_ = r.version_;
+        artifact.contentUrl = r.contentUrl;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        artifact.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(artifact);
+        return CommandResult(true, artifact.id.value, "");
     }
 
-    CommandResult deleteArtifact(ArtifactId id) {
+    CommandResult deleteArtifact(TenantId tenantId, ArtifactId id) {
         auto artifact = repo.findById(tenantId, id);
         if (artifact.isNull)
             return CommandResult(false, "", "Artifact not found");

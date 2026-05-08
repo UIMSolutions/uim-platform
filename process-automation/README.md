@@ -6,7 +6,7 @@ A comprehensive process automation platform built with D (dlang) and vibe.d, fol
 
 - **Process Management** - Design, version, deploy, and manage business processes with multi-step workflows
 - **Process Instances** - Start, monitor, suspend, resume, cancel, and retry process executions
-- **Task Management** - Human task inbox with claim/complete workflow, priorities, due dates, and candidate assignment
+- **PATask Management** - Human task inbox with claim/complete workflow, priorities, due dates, and candidate assignment
 - **Decisions (Business Rules)** - Decision tables and text rules with configurable hit policies
 - **Forms** - Form builder with sections, fields, validation rules, and conditional visibility
 - **Automations (RPA Bots)** - Desktop and cloud automations with step-by-step execution and run history
@@ -30,7 +30,7 @@ Clean / Hexagonal Architecture (Ports & Adapters)
 |  - DTOs (Request/Response objects)                        |
 +-----------------------------------------------------------+
 |  Domain Layer (Core)                                      |
-|  - Entities (Process, Task, Decision, Form, ...)         |
+|  - Entities (Process, PATask, Decision, Form, ...)         |
 |  - Repository Ports (interfaces)                          |
 |  - Domain Services (ProcessValidator)                     |
 |  - Value Objects / Types / Enums                          |
@@ -52,8 +52,8 @@ Clean / Hexagonal Architecture (Ports & Adapters)
 | Instances    | `/api/v1/process-automation/instances`         | GET, POST, DELETE          |
 | Inst. Action | `/api/v1/process-automation/instances/*/action` | POST                     |
 | Tasks        | `/api/v1/process-automation/tasks`             | GET, POST, PUT, DELETE     |
-| Claim Task   | `/api/v1/process-automation/tasks/*/claim`     | POST                       |
-| Complete Task| `/api/v1/process-automation/tasks/*/complete`  | POST                       |
+| Claim PATask   | `/api/v1/process-automation/tasks/*/claim`     | POST                       |
+| Complete PATask| `/api/v1/process-automation/tasks/*/complete`  | POST                       |
 | Decisions    | `/api/v1/process-automation/decisions`         | GET, POST, PUT, DELETE     |
 | Forms        | `/api/v1/process-automation/forms`             | GET, POST, PUT, DELETE     |
 | Automations  | `/api/v1/process-automation/automations`       | GET, POST, PUT, DELETE     |

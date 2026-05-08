@@ -49,7 +49,7 @@ class AlertRuleController : PlatformController {
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createAlertRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -79,7 +79,8 @@ class AlertRuleController : PlatformController {
 
       auto response = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", Json(rules.length));
+        .set("totalCount", rules.length)
+        .set("message", "Alert rules retrieved successfully");
 
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -134,7 +135,7 @@ class AlertRuleController : PlatformController {
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 
-      auto result = usecase.updateRule(r);
+      auto result = usecase.updateAlertRule(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -154,7 +155,7 @@ class AlertRuleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI.to!string));
       
-      usecase.deleteRule(tenantId, id);
+      usecase.deleteAlertRule(tenantId, id);
       auto resp = Json.emptyObject
         .set("id", id)
         .set("message", "Alert rule deleted successfully");

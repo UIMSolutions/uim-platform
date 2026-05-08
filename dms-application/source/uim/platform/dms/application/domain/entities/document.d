@@ -32,10 +32,10 @@ struct Document {
       .set("folderId", folderId.value)
       .set("name", name)
       .set("description", description)
-      .set("contentCategory", contentCategory.toString)
+      .set("contentCategory", contentCategory.to!string())
       .set("mimeType", mimeType)
       .set("fileSize", fileSize)
-      .set("status", status.toString)
+      .set("status", status.to!string())
       .set("currentVersionId", currentVersionId.value)
       .set("tags", tags)
       .set("properties", properties);

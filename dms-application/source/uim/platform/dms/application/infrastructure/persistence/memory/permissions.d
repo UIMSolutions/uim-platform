@@ -19,8 +19,12 @@ class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), 
     return findByResource(tenantId, resourceId, resourceType).count;
   }
 
+Permission[] filterByResource(Permission[] permissions, string resourceId, ResourceType resourceType) {
+    return permissions.filter!(e => e.resourceId == resourceId && e.resourceType == resourceType)
+      .array;
+  }
   Permission[] findByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
-    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId && e.resourceType == resourceType).array;
+    return filterByResource(findByTenant(tenantId), resourceId, resourceType);
   }
 
   void removeByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
@@ -33,8 +37,11 @@ class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), 
     return findByUser(tenantId, userId).count;
   }
 
-    Permission[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
+Permission[] filterByUser(Permission[] permissions, UserId userId) {
+    return permissions.filter!(e => e.userId == userId).array;
+  }
+  Permission[] findByUser(TenantId tenantId, UserId userId) {
+    return filterByUser(findByTenant(tenantId), userId);
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -42,10 +49,15 @@ class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), 
   }
   // #endregion byUser
 
+  bool existsByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
+    UserId userId) {
+    return filterByResource(findByTenant(tenantId), resourceId, resourceType).any!(e => e.userId == userId);
+  }
+
   Permission findByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
-      UserId userId) {
-    foreach (e; findByTenant(tenantId))
-      if (e.resourceId == resourceId && e.resourceType == resourceType && e.userId == userId)
+    UserId userId) {
+    foreach (e; filterByResource(findByTenant(tenantId), resourceId, resourceType))
+      if (e.userId == userId)
         return e;
     return Permission.init;
   }

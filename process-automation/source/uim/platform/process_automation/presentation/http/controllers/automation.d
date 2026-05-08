@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.automation;
 
-import uim.platform.process_automation.application.usecases.manage.automations;
-import uim.platform.process_automation.application.dto;
-import uim.platform.process_automation.presentation.http
+// import uim.platform.process_automation.application.usecases.manage.automations;
+// import uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class AutomationController : PlatformController {
     private ManageAutomationsUseCase usecase;
@@ -30,11 +33,13 @@ class AutomationController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+
             auto j = req.json;
             CreateAutomationRequest r;
-            r.tenantId = req.getTenantId;
-            r.projectId = j.getString("projectId");
-            r.id = j.getString("id");
+            r.tenantId = tenantId;
+            r.projectId = ProjectId(j.getString("projectId"));
+            r.id = AutomationId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -59,8 +64,9 @@ class AutomationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
-            auto automations = usecase.list(tenantId);
+                        auto tenantId = req.getTenantId;
+
+            auto automations = usecase.listAutomations(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; automations) {
@@ -89,14 +95,15 @@ class AutomationController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            if (!usecase.existsById(id)) {
+            auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            if (!usecase.existsById(tenantId, id)) {
                 writeError(res, 404, "Automation not found");
                 return;
             }
 
-            auto a = usecase.getById(id);
+            auto a = usecase.getById(tenantId, id);
             auto resp = Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
@@ -119,12 +126,13 @@ class AutomationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             
 
             auto j = req.json;
             UpdateAutomationRequest r;
-            r.tenantId = req.getTenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.tenantId = tenantId;
+            r.id = AutomationId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -150,9 +158,10 @@ class AutomationController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteAutomation(id);
+            auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteAutomation(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("id", result.id)

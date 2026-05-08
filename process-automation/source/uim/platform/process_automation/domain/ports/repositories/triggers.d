@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.triggers;
 
-import uim.platform.process_automation.domain.types;
-import uim.platform.process_automation.domain.entities.trigger;
+// import uim.platform.process_automation.domain.types;
+// import uim.platform.process_automation.domain.entities.trigger;
+import uim.platform.process_automation;
 
+mixin(ShowModule!());
+
+@safe:
 interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
 
-    size_t countByProcess(ProcessId processId);
-    Trigger[] findByProcess(ProcessId processId);
-    void removeByProcess(ProcessId processId);
+    size_t countByProcess(TenantId tenantId, ProcessId processId);
+    Trigger[] findByProcess(TenantId tenantId, ProcessId processId);
+    void removeByProcess(TenantId tenantId, ProcessId processId);
 
 }

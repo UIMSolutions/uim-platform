@@ -12,14 +12,17 @@ mixin(ShowModule!());
 @safe:
 class MemoryFormRepository : TenantRepository!(Form, FormId), FormRepository {
 
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }
-    Form[] findByProject(ProjectId projectId) {
-        return findAll().filter!(f => f.projectId == projectId).array;
+    Form[] findByProject(TenantId tenantId, ProjectId projectId) {
+        return filterByProject(filterByTenant(tenantId), projectId);
     }
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(f => remove(f));
+    Form[] filterByProject(Form[] forms, ProjectId projectId) {
+        return forms.filter!(f => f.projectId == projectId).array;
+    }
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(f => remove(f));
     }
 
 }

@@ -25,7 +25,7 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
   }
 
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    findByRepository(tenantId, repositoryId).each!(e => remove(e.id));
+    findByRepository(tenantId, repositoryId).each!(e => remove(e));
   }
 
   size_t countByFolder(TenantId tenantId, FolderId folderId) {
@@ -37,7 +37,7 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
   }
 
   void removeByFolder(TenantId tenantId, FolderId folderId) {
-    findByFolder(tenantId, folderId).each!(e => remove(e.id));
+    findByFolder(tenantId, folderId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, DocumentStatus status) {
@@ -49,7 +49,7 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
   }
 
   void removeByStatus(TenantId tenantId, DocumentStatus status) {
-    findByStatus(tenantId, status).each!(e => remove(e.id));
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
   size_t countByName(TenantId tenantId, string name) {
@@ -62,6 +62,6 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).each!(e => remove(e.id));
+    findByName(tenantId, name).each!(e => remove(e));
   }
 }

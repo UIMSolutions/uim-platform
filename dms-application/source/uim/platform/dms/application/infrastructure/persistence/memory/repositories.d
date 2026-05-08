@@ -23,11 +23,11 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
-    return null;
+    return Repository.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).each!(e => remove(e.tenantId, e.id));
+    remove(findByName(tenantId, name));
   }
   // #endregion byName
 
@@ -36,12 +36,15 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
     return findByStatus(tenantId, status).count;
   }
 
+  Repository[] filterByStatus(Repository[] repositories, RepositoryStatus status) {
+    return repositories.filter!(e => e.status == status).array;
+  }
   Repository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, RepositoryStatus status) {
-    findByStatus(tenantId, status).each!(e => remove(e.tenantId, e.id));
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
   // #endregion byStatus
 }

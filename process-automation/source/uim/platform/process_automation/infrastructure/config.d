@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.infrastructure.config;
 
-// import std.process : environment;
+import std.process : environment;
 
-import uim.platform.hana;
+import uim.platform.process_automation;
 
 mixin(ShowModule!());
 
