@@ -12,7 +12,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateLegalEntityRequest req) {
+    CommandResult createLegalEntity(CreateLegalEntityRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.length == 0)
@@ -33,15 +33,11 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, le.id.value, "");
     }
 
-    CommandResult update(string id, UpdateLegalEntityRequest req) {
-        return update(LegalEntityId(id), req);
-    }
-
-    CommandResult update(LegalEntityId id, UpdateLegalEntityRequest req) {
-        if (!repo.existsById(id))
+    CommandResult updateLegalEntity(TenantId tenantId, LegalEntityId id, UpdateLegalEntityRequest req) {
+        auto le = repo.findById(tenantId, id);
+        if (le.isNull)
             return CommandResult(false, "", "Legal entity not found");
 
-        auto le = repo.findById(tenantId, id);
         if (req.name.length > 0)
             le.name = req.name;
         if (req.description.length > 0)
@@ -57,19 +53,19 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(LegalEntityId id) {
-        return repo.existsById(id);
+    bool hasLegalEntity(TenantId tenantId, LegalEntityId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    LegalEntity getById(LegalEntityId id) {
+    LegalEntity getLegalEntity(TenantId tenantId, LegalEntityId id) {
         return repo.findById(tenantId, id);
     }
 
-    LegalEntity[] list(TenantId tenantId) {
+    LegalEntity[] listLegalEntities(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    CommandResult deleteLegalEntity(LegalEntityId id) {
+    CommandResult deleteLegalEntity(TenantId tenantId, LegalEntityId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Legal entity not found");

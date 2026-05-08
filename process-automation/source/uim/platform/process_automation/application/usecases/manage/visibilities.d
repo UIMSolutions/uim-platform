@@ -17,7 +17,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateVisibilityRequest r) {
+    CommandResult createVisibility(CreateVisibilityRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Visibility ID is required");
         if (r.name.length == 0)
@@ -45,15 +45,15 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, v.id.value, "");
     }
 
-    Visibility getById(VisibilityId id) {
+    Visibility getVisibility(VisibilityId id) {
         return repo.findById(tenantId, id);
     }
 
-    Visibility[] list(TenantId tenantId) {
+    Visibility[] listVisibilities(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateVisibilityRequest r) {
+    CommandResult updateVisibility(UpdateVisibilityRequest r) {
         if (!repo.existsById(r.id))
             return CommandResult(false, "", "Visibility dashboard not found");
 

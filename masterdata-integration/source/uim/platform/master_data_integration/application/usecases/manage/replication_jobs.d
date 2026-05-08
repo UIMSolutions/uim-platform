@@ -18,7 +18,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateReplicationJobRequest req) {
+  CommandResult createReplicationJob(CreateReplicationJobRequest req) {
     if (req.distributionModelId.isEmpty)
       return CommandResult(false, "", "Distribution model ID is required");
     if (req.sourceClientId.isEmpty)
@@ -40,10 +40,10 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.createdBy = req.createdBy;
 
     repo.save(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult startJob(ReplicationJobId id) {
+  CommandResult startReplicationJob(ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
@@ -53,10 +53,10 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.status = ReplicationJobStatus.running;
     job.startedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult completeJob(ReplicationJobId id, long successRecords,
+  CommandResult completeReplicationJob(ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
@@ -75,17 +75,17 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult cancelJob(ReplicationJobId id) {
+  CommandResult cancelReplicationJob(ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult pauseJob(ReplicationJobId id) {
+  CommandResult pauseReplicationJob(ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
@@ -93,31 +93,31 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Job can only be paused when running");
     job.status = ReplicationJobStatus.paused;
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  ReplicationJob getJob(ReplicationJobId id) {
+  ReplicationJob getReplicationJob(ReplicationJobId id) {
     return repo.findById(tenantId, id);
   }
 
-  ReplicationJob[] listByTenant(TenantId tenantId) {
+  ReplicationJob[] listReplicationJobsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  ReplicationJob[] listByStatus(TenantId tenantId, string status) {
+  ReplicationJob[] listReplicationJobsByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseJobStatus(status));
   }
 
-  ReplicationJob[] listByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
+  ReplicationJob[] listReplicationJobsByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
     return repo.findByDistributionModel(tenantId, modelId);
   }
 
-  CommandResult deleteJob(ReplicationJobId id) {
+  CommandResult deleteReplicationJob(ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
   private ReplicationTrigger parseTrigger(string s) {

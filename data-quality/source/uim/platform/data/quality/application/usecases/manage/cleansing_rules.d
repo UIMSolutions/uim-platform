@@ -24,7 +24,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateCleansingRuleRequest req) {
+  CommandResult createCleansingRule(CreateCleansingRuleRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
@@ -59,11 +59,11 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult update(UpdateCleansingRuleRequest req) {
-    if (req.isNull)
+  CommandResult updateCleansingRule(UpdateCleansingRuleRequest req) {
+    if (req.ruleId.isNull)
       return CommandResult(false, "", "Rule ID is required");
 
-    auto existing = repo.findById(req.id);
+    auto existing = repo.findById(req.tenantId, req.ruleId);
     if (existing.isNull)
       return CommandResult(false, "", "Cleansing rule not found");
     if (existing.tenantId != req.tenantId)
@@ -104,15 +104,15 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  CleansingRule getById(CleansingRuleId id) {
+  CleansingRule getCleansingRule(TenantId tenantId, CleansingRuleId id) {
     return repo.findById(tenantId, id);
   }
 
-  CleansingRule[] listByTenant(TenantId tenantId) {
+  CleansingRule[] listCleansingRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CleansingRule[] listActive(TenantId tenantId) {
+  CleansingRule[] listActiveCleansingRules(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 }

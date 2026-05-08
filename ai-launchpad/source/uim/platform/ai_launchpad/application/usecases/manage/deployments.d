@@ -24,7 +24,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDeploymentRequest r) {
+  CommandResult createDeployment(CreateDeploymentRequest r) {
     Deployment d;
     d.id = randomUUID();
     d.connectionId = r.connectionId;
@@ -38,19 +38,19 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getById(ConnectionId connectionId, DeploymentId id) {
+  Deployment getDeployment(ConnectionId connectionId, DeploymentId id) {
     return repo.findById(connectionId, id);
   }
 
-  Deployment[] listByConnection(ConnectionId connectionId) {
+  Deployment[] listDeploymentsByConnection(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  Deployment[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+  Deployment[] listDeployments(ConnectionId connectionId, ScenarioId scenarioId) {
     return repo.findByScenario(connectionId, scenarioId);
   }
 
-  CommandResult patch(PatchDeploymentRequest r) {
+  CommandResult patchDeployment(PatchDeploymentRequest r) {
     auto d = repo.findById(r.connectionId, r.deploymentId);
     if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
@@ -68,14 +68,14 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult[] bulkPatch(BulkPatchDeploymentRequest r) {
+  CommandResult[] bulkPatchDeployments(BulkPatchDeploymentRequest r) {
     CommandResult[] results;
     foreach (did; r.deploymentIds) {
       PatchDeploymentRequest pr;
       pr.connectionId = r.connectionId;
       pr.deploymentId = did;
       pr.targetStatus = r.targetStatus;
-      results ~= patch(pr);
+      results ~= patchDeployment(pr);
     }
     return results;
   }

@@ -20,7 +20,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateClientRequest r) {
+  CommandResult createClient(CreateClientRequest r) {
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
@@ -53,7 +53,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  CommandResult patch(PatchClientRequest r) {
+  CommandResult patchClient(PatchClientRequest r) {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
@@ -86,23 +86,23 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  Client getById(ClientId id) {
+  Client getClient(TenantId tenantId, ClientId id) {
     return repo.findById(tenantId, id);
   }
 
-  Client[] listByTenant(TenantId tenantId) {
+  Client[] listClients(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
-  size_t countByTenant(TenantId tenantId) {
+  size_t countClients(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
-  CommandResult deleteClient(ClientId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteClient(TenantId tenantId, ClientId id) {
+    auto client = repo.findById(tenantId, id);
+    if (client.isNull)
       return CommandResult(false, "", "Client not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(client);
+    return CommandResult(true, client.id.value, "");
   }
 
 

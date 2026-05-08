@@ -18,7 +18,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateCertificateRequest r) {
+    CommandResult createCertificate(CreateCertificateRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.keyId.isEmpty)
@@ -42,7 +42,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, c.id.value, "");
     }
 
-    CommandResult uploadChain(UploadCertificateChainRequest r) {
+    CommandResult uploadCertificateChain(UploadCertificateChainRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
@@ -54,7 +54,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult activate(ActivateCertificateRequest r) {
+    CommandResult activateCertificate(ActivateCertificateRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
@@ -69,8 +69,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deactivate(CertificateId id) {
-        auto existing = repo.findById(tenantId, id);
+    CommandResult deactivateCertificate(DeactivateCertificateRequest r) {
+        auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
@@ -79,24 +79,24 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    Certificate getById(CertificateId id) {
+    Certificate getCertificate(TenantId tenantId, CertificateId id) {
         return repo.findById(tenantId, id);
     }
 
-    Certificate[] list(TenantId tenantId) {
+    Certificate[] listCertificates(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Certificate[] listByKey(PrivateKeyId keyId) {
-        return repo.findByKey(keyId);
+    Certificate[] listCertificates(TenantId tenantId, PrivateKeyId keyId) {
+        return repo.findByKey(tenantId, keyId);
     }
 
-    Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp) {
+    Certificate[] listExpiringCertificates(TenantId tenantId, long beforeTimestamp) {
         return repo.findExpiring(tenantId, beforeTimestamp);
     }
 
-    CommandResult deleteCertificate(CertificateId id) {
-        auto entity = repo.findById(tenantId, id);
+    CommandResult deleteCertificate(DeleteCertificateRequest r) {
+        auto entity = repo.findById(r.tenantId, r.certificateId);
         if (entity.isNull)
             return CommandResult(false, "", "Certificate not found");
 

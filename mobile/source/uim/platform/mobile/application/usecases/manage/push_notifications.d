@@ -56,7 +56,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(appId, parseNotifStatus(status));
     }
 
-    CommandResult remove(PushNotificationId id) {
+    CommandResult delete(PushNotificationId id) {
         repo.removeById(id);
     }
 

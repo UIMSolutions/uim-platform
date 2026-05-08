@@ -55,7 +55,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         return repo.findByTopic(appId, topic);
     }
 
-    CommandResult remove(PushRegistrationId id) {
+    CommandResult delete(PushRegistrationId id) {
         repo.removeById(id);
     }
 

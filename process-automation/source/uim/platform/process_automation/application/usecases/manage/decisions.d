@@ -17,7 +17,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDecisionRequest r) {
+    CommandResult createDecision(CreateDecisionRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Decision ID is required");
         if (r.name.length == 0)
@@ -46,15 +46,15 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    Decision getById(DecisionId id) {
+    Decision getDecision(DecisionId id) {
         return repo.findById(tenantId, id);
     }
 
-    Decision[] list(TenantId tenantId) {
+    Decision[] listDecisions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateDecisionRequest r) {
+    CommandResult updateDecision(UpdateDecisionRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Decision not found");
@@ -77,6 +77,6 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Decision not found");
 
         repo.remove(decision);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, decision.id.value, "");
     }
 }

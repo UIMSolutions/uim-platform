@@ -22,7 +22,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     this.subscriptionRepository = subscriptionRepository;
   }
 
-  CommandResult create(CreateEventSubscriptionRequest req) {
+  CommandResult createEventSubscription(CreateEventSubscriptionRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Subscription name is required");
     if (req.source.length == 0)
@@ -59,11 +59,11 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, sub.id.value, "");
   }
 
-  CommandResult updateSubscription(string subscriptionId, UpdateEventSubscriptionRequest request) {
-    return updateSubscription(EventSubscriptionId(subscriptionId), request);
+  CommandResult updateEventSubscription(string subscriptionId, UpdateEventSubscriptionRequest request) {
+    return updateEventSubscription(EventSubscriptionId(subscriptionId), request);
   }
 
-  CommandResult updateSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
+  CommandResult updateEventSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
     
@@ -88,14 +88,10 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.updatedAt = clockSeconds();
 
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionid.value, "");
+    return CommandResult(true, subscriptionId.value, "");
   }
 
-  CommandResult pauseSubscription(string subscriptionId) {
-    return pauseSubscription(EventSubscriptionId(subscriptionId));
-  }
-
-  CommandResult pauseSubscription(EventSubscriptionId subscriptionId) {
+  CommandResult pauseEventSubscription(EventSubscriptionId subscriptionId) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
     
@@ -103,14 +99,10 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.status = SubscriptionStatus.paused;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionid.value, "");
+    return CommandResult(true, subscriptionId.value, "");
   }
 
-  CommandResult resumeSubscription(string subscriptionId) {
-    return resumeSubscription(EventSubscriptionId(subscriptionId));
-  }
-
-  CommandResult resumeSubscription(EventSubscriptionId subscriptionId) {
+  CommandResult resumeEventSubscription(EventSubscriptionId subscriptionId) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
     
@@ -118,47 +110,23 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.status = SubscriptionStatus.active;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionid.value, "");
-  }
-
-  bool hasSubscription(string subscriptionId) {
-    return hasSubscription(EventSubscriptionId(subscriptionId));
+    return CommandResult(true, subscriptionId.value, "");
   }
 
   bool hasSubscription(EventSubscriptionId subscriptionId) {
     return subscriptionRepository.existsById(subscriptionId);
   }
 
-  EventSubscription getSubscription(string subscriptionId) {
-    return getSubscription(EventSubscriptionId(subscriptionId));
-  }
-
   EventSubscription getSubscription(EventSubscriptionId subscriptionId) {
     return subscriptionRepository.findById(subscriptionId);
-  }
-
-  EventSubscription[] listByNamespace(string namespaceId) {
-    return listByNamespace(NamespaceId(namespaceId));
   }
 
   EventSubscription[] listByNamespace(NamespaceId namespaceId) {
     return subscriptionRepository.findByNamespace(namespaceId);
   }
 
-  EventSubscription[] listByEnvironment(string environmentId) {
-    return listByEnvironment(KymaEnvironmentId(environmentId));
-  }
-
   EventSubscription[] listByEnvironment(KymaEnvironmentId environmentId) {
     return subscriptionRepository.findByEnvironment(environmentId);
-  }
-
-  EventSubscription[] listBySource(string source) {
-    return subscriptionRepository.findBySource(source);
-  }
-
-  CommandResult deleteSubscription(string subscriptionId) {
-    return deleteSubscription(EventSubscriptionId(subscriptionId));
   }
 
   CommandResult deleteSubscription(EventSubscriptionId subscriptionId) {
@@ -166,7 +134,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subscription not found");
 
     subscriptionRepository.remove(subscriptionId);
-    return CommandResult(true, subscriptionid.value, "");
+    return CommandResult(true, subscriptionId.value, "");
   }
 
   private EventTypeEncoding parseTypeEncoding(string encoding) {

@@ -18,15 +18,15 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDataProcessingLogRequest r) {
-        if (r.isNull) return CommandResult(false, "", "ID is required");
-
-        
+    CommandResult createDataProcessingLog(CreateDataProcessingLogRequest r) {
+        if (r.isNull)
+            return CommandResult(false, "", "ID is required");
 
         DataProcessingLog entry;
         entry.id = r.id;
         entry.tenantId = r.tenantId;
-        entry.entryType = r.entryType.length > 0 ? r.entryType.to!LogEntryType : LogEntryType.access;
+        entry.entryType = r.entryType.length > 0 ? r.entryType.to!LogEntryType
+            : LogEntryType.access;
         entry.severity = r.severity.length > 0 ? r.severity.to!LogSeverity : LogSeverity.info;
         entry.dataSubjectId = r.dataSubjectId;
         entry.applicationId = r.applicationId;
@@ -42,27 +42,27 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    bool hasById(DataProcessingLogId id) {
+    bool hasDataProcessingLog(DataProcessingLogId id) {
         return repo.existsById(id);
     }
 
-    DataProcessingLog getById(DataProcessingLogId id) {
+    DataProcessingLog getDataProcessingLogById(DataProcessingLogId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataProcessingLog[] listByTenant(TenantId tenantId) {
+    DataProcessingLog[] listDataProcessingLogsByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataProcessingLog[] listByTenant(TenantId tenantId) {
-        return listByTenant(TenantId(tenantId));
+    DataProcessingLog[] listDataProcessingLogsByTenant(TenantId tenantId) {
+        return listDataProcessingLogsByTenant(TenantId(tenantId));
     }
 
-    DataProcessingLog[] listByDataSubject(DataSubjectId dataSubjectId) {
+    DataProcessingLog[] listDataProcessingLogsByDataSubject(DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(dataSubjectId);
     }
 
-    DataProcessingLog[] listByRequest(DataSubjectRequestId requestId) {
+    DataProcessingLog[] listDataProcessingLogsByRequest(DataSubjectRequestId requestId) {
         return repo.findByRequest(requestId);
     }
 

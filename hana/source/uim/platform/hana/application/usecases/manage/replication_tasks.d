@@ -24,7 +24,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateReplicationTaskRequest r) {
+  CommandResult createReplicationTask(CreateReplicationTaskRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Replication task ID and name are required");
 
@@ -51,15 +51,15 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  ReplicationTask getById(ReplicationTaskId id) {
+  ReplicationTask getReplicationTask(ReplicationTaskId id) {
     return repo.findById(tenantId, id);
   }
 
-  ReplicationTask[] list(TenantId tenantId) {
+  ReplicationTask[] listReplicationTasks(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateReplicationTaskRequest r) {
+  CommandResult updateReplicationTask(UpdateReplicationTaskRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Replication task not found");
 
@@ -84,7 +84,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countReplicationTasks(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

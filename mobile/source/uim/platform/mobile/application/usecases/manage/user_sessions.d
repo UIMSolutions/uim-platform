@@ -19,7 +19,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateUserSessionRequest r) {
+    CommandResult createUserSession(CreateUserSessionRequest r) {
         UserSession session;
         session.id = randomUUID();
         session.tenantId = r.tenantId;
@@ -37,31 +37,33 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, session.id.value, "");
     }
 
-    CommandResult terminate(UserSessionId id) {
+    CommandResult terminateUserSession(UserSessionId id) {
         auto session = repo.findById(tenantId, id);
         if (session.isNull)
             return CommandResult(false, "", "Session not found");
         session.status = SessionStatus.terminated;
         session.endedAt = currentTimestamp();
         session.updatedAt = currentTimestamp();
+        
         repo.update(session);
         return CommandResult(true, session.id.value, "");
     }
 
-    UserSession get_(UserSessionId id) {
+    UserSession getUserSession(UserSessionId id) {
         return repo.findById(tenantId, id);
     }
 
-    UserSession[] listByApp(MobileAppId appId) {
+    UserSession[] listUserSessionsByApp(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    UserSession[] listActive(MobileAppId appId) {
+    UserSession[] listActiveUserSessions(MobileAppId appId) {
         return repo.findActive(appId);
     }
 
-    CommandResult remove(UserSessionId id) {
+    CommandResult deleteUserSession(UserSessionId id) {
         repo.removeById(id);
+        return CommandResult(true, id.value, "");
     }
 
     size_t countActive(MobileAppId appId) {

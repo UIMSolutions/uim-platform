@@ -25,7 +25,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     this.validator = validator;
   }
 
-  CommandResult create(CreateFunctionRequest request) {
+  CommandResult createFunction(CreateFunctionRequest request) {
     if (request.name.length == 0)
       return CommandResult(false, "", "Function name is required");
     if (request.namespaceId.isEmpty)
@@ -67,10 +67,6 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
 
     functionRepository.save(serverlessFunction);
     return CommandResult(true, serverlessFunction.id.value, "");
-  }
-
-  CommandResult updateFunction(string functionId, UpdateFunctionRequest req) {
-    return updateFunction(ServerlessFunctionId(functionId), req);
   }
 
   CommandResult updateFunction(ServerlessFunctionId functionId, UpdateFunctionRequest req) {
@@ -116,41 +112,21 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     functionRepository.update(fn);
     return CommandResult(true, fn.id.value, "");
   }
-
-  bool hasFunction(string functionId) {
-    return hasFunction(ServerlessFunctionId(functionId));
-  }
   
   bool hasFunction(ServerlessFunctionId functionId) {
     return functionRepository.existsById(functionId);
-  }
-
-  ServerlessFunction getFunction(string functionId) {
-    return getFunction(ServerlessFunctionId(functionId));
   }
   
   ServerlessFunction getFunction(ServerlessFunctionId functionId) {
     return functionRepository.findById(functionId);
   }
 
-  ServerlessFunction[] listByNamespace(string nsId) {
-    return listByNamespace(NamespaceId(nsId));
-  }
-
   ServerlessFunction[] listByNamespace(NamespaceId nsId) {
     return functionRepository.findByNamespace(nsId);
   }
 
-  ServerlessFunction[] listByEnvironment(string environmentId) {
-    return listByEnvironment(KymaEnvironmentId(environmentId));
-  }
-
   ServerlessFunction[] listByEnvironment(KymaEnvironmentId environmentId) {
     return functionRepository.findByEnvironment(environmentId);
-  }
-
-  CommandResult deleteFunction(string functionId) {
-    return deleteFunction(ServerlessFunctionId(functionId));
   }
 
   CommandResult deleteFunction(ServerlessFunctionId functionId) {

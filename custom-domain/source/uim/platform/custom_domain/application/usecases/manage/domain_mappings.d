@@ -18,7 +18,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDomainMappingRequest r) {
+    CommandResult createDomainMapping(CreateDomainMappingRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.standardRoute.length == 0)
@@ -55,19 +55,19 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, m.id.value, "");
     }
 
-    DomainMapping getById(DomainMappingId id) {
+    DomainMapping getDomainMappingById(TenantId tenantId, DomainMappingId id) {
         return repo.findById(tenantId, id);
     }
 
-    DomainMapping[] list(TenantId tenantId) {
+    DomainMapping[] listDomainMappings(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DomainMapping[] listByDomain(CustomDomainId domainId) {
-        return repo.findByDomain(domainId);
+    DomainMapping[] listDomainMappings(TenantId tenantId, CustomDomainId domainId) {
+        return repo.findByDomain(tenantId, domainId);
     }
 
-    CommandResult deleteDomainMapping(DomainMappingId id) {
+    CommandResult deleteDomainMapping(TenantId tenantId, DomainMappingId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Domain mapping not found");

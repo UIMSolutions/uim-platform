@@ -21,7 +21,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     this.resolver = resolver;
   }
 
-  CommandResult create(CreateKeyMappingRequest req) {
+  CommandResult createKeyMapping(CreateKeyMappingRequest req) {
     if (req.masterDataObjectId.isEmpty)
       return CommandResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
@@ -42,11 +42,11 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
           "Key mapping must have exactly one primary entry and all entries must have local keys");
 
     repo.save(mapping);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, mapping.id.value, "");
   }
 
-  CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req) {
-    auto mapping = repo.findById(tenantId, id);
+  CommandResult updateKeyMapping(UpdateKeyMappingRequest req) {
+    auto mapping = repo.findById(tenantId, req.id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
@@ -58,7 +58,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Invalid key mapping: must have exactly one primary entry");
 
     repo.update(mapping);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, mapping.id.value, "");
   }
 
   /// Lookup: given a source client+key, find the target client's key.
@@ -69,28 +69,29 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
 
-  KeyMapping getMapping(KeyMappingId id) {
+  KeyMapping getKeyMapping(KeyMappingId id) {
     return repo.findById(tenantId, id);
   }
 
-  KeyMapping[] listByTenant(TenantId tenantId) {
+  KeyMapping[] listKeyMappings(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  KeyMapping[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
+  KeyMapping[] listKeyMappings(TenantId tenantId, MasterDataObjectId objectId) {
     return repo.findByObjectId(tenantId, objectId);
   }
 
-  KeyMapping[] listByCategory(TenantId tenantId, string category) {
+  KeyMapping[] listKeyMappings(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  CommandResult deleteMapping(KeyMappingId id) {
+  CommandResult deleteKeyMapping(KeyMappingId id) {
     auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.removeById(mapping.id);
+    return CommandResult(true, mapping.id.value, "");
   }
 
   private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {

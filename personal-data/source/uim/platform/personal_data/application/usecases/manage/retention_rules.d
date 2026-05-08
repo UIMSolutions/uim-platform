@@ -18,7 +18,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateRetentionRuleRequest r) {
+    CommandResult createRetentionRule(CreateRetentionRuleRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Rule name is required");
 
@@ -45,15 +45,15 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rule.id.value, "");
     }
 
-    RetentionRule getById(RetentionRuleId id) {
+    RetentionRule getRetentionRule(RetentionRuleId id) {
         return repo.findById(tenantId, id);
     }
 
-    RetentionRule[] list(TenantId tenantId) {
+    RetentionRule[] listRetentionRules(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateRetentionRuleRequest r) {
+    CommandResult updateRetentionRule(UpdateRetentionRuleRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Retention rule not found");

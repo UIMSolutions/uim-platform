@@ -23,7 +23,7 @@ class PlanningUseCases {
     this.repo = repo;
   }
 
-  PlanningModelResponse create(CreatePlanningModelRequest req) {
+  PlanningModelResponse createPlanningModel(CreatePlanningModelRequest req) {
     TimeGranularity gran;
     try {
       gran = req.granularity.to!TimeGranularity;
@@ -40,14 +40,14 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  PlanningModelResponse[] list() {
+  PlanningModelResponse[] listPlanningModels() {
     PlanningModelResponse[] result;
     foreach (pm; repo.findAll())
       result ~= PlanningModelResponse.fromEntity(pm);
     return result;
   }
 
-  PlanningModelResponse lock(string id) {
+  PlanningModelResponse lockPlanningModel(string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -56,7 +56,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse approve(string id) {
+  PlanningModelResponse approvePlanningModel(string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -65,7 +65,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  CommandResult remove(string id) {
+  CommandResult deletePlanningModel(string id) {
     repo.remove(EntityId(id));
   }
 }

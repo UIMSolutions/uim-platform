@@ -24,7 +24,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateConfigurationRequest r) {
+  CommandResult createConfiguration(CreateConfigurationRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Configuration name is required");
     if (r.scenarioId.isEmpty)
@@ -73,20 +73,20 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Configuration getById(ResourceGroupId rgId, ConfigurationId id) {
-    return repo.findById(rgId, id);
+  Configuration getConfiguration(GetConfigurationRequest r) {
+    return repo.findById(r.resourceGroupId, r.configurationId);
   }
 
-  Configuration[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
-    return repo.findByScenario(rgId, scenarioId);
+  Configuration[] listConfigurations(ListConfigurationsByScenarioRequest r) {
+    return repo.findByScenario(r.resourceGroupId, r.scenarioId);
   }
 
-  Configuration[] list(ResourceGroupId rgId) {
-    return repo.findByResourceGroup(rgId);
+  Configuration[] listConfigurations(ListConfigurationsRequest r) {
+    return repo.findByResourceGroup(r.resourceGroupId);
   }
 
-  CommandResult deleteConfiguration(ResourceGroupId rgId, ConfigurationId id) {
-    auto config = repo.findById(rgId, id);
+  CommandResult deleteConfiguration(DeleteConfigurationRequest r) {
+    auto config = repo.findById(r.resourceGroupId, r.configurationId);
     if (config.isNull)
       return CommandResult(false, "", "Configuration not found");
 
@@ -94,7 +94,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, config.id.value, "");
   }
 
-  size_t count(ResourceGroupId rgId) {
-    return repo.countByResourceGroup(rgId);
+  size_t count(CountConfigurationsRequest r) {
+    return repo.countByResourceGroup(r.resourceGroupId);
   }
 }

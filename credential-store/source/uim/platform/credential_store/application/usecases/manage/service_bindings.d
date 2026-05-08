@@ -24,7 +24,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     this.bindings = bindings;
   }
 
-  ServiceBindingResponse create(CreateServiceBindingRequest r) {
+  ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r) {
     ServiceBinding binding;
     binding.initEntity(r.tenantId);
     binding.name = r.name;
@@ -52,8 +52,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return resp;
   }
 
-  CommandResult update(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest r) {
-    auto binding = bindings.findById(tenantId, id);
+  CommandResult updateServiceBinding(UpdateServiceBindingRequest r) {
+    auto binding = bindings.findById(r.tenantId, r.serviceBindingId);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
@@ -70,25 +70,25 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
-    return bindings.findById(tenantId, id);
+  ServiceBinding getServiceBinding(GetServiceBindingRequest r) {
+    return bindings.findById(r.tenantId, r.serviceBindingId);
   }
 
-  ServiceBinding[] list(TenantId tenantId) {
-    return bindings.findByTenant(tenantId);
+  ServiceBinding[] listServiceBindings(ListServiceBindingsRequest r) {
+    return bindings.findByTenant(r.tenantId);
   }
 
-  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = bindings.findById(tenantId, id);
+  CommandResult deleteServiceBinding(DeleteServiceBindingRequest r) {
+    auto binding = bindings.findById(r.tenantId, r.serviceBindingId);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
-    bindings.removeById(tenantId, id);
+    bindings.removeById(r.tenantId, r.serviceBindingId);
     return CommandResult(true, binding.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
-    return bindings.countByTenant(tenantId);
+  size_t countServiceBindings(CountServiceBindingsRequest r) {
+    return bindings.countByTenant(r.tenantId);
   }
 
   private static PermissionLevel parsePermission(string p) {

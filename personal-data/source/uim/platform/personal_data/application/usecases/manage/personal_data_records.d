@@ -18,7 +18,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreatePersonalDataRecordRequest r) {
+    CommandResult createPersonalDataRecord(CreatePersonalDataRecordRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
 
@@ -44,23 +44,23 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rec.id.value, "");
     }
 
-    PersonalDataRecord getById(PersonalDataRecordId id) {
+    PersonalDataRecord getPersonalDataRecord(PersonalDataRecordId id) {
         return repo.findById(tenantId, id);
     }
 
-    PersonalDataRecord[] list(TenantId tenantId) {
+    PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    PersonalDataRecord[] listByDataSubject(DataSubjectId dataSubjectId) {
+    PersonalDataRecord[] listPersonalDataRecords(DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(dataSubjectId);
     }
 
-    PersonalDataRecord[] listByApplication(RegisteredApplicationId applicationId) {
+    PersonalDataRecord[] listPersonalDataRecords(RegisteredApplicationId applicationId) {
         return repo.findByApplication(applicationId);
     }
 
-    PersonalDataRecord[] listByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId appId) {
+    PersonalDataRecord[] listPersonalDataRecords(DataSubjectId dataSubjectId, RegisteredApplicationId appId) {
         return repo.findByDataSubjectAndApplication(dataSubjectId, appId);
     }
 

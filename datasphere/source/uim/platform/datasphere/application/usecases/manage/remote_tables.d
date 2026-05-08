@@ -24,7 +24,7 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     this.tables = tables;
   }
 
-  CommandResult create(CreateRemoteTableRequest r) {
+  CommandResult createRemoteTable(CreateRemoteTableRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Remote table name is required");
     if (r.spaceId.isEmpty)
@@ -54,20 +54,20 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rt.id.value, "");
   }
 
-  RemoteTable getById(SpaceId spaceId, RemoteTableId id) {
+  RemoteTable getRemoteTable(SpaceId spaceId, RemoteTableId id) {
     return tables.findById(spaceId, id);
   }
 
-  RemoteTable[] list(SpaceId spaceId) {
+  RemoteTable[] listRemoteTables(SpaceId spaceId) {
     return tables.findBySpace(spaceId);
   }
 
-  CommandResult deleteRemoteTable(RemoteTableId id, SpaceId spaceId) {
-    auto entity = tables.findById(spaceId, id);
-    if (entity.id.isEmpty)
+  CommandResult deleteRemoteTable(SpaceId spaceId, RemoteTableId id) {
+    auto table = tables.findById(spaceId, id);
+    if (table.isNull)
       return CommandResult(false, "", "Remote table not found");
 
-    tables.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    tables.remove(table);
+    return CommandResult(true, table.id.value, "");
   }
 }

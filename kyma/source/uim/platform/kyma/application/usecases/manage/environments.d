@@ -22,7 +22,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateEnvironmentRequest req) {
+  CommandResult createEnvironment(CreateEnvironmentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Environment name is required");
     if (req.plan.length == 0)
@@ -88,40 +88,25 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, env.id.value, "");
   }
 
-  bool hasEnvironment(string id) {
-    return hasEnvironment(KymaEnvironmentId(id));
-  }
-
   bool hasEnvironment(KymaEnvironmentId id) {
     return repo.existsById(id);
-  }
-
-  KymaEnvironment getEnvironment(string id) {
-    return getEnvironment(KymaEnvironmentId(id));
   }
 
   KymaEnvironment getEnvironment(KymaEnvironmentId id) {
     return repo.findById(tenantId, id);
   }
 
-  KymaEnvironment[] listByTenant(TenantId tenantId) {
-    return listByTenant(TenantId(tenantId));
+  KymaEnvironment[] listEnvironments(TenantId tenantId) {
+    return listEnvironments(TenantId(tenantId));
   }
 
-  KymaEnvironment[] listByTenant(TenantId tenantId) {
+  KymaEnvironment[] listEnvironments(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  KymaEnvironment[] listBySubaccount(TenantId tenantId, string subId) {
-    return listBySubaccount(TenantId(tenantId), SubaccountId(subId));
-  }
 
-  KymaEnvironment[] listBySubaccount(TenantId tenantId, SubaccountId subId) {
+  KymaEnvironment[] listEnvironments(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
-  }
-
-  CommandResult deleteEnvironment(string id) {
-    return deleteEnvironment(KymaEnvironmentId(id));
   }
 
   CommandResult deleteEnvironment(KymaEnvironmentId id) {

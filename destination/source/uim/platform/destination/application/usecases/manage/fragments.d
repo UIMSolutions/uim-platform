@@ -24,7 +24,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateFragmentRequest req) {
+  CommandResult createFragment(CreateFragmentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Fragment name is required");
 
@@ -59,11 +59,11 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, f.id.value, "");
   }
 
-  CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateFragment(UpdateFragmentRequest req) {
+    if (!repo.existsById(req.fragmentId))
       return CommandResult(false, "", "Fragment not found");
 
-    auto fragment = repo.findById(tenantId, id);
+    auto fragment = repo.findById(req.tenantId, req.fragmentId);
     if (req.description.length > 0)
       fragment.description = req.description;
     if (req.url.length > 0)
@@ -96,7 +96,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, fragment.id.value, "");
   }
 
-  DestinationFragment getFragment(FragmentId id) {
+  DestinationFragment getFragment(TenantId tenantId, FragmentId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -104,13 +104,13 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  CommandResult deleteFragment(FragmentId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteFragment(TenantId tenantId, FragmentId id) {
+    auto fragment = repo.findById(tenantId, id);
+    if (fragment.isNull)
       return CommandResult(false, "", "Fragment not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(fragment);
+    return CommandResult(true, fragment.id.value, "");
   }
 
   private static DestinationLevel parseLevel(string s) {

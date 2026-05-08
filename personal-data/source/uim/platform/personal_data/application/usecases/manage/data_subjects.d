@@ -18,7 +18,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDataSubjectRequest r) {
+    CommandResult createDataSubject(CreateDataSubjectRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.firstName.length == 0 && r.lastName.length == 0)
             return CommandResult(false, "", "First name or last name is required");
@@ -46,23 +46,23 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ds.id.value, "");
     }
 
-    DataSubject getById(DataSubjectId id) {
+    DataSubject getDataSubject(DataSubjectId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataSubject[] list(TenantId tenantId) {
+    DataSubject[] listDataSubjects(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataSubject[] search(string firstName, string lastName) {
+    DataSubject[] searchDataSubjectsByName(string firstName, string lastName) {
         return repo.findByName(firstName, lastName);
     }
 
-    DataSubject findByEmail(string email) {
+    DataSubject findDataSubjectByEmail(string email) {
         return repo.findByEmail(email);
     }
 
-    CommandResult update(UpdateDataSubjectRequest r) {
+    CommandResult updateDataSubject(UpdateDataSubjectRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
@@ -79,7 +79,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult block(DataSubjectId id) {
+    CommandResult blockDataSubject(DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
@@ -90,7 +90,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult erase(DataSubjectId id) {
+    CommandResult eraseDataSubject(DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");

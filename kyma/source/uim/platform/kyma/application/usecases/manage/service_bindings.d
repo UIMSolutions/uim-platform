@@ -22,7 +22,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateServiceBindingRequest req) {
+  CommandResult createServiceBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Binding name is required");
     if (req.serviceInstanceId.isEmpty)
@@ -52,7 +52,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
+  CommandResult updateServiceBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
 
@@ -71,45 +71,27 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-    bool hasBinding(string id) {
-      return hasBinding(ServiceBindingId(id));
-    }
-
-    bool hasBinding(ServiceBindingId id) {
-      return repo.existsById(id);
-    }
-
-    ServiceBinding getBinding(string id) {
-      return getBinding(ServiceBindingId(id));
-    }
-
-    ServiceBinding getBinding(ServiceBindingId id) {
-      return repo.findById(tenantId, id);
-    }
-
-  ServiceBinding[] listByNamespace(string nsId) {
-    return listByNamespace(NamespaceId(nsId));
+  bool hasServiceBinding(ServiceBindingId id) {
+    return repo.existsById(id);
   }
 
-  ServiceBinding[] listByNamespace(NamespaceId nsId) {
+  ServiceBinding getServiceBinding(ServiceBindingId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  ServiceBinding[] listServiceBindingsByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ServiceBinding[] listByServiceInstance(string instId) {
-    return listByServiceInstance(ServiceInstanceId(instId));
-  }
-
-  ServiceBinding[] listByServiceInstance(ServiceInstanceId instId) {
+  ServiceBinding[] listServiceBindingsByServiceInstance(ServiceInstanceId instId) {
     return repo.findByServiceInstance(instId);
   }
 
-  CommandResult deleteBinding(ServiceBindingId id) {
+  CommandResult deleteServiceBinding(ServiceBindingId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
-      
+
     repo.removeById(id);
     return CommandResult(true, id.value, "");
   }
 }
-
-

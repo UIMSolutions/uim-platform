@@ -26,7 +26,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     this.tasks = tasks;
   }
 
-  CommandResult create(CreateTaskRequest r) {
+  CommandResult createTask(CreateTaskRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Task name is required");
     if (r.spaceId.isEmpty)
@@ -46,32 +46,32 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  DSTask getById(SpaceId spaceId, TaskId id) {
+  DSTask getTask(SpaceId spaceId, TaskId id) {
     return tasks.findById(spaceId, id);
   }
 
-  DSTask[] list(SpaceId spaceId) {
+  DSTask[] listTasks(SpaceId spaceId) {
     return tasks.findBySpace(spaceId);
   }
 
-  CommandResult patch(PatchTaskRequest r) {
-    auto existing = tasks.findById(r.spaceId, r.taskId);
-    if (existing.isNull)
+  CommandResult patchTask(PatchTaskRequest r) {
+    auto task = tasks.findById(r.spaceId, r.taskId);
+    if (task.isNull)
       return CommandResult(false, "", "Task not found");
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    task.updatedAt = MonoTime.currTime.ticks;
 
-    tasks.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    tasks.update(task);
+    return CommandResult(true, task.id.value, "");
   }
 
   CommandResult deleteTask(SpaceId spaceId, TaskId id) {
-    auto entity = tasks.findById(spaceId, id);
-    if (entity.isNull)
+    auto task = tasks.findById(spaceId, id);
+    if (task.isNull)
       return CommandResult(false, "", "Task not found");
 
-    tasks.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    tasks.remove(task);
+    return CommandResult(true, task.id.value, "");
   }
 }

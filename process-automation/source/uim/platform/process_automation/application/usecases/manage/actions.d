@@ -17,7 +17,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateActionRequest r) {
+    CommandResult createAction(CreateActionRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Action ID is required");
         if (r.name.length == 0)
@@ -49,15 +49,15 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    Action getById(ActionId id) {
+    Action getAction(ActionId id) {
         return repo.findById(tenantId, id);
     }
 
-    Action[] list(TenantId tenantId) {
+    Action[] listActions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateActionRequest r) {
+    CommandResult updateAction(UpdateActionRequest r) {
         if (!repo.existsById(r.id))
             return CommandResult(false, "", "Action not found");
 

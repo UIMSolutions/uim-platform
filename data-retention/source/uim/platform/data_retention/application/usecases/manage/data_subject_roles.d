@@ -12,7 +12,8 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDataSubjectRoleRequest req) {
+
+    CommandResult createDataSubjectRole(CreateDataSubjectRoleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.length == 0)
@@ -31,11 +32,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dsr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateDataSubjectRoleRequest req) {
-        return update(DataSubjectRoleId(id), req);
-    }
-
-    CommandResult update(DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
+    CommandResult updateDataSubjectRole(DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Data subject role not found");
 
@@ -51,15 +48,15 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(DataSubjectRoleId id) {
+    bool hasDataSubjectRole(DataSubjectRoleId id) {
         return repo.existsById(id);
     }
 
-    DataSubjectRole getById(DataSubjectRoleId id) {
+    DataSubjectRole getDataSubjectRoles(DataSubjectRoleId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataSubjectRole[] list(TenantId tenantId) {
+    DataSubjectRole[] listDataSubjectRoles(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 

@@ -25,7 +25,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDestinationRequest req) {
+  CommandResult createDestination(CreateDestinationRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Destination name is required");
 
@@ -146,15 +146,15 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  Destination[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+  Destination[] listDestinations(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  Destination[] listByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+  Destination[] listDestinationsByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return repo.findByServiceInstance(tenantId, instanceId);
   }
 
-  Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+  Destination findDestinationByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     return repo.findByName(tenantId, subaccountId, name);
   }
 

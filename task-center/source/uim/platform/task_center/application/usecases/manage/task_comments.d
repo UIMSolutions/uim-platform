@@ -18,15 +18,15 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskComment getById(TenantId tenantId, string id) {
+    TaskComment getTaskCommentById(TenantId tenantId, TaskCommentId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskComment[] listByTask(TenantId tenantId, string taskId) {
+    TaskComment[] listTaskCommentsByTask(TenantId tenantId, TaskId taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
-    CommandResult create(CreateTaskCommentRequest req) {
+    CommandResult createTaskComment(CreateTaskCommentRequest req) {
         TaskComment c;
         c.id = req.id;
         c.tenantId = req.tenantId;
@@ -37,7 +37,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult update(UpdateTaskCommentRequest req) {
+    CommandResult updateTaskComment(UpdateTaskCommentRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
         if (existing.isNull)
             return CommandResult(false, "", "Comment not found");

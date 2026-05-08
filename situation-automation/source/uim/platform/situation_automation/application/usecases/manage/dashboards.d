@@ -17,7 +17,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDashboardRequest r) {
+    CommandResult createDashboard(CreateDashboardRequest r) {
         auto err = SituationEvaluator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -43,15 +43,15 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    Dashboard getById(DashboardId id) {
+    Dashboard getDashboard(DashboardId id) {
         return repo.findById(tenantId, id);
     }
 
-    Dashboard[] list(TenantId tenantId) {
+    Dashboard[] listDashboards(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateDashboardRequest r) {
+    CommandResult updateDashboard(UpdateDashboardRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Dashboard not found");

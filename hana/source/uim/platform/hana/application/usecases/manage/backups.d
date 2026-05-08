@@ -24,7 +24,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateBackupRequest r) {
+  CommandResult createBackup(CreateBackupRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Backup ID and name are required");
 
@@ -51,15 +51,15 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, b.id.value, "");
   }
 
-  Backup getById(BackupId id) {
+  Backup getBackup(BackupId id) {
     return repo.findById(tenantId, id);
   }
 
-  Backup[] list(TenantId tenantId) {
+  Backup[] listBackups(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateBackupRequest r) {
+  CommandResult updateBackup(UpdateBackupRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Backup not found");
 
@@ -82,7 +82,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countBackups(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

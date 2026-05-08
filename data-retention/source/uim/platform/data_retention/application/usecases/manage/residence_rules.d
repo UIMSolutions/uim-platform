@@ -12,7 +12,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateResidenceRuleRequest req) {
+    CommandResult createResidenceRule(CreateResidenceRuleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.duration <= 0)
@@ -33,49 +33,45 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateResidenceRuleRequest req) {
-        return update(ResidenceRuleId(id), req);
-    }
-
-    CommandResult update(ResidenceRuleId id, UpdateResidenceRuleRequest req) {
-        if (!repo.existsById(id))
+    CommandResult updateResidenceRule(UpdateResidenceRuleRequest req) {
+        auto rule = repo.findById(req.tenantId, req.id);
+        if (!repo.existsById(req.tenantId, req.id))
             return CommandResult(false, "", "Residence rule not found");
 
-        auto rr = repo.findById(tenantId, id);
         if (req.duration > 0)
-            rr.duration = req.duration;
+            rule.duration = req.duration;
         if (req.periodUnit.length > 0)
-            rr.periodUnit = parsePeriodUnit(req.periodUnit);
-        rr.isActive = req.isActive;
-        rr.updatedAt = clockSeconds();
+            rule.periodUnit = parsePeriodUnit(req.periodUnit);
+        rule.isActive = req.isActive;
+        rule.updatedAt = clockSeconds();
 
-        repo.update(rr);
-        return CommandResult(true, id.value, "");
+        repo.update(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
-    bool hasById(ResidenceRuleId id) {
-        return repo.existsById(id);
+    bool hasResidenceRule(TenantId tenantId, ResidenceRuleId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    ResidenceRule getById(ResidenceRuleId id) {
+    ResidenceRule getResidenceRule(TenantId tenantId, ResidenceRuleId id) {
         return repo.findById(tenantId, id);
     }
 
-    ResidenceRule[] list(TenantId tenantId) {
+    ResidenceRule[] listResidenceRules(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    ResidenceRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+    ResidenceRule[] listResidenceRules(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult deleteResidenceRule(ResidenceRuleId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.id.isEmpty)
+    CommandResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id) {
+        auto rule = repo.findById(tenantId, id);
+        if (rule.id.isEmpty)
             return CommandResult(false, "", "Residence rule not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     private static PeriodUnit parsePeriodUnit(string s) {

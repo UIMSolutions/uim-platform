@@ -28,7 +28,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     this.confRepo = confRepo;
   }
 
-  CommandResult create(CreateExecutionRequest r) {
+  CommandResult createExecution(CreateExecutionRequest r) {
     if (r.configurationId.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
     if (r.resourceGroupId.isEmpty)
@@ -57,7 +57,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  CommandResult patch(PatchExecutionRequest r) {
+  CommandResult patchExecution(PatchExecutionRequest r) {
     auto e = execRepo.findById(r.executionId, r.resourceGroupId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
@@ -87,28 +87,28 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getById(ResourceGroupId rgId, ExecutionId id) {
-    return execRepo.findById(rgId, id);
+  Execution getExecution(GetExecutionRequest r) {
+    return execRepo.findById(r.resourceGroupId, r.executionId);
   }
 
-  Execution[] list(ResourceGroupId rgId) {
-    return execRepo.findByResourceGroup(rgId);
+  Execution[] listExecutions(ListExecutionsRequest r) {
+    return execRepo.findByResourceGroup(r.resourceGroupId);
   }
 
-  Execution[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
-    return execRepo.findByScenario(rgId, scenarioId);
+  Execution[] listExecutionsByScenario(ListExecutionsByScenarioRequest r) {
+    return execRepo.findByScenario(r.resourceGroupId, r.scenarioId);
   }
 
-  Execution[] listByStatus(ResourceGroupId rgId, ExecutionStatus status) {
-    return execRepo.findByStatus(rgId, status, rgId);
+  Execution[] listExecutionsByStatus(ListExecutionsByStatusRequest r) {
+    return execRepo.findByStatus(r.resourceGroupId, r.status, r.resourceGroupId);
   }
 
-  size_t count(ResourceGroupId rgId) {
-    return execRepo.countByResourceGroup(rgId);
+  size_t count(CountExecutionsRequest r) {
+    return execRepo.countByResourceGroup(r.resourceGroupId);
   }
 
-  CommandResult deleteExecution(ResourceGroupId rgId, ExecutionId id) {
-    auto execution = execRepo.findById(rgId, id);
+  CommandResult deleteExecution(DeleteExecutionRequest r) {
+    auto execution = execRepo.findById(r.resourceGroupId, r.executionId);
     if (execution.isNull)
       return CommandResult(false, "", "Execution not found");
 

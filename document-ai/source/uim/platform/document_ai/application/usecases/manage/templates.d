@@ -20,7 +20,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateTemplateRequest r) {
+  CommandResult createTemplate(CreateTemplateRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Template name is required");
     if (r.clientId.isEmpty)
@@ -67,7 +67,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  CommandResult update(UpdateTemplateRequest r) {
+  CommandResult updateTemplate(UpdateTemplateRequest r) {
     if (r.templateId.isEmpty)
       return CommandResult(false, "", "Template ID is required");
 
@@ -94,22 +94,22 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  Template getById(ClientId clientId, TemplateId id) {
+  Template getTemplate(ClientId clientId, TemplateId id) {
     return repo.findById(clientId, id);
   }
 
-  Template[] list(ClientId clientId) {
+  Template[] listTemplates(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  Template[] listBySchema(ClientId clientId, SchemaId schemaId) {
+  Template[] listTemplates(ClientId clientId, SchemaId schemaId) {
     return repo.findBySchema(clientId, schemaId);
   }
 
-  Template[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+  Template[] listTemplates(ClientId clientId, DocumentTypeId typeId) {
     return repo.findByDocumentType(clientId, typeId);
   }
-  size_t count(ClientId clientId) {
+  size_t countTemplates(ClientId clientId) {
     return repo.countByClient(clientId);
   }
   CommandResult deleteTemplate(ClientId clientId, TemplateId id) {

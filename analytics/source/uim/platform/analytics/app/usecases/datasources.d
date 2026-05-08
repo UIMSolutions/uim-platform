@@ -25,7 +25,7 @@ class DataSourceUseCases {
     this.connector = connector;
   }
 
-  DataSourceResponse create(CreateDataSourceRequest req) {
+  DataSourceResponse createSource(CreateDataSourceRequest req) {
     DataSourceType st;
     try {
       st = req.sourceType.to!DataSourceType;
@@ -39,19 +39,19 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  DataSourceResponse getById(string id) {
-    return DataSourceResponse.fromEntity(repo.findById(EntityId(id)));
+  DataSourceResponse getSource(GetDataSourceRequest r) {
+    return DataSourceResponse.fromEntity(repo.findById(EntityId(r.id)));
   }
 
-  DataSourceResponse[] list() {
+  DataSourceResponse[] listSources(ListDataSourcesRequest r) {
     DataSourceResponse[] result;
     foreach (ds; repo.findAll())
       result ~= DataSourceResponse.fromEntity(ds);
     return result;
   }
 
-  DataSourceResponse testConnection(string id) {
-    auto ds = repo.findById(EntityId(id));
+  DataSourceResponse testConnection(TestDataSourceConnectionRequest r) {
+    auto ds = repo.findById(EntityId(r.id));
     if (ds.isNull)
       return DataSourceResponse.init;
 
@@ -67,7 +67,8 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  CommandResult remove(string id) {
-    repo.remove(EntityId(id));
+  CommandResult deleteSource(RemoveDataSourceRequest r) {
+    repo.remove(EntityId(r.id));
+    return CommandResult(true, r.id, "");
   }
 }

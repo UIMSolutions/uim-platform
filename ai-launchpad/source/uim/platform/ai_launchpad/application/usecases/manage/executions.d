@@ -24,7 +24,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     this.executions = executions;
   }
 
-  CommandResult create(CreateExecutionRequest r) {
+  CommandResult createExecution(CreateExecutionRequest r) {
     Execution e;
     e.id = randomUUID();
     e.connectionId = r.connectionId;
@@ -37,19 +37,19 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getById(ConnectionId connectionId, ExecutionId id) {
+  Execution getExecution(ConnectionId connectionId, ExecutionId id) {
     return executions.findById(connectionId, id);
   }
 
-  Execution[] listByConnection(ConnectionId connectionId) {
+  Execution[] listExecutions(ConnectionId connectionId) {
     return executions.findByConnection(connectionId);
   }
 
-  Execution[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+  Execution[] listExecutions(ConnectionId connectionId, ScenarioId scenarioId) {
     return executions.findByScenario(connectionId, scenarioId);
   }
 
-  CommandResult patch(PatchExecutionRequest r) {
+  CommandResult patchExecution(PatchExecutionRequest r) {
     auto e = executions.findById(r.connectionId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
@@ -63,7 +63,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  CommandResult[] bulkPatch(BulkPatchExecutionRequest r) {
+  CommandResult[] bulkPatchExecution(BulkPatchExecutionRequest r) {
     CommandResult[] results;
     foreach (eid; r.executionIds) {
       PatchExecutionRequest pr;

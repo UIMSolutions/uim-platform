@@ -20,24 +20,29 @@ class DatasetUseCases {
     this.repo = repo;
   }
 
-  DatasetResponse create(CreateDatasetRequest req) {
+  DatasetResponse createDataset(CreateDatasetRequest req) {
     auto ds = Dataset.create(req.name, req.description, req.dataSourceId, req.userId);
     repo.save(ds);
     return DatasetResponse.fromEntity(ds);
   }
 
-  DatasetResponse getById(string id) {
+  DatasetResponse getDataset(string id) {
     return DatasetResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  DatasetResponse[] list() {
+  DatasetResponse[] listDatasets() {
     DatasetResponse[] result;
     foreach (d; repo.findAll())
       result ~= DatasetResponse.fromEntity(d);
     return result;
   }
 
-  CommandResult remove(string id) {
-    repo.remove(EntityId(id));
+  CommandResult deleteDataset(string datasetId) {
+    auto ds = repo.findById(EntityId(datasetId));
+    if (ds.isNull)
+      return CommandResult(false, "", "Dataset not found");
+
+    repo.remove(ds);
+    return CommandResult(true, ds.id.value, "");
   }
 }

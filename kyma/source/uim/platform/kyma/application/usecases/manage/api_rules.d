@@ -22,7 +22,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
     this.ruleRepository = ruleRepository;
   }
 
-  CommandResult create(CreateApiRuleRequest req) {
+  CommandResult createApiRule(CreateApiRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "API rule name is required");
     if (req.serviceName.length == 0)

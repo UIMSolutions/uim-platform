@@ -17,7 +17,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateAutomationRequest r) {
+    CommandResult createAutomation(CreateAutomationRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Automation ID is required");
         if (r.name.length == 0)
@@ -47,15 +47,15 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    Automation getById(AutomationId id) {
+    Automation getAutomation(AutomationId id) {
         return repo.findById(tenantId, id);
     }
 
-    Automation[] list(TenantId tenantId) {
+    Automation[] listAutomations(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateAutomationRequest r) {
+    CommandResult updateAutomation(UpdateAutomationRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Automation not found");

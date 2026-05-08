@@ -12,7 +12,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDeletionRequestRequest req) {
+    CommandResult createDeletionRequest(CreateDeletionRequestRequest req) {
         import std.uuid : randomUUID;
 
         if (req.dataSubjectId.length == 0)
@@ -34,11 +34,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateDeletionRequestRequest req) {
-        return update(DeletionRequestId(id), req);
-    }
-
-    CommandResult update(DeletionRequestId id, UpdateDeletionRequestRequest req) {
+    CommandResult updateDeletionRequest(DeletionRequestId id, UpdateDeletionRequestRequest req) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Deletion request not found");
 
@@ -55,29 +51,29 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(DeletionRequestId id) {
-        return repo.existsById(id);
+    bool hasDeletionRequest(TenantId tenantId, DeletionRequestId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    DeletionRequest getById(DeletionRequestId id) {
+    DeletionRequest getDeletionRequest(TenantId tenantId, DeletionRequestId id) {
         return repo.findById(tenantId, id);
     }
 
-    DeletionRequest[] list(TenantId tenantId) {
+    DeletionRequest[] listDeletionRequests(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    DeletionRequest[] listByStatus(TenantId tenantId, DeletionRequestStatus status) {
+    DeletionRequest[] listDeletionRequestsByStatus(TenantId tenantId, DeletionRequestStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteDeletionRequest(DeletionRequestId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteDeletionRequest(TenantId tenantId, DeletionRequestId id) {
+        auto request = repo.findById(tenantId, id);
+        if (request.isNull)
             return CommandResult(false, "", "Deletion request not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(request);
+        return CommandResult(true, request.id.value, "");
     }
 
     private static DeletionActionType parseDeletionActionType(string s) {

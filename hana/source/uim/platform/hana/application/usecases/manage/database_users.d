@@ -24,7 +24,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDatabaseUserRequest r) {
+  CommandResult createDatabaseUser(CreateDatabaseUserRequest r) {
     if (r.isNull || r.userName.length == 0)
       return CommandResult(false, "", "User ID and username are required");
 
@@ -50,40 +50,40 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, u.id.value, "");
   }
 
-  DatabaseUser getById(DatabaseUserId id) {
+  DatabaseUser getDatabaseUser(DatabaseUserId id) {
     return repo.findById(tenantId, id);
   }
 
-  DatabaseUser[] list(TenantId tenantId) {
+  DatabaseUser[] listDatabaseUsers(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateDatabaseUserRequest r) {
-    if (!repo.existsById(r.id))
+  CommandResult updateDatabaseUser(UpdateDatabaseUserRequest r) {
+    auto user = repo.findById(r.id);
+    if (user.isNull)
       return CommandResult(false, "", "Database user not found");
 
-    auto existing = repo.findById(r.id);
-    existing.defaultSchema = r.defaultSchema;
-    existing.isRestricted = r.isRestricted;
-    existing.forcePasswordChange = r.forcePasswordChange;
+    user.defaultSchema = r.defaultSchema;
+    user.isRestricted = r.isRestricted;
+    user.forcePasswordChange = r.forcePasswordChange;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    user.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(user);
+    return CommandResult(true, user.id.value, "");
   }
 
   CommandResult deleteDatabaseUser(DatabaseUserId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+    auto user = repo.findById(tenantId, id);
+    if (user.isNull)
       return CommandResult(false, "", "Database user not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(user);
+    return CommandResult(true, user.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countDatabaseUsers(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

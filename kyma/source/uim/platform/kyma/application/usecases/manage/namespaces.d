@@ -22,7 +22,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     this.namespaceRepository = namespaceRepository;
   }
 
-  CommandResult create(CreateNamespaceRequest req) {
+  CommandResult createNamespace(CreateNamespaceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Namespace name is required");
 
@@ -88,32 +88,16 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasNamespace(string namespaceId) {
-    return hasNamespace(NamespaceId(namespaceId));
-  }
-
   bool hasNamespace(NamespaceId namespaceId) {
     return namespaceRepository.existsById(namespaceId);
-  }
-
-  Namespace getNamespace(string namespaceId) {
-    return getNamespace(NamespaceId(namespaceId));
   }
 
   Namespace getNamespace(NamespaceId namespaceId) {
     return namespaceRepository.findById(namespaceId);
   }
 
-  Namespace[] listByEnvironment(KymaEnvironmentId envId) {
+  Namespace[] listNamespaces(KymaEnvironmentId envId) {
     return namespaceRepository.findByEnvironment(envId);
-  }
-
-  Namespace[] listByEnvironment(string envId) {
-    return listByEnvironment(KymaEnvironmentId(envId));
-  } 
-
-  CommandResult deleteNamespace(string namespaceId) {
-    return deleteNamespace(NamespaceId(namespaceId));
   }
 
   CommandResult deleteNamespace(NamespaceId namespaceId) {
@@ -121,7 +105,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace not found");
 
     namespaceRepository.remove(namespaceId);
-    return CommandResult(true, namespaceid.value, "");
+    return CommandResult(true, namespaceId.value, "");
   }
 
   private QuotaEnforcement parseQuotaEnforcement(string s) {

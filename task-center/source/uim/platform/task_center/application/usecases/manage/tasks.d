@@ -18,35 +18,35 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Task getById(TenantId tenantId, string id) {
+    Task getTaskById(TenantId tenantId, string id) {
         return repo.findById(tenantId, id);
     }
 
-    Task[] list(TenantId tenantId) {
+    Task[] listTasks(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Task[] listByAssignee(TenantId tenantId, string assignee) {
+    Task[] listTasksByAssignee(TenantId tenantId, string assignee) {
         return repo.findByAssignee(tenantId, assignee);
     }
 
-    Task[] listByStatus(TenantId tenantId, TaskStatus status) {
+    Task[] listTasksByStatus(TenantId tenantId, TaskStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    Task[] listByProvider(TenantId tenantId, string providerId) {
+    Task[] listTasksByProvider(TenantId tenantId, string providerId) {
         return repo.findByProvider(tenantId, providerId);
     }
 
-    Task[] listByCategory(TenantId tenantId, TaskCategory category) {
+    Task[] listTasksByCategory(TenantId tenantId, TaskCategory category) {
         return repo.findByCategory(tenantId, category);
     }
 
-    Task[] listByPriority(TenantId tenantId, TaskPriority priority) {
+    Task[] listTasksByPriority(TenantId tenantId, TaskPriority priority) {
         return repo.findByPriority(tenantId, priority);
     }
 
-    CommandResult create(CreateTaskRequest req) {
+    CommandResult createTask(CreateTaskRequest req) {
         if (!TaskValidator.validate(req.id, req.title))
             return CommandResult(false, "", "Invalid task data");
         Task t;
@@ -66,7 +66,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult update(UpdateTaskRequest req) {
+    CommandResult updateTask(UpdateTaskRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
@@ -91,7 +91,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult release(TenantId tenantId, string id) {
+    CommandResult releaseTask(TenantId tenantId, string id) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Task not found");
@@ -103,7 +103,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult forward(TenantId tenantId, string id, string toUser, string comment) {
+    CommandResult forwardTask(TenantId tenantId, string id, string toUser, string comment) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Task not found");
@@ -113,7 +113,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult complete(TenantId tenantId, string id) {
+    CommandResult completeTask(TenantId tenantId, string id) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Task not found");
@@ -122,7 +122,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult cancel(TenantId tenantId, string id) {
+    CommandResult cancelTask(TenantId tenantId, string id) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Task not found");

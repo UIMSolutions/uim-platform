@@ -20,7 +20,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDocumentTypeRequest r) {
+  CommandResult createDocumentType(CreateDocumentTypeRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Document type name is required");
     if (r.clientId.isEmpty)
@@ -46,7 +46,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dt.id.value, "");
   }
 
-  CommandResult update(UpdateDocumentTypeRequest r) {
+  CommandResult updateDocumentType(UpdateDocumentTypeRequest r) {
     if (r.documentTypeId.isEmpty)
       return CommandResult(false, "", "Document type ID is required");
 
@@ -66,15 +66,15 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  DocumentType getById(DocumentTypeId id, ClientId clientId) {
+  DocumentType getDocumentType(DocumentTypeId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 
-  DocumentType[] list(ClientId clientId) {
+  DocumentType[] listDocumentTypes(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  DocumentType[] listByCategory(DocumentCategory category, ClientId clientId) {
+  DocumentType[] listDocumentTypes(DocumentCategory category, ClientId clientId) {
     return repo.findByCategory(category, clientId);
   }
 

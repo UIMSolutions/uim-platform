@@ -17,7 +17,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateSituationActionRequest r) {
+    CommandResult createSituationAction(CreateSituationActionRequest r) {
         auto err = SituationEvaluator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -50,15 +50,15 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    SituationAction getById(SituationActionId id) {
+    SituationAction getSituationActiond(SituationActionId id) {
         return repo.findById(tenantId, id);
     }
 
-    SituationAction[] list(TenantId tenantId) {
+    SituationAction[] listSituationActions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateSituationActionRequest r) {
+    CommandResult updateSituationAction(UpdateSituationActionRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Situation action not found");

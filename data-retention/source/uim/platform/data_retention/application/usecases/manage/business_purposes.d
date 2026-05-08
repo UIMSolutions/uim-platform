@@ -12,7 +12,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateBusinessPurposeRequest req) {
+    CommandResult createBusinessPurpose(CreateBusinessPurposeRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.length == 0)
@@ -35,11 +35,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bp.id.value, "");
     }
 
-    CommandResult update(string id, UpdateBusinessPurposeRequest req) {
-        return update(BusinessPurposeId(id), req);
-    }
-
-    CommandResult update(BusinessPurposeId id, UpdateBusinessPurposeRequest req) {
+    CommandResult updateBusinessPurpose(BusinessPurposeId id, UpdateBusinessPurposeRequest req) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Business purpose not found");
 
@@ -63,11 +59,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult activate(string id) {
-        return activate(BusinessPurposeId(id));
-    }
-
-    CommandResult activate(BusinessPurposeId id) {
+    CommandResult activateBusinessPurpose(BusinessPurposeId id) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Business purpose not found");
 
@@ -78,29 +70,31 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(BusinessPurposeId id) {
+    bool hasBusinessPurpose(BusinessPurposeId id) {
         return repo.existsById(id);
     }
 
-    BusinessPurpose getById(BusinessPurposeId id) {
+    BusinessPurpose getBusinessPurpose(BusinessPurposeId id) {
         return repo.findById(tenantId, id);
     }
 
-    BusinessPurpose[] list(TenantId tenantId) {
+    BusinessPurpose[] listBusinessPurposes(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    BusinessPurpose[] listByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+    BusinessPurpose[] listBusinessPurposes(TenantId tenantId, ApplicationGroupId groupId) {
         return repo.findByApplicationGroup(tenantId, groupId);
     }
 
     CommandResult deleteBusinessPurpose(BusinessPurposeId id) {
-        if (!repo.existsById(id))
+        auto purpose = repo.findById(tenantId, id);
+        if (purpose.isNull)
             return CommandResult(false, "", "Business purpose not found");
-        auto bp = repo.findById(tenantId, id);
-        if (bp.status == BusinessPurposeStatus.active)
+        
+        if (purpose.status == BusinessPurposeStatus.active)
             return CommandResult(false, "", "Cannot delete an active business purpose");
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+        
+        repo.remove(purpose);
+        return CommandResult(true, purpose.id.value, "");
     }
 }

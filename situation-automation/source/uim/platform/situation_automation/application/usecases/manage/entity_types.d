@@ -17,7 +17,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateEntityTypeRequest r) {
+    CommandResult createEntityType(CreateEntityTypeRequest r) {
         auto err = SituationEvaluator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -43,15 +43,15 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    EntityType getById(EntityTypeId id) {
+    EntityType getEntityTypeById(EntityTypeId id) {
         return repo.findById(tenantId, id);
     }
 
-    EntityType[] list(TenantId tenantId) {
+    EntityType[] listEntityTypes(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateEntityTypeRequest r) {
+    CommandResult updateEntityType(UpdateEntityTypeRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Entity type not found");

@@ -19,7 +19,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateAppVersionRequest r) {
+    CommandResult createAppVersion(CreateAppVersionRequest r) {
         AppVersion ver;
         ver.id = randomUUID();
         ver.tenantId = r.tenantId;
@@ -41,7 +41,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    CommandResult update(AppVersionId id, UpdateAppVersionRequest r) {
+    CommandResult updateAppVersion(AppVersionId id, UpdateAppVersionRequest r) {
         auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
             return CommandResult(false, "", "App version not found");
@@ -55,23 +55,23 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    AppVersion get_(AppVersionId id) {
+    AppVersion getAppVersion(AppVersionId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppVersion getLatest(MobileAppId appId) {
+    AppVersion getLatestAppVersion(MobileAppId appId) {
         return repo.findLatest(appId);
     }
 
-    AppVersion[] listByApp(MobileAppId appId) {
+    AppVersion[] listAppVersions(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(AppVersionId id) {
+    CommandResult deleteAppVersion(AppVersionId id) {
         repo.removeById(id);
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countAppVersions(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

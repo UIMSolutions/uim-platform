@@ -23,7 +23,7 @@ class WidgetUseCases {
     this.repo = repo;
   }
 
-  WidgetResponse create(CreateWidgetRequest req) {
+  WidgetResponse createWidget(CreateWidgetRequest req) {
     ChartType ct;
     try {
       ct = req.chartType.to!ChartType;
@@ -36,18 +36,18 @@ class WidgetUseCases {
     return WidgetResponse.fromEntity(w);
   }
 
-  WidgetResponse getById(string id) {
+  WidgetResponse getWidget(string id) {
     return WidgetResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  WidgetResponse[] list() {
+  WidgetResponse[] listWidgets() {
     WidgetResponse[] result;
     foreach (w; repo.findAll())
       result ~= WidgetResponse.fromEntity(w);
     return result;
   }
 
-  CommandResult remove(string id) {
+  CommandResult deleteWidget(string id) {
     repo.remove(EntityId(id));
   }
 }

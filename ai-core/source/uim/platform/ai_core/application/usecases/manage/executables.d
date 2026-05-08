@@ -21,7 +21,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateExecutableRequest r) {
+    CommandResult createExecutable(CreateExecutableRequest r) {
         if (r.executableId.isNull)
             return CommandResult(false, "", "Executable ID is required");
         if (r.scenarioId.isEmpty)
@@ -58,20 +58,20 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    Executable getById(ResourceGroupId rgId, ExecutableId id) {
-        return repo.findById(rgId, id);
+    Executable getExecutable(GetExecutableRequest r) {
+        return repo.findById(r.resourceGroupId, r.executableId);
     }
 
-    Executable[] listByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
-        return repo.findByScenario(rgId, scenarioId);
+    Executable[] listExecutables(ListExecutablesByScenarioRequest r) {
+        return repo.findByScenario(r.resourceGroupId, r.scenarioId);
     }
 
-    Executable[] list(ResourceGroupId rgId) {
-        return repo.findByResourceGroup(rgId);
+    Executable[] listExecutables(ListExecutablesRequest r) {
+        return repo.findByResourceGroup(r.resourceGroupId);
     }
 
-    CommandResult deleteExecutable(ResourceGroupId rgId, ExecutableId id) {
-        auto entity = repo.findById(rgId, id);
+    CommandResult deleteExecutable(DeleteExecutableRequest r) {
+        auto entity = repo.findById(r.resourceGroupId, r.executableId);
         if (entity.isNull)
             return CommandResult(false, "", "Executable not found");
 

@@ -24,7 +24,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDataLakeRequest r) {
+  CommandResult createDataLake(CreateDataLakeRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Data lake ID and name are required");
 
@@ -49,15 +49,15 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  DataLake getById(DataLakeId id) {
+  DataLake getDataLake(DataLakeId id) {
     return repo.findById(tenantId, id);
   }
 
-  DataLake[] list(TenantId tenantId) {
+  DataLake[] listDataLakes(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateDataLakeRequest r) {
+  CommandResult updateDataLake(UpdateDataLakeRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Data lake not found");
 
@@ -74,15 +74,15 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDataLake(DataLakeId id) {
-    auto existing = repo.findById(tenantId, id);
-    if (existing.isNull)
+    auto lake = repo.findById(tenantId, id);
+    if (lake.isNull)
       return CommandResult(false, "", "Data lake not found");
 
-    repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.remove(lake);
+    return CommandResult(true, lake.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countDataLakes(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

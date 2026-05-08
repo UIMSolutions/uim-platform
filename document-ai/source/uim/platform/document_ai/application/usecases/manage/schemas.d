@@ -20,7 +20,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateSchemaRequest r) {
+  CommandResult createSchema(CreateSchemaRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Schema name is required");
     if (r.clientId.isEmpty)
@@ -73,7 +73,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  CommandResult update(UpdateSchemaRequest r) {
+  CommandResult updateSchema(UpdateSchemaRequest r) {
     if (r.schemaId.isEmpty)
       return CommandResult(false, "", "Schema ID is required");
 
@@ -100,28 +100,28 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  Schema getById(SchemaId id, ClientId clientId) {
+  Schema getSchema(SchemaId id, ClientId clientId) {
     return repo.findById(id, clientId);
   }
 
-  Schema[] list(ClientId clientId) {
+  Schema[] listSchemas(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  Schema[] listByDocumentType(DocumentTypeId typeId, ClientId clientId) {
+  Schema[] listSchemas(DocumentTypeId typeId, ClientId clientId) {
     return repo.findByDocumentType(typeId, clientId);
   }
 
   CommandResult deleteSchema(SchemaId id, ClientId clientId) {
-    auto entity = repo.findById(id, clientId);
-    if (entity.isNull)
+    auto schema = repo.findById(id, clientId);
+    if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(schema);
+    return CommandResult(true, schema.id.value, "");
   }
 
-  size_t count(ClientId clientId) {
+  size_t countSchemas(ClientId clientId) {
     return repo.countByClient(clientId);
   }
 }

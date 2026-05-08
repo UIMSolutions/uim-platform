@@ -21,7 +21,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateAppVersionRequest r) {
+    CommandResult createAppVersion(CreateAppVersionRequest r) {
         if (!DeploymentValidator.validateVersionCode(r.versionCode))
             return CommandResult(false, "", "Invalid version code");
 
@@ -42,7 +42,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    CommandResult update(AppVersionId id, UpdateAppVersionRequest r) {
+    CommandResult updateAppVersion(AppVersionId id, UpdateAppVersionRequest r) {
         auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
             return CommandResult(false, "", "Version not found");
@@ -56,20 +56,21 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    AppVersion getById(AppVersionId id) {
+    AppVersion getAppVersionById(AppVersionId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppVersion getLatest(HtmlAppId appId) {
+    AppVersion getLatestAppVersion(HtmlAppId appId) {
         return repo.findLatestByApp(appId);
     }
 
-    AppVersion[] listByApp(HtmlAppId appId) {
+    AppVersion[] listAppVersions(HtmlAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(AppVersionId id) {
+    CommandResult deleteAppVersion(AppVersionId id) {
         repo.removeById(id);
+        return CommandResult(true, id.value, "");
     }
 
     size_t countByApp(HtmlAppId appId) {

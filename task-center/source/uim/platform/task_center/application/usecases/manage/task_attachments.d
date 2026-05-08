@@ -18,15 +18,15 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAttachment getById(TenantId tenantId, TaskAttachmentId id) {
+    TaskAttachment getTaskAttachmentById(TenantId tenantId, TaskAttachmentId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskAttachment[] listByTask(TenantId tenantId, TaskId taskId) {
+    TaskAttachment[] listTaskAttachmentsByTask(TenantId tenantId, TaskId taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
-    CommandResult create(CreateTaskAttachmentRequest req) {
+    CommandResult createTaskAttachment(CreateTaskAttachmentRequest req) {
         TaskAttachment a;
         a.id = req.id;
         a.tenantId = req.tenantId;

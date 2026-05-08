@@ -12,7 +12,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateRetentionRuleRequest req) {
+    CommandResult createRetentionRule(CreateRetentionRuleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.duration <= 0)
@@ -34,26 +34,22 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rr.id.value, "");
     }
 
-    CommandResult update(string id, UpdateRetentionRuleRequest req) {
-        return update(RetentionRuleId(id), req);
-    }
-
-    CommandResult update(RetentionRuleId id, UpdateRetentionRuleRequest req) {
-        if (!repo.existsById(id))
+    CommandResult updateRetentionRule(UpdateRetentionRuleRequest req) {
+        auto rule = repo.findById(req.tenantId, req.id);
+        if (rule.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
-        auto rr = repo.findById(tenantId, id);
         if (req.duration > 0)
-            rr.duration = req.duration;
+            rule.duration = req.duration;
         if (req.periodUnit.length > 0)
-            rr.periodUnit = parsePeriodUnit(req.periodUnit);
+            rule.periodUnit = parsePeriodUnit(req.periodUnit);
         if (req.actionOnExpiry.length > 0)
-            rr.actionOnExpiry = parseDeletionActionType(req.actionOnExpiry);
-        rr.isActive = req.isActive;
-        rr.updatedAt = clockSeconds();
+            rule.actionOnExpiry = parseDeletionActionType(req.actionOnExpiry);
+        rule.isActive = req.isActive;
+        rule.updatedAt = clockSeconds();
 
-        repo.update(rr);
-        return CommandResult(true, id.value, "");
+        repo.update(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     bool hasById(RetentionRuleId id) {
@@ -73,12 +69,12 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteRetentionRule(RetentionRuleId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto rule = repo.findById(tenantId, id);
+        if (rule.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     private static PeriodUnit parsePeriodUnit(string s) {

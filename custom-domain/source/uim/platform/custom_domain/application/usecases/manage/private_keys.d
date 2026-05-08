@@ -18,7 +18,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreatePrivateKeyRequest r) {
+    CommandResult createPrivateKey(CreatePrivateKeyRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.subject.length == 0)
@@ -40,21 +40,23 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         k.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        k.createdAt = MonoTime.currTime.ticks;
+        auto now = MonoTime.currTime.ticks;
+        k.createdAt = now;
+        k.updatedAt = now;
 
         repo.save(k);
         return CommandResult(true, k.id.value, "");
     }
 
-    PrivateKey getById(PrivateKeyId id) {
+    PrivateKey getPrivateKey(TenantId tenantId, PrivateKeyId id) {
         return repo.findById(tenantId, id);
     }
 
-    PrivateKey[] list(TenantId tenantId) {
+    PrivateKey[] listPrivateKeys(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deletePrivateKey(PrivateKeyId id) {
+    CommandResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Key not found");

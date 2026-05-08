@@ -24,7 +24,7 @@ class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateCleansingJobRequest req) {
+  CommandResult createCleansingJob(CreateCleansingJobRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
@@ -43,19 +43,19 @@ class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CleansingJob getById(TenantId tenantId, CleansingJobId jobId) {
+  CleansingJob getCleansingJob(TenantId tenantId, CleansingJobId jobId) {
     return repo.findById(tenantId, jobId);
   }
 
-  CleansingJob[] listByTenant(TenantId tenantId) {
+  CleansingJob[] listCleansingJobs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CleansingJob[] listByDataset(TenantId tenantId, DatasetId datasetId) {
+  CleansingJob[] listCleansingJobs(TenantId tenantId, DatasetId datasetId) {
     return repo.findByDataset(tenantId, datasetId);
   }
 
-  CleansingJob[] listByStatus(TenantId tenantId, JobStatus status) {
+  CleansingJob[] listCleansingJobs(TenantId tenantId, JobStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 }

@@ -28,7 +28,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     this.configurations = configurations;
   }
 
-  CommandResult create(CreateDeploymentRequest r) {
+  CommandResult createDeployment(CreateDeploymentRequest r) {
     if (r.configurationId.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
     if (r.resourceGroupId.isEmpty)
@@ -100,24 +100,24 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getById(ResourceGroupId groupId, DeploymentId id) {
-    return deployments.findById(groupId, id);
+  Deployment getDeployment(GetDeploymentRequest r) {
+    return deployments.findById(r.resourceGroupId, r.deploymentId);
   }
 
-  Deployment[] list(ResourceGroupId groupId) {
-    return deployments.findByResourceGroup(groupId);
+  Deployment[] listDeployments(ListDeploymentsRequest r) {
+    return deployments.findByResourceGroup(r.resourceGroupId);
   }
 
-  Deployment[] listByScenario(ResourceGroupId groupId, ScenarioId scenarioId) {
-    return deployments.findByScenario(groupId, scenarioId);
+  Deployment[] listDeployments(ListDeploymentsByScenarioRequest r) {
+    return deployments.findByScenario(r.resourceGroupId, r.scenarioId);
   }
 
-  Deployment[] listByStatus(ResourceGroupId groupId, DeploymentStatus status) {
-    return deployments.findByStatus(groupId, status);
+  Deployment[] listDeployments(ListDeploymentsByStatusRequest r) {
+    return deployments.findByStatus(r.resourceGroupId, r.status);
   }
 
-  CommandResult deleteDeployment(ResourceGroupId groupId, DeploymentId id) {
-    auto entity = deployments.findById(groupId, id);
+  CommandResult deleteDeployment(DeleteDeploymentRequest r) {
+    auto entity = deployments.findById(r.resourceGroupId, r.deploymentId);
     if (entity.isNull)
       return CommandResult(false, "", "Deployment not found");
 
@@ -125,7 +125,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(ResourceGroupId rgId) {
-    return deployments.countByResourceGroup(rgId);
+  size_t count(CountDeploymentsRequest r) {
+    return deployments.countByResourceGroup(r.resourceGroupId);
   }
 }

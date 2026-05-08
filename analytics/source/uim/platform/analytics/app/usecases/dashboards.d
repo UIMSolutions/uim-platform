@@ -21,25 +21,25 @@ class DashboardUseCases {
     this.repo = repo;
   }
 
-  DashboardResponse create(CreateDashboardRequest req) {
+  DashboardResponse createDashboard(CreateDashboardRequest req) {
     auto dashboard = Dashboard.create(req.name, req.description, req.ownerId);
     repo.save(dashboard);
     return DashboardResponse.fromEntity(dashboard);
   }
 
-  DashboardResponse getById(string id) {
+  DashboardResponse getDashboard(string id) {
     auto d = repo.findById(EntityId(id));
     return DashboardResponse.fromEntity(d);
   }
 
-  DashboardResponse[] list() {
+  DashboardResponse[] listDashboards() {
     DashboardResponse[] result;
     foreach (d; repo.findAll())
       result ~= DashboardResponse.fromEntity(d);
     return result;
   }
 
-  DashboardResponse addPage(string dashboardId, string title) {
+  DashboardResponse addPageToDashboard(string dashboardId, string title) {
     auto d = repo.findById(EntityId(dashboardId));
     if (d.isNull)
       return DashboardResponse.init;
@@ -48,7 +48,7 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  DashboardResponse publish(string dashboardId) {
+  DashboardResponse publishDashboard(string dashboardId) {
     auto d = repo.findById(EntityId(dashboardId));
     if (d.isNull)
       return DashboardResponse.init;
@@ -57,7 +57,12 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  CommandResult remove(string id) {
-    repo.remove(EntityId(id));
+  CommandResult deleteDashboard(string dashboardId) {
+    auto d = repo.findById(EntityId(dashboardId));
+    if (d.isNull)
+      return CommandResult(false, "", "Dashboard not found");
+
+    repo.remove(d);
+    return CommandResult(true, d.id.value, "");
   }
 }

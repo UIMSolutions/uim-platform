@@ -23,7 +23,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateRetentionPolicyRequest req) {
+  CommandResult createRetentionPolicy(CreateRetentionPolicyRequest req) {
     import std.uuid : randomUUID;
 
     RetentionPolicy p;
@@ -51,7 +51,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
+  CommandResult updateRetentionPolicy(UpdateRetentionPolicyRequest req) {
     auto policy = repo.findById(req.tenantId, req.policyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
@@ -70,15 +70,15 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "");
   }
 
-  RetentionPolicy getPolicy(TenantId tenantId, RetentionPolicyId id) {
+  RetentionPolicy getRetentionPolicy(TenantId tenantId, RetentionPolicyId id) {
     return repo.findById(tenantId, id);
   }
 
-  RetentionPolicy[] listPolicies(TenantId tenantId) {
+  RetentionPolicy[] listRetentionPolicies(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+  CommandResult deleteRetentionPolicy(TenantId tenantId, RetentionPolicyId policyId) {
     auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");

@@ -23,7 +23,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     this.docRepo = docRepo;
   }
 
-  CommandResult create(CreateTrainingJobRequest r) {
+  CommandResult createTrainingJob(CreateTrainingJobRequest r) {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
     if (r.documentTypeId.isEmpty)
@@ -58,7 +58,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tj.id.value, "");
   }
 
-  CommandResult patch(PatchTrainingJobRequest r) {
+  CommandResult patchTrainingJob(PatchTrainingJobRequest r) {
     if (r.trainingJobId.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
@@ -92,35 +92,35 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  TrainingJob getById(ClientId clientId, TrainingJobId id) {
+  TrainingJob getTrainingJob(ClientId clientId, TrainingJobId id) {
     return jobRepo.findById(clientId, id);
   }
 
-  TrainingJob[] list(ClientId clientId) {
+  TrainingJob[] listTrainingJobs(ClientId clientId) {
     return jobRepo.findByClient(clientId);
   }
 
-  TrainingJob[] listByStatus(ClientId clientId, TrainingJobStatus status) {
+  TrainingJob[] listTrainingJobs(ClientId clientId, TrainingJobStatus status) {
     return jobRepo.findByStatus(clientId, status);
   }
 
-  TrainingJob[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+  TrainingJob[] listTrainingJobs(ClientId clientId, DocumentTypeId typeId) {
     return jobRepo.findByDocumentType(clientId, typeId);
   }
 
   CommandResult deleteTrainingJob(ClientId clientId, TrainingJobId id) {
-    auto entity = jobRepo.findById(clientId, id);
-    if (entity.isNull)
+    auto job = jobRepo.findById(clientId, id);
+    if (job.isNull)
       return CommandResult(false, "", "Training job not found");
 
-    if (entity.status == TrainingJobStatus.running)
+    if (job.status == TrainingJobStatus.running)
       return CommandResult(false, "", "Cannot delete running training job");
 
-    jobRepo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    jobRepo.remove(job);
+    return CommandResult(true, job.id.value, "");
   }
 
-  size_t count(ClientId clientId) {
+  size_t countTrainingJobs(ClientId clientId) {
     return jobRepo.countByClient(clientId);
   }
 }

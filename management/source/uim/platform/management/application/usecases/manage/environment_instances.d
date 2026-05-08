@@ -30,7 +30,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     this.provisioner = provisioner;
   }
 
-  CommandResult create(CreateEnvironmentInstanceRequest req) {
+  CommandResult createEnvironmentInstance(CreateEnvironmentInstanceRequest req) {
     if (req.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.name.length == 0)
@@ -78,11 +78,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, inst.id.value, "");
   }
 
-  CommandResult update(string id, UpdateEnvironmentInstanceRequest req) {
-    return update(EnvironmentInstanceId(id), req);
-  }
-
-  CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
+  CommandResult updateEnvironmentInstance(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
@@ -104,12 +100,8 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     repo.update(instance);
     return CommandResult(true, instance.id.value, "");
   }
-
-  CommandResult deprovision(string id) {
-    return deprovision(EnvironmentInstanceId(id));
-  }
-
-  CommandResult deprovision(EnvironmentInstanceId id) {
+  
+  CommandResult deprovisionEnvironmentInstance(EnvironmentInstanceId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
@@ -126,27 +118,15 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  EnvironmentInstance getById(string id) {
-    return getById(EnvironmentInstanceId(id));
-  }
-
-  EnvironmentInstance getById(EnvironmentInstanceId id) {
+  EnvironmentInstance getEnvironmentInstance(EnvironmentInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
-  EnvironmentInstance[] listBySubaccount(string subId) {
-    return listBySubaccount(SubaccountId(subId));
-  }
-
-  EnvironmentInstance[] listBySubaccount(SubaccountId subId) {
+  EnvironmentInstance[] listEnvironmentInstances(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
-  EnvironmentInstance[] listByType(string subId, string envType) {
-    return listByType(SubaccountId(subId), envType);
-  }
-
-  EnvironmentInstance[] listByType(SubaccountId subId, string envType) {
+  EnvironmentInstance[] listEnvironmentInstances(SubaccountId subId, string envType) {
     return repo.findByType(subId, parseEnvironmentType(envType));
   }
 

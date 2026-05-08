@@ -54,7 +54,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         return repo.findByLevel(appId, parseLogLevel(level));
     }
 
-    CommandResult remove(ClientLogEntryId id) {
+    CommandResult delete(ClientLogEntryId id) {
         repo.removeById(id);
     }
 

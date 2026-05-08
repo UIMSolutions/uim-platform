@@ -18,23 +18,23 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskDefinition getById(TenantId tenantId, string id) {
+    TaskDefinition getTaskDefinitionById(TenantId tenantId, TaskDefinitionId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskDefinition[] list(TenantId tenantId) {
+    TaskDefinition[] listTaskDefinitions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    TaskDefinition[] listByProvider(TenantId tenantId, string providerId) {
+    TaskDefinition[] listTaskDefinitionsByProvider(TenantId tenantId, string providerId) {
         return repo.findByProvider(tenantId, providerId);
     }
 
-    TaskDefinition[] listByCategory(TenantId tenantId, TaskCategory category) {
+    TaskDefinition[] listTaskDefinitionsByCategory(TenantId tenantId, TaskCategory category) {
         return repo.findByCategory(tenantId, category);
     }
 
-    CommandResult create(CreateTaskDefinitionRequest req) {
+    CommandResult createTaskDefinition(CreateTaskDefinitionRequest req) {
         TaskDefinition d;
         d.id = req.id;
         d.tenantId = req.tenantId;
@@ -48,7 +48,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult update(UpdateTaskDefinitionRequest req) {
+    CommandResult updateTaskDefinition(UpdateTaskDefinitionRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
         if (existing == TaskDefinition.init)
             return CommandResult(false, "", "Task definition not found");

@@ -27,7 +27,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     this.enricher = enricher;
   }
 
-  CommandResult create(CreatePromptRequest r) {
+  CommandResult createPrompt(CreatePromptRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Prompt name is required");
     if (r.modelName.length == 0)
@@ -75,15 +75,15 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  Prompt[] listByCollection(TenantId tenantId, PromptCollectionId collectionId) {
+  Prompt[] listPrompts(TenantId tenantId, PromptCollectionId collectionId) {
     return repo.findByCollection(tenantId, collectionId);
   }
 
-  Prompt[] listAll(TenantId tenantId) {
+  Prompt[] listPrompts(TenantId tenantId) {
     return repo.findAll(tenantId);
   }
 
-  CommandResult patch(PatchPromptRequest r) {
+  CommandResult patchPrompt(PatchPromptRequest r) {
     auto p = repo.findById(r.tenantId, r.promptId);
     if (p.isNull)
       return CommandResult(false, "", "Prompt not found");

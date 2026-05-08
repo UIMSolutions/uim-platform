@@ -17,7 +17,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDataContextRequest r) {
+    CommandResult createDataContext(CreateDataContextRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Data context ID is required");
         if (r.instanceId.isEmpty)
@@ -45,15 +45,15 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    DataContext getById(DataContextId id) {
+    DataContext getDataContextById(DataContextId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataContext[] list(TenantId tenantId) {
+    DataContext[] listDataContexts(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataContext[] listByInstance(SituationInstanceId instanceId) {
+    DataContext[] listDataContextsByInstance(SituationInstanceId instanceId) {
         return repo.findByInstance(instanceId);
     }
 

@@ -24,7 +24,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateConfigurationRequest r) {
+  CommandResult createConfiguration(CreateConfigurationRequest r) {
     if (r.isNull || r.key.length == 0)
       return CommandResult(false, "", "Configuration ID and key are required");
 
@@ -48,19 +48,19 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Configuration getById(ConfigurationId id) {
+  Configuration getConfiguration(ConfigurationId id) {
     return repo.findById(tenantId, id);
   }
 
-  Configuration[] list(TenantId tenantId) {
+  Configuration[] listConfigurations(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Configuration[] listBySection(DatabaseInstanceId instanceId, string section) {
+  Configuration[] listConfigurations(DatabaseInstanceId instanceId, string section) {
     return repo.findBySection(instanceId, section);
   }
 
-  CommandResult update(UpdateConfigurationRequest r) {
+  CommandResult updateConfiguration(UpdateConfigurationRequest r) {
     auto existing = repo.findById(r.id);
     if (existing.isNull)
       return CommandResult(false, "", "Configuration not found");
@@ -86,7 +86,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countConfigurations(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

@@ -18,7 +18,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateCustomDomainRequest r) {
+    CommandResult createCustomDomain(CreateCustomDomainRequest r) {
         auto err = DomainValidator.validateDomainName(r.domainName);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -52,65 +52,65 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    CustomDomain getById(CustomDomainId id) {
+    CustomDomain getCustomDomainById(TenantId tenantId, CustomDomainId id) {
         return repo.findById(tenantId, id);
     }
 
-    CustomDomain[] list(TenantId tenantId) {
+    CustomDomain[] listCustomDomains(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateCustomDomainRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+    CommandResult updateCustomDomain(UpdateCustomDomainRequest r) {
+        auto domain = repo.findById(r.tenantId, r.id);
+        if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
 
-        existing.activeCertificateId = r.activeCertificateId;
-        existing.tlsConfigurationId = r.tlsConfigurationId;
-        existing.isShared = r.isShared;
-        existing.sharedWithOrgs = r.sharedWithOrgs;
-        existing.clientAuthEnabled = r.clientAuthEnabled;
-        existing.updatedBy = r.updatedBy;
+        domain.activeCertificateId = r.activeCertificateId;
+        domain.tlsConfigurationId = r.tlsConfigurationId;
+        domain.isShared = r.isShared;
+        domain.sharedWithOrgs = r.sharedWithOrgs;
+        domain.clientAuthEnabled = r.clientAuthEnabled;
+        domain.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(domain);
+        return CommandResult(true, domain.id.value, "");
     }
 
-    CommandResult activate(CustomDomainId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult activateCustomDomain(TenantId tenantId, CustomDomainId id) {
+        auto domain = repo.findById(tenantId, id);
+        if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
-        existing.status = DomainStatus.active;
+        domain.status = DomainStatus.active;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
+        repo.update(domain);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivate(CustomDomainId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deactivateCustomDomain(TenantId tenantId, CustomDomainId id) {
+        auto domain = repo.findById(tenantId, id);
+        if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
-        existing.status = DomainStatus.deactivated;
+        domain.status = DomainStatus.deactivated;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
+        repo.update(domain);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deleteCustomDomain(CustomDomainId id) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult deleteCustomDomain(TenantId tenantId, CustomDomainId id) {
+        auto domain = repo.findById(tenantId, id);
+        if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
 
-        repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.remove(domain);
+        return CommandResult(true, domain.id.value, "");
     }
 }

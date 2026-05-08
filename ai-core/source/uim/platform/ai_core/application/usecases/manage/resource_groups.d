@@ -21,7 +21,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateResourceGroupRequest r) {
+  CommandResult createResourceGroup(CreateResourceGroupRequest r) {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
     if (r.tenantId.isEmpty)
@@ -56,7 +56,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  CommandResult patch(PatchResourceGroupRequest r) {
+  CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.resourceGroupId);
     if (rg.isNull)
       return CommandResult(false, "", "Resource group not found");
@@ -76,20 +76,20 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  ResourceGroup getById(ResourceGroupId id) {
-    return repo.findById(tenantId, id);
+  ResourceGroup getResourceGroup(GetResourceGroupRequest r) {
+    return repo.findById(r.tenantId, r.resourceGroupId);
   }
 
-  ResourceGroup[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+  ResourceGroup[] listResourceGroups(ListResourceGroupsRequest r) {
+    return repo.findByTenant(r.tenantId);
   }
 
-  size_t count(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+  size_t count(CountResourceGroupsRequest r) {
+    return repo.countByTenant(r.tenantId);
   }
 
-  CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId id) {
-    auto group = repo.findById(tenantId, id);
+  CommandResult deleteResourceGroup(DeleteResourceGroupRequest r) {
+    auto group = repo.findById(r.tenantId, r.resourceGroupId);
     if (group.isNull)
       return CommandResult(false, "", "Resource group not found");
 

@@ -24,7 +24,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateScenarioRequest r) {
+  CommandResult createScenario(CreateScenarioRequest r) {
     auto err = ScenarioValidator.validate(r.id, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
@@ -53,16 +53,16 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Scenario getById(ScenarioId id, ResourceGroupId rgId) {
-    return repo.findById(id, rgId);
+  Scenario getScenario(GetScenarioRequest r) {
+    return repo.findById(r.id, r.resourceGroupId);
   }
 
-  Scenario[] list(ResourceGroupId rgId) {
-    return repo.findByResourceGroup(rgId);
+  Scenario[] listScenarios(ListScenariosRequest r) {
+    return repo.findByResourceGroup(r.resourceGroupId);
   }
 
-  CommandResult deleteScenario(ScenarioId id, ResourceGroupId rgId) {
-    auto entity = repo.findById(id, rgId);
+  CommandResult deleteScenario(DeleteScenarioRequest r) {
+    auto entity = repo.findById(r.id, r.resourceGroupId);
     if (entity.isNull)
       return CommandResult(false, "", "Scenario not found");
 
@@ -70,7 +70,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(ResourceGroupId rgId) {
-    return repo.countByResourceGroup(rgId);
+  size_t count(CountScenariosRequest r) {
+    return repo.countByResourceGroup(r.resourceGroupId);
   }
 }

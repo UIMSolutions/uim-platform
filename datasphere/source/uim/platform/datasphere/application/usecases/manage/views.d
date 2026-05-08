@@ -24,7 +24,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateViewRequest r) {
+  CommandResult createView(CreateViewRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "View name is required");
     if (r.spaceId.isEmpty)
@@ -64,31 +64,31 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     return repo.findExposed(spaceId);
   }
 
-  CommandResult update(UpdateViewRequest r) {
-    auto existing = repo.findById(r.spaceId, r.viewId);
-    if (existing.id.isEmpty)
+  CommandResult updateView(UpdateViewRequest r) {
+    auto view = repo.findById(r.spaceId, r.viewId);
+    if (view.isNull)
       return CommandResult(false, "", "View not found");
 
-    existing.name = r.name;
-    existing.description = r.description;
-    existing.businessName = r.businessName;
-    existing.sqlExpression = r.sqlExpression;
-    existing.isExposed = r.isExposed;
-    existing.isPersisted = r.isPersisted;
+    view.name = r.name;
+    view.description = r.description;
+    view.businessName = r.businessName;
+    view.sqlExpression = r.sqlExpression;
+    view.isExposed = r.isExposed;
+    view.isPersisted = r.isPersisted;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    view.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(view);
+    return CommandResult(true, view.id.value, "");
   }
 
   CommandResult deleteView(SpaceId spaceId, ViewId id) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto view = repo.findById(spaceId, id);
+    if (view.isNull)
       return CommandResult(false, "", "View not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(view);
+    return CommandResult(true, view.id.value, "");
   }
 }

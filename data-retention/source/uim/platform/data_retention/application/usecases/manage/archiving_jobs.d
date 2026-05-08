@@ -12,7 +12,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateArchivingJobRequest req) {
+    CommandResult createArchivingJob(CreateArchivingJobRequest req) {
         import std.uuid : randomUUID;
 
         if (req.applicationGroupId.length == 0)
@@ -33,11 +33,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, aj.id.value, "");
     }
 
-    CommandResult update(string id, UpdateArchivingJobRequest req) {
-        return update(ArchivingJobId(id), req);
-    }
-
-    CommandResult update(ArchivingJobId id, UpdateArchivingJobRequest req) {
+    CommandResult updateArchivingJob(ArchivingJobId id, UpdateArchivingJobRequest req) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Archiving job not found");
 
@@ -61,29 +57,29 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
 
-    bool hasById(ArchivingJobId id) {
+    bool hasArchivingJob(ArchivingJobId id) {
         return repo.existsById(id);
     }
 
-    ArchivingJob getById(ArchivingJobId id) {
+    ArchivingJob getArchivingJob(ArchivingJobId id) {
         return repo.findById(tenantId, id);
     }
 
-    ArchivingJob[] list(TenantId tenantId) {
+    ArchivingJob[] listArchivingJobs(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    ArchivingJob[] listByStatus(TenantId tenantId, ArchivingJobStatus status) {
+    ArchivingJob[] listArchivingJobs(TenantId tenantId, ArchivingJobStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
     CommandResult deleteArchivingJob(ArchivingJobId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto job = repo.findById(tenantId, id);
+        if (job.isNull)
             return CommandResult(false, "", "Archiving job not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(job);
+        return CommandResult(true, job.id.value, "");
     }
 
 

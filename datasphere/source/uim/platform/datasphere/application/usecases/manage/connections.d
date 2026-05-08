@@ -24,7 +24,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateConnectionRequest r) {
+  CommandResult createConnection(CreateConnectionRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Connection name is required");
     if (r.spaceId.isEmpty)
@@ -54,39 +54,39 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Connection getById(ConnectionId id, SpaceId spaceId) {
+  Connection getConnection(ConnectionId id, SpaceId spaceId) {
     return repo.findById(spaceId, id);
   }
 
-  Connection[] list(SpaceId spaceId) {
+  Connection[] listConnections(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CommandResult update(UpdateConnectionRequest r) {
-    auto existing = repo.findById(r.spaceId, r.connectionId);
-    if (existing.id.isEmpty)
+  CommandResult updateConnection(UpdateConnectionRequest r) {
+    auto connection = repo.findById(r.spaceId, r.connectionId);
+    if (connection.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
-    existing.name = r.name;
-    existing.description = r.description;
-    existing.host = r.host;
-    existing.port = r.port;
-    existing.database = r.database;
-    existing.user = r.user;
+    connection.name = r.name;
+    connection.description = r.description;
+    connection.host = r.host;
+    connection.port = r.port;
+    connection.database = r.database;
+    connection.user = r.user;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    connection.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(connection);
+    return CommandResult(true, connection.id.value, "");
   }
 
   CommandResult deleteConnection(ConnectionId id, SpaceId spaceId) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto connection = repo.findById(spaceId, id);
+    if (connection.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(connection);
+    return CommandResult(true, connection.id.value, "");
   }
 }

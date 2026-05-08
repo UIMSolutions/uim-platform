@@ -34,7 +34,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return repo.findByType(tenantId, ptype);
     }
 
-    CommandResult create(CreateTaskProviderRequest req) {
+    CommandResult createTaskProvider(CreateTaskProviderRequest req) {
         TaskProvider p;
         p.id = req.id;
         p.tenantId = req.tenantId;
@@ -48,7 +48,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult update(UpdateTaskProviderRequest req) {
+    CommandResult updateTaskProvider(UpdateTaskProviderRequest req) {
         auto existing = repo.findById(req.tenantId, req.id);
         if (existing == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");

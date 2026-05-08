@@ -22,7 +22,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateAlertRuleRequest req) {
+  CommandResult createAlertRule(CreateAlertRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Alert rule name is required");
 
@@ -45,7 +45,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(UpdateAlertRuleRequest req) {
+  CommandResult updateAlertRule(UpdateAlertRuleRequest req) {
     auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
@@ -93,7 +93,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult deleteRule(TenantId tenantId, AlertRuleId id) {
+  CommandResult deleteAlertRule(TenantId tenantId, AlertRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
@@ -101,6 +101,5 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     repo.remove(rule);
     return CommandResult(true, rule.id.value, "");
   }
-
   
 }

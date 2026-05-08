@@ -12,7 +12,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         this.appGroupRepository = appGroupRepository;
     }
 
-    CommandResult create(CreateApplicationGroupRequest req) {
+    CommandResult createApplicationGroup(CreateApplicationGroupRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.length == 0)
@@ -33,7 +33,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ag.id.value, "");
     }
 
-    CommandResult updateAppGroup(ApplicationGroupId id, UpdateApplicationGroupRequest req) {
+    CommandResult updateApplicationGroup(ApplicationGroupId id, UpdateApplicationGroupRequest req) {
         if (!appGroupRepository.existsById(id))
             return CommandResult(false, "", "Application group not found");
 
@@ -53,25 +53,25 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasAppGroup(ApplicationGroupId id) {
+    bool hasApplicationGroup(ApplicationGroupId id) {
         return appGroupRepository.existsById(id);
     }
 
-    ApplicationGroup getAppGroupById(ApplicationGroupId id) {
+    ApplicationGroup getApplicationGroup(ApplicationGroupId id) {
         return appGroupRepository.findById(tenantId, id);
     }
 
-    ApplicationGroup[] list(TenantId tenantId) {
+    ApplicationGroup[] listApplicationGroups(TenantId tenantId) {
         return appGroupRepository.findAll(tenantId);
     }
 
-    CommandResult deleteAppGroup(ApplicationGroupId id) {
-        auto entity = appGroupRepository.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteApplicationGroup(ApplicationGroupId id) {
+        auto group = appGroupRepository.findById(tenantId, id);
+        if (group.isNull)
             return CommandResult(false, "", "Application group not found");
 
-        appGroupRepository.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        appGroupRepository.remove(group);
+        return CommandResult(true, group.id.value, "");
     }
 
 }

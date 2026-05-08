@@ -22,7 +22,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateServiceInstanceRequest req) {
+  CommandResult createServiceInstance(CreateServiceInstanceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Service instance name is required");
     if (req.serviceOfferingName.length == 0)
@@ -77,40 +77,20 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasServiceInstance(string id) {
-    return hasServiceInstance(ServiceInstanceId(id));
-  }
-
   bool hasServiceInstance(ServiceInstanceId id) {
     return repo.existsById(id);
-  }
-
-  ServiceInstance getServiceInstance(string id) {
-    return getServiceInstance(ServiceInstanceId(id));
   }
 
   ServiceInstance getServiceInstance(ServiceInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
-  ServiceInstance[] listByNamespace(string nsId) {
-    return listByNamespace(NamespaceId(nsId));
-  }
-
-  ServiceInstance[] listByNamespace(NamespaceId nsId) {
+  ServiceInstance[] listServiceInstances(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ServiceInstance[] listByEnvironment(string envId) {
-    return listByEnvironment(KymaEnvironmentId(envId));
-  }
-
-  ServiceInstance[] listByEnvironment(KymaEnvironmentId envId) {
+  ServiceInstance[] listServiceInstances(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
-  }
-
-  CommandResult deleteServiceInstance(string id) {
-    return deleteServiceInstance(ServiceInstanceId(id));
   }
 
   CommandResult deleteServiceInstance(ServiceInstanceId id) {

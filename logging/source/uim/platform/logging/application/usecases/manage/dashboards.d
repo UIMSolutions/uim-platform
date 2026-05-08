@@ -23,7 +23,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDashboardRequest req) {
+  CommandResult createDashboard(CreateDashboardRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.length == 0)
@@ -86,19 +86,19 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  bool hasById(TenantId tenantId, DashboardId dashboardId) {
+  bool hasDashboardById(TenantId tenantId, DashboardId dashboardId) {
     return repo.existsById(tenantId, dashboardId);
   }
 
-  Dashboard getDashboard(TenantId tenantId, DashboardId dashboardId) {
+  Dashboard getDashboardById(TenantId tenantId, DashboardId dashboardId) {
     return repo.findById(tenantId, dashboardId);
   }
 
-  Dashboard[] listDashboards(TenantId tenantId) {
+  Dashboard[] listDashboardsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Dashboard getDefault(TenantId tenantId) {
+  Dashboard getDefaultDashboard(TenantId tenantId) {
     return repo.findDefault(tenantId);
   }
 

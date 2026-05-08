@@ -17,7 +17,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateSituationTemplateRequest r) {
+    CommandResult createSituationTemplate(CreateSituationTemplateRequest r) {
         auto err = SituationEvaluator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -49,19 +49,19 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, t.id.value, "");
     }
 
-    SituationTemplate getById(SituationTemplateId id) {
+    SituationTemplate getSituationTemplate(SituationTemplateId id) {
         return repo.findById(tenantId, id);
     }
 
-    SituationTemplate[] list(TenantId tenantId) {
+    SituationTemplate[] listSituationTemplates(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    SituationTemplate[] listByEntityType(TenantId tenantId, string entityTypeId) {
+    SituationTemplate[] listSituationTemplates(TenantId tenantId, string entityTypeId) {
         return repo.findByEntityType(tenantId, entityTypeId);
     }
 
-    CommandResult update(UpdateSituationTemplateRequest r) {
+    CommandResult updateSituationTemplate(UpdateSituationTemplateRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Situation template not found");

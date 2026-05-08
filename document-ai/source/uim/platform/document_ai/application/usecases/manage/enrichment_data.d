@@ -20,7 +20,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateEnrichmentDataRequest r) {
+  CommandResult createEnrichmentData(CreateEnrichmentDataRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Enrichment data name is required");
     if (r.clientId.isEmpty)
@@ -55,7 +55,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ed.id.value, "");
   }
 
-  CommandResult update(UpdateEnrichmentDataRequest r) {
+  CommandResult updateEnrichmentData(UpdateEnrichmentDataRequest r) {
     if (r.enrichmentDataId.isEmpty)
       return CommandResult(false, "", "Enrichment data ID is required");
 
@@ -86,22 +86,22 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  EnrichmentData getById(ClientId clientId, EnrichmentDataId id) {
+  EnrichmentData getEnrichmentData(ClientId clientId, EnrichmentDataId id) {
     return repo.findById(clientId, id);
   }
 
-  EnrichmentData[] list(ClientId clientId) {
+  EnrichmentData[] listEnrichmentData(ClientId clientId) {
     return repo.findByClient(clientId);
   }
 
-  EnrichmentData[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+  EnrichmentData[] listEnrichmentData(ClientId clientId, DocumentTypeId typeId) {
     return repo.findByDocumentType(clientId, typeId);
   }
 
-  EnrichmentData[] listBySubtype(ClientId clientId, string subtype) {
+  EnrichmentData[] listEnrichmentData(ClientId clientId, string subtype) {
     return repo.findBySubtype(clientId, subtype);
   }
-  size_t count(ClientId clientId) {
+  size_t countEnrichmentData(ClientId clientId) {
     return repo.countByClient(clientId);
   }
   CommandResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id) {

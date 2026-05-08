@@ -22,7 +22,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     this.servicePlans = servicePlans;
   }
 
-  CommandResult create(CreateServicePlanRequest req) {
+  CommandResult createServicePlan(CreateServicePlanRequest req) {
     if (req.serviceName.length == 0)
       return CommandResult(false, "", "Service name is required");
     if (req.planName.length == 0)
@@ -52,8 +52,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     return CommandResult(true, plan.id.value, "");
   }
 
-  CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
-    auto plan = servicePlans.findById(tenantId, id);
+  CommandResult updateServicePlan(UpdateServicePlanRequest req) {
+    auto plan = servicePlans.findById(tenantId, req.id);
     if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
 
@@ -72,30 +72,26 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.updatedAt = clockSeconds();
 
     servicePlans.update(plan);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, req.id.value, "");
   }
 
-  ServicePlan getById(string id) {
-    return getById(ServicePlanId(id));
-  }
-
-  ServicePlan getById(ServicePlanId id) {
+  ServicePlan getServicePlan(ServicePlanId id) {
     return servicePlans.findById(tenantId, id);
   }
 
-  ServicePlan[] listAll() {
+  ServicePlan[] listServicePlans() {
     return servicePlans.findAll();
   }
 
-  ServicePlan[] listByService(string serviceName) {
+  ServicePlan[] listServicePlansByService(string serviceName) {
     return servicePlans.findByService(serviceName);
   }
 
-  ServicePlan[] listByCategory(string category) {
+  ServicePlan[] listServicePlansByCategory(string category) {
     return servicePlans.findByCategory(parseCategory(category));
   }
 
-  ServicePlan[] listByRegion(string region) {
+  ServicePlan[] listServicePlansByRegion(string region) {
     return servicePlans.findByRegion(region);
   }
 

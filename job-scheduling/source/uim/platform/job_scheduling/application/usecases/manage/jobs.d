@@ -26,7 +26,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateJobRequest r) {
+    CommandResult createJob(CreateJobRequest r) {
         if (r.name.length == 0)
             return CommandResult(false, "", "Job name is required");
         if (r.actionUrl.length == 0 && r.type != "cloudFoundryTask")
@@ -75,7 +75,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         return repo.search(tenantId, query);
     }
 
-    CommandResult update(UpdateJobRequest r) {
+    CommandResult updateJob(UpdateJobRequest r) {
         if (!repo.existsById(r.tenantId, r.jobId))
             return CommandResult(false, "", "Job not found");
 
@@ -110,15 +110,15 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 
-    size_t count(TenantId tenantId) {
+    size_t countJobs(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 
-    size_t countActive(TenantId tenantId) {
+    size_t countActiveJobs(TenantId tenantId) {
         return repo.countActiveByTenant(tenantId);
     }
 
-    size_t countInactive(TenantId tenantId) {
+    size_t countInactiveJobs(TenantId tenantId) {
         return repo.countInactiveByTenant(tenantId);
     }
 

@@ -26,7 +26,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateConfigurationRequest r) {
+  CommandResult createConfiguration(CreateConfigurationRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Configuration name is required");
 
@@ -53,15 +53,15 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Configuration getById(ConnectionId connectionId, ConfigurationId id) {
+  Configuration getConfiguration(ConnectionId connectionId, ConfigurationId id) {
     return repo.findById(connectionId, id);
   }
 
-  Configuration[] listByConnection(ConnectionId connectionId) {
+  Configuration[] listConfigurations(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  Configuration[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
+  Configuration[] listConfigurations(ConnectionId connectionId, ScenarioId scenarioId) {
     return repo.findByScenario(connectionId, scenarioId);
   }
 

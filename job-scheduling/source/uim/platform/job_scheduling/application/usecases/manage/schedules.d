@@ -27,7 +27,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         this.schedules = schedules;
     }
 
-    CommandResult create(CreateScheduleRequest request) {
+    CommandResult createSchedule(CreateScheduleRequest request) {
         if (request.jobId.isEmpty)
             return CommandResult(false, "", "Job ID is required");
 
@@ -59,19 +59,19 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, schedule.id.value, "");
     }
 
-    Schedule getById(TenantId tenantId, ScheduleId id, JobId jobId) {
+    Schedule getSchedule(TenantId tenantId, ScheduleId id, JobId jobId) {
         return schedules.findById(tenantId, id, jobId);
     }
 
-    Schedule[] list(TenantId tenantId, JobId jobId) {
+    Schedule[] listSchedules(TenantId tenantId, JobId jobId) {
         return schedules.findByJob(tenantId, jobId);
     }
 
-    Schedule[] search(TenantId tenantId, string query) {
+    Schedule[] searchSchedules(TenantId tenantId, string query) {
         return schedules.search(tenantId, query);
     }
 
-    CommandResult update(UpdateScheduleRequest request) {
+    CommandResult updateSchedule(UpdateScheduleRequest request) {
         auto existing = schedules.findById(request.tenantId, request.scheduleId, request.jobId);
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
@@ -114,7 +114,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult removeAllByJob(TenantId tenantId, JobId jobId) {
+    CommandResult deleteAllByJob(TenantId tenantId, JobId jobId) {
         schedules.removeAllByJob(tenantId, jobId);
         return CommandResult(true, jobId, "");
     }

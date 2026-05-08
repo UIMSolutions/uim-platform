@@ -12,7 +12,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateLegalGroundRequest req) {
+    CommandResult createLegalGround(CreateLegalGroundRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.length == 0)
@@ -34,11 +34,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, lg.id.value, "");
     }
 
-    CommandResult update(string id, UpdateLegalGroundRequest req) {
-        return update(LegalGroundId(id), req);
-    }
-
-    CommandResult update(LegalGroundId id, UpdateLegalGroundRequest req) {
+    CommandResult updateLegalGround(LegalGroundId id, UpdateLegalGroundRequest req) {
         if (!repo.existsById(id))
             return CommandResult(false, "", "Legal ground not found");
 
@@ -57,19 +53,19 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(LegalGroundId id) {
+    bool hasLegalGround(LegalGroundId id) {
         return repo.existsById(id);
     }
 
-    LegalGround getById(LegalGroundId id) {
+    LegalGround getLegalGround(LegalGroundId id) {
         return repo.findById(tenantId, id);
     }
 
-    LegalGround[] list(TenantId tenantId) {
+    LegalGround[] listLegalGrounds(TenantId tenantId) {
         return repo.findAll(tenantId);
     }
 
-    LegalGround[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+    LegalGround[] listLegalGrounds(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 

@@ -18,19 +18,19 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UserTaskFilter getById(TenantId tenantId, UserTaskFilterId id) {
+    UserTaskFilter getUserTaskFilterById(TenantId tenantId, UserTaskFilterId id) {
         return repo.findById(tenantId, id);
     }
 
-    UserTaskFilter[] listByUser(TenantId tenantId, UserId userId) {
+    UserTaskFilter[] listUserTaskFiltersByUser(TenantId tenantId, UserId userId) {
         return repo.findByUser(tenantId, userId);
     }
 
-    UserTaskFilter getDefault(TenantId tenantId, UserId userId) {
+    UserTaskFilter getDefaultUserTaskFilter(TenantId tenantId, UserId userId) {
         return repo.findDefault(tenantId, userId);
     }
 
-    CommandResult create(CreateUserTaskFilterRequest req) {
+    CommandResult createUserTaskFilter(CreateUserTaskFilterRequest req) {
         UserTaskFilter f;
         f.id = req.id;
         f.tenantId = req.tenantId;
@@ -53,7 +53,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    CommandResult setDefault(TenantId tenantId, UserTaskFilterId id) {
+    CommandResult setDefaultUserTaskFilter(TenantId tenantId, UserTaskFilterId id) {
         auto fil = repo.findById(tenantId, id);
         if (fil.isNull)
             return CommandResult(false, "", "Filter not found");

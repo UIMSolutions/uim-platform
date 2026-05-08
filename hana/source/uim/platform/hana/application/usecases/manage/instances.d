@@ -25,7 +25,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateInstanceRequest r) {
+  CommandResult createDatabaseInstance(CreateInstanceRequest r) {
     auto err = InstanceValidator.validate(r.id, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
@@ -61,15 +61,15 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, i.id.value, "");
   }
 
-  DatabaseInstance getById(DatabaseInstanceId id) {
+  DatabaseInstance getDatabaseInstance(DatabaseInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
-  DatabaseInstance[] list(TenantId tenantId) {
+  DatabaseInstance[] listDatabaseInstances(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateInstanceRequest r) {
+  CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Instance not found");
 
@@ -91,7 +91,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult performAction(InstanceActionRequest r) {
+  CommandResult performInstanceAction(InstanceActionRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Instance not found");
 
@@ -117,7 +117,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteInstance(DatabaseInstanceId id) {
+  CommandResult deleteDatabaseInstance(DatabaseInstanceId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Instance not found");
@@ -126,7 +126,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countDatabaseInstances(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

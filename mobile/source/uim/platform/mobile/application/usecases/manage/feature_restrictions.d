@@ -20,7 +20,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateFeatureRestrictionRequest r) {
+    CommandResult createFeatureRestriction(CreateFeatureRestrictionRequest r) {
         FeatureRestriction restriction;
         restriction.id = randomUUID();
         restriction.tenantId = r.tenantId;
@@ -41,7 +41,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    CommandResult update(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
+    CommandResult updateFeatureRestriction(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
         auto restriction = repo.findById(tenantId, id);
         if (restriction.isNull)
             return CommandResult(false, "", "Feature restriction not found");
@@ -59,26 +59,26 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    bool evaluate(FeatureRestrictionId featureId, UserId userId, string deviceId) {
+    bool evaluateFeatureRestriction(FeatureRestrictionId featureId, UserId userId, string deviceId) {
         auto restriction = repo.findById(featureId);
         if (restriction.isNull)
             return false;
         return FeatureEvaluationService.evaluate(restriction, userId, deviceId);
     }
 
-    FeatureRestriction get_(FeatureRestrictionId id) {
+    FeatureRestriction getFeatureRestriction(FeatureRestrictionId id) {
         return repo.findById(tenantId, id);
     }
 
-    FeatureRestriction[] listByApp(MobileAppId appId) {
+    FeatureRestriction[] listFeatureRestrictions(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(FeatureRestrictionId id) {
+    CommandResult deleteFeatureRestriction(FeatureRestrictionId id) {
         repo.removeById(id);
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countFeatureRestrictions(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

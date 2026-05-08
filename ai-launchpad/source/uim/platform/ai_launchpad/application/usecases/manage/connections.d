@@ -27,7 +27,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     this.validator = validator;
   }
 
-  CommandResult create(CreateConnectionRequest r) {
+  CommandResult createConnection(CreateConnectionRequest r) {
     Connection c;
     c.id = randomUUID();
     c.name = r.name;
@@ -56,19 +56,19 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Connection getById(ConnectionId id) {
+  Connection getConnection(ConnectionId id) {
     return repo.findById(tenantId, id);
   }
 
-  Connection[] listByWorkspace(WorkspaceId workspaceId) {
+  Connection[] listConnections(WorkspaceId workspaceId) {
     return repo.findByWorkspace(workspaceId);
   }
 
-  Connection[] listAll() {
+  Connection[] listConnections() {
     return repo.findAll();
   }
 
-  CommandResult patch(PatchConnectionRequest r) {
+  CommandResult patchConnection(PatchConnectionRequest r) {
     auto c = repo.findById(r.connectionId);
     if (c.isNull)
       return CommandResult(false, "", "Connection not found");

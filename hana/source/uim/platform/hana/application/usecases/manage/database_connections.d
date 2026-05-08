@@ -24,7 +24,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDatabaseConnectionRequest r) {
+  CommandResult createDatabaseConnection(CreateDatabaseConnectionRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Connection ID and name are required");
 
@@ -57,15 +57,15 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  DatabaseConnection getById(DatabaseConnectionId id) {
+  DatabaseConnection getDatabaseConnection(DatabaseConnectionId id) {
     return repo.findById(tenantId, id);
   }
 
-  DatabaseConnection[] list(TenantId tenantId) {
+  DatabaseConnection[] listDatabaseConnections(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateDatabaseConnectionRequest r) {
+  CommandResult updateDatabaseConnection(UpdateDatabaseConnectionRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Database connection not found");
 
@@ -76,6 +76,11 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     existing.port = r.port;
     existing.database = r.database;
     existing.user = r.user;
+    existing.useTls = r.useTls;
+    existing.properties = r.properties;
+
+    existing.poolConfig.minConnections = r.minConnections;
+    existing.poolConfig.maxConnections = r.maxConnections;
 
     import core.time : MonoTime;
     existing.updatedAt = MonoTime.currTime.ticks;
@@ -85,15 +90,15 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDatabaseConnection(DatabaseConnectionId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+    auto connection = repo.findById(tenantId, id);
+    if (connection.isNull)
       return CommandResult(false, "", "Database connection not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(connection);
+    return CommandResult(true, connection.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countDatabaseConnections(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

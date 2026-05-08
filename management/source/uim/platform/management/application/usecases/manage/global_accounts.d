@@ -26,7 +26,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult create(CreateGlobalAccountRequest req) {
+  CommandResult createGlobalAccount(CreateGlobalAccountRequest req) {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
     if (req.region.length == 0)
@@ -56,7 +56,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
+  CommandResult updateGlobalAccount(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
 
@@ -77,7 +77,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult suspend(GlobalAccountId accountId) {
+  CommandResult suspendGlobalAccount(GlobalAccountId accountId) {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
@@ -89,12 +89,12 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
 
-    emitEvent(eventRepo, accountid.value, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, accountId.value, "", PlatformEventCategory.globalAccountChange,
       "globalAccount.suspended", "Global account suspended", UserId("system"));
-    return CommandResult(true, accountid.value, "");
+    return CommandResult(true, accountId.value, "");
   }
 
-  CommandResult reactivate(GlobalAccountId accountId) {
+  CommandResult reactivateGlobalAccount(GlobalAccountId accountId) {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
@@ -105,22 +105,24 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.status = GlobalAccountStatus.active;
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
+    emitEvent(eventRepo, accountId.value, "", PlatformEventCategory.globalAccountChange,
+      "globalAccount.reactivated", "Global account reactivated", UserId("system")); 
     return CommandResult(true, accountId.value, "");
   }
 
-  bool existsById(GlobalAccountId accountId) {
+  bool existsGlobalAccount(GlobalAccountId accountId) {
     return repo.existsById(accountId);
   }
 
-  GlobalAccount getById(GlobalAccountId accountId) {
+  GlobalAccount getGlobalAccount(GlobalAccountId accountId) {
     return repo.findById(accountId);
   }
 
-  GlobalAccount[] listAll() {
+  GlobalAccount[] listGlobalAccounts() {
     return repo.findAll();
   }
 
-  GlobalAccount[] listByStatus(string status) {
+  GlobalAccount[] listGlobalAccounts(string status) {
     return repo.findByStatus(status.to!GlobalAccountStatus);
   }
 

@@ -17,7 +17,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateFormRequest r) {
+    CommandResult createForm(CreateFormRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Form ID is required");
         if (r.name.length == 0)
@@ -46,15 +46,15 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, f.id.value, "");
     }
 
-    Form getById(FormId id) {
+    Form getForm(FormId id) {
         return repo.findById(tenantId, id);
     }
 
-    Form[] list(TenantId tenantId) {
+    Form[] listForms(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateFormRequest r) {
+    CommandResult updateForm(UpdateFormRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Form not found");

@@ -21,7 +21,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateResourceGroupRequest r) {
+  CommandResult createResourceGroup(CreateResourceGroupRequest r) {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
@@ -41,19 +41,19 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  ResourceGroup getById(ConnectionId connectionId, ResourceGroupId id) {
+  ResourceGroup getResourceGroup(ConnectionId connectionId, ResourceGroupId id) {
     return repo.findById(connectionId, id);
   }
 
-  ResourceGroup[] listByConnection(ConnectionId connectionId) {
+  ResourceGroup[] listResourceGroups(ConnectionId connectionId) {
     return repo.findByConnection(connectionId);
   }
 
-  ResourceGroup[] listAll() {
+  ResourceGroup[] listResourceGroups() {
     return repo.findAll();
   }
 
-  CommandResult patch(PatchResourceGroupRequest r) {
+  CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.connectionId, r.resourceGroupId);
     if (rg.isNull)
       return CommandResult(false, "", "Resource group not found");

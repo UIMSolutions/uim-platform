@@ -19,7 +19,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateAppConfigurationRequest r) {
+    CommandResult createAppConfiguration(CreateAppConfigurationRequest r) {
         auto existing = repo.findByKey(r.appId, r.key);
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
@@ -39,8 +39,8 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, config.id.value, "");
     }
 
-    CommandResult update(AppConfigurationId id, UpdateAppConfigurationRequest r) {
-        auto config = repo.findById(tenantId, id);
+    CommandResult updateAppConfiguration(UpdateAppConfigurationRequest r) {
+        auto config = repo.findById(tenantId, r.id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
         if (r.value.length > 0) config.value = r.value;
@@ -51,23 +51,24 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, config.id.value, "");
     }
 
-    AppConfiguration get_(AppConfigurationId id) {
+    AppConfiguration getAppConfiguration(AppConfigurationId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppConfiguration getByKey(MobileAppId appId, string key) {
+    AppConfiguration getAppConfigurationByKey(MobileAppId appId, string key) {
         return repo.findByKey(appId, key);
     }
 
-    AppConfiguration[] listByApp(MobileAppId appId) {
+    AppConfiguration[] listAppConfigurationsByApp(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(AppConfigurationId id) {
+    CommandResult deleteAppConfiguration(AppConfigurationId id) {
         repo.removeById(id);
+        return CommandResult(true, id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countAppConfigurationsByApp(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

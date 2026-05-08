@@ -18,7 +18,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDistributionModelRequest req) {
+  CommandResult createDistributionModel(CreateDistributionModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Distribution model name is required");
     if (req.sourceClientId.isEmpty)
@@ -43,10 +43,10 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = model.createdAt;
 
     repo.save(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateModel(DistributionModelId id, UpdateDistributionModelRequest req) {
+  CommandResult updateDistributionModel(DistributionModelId id, UpdateDistributionModelRequest req) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -71,47 +71,48 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = clockSeconds();
 
     repo.update(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult activate(DistributionModelId id) {
+  CommandResult activateDistributionModel(DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.active;
     model.updatedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult deactivate(DistributionModelId id) {
+  CommandResult deactivateDistributionModel(DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.inactive;
     model.updatedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  DistributionModel getModel(DistributionModelId id) {
+  DistributionModel getDistributionModel(DistributionModelId id) {
     return repo.findById(tenantId, id);
   }
 
-  DistributionModel[] listByTenant(TenantId tenantId) {
+  DistributionModel[] listDistributionModelsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DistributionModel[] listByStatus(TenantId tenantId, string status) {
+  DistributionModel[] listDistributionModelsByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseStatus(status));
   }
 
-  CommandResult deleteModel(DistributionModelId id) {
+  CommandResult deleteDistributionModel(DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
+
     repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
   private DistributionDirection parseDirection(string s) {

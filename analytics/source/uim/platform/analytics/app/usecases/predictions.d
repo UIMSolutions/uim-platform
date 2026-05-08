@@ -22,7 +22,7 @@ class PredictionUseCases {
     this.repo = repo;
   }
 
-  PredictionResponse create(CreatePredictionRequest req) {
+  PredictionResponse createPrediction(CreatePredictionRequest req) {
     PredictionType pt;
     try {
       pt = req.predictionType.to!PredictionType;
@@ -35,18 +35,18 @@ class PredictionUseCases {
     return PredictionResponse.fromEntity(p);
   }
 
-  PredictionResponse getById(string id) {
+  PredictionResponse getPrediction(string id) {
     return PredictionResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  PredictionResponse[] list() {
+  PredictionResponse[] listPredictions() {
     PredictionResponse[] result;
     foreach (p; repo.findAll())
       result ~= PredictionResponse.fromEntity(p);
     return result;
   }
 
-  PredictionResponse train(string id) {
+  PredictionResponse trainPrediction(string id) {
     auto p = repo.findById(EntityId(id));
     if (p.isNull)
       return PredictionResponse.init;
@@ -57,7 +57,7 @@ class PredictionUseCases {
     return PredictionResponse.fromEntity(p);
   }
 
-  CommandResult remove(string id) {
+  CommandResult deletePrediction(string id) {
     repo.remove(EntityId(id));
   }
 }

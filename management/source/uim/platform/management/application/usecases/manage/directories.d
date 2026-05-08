@@ -24,7 +24,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     this.directories = directories;
   }
 
-  CommandResult create(CreateDirectoryRequest request) {
+  CommandResult createDirectory(CreateDirectoryRequest request) {
     if (request.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (request.displayName.length == 0)
@@ -35,7 +35,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  CommandResult update(DirectoryId id, UpdateDirectoryRequest request) {
+  CommandResult updateDirectory(DirectoryId id, UpdateDirectoryRequest request) {
     auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
@@ -54,15 +54,15 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  Directory getById(DirectoryId id) {
+  Directory getDirectoryById(DirectoryId id) {
     return directories.findById(tenantId, id);
   }
 
-  Directory[] listByGlobalAccount(GlobalAccountId gaId) {
+  Directory[] listDirectoriesByGlobalAccount(GlobalAccountId gaId) {
     return directories.findByGlobalAccount(gaId);
   }
 
-  Directory[] listByParent(DirectoryId parentId) {
+  Directory[] listDirectories(DirectoryId parentId) {
     return directories.findByParent(parentId);
   }
 

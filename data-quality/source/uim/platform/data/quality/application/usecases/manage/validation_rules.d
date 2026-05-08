@@ -24,7 +24,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateValidationRuleRequest req) {
+  CommandResult createValidationRule(CreateValidationRuleRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
@@ -58,11 +58,11 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult update(UpdateValidationRuleRequest req) {
-    if (req.isNull)
+  CommandResult updateValidationRule(UpdateValidationRuleRequest req) {
+    if (req.ruleId.isNull)
       return CommandResult(false, "", "Rule ID is required");
 
-    auto existing = repo.findById(req.id);
+    auto existing = repo.findById(req.tenantId, req.ruleId);
     if (existing.isNull)
       return CommandResult(false, "", "Validation rule not found");
     if (existing.tenantId != req.tenantId)
@@ -91,24 +91,24 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult deleteValidationRule(TenantId tenantId, CleansingRuleId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
-      return CommandResult(false, "", "Validation rule not found");
-
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
-  }
-
-  ValidationRule getById(TenantId tenantId, CleansingRuleId id) {
+  ValidationRule getValidationRule(TenantId tenantId, ValidationRuleId id) {
     return repo.findById(tenantId, id);
   }
 
-  ValidationRule[] listByTenant(TenantId tenantId) {
+  ValidationRule[] listValidationRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
   ValidationRule[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
+  }
+
+  CommandResult deleteValidationRule(TenantId tenantId, ValidationRuleId id) {
+    auto rule = repo.findById(tenantId, id);
+    if (rule.isNull)
+      return CommandResult(false, "", "Validation rule not found");
+
+    repo.remove(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 }

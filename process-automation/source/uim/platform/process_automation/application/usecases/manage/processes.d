@@ -17,7 +17,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateProcessRequest r) {
+    CommandResult createProcess(CreateProcessRequest r) {
         auto err = ProcessValidator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -45,19 +45,19 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, p.id.value, "");
     }
 
-    Process getById(ProcessId id) {
+    Process getProcess(ProcessId id) {
         return repo.findById(tenantId, id);
     }
 
-    Process[] list(TenantId tenantId) {
+    Process[] listProcesses(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Process[] listByProject(ProjectId projectId) {
+    Process[] listProcesses(ProjectId projectId) {
         return repo.findByProject(projectId);
     }
 
-    CommandResult update(UpdateProcessRequest r) {
+    CommandResult updateProcess(UpdateProcessRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Process not found");
@@ -74,7 +74,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deploy(DeployProcessRequest r) {
+    CommandResult deployProcess(DeployProcessRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Process not found");

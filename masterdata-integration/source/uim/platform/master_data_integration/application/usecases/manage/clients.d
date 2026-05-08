@@ -18,7 +18,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateClientRequest req) {
+  CommandResult createClient(CreateClientRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Client name is required");
 
@@ -44,7 +44,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.updatedAt = client.createdAt;
 
     repo.save(client);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, client.id.value, "");
   }
 
   CommandResult updateClient(ClientId id, UpdateClientRequest req) {
@@ -75,10 +75,10 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.updatedAt = clockSeconds();
 
     repo.update(client);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, client.id.value, "");
   }
 
-  CommandResult connect(ClientId id) {
+  CommandResult connectClient(ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
@@ -86,32 +86,32 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.lastSyncAt = clockSeconds();
     client.updatedAt = client.lastSyncAt;
     repo.update(client);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, client.id.value, "");
   }
 
-  CommandResult disconnect(ClientId id) {
+  CommandResult disconnectClient(ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
     client.status = ClientStatus.disconnected;
     client.updatedAt = clockSeconds();
     repo.update(client);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, client.id.value, "");
   }
 
   Client getClient(ClientId id) {
     return repo.findById(tenantId, id);
   }
 
-  Client[] listByTenant(TenantId tenantId) {
+  Client[] listClients(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Client[] listByStatus(TenantId tenantId, string status) {
+  Client[] listClientsByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseClientStatus(status));
   }
 
-  Client[] listByType(TenantId tenantId, string type) {
+  Client[] listClientsByType(TenantId tenantId, string type) {
     return repo.findByType(tenantId, parseClientType(type));
   }
 
@@ -119,8 +119,9 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(client);
+    return CommandResult(true, client.id.value, "");
   }
 
   private ClientType parseClientType(string s) {

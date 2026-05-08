@@ -21,7 +21,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateHtmlAppRequest r) {
+    CommandResult createHtmlApp(CreateHtmlAppRequest r) {
         if (!DeploymentValidator.validateAppName(r.name))
             return CommandResult(false, "", "Invalid application name");
 
@@ -49,7 +49,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    CommandResult update(HtmlAppId id, UpdateHtmlAppRequest r) {
+    CommandResult updateHtmlApp(HtmlAppId id, UpdateHtmlAppRequest r) {
         auto app = repo.findById(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
@@ -63,23 +63,23 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    HtmlApp getById(HtmlAppId id) {
+    HtmlApp getHtmlAppById(HtmlAppId id) {
         return repo.findById(tenantId, id);
     }
 
-    HtmlApp[] listByTenant(TenantId tenantId) {
+    HtmlApp[] listHtmlAppsByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    HtmlApp[] listPublic(TenantId tenantId) {
+    HtmlApp[] listPublicHtmlApps(TenantId tenantId) {
         return repo.findPublic(tenantId);
     }
 
-    CommandResult remove(HtmlAppId id) {
+    CommandResult deleteHtmlApp(HtmlAppId id) {
         repo.removeById(id);
     }
 
-    size_t countByTenant(TenantId tenantId) {
+    size_t countHtmlAppsByTenant(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 

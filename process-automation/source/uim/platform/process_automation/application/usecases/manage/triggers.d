@@ -17,7 +17,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateTriggerRequest r) {
+    CommandResult createTrigger(CreateTriggerRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Trigger ID is required");
         if (r.name.length == 0)
@@ -48,19 +48,19 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, t.id.value, "");
     }
 
-    Trigger getById(TriggerId id) {
+    Trigger getTrigger(TriggerId id) {
         return repo.findById(tenantId, id);
     }
 
-    Trigger[] list(TenantId tenantId) {
+    Trigger[] listTriggers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Trigger[] listByProcess(ProcessId processId) {
+    Trigger[] listTriggers(ProcessId processId) {
         return repo.findByProcess(processId);
     }
 
-    CommandResult update(UpdateTriggerRequest r) {
+    CommandResult updateTrigger(UpdateTriggerRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");

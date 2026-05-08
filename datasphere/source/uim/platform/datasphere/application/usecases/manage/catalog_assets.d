@@ -24,7 +24,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateCatalogAssetRequest r) {
+  CommandResult createCatalogAsset(CreateCatalogAssetRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Catalog asset name is required");
     if (r.spaceId.isEmpty)
@@ -54,42 +54,42 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ca.id.value, "");
   }
 
-  CatalogAsset getById(SpaceId spaceId, CatalogAssetId id) {
+  CatalogAsset getCatalogAssetById(SpaceId spaceId, CatalogAssetId id) {
     return repo.findById(spaceId, id);
   }
 
-  CatalogAsset[] list(SpaceId spaceId) {
+  CatalogAsset[] listCatalogAssets(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CatalogAsset[] search(SpaceId spaceId, string query) {
+  CatalogAsset[] searchCatalogAssets(SpaceId spaceId, string query) {
     return repo.search(spaceId, query);
   }
 
-  CommandResult update(UpdateCatalogAssetRequest r) {
-    auto existing = repo.findById(r.spaceId, r.assetId);
-    if (existing.id.isEmpty)
+  CommandResult updateCatalogAsset(UpdateCatalogAssetRequest r) {
+    auto asset = repo.findById(r.spaceId, r.assetId);
+    if (asset.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
-    existing.name = r.name;
-    existing.description = r.description;
-    existing.businessName = r.businessName;
-    existing.owner = r.owner;
-    existing.glossaryTerms = r.glossaryTerms;
+    asset.name = r.name;
+    asset.description = r.description;
+    asset.businessName = r.businessName;
+    asset.owner = r.owner;
+    asset.glossaryTerms = r.glossaryTerms;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    asset.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(asset);
+    return CommandResult(true, asset.id.value, "");
   }
 
   CommandResult deleteCatalogAsset(SpaceId spaceId, CatalogAssetId id) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto asset = repo.findById(spaceId, id);
+    if (asset.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(asset);
+    return CommandResult(true, asset.id.value, "");
   }
 }

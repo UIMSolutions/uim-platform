@@ -24,7 +24,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     this.workspaces = workspaces;
   }
 
-  CommandResult create(CreateWorkspaceRequest r) {
+  CommandResult createWorkspace(CreateWorkspaceRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Workspace name is required");
 
@@ -41,19 +41,19 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, w.id.value, "");
   }
 
-  Workspace getById(TenantId tenantId, WorkspaceId id) {
+  Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
     return workspaces.findById(tenantId, id);
   }
 
-  Workspace[] listByTenant(TenantId tenantId) {
+  Workspace[] listWorkspaces(TenantId tenantId) {
     return workspaces.findByTenant(tenantId);
   }
 
-  Workspace[] listAll(TenantId tenantId) {
+  Workspace[] listWorkspaces(TenantId tenantId) {
     return workspaces.findAll(tenantId);
   }
 
-  CommandResult patch(PatchWorkspaceRequest r) {
+  CommandResult patchWorkspace(PatchWorkspaceRequest r) {
     auto w = workspaces.findById(r.tenantId, r.workspaceId);
     if (w.isNull)
       return CommandResult(false, "", "Workspace not found");

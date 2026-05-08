@@ -20,7 +20,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateOfflineStoreRequest r) {
+    CommandResult createOfflineStore(CreateOfflineStoreRequest r) {
         if (!OfflineSyncService.validateStoreName(r.name))
             return CommandResult(false, "", "Invalid store name");
         OfflineStore store;
@@ -42,8 +42,8 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         return CommandResult(true, store.id.value, "");
     }
 
-    CommandResult update(OfflineStoreId id, UpdateOfflineStoreRequest r) {
-        auto store = repo.findById(tenantId, id);
+    CommandResult updateOfflineStore(UpdateOfflineStoreRequest r) {
+        auto store = repo.findById(tenantId, r.id);
         if (store.isNull)
             return CommandResult(false, "", "Offline store not found");
         if (r.description.length > 0) store.description = r.description;
@@ -57,19 +57,24 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         return CommandResult(true, store.id.value, "");
     }
 
-    OfflineStore get_(OfflineStoreId id) {
+    OfflineStore getOfflineStore(OfflineStoreId id) {
         return repo.findById(tenantId, id);
     }
 
-    OfflineStore[] listByApp(MobileAppId appId) {
+    OfflineStore[] listOfflineStoresByApp(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(OfflineStoreId id) {
-        repo.removeById(id);
+    CommandResult deleteOfflineStore(OfflineStoreId id) {
+        auto store = repo.findById(tenantId, id);
+        if (store.isNull)
+            return CommandResult(false, "", "Offline store not found");
+            
+        repo.removeById(r.id);
+        return CommandResult(true, store.id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countOfflineStoresByApp(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

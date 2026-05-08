@@ -74,7 +74,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult remove(DeviceRegistrationId id) {
+    CommandResult delete(DeviceRegistrationId id) {
         repo.removeById(id);
     }
 

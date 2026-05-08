@@ -19,6 +19,8 @@ struct CreateNamespaceRequest {
 }
 
 struct UpdateNamespaceRequest {
+  NamespaceId namespaceId;
+  TenantId tenantId;
   string description;
 }
 
@@ -37,6 +39,8 @@ struct CreateCredentialRequest {
 }
 
 struct UpdateCredentialRequest {
+  CredentialId credentialId;
+  TenantId tenantId;
   string value;
   string metadata;
   string format;
@@ -132,6 +136,9 @@ struct CreateServiceBindingRequest {
 }
 
 struct UpdateServiceBindingRequest {
+  ServiceBindingId serviceBindingId;
+  TenantId tenantId;
+  
   string description;
   string permission;
   string status;           // "active", "revoked"

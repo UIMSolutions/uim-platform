@@ -24,7 +24,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateHDIContainerRequest r) {
+  CommandResult createHDIContainer(CreateHDIContainerRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "HDI Container ID and name are required");
 
@@ -50,19 +50,19 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  HDIContainer getById(HDIContainerId id) {
+  HDIContainer getHDIContainer(HDIContainerId id) {
     return repo.findById(tenantId, id);
   }
 
-  HDIContainer[] list(TenantId tenantId) {
+  HDIContainer[] listHDIContainers(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateHDIContainerRequest r) {
-    if (!repo.existsById(r.id))
+  CommandResult updateHDIContainer(UpdateHDIContainerRequest r) {
+    auto existing = repo.findById(r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "HDI Container not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.grantedSchemas = r.grantedSchemas;
@@ -83,7 +83,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countHDIContainers(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

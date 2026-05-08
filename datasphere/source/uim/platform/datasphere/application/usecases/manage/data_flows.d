@@ -25,7 +25,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDataFlowRequest r) {
+  CommandResult createDataFlow(CreateDataFlowRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Data flow name is required");
     if (r.spaceId.isEmpty)
@@ -51,32 +51,32 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, df.id.value, "");
   }
 
-  DataFlow getById(SpaceId spaceId, DataFlowId id) {
+  DataFlow getDataFlow(SpaceId spaceId, DataFlowId id) {
     return repo.findById(spaceId, id);
   }
 
-  DataFlow[] list(SpaceId spaceId) {
+  DataFlow[] listDataFlows(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CommandResult patch(PatchDataFlowRequest r) {
-    auto existing = repo.findById(r.spaceId, r.dataFlowId);
-    if (existing.id.isEmpty)
+  CommandResult patchDataFlow(PatchDataFlowRequest r) {
+    auto flow = repo.findById(r.spaceId, r.dataFlowId);
+    if (flow.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    flow.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(flow);
+    return CommandResult(true, flow.id.value, "");
   }
 
   CommandResult deleteDataFlow(SpaceId spaceId, DataFlowId id) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto flow = repo.findById(spaceId, id);
+    if (flow.id.isEmpty)
       return CommandResult(false, "", "Data flow not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(flow);
+    return CommandResult(true, flow.id.value, "");
   }
 }

@@ -24,7 +24,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateAlertRequest r) {
+  CommandResult createAlert(CreateAlertRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
@@ -54,19 +54,19 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, a.id.value, "");
   }
 
-  Alert getById(AlertId id) {
+  Alert getAlertById(AlertId id) {
     return repo.findById(tenantId, id);
   }
 
-  Alert[] list(TenantId tenantId) {
+  Alert[] listAlerts(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Alert[] listActive(TenantId tenantId) {
+  Alert[] listActiveAlerts(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
-  CommandResult acknowledge(AcknowledgeAlertRequest r) {
+  CommandResult acknowledgeAlert(AcknowledgeAlertRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Alert not found");
 
@@ -82,7 +82,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult update(UpdateAlertRequest r) {
+  CommandResult updateAlert(UpdateAlertRequest r) {
     if (!repo.existsById(r.id))
       return CommandResult(false, "", "Alert not found");
 
@@ -105,7 +105,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countAlerts(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

@@ -29,7 +29,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     this.versionRepo = versionRepo;
   }
 
-  CommandResult create(CreateKeyringRequest r) {
+  CommandResult createKeyring(CreateKeyringRequest r) {
     if (r.name.length == 0 || r.name.length > 255)
       return CommandResult(false, "", "Keyring name must be 1-255 characters");
 
@@ -70,7 +70,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cred.id.value, "");
   }
 
-  CommandResult rotate(RotateKeyringRequest r) {
+  CommandResult rotateKeyring(RotateKeyringRequest r) {
     auto cred = credRepo.findById(r.tenantId, r.keyringId);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");

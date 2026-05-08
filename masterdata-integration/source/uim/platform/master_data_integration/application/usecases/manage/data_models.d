@@ -18,7 +18,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDataModelRequest req) {
+  CommandResult createDataModel(CreateDataModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Data model name is required");
     if (req.namespace.length == 0)
@@ -41,10 +41,10 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = model.createdAt;
 
     repo.save(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateModel(DataModelId id, UpdateDataModelRequest req) {
+  CommandResult updateDataModel(DataModelId id, UpdateDataModelRequest req) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
@@ -62,31 +62,31 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     model.updatedAt = clockSeconds();
 
     repo.update(model);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
-  DataModel getModel(DataModelId id) {
+  DataModel getDataModel(DataModelId id) {
     return repo.findById(tenantId, id);
   }
 
-  DataModel[] listByTenant(TenantId tenantId) {
+  DataModel[] listDataModelsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataModel[] listByCategory(TenantId tenantId, string category) {
+  DataModel[] listDataModelsByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  DataModel findByName(TenantId tenantId, string name) {
+  DataModel findDataModelByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 
-  CommandResult deleteModel(DataModelId id) {
+  CommandResult deleteDataModel(DataModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
     repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, model.id.value, "");
   }
 
   private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {

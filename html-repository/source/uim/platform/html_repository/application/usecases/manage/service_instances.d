@@ -21,7 +21,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateServiceInstanceRequest r) {
+    CommandResult createServiceInstance(CreateServiceInstanceRequest r) {
         if (!DeploymentValidator.validateInstanceName(r.name))
             return CommandResult(false, "", "Invalid service instance name");
 
@@ -43,7 +43,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, inst.id.value, "");
     }
 
-    CommandResult update(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
+    CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
         auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");
@@ -58,19 +58,19 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, inst.id.value, "");
     }
 
-    ServiceInstance getById(ServiceInstanceId id) {
+    ServiceInstance getServiceInstance(ServiceInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
-    ServiceInstance[] listByTenant(TenantId tenantId) {
+    ServiceInstance[] listServiceInstances(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult remove(ServiceInstanceId id) {
+    CommandResult deleteServiceInstance(ServiceInstanceId id) {
         repo.removeById(id);
     }
 
-    size_t countByTenant(TenantId tenantId) {
+    size_t countServiceInstances(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 

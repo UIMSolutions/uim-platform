@@ -18,7 +18,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDataSubjectRequestRequest r) {
+    CommandResult createDataSubjectRequest(CreateDataSubjectRequestRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
         if (r.requestType.length == 0) return CommandResult(false, "", "Request type is required");
@@ -44,50 +44,50 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, req.id.value, "");
     }
 
-    DataSubjectRequest getById(DataSubjectRequestId id) {
+    DataSubjectRequest getDataSubjectRequest(DataSubjectRequestId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataSubjectRequest[] list(TenantId tenantId) {
+    DataSubjectRequest[] listDataSubjectRequests(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataSubjectRequest[] listByDataSubject(DataSubjectId dataSubjectId) {
+    DataSubjectRequest[] listDataSubjectRequestsByDataSubject(DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(dataSubjectId);
     }
 
-    DataSubjectRequest[] listByStatus(RequestStatus status) {
+    DataSubjectRequest[] listDataSubjectRequestsByStatus(RequestStatus status) {
         return repo.findByStatus(status);
     }
 
-    CommandResult update(UpdateDataSubjectRequestRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+    CommandResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r) {
+        auto request = repo.findById(r.id);
+        if (request.isNull)
             return CommandResult(false, "", "Data subject request not found");
 
         
 
         if (r.status.length > 0) {
-            existing.status = r.status.to!RequestStatus;
-            if (existing.status == RequestStatus.completed)
-                existing.completedAt = clockTime();
+            request.status = r.status.to!RequestStatus;
+            if (request.status == RequestStatus.completed)
+                request.completedAt = clockTime();
         }
-        if (r.assignedTo.length > 0) existing.assignedTo = r.assignedTo;
-        if (r.rejectionReason.length > 0) existing.rejectionReason = r.rejectionReason;
+        if (r.assignedTo.length > 0) request.assignedTo = r.assignedTo;
+        if (r.rejectionReason.length > 0) request.rejectionReason = r.rejectionReason;
 
         if (r.commentText.length > 0) {
             ProcessingComment c;
             c.author = r.commentAuthor;
             c.comment = r.commentText;
             c.createdAt = clockTime();
-            existing.comments ~= c;
+            request.comments ~= c;
         }
 
-        existing.updatedBy = r.updatedBy;
-        existing.updatedAt = clockTime();
+        request.updatedBy = r.updatedBy;
+        request.updatedAt = clockTime();
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(request);
+        return CommandResult(true, request.id.value, "");
     }
 
     CommandResult deleteDataSubjectRequest(DataSubjectRequestId id) {

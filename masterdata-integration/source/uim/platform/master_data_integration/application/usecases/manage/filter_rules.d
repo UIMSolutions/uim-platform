@@ -18,7 +18,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateFilterRuleRequest req) {
+  CommandResult createFilterRule(CreateFilterRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Filter rule name is required");
 
@@ -40,17 +40,15 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(FilterRuleId id, UpdateFilterRuleRequest req) {
+  CommandResult updateFilterRule(FilterRuleId id, UpdateFilterRuleRequest req) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");
 
     if (req.name.length > 0)
-      rule.name = req.name;
-    if (req.description.length > 0)
       rule.description = req.description;
     if (req.conditions.length > 0)
       rule.conditions = toConditions(req.conditions);
@@ -63,23 +61,23 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  FilterRule getRule(FilterRuleId id) {
+  FilterRule getFilterRule(FilterRuleId id) {
     return repo.findById(tenantId, id);
   }
 
-  FilterRule[] listByTenant(TenantId tenantId) {
+  FilterRule[] listFilterRulesByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  FilterRule[] listByCategory(TenantId tenantId, string category) {
+  FilterRule[] listFilterRulesByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  FilterRule[] listActive(TenantId tenantId) {
+  FilterRule[] listActiveFilterRules(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deleteRule(FilterRuleId id) {
+  CommandResult deleteFilterRule(FilterRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");

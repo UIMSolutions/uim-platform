@@ -24,7 +24,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateTaskChainRequest r) {
+  CommandResult createTaskChain(CreateTaskChainRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Task chain name is required");
     if (r.spaceId.isEmpty)
@@ -51,32 +51,32 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tc.id.value, "");
   }
 
-  TaskChain getById(SpaceId spaceId, TaskChainId id) {
+  TaskChain getTaskChain(SpaceId spaceId, TaskChainId id) {
     return repo.findById(spaceId, id);
   }
 
-  TaskChain[] list(SpaceId spaceId) {
+  TaskChain[] listTaskChains(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CommandResult patch(PatchTaskChainRequest r) {
-    auto existing = repo.findById(r.spaceId, r.taskChainId);
-    if (existing.id.isEmpty)
+  CommandResult patchTaskChain(PatchTaskChainRequest r) {
+    auto chain = repo.findById(r.spaceId, r.taskChainId);
+    if (chain.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    chain.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(chain);
+    return CommandResult(true, chain.id.value, "");
   }
 
   CommandResult deleteTaskChain(SpaceId spaceId, TaskChainId id) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto chain = repo.findById(spaceId, id);
+    if (chain.id.isEmpty)
       return CommandResult(false, "", "Task chain not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(chain);
+    return CommandResult(true, chain.id.value, "");
   }
 }

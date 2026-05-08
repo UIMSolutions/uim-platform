@@ -24,7 +24,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDataAccessControlRequest r) {
+  CommandResult createDataAccessControl(CreateDataAccessControlRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Data access control name is required");
     if (r.spaceId.isEmpty)
@@ -49,38 +49,38 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dac.id.value, "");
   }
 
-  DataAccessControl getById(SpaceId spaceId, DataAccessControlId id) {
+  DataAccessControl getDataAccessControl(SpaceId spaceId, DataAccessControlId id) {
     return repo.findById(spaceId, id);
   }
 
-  DataAccessControl[] list(SpaceId spaceId) {
+  DataAccessControl[] listDataAccessControls(SpaceId spaceId) {
     return repo.findBySpace(spaceId);
   }
 
-  CommandResult update(UpdateDataAccessControlRequest r) {
-    auto existing = repo.findById(r.spaceId, r.controlId);
-    if (existing.id.isEmpty)
+  CommandResult updateDataAccessControl(UpdateDataAccessControlRequest r) {
+    auto control = repo.findById(r.spaceId, r.controlId);
+    if (control.isNull)
       return CommandResult(false, "", "Data access control not found");
 
-    existing.name = r.name;
-    existing.description = r.description;
-    existing.targetViewIds = r.targetViewIds;
-    existing.assignedUserIds = r.assignedUserIds;
-    existing.isEnabled = r.isEnabled;
+    control.name = r.name;
+    control.description = r.description;
+    control.targetViewIds = r.targetViewIds;
+    control.assignedUserIds = r.assignedUserIds;
+    control.isEnabled = r.isEnabled;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    control.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(control);
+    return CommandResult(true, control.id.value, "");
   }
 
   CommandResult deleteDataAccessControl(SpaceId spaceId, DataAccessControlId id) {
-    auto entity = repo.findById(spaceId, id);
-    if (entity.id.isEmpty)
+    auto control = repo.findById(spaceId, id);
+    if (control.isNull)
       return CommandResult(false, "", "Data access control not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(control);
+    return CommandResult(true, control.id.value, "");
   }
 }

@@ -18,7 +18,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateTlsConfigurationRequest r) {
+    CommandResult createTlsConfiguration(CreateTlsConfigurationRequest r) {
         auto err = DomainValidator.validate(r.id, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -47,16 +47,16 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, c.id.value, "");
     }
 
-    TlsConfiguration getById(TlsConfigurationId id) {
+    TlsConfiguration getTlsConfigurationById(TenantId tenantId, TlsConfigurationId id) {
         return repo.findById(tenantId, id);
     }
 
-    TlsConfiguration[] list(TenantId tenantId) {
+    TlsConfiguration[] listTlsConfigurations(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateTlsConfigurationRequest r) {
-        auto existing = repo.findById(r.id);
+    CommandResult updateTlsConfiguration(TenantId tenantId, UpdateTlsConfigurationRequest r) {
+        auto existing = repo.findById(tenantId, r.id);
         if (existing.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 
@@ -75,7 +75,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTlsConfiguration(TlsConfigurationId id) {
+    CommandResult deleteTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "TLS configuration not found");

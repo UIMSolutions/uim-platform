@@ -17,7 +17,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateTaskRequest r) {
+    CommandResult createTask(CreateTaskRequest r) {
         auto err = ProcessValidator.validateTask(r.name, r.assignee);
         if (err.length > 0)
             return CommandResult(false, "", err);
@@ -42,23 +42,23 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, t.id.value, "");
     }
 
-    Task getById(TaskId id) {
+    Task getTask(TaskId id) {
         return repo.findById(tenantId, id);
     }
 
-    Task[] list(TenantId tenantId) {
+    Task[] listTasks(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Task[] listByAssignee(TenantId tenantId, string assignee) {
+    Task[] listTasksByAssignee(TenantId tenantId, string assignee) {
         return repo.findByAssignee(tenantId, assignee);
     }
 
-    Task[] listByProcessInstance(ProcessInstanceId instanceId) {
+    Task[] listTasksByProcessInstance(ProcessInstanceId instanceId) {
         return repo.findByProcessInstance(instanceId);
     }
 
-    CommandResult claim(ClaimTaskRequest r) {
+    CommandResult claimTask(ClaimTaskRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
@@ -73,7 +73,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult complete(CompleteTaskRequest r) {
+    CommandResult completeTask(CompleteTaskRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
@@ -90,7 +90,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult update(UpdateTaskRequest r) {
+    CommandResult updateTask(UpdateTaskRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");

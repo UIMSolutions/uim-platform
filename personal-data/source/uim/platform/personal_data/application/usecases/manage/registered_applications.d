@@ -18,7 +18,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateRegisteredApplicationRequest r) {
+    CommandResult createRegisteredApplication(CreateRegisteredApplicationRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Application name is required");
 
@@ -41,15 +41,15 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    RegisteredApplication getById(RegisteredApplicationId id) {
+    RegisteredApplication getRegisteredApplication(RegisteredApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
-    RegisteredApplication[] list(TenantId tenantId) {
+    RegisteredApplication[] listRegisteredApplications(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult update(UpdateRegisteredApplicationRequest r) {
+    CommandResult updateRegisteredApplication(UpdateRegisteredApplicationRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
@@ -67,7 +67,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult activate(RegisteredApplicationId id) {
+    CommandResult activateRegisteredApplication(RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
@@ -77,7 +77,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult suspend(RegisteredApplicationId id) {
+    CommandResult suspendRegisteredApplication(RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");

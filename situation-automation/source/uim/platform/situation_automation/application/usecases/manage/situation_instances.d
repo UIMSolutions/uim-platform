@@ -17,7 +17,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateSituationInstanceRequest r) {
+    CommandResult createSituationInstance(CreateSituationInstanceRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Instance ID is required");
         if (r.templateId.isEmpty)
@@ -50,23 +50,23 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, i.id.value, "");
     }
 
-    SituationInstance getById(SituationInstanceId id) {
+    SituationInstance getSituationInstance(SituationInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
-    SituationInstance[] list(TenantId tenantId) {
+    SituationInstance[] listSituationInstances(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    SituationInstance[] listByTemplate(SituationTemplateId templateId) {
+    SituationInstance[] listSituationInstances(SituationTemplateId templateId) {
         return repo.findByTemplate(templateId);
     }
 
-    SituationInstance[] listByStatus(TenantId tenantId, InstanceStatus status) {
+    SituationInstance[] listSituationInstances(TenantId tenantId, InstanceStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult update(UpdateSituationInstanceRequest r) {
+    CommandResult updateSituationInstance(UpdateSituationInstanceRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
@@ -81,7 +81,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult resolve(ResolveSituationRequest r) {
+    CommandResult resolveSituationInstance(ResolveSituationRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");

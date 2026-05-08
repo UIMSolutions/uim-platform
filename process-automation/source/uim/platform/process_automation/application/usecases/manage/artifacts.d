@@ -17,7 +17,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateArtifactRequest r) {
+    CommandResult createArtifact(CreateArtifactRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "Artifact ID is required");
         if (r.name.length == 0)
@@ -47,19 +47,19 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, a.id.value, "");
     }
 
-    Artifact getById(ArtifactId id) {
+    Artifact getArtifact(ArtifactId id) {
         return repo.findById(tenantId, id);
     }
 
-    Artifact[] list() {
+    Artifact[] listArtifacts() {
         return repo.findAll();
     }
 
-    Artifact[] listByType(ArtifactType type) {
+    Artifact[] listArtifacts(ArtifactType type) {
         return repo.findByType(type);
     }
 
-    CommandResult update(UpdateArtifactRequest r) {
+    CommandResult updateArtifact(UpdateArtifactRequest r) {
         if (!repo.existsById(r.id))
             return CommandResult(false, "", "Artifact not found");
 

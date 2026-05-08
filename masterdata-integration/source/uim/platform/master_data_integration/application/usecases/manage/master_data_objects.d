@@ -22,7 +22,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     this.changeLogRepo = changeLogRepo;
   }
 
-  CommandResult create(CreateMasterDataObjectRequest req) {
+  CommandResult createMasterDataObject(CreateMasterDataObjectRequest req) {
     if (req.objectType.length == 0)
       return CommandResult(false, "", "Object type is required");
     if (req.displayName.length == 0)
@@ -56,7 +56,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult updateObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
+  CommandResult updateMasterDataObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
     auto obj = repo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
@@ -101,27 +101,27 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  MasterDataObject getObject(MasterDataObjectId id) {
+  MasterDataObject getMasterDataObject(MasterDataObjectId id) {
     return repo.findById(tenantId, id);
   }
 
-  MasterDataObject[] listByTenant(TenantId tenantId) {
+  MasterDataObject[] listMasterDataObjectsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  MasterDataObject[] listByCategory(TenantId tenantId, string category) {
+  MasterDataObject[] listMasterDataObjectsByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  MasterDataObject[] listByDataModel(TenantId tenantId, DataModelId modelId) {
+  MasterDataObject[] listMasterDataObjectsByDataModel(TenantId tenantId, DataModelId modelId) {
     return repo.findByDataModel(tenantId, modelId);
   }
 
-  MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
+  MasterDataObject findMasterDataObjectByGlobalId(TenantId tenantId, string globalId) {
     return repo.findByGlobalId(tenantId, globalId);
   }
 
-  CommandResult deleteObject(MasterDataObjectId id) {
+  CommandResult deleteMasterDataObject(MasterDataObjectId id) {
     auto obj = repo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");

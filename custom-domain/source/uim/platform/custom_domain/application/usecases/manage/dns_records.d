@@ -18,7 +18,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDnsRecordRequest r) {
+    CommandResult createDnsRecord(CreateDnsRecordRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.hostname.length == 0)
@@ -49,41 +49,41 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rec.id.value, "");
     }
 
-    DnsRecord getById(DnsRecordId id) {
+    DnsRecord getDnsRecordById(TenantId tenantId, DnsRecordId id) {
         return repo.findById(tenantId, id);
     }
 
-    DnsRecord[] list(TenantId tenantId) {
+    DnsRecord[] listDnsRecords(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DnsRecord[] listByDomain(CustomDomainId domainId) {
+    DnsRecord[] listDnsRecords(CustomDomainId domainId) {
         return repo.findByDomain(domainId);
     }
 
-    CommandResult update(UpdateDnsRecordRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+    CommandResult updateDnsRecord(UpdateDnsRecordRequest r) {
+        auto record = repo.findById(r.id);
+        if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 
         if (r.value.length > 0)
-            existing.value = r.value;
+            record.value = r.value;
         if (r.ttl > 0)
-            existing.ttl = r.ttl;
+            record.ttl = r.ttl;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        record.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(record);
+        return CommandResult(true, record.id.value, "");
     }
 
     CommandResult deleteDnsRecord(DnsRecordId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto record = repo.findById(tenantId, id);
+        if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(record);
+        return CommandResult(true, record.id.value, "");
     }
 }

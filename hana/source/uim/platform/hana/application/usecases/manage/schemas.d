@@ -24,7 +24,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateSchemaRequest r) {
+  CommandResult createSchema(CreateSchemaRequest r) {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Schema ID and name are required");
 
@@ -48,38 +48,38 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Schema getById(SchemaId id) {
+  Schema getSchemaById(TenantId tenantId, SchemaId id) {
     return repo.findById(tenantId, id);
   }
 
-  Schema[] list(TenantId tenantId) {
+  Schema[] listSchemas(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateSchemaRequest r) {
-    if (!repo.existsById(r.id))
+  CommandResult updateSchema(UpdateSchemaRequest r) {
+    auto schema = repo.findById(r.tenantId, r.id);
+    if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
-    auto existing = repo.findById(r.id);
-    existing.owner = r.owner;
+    schema.owner = r.owner;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    schema.updatedAt = MonoTime.currTime.ticks;
 
-    repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    repo.update(schema);
+    return CommandResult(true, schema.id.value, "");
   }
 
-  CommandResult deleteSchema(SchemaId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+  CommandResult deleteSchema(TenantId tenantId, SchemaId id) {
+    auto schema = repo.findById(tenantId, id);
+    if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(schema);
+    return CommandResult(true, schema.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countSchemas(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

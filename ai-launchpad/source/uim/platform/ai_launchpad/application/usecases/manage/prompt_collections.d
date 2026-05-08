@@ -24,7 +24,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     this.collections = repo;
   }
 
-  CommandResult create(CreatePromptCollectionRequest r) {
+  CommandResult createCollection(CreatePromptCollectionRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Collection name is required");
 
@@ -41,19 +41,19 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, pc.id.value, "");
   }
 
-  PromptCollection getById(TenantId tenantId, PromptCollectionId id) {
+  PromptCollection getCollection(TenantId tenantId, PromptCollectionId id) {
     return collections.findById(tenantId, id);
   }
 
-  PromptCollection[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+  PromptCollection[] listCollections(TenantId tenantId, WorkspaceId workspaceId) {
     return collections.findByWorkspace(tenantId, workspaceId);
   }
 
-  PromptCollection[] listAll(TenantId tenantId) {
+  PromptCollection[] listCollections(TenantId tenantId) {
     return collections.findAll(tenantId);
   }
 
-  CommandResult patch(PatchPromptCollectionRequest r) {
+  CommandResult patchCollection(PatchPromptCollectionRequest r) {
     if (!collections.existsById(r.collectionId))
       return CommandResult(false, "", "Prompt collection not found");
       
@@ -67,7 +67,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, pc.id.value, "");
   }
 
-  CommandResult deletePromptCollection(TenantId tenantId, PromptCollectionId id) {
+  CommandResult deleteCollection(TenantId tenantId, PromptCollectionId id) {
     auto collection = collections.findById(tenantId, id);
     if (collection.isNull)
       return CommandResult(false, "", "Prompt collection not found");

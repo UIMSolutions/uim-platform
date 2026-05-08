@@ -19,7 +19,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateClientResourceRequest r) {
+    CommandResult createClientResource(CreateClientResourceRequest r) {
         ClientResource resource;
         resource.id = randomUUID();
         resource.tenantId = r.tenantId;
@@ -38,7 +38,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, resource.id.value, "");
     }
 
-    CommandResult update(ClientResourceId id, UpdateClientResourceRequest r) {
+    CommandResult updateClientResource(ClientResourceId id, UpdateClientResourceRequest r) {
         auto resource = repo.findById(tenantId, id);
         if (resource.isNull)
             return CommandResult(false, "", "Client resource not found");
@@ -53,19 +53,19 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, resource.id.value, "");
     }
 
-    ClientResource get_(ClientResourceId id) {
+    ClientResource getClientResource(ClientResourceId id) {
         return repo.findById(tenantId, id);
     }
 
-    ClientResource[] listByApp(MobileAppId appId) {
+    ClientResource[] listClientResourcesByApp(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    CommandResult remove(ClientResourceId id) {
+    CommandResult deleteClientResource(ClientResourceId id) {
         repo.removeById(id);
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countClientResourcesByApp(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

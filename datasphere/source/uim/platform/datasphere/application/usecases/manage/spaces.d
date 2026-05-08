@@ -25,7 +25,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateSpaceRequest r) {
+  CommandResult createSpace(CreateSpaceRequest r) {
     auto err = SpaceValidator.validate(r.spaceId, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
@@ -51,15 +51,15 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Space getById(SpaceId id) {
+  Space getSpace(SpaceId id) {
     return repo.findById(tenantId, id);
   }
 
-  Space[] list(TenantId tenantId) {
+  Space[] listSpaces(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult update(UpdateSpaceRequest r) {
+  CommandResult updateSpace(UpdateSpaceRequest r) {
     auto existing = repo.findById(r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Space not found");
@@ -85,7 +85,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countSpaces(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

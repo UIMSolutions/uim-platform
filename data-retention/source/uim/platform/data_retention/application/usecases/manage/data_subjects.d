@@ -8,11 +8,15 @@ mixin(ShowModule!());
 class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     private DataSubjectRepository repo;
 
-    this(DataSubjectRepository repo) { this.repo = repo; }
+    this(DataSubjectRepository repo) {
+        this.repo = repo;
+    }
 
-    CommandResult create(CreateDataSubjectRequest req) {
+    CommandResult createDataSubject(CreateDataSubjectRequest req) {
         import std.uuid : randomUUID;
-        if (req.externalId.length == 0) return CommandResult(false, "", "External ID is required");
+
+        if (req.externalId.length == 0)
+            return CommandResult(false, "", "External ID is required");
 
         DataSubject ds;
         ds.id = DataSubjectId(randomUUID().toString());
@@ -28,24 +32,24 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ds.id.value, "");
     }
 
-    CommandResult update(string id, UpdateDataSubjectRequest req) { return update(DataSubjectId(id), req); }
-
-    CommandResult update(DataSubjectId id, UpdateDataSubjectRequest req) {
-        if (!repo.existsById(id)) return CommandResult(false, "", "Data subject not found");
+    CommandResult updateDataSubject(DataSubjectId id, UpdateDataSubjectRequest req) {
+        if (!repo.existsById(id))
+            return CommandResult(false, "", "Data subject not found");
 
         auto ds = repo.findById(tenantId, id);
-        if (req.lifecycleStatus.length > 0) ds.lifecycleStatus = parseLifecycleStatus(req.lifecycleStatus);
-        if (req.roleId.length > 0) ds.roleId = DataSubjectRoleId(req.roleId);
+        if (req.lifecycleStatus.length > 0)
+            ds.lifecycleStatus = parseLifecycleStatus(req.lifecycleStatus);
+        if (req.roleId.length > 0)
+            ds.roleId = DataSubjectRoleId(req.roleId);
         ds.updatedAt = clockSeconds();
 
         repo.update(ds);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult block(string id) { return block(DataSubjectId(id)); }
-
-    CommandResult block(DataSubjectId id) {
-        if (!repo.existsById(id)) return CommandResult(false, "", "Data subject not found");
+    CommandResult blockDataSubject(DataSubjectId id) {
+        if (!repo.existsById(id))
+            return CommandResult(false, "", "Data subject not found");
         auto ds = repo.findById(tenantId, id);
         ds.lifecycleStatus = DataLifecycleStatus.blocked;
         ds.blockedAt = clockSeconds();
@@ -54,32 +58,45 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasById(string id) { return hasById(DataSubjectId(id)); }
-    bool hasById(DataSubjectId id) { return repo.existsById(id); }
-    DataSubject getById(string id) { return getById(DataSubjectId(id)); }
-    DataSubject getById(DataSubjectId id) { return repo.findById(tenantId, id); }
-    DataSubject[] list(TenantId tenantId) { return list(TenantId(tenantId)); }
-    DataSubject[] list(TenantId tenantId) { return repo.findAll(tenantId); }
-    DataSubject[] listByStatus(TenantId tenantId, DataLifecycleStatus status) {
+    bool hasDataSubjectById(DataSubjectId id) {
+        return repo.existsById(id);
+    }
+
+    DataSubject getDataSubjectById(DataSubjectId id) {
+        return repo.findById(tenantId, id);
+    }
+
+    DataSubject[] listDataSubjects(TenantId tenantId) {
+        return repo.findAll(tenantId);
+    }
+
+    DataSubject[] listDataSubjects(TenantId tenantId, DataLifecycleStatus status) {
         return repo.findByLifecycleStatus(tenantId, status);
     }
+
     CommandResult deleteDataSubject(DataSubjectId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto subject = repo.findById(tenantId, id);
+        if (subject.isNull)
             return CommandResult(false, "", "Data subject not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(subject);
+        return CommandResult(true, subject.id.value, "");
     }
 
     private static DataLifecycleStatus parseLifecycleStatus(string s) {
         switch (s) {
-            case "active": return DataLifecycleStatus.active;
-            case "blocked": return DataLifecycleStatus.blocked;
-            case "markedForDeletion": return DataLifecycleStatus.markedForDeletion;
-            case "deleted": return DataLifecycleStatus.deleted;
-            case "archived": return DataLifecycleStatus.archived;
-            default: return DataLifecycleStatus.active;
+        case "active":
+            return DataLifecycleStatus.active;
+        case "blocked":
+            return DataLifecycleStatus.blocked;
+        case "markedForDeletion":
+            return DataLifecycleStatus.markedForDeletion;
+        case "deleted":
+            return DataLifecycleStatus.deleted;
+        case "archived":
+            return DataLifecycleStatus.archived;
+        default:
+            return DataLifecycleStatus.active;
         }
     }
 }
