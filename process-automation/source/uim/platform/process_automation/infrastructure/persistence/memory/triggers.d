@@ -19,7 +19,7 @@ class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRe
         return triggers.filter!(t => t.processId == processId).array;
     }
     Trigger[] findByProcess(TenantId tenantId, ProcessId processId) {
-        return filterByProcess(filterByTenant(tenantId), processId);
+        return filterByProcess(findByTenant(tenantId), processId);
     }
     void removeByProcess(TenantId tenantId, ProcessId processId) {
         findByProcess(tenantId, processId).each!(t => remove(t));

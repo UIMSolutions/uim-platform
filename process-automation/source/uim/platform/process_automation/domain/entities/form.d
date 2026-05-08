@@ -65,7 +65,7 @@ struct FormSection {
             .set("title", title)
             .set("description", description)
             .set("sortOrder", sortOrder)
-            .set("fields", fields.map!(f => f.toJson()).array);
+            .set("fields", fields.map!(f => f.toJson()).array.toJson);
 
         return j;
     }
@@ -88,7 +88,7 @@ struct Form {
             .set("description", description)
             .set("status", status.to!string())
             .set("version", version_)
-            .set("sections", sections.map!(s => s.toJson()).array);
+            .set("sections", sections.map!(s => s.toJson()).array.toJson);
 
         return j;
     }

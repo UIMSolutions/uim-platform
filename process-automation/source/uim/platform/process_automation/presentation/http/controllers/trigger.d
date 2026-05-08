@@ -38,8 +38,8 @@ class TriggerController : PlatformController {
             auto j = req.json;
             CreateTriggerRequest r;
             r.tenantId = tenantId;
-            r.processId = j.getString("processId");
-            r.id = j.getString("id");
+            r.processId = ProcessId(j.getString("processId"));
+            r.triggerId = TriggerId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

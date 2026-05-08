@@ -22,7 +22,7 @@ class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, Proce
         return instances.filter!(i => i.processId == processId).array;
     }
     void removeByProcess(TenantId tenantId, ProcessId processId) {
-        findByProcess(tenantId, processId).each!(i => remove(i.id));
+        findByProcess(tenantId, processId).each!(i => remove(i));
     }
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
@@ -35,7 +35,7 @@ class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, Proce
         return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
-        findByStatus(tenantId, status).each!(i => remove(i.id));
+        findByStatus(tenantId, status).each!(i => remove(i));
     }
 
 }

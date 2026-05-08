@@ -39,8 +39,8 @@ struct DecisionRow {
     Json toJson() const {
         return Json.emptyObject
             .set("decisionRowId", decisionRowId.value)
-            .set("inputValues", inputValues)
-            .set("outputValues", outputValues)
+            .set("inputValues", inputValues.toJson())
+            .set("outputValues", outputValues.toJson())
             .set("priority", priority);
     }
 }
@@ -66,8 +66,8 @@ struct Decision {
             .set("status", status.to!string())
             .set("type", type.to!string())
             .set("hitPolicy", hitPolicy.to!string())
-            .set("columns", columns.map!(col => col.toJson()).array)
-            .set("rows", rows.map!(row => row.toJson()).array)
+            .set("columns", columns.map!(col => col.toJson()).array.toJson)
+            .set("rows", rows.map!(row => row.toJson()).array.toJson)
             .set("version", version_);
 
         return j;

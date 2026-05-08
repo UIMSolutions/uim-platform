@@ -48,7 +48,7 @@ class ArtifactController : PlatformController {
             r.tags = getStrings(j, "tags");
             r.contentUrl = j.getString("contentUrl");
 
-            auto result = artifactUsecase.create(r);
+            auto result = artifactUsecase.createArtifact(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -115,7 +115,7 @@ class ArtifactController : PlatformController {
                 .set("version", a.version_)
                 .set("author", a.author)
                 .set("category", a.category)
-                .set("tags", a.tags)
+                .set("tags", a.tags.toJson)
                 .set("contentUrl", a.contentUrl)
                 .set("downloadCount", a.downloadCount)
                 .set("rating", a.rating)
@@ -136,7 +136,7 @@ class ArtifactController : PlatformController {
             auto j = req.json;
             UpdateArtifactRequest r;
             r.tenantId = tenantId;
-            r.id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            r.artifactId = ArtifactId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -161,8 +161,8 @@ class ArtifactController : PlatformController {
         try {
             
             auto tenantId = req.getTenantId;
-
             auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            
             auto result = artifactUsecase.deleteArtifact(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject

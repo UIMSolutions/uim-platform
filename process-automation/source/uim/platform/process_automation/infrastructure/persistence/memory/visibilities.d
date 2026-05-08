@@ -17,7 +17,7 @@ class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), 
     }
 
     Visibility[] filterByProcess(Visibility[] items, ProcessId processId) {
-        return items.filter!(v => v.processId == processId).array;
+        return items.filter!(v => v.processIds.canFind(processId)).array;
     }
 
     Visibility[] findByProcess(TenantId tenantId, ProcessId processId) {

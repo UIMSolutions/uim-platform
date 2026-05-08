@@ -39,7 +39,7 @@ class DecisionController : PlatformController {
             CreateDecisionRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.id = DecisionId(j.getString("id"));
+            r.decisionId = DecisionId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -130,7 +130,7 @@ class DecisionController : PlatformController {
             auto j = req.json;
             UpdateDecisionRequest r;
             r.tenantId = tenantId;
-            r.id = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            r.decisionId = DecisionId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.hitPolicy = j.getString("hitPolicy");

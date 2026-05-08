@@ -38,7 +38,7 @@ class ActionController : PlatformController {
             auto j = req.json;
             CreateActionRequest r;
             r.tenantId = tenantId;
-            r.projectId = j.getString("projectId");
+            r.projectId = ProjectId(j.getString("projectId"));
             r.actionId = ActionId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -51,7 +51,7 @@ class ActionController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = actionUsecase.create(r);
+            auto result = actionUsecase.createAction(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -136,7 +136,7 @@ class ActionController : PlatformController {
             auto j = req.json;
             UpdateActionRequest r;
             r.tenantId = tenantId;
-            r.id = ActionId(extractIdFromPath(req.requestURI.to!string));
+            r.actionId = ActionId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.baseUrl = j.getString("baseUrl");

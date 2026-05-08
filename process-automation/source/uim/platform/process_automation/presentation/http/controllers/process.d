@@ -40,7 +40,7 @@ class ProcessController : PlatformController {
             CreateProcessRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.id = ProcessId(j.getString("id"));
+            r.processId = ProcessId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -130,7 +130,7 @@ class ProcessController : PlatformController {
             auto j = req.json;
             UpdateProcessRequest r;
             r.tenantId = tenantId;
-            r.id = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            r.processId = ProcessId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -173,7 +173,7 @@ class ProcessController : PlatformController {
             r.processId = id;
             r.action = j.getString("action");
 
-            auto result = processUsecase.deploy(r);
+            auto result = processUsecase.deployProcess(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -41,7 +41,7 @@ class TaskController : PlatformController {
       CreateTaskRequest r;
       r.tenantId = tenantId;
       r.processInstanceId = j.getString("processInstanceId");
-      r.id = j.getString("id");
+      r.taskId = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");
@@ -119,8 +119,8 @@ class TaskController : PlatformController {
         .set("processInstanceId", t.processInstanceId)
         .set("formId", t.formId)
         .set("formData", t.formData)
-        .set("candidateUsers", t.candidateUsers)
-        .set("candidateGroups", t.candidateGroups)
+        .set("candidateUsers", t.candidateUsers.map!(u => Json(u.value)).array.toJson)
+        .set("candidateGroups", t.candidateGroups.map!(g => Json(g)).array.toJson)
         .set("completedBy", t.completedBy)
         .set("outcome", t.outcome)
         .set("createdAt", t.createdAt)
@@ -141,7 +141,7 @@ class TaskController : PlatformController {
       auto j = req.json;
       UpdateTaskRequest r;
       r.tenantId = tenantId;
-      r.id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      r.taskId = TaskId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");
@@ -216,8 +216,8 @@ class TaskController : PlatformController {
       auto j = req.json;
       CompleteTaskRequest r;
       r.tenantId = tenantId;
-      r.id = id;
-      r.completedBy = j.getString("completedBy");
+      r.taskId = id;
+      r.completedBy = UserId(j.getString("completedBy"));
       r.outcome = j.getString("outcome");
       r.formData = j.getString("formData");
 

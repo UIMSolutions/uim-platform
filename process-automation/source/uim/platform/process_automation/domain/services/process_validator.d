@@ -27,7 +27,7 @@ struct ProcessValidator {
             return "Tenant ID is required";
         if (processId.isEmpty)
             return "Process ID is required";
-        if (startedBy.length == 0)
+        if (startedBy.value.length == 0)
             return "StartedBy user is required";
         return "";
     }
@@ -39,6 +39,8 @@ struct ProcessValidator {
             return "Task ID is required";
         if (name.length == 0)
             return "Task name is required";
+        if (assignee.value.length == 0)
+            return "Assignee is required";
         return "";
     }
 }

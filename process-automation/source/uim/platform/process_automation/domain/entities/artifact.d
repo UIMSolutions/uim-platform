@@ -49,7 +49,7 @@ struct Artifact {
             .set("author", author)
             .set("category", category)
             .set("tags", tags.toJson)
-            .set("dependencies", dependencies.map!(d => d.toJson()).array)
+            .set("dependencies", dependencies.map!(d => d.toJson()).array.toJson)
             .set("contentUrl", contentUrl)
             .set("downloadCount", downloadCount)
             .set("rating", rating)

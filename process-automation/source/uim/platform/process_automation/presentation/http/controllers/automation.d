@@ -39,7 +39,7 @@ class AutomationController : PlatformController {
             CreateAutomationRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.id = AutomationId(j.getString("id"));
+            r.automationId = AutomationId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -47,7 +47,7 @@ class AutomationController : PlatformController {
             r.version_ = j.getString("version");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = automationUsecase.create(r);
+            auto result = automationUsecase.createAutomation(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -98,12 +98,13 @@ class AutomationController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
-            if (!automationUsecase.hasAutomation(tenantId, id)) {
+            
+            auto a = automationUsecase.getAutomation(tenantId, id);
+            if (a.isNull) {
                 writeError(res, 404, "Automation not found");
                 return;
             }
 
-            auto a = automationUsecase.getAutomation(tenantId, id);
             auto resp = Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
@@ -131,7 +132,7 @@ class AutomationController : PlatformController {
             auto j = req.json;
             UpdateAutomationRequest r;
             r.tenantId = tenantId;
-            r.id = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            r.automationId = AutomationId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

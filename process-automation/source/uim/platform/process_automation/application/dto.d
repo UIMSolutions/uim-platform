@@ -112,7 +112,7 @@ struct ClaimTaskRequest {
 
 struct CreateDecisionRequest {
     TenantId tenantId;
-    string projectId;
+    ProjectId projectId;
     DecisionId decisionId;
     string name;
     string description;

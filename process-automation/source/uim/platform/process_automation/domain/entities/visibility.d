@@ -24,7 +24,7 @@ struct VisibilityMetric {
         return Json.emptyObject
             .set("id", id)
             .set("name", name)
-            .set("type", type.toString())
+            .set("type", type.to!string())
             .set("sourceField", sourceField)
             .set("unit", unit)
             .set("warningThreshold", warningThreshold)

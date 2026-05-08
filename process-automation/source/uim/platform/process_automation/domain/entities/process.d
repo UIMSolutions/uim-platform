@@ -78,8 +78,8 @@ struct Process {
             .set("status", status.to!string())
             .set("category", category.to!string())
             .set("version", version_)
-            .set("steps", steps.map!(step => step.toJson()).array)
-            .set("variables", variables.map!(var => var.toJson()).array);
+            .set("steps", steps.map!(step => step.toJson()).array.toJson)
+            .set("variables", variables.map!(var => var.toJson()).array.toJson);
 
         return j;
     }

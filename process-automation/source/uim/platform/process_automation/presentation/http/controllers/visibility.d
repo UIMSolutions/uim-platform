@@ -37,7 +37,7 @@ class VisibilityController : PlatformController {
             auto j = req.json;
             CreateVisibilityRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.visibilityId = VisibilityId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.dashboardType = j.getString("dashboardType");
@@ -103,10 +103,10 @@ class VisibilityController : PlatformController {
                 .set("description", v.description)
                 .set("status", v.status.to!string)
                 .set("dashboardType", v.dashboardType.to!string)
-                .set("processIds", stringsToJsonArray(v.processIds))
+                .set("processIds", v.processIds.map!(pid => Json(pid.value)).array.toJson)
                 .set("refreshIntervalSeconds", Json(v.refreshIntervalSeconds))
-                .set("createdBy", Json(v.createdBy))
-                .set("updatedBy", Json(v.updatedBy))
+                .set("createdBy", Json(v.createdBy.value))
+                .set("updatedBy", Json(v.updatedBy.value))
                 .set("createdAt", Json(v.createdAt))
                 .set("updatedAt", Json(v.updatedAt));
 

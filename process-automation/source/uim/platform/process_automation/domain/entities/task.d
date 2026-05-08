@@ -16,6 +16,14 @@ struct TaskComment {
     UserId userId;
     string text;
     long createdAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id.value)
+            .set("userId", userId.value)
+            .set("text", text)
+            .set("createdAt", createdAt);
+    }
 }
 
 struct TaskAttachment {
@@ -25,6 +33,16 @@ struct TaskAttachment {
     long sizeBytes;
     string url;
     long uploadedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("id", id.value)
+            .set("name", name)
+            .set("contentType", contentType)
+            .set("sizeBytes", sizeBytes)
+            .set("url", url)
+            .set("uploadedAt", uploadedAt);
+    }
 }
 
 struct PATask {
@@ -56,7 +74,7 @@ struct PATask {
             .set("type", type.to!string())
             .set("status", status.to!string())
             .set("priority", priority.to!string())
-            .set("assignee", assignee)
+            .set("assignee", assignee.value)
             .set("candidateUsers", candidateUsers.map!(u => u.value).array.toJson)
             .set("candidateGroups", candidateGroups.toJson)
             .set("formId", formId)

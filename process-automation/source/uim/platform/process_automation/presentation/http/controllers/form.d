@@ -39,7 +39,7 @@ class FormController : PlatformController {
             CreateFormRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.id = FormId(j.getString("id"));
+            r.formId = FormId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -74,11 +74,8 @@ class FormController : PlatformController {
                     .set("description", f.description)
                     .set("status", f.status.to!string)
                     .set("version", f.version_)
-                    .set("createdAt", f.createdAt);
-
-                
-
-                .set("updatedAt", f.updatedAt);
+                    .set("createdAt", f.createdAt)
+                    .set("updatedAt", f.updatedAt);
             }
 
             auto resp = Json.emptyObject
@@ -128,7 +125,7 @@ class FormController : PlatformController {
             auto j = req.json;
             UpdateFormRequest r;
             r.tenantId = tenantId;
-            r.id = FormId(extractIdFromPath(req.requestURI.to!string));
+            r.formId = FormId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
