@@ -41,7 +41,7 @@ class CommunicationArrangementController : PlatformController {
     try {
       auto j = req.json;
       CreateCommunicationArrangementRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");

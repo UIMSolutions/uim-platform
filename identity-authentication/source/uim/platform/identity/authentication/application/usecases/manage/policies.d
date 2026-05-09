@@ -32,7 +32,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
     return PolicyResponse(policy.id.value, "");
   }
 
-  AuthorizationPolicy getPolicy(PolicyId id) {
+  AuthorizationPolicy getPolicy(TenantId tenantId, PolicyId id) {
     return policyRepo.findById(tenantId, id);
   }
 
@@ -40,8 +40,12 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
     return policyRepo.findByTenant(tenantId);
   }
 
-  string deletePolicy(PolicyId id) {
-    policyRepo.removeById(id);
-    return "";
+  CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
+    auto policy = policyRepo.findById(tenantId, id);
+    if (policy.id.value == "") {
+      return CommandResult(false, "", "Policy not found.");
+    }
+    policyRepo.removeById(tenantId, id);
+    return CommandResult(true, policy.id.value, "Policy deleted successfully.");
   }
 }

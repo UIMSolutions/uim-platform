@@ -33,7 +33,7 @@ class InferenceEngine {
   /// Check whether a deployment is available for inference.
   bool isDeploymentReady(DeploymentId deploymenttenantId, id tenantId) {
     auto dep = deploymentRepo.findById(deploymenttenantId, id);
-    if (dep is null)
+    if (dep.isNull)
       return false;
     return dep.status == DeploymentStatus.active;
   }
@@ -41,7 +41,7 @@ class InferenceEngine {
   /// Process an inference request: validate, run prediction, store result.
   InferenceResult* predict(InferenceRequestId requesttenantId, id tenantId) {
     auto request = requestRepo.findById(requesttenantId, id);
-    if (request is null)
+    if (request.isNull)
       return null;
 
     if (!isDeploymentReady(request.deploymenttenantId, id)) {

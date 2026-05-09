@@ -40,7 +40,7 @@ class BlockingController : PlatformController {
     try {
       auto j = req.json;
       CreateBlockingRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = getStrings(j, "targetSystems");
@@ -61,7 +61,7 @@ class BlockingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
       BlockingRequest[] items = statusParam.length > 0 
@@ -83,7 +83,7 @@ class BlockingController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Blocking request not found");
@@ -99,7 +99,7 @@ class BlockingController : PlatformController {
       auto j = req.json;
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.status = parseBlockingStatus(j.getString("status"));
 
       auto result = usecase.updateStatus(r);
@@ -118,7 +118,7 @@ class BlockingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

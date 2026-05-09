@@ -27,17 +27,25 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
 
   AppResponse createApplication(CreateAppRequest req) {
     auto now = Clock.currStdTime();
-    auto app = Application(randomUUID().toString(), req.tenantId, req.name,
-        req.description, req.protocol, randomUUID().toString(), // clientId
-        randomUUID()
-          .toString(), // clientSecret
-        req.redirectUris, req.allowedScopes, req.samlEntityId,
-        req.samlAcsUrl, "", true, now, now);
+    
+    Application app;
+    app.initEntity(req.tenantId);
+    app.name = req.name;
+    app.description = req.description;
+    app.protocol = req.protocol;
+    app.clientId = randomUUID().toString();
+    app.clientSecret = randomUUID().toString();
+    app.redirectUris = req.redirectUris;
+    app.allowedScopes = req.allowedScopes;
+    app.samlEntityId = req.samlEntityId;
+    app.samlAcsUrl = req.samlAcsUrl;
+    app.active = true;
+
     appRepo.save(app);
     return AppResponse(app.id, app.clientId, app.clientSecret, "");
   }
 
-  Application getApplication(ApplicationId id) {
+  Application getApplication(TenantId tenantId, ApplicationId id) {
     return appRepo.findById(tenantId, id);
   }
 
@@ -46,8 +54,8 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   string updateApplication(UpdateAppRequest req) {
-    auto app = appRepo.findById(req.applicationId);
-    if (app == Application.init)
+    auto app = appRepo.findById(req.tenantId, req.applicationId);
+    if (app.isNull)
       return "Application not found";
 
     if (req.name.length > 0)
@@ -62,8 +70,12 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteApplication(ApplicationId id) {
-    appRepo.removeById(id);
-    return "";
+  CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
+    auto app = appRepo.findById(tenantId, id);
+    if (app.isNull)      
+      return CommandResult(false, "", "Application not found.");
+
+    appRepo.remove(app);
+    return CommandResult(true, app.id.value, "Application deleted successfully.");
   }
 }

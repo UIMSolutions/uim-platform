@@ -70,7 +70,7 @@ class SystemInstanceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto instances = usecase.listInstances(tenantId);
       auto arr = instances.map!(inst => inst.toJson).array.toJson;
 

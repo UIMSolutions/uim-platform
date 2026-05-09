@@ -12,7 +12,7 @@ public {
   import uim.platform.identity.authentication.domain.entities.policy;
   import uim.platform.identity.authentication.domain.entities.risk_rule;
   import uim.platform.identity.authentication.domain.entities.session;
-  import uim.platform.identity.authentication.domain.entities.tenant;
+  // import uim.platform.identity.authentication.domain.entities.tenant;
   import uim.platform.identity.authentication.domain.entities.token;
   import uim.platform.identity.authentication.domain.entities.user;
 }

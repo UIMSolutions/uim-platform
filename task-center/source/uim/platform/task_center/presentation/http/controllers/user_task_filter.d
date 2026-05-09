@@ -32,7 +32,7 @@ class UserTaskFilterController : PlatformController {
         try {
             auto j = req.json;
             CreateUserTaskFilterRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.userId = j.getString("userId");
             r.name = j.getString("name");
@@ -55,7 +55,7 @@ class UserTaskFilterController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -88,7 +88,7 @@ class UserTaskFilterController : PlatformController {
             if (path.endsWith("/default"))
                 return;
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto f = usecase.getById(tenantId, id);
             if (f.isNull) {
@@ -108,7 +108,7 @@ class UserTaskFilterController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateUserTaskFilterRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -135,7 +135,7 @@ class UserTaskFilterController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.setDefault(tenantId, id);
             if (result.success) {
@@ -156,7 +156,7 @@ class UserTaskFilterController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteUserTaskFilter(tenantId, id);
             if (result.success) {

@@ -35,7 +35,7 @@ class AutomationRuleController : PlatformController {
         try {
             auto j = req.json;
             CreateAutomationRuleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.templateId = j.getString("templateId");
             r.id = j.getString("id");
             r.name = j.getString("name");
@@ -61,7 +61,7 @@ class AutomationRuleController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto rules = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -131,7 +131,7 @@ class AutomationRuleController : PlatformController {
 
             auto j = req.json;
             UpdateAutomationRuleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

@@ -35,7 +35,7 @@ class SecurityEventController : PlatformController {
     try {
       auto j = req.json;
       auto r = WriteSecurityEventRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = j.getString("userId");
       r.userName = j.getString("userName");
       r.eventType = j.getString("eventType");

@@ -71,7 +71,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteCatalog(CatalogId id) {
+  CommandResult deleteCatalog(CatalogId id) {
     if (!catalogRepo.existsById(id))
       return "Catalog not found";
 

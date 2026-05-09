@@ -35,7 +35,7 @@ class TraceController : PlatformController {
     try {
       auto j = req.json;
       IngestSpanRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.traceId = j.getString("traceId");
       r.parentSpanId = j.getString("parentSpanId");
       r.operationName = j.getString("operationName");
@@ -64,7 +64,7 @@ class TraceController : PlatformController {
   private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       IngestSpanBatchRequest batchReq;
       batchReq.tenantId = tenantId;
@@ -99,7 +99,7 @@ class TraceController : PlatformController {
   private void handleGetTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto traceId = extractIdFromPath(req.requestURI.to!string);
 
       auto spans = usecase.getTrace(tenantId, traceId);

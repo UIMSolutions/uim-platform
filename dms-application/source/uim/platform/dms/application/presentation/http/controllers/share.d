@@ -41,7 +41,7 @@ class ShareController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateShareRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.documentId = DocumentId(j.getString("documentId"));
       r.shareType = j.getString("shareType").to!ShareType;
       r.sharedWith = j.getString("sharedWith");
@@ -65,7 +65,7 @@ class ShareController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto shares = usecase.listShares(tenantId);
 
       auto arr = shares.map!(share => share.toJson).array.toJson;
@@ -83,7 +83,7 @@ class ShareController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto share = usecase.getShare(tenantId, id);
       if (share.isNull) {
         writeError(res, 404, "Share not found");
@@ -98,7 +98,7 @@ class ShareController : PlatformController {
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -117,7 +117,7 @@ class ShareController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

@@ -68,7 +68,7 @@ class AccessRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto rules = usecase.listAccessRules(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
@@ -87,7 +87,7 @@ class AccessRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto rule = usecase.getAccessRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Access rule not found");
@@ -104,7 +104,7 @@ class AccessRuleController : PlatformController {
       auto id = RuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateAccessRuleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.urlPathPrefix = j.getString("urlPathPrefix");
       r.policy = j.getString("policy");
@@ -127,7 +127,7 @@ class AccessRuleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = RuleId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteAccessRule(tenantId, id);
       if (result.success) {

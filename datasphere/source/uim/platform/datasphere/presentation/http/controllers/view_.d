@@ -34,7 +34,7 @@ class ViewController : PlatformController {
     try {
       auto j = req.json;
       CreateViewRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -130,7 +130,7 @@ class ViewController : PlatformController {
       auto j = req.json;
 
       UpdateViewRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.viewId = ViewId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");

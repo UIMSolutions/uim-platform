@@ -40,7 +40,7 @@ class VersionController : PlatformController {
   private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.checkOut(tenantId, docId, userId);
@@ -65,7 +65,7 @@ class VersionController : PlatformController {
       auto j = req.json;
       auto r = CheckInRequest();
       r.documentId = DocumentId(j.getString("documentId"));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.isMajor = j.getBoolean("isMajor", true);
       r.comment = j.getString("comment");
@@ -95,7 +95,7 @@ class VersionController : PlatformController {
   private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto result = usecase.cancelCheckOut(tenantId, docId);
       if (result.isSuccess) {
@@ -117,7 +117,7 @@ class VersionController : PlatformController {
   private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto versions = usecase.getAllVersions(tenantId, docId);
       auto arr = versions.map!(v => v.toJson).array.toJson;
 
@@ -136,7 +136,7 @@ class VersionController : PlatformController {
   private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto ver = usecase.getCurrentVersion(tenantId, docId);
       if (ver.isNull) {
         writeError(res, 404, "No current version found");

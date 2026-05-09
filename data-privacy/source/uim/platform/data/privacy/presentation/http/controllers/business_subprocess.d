@@ -35,12 +35,12 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto j = req.json;
       CreateBusinessSubprocessRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.parentProcessId = BusinessProcessId(j.getString("parentProcessId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes");
-      r.dataCategories = getStrings(j, "dataCategories");
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!DataCategoryId).array;
       r.owner = UserId(j.getString("owner"));
 
       auto result = usecase.createSubprocess(r);
@@ -58,7 +58,7 @@ class BusinessSubprocessController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listSubprocesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class BusinessSubprocessController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getSubprocess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business subprocess not found");
@@ -92,7 +92,7 @@ class BusinessSubprocessController : PlatformController {
       auto j = req.json;
       UpdateBusinessSubprocessRequest r;
       r.id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purposes = getStrings(j, "purposes").map!(p => PurposeId(p)).array;
@@ -115,7 +115,7 @@ class BusinessSubprocessController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

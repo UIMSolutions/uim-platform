@@ -43,7 +43,7 @@ class ServiceBindingController : PlatformController {
       r.serviceInstanceId = j.getString("serviceInstanceId");
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.secretName = j.getString("secretName");

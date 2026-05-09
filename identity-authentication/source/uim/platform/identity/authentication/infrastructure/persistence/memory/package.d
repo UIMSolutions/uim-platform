@@ -6,14 +6,14 @@
 module uim.platform.identity.authentication.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.app;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.group;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.idp_config;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.policy;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rule;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.session;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.tenant;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.token;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.user;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.applications;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.groups;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.idp_configs;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.policies;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rules;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.sessions;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.tenants;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.tokens;
+  import uim.platform.identity.authentication.infrastructure.persistence.memory.users;
 
 }

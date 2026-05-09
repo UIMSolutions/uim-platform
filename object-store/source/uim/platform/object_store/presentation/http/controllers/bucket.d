@@ -41,7 +41,7 @@ class BucketController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateBucketRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.region = j.getString("region");
       r.storageClass = j.getString("storageClass");
@@ -67,7 +67,7 @@ class BucketController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto buckets = usecase.listBuckets(tenantId);
       auto arr = buckets.map!(b => b.toJson).array.toJson;

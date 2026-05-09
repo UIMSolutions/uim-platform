@@ -34,7 +34,7 @@ class ActivityController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto activities = usecase.listActivities(tenantId);
       auto arr = activities.map!(a => a.toJson).array.toJson;
@@ -52,7 +52,7 @@ class ActivityController : PlatformController {
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject

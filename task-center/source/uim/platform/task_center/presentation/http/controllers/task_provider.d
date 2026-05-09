@@ -34,7 +34,7 @@ class TaskProviderController : PlatformController {
         try {
             auto j = req.json;
             CreateTaskProviderRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -62,7 +62,7 @@ class TaskProviderController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto providers = usecase.list(tenantId);
 
             auto jarr = providers.map!(p => toJson(p)).array;{
@@ -85,7 +85,7 @@ class TaskProviderController : PlatformController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith("/sync")) return;
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto p = usecase.getById(tenantId, id);
             if (p.isNull) {
@@ -104,7 +104,7 @@ class TaskProviderController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskProviderRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -134,7 +134,7 @@ class TaskProviderController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.activate(tenantId, id);
             if (result.success) {
@@ -157,7 +157,7 @@ class TaskProviderController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
@@ -180,7 +180,7 @@ class TaskProviderController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 5]; // remove "/sync"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.sync(tenantId, id);
             if (result.success) {
@@ -200,7 +200,7 @@ class TaskProviderController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteTaskProvider(tenantId, TaskProviderId(id));
             if (result.success) {

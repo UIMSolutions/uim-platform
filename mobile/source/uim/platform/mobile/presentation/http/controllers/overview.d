@@ -26,7 +26,7 @@ class OverviewController : PlatformController {
 
   private void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);
       auto resp = Json.emptyObject
         .set("totalApps", Json(summary.totalApps))

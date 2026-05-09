@@ -41,7 +41,7 @@ class PersonalDataModelController : PlatformController {
     try {
       auto j = req.json;
       CreatePersonalDataModelRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
       r.category = parseCategory(j.getString("category"));
@@ -69,7 +69,7 @@ class PersonalDataModelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
 
       PersonalDataModel[] items = catParam.length > 0
@@ -91,7 +91,7 @@ class PersonalDataModelController : PlatformController {
 
   private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listSpecialCategories(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -109,8 +109,9 @@ class PersonalDataModelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
+      auto id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+
       auto entry = usecase.getModel(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Personal data model not found");
@@ -124,10 +125,12 @@ class PersonalDataModelController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdatePersonalDataModelRequest r;
-      r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+      r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
       r.category = parseCategory(j.getString("category"));
@@ -154,8 +157,9 @@ class PersonalDataModelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
+      auto id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+ 
       usecase.deleteModel(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
@@ -163,81 +167,4 @@ class PersonalDataModelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(const PersonalDataModel e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("fieldName", e.fieldName)
-      .set("fieldDescription", e.fieldDescription)
-      .set("category", e.category.to!string)
-      .set("sensitivity", e.sensitivity.to!string)
-      .set("sourceSystem", e.sourceSystem)
-      .set("sourceEntity", e.sourceEntity)
-      .set("subjectType", e.subjectType.to!string)
-      .set("isSpecialCategory", e.isSpecialCategory)
-      .set("legalReference", e.legalReference)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt);
-  }
-
-  private static PersonalDataCategory parseCategory(string s) {
-    switch (s) {
-    case "identification":
-      return PersonalDataCategory.identification;
-    case "contact":
-      return PersonalDataCategory.contact;
-    case "financial":
-      return PersonalDataCategory.financial;
-    case "health":
-      return PersonalDataCategory.health;
-    case "biometric":
-      return PersonalDataCategory.biometric;
-    case "ethnic":
-      return PersonalDataCategory.ethnic;
-    case "political":
-      return PersonalDataCategory.political;
-    case "religious":
-      return PersonalDataCategory.religious;
-    case "tradeUnion":
-      return PersonalDataCategory.tradeUnion;
-    case "genetic":
-      return PersonalDataCategory.genetic;
-    case "criminal":
-      return PersonalDataCategory.criminal;
-    case "location":
-      return PersonalDataCategory.location;
-    case "behavioral":
-      return PersonalDataCategory.behavioral;
-    default:
-      return PersonalDataCategory.identification;
-    }
-  }
-
-  private static DataSensitivity parseSensitivity(string s) {
-    switch (s) {
-    case "sensitive":
-      return DataSensitivity.sensitive;
-    case "highlyConfidential":
-      return DataSensitivity.highlyConfidential;
-    default:
-      return DataSensitivity.standard;
-    }
-  }
-
-  private static DataSubjectType parseSubjectType(string s) {
-    switch (s) {
-    case "employee":
-      return DataSubjectType.employee;
-    case "customer":
-      return DataSubjectType.customer;
-    case "vendor":
-      return DataSubjectType.vendor;
-    case "partner":
-      return DataSubjectType.partner;
-    case "applicant":
-      return DataSubjectType.applicant;
-    default:
-      return DataSubjectType.naturalPerson;
-    }
-  }
 }

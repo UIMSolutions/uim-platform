@@ -23,7 +23,7 @@ class DeletionRequestController : PlatformController {
         try {
             auto j = req.json;
             CreateDeletionRequestRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.dataSubjectId = j.getString("dataSubjectId");
             r.applicationGroupId = j.getString("applicationGroupId");
             r.actionType = j.getString("actionType");

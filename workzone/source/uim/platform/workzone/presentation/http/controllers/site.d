@@ -39,7 +39,7 @@ class SiteController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateSiteRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.alias_ = j.getString("alias");
@@ -63,7 +63,7 @@ class SiteController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto arr = sites.map!(s => s.toJson).array.toJson;
 
@@ -81,7 +81,7 @@ class SiteController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto s = useCase.getSite(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Site not found");
@@ -98,7 +98,7 @@ class SiteController : PlatformController {
       auto j = req.json;
       auto r = UpdateSiteRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.themeId = j.getString("themeId");
@@ -116,7 +116,7 @@ class SiteController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteSite(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -33,8 +33,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Field name is required");
 
     auto rule = CleansingRule();
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    rule.initEntity(req.tenantId);
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
@@ -52,24 +51,23 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     rule.removeDiacritics = req.removeDiacritics;
     rule.category = req.category;
     rule.priority = req.priority;
-    rule.createdAt = Clock.currStdTime();
-    rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
     return CommandResult(true, rule.id.value, "");
   }
 
   CommandResult updateCleansingRule(UpdateCleansingRuleRequest req) {
-    if (req.ruleId.isNull)
+    if (req.ruleId.isEmpty)
       return CommandResult(false, "", "Rule ID is required");
 
     auto existing = repo.findById(req.tenantId, req.ruleId);
     if (existing.isNull)
       return CommandResult(false, "", "Cleansing rule not found");
+
     if (existing.tenantId != req.tenantId)
       return CommandResult(false, "", "Tenant mismatch");
 
-    auto rule = *existing;
+    auto rule = existing;
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
@@ -94,14 +92,15 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCleansingRule(TenantId tenantId, CleansingRuleId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+    auto rule = repo.findById(tenantId, id);
+    if (rule.isNull)
       return CommandResult(false, "", "Cleansing rule not found");
-    if (entity.tenantId != tenantId)
+
+    if (rule.tenantId != tenantId)
       return CommandResult(false, "", "Tenant mismatch");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(rule);
+    return CommandResult(true, rule.id.value, "");
   }
 
   CleansingRule getCleansingRule(TenantId tenantId, CleansingRuleId id) {

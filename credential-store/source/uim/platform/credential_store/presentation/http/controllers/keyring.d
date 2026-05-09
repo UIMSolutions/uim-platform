@@ -36,7 +36,7 @@ class KeyringController : PlatformController {
     try {
       auto j = req.json;
       CreateKeyringRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
       r.name = j.getString("name");
       r.metadata = j.getString("metadata");
@@ -127,7 +127,7 @@ class KeyringController : PlatformController {
       auto j = req.json;
       RotateKeyringRequest r;
       r.keyringId = j.getString("keyringId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
 
       auto result = keyrings.rotate(r);
       if (result.success) {

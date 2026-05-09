@@ -36,7 +36,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return GroupResponse(group.id.value, "");
   }
 
-  IdaGroup getGroup(GroupId id) {
+  IdaGroup getGroup(TenantId tenantId, GroupId id) {
     return groupRepo.findById(tenantId, id);
   }
 
@@ -44,10 +44,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string addMember(GroupId groupId, UserId userId) {
+  string addMember(TenantId tenantId, GroupId groupId, UserId userId) {
     import uim.platform.identity.authentication.domain.entities.user : User;
 
-    auto group = groupRepo.findById(groupId);
+    auto group = groupRepo.findById(tenantId, groupId);
     if (group == IdaGroup.init)
       return "IdaGroup not found";
 
@@ -69,8 +69,8 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string removeMember(GroupId groupId, UserId userId) {
-    auto group = groupRepo.findById(groupId);
+  string removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
+    auto group = groupRepo.findById(tenantId, groupId);
     if (group == IdaGroup.init)
       return "IdaGroup not found";
 
@@ -85,8 +85,12 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteGroup(GroupId id) {
-    groupRepo.removeById(id);
-    return "";
+  CommandResult deleteGroup(TenantId tenantId, GroupId id) {
+    auto group = groupRepo.findById(tenantId, id);
+    if (group == IdaGroup.init)
+      return CommandResult("IdaGroup not found");  
+
+    groupRepo.removeById(tenantId, id);
+    return CommandResult("");
   }
 }

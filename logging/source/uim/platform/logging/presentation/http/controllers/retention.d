@@ -89,7 +89,7 @@ class RetentionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       auto policy = usecase.getRetentionPolicy(tenantId, policyId);
       if (policy.isNull) {
@@ -144,7 +144,7 @@ class RetentionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
       usecase.deleteRetentionPolicy(tenantId, policyId);
 

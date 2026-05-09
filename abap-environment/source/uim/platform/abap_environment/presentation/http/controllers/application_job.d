@@ -42,7 +42,7 @@ class ApplicationJobController : PlatformController {
     try {
       auto j = req.json;
       CreateApplicationJobRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.name = j.getString("name");
       r.description = j.getString("description");

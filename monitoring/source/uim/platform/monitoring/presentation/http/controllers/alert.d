@@ -83,7 +83,7 @@ class AlertController : PlatformController {
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.acknowledgeAlert(r);
@@ -107,7 +107,7 @@ class AlertController : PlatformController {
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.resolveAlert(r);

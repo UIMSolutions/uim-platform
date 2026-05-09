@@ -35,7 +35,7 @@ class InformationReportController : PlatformController {
     try {
       auto j = req.json;
       CreateInformationReportRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.format = j.getString("format");
@@ -58,7 +58,7 @@ class InformationReportController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listReports(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class InformationReportController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getReport(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Information report not found");
@@ -95,7 +95,7 @@ class InformationReportController : PlatformController {
       auto j = req.json;
       UpdateInformationReportStatusRequest r;
       r.id = InformationReportId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.status = parseReportStatus(j.getString("status"));
       r.downloadUrl = j.getString("downloadUrl");
       r.totalRecords = jsonLong(j, "totalRecords");
@@ -115,7 +115,7 @@ class InformationReportController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

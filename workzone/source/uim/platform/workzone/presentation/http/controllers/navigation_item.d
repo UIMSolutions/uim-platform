@@ -38,7 +38,7 @@ class NavigationItemController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateNavigationItemRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.siteId = j.getString("siteId");
       r.title = j.getString("title");
       r.icon = j.getString("icon");
@@ -66,7 +66,7 @@ class NavigationItemController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(tenantId, siteId);
       auto arr = items.map!(n => n.toJson).array;
@@ -85,7 +85,7 @@ class NavigationItemController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto n = useCase.getNavigationItem(tenantId, id);
       if (n.isNull) {
         writeError(res, 404, "Navigation item not found");
@@ -103,7 +103,7 @@ class NavigationItemController : PlatformController {
       auto j = req.json;
       auto r = UpdateNavigationItemRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.icon = j.getString("icon");
       r.targetUrl = j.getString("targetUrl");
@@ -123,7 +123,7 @@ class NavigationItemController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteNavigationItem(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

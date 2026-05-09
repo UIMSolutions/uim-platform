@@ -40,7 +40,7 @@ class ContentController : PlatformController {
       auto j = req.json;
       auto r = CreateContentRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
@@ -80,7 +80,7 @@ class ContentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto query = req.params.get("q", "");
       ContentItem[] items;
@@ -105,7 +105,7 @@ class ContentController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto item = useCase.getContent(tenantId, id);
       if (item.isNull) {
         writeError(res, 404, "Content not found");
@@ -122,7 +122,7 @@ class ContentController : PlatformController {
       auto j = req.json;
       auto r = UpdateContentRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
@@ -155,7 +155,7 @@ class ContentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteContent(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {
@@ -166,7 +166,7 @@ class ContentController : PlatformController {
   private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.publishContent(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

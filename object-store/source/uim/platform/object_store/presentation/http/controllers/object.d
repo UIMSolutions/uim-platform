@@ -43,7 +43,7 @@ class ObjectController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateObjectRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.bucketId = j.getString("bucketId");
       r.key = j.getString("key");
       r.contentType = j.getString("contentType");
@@ -157,7 +157,7 @@ class ObjectController : PlatformController {
     try {
       auto j = req.json;
       auto r = CopyObjectRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.sourceBucketId = j.getString("sourceBucketId");
       r.sourceKey = j.getString("sourceKey");
       r.destBucketId = j.getString("destBucketId");

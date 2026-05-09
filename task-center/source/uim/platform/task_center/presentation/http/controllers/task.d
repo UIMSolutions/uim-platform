@@ -36,7 +36,7 @@ class TaskController : PlatformController {
         try {
             auto j = req.json;
             CreateTaskRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.providerId = j.getString("providerId");
@@ -70,7 +70,7 @@ class TaskController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto assignee = params.get("assignee", "");
             auto status = params.get("status", "");
@@ -108,7 +108,7 @@ class TaskController : PlatformController {
             if (pathEndsWithAction(path))
                 return;
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto t = usecase.getById(tenantId, id);
             if (t.isNull) {
@@ -128,7 +128,7 @@ class TaskController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.title = j.getString("title");
             r.description = j.getString("description");
@@ -159,7 +159,7 @@ class TaskController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             auto userId = j.getString("userId");
 
@@ -185,7 +185,7 @@ class TaskController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.release(tenantId, id);
             if (result.success) {
@@ -209,7 +209,7 @@ class TaskController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             auto toUser = j.getString("toUser");
             auto comment = j.getString("comment");
@@ -236,7 +236,7 @@ class TaskController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.complete(tenantId, id);
             if (result.success) {
@@ -260,7 +260,7 @@ class TaskController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.cancel(tenantId, id);
             if (result.success) {
@@ -282,7 +282,7 @@ class TaskController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto result = usecase.deleteTask(tenantId, TaskId(id));
             if (result.success) {
                 auto resp = Json.emptyObject

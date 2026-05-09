@@ -38,7 +38,7 @@ class MonitoringController : PlatformController {
 
   private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listJobSummaries(tenantId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -57,7 +57,7 @@ class MonitoringController : PlatformController {
   private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getJobSummary(tenantId, id);
       if (summary.jobId.isEmpty) {
         writeError(res, 404, "Job not found");
@@ -72,7 +72,7 @@ class MonitoringController : PlatformController {
   private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto logs = usecase.getJobLogs(tenantId, jobId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -91,7 +91,7 @@ class MonitoringController : PlatformController {
 
   private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listProvisionedEntities(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -109,7 +109,7 @@ class MonitoringController : PlatformController {
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject

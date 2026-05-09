@@ -35,7 +35,7 @@ class NotificationController : PlatformController {
         try {
             auto j = req.json;
             CreateNotificationRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.instanceId = j.getString("instanceId");
             r.id = j.getString("id");
             r.recipientId = j.getString("recipientId");
@@ -62,7 +62,7 @@ class NotificationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto notifications = notifications.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -127,7 +127,7 @@ class NotificationController : PlatformController {
 
             auto j = req.json;
             UpdateNotificationRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
 

@@ -59,7 +59,7 @@ class ApiClientController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto clients = useCase.listClients(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(clients.length);

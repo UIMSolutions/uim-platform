@@ -30,7 +30,7 @@ class ConfigurationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto config = usecase.getById(tenantId);
 
             auto resp = Json.emptyObject
@@ -51,7 +51,7 @@ class ConfigurationController : PlatformController {
             auto j = req.json;
 
             UpdateConfigurationRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.defaultRetries = j.getInteger("defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);

@@ -30,7 +30,7 @@ class TaskAttachmentController : PlatformController {
         try {
             auto j = req.json;
             CreateTaskAttachmentRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.taskId = j.getString("taskId");
             r.fileName = j.getString("fileName");
@@ -55,7 +55,7 @@ class TaskAttachmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto taskId = params.get("taskId", "");
 
@@ -83,7 +83,7 @@ class TaskAttachmentController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
@@ -100,7 +100,7 @@ class TaskAttachmentController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = TaskAttachmentId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteTaskAttachment(tenantId, id);
             if (result.success) {

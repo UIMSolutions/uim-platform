@@ -42,7 +42,7 @@ class TargetSystemController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateTargetSystemRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
@@ -64,7 +64,7 @@ class TargetSystemController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listTargetSystems(tenantId);
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -82,7 +82,7 @@ class TargetSystemController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto sys = usecase.getTargetSystem(tenantId, id);
       if (sys.isNull) {
         writeError(res, 404, "Target system not found");
@@ -100,7 +100,7 @@ class TargetSystemController : PlatformController {
       auto j = req.json;
       auto r = UpdateTargetSystemRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
@@ -123,7 +123,7 @@ class TargetSystemController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -143,7 +143,7 @@ class TargetSystemController : PlatformController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -161,7 +161,7 @@ class TargetSystemController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteTargetSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

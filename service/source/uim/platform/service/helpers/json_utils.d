@@ -119,7 +119,7 @@ unittest {
   assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
       "a", "b"
     ]);
-  assert(getStrings(parseJsonString(`{}`), "tags") is null);
+  assert(getStrings(parseJsonString(`{}`), "tags").isNull);
 }
 
 /// Read a string array from JSON.
@@ -566,7 +566,7 @@ string getString(Json j, string key) {
     if (!j.isObject)
         return "";
     auto v = key in j;
-    if (v is null)
+    if (v.isNull)
         return "";
     if ((v).isString)
         return (v).get!string;
@@ -577,7 +577,7 @@ bool getBoolean(Json j, string key, bool default_ = false) {
     if (!j.isObject)
         return default_;
     auto v = key in j;
-    if (v is null)
+    if (v.isNull)
         return default_;
     if ((v).isBoolean)
         return (v).get!bool;
@@ -589,7 +589,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
     if (!j.isObject)
         return default_;
     auto v = key in j;
-    if (v is null)
+    if (v.isNull)
         return default_;
     if ((v).isInteger)
         return (v).get!long;
@@ -601,7 +601,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
 //     if (!j.isObject)
 //         return default_;
 //     auto v = key in j;
-//     if (v is null)
+//     if (v.isNull)
 //         return default_;
 //     if ((v).isInteger)
 //         return (v).get!long;

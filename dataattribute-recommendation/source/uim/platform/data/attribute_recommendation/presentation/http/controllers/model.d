@@ -41,7 +41,7 @@ class ModelController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateModelConfigRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -69,7 +69,7 @@ class ModelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listModelConfigs(tenantId);
       auto arr = items.map!(c => c.toJson).array.toJson;
@@ -89,9 +89,9 @@ class ModelController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto config = usecase.getModelConfig(tenantId, id);
-      if (config is null) {
+      if (config.isNull) {
         writeError(res, 404, "Model configuration not found");
         return;
       }
@@ -108,7 +108,7 @@ class ModelController : PlatformController {
       auto j = req.json;
       auto r = UpdateModelConfigRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.modelType = parseModelType(j.getString("modelType"));
@@ -138,7 +138,7 @@ class ModelController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -164,7 +164,7 @@ class ModelController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto r = StartTrainingRequest();
       r.modelConfigId = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.startTraining(r);
@@ -187,7 +187,7 @@ class ModelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteModelConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

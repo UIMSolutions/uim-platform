@@ -30,7 +30,7 @@ class TrustedCertificateController : PlatformController {
         try {
             auto j = req.json;
             CreateTrustedCertificateRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.customDomainId = j.getString("customDomainId");
             r.certificatePem = j.getString("certificatePem");
@@ -54,7 +54,7 @@ class TrustedCertificateController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto certs = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;

@@ -88,7 +88,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteTheme(ThemeId id) {
+  CommandResult deleteTheme(ThemeId id) {
     auto theme = themeRepo.findById(tenantId, id);
     if (theme == Theme.init)
       return "Theme not found";

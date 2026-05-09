@@ -36,7 +36,7 @@ class AppFileController : PlatformController {
     try {
       auto j = req.json;
       UploadAppFileRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.versionId = j.getString("versionId");
       r.filePath = j.getString("filePath");
       r.contentType = j.getString("contentType");
@@ -87,7 +87,7 @@ class AppFileController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
@@ -120,7 +120,7 @@ class AppFileController : PlatformController {
     try {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "File not found");
         return;
@@ -145,7 +145,7 @@ class AppFileController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       if (id.isEmpty) {
         writeError(res, 404, "File not found");

@@ -37,7 +37,7 @@ class ContentCacheController : PlatformController {
     try {
       auto j = req.json;
       CreateContentCacheRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.fileId = j.getString("fileId");
       r.filePath = j.getString("filePath");
       r.contentType = j.getString("contentType");
@@ -59,7 +59,7 @@ class ContentCacheController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class ContentCacheController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -116,7 +116,7 @@ class ContentCacheController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -132,7 +132,7 @@ class ContentCacheController : PlatformController {
 
   private void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.purgeExpired(tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

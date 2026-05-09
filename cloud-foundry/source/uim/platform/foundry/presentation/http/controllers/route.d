@@ -50,7 +50,7 @@ class RouteController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateRouteRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = j.getString("spaceId");
       r.domainId = j.getString("domainId");
       r.host = j.getString("host");
@@ -75,7 +75,7 @@ class RouteController : PlatformController {
 
   private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
 
       auto arr = items.map!(r => r.toJson).array.toJson;
@@ -92,7 +92,7 @@ class RouteController : PlatformController {
   private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RouteId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto r = useCase.getRoute(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Route not found");
@@ -107,7 +107,7 @@ class RouteController : PlatformController {
   private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RouteId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -126,7 +126,7 @@ class RouteController : PlatformController {
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = RouteId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
 
       auto result = useCase.mapRoute(r);
@@ -148,7 +148,7 @@ class RouteController : PlatformController {
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = routeId;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
 
       auto result = useCase.unmapRoute(r);
@@ -170,7 +170,7 @@ class RouteController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateDomainRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.ownerOrgId = j.getString("ownerOrgId");
       r.name = j.getString("name");
       r.scope_ = parseDomainScope(j.getString("scope"));
@@ -193,7 +193,7 @@ class RouteController : PlatformController {
 
   private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -212,7 +212,7 @@ class RouteController : PlatformController {
   private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DomainId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

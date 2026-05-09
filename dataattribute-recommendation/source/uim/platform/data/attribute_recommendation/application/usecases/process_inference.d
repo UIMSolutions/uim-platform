@@ -53,7 +53,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
 
     // Process immediately
     auto result = engine.predict(request.id, req.tenantId);
-    if (result is null)
+    if (result.isNull)
       return CommandResult(false, "", "Inference processing failed");
 
     return CommandResult(true, result.id.value, "");

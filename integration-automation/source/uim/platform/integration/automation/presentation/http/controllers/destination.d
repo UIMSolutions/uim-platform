@@ -41,7 +41,7 @@ class DestinationController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateDestinationRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemId = j.getString("systemId");
@@ -73,7 +73,7 @@ class DestinationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto destinations = useCase.listDestinations(tenantId);
 
       auto arr = destinations.map!(d => d.toJson).array.toJson;
@@ -91,7 +91,7 @@ class DestinationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto dest = useCase.getDestination(tenantId, id);
       if (dest.isNull) {
         writeError(res, 404, "Destination not found");
@@ -109,7 +109,7 @@ class DestinationController : PlatformController {
       auto j = req.json;
       auto r = UpdateDestinationRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemId = j.getString("systemId");
@@ -142,7 +142,7 @@ class DestinationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteDestination(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

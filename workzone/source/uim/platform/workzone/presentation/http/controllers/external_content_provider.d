@@ -37,7 +37,7 @@ class ExternalContentProviderController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateExternalContentProviderRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpointUrl = j.getString("endpointUrl");
@@ -62,7 +62,7 @@ class ExternalContentProviderController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto arr = providers.map!(p => p.toJson).array.toJson;
 
@@ -80,7 +80,7 @@ class ExternalContentProviderController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto p = useCase.getProvider(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Provider not found");
@@ -98,7 +98,7 @@ class ExternalContentProviderController : PlatformController {
       auto j = req.json;
       auto r = UpdateExternalContentProviderRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpointUrl = j.getString("endpointUrl");
@@ -119,7 +119,7 @@ class ExternalContentProviderController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteProvider(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -37,7 +37,7 @@ class DeploymentController : PlatformController {
     try {
       auto j = req.json;
       DeployApplicationRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
       r.versionId = j.getString("versionId");
       r.serviceInstanceId = j.getString("serviceInstanceId");
@@ -59,7 +59,7 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = getHistory.getByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class DeploymentController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;

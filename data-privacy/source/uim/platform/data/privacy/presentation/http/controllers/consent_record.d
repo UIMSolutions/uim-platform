@@ -41,7 +41,7 @@ class ConsentController : PlatformController {
     try {
       auto j = req.json;
       CreateConsentRecordRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.purpose = parsePurpose(j.getString("purpose"));
       r.channel = j.getString("channel");
@@ -65,7 +65,7 @@ class ConsentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
@@ -91,7 +91,7 @@ class ConsentController : PlatformController {
 
   private void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       ConsentRecord[] items;
@@ -115,7 +115,7 @@ class ConsentController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getConsent(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent record not found");
@@ -134,7 +134,7 @@ class ConsentController : PlatformController {
       auto j = req.json;
       RevokeConsentRequest r;
       r.id = ConsentRecordId(j.getString("id"));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
 
       auto result = usecase.revokeConsent(r);
       if (result.isSuccess()) {
@@ -152,7 +152,7 @@ class ConsentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

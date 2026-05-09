@@ -71,7 +71,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
 
   TrainingJobSummary getTrainingJob(TrainingJobId tenantId, id tenantId) {
     auto job = jobRepo.findById(tenantId, id);
-    if (job is null)
+    if (job.isNull)
       return TrainingJobSummary.init;
     return buildJobSummary(job, tenantId);
   }

@@ -36,7 +36,7 @@ class SearchController : PlatformController {
       
 
       SearchLogsRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.query = req.params.get("q", "");
       r.level = req.params.get("level", "");
       r.streamId = LogStreamId(req.params.get("streamId", ""));

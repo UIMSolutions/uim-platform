@@ -39,7 +39,7 @@ class CertificateController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateCertificateRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.certType = j.getString("type");
@@ -68,7 +68,7 @@ class CertificateController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto certs = usecase.listCertificates(tenantId);
       auto arr = certs.map!(c => c.toJson).array.toJson;
@@ -86,7 +86,7 @@ class CertificateController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;  
+      auto tenantId = req.getTenantId;  
       auto id = CertificateId(extractIdFromPath(req.requestURI));
 
       auto cert = usecase.getCertificate(tenantId, id);
@@ -105,7 +105,7 @@ class CertificateController : PlatformController {
       auto j = req.json;
       auto r = UpdateCertificateRequest();
       r.certificateId = CertificateId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
 
@@ -126,7 +126,7 @@ class CertificateController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteCertificate(tenantId, id);
       if (result.success) {

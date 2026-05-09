@@ -36,7 +36,7 @@ class DataModelController : PlatformController {
     try {
       auto j = req.json;
       CreateDataModelRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.namespace = j.getString("namespace");
       r.version_ = j.getString("version");
@@ -80,7 +80,7 @@ class DataModelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
 
       DataModel[] models = category.length > 0

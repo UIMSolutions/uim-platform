@@ -37,7 +37,7 @@ class RunLogController : PlatformController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto ids = extractIds(path);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto logs = usecase.listBySchedule(ids[1], ids[0], tenantId);
 
@@ -60,7 +60,7 @@ class RunLogController : PlatformController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto jobId = extractJobId(path);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto logs = usecase.listByJob(jobId, tenantId);
 
@@ -85,7 +85,7 @@ class RunLogController : PlatformController {
 
             UpdateRunLogRequest r;
             r.runLogId = runLogId;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.status = j.getString("status");
             r.statusMessage = j.getString("statusMessage");
             r.httpStatus = j.getInteger("httpStatus");

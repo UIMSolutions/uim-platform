@@ -36,7 +36,7 @@ class BusinessContextController : PlatformController {
     try {
       auto j = req.json;
       CreateBusinessContextRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
@@ -60,7 +60,7 @@ class BusinessContextController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listContexts(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -78,7 +78,7 @@ class BusinessContextController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getContext(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business context not found");
@@ -94,7 +94,7 @@ class BusinessContextController : PlatformController {
       auto j = req.json;
       UpdateBusinessContextRequest r;
       r.id = BusinessContextId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
@@ -119,7 +119,7 @@ class BusinessContextController : PlatformController {
     try {
       ActivateBusinessContextRequest r;
       r.id = BusinessContextId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
 
       auto result = usecase.activateContext(r);
       if (result.isSuccess()) {
@@ -137,7 +137,7 @@ class BusinessContextController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteContext(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

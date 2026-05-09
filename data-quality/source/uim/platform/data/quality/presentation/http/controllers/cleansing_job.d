@@ -38,12 +38,12 @@ class CleansingJobController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateCleansingJobRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.requestedBy = j.getString("requestedBy");
       r.ruleIds = getStrings(j, "ruleIds");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createCleansingJob(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -61,8 +61,9 @@ class CleansingJobController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
-      auto jobs = usecase.listByTenant(tenantId);
+      auto tenantId = req.getTenantId;
+
+      auto jobs = usecase.listCleansingJobs(tenantId);
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -78,10 +79,11 @@ class CleansingJobController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto job = usecase.getById(tenantId, id);
-      if (job is null) {
+      auto tenantId = req.getTenantId;
+      auto id = CleansingJobId(extractIdFromPath(req.requestURI));
+
+      auto job = usecase.getCleansingJob(tenantId, id);
+      if (job.isNull) {
         writeError(res, 404, "Cleansing job not found");
         return;
       }
@@ -89,31 +91,5 @@ class CleansingJobController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeJob(const CleansingJob j) {
-    auto r = Json.emptyObject;
-    r["id"] = Json(j.id);
-    r["tenantId"] = Json(j.tenantId);
-    r["datasetId"] = Json(j.datasetId);
-    r["requestedBy"] = Json(j.requestedBy);
-    r["status"] = Json(j.status.to!string);
-    r["totalRecords"] = Json(j.totalRecords);
-    r["processedRecords"] = Json(j.processedRecords);
-    r["cleansedRecords"] = Json(j.cleansedRecords);
-    r["errorRecords"] = Json(j.errorRecords);
-    r["createdAt"] = Json(j.createdAt);
-    r["startedAt"] = Json(j.startedAt);
-    r["completedAt"] = Json(j.completedAt);
-
-    if (j.errorMessage.length > 0)
-      r["errorMessage"] = Json(j.errorMessage);
-
-    if (j.ruleIds.length > 0) {
-      auto ids = j.ruleIds.map!(id => Json(id)).array.toJson;
-      r["ruleIds"] = ids;
-    }
-
-    return r;
   }
 }

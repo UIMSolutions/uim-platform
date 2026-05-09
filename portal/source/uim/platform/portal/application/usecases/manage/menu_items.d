@@ -101,7 +101,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
+  CommandResult deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
     if (!menuRepo.existsById(menuItemId))
       return "Menu item not found";
 

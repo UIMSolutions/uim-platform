@@ -43,7 +43,7 @@ class ScheduleController : PlatformController {
             auto j = req.json;
 
             CreateScheduleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.jobId = jobId;
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -79,7 +79,7 @@ class ScheduleController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto schedules = usecase.list(tenantId, jobId);
 
@@ -101,7 +101,7 @@ class ScheduleController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto s = usecase.getById(ids[1], ids[0], tenantId);
             if (s.isNull) {
@@ -124,7 +124,7 @@ class ScheduleController : PlatformController {
             auto j = req.json;
 
             UpdateScheduleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.jobId = ids[0];
             r.scheduleId = ids[1];
             r.description = j.getString("description");
@@ -158,7 +158,7 @@ class ScheduleController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
             if (result.success) {
@@ -180,7 +180,7 @@ class ScheduleController : PlatformController {
             auto j = req.json;
 
             ActivateAllSchedulesRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.jobId = jobId;
             r.active = j.getBoolean("active", true);
 
@@ -202,7 +202,7 @@ class ScheduleController : PlatformController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
             auto schedules = usecase.search(query, tenantId);

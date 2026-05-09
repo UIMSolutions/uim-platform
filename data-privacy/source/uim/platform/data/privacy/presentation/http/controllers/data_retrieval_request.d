@@ -40,7 +40,7 @@ class DataRetrievalController : PlatformController {
     try {
       auto j = req.json;
       CreateDataRetrievalRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = getStrings(j, "targetSystems");
@@ -61,7 +61,7 @@ class DataRetrievalController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
@@ -83,7 +83,7 @@ class DataRetrievalController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data retrieval request not found");
@@ -99,7 +99,7 @@ class DataRetrievalController : PlatformController {
       auto j = req.json;
       UpdateRetrievalStatusRequest r;
       r.id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.status = parseRetrievalStatus(j.getString("status"));
       r.downloadUrl = j.getString("downloadUrl");
       r.totalFields = jsonLong(j, "totalFields");
@@ -120,7 +120,7 @@ class DataRetrievalController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

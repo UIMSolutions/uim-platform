@@ -32,7 +32,7 @@ class ClientResourceController : PlatformController {
     try {
       auto j = req.json;
       CreateClientResourceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -56,7 +56,7 @@ class ClientResourceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {

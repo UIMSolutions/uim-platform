@@ -35,7 +35,7 @@ class DataControllerController : PlatformController {
     try {
       auto j = req.json;
       CreateDataControllerRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -61,7 +61,7 @@ class DataControllerController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listControllers(tenantId);
       auto arr = items.map!(controller => controller.toJson).array.toJson;
@@ -78,7 +78,7 @@ class DataControllerController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getController(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data controller not found");
@@ -94,7 +94,7 @@ class DataControllerController : PlatformController {
       auto j = req.json;
       UpdateDataControllerRequest r;
       r.id = DataControllerId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -121,7 +121,7 @@ class DataControllerController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteController(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

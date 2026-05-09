@@ -33,7 +33,7 @@ class TaskDefinitionController : PlatformController {
         try {
             auto j = req.json;
             CreateTaskDefinitionRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.providerId = j.getString("providerId");
             r.name = j.getString("name");
@@ -59,7 +59,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto providerId = params.get("providerId", "");
 
@@ -85,7 +85,7 @@ class TaskDefinitionController : PlatformController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto d = usecase.getById(tenantId, id);
             if (d.isNull) {
@@ -104,7 +104,7 @@ class TaskDefinitionController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskDefinitionRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -133,7 +133,7 @@ class TaskDefinitionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.activate(tenantId, id);
             if (result.success) {
@@ -156,7 +156,7 @@ class TaskDefinitionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
@@ -177,7 +177,7 @@ class TaskDefinitionController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
             if (result.success) {
                 auto resp = Json.emptyObject

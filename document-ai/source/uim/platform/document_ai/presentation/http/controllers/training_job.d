@@ -32,7 +32,7 @@ class TrainingJobController : PlatformController {
     try {
       auto j = req.json;
       CreateTrainingJobRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = j.getString("documentTypeId");
       r.schemaId = j.getString("schemaId");
@@ -102,7 +102,7 @@ class TrainingJobController : PlatformController {
       auto j = req.json;
 
       PatchTrainingJobRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.trainingJobId = id;
       r.targetStatus = j.getString("targetStatus");

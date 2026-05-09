@@ -43,7 +43,7 @@ class ApiRuleController : PlatformController {
       CreateApiRuleRequest r;
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.serviceName = j.getString("serviceName");

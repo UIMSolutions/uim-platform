@@ -33,7 +33,7 @@ class CustomDomainController : PlatformController {
         try {
             auto j = req.json;
             CreateCustomDomainRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.domainName = j.getString("domainName");
             r.organizationId = j.getString("organizationId");
@@ -58,7 +58,7 @@ class CustomDomainController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto domains = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -132,7 +132,7 @@ class CustomDomainController : PlatformController {
 
             auto j = req.json;
             UpdateCustomDomainRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.activeCertificateId = j.getString("activeCertificateId");
             r.tlsConfigurationId = j.getString("tlsConfigurationId");

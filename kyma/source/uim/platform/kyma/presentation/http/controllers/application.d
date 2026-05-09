@@ -73,7 +73,7 @@ class ApplicationController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto envId = req.params.get("environmentId");
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       Application[] items;
       if (envId.length > 0)

@@ -35,7 +35,7 @@ class DataAccessController : PlatformController {
     try {
       auto j = req.json;
       auto r = WriteDataAccessLogRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.accessedBy = j.getString("accessedBy");
       r.dataSubject = j.getString("dataSubject");
       r.dataObjectType = j.getString("dataObjectType");

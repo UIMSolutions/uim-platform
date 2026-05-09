@@ -150,7 +150,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Delete a user permanently.
-  string deleteUser(UserId id) {
+  CommandResult deleteUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
       return "User not found";

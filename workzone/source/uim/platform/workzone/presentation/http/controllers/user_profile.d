@@ -38,7 +38,7 @@ class UserProfileController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateUserProfileRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = j.getString("userId");
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
@@ -66,7 +66,7 @@ class UserProfileController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
       auto arr = profiles.map!(p => p.toJson).array.toJson;
 
@@ -84,7 +84,7 @@ class UserProfileController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto p = useCase.getUserProfile(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "User profile not found");
@@ -102,7 +102,7 @@ class UserProfileController : PlatformController {
       auto j = req.json;
       auto r = UpdateUserProfileRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.jobTitle = j.getString("jobTitle");
@@ -121,7 +121,7 @@ class UserProfileController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteUserProfile(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

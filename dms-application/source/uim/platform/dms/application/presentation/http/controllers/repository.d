@@ -43,7 +43,7 @@ class RepositoryController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateRepositoryRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
@@ -66,7 +66,7 @@ class RepositoryController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listRepositories(tenantId);
 
       auto arr = items.map!(item => item.toJson).array.toJson;
@@ -85,7 +85,7 @@ class RepositoryController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto repository = usecase.getRepository(tenantId, id);
       if (repository.isNull) {
         writeError(res, 404, "Repository not found");
@@ -103,7 +103,7 @@ class RepositoryController : PlatformController {
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
       r.repositoryId = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
@@ -128,7 +128,7 @@ class RepositoryController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.activateRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -147,7 +147,7 @@ class RepositoryController : PlatformController {
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.archiveRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -165,7 +165,7 @@ class RepositoryController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

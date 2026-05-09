@@ -101,7 +101,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteTile(TileId id) {
+  CommandResult deleteTile(TileId id) {
     if (!tileRepo.existsById(id))
       return "Tile not found";
 

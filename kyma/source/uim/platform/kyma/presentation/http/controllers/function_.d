@@ -42,7 +42,7 @@ class FunctionController : PlatformController {
       CreateFunctionRequest r;
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.runtime = j.getString("runtime");

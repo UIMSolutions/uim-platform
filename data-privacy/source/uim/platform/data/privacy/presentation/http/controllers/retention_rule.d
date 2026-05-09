@@ -40,7 +40,7 @@ class RetentionRuleController : PlatformController {
     try {
       auto j = req.json;
       CreateRetentionRuleRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purpose = parsePurpose(j.getString("purpose"));
@@ -63,7 +63,7 @@ class RetentionRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       RetentionRule[] items;
@@ -87,7 +87,7 @@ class RetentionRuleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRule(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Retention rule not found");
@@ -103,7 +103,7 @@ class RetentionRuleController : PlatformController {
       auto j = req.json;
       UpdateRetentionRuleRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
@@ -126,7 +126,7 @@ class RetentionRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRule(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

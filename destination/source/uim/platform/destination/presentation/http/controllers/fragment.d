@@ -40,7 +40,7 @@ class FragmentController : PlatformController {
     try {
       auto j = req.json;
       CreateFragmentRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -76,7 +76,7 @@ class FragmentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto fragments = usecase.listBySubaccount(tenantId, subaccountId);
       auto arr = fragments.map!(f => f.toJson).array.toJson;

@@ -44,7 +44,7 @@ class MonitoringController : PlatformController {
 
   private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto logs = usecase.listLogs(tenantId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -62,7 +62,7 @@ class MonitoringController : PlatformController {
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto response = Json.emptyObject

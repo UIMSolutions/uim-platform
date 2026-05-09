@@ -23,7 +23,7 @@ class ApplicationGroupController : PlatformController {
         try {
             auto j = req.json;
             CreateApplicationGroupRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.scope_ = j.getString("scope");

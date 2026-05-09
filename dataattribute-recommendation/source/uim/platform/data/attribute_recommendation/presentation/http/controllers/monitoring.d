@@ -36,7 +36,7 @@ class MonitoringController : PlatformController {
 
   private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto jobs = usecase.listTrainingJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -55,7 +55,7 @@ class MonitoringController : PlatformController {
   private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto job = usecase.getTrainingJob(tenantId, id);
       if (job.jobId.isEmpty) {
         writeError(res, 404, "Training job not found");
@@ -69,7 +69,7 @@ class MonitoringController : PlatformController {
 
   private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto deps = usecase.listDeploymentSummaries(tenantId);
 
       auto arr = deps.map!(d => d.toJson).array.toJson;
@@ -86,7 +86,7 @@ class MonitoringController : PlatformController {
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getPipelineSummary(tenantId);
 
       auto response = Json.emptyObject

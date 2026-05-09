@@ -40,7 +40,7 @@ class CorsRuleController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateCorsRuleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.bucketId = j.getString("bucketId");
       r.allowedOrigins = j.getString("allowedOrigins");
       r.allowedMethods = j.getString("allowedMethods");

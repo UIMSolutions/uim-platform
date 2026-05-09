@@ -28,7 +28,7 @@ class OverviewController : PlatformController {
 
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject

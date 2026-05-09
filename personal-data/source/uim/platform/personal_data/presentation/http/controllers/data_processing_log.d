@@ -30,7 +30,7 @@ class DataProcessingLogController : PlatformController {
         try {
             auto j = req.json;
             CreateDataProcessingLogRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.requestId = j.getString("requestId");
@@ -59,7 +59,7 @@ class DataProcessingLogController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto requestId = params.get("requestId", "");

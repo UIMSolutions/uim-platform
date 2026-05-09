@@ -82,7 +82,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteSection(SectionId sectionId, PageId pageId) {
+  CommandResult deleteSection(SectionId sectionId, PageId pageId) {
     if (!sectionRepo.existsById(sectionId))
       return "Section not found";
 

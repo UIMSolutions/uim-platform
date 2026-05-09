@@ -31,7 +31,7 @@ class MonitoringController : PlatformController {
 
   private void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        TenantId tenantId = req.getTenantId;
+        auto tenantId = req.getTenantId;
       auto items = useCase.listAppHealth(tenantId);
 
       auto arr = items.map!(h => h)).array;
@@ -51,7 +51,7 @@ class MonitoringController : PlatformController {
   private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(tenantId, id);
       if (h.appId.isEmpty) {
         writeError(res, 404, "Application not found");
@@ -67,7 +67,7 @@ class MonitoringController : PlatformController {
   private void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto u = useCase.getSpaceUsage(tenantId, spaceId);
 
       auto j = Json.emptyObject

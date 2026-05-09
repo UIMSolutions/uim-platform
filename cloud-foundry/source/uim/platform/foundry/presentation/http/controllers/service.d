@@ -49,7 +49,7 @@ class ServiceController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(j.getString("spaceId"));
       r.name = j.getString("name");
       r.serviceName = j.getString("serviceName");
@@ -74,7 +74,7 @@ class ServiceController : PlatformController {
 
   private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
 
       auto arr = items.map!(si => si.toJson).array.toJson;
@@ -93,7 +93,7 @@ class ServiceController : PlatformController {
   private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto si = useCase.getInstance(tenantId, id);
       if (si.isNull) {
         writeError(res, 404, "Service instance not found");
@@ -114,7 +114,7 @@ class ServiceController : PlatformController {
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.parameters = j.getString("parameters");
       r.tags = j.getString("tags");
@@ -136,7 +136,7 @@ class ServiceController : PlatformController {
   private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -157,7 +157,7 @@ class ServiceController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = AppId(j.getString("appId"));
       r.serviceInstanceId = ServiceInstanceId(j.getString("serviceInstanceId"));
       r.name = j.getString("name");
@@ -180,7 +180,7 @@ class ServiceController : PlatformController {
 
   private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);
 
       auto arr = items.map!(b => b.toJson).array.toJson;
@@ -199,7 +199,7 @@ class ServiceController : PlatformController {
   private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

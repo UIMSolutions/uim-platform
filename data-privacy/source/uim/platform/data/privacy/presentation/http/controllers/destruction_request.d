@@ -35,7 +35,7 @@ class DestructionRequestController : PlatformController {
     try {
       auto j = req.json;
       CreateDestructionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
@@ -59,7 +59,7 @@ class DestructionRequestController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class DestructionRequestController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Destruction request not found");
@@ -92,7 +92,7 @@ class DestructionRequestController : PlatformController {
       auto j = req.json;
       UpdateDestructionStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.status = parseDestructionStatus(j.getString("status"));
 
       auto result = usecase.updateStatus(r);
@@ -111,7 +111,7 @@ class DestructionRequestController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

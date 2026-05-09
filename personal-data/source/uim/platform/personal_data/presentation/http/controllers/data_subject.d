@@ -34,7 +34,7 @@ class DataSubjectController : PlatformController {
         try {
             auto j = req.json;
             CreateDataSubjectRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.subjectType = j.getString("subjectType");
             r.firstName = j.getString("firstName");
@@ -64,7 +64,7 @@ class DataSubjectController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto subjects = usecase.list(tenantId);
 
             auto jarr = subjects.map!(s => s.toJson).array.toJson;

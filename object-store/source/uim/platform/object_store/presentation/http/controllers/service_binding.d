@@ -37,7 +37,7 @@ class ServiceBindingController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.bucketId = j.getString("bucketId");
       r.name = j.getString("name");
       r.permission = j.getString("permission");

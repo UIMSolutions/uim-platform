@@ -38,7 +38,7 @@ class PageTemplateController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreatePageTemplateRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.thumbnailUrl = j.getString("thumbnailUrl");
@@ -62,7 +62,7 @@ class PageTemplateController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto templates = useCase.listPageTemplates(tenantId);
       auto arr = templates.map!(t => t.toJson).array.toJson;
 
@@ -80,7 +80,7 @@ class PageTemplateController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = useCase.getPageTemplate(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Page template not found");
@@ -98,7 +98,7 @@ class PageTemplateController : PlatformController {
       auto j = req.json;
       auto r = UpdatePageTemplateRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = j.getBoolean("isDefault");
@@ -121,7 +121,7 @@ class PageTemplateController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deletePageTemplate(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

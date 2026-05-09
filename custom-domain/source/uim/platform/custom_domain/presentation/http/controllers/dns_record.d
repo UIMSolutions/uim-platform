@@ -31,7 +31,7 @@ class DnsRecordController : PlatformController {
         try {
             auto j = req.json;
             CreateDnsRecordRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.customDomainId = j.getString("customDomainId");
             r.recordType = j.getString("recordType");
@@ -57,7 +57,7 @@ class DnsRecordController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto records = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -121,7 +121,7 @@ class DnsRecordController : PlatformController {
 
             auto j = req.json;
             UpdateDnsRecordRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");

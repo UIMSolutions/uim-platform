@@ -40,7 +40,7 @@ class DuplicateController : PlatformController {
     try {
       auto j = req.json;
       auto r = DetectDuplicatesRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.matchFields = getStringsArray(j, "matchFields");
       r.strategy = parseStrategy(j.getString("strategy"));
@@ -73,7 +73,7 @@ class DuplicateController : PlatformController {
     try {
       auto j = req.json;
       auto r = ResolveDuplicateRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.groupId = j.getString("groupId");
       r.survivorRecordId = j.getString("survivorRecordId");
 
@@ -95,7 +95,7 @@ class DuplicateController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto groups = usecase.getUnresolved(tenantId);
       auto arr = groups.map!(g => g.toJson).array.toJson;
 
@@ -113,9 +113,9 @@ class DuplicateController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto group = usecase.getById(tenantId, id);
-      if (group is null) {
+      if (group.isNull) {
         writeError(res, 404, "Match group not found");
         return;
       }

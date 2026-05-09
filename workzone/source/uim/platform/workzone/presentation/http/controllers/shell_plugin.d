@@ -38,7 +38,7 @@ class ShellPluginController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateShellPluginRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.version_ = j.getString("version");
@@ -67,7 +67,7 @@ class ShellPluginController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto plugins = useCase.listPlugins(tenantId);
       auto arr = plugins.map!(p => p.toJson).array;
 
@@ -86,7 +86,7 @@ class ShellPluginController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto p = useCase.getPlugin(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Plugin not found");
@@ -105,7 +105,7 @@ class ShellPluginController : PlatformController {
       auto j = req.json;
       auto r = UpdateShellPluginRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.scriptUrl = j.getString("scriptUrl");
@@ -124,7 +124,7 @@ class ShellPluginController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deletePlugin(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

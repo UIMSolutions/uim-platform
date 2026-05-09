@@ -35,7 +35,7 @@ class AppRouteController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto j = req.json;
       CreateAppRouteRequest request;
@@ -63,7 +63,7 @@ class AppRouteController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listByTenant(tenantId);
       auto arr = Json.emptyArray;
@@ -86,7 +86,7 @@ class AppRouteController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       if (id.isEmpty) {
@@ -118,7 +118,7 @@ class AppRouteController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -147,7 +147,7 @@ class AppRouteController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       if (id.isEmpty) {

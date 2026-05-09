@@ -36,7 +36,7 @@ class AnonymizationConfigController : PlatformController {
     try {
       auto j = req.json;
       CreateAnonymizationConfigRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
@@ -57,7 +57,7 @@ class AnonymizationConfigController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listConfigs(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -75,7 +75,7 @@ class AnonymizationConfigController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getConfig(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Anonymization config not found");
@@ -91,7 +91,7 @@ class AnonymizationConfigController : PlatformController {
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
       r.id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
@@ -112,7 +112,7 @@ class AnonymizationConfigController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess()) {
@@ -129,7 +129,7 @@ class AnonymizationConfigController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -41,7 +41,7 @@ class SystemController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateSystemRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
@@ -71,7 +71,7 @@ class SystemController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto systems = useCase.listSystems(tenantId);
 
       auto arr = systems.map!(s => s.toJson).array.toJson;
@@ -90,7 +90,7 @@ class SystemController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto sys = useCase.getSystem(tenantId, id);
       if (sys.isNull) {
         writeError(res, 404, "System not found");
@@ -108,7 +108,7 @@ class SystemController : PlatformController {
       auto j = req.json;
       auto r = UpdateSystemRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
@@ -139,7 +139,7 @@ class SystemController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteSystem(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -157,7 +157,7 @@ class SystemController : PlatformController {
   private void handleTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.testConnection(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

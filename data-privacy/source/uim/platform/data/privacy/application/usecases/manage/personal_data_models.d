@@ -57,7 +57,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     return dataModels.findByTenant(tenantId);
   }
 
-  PersonalDataModel[] listByCategory(TenantId tenantId, PersonalDataCategory category) {
+  PersonalDataModel[] listModels(TenantId tenantId, PersonalDataCategory category) {
     return dataModels.findByCategory(tenantId, category);
   }
 

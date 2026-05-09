@@ -23,7 +23,7 @@ class RetentionRuleController : PlatformController {
         try {
             auto j = req.json;
             CreateRetentionRuleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.businessPurposeId = j.getString("businessPurposeId");
             r.legalGroundId = j.getString("legalGroundId");
             r.duration = jsonInt(j, "duration");

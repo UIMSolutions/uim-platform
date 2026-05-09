@@ -38,7 +38,7 @@ class AddressController : PlatformController {
     try {
       auto j = req.json;
       auto r = CleanseAddressRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.sourceRecordId = j.getString("sourceRecordId");
       r.line1 = j.getString("line1");
       r.line2 = j.getString("line2");
@@ -91,7 +91,7 @@ class AddressController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto records = usecase.getByTenant(tenantId);
       auto arr = records.map!(r => r.toJson).array;

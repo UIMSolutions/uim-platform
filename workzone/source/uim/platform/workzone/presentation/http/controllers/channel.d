@@ -39,7 +39,7 @@ class ChannelController : PlatformController {
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -72,7 +72,7 @@ class ChannelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto channels = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = channels.map!(c => c.toJson).array.toJson;
@@ -91,7 +91,7 @@ class ChannelController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto ch = useCase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
@@ -108,7 +108,7 @@ class ChannelController : PlatformController {
       auto j = req.json;
       auto r = UpdateChannelRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
@@ -133,7 +133,7 @@ class ChannelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteChannel(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {

@@ -40,7 +40,7 @@ class CleansingRuleController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateCleansingRuleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -75,7 +75,7 @@ class CleansingRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto rules = usecase.listByTenant(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -94,7 +94,7 @@ class CleansingRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getById(id);
-      if (rule is null) {
+      if (rule.isNull) {
         writeError(res, 404, "Cleansing rule not found");
         return;
       }
@@ -109,7 +109,7 @@ class CleansingRuleController : PlatformController {
       auto j = req.json;
       auto r = UpdateCleansingRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -146,7 +146,7 @@ class CleansingRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteCleansingRule(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

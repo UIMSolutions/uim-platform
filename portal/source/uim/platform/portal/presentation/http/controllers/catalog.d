@@ -59,7 +59,7 @@ class CatalogController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto catalogs = useCase.listCatalogs(tenantId);
       auto response = Json.emptyObject
         .set("totalResults", catalogs.length)

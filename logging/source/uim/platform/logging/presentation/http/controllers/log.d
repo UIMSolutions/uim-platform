@@ -32,7 +32,7 @@ class LogController : PlatformController {
     try {
       auto j = req.json;
       IngestLogRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.streamId = j.getString("streamId");
       r.level = j.getString("level");
       r.source = j.getString("source");
@@ -66,7 +66,7 @@ class LogController : PlatformController {
   private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;

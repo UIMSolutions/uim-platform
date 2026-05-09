@@ -37,7 +37,7 @@ class DashboardController : PlatformController {
     try {
       auto j = req.json;
       CreateDashboardRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = j.getBoolean("isDefault");
@@ -73,7 +73,7 @@ class DashboardController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto dashboards = usecase.listDashboards(tenantId);
 
       auto jarr = Json.emptyArray;

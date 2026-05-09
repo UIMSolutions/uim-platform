@@ -62,7 +62,7 @@ class GroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;

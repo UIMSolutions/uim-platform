@@ -35,10 +35,10 @@ class DataControllerGroupController : PlatformController {
     try {
       auto j = req.json;
       CreateDataControllerGroupRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds");
+      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.createGroup(r);
       if (result.isSuccess()) {
@@ -55,7 +55,7 @@ class DataControllerGroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listGroups(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -73,7 +73,7 @@ class DataControllerGroupController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getGroup(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Controller group not found");
@@ -86,13 +86,15 @@ class DataControllerGroupController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+        auto tenantId = req.getTenantId;
+        auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateDataControllerGroupRequest r;
-      r.id = DataControllerGroupId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.id = id;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds");
+      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.updateGroup(r);
       if (result.isSuccess()) {
@@ -110,7 +112,7 @@ class DataControllerGroupController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteGroup(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

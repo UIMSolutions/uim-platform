@@ -43,7 +43,7 @@ class WorkflowController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateWorkflowRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -67,7 +67,7 @@ class WorkflowController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = useCase.listWorkflows(tenantId);
       auto arr = items.map!(w => w.toJson).array.toJson;
@@ -86,7 +86,7 @@ class WorkflowController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto wf = useCase.getWorkflow(tenantId, id);
       if (wf.isNull) {
         writeError(res, 404, "Workflow not found");
@@ -101,7 +101,7 @@ class WorkflowController : PlatformController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.startWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -120,7 +120,7 @@ class WorkflowController : PlatformController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.suspendWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -139,7 +139,7 @@ class WorkflowController : PlatformController {
   private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.resumeWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -158,7 +158,7 @@ class WorkflowController : PlatformController {
   private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.terminateWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -177,7 +177,7 @@ class WorkflowController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

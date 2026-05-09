@@ -39,7 +39,7 @@ class SurveyController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateSurveyRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.workspaceId = j.getString("workspaceId");
       r.title = j.getString("title");
       r.description = j.getString("description");
@@ -67,7 +67,7 @@ class SurveyController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto surveys = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = surveys.map!(s => s.toJson).array.toJson;
@@ -86,7 +86,7 @@ class SurveyController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SurveyId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto s = useCase.getSurvey(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Survey not found");
@@ -103,7 +103,7 @@ class SurveyController : PlatformController {
       auto j = req.json;
       auto r = UpdateSurveyRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
 
@@ -125,7 +125,7 @@ class SurveyController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SurveyId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

@@ -39,7 +39,7 @@ class TaskController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateTaskRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.assigneeId = j.getString("assigneeId");
       r.assigneeName = j.getString("assigneeName");
       r.creatorId = j.getString("creatorId");
@@ -80,7 +80,7 @@ class TaskController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto assigneeId = AssigneeId(req.params.get("assigneeId", ""));
       auto tasks = useCase.listByAssignee(tenantId, assigneeId);
       auto arr = tasks.map!(t => t.toJson).array.toJson;
@@ -99,7 +99,7 @@ class TaskController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = useCase.getTask(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "WZTask not found");
@@ -116,7 +116,7 @@ class TaskController : PlatformController {
       auto j = req.json;
       auto r = UpdateTaskRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.dueDate = jsonLong(j, "dueDate");
@@ -159,7 +159,7 @@ class TaskController : PlatformController {
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.completeTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -178,7 +178,7 @@ class TaskController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

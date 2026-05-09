@@ -38,7 +38,7 @@ class DistributionController : PlatformController {
     try {
       auto j = req.json;
       CreateDistributionModelRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.direction = j.getString("direction");
@@ -67,7 +67,7 @@ class DistributionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
 
       DistributionModel[] models;

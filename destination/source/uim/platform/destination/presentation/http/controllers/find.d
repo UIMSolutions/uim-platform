@@ -32,7 +32,7 @@ class FindController : PlatformController {
   private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       FindDestinationRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.name = req.params.get("name");
       r.headerProvider = req.params.get("headerProvider");

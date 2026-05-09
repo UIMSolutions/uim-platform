@@ -38,7 +38,7 @@ class TenantController : PlatformController {
     try {
       auto j = req.json;
       auto createReq = CreateTenantRequest(j.getString("name"),
-          j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
+        j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
 
       auto result = useCase.createTenant(createReq);
       auto response = Json.emptyObject;
@@ -46,14 +46,11 @@ class TenantController : PlatformController {
       if (result.isSuccess()) {
         response["tenantId"] = Json(result.tenantId);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         response["error"] = Json(result.error);
         res.writeJsonBody(response, 409);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -67,8 +64,7 @@ class TenantController : PlatformController {
       response["totalResults"] = Json(tenants.length);
       response["resources"] = toJsonArray(tenants);
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -92,8 +88,7 @@ class TenantController : PlatformController {
       }
 
       res.writeJsonBody(toJsonValue(tenant), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -115,18 +110,15 @@ class TenantController : PlatformController {
       if (error.length > 0) {
         auto errRes = Json.emptyObject
           .set("error", error);
-          
+
         res.writeJsonBody(errRes, 404);
-      }
-      else
-      {
+      } else {
         auto resp = Json.emptyObject
           .set("status", "updated");
 
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject
         .set("error", "Internal server error");
 

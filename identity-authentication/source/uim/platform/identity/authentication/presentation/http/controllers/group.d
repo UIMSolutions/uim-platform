@@ -35,9 +35,10 @@ class GroupController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateGroupRequest(j.getString("tenantId"),
-          j.getString("name"), j.getString("description"));
+        j.getString("name"), j.getString("description"));
 
       auto result = useCase.createGroup(createReq);
       auto response = Json.emptyObject;
@@ -45,14 +46,11 @@ class GroupController : PlatformController {
       if (result.isSuccess()) {
         response["groupId"] = Json(result.groupId);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         response["error"] = Json(result.error);
         res.writeJsonBody(response, 400);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -61,14 +59,14 @@ class GroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
+
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = groups.length.toJson;
       response["resources"] = groups.toJson;
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -78,6 +76,7 @@ class GroupController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
+      auto tenantId = req.getTenantId;
 
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
@@ -92,8 +91,7 @@ class GroupController : PlatformController {
       }
 
       res.writeJsonBody(toJsonValue(group), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -102,6 +100,8 @@ class GroupController : PlatformController {
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       auto error = useCase.addMember(j.getString("groupId"), j.getString("userId"));
 
@@ -109,16 +109,13 @@ class GroupController : PlatformController {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 400);
-      }
-      else
-      {
+      } else {
         auto resp = Json.emptyObject
           .set("status", "member_added");
-          
+
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

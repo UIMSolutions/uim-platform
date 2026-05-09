@@ -40,7 +40,7 @@ class LegalGroundController : PlatformController {
     try {
       auto j = req.json;
       CreateLegalGroundRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.basis = parseLegalBasis(j.getString("basis"));
       r.purpose = parsePurpose(j.getString("purpose"));
@@ -66,7 +66,7 @@ class LegalGroundController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto basisParam = req.headers.get("X-Basis-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -97,7 +97,7 @@ class LegalGroundController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getGround(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Legal ground not found");
@@ -114,7 +114,7 @@ class LegalGroundController : PlatformController {
       auto j = req.json;
       UpdateLegalGroundRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.legalReference = j.getString("legalReference");
       r.isActive = j.getBoolean("isActive", true);
@@ -138,7 +138,7 @@ class LegalGroundController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteGround(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }

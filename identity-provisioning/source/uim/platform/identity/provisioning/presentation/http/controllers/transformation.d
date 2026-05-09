@@ -42,7 +42,7 @@ class TransformationController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateTransformationRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.systemId = j.getString("systemId");
       r.systemRole = parseSystemRole(j.getString("systemRole"));
       r.name = j.getString("name");
@@ -65,7 +65,7 @@ class TransformationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listTransformations(tenantId);
 
       auto arr = items.map!(t => t.toJson).array.toJson;
@@ -83,7 +83,7 @@ class TransformationController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = usecase.getTransformation(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Transformation not found");
@@ -101,7 +101,7 @@ class TransformationController : PlatformController {
       auto j = req.json;
       auto r = UpdateTransformationRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.mappingRules = j.getString("mappingRules");
       r.conditions = j.getString("conditions");
@@ -124,7 +124,7 @@ class TransformationController : PlatformController {
   private void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto systemId = j.getString("systemId");
       auto inputAttributes = j.getString("inputAttributes");
 
@@ -145,7 +145,7 @@ class TransformationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteTransformation(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

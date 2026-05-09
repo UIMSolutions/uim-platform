@@ -39,7 +39,7 @@ class OrgController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateOrgRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
@@ -66,7 +66,7 @@ class OrgController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
     auto orgs = useCase.listOrgs(tenantId);
 
@@ -87,7 +87,7 @@ class OrgController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = OrgId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto org = useCase.getOrg(tenantId, id);
       if (org.isNull) {
         writeError(res, 404, "Organization not found");
@@ -106,7 +106,7 @@ class OrgController : PlatformController {
       auto j = req.json;
       auto r = UpdateOrgRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
@@ -133,7 +133,7 @@ class OrgController : PlatformController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = OrgId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.suspendOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -153,7 +153,7 @@ class OrgController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = OrgId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.activateOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -173,7 +173,7 @@ class OrgController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = OrgId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

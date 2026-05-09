@@ -31,7 +31,7 @@ class TaskCommentController : PlatformController {
         try {
             auto j = req.json;
             CreateTaskCommentRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.taskId = j.getString("taskId");
             r.author = j.getString("author");
@@ -54,7 +54,7 @@ class TaskCommentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto taskId = params.get("taskId", "");
 
@@ -81,7 +81,7 @@ class TaskCommentController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
@@ -100,7 +100,7 @@ class TaskCommentController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskCommentRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.content = j.getString("content");
 
@@ -122,7 +122,7 @@ class TaskCommentController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteTaskComment(tenantId, TaskCommentId(id));
             if (result.success) {

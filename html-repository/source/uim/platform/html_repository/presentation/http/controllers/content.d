@@ -34,7 +34,7 @@ class ContentController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (path.length == 0) {
         writeError(res, 404, "Content not found");
         return;

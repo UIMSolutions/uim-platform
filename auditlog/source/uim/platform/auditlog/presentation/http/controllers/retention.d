@@ -63,7 +63,7 @@ class RetentionController : ManageController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto arr = policies.map!(p => p.toJson).array.toJson;
 
@@ -80,7 +80,7 @@ class RetentionController : ManageController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (!useCase.existsPolicy(tenantId, policyId)) {
         writeError(res, 404, "Retention policy not found");
         return;
@@ -127,7 +127,7 @@ class RetentionController : ManageController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deletePolicy(tenantId, policyId);
       auto resp = Json.emptyObject
         .set("status", "deleted");

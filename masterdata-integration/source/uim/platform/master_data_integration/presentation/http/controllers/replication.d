@@ -38,7 +38,7 @@ class ReplicationController : PlatformController {
     try {
       auto j = req.json;
       CreateReplicationJobRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.distributionModelId = j.getString("distributionModelId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -65,7 +65,7 @@ class ReplicationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
       auto modelId = req.params.get("distributionModelId", "");
 

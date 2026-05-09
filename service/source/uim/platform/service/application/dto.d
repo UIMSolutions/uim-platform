@@ -5,14 +5,14 @@ struct CommandResult {
   bool success;
   string id;
   string error;
-  // TODO: Success??
+
   bool isSuccess() const {
-    return error.length == 0;
+    return success;
   }
+
+  bool isFailure() const {
+    return !success;
+  }
+
 }
 
-// struct CommandResult {
-//   bool success;
-//   string id;
-//   string error;
-// }

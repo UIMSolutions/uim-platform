@@ -24,7 +24,7 @@ class DataSubjectController : PlatformController {
         try {
             auto j = req.json;
             CreateDataSubjectRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.roleId = j.getString("roleId");
             r.applicationGroupId = j.getString("applicationGroupId");
             r.externalId = j.getString("externalId");

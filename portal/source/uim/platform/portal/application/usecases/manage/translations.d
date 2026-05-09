@@ -63,7 +63,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteTranslation(TranslationId id) {
+  CommandResult deleteTranslation(TranslationId id) {
     if (!translationRepo.existsById(id))
       return "Translation not found";
 
@@ -71,7 +71,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteTranslationsForResource(string resourceType, string resourceId) {
+  CommandResult deleteTranslationsForResource(string resourceType, string resourceId) {
     translationRepo.removeByResource(resourceType, resourceId);
     return "";
   }

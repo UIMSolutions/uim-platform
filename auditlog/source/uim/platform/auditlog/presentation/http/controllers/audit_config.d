@@ -93,7 +93,7 @@ class AuditConfigController : ManageController {
 
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       if (!useCase.existsAuditConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
@@ -108,7 +108,7 @@ class AuditConfigController : ManageController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
@@ -153,7 +153,7 @@ class AuditConfigController : ManageController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
       useCase.deleteAuditConfig(tenantId, id);

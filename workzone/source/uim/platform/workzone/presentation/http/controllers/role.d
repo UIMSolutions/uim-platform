@@ -38,7 +38,7 @@ class RoleController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateRoleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permissions = getStrings(j, "permissions");
@@ -61,7 +61,7 @@ class RoleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto arr = roles.map!(r => r.toJson).array.toJson;
 
@@ -79,7 +79,7 @@ class RoleController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto r = useCase.getRole(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Role not found");
@@ -97,7 +97,7 @@ class RoleController : PlatformController {
       auto r = UpdateRoleRequest();
       r.id = extractIdFromPath(req.requestURI);
       ;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permissions = getStrings(j, "permissions");
@@ -115,7 +115,7 @@ class RoleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteRole(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

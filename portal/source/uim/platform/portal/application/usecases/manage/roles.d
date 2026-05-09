@@ -115,7 +115,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteRole(RoleId id) {
+  CommandResult deleteRole(RoleId id) {
     if (!roleRepo.existsById(id))
       return "Role not found";
 

@@ -38,7 +38,7 @@ class KnowledgeBaseArticleController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateKBArticleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.workspaceId = j.getString("workspaceId");
       r.title = j.getString("title");
       r.body_ = j.getString("body");
@@ -66,7 +66,7 @@ class KnowledgeBaseArticleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
 
       auto articles = useCase.listByWorkspace(tenantId, workspaceId);
@@ -86,7 +86,7 @@ class KnowledgeBaseArticleController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto a = useCase.getArticle(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Article not found");
@@ -104,7 +104,7 @@ class KnowledgeBaseArticleController : PlatformController {
       auto j = req.json;
       auto r = UpdateKBArticleRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
@@ -127,7 +127,7 @@ class KnowledgeBaseArticleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteArticle(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

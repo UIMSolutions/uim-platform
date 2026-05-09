@@ -32,7 +32,7 @@ class ClientController : PlatformController {
     try {
       auto j = req.json;
       CreateClientRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
@@ -53,7 +53,7 @@ class ClientController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto clients = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -76,7 +76,7 @@ class ClientController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto c = usecase.getById(tenantId, id);
       if (c.clientId.isEmpty) {
@@ -98,7 +98,7 @@ class ClientController : PlatformController {
       auto j = req.json;
 
       PatchClientRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = id;
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
@@ -123,7 +123,7 @@ class ClientController : PlatformController {
       
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto result = usecase.deleteClient(tenantId, ClientId(id));
       if (result.success) {

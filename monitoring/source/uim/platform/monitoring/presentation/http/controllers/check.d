@@ -43,7 +43,7 @@ class CheckController : PlatformController {
     try {
       auto j = req.json;
       CreateHealthCheckRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceId = j.getString("resourceId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -77,7 +77,7 @@ class CheckController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto checks = usecase.listChecks(tenantId);
       auto arr = checks.map!(c => c.toJson).array.toJson;
 
@@ -165,7 +165,7 @@ class CheckController : PlatformController {
     try {
       auto j = req.json;
       RecordCheckResultRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.checkId = HealthCheckId(j.getString("checkId"));
       r.resourceId = MonitoredResourceId(j.getString("resourceId"));
       r.status = j.getString("status");
@@ -191,7 +191,7 @@ class CheckController : PlatformController {
 
   private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto checkId = HealthCheckId(extractIdFromPath(req.requestURI));
       auto results = usecase.getResults(tenantId, checkId);
 

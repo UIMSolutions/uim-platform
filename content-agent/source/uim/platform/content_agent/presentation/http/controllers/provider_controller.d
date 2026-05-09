@@ -41,7 +41,7 @@ class ProviderController : PlatformController {
     try {
       auto j = req.json;
       auto r = RegisterProviderRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpoint = j.getString("endpoint");
@@ -65,7 +65,7 @@ class ProviderController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto providers = usecase.listProviders(tenantId);
 
       auto arr = providers.map!(p => p.toJson).array.toJson;

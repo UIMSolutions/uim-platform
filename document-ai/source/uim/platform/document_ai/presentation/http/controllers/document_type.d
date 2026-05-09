@@ -32,7 +32,7 @@ class DocumentTypeController : PlatformController {
     try {
       auto j = req.json;
       CreateDocumentTypeRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -102,7 +102,7 @@ class DocumentTypeController : PlatformController {
       auto j = req.json;
 
       UpdateDocumentTypeRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = id;
       r.name = j.getString("name");

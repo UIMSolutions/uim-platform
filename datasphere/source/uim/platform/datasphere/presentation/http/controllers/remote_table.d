@@ -34,7 +34,7 @@ class RemoteTableController : PlatformController {
     try {
       auto j = req.json;
       CreateRemoteTableRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.connectionId = j.getString("connectionId");
       r.name = j.getString("name");

@@ -39,7 +39,7 @@ class DestinationController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateDestinationRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.url = j.getString("url");
@@ -75,7 +75,7 @@ class DestinationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto dests = usecase.listDestinations(tenantId);
       auto arr = dests.map!(d => d.toJson).array.toJson;
@@ -93,7 +93,7 @@ class DestinationController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto dest = usecase.getDestination(tenantId, id);
       if (dest.isNull) {
@@ -108,7 +108,7 @@ class DestinationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateDestinationRequest();
@@ -146,7 +146,7 @@ class DestinationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteDestination(tenantId, id);
       if (result.success) {

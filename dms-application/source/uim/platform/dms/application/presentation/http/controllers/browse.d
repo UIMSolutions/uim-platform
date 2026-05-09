@@ -42,7 +42,7 @@ class BrowseController : PlatformController {
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = FolderId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto contents = usecase.browseFolderContents(tenantId, folderId);
 
       auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
@@ -64,7 +64,7 @@ class BrowseController : PlatformController {
   private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = RepositoryId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
       if (summary.repositoryId.isEmpty) {
@@ -90,7 +90,7 @@ class BrowseController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateFavoriteRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.resourceId = j.getString("resourceId");
       r.resourceType = j.getString("resourceType").to!ResourceType;
@@ -111,7 +111,7 @@ class BrowseController : PlatformController {
 
   private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
       auto items = usecase.getFavorites(tenantId, userId);
 
@@ -131,7 +131,7 @@ class BrowseController : PlatformController {
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = FavoriteId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

@@ -34,7 +34,7 @@ class SchemaController : PlatformController {
     try {
       auto j = req.json;
       CreateSchemaRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -58,7 +58,7 @@ class SchemaController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto schemas = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -119,7 +119,7 @@ class SchemaController : PlatformController {
 
       auto j = req.json;
       UpdateSchemaRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.owner = j.getString("owner");
 

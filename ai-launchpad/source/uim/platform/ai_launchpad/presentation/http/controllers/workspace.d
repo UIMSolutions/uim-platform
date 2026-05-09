@@ -34,7 +34,7 @@ class WorkspaceController : PlatformController {
     try {
       auto j = req.json;
       CreateWorkspaceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -55,7 +55,7 @@ class WorkspaceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto workspaces = tenantId.length > 0
         ? usecase.listByTenant(tenantId)
@@ -98,7 +98,7 @@ class WorkspaceController : PlatformController {
 
       PatchWorkspaceRequest r;
       r.workspaceId = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 

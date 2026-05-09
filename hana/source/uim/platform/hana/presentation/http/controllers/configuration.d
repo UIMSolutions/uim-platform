@@ -34,7 +34,7 @@ class ConfigurationController : PlatformController {
     try {
       auto j = req.json;
       CreateConfigurationRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.section = j.getString("section");
@@ -61,7 +61,7 @@ class ConfigurationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto configs = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -122,7 +122,7 @@ class ConfigurationController : PlatformController {
 
       auto j = req.json;
       UpdateConfigurationRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.value = j.getString("value");
 

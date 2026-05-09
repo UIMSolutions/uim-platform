@@ -35,7 +35,7 @@ class AlertController : PlatformController {
     try {
       auto j = req.json;
       CreateAlertRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -64,7 +64,7 @@ class AlertController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto alerts = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -127,7 +127,7 @@ class AlertController : PlatformController {
 
       auto j = req.json;
       UpdateAlertRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -166,7 +166,7 @@ class AlertController : PlatformController {
 
       auto j = req.json;
       AcknowledgeAlertRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 

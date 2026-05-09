@@ -41,7 +41,7 @@ class ResourceController : PlatformController {
     try {
       auto j = req.json;
       RegisterResourceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");

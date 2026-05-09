@@ -38,7 +38,7 @@ class ThemeController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateThemeRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.baseTheme = j.getString("baseTheme");
@@ -64,7 +64,7 @@ class ThemeController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto arr = themes.map!(t => t.toJson).array;
 
@@ -82,7 +82,7 @@ class ThemeController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = useCase.getTheme(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Theme not found");
@@ -100,7 +100,7 @@ class ThemeController : PlatformController {
       auto j = req.json;
       auto r = UpdateThemeRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.customCss = j.getString("customCss");
@@ -119,7 +119,7 @@ class ThemeController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteTheme(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

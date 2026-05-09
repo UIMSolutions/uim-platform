@@ -32,7 +32,7 @@ class SchemaController : PlatformController {
     try {
       auto j = req.json;
       CreateSchemaRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = j.getString("documentTypeId");
       r.name = j.getString("name");
@@ -104,7 +104,7 @@ class SchemaController : PlatformController {
       auto j = req.json;
 
       UpdateSchemaRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.schemaId = id;
       r.name = j.getString("name");

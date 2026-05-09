@@ -60,7 +60,7 @@ class ThemeController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto response = Json.emptyObject
         .set("totalResults", themes.length)
@@ -74,7 +74,7 @@ class ThemeController : PlatformController {
 
   private void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto theme = useCase.getDefaultTheme(tenantId);
       if (theme == Theme.init) {
         writeApiError(res, 404, "No default theme found");

@@ -32,7 +32,7 @@ class ServiceInstanceController : PlatformController {
     try {
       auto j = req.json;
       CreateServiceInstanceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.spaceId = j.getString("spaceId");
@@ -53,7 +53,7 @@ class ServiceInstanceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class ServiceInstanceController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -111,7 +111,7 @@ class ServiceInstanceController : PlatformController {
     try {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -136,7 +136,7 @@ class ServiceInstanceController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;

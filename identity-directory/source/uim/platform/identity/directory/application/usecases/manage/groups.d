@@ -158,7 +158,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   /// Delete a group.
-  string deleteGroup(GroupId id) {
+  CommandResult deleteGroup(GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group == Group.init)
       return "Group not found";

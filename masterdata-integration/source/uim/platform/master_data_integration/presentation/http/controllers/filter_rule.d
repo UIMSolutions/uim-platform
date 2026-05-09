@@ -36,7 +36,7 @@ class FilterRuleController : PlatformController {
     try {
       auto j = req.json;
       CreateFilterRuleRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.category = j.getString("category");
@@ -62,7 +62,7 @@ class FilterRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
       auto activeOnly = req.params.get("active", "");
 

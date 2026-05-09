@@ -38,7 +38,7 @@ class ValidateController : PlatformController {
     try {
       auto j = req.json;
       auto r = ValidateRecordRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.recordId = j.getString("recordId");
       r.fieldValues = jsonStrMap(j, "fieldValues");
@@ -54,7 +54,7 @@ class ValidateController : PlatformController {
     try {
       auto j = req.json;
       auto r = ValidateBatchRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
 
       foreach (item; j.getArray("records")) {
@@ -83,9 +83,9 @@ class ValidateController : PlatformController {
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.getResultByRecord(tenantId, recordId);
-      if (result is null) {
+      if (result.isNull) {
         writeError(res, 404, "Validation result not found");
         return;
       }

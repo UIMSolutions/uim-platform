@@ -41,7 +41,7 @@ class StepController : PlatformController {
 
   private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
       auto steps = useCase.listSteps(tenantId, workflowId);
 
@@ -62,7 +62,7 @@ class StepController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto step = useCase.getStep(tenantId, id);
       if (step.isNull) {
         writeError(res, 404, "Step not found");
@@ -76,7 +76,7 @@ class StepController : PlatformController {
 
   private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
@@ -96,7 +96,7 @@ class StepController : PlatformController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = useCase.startStep(tenantId, id, userId);
@@ -121,7 +121,7 @@ class StepController : PlatformController {
       auto j = req.json;
       auto r = CompleteStepRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.completedBy = UserId(req.headers.get("X-User-Id", ""));
       r.result = j.getString("result");
 
@@ -147,7 +147,7 @@ class StepController : PlatformController {
       auto j = req.json;
       auto r = FailStepRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
       r.errorMessage = j.getString("errorMessage");
 
@@ -173,7 +173,7 @@ class StepController : PlatformController {
       auto j = req.json;
       auto r = SkipStepRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
       r.reason = j.getString("reason");
 
@@ -199,7 +199,7 @@ class StepController : PlatformController {
       auto j = req.json;
       auto r = AssignStepRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.assignedTo = UserId(j.getString("assignedTo"));
       r.assignedRole = j.getString("assignedRole");
 

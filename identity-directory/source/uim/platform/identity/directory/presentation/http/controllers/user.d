@@ -69,7 +69,7 @@ class UserController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto users = useCase.listUsers(tenantId);
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;
@@ -163,7 +163,7 @@ class UserController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto filter = req.params.get("filter", "");
       auto users = useCase.searchUsers(tenantId, filter);
       auto response = Json.emptyObject

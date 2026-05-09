@@ -61,7 +61,7 @@ class SiteController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto response = Json.emptyObject
       .set("totalResults", sites.length)

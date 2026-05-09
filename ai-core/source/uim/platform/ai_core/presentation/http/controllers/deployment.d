@@ -35,7 +35,7 @@ class DeploymentController : PlatformController {
     try {
       auto j = req.json;
       CreateDeploymentRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
       r.ttl = j.getInteger("ttl");

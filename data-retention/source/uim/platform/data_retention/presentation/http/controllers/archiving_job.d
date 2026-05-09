@@ -23,7 +23,7 @@ class ArchivingJobController : PlatformController {
         try {
             auto j = req.json;
             CreateArchivingJobRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.applicationGroupId = j.getString("applicationGroupId");
             r.operationType = j.getString("operationType");
             r.selectionCriteria = j.getString("selectionCriteria");

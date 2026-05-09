@@ -38,7 +38,7 @@ class ImportController : PlatformController {
     try {
       auto j = req.json;
       auto r = StartImportRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
       r.sourceFilePath = j.getString("sourceFilePath");
@@ -62,7 +62,7 @@ class ImportController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto jobs = usecase.listImportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;

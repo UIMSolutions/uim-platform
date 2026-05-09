@@ -38,7 +38,7 @@ class ForumTopicController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateForumTopicRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.workspaceId = j.getString("workspaceId");
       r.title = j.getString("title");
       r.body_ = j.getString("body");
@@ -63,7 +63,7 @@ class ForumTopicController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto topics = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = topics.map!(t => t.toJson).array.toJson;
@@ -82,7 +82,7 @@ class ForumTopicController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = useCase.getForumTopic(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Forum topic not found");
@@ -100,7 +100,7 @@ class ForumTopicController : PlatformController {
       auto j = req.json;
       auto r = UpdateForumTopicRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.pinned = j.getBoolean("pinned");
@@ -123,7 +123,7 @@ class ForumTopicController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteForumTopic(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

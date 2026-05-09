@@ -41,7 +41,7 @@ class BusinessUserController : PlatformController {
     try {
       auto j = req.json;
       CreateBusinessUserRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.username = j.getString("username");
       r.firstName = j.getString("firstName");

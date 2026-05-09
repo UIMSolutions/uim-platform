@@ -35,7 +35,7 @@ class ReplicationTaskController : PlatformController {
     try {
       auto j = req.json;
       CreateReplicationTaskRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -63,7 +63,7 @@ class ReplicationTaskController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto tasks = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -128,7 +128,7 @@ class ReplicationTaskController : PlatformController {
 
       auto j = req.json;
       UpdateReplicationTaskRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");

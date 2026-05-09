@@ -32,7 +32,7 @@ class TemplateController : PlatformController {
     try {
       auto j = req.json;
       CreateTemplateRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.schemaId = j.getString("schemaId");
       r.documentTypeId = j.getString("documentTypeId");
@@ -103,7 +103,7 @@ class TemplateController : PlatformController {
       auto j = req.json;
 
       UpdateTemplateRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.templateId = id;
       r.name = j.getString("name");

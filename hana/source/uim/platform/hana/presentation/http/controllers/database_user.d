@@ -34,7 +34,7 @@ class DatabaseUserController : PlatformController {
     try {
       auto j = req.json;
       CreateDatabaseUserRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.userName = j.getString("userName");
@@ -62,7 +62,7 @@ class DatabaseUserController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto users = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -121,7 +121,7 @@ class DatabaseUserController : PlatformController {
 
       auto j = req.json;
       UpdateDatabaseUserRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.password = j.getString("password");
       r.defaultSchema = j.getString("defaultSchema");

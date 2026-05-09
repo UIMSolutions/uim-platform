@@ -38,7 +38,7 @@ class ExportController : PlatformController {
     try {
       auto j = req.json;
       auto r = StartExportRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
       r.queueId = j.getString("queueId");
@@ -62,7 +62,7 @@ class ExportController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto jobs = usecase.listExportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;

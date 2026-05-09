@@ -39,7 +39,7 @@ class JobController : PlatformController {
         try {
             auto j = req.json;
             CreateJobRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.actionUrl = j.getString("action");
@@ -89,7 +89,7 @@ class JobController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto jobs = jobUc.list(tenantId);
 
             auto jarr = jobs.map!(job => toJson(job)).array; 
@@ -109,7 +109,7 @@ class JobController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto job = jobUc.getById(tenantId, id);
             if (job.isNull) {
@@ -132,7 +132,7 @@ class JobController : PlatformController {
             auto j = req.json;
 
             UpdateJobRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.jobId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -162,7 +162,7 @@ class JobController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             // Delete all schedules first
             scheduleUc.removeAllByJob(tenantId, JobId(id));
@@ -180,7 +180,7 @@ class JobController : PlatformController {
 
     private void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto resp = Json.emptyObject
                 .set("total", jobUc.count(tenantId))
@@ -197,7 +197,7 @@ class JobController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
             auto jobs = jobUc.search(query, tenantId);

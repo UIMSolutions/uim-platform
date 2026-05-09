@@ -36,7 +36,7 @@ class RuleSetController : PlatformController {
     try {
       auto j = req.json;
       CreateRuleSetRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.businessContextId = j.getString("businessContextId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -57,7 +57,7 @@ class RuleSetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listRuleSets(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -75,7 +75,7 @@ class RuleSetController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRuleSet(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Rule set not found");
@@ -91,7 +91,7 @@ class RuleSetController : PlatformController {
       auto j = req.json;
       UpdateRuleSetRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = cast(int) jsonLong(j, "priority");
@@ -112,7 +112,7 @@ class RuleSetController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto result = usecase.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
@@ -130,7 +130,7 @@ class RuleSetController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRuleSet(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

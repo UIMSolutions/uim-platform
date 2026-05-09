@@ -35,7 +35,7 @@ class DataContextController : PlatformController {
         try {
             auto j = req.json;
             CreateDataContextRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.instanceId = j.getString("instanceId");
             r.id = j.getString("id");
             r.entityId = j.getString("entityId");
@@ -62,7 +62,7 @@ class DataContextController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto contexts = dataContexts.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -138,7 +138,7 @@ class DataContextController : PlatformController {
 
     private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto result = dataContexts.removePersonalData(tenantId);
             if (result.success) {
                 auto resp = Json.emptyObject

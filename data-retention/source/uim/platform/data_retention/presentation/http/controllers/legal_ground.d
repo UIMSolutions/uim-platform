@@ -23,7 +23,7 @@ class LegalGroundController : PlatformController {
         try {
             auto j = req.json;
             CreateLegalGroundRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.businessPurposeId = j.getString("businessPurposeId");

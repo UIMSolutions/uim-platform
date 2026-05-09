@@ -40,7 +40,7 @@ class AccessPolicyController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateAccessPolicyRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.bucketId = j.getString("bucketId");
       r.name = j.getString("name");
       r.effect = j.getString("effect");

@@ -32,7 +32,7 @@ class MetricController : PlatformController {
     try {
       auto j = req.json;
       PatchMetricsRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.executionId = j.getString("executionId");
       r.metrics = jsonKeyValuePairs(j, "metrics");

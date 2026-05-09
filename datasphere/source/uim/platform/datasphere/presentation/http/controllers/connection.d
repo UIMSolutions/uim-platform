@@ -34,7 +34,7 @@ class ConnectionController : PlatformController {
     try {
       auto j = req.json;
       CreateConnectionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");

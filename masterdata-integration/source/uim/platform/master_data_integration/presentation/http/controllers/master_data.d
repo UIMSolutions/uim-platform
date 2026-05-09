@@ -37,7 +37,7 @@ class MasterDataController : PlatformController {
     try {
       auto j = req.json;
       CreateMasterDataObjectRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataModelId = j.getString("dataModelId");
       r.category = j.getString("category");
       r.objectType = j.getString("objectType");
@@ -66,7 +66,7 @@ class MasterDataController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
 
       MasterDataObject[] objs;
@@ -90,7 +90,7 @@ class MasterDataController : PlatformController {
 
   private void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto globalId = req.params.get("globalId", "");
       if (globalId.isEmpty) {
         writeError(res, 400, "globalId query parameter is required");

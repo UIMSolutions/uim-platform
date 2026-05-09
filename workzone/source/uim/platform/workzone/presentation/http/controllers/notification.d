@@ -39,7 +39,7 @@ class NotificationController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateNotificationRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.recipientId = j.getString("recipientId");
       r.title = j.getString("title");
       r.body_ = j.getString("body");
@@ -76,7 +76,7 @@ class NotificationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto recipientId = req.params.get("recipientId", "");
       auto unreadOnly = req.params.get("unread", "") == "true";
 
@@ -102,7 +102,7 @@ class NotificationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto n = useCase.getNotification(tenantId, id);
       if (n.isNull) {
         writeError(res, 404, "Notification not found");
@@ -117,7 +117,7 @@ class NotificationController : PlatformController {
   private void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.markAsRead(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -136,7 +136,7 @@ class NotificationController : PlatformController {
   private void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -155,7 +155,7 @@ class NotificationController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteNotification(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {

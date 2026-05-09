@@ -34,7 +34,7 @@ class SpaceController : PlatformController {
     try {
       auto j = req.json;
       CreateSpaceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -58,7 +58,7 @@ class SpaceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto spaces = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -117,7 +117,7 @@ class SpaceController : PlatformController {
       auto j = req.json;
 
       UpdateSpaceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = SpaceId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");

@@ -58,7 +58,7 @@ class RoleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(roles.length);

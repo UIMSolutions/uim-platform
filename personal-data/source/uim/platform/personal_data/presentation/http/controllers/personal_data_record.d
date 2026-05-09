@@ -31,7 +31,7 @@ class PersonalDataRecordController : PlatformController {
         try {
             auto j = req.json;
             CreatePersonalDataRecordRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.applicationId = j.getString("applicationId");
@@ -61,7 +61,7 @@ class PersonalDataRecordController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto applicationId = params.get("applicationId", "");

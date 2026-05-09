@@ -39,7 +39,7 @@ class WorkpageController : PlatformController {
       auto j = req.json;
       auto r = CreateWorkpageRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
@@ -62,7 +62,7 @@ class WorkpageController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = pages.map!(p => p.toJson).array;
@@ -81,7 +81,7 @@ class WorkpageController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto page = useCase.getWorkpage(tenantId, id);
       if (page.isNull) {
         writeError(res, 404, "Page not found");
@@ -98,7 +98,7 @@ class WorkpageController : PlatformController {
       auto j = req.json;
       auto r = UpdateWorkpageRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
@@ -121,7 +121,7 @@ class WorkpageController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteWorkpage(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

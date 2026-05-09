@@ -95,7 +95,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deletePage(PageId pageId, SiteId siteId) {
+  CommandResult deletePage(PageId pageId, SiteId siteId) {
     if (!pageRepo.existsById(pageId))
       return "Page not found";
 

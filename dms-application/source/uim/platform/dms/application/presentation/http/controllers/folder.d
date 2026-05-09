@@ -43,7 +43,7 @@ class FolderController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateFolderRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.repositoryId = j.getString("repositoryId");
       r.parentFolderId = j.getString("parentFolderId");
       r.name = j.getString("name");
@@ -66,7 +66,7 @@ class FolderController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listFolders(tenantId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;
@@ -84,7 +84,7 @@ class FolderController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = FolderId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto folder = usecase.getFolder(tenantId, id);
       if (folder.isNull) {
         writeError(res, 404, "Folder not found");
@@ -106,7 +106,7 @@ class FolderController : PlatformController {
       auto j = req.json;
       auto r = UpdateFolderRequest();
       r.folderId = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -132,7 +132,7 @@ class FolderController : PlatformController {
       auto j = req.json;
       auto r = MoveFolderRequest();
       r.folderId = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.newParentFolderId = j.getString("newParentFolderId");
 
       auto result = usecase.moveFolder(r);
@@ -154,7 +154,7 @@ class FolderController : PlatformController {
   private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = FolderId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto subfolders = usecase.listSubfolders(tenantId, parentId);
       auto arr = subfolders.map!(f => f.toJson).array.toJson;

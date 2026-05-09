@@ -38,7 +38,7 @@ class ProfileController : PlatformController {
     try {
       auto j = req.json;
       auto r = ProfileDatasetRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.datasetName = j.getString("datasetName");
 
@@ -63,7 +63,7 @@ class ProfileController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto profiles = usecase.listByTenant(tenantId);
       auto arr = profiles.map!(p => p.toJson).array.toJson;
@@ -82,9 +82,9 @@ class ProfileController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto profile = usecase.getById(tenantId, id);
-      if (profile is null) {
+      if (profile.isNull) {
         writeError(res, 404, "Data profile not found");
         return;
       }

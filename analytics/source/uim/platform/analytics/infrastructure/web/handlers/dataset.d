@@ -27,6 +27,7 @@ class DatasetHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
     auto id = extractIdFromPath(req.requestURI, "datasets");
     if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);

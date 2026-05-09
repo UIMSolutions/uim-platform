@@ -32,7 +32,7 @@ class EnrichmentDataController : PlatformController {
     try {
       auto j = req.json;
       CreateEnrichmentDataRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = j.getString("documentTypeId");
       r.name = j.getString("name");
@@ -103,7 +103,7 @@ class EnrichmentDataController : PlatformController {
       auto j = req.json;
 
       UpdateEnrichmentDataRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.enrichmentDataId = id;
       r.name = j.getString("name");

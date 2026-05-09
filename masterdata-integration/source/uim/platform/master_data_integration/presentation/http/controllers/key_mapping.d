@@ -37,7 +37,7 @@ class KeyMappingController : PlatformController {
     try {
       auto j = req.json;
       CreateKeyMappingRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.masterDataObjectId = j.getString("masterDataObjectId");
       r.category = j.getString("category");
       r.objectType = j.getString("objectType");
@@ -58,7 +58,7 @@ class KeyMappingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto objectId = req.params.get("objectId", "");
       auto category = req.params.get("category", "");
 
@@ -86,7 +86,7 @@ class KeyMappingController : PlatformController {
   private void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       LookupKeyRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.sourceClientId = req.params.get("sourceClientId", "");
       r.sourceLocalKey = req.params.get("sourceLocalKey", "");
       r.targetClientId = req.params.get("targetClientId", "");

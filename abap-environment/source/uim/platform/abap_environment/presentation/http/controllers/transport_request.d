@@ -43,7 +43,7 @@ class TransportRequestController : PlatformController {
     try {
       auto j = req.json;
       CreateTransportRequestRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
       r.description = j.getString("description");

@@ -38,7 +38,7 @@ class TagController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateTagRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.color = j.getString("color");
@@ -62,7 +62,7 @@ class TagController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto tags = useCase.listTags(tenantId);
       auto arr = tags.map!(t => t.toJson).array.toJson;
 
@@ -81,7 +81,7 @@ class TagController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto t = useCase.getTag(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Tag not found");
@@ -100,7 +100,7 @@ class TagController : PlatformController {
       auto j = req.json;
       auto r = UpdateTagRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.color = j.getString("color");
@@ -122,7 +122,7 @@ class TagController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteTag(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

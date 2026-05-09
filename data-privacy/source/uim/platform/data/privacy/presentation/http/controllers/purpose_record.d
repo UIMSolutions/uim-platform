@@ -33,9 +33,11 @@ class PurposeRecordController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       CreatePurposeRecordRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.businessContextId = j.getString("businessContextId");
       r.purpose = j.getString("purpose");
@@ -60,7 +62,7 @@ class PurposeRecordController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto items = usecase.listRecords(tenantId);
       auto arr = items.map!(record => record.toJson).array.toJson;
@@ -77,8 +79,10 @@ class PurposeRecordController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+
+      auto tenantId = req.getTenantId;
       auto record = usecase.getRecord(tenantId, id);
       if (record.isNull) {
         writeError(res, 404, "Purpose record not found");
@@ -91,9 +95,10 @@ class PurposeRecordController : PlatformController {
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       DeactivatePurposeRecordRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
 
       auto result = usecase.deactivateRecord(r);
       if (result.isSuccess()) {
@@ -110,7 +115,7 @@ class PurposeRecordController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRecord(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

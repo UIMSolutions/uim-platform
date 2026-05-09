@@ -33,7 +33,7 @@ class FeatureRestrictionController : PlatformController {
     try {
       auto j = req.json;
       CreateFeatureRestrictionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
       r.featureKey = j.getString("featureKey");
       r.description = j.getString("description");
@@ -59,7 +59,7 @@ class FeatureRestrictionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {

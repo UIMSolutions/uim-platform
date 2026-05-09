@@ -38,7 +38,7 @@ class AppController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateAppRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.launchUrl = j.getString("launchUrl");
@@ -66,7 +66,7 @@ class AppController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
       auto arr = apps.map!(a => a.toJson).array.toJson;
 
@@ -85,7 +85,7 @@ class AppController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, id);
       if (app.isNull) {
         writeError(res, 404, "App not found");
@@ -102,7 +102,7 @@ class AppController : PlatformController {
       auto j = req.json;
       auto r = UpdateAppRequest();
       r.id = AppId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.launchUrl = j.getString("launchUrl");
@@ -135,7 +135,7 @@ class AppController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

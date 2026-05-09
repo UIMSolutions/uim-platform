@@ -41,7 +41,7 @@ class DatasetController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateDatasetRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataType = parseDataType(j.getString("dataType"));
@@ -64,7 +64,7 @@ class DatasetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto items = usecase.listDatasets(tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -83,9 +83,9 @@ class DatasetController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto ds = usecase.getDataset(tenantId, id);
-      if (ds is null) {
+      if (ds.isNull) {
         writeError(res, 404, "Dataset not found");
         return;
       }
@@ -101,7 +101,7 @@ class DatasetController : PlatformController {
       auto j = req.json;
       auto r = UpdateDatasetRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.columnDefinitions = j.getString("columnDefinitions");
@@ -125,7 +125,7 @@ class DatasetController : PlatformController {
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -146,7 +146,7 @@ class DatasetController : PlatformController {
   private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -167,7 +167,7 @@ class DatasetController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

@@ -31,7 +31,7 @@ class DataSubjectRequestController : PlatformController {
         try {
             auto j = req.json;
             CreateDataSubjectRequestRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.requestType = j.getString("requestType");
@@ -58,7 +58,7 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto statusFilter = params.get("status", "");
@@ -114,7 +114,7 @@ class DataSubjectRequestController : PlatformController {
 
             auto j = req.json;
             UpdateDataSubjectRequestRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
             r.priority = j.getString("priority");

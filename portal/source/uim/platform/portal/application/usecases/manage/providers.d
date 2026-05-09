@@ -73,7 +73,7 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteProvider(ProviderId id) {
+  CommandResult deleteProvider(ProviderId id) {
     if (!providerRepo.existsById(id))
       return "Content provider not found";
 

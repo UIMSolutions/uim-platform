@@ -41,7 +41,7 @@ class PackageController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreatePackageRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -68,7 +68,7 @@ class PackageController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto packages = usecase.listPackages(tenantId);
 
       auto arr = packages.map!(p => p.toJson).array.toJson;
@@ -149,7 +149,7 @@ class PackageController : PlatformController {
       auto j = req.json;
       auto r = AssemblePackageRequest();
       r.packageId = j.getString("packageId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.assemblePackage(r);

@@ -32,7 +32,7 @@ class DeviceRegistrationController : PlatformController {
     try {
       auto j = req.json;
       RegisterDeviceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.appId = j.getString("appId");
       r.deviceModel = j.getString("deviceModel");
       r.osVersion = j.getString("osVersion");
@@ -56,7 +56,7 @@ class DeviceRegistrationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {

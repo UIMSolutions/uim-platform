@@ -34,20 +34,20 @@ class PolicyController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
 
       PolicyRule[] rules;
       auto rulesJson = "rules" in j;
       if (rulesJson !is null && (rulesJson).isArray) {
-        foreach (rj; *rulesJson)
-        {
+        foreach (rj; *rulesJson) {
           rules ~= PolicyRule(getString(rj, "attribute"), getString(rj,
               "operator"), getString(rj, "value"));
         }
       }
 
       auto createReq = CreatePolicyRequest(j.getString("tenantId"), j.getString("name"),
-          j.getString("description"), rules, getStrings(j, "applicationIds"));
+        j.getString("description"), rules, getStrings(j, "applicationIds"));
 
       auto result = useCase.createPolicy(createReq);
       auto response = Json.emptyObject;
@@ -55,14 +55,11 @@ class PolicyController : PlatformController {
       if (result.isSuccess()) {
         response["policyId"] = Json(result.policyId);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         response["error"] = Json(result.error);
         res.writeJsonBody(response, 400);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -71,7 +68,7 @@ class PolicyController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(policies.length);
@@ -80,8 +77,7 @@ class PolicyController : PlatformController {
         arr ~= toJsonValue(p);
       response["resources"] = arr;
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -96,7 +92,8 @@ class PolicyController : PlatformController {
       auto idx = path.lastIndexOf('/');
       auto policyId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto policy = useCase.getPolicy(policyId);
+      auto tenantId = req.getTenantId;
+      auto policy = useCase.getPolicy(tenantId, policyId);
       if (policy == AuthorizationPolicy.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("Policy not found");
@@ -105,8 +102,7 @@ class PolicyController : PlatformController {
       }
 
       res.writeJsonBody(toJsonValue(policy), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

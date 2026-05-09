@@ -35,7 +35,7 @@ class ConsentPurposeController : PlatformController {
     try {
       auto j = req.json;
       CreateConsentPurposeRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.controllerId = DataControllerId(j.getString("controllerId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -62,7 +62,7 @@ class ConsentPurposeController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto items = usecase.listPurposes(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -80,7 +80,7 @@ class ConsentPurposeController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getPurpose(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent purpose not found");
@@ -96,7 +96,7 @@ class ConsentPurposeController : PlatformController {
       auto j = req.json;
       UpdateConsentPurposeRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.consentFormTemplate = j.getString("consentFormTemplate");
@@ -118,7 +118,7 @@ class ConsentPurposeController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deletePurpose(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -34,7 +34,7 @@ class SubstitutionRuleController : PlatformController {
         try {
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.userId = j.getString("userId");
             r.substituteId = j.getString("substituteId");
@@ -60,7 +60,7 @@ class SubstitutionRuleController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -95,7 +95,7 @@ class SubstitutionRuleController : PlatformController {
             if (path.endsWith("/activate") || path.endsWith("/deactivate"))
                 return;
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
@@ -115,7 +115,7 @@ class SubstitutionRuleController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateSubstitutionRuleRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.substituteId = j.getString("substituteId");
             r.taskDefinitionId = j.getString("taskDefinitionId");
@@ -145,7 +145,7 @@ class SubstitutionRuleController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.activate(tenantId, id);
             if (result.success) {
@@ -169,7 +169,7 @@ class SubstitutionRuleController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
 
             auto result = usecase.deactivate(tenantId, id);
             if (result.success) {
@@ -190,7 +190,7 @@ class SubstitutionRuleController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteSubstitutionRule(tenantId, id);
             if (result.success) {

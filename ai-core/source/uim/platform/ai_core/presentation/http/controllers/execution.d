@@ -35,7 +35,7 @@ class ExecutionController : PlatformController {
     try {
       auto j = req.json;
       CreateExecutionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
 
@@ -99,7 +99,7 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchExecutionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");

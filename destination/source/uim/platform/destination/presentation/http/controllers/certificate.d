@@ -42,7 +42,7 @@ class CertificateController : PlatformController {
     try {
       auto j = req.json;
       UploadCertificateRequest r;
-        r.tenantId = req.getTenantId;
+        r.tenantId = tenantId;
         r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -74,7 +74,7 @@ class CertificateController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto typeFilter = req.params.get("type");
 
@@ -99,7 +99,7 @@ class CertificateController : PlatformController {
 
   private void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       // import std.datetime.systime : Clock;
 
       auto now = Clock.currTime().toUnixTime();

@@ -59,7 +59,7 @@ class ProviderController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto response = Json.emptyObject
         .set("totalResults", providers.length)

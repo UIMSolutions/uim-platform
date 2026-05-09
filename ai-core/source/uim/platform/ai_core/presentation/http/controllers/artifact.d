@@ -34,7 +34,7 @@ class ArtifactController : PlatformController {
     try {
       auto j = req.json;
       CreateArtifactRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");

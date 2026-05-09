@@ -39,7 +39,7 @@ class GroupController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateGroupRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -60,7 +60,7 @@ class GroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto arr = groups.map!(g => g.toJson).array;
 
@@ -78,7 +78,7 @@ class GroupController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto g = useCase.getGroup(tenantId, id);
       if (g.isNull) {
         writeError(res, 404, "WZGroup not found");
@@ -96,7 +96,7 @@ class GroupController : PlatformController {
       auto j = req.json;
       auto r = UpdateGroupRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
@@ -117,7 +117,7 @@ class GroupController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteGroup(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

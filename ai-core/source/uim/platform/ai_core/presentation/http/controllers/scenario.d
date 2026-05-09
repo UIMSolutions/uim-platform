@@ -34,7 +34,7 @@ class ScenarioController : PlatformController {
     try {
       auto j = req.json;
       CreateScenarioRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.id = j.getString("id");
       r.name = j.getString("name");

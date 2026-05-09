@@ -40,7 +40,7 @@ class ValidationRuleController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateValidationRuleRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -77,7 +77,7 @@ class ValidationRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto rules = usecase.listByTenant(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -96,7 +96,7 @@ class ValidationRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getById(id);
-      if (rule is null) {
+      if (rule.isNull) {
         writeError(res, 404, "Validation rule not found");
         return;
       }
@@ -112,7 +112,7 @@ class ValidationRuleController : PlatformController {
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -151,7 +151,7 @@ class ValidationRuleController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteValidationRule(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -40,7 +40,7 @@ class ConnectorController : PlatformController {
       auto j = req.json;
       auto r = RegisterConnectorRequest();
       r.subaccountId = j.getString("subaccountId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.locationId = j.getString("locationId");
       r.description = j.getString("description");
       r.connectorVersion = j.getString("connectorVersion");
@@ -65,7 +65,7 @@ class ConnectorController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto conns = usecase.listByTenant(tenantId);
 
       auto arr = conns.map!(c => c.toJson).array.toJson;
@@ -83,7 +83,7 @@ class ConnectorController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
       auto cc = usecase.getConnector(tenantId, id);
       if (cc.isNull) {
@@ -109,7 +109,7 @@ class ConnectorController : PlatformController {
 
       auto j = req.json;
       auto r = HeartbeatRequest();
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       r.connectorVersion = j.getString("connectorVersion");
 
       auto result = usecase.heartbeat(tenantId, connectorId, r);
@@ -129,7 +129,7 @@ class ConnectorController : PlatformController {
 
   private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
       auto result = usecase.unregister(tenantId, id);
       if (result.success) {

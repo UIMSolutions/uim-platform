@@ -35,7 +35,7 @@ class NamespaceController : PlatformController {
     try {
       auto j = req.json;
       CreateNamespaceRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.createdBy = UserId(j.getString("createdBy"));
@@ -57,7 +57,7 @@ class NamespaceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto namespaces = namespaces.list(tenantId);
 
       auto jarr = Json.emptyArray;

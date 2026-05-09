@@ -64,7 +64,7 @@ class TileController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto tiles = useCase.listTiles(tenantId);
       auto response = Json.emptyObject
       .set("totalResults", tiles.length)
@@ -78,7 +78,7 @@ class TileController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");
       auto tiles = useCase.searchTiles(tenantId, query);
       auto response = Json.emptyObject;

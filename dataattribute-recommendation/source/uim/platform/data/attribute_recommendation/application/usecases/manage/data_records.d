@@ -24,7 +24,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     this.datasetRepo = datasetRepo;
   }
 
-  CommandResult createRecord(CreateDataRecordRequest req) {
+  CommandResult createDataRecord(CreateDataRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
@@ -53,15 +53,15 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(record.id.value, "");
   }
 
-  DataRecord getRecord(DataRecordId tenantId, id tenantId) {
+  DataRecord getDataRecord(TenantId tenantId, DataRecordId id) {
     return repo.findById(tenantId, id);
   }
 
-  DataRecord[] listByDataset(DatasetId datasettenantId, id tenantId) {
-    return repo.findByDataset(datasettenantId, id);
+  DataRecord[] listDataRecords(TenantId tenantId, DatasetId datasetId) {
+    return repo.findByDataset(datasetId, tenantId);
   }
 
-  CommandResult validateRecord(DataRecordId tenantId, id tenantId) {
+  CommandResult validateDataRecord(TenantId tenantId, DataRecordId id) {
     auto record = repo.findById(tenantId, id);
     if (record.isNull)
       return CommandResult(false, "", "Record not found");
@@ -71,7 +71,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult rejectRecord(DataRecordId tenantId, id tenantId) {
+  CommandResult rejectDataRecord(TenantId tenantId, DataRecordId id) {
     auto record = repo.findById(tenantId, id);
     if (record.isNull)
       return CommandResult(false, "", "Record not found");
@@ -81,7 +81,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult deleteRecord(DataRecordId tenantId, id tenantId) {
+  CommandResult deleteDataRecord(TenantId tenantId, DataRecordId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Record not found");

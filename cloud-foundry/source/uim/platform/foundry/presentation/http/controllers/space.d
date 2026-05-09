@@ -41,7 +41,7 @@ class SpaceController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateSpaceRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.orgId = OrgId(j.getString("orgId"));
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
@@ -65,7 +65,7 @@ class SpaceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto spaces = useCase.listSpaces(tenantId);
       auto arr = spaces.map!(s => s.toJson).array.toJson;
@@ -85,7 +85,7 @@ class SpaceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SpaceId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto space = useCase.getSpace(tenantId, id);
       if (space.isNull) {
         writeError(res, 404, "Space not found");
@@ -104,7 +104,7 @@ class SpaceController : PlatformController {
       auto j = req.json;
       auto r = UpdateSpaceRequest();
       r.id = id;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
 
@@ -127,7 +127,7 @@ class SpaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = SpaceId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

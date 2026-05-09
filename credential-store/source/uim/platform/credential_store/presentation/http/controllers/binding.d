@@ -35,7 +35,7 @@ class BindingController : PlatformController {
     try {
       auto j = req.json;
       CreateServiceBindingRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permission = j.getString("permission");
@@ -65,7 +65,7 @@ class BindingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto bindings = bindings.list(tenantId);
 
       auto jarr = Json.emptyArray;

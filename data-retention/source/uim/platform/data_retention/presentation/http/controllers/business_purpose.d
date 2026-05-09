@@ -24,7 +24,7 @@ class BusinessPurposeController : PlatformController {
         try {
             auto j = req.json;
             CreateBusinessPurposeRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.applicationGroupId = j.getString("applicationGroupId");

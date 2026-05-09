@@ -59,7 +59,7 @@ class SchemaController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto schemas = useCase.listSchemas(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(schemas.length);

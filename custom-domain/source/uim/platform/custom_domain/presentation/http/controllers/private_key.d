@@ -30,7 +30,7 @@ class PrivateKeyController : PlatformController {
         try {
             auto j = req.json;
             CreatePrivateKeyRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.subject = j.getString("subject");
             r.domains = getStrings(j, "domains");
@@ -55,7 +55,7 @@ class PrivateKeyController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto keys = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;

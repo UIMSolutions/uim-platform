@@ -38,7 +38,7 @@ class CardController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateCardRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.subtitle = j.getString("subtitle");
       r.description = j.getString("description");
@@ -64,7 +64,7 @@ class CardController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto cards = useCase.listCards(tenantId);
       auto arr = cards.map!(c => c.toJson).array.toJson;
 
@@ -82,7 +82,7 @@ class CardController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto c = useCase.getCard(tenantId, id);
       if (c.isNull) {
@@ -100,7 +100,7 @@ class CardController : PlatformController {
       auto j = req.json;
       auto r = UpdateCardRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.title = j.getString("title");
       r.subtitle = j.getString("subtitle");
       r.description = j.getString("description");
@@ -127,7 +127,7 @@ class CardController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteCard(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {

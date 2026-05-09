@@ -48,7 +48,7 @@ class AppController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateAppRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.spaceId = j.getString("spaceId");
       r.name = j.getString("name");
       r.instances = j.getInteger("instances", 0);
@@ -80,7 +80,7 @@ class AppController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
 
       auto arr = apps.map!(a => a.toJson).array.toJson;
@@ -98,7 +98,7 @@ class AppController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, appId);
       if (app.isNull) {
         writeError(res, 404, "Application not found");
@@ -117,7 +117,7 @@ class AppController : PlatformController {
       auto j = req.json;
       auto r = UpdateAppRequest();
       r.id = appId;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.instances = j.getInteger("instances", 0);
       r.memoryMb = j.getInteger("memoryMb", 0);
@@ -148,7 +148,7 @@ class AppController : PlatformController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.startApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -166,7 +166,7 @@ class AppController : PlatformController {
   private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.stopApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -183,7 +183,7 @@ class AppController : PlatformController {
   private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.restartApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -203,7 +203,7 @@ class AppController : PlatformController {
       auto j = req.json;
       auto r = ScaleAppRequest();
       r.id = appId;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instances = j.getInteger("instances", 0);
       r.memoryMb = j.getInteger("memoryMb", 0);
       r.diskMb = j.getInteger("diskMb", 0);
@@ -223,7 +223,7 @@ class AppController : PlatformController {
   private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(tenantId, id);
 
       auto resp = Json.emptyObject
@@ -239,7 +239,7 @@ class AppController : PlatformController {
   private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
@@ -259,7 +259,7 @@ class AppController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AppId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

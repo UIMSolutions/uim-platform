@@ -38,7 +38,7 @@ class ClientController : PlatformController {
     try {
       auto j = req.json;
       CreateClientRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.clientType = j.getString("clientType");
@@ -70,7 +70,7 @@ class ClientController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
       auto type = req.params.get("type", "");
 

@@ -35,7 +35,7 @@ class AlertRuleController : PlatformController {
     try {
       auto j = req.json;
       CreateAlertRuleRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.query = j.getString("query");
@@ -65,7 +65,7 @@ class AlertRuleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto rules = usecase.listRules(tenantId);
 
       auto jarr = Json.emptyArray;

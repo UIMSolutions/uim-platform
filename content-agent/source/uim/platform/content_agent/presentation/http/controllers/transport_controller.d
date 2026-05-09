@@ -40,7 +40,7 @@ class TransportController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateTransportRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.sourceSubaccount = j.getString("sourceSubaccount");
       r.targetSubaccount = j.getString("targetSubaccount");
       r.description = j.getString("description");
@@ -66,7 +66,7 @@ class TransportController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto transports = usecase.listTransportRequests(tenantId);
       auto arr = transports.map!(t => t.toJson).array.toJson;
@@ -101,7 +101,7 @@ class TransportController : PlatformController {
       auto j = req.json;
       auto r = ReleaseTransportRequest();
       r.requestId = j.getString("requestId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.releaseTransport(r);

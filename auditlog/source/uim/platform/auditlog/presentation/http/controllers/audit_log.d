@@ -41,7 +41,7 @@ class AuditLogController : PlatformController {
     try {
       auto j = req.json;
       auto r = WriteAuditLogRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = j.getString("userId");
       r.userName = j.getString("userName");
       r.serviceId = j.getString("serviceId");
@@ -78,7 +78,7 @@ class AuditLogController : PlatformController {
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto queryReq = AuditLogQueryRequest();
       queryReq.tenantId = tenantId;
 
@@ -113,7 +113,7 @@ class AuditLogController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AuditLogId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (!retrieveUsecase.existsById(tenantId, id)) {
         writeError(res, 404, "Audit log entry not found");
         return;

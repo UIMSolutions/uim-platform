@@ -27,7 +27,7 @@ class DomainDashboardController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto d = usecase.getById(tenantId);
 
             auto resp = Json.emptyObject
@@ -50,7 +50,7 @@ class DomainDashboardController : PlatformController {
     private void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             RefreshDashboardRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
 
             auto result = usecase.refresh(r);
             if (result.success) {

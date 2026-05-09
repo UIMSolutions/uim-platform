@@ -40,15 +40,17 @@ class DataRecordController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+
       auto r = CreateDataRecordRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.attributes = j.getString("attributes");
       r.labels = j.getString("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.createRecord(r);
+      auto result = usecase.createDataRecord(r);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -66,10 +68,11 @@ class DataRecordController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto record = usecase.getRecord(tenantId, id);
-      if (record is null) {
+
+      auto record = usecase.getDataRecord(tenantId, id);
+      if (record.isNull) {
         writeError(res, 404, "Record not found");
         return;
       }
@@ -82,10 +85,10 @@ class DataRecordController : PlatformController {
 
   private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto datasetId = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
+      auto datasetId = DatasetId(extractIdFromPath(req.requestURI));
       
-      auto items = usecase.listByDataset(tenantId, datasetId);
+      auto items = usecase.listDataRecords(tenantId, datasetId);
       auto arr = items.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -102,9 +105,10 @@ class DataRecordController : PlatformController {
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto result = usecase.validateRecord(tenantId, id);
+      auto tenantId = req.getTenantId;
+      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+
+      auto result = usecase.validateDataRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -123,9 +127,9 @@ class DataRecordController : PlatformController {
 
   private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto result = usecase.rejectRecord(tenantId, id);
+      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+      auto tenantId = req.getTenantId;
+      auto result = usecase.rejectDataRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -144,10 +148,11 @@ class DataRecordController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
-      auto result = usecase.deleteRecord(tenantId, id);
-      if (result.isSuccess) {
+      auto tenantId = req.getTenantId;
+      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+
+      auto result = usecase.deleteDataRecord(tenantId, id);
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("deleted", true)
@@ -162,16 +167,5 @@ class DataRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeRecord(const DataRecord r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("datasetId", r.datasetId)
-      .set("tenantId", r.tenantId)
-      .set("attributes", r.attributes)
-      .set("labels", r.labels)
-      .set("status", r.status.to!string)
-      .set("createdBy", r.createdBy)
-      .set("createdAt", r.createdAt);
-  }
+  
 }

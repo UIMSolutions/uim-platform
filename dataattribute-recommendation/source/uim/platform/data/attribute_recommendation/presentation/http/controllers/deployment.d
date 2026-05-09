@@ -41,7 +41,7 @@ class DeploymentController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateDeploymentRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.trainingJobId = j.getString("trainingJobId");
       r.name = j.getString("name");
       r.replicas = j.getInteger("replicas", 1);
@@ -65,7 +65,7 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listDeployments(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -85,9 +85,9 @@ class DeploymentController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto dep = usecase.getDeployment(tenantId, id);
-      if (dep is null) {
+      if (dep.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
       }
@@ -101,7 +101,7 @@ class DeploymentController : PlatformController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.activateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -125,7 +125,7 @@ class DeploymentController : PlatformController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deactivateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject  
@@ -149,7 +149,7 @@ class DeploymentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.deleteDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

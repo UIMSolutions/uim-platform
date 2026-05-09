@@ -36,7 +36,7 @@ class DashboardController : PlatformController {
     try {
       auto j = req.json;
       auto r = ComputeDashboardRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
       r.datasetName = j.getString("datasetName");
 

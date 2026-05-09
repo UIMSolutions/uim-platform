@@ -37,13 +37,13 @@ class ModelTrainer {
   /// Validate that a model configuration can be trained.
   bool canTrain(ModelConfigId configtenantId, id tenantId) {
     auto config = configRepo.findById(configtenantId, id);
-    if (config is null)
+    if (config.isNull)
       return false;
     if (config.status != ModelConfigStatus.ready && config.status != ModelConfigStatus.trained)
       return false;
 
     auto ds = datasetRepo.findById(config.datasettenantId, id);
-    if (ds is null)
+    if (ds.isNull)
       return false;
     if (ds.status != DatasetStatus.completed)
       return false;
@@ -87,7 +87,7 @@ class ModelTrainer {
   /// Simulate training completion with generated quality metrics.
   void completeTraining(TrainingJobId jobtenantId, id tenantId) {
     auto job = jobRepo.findById(jobtenantId, id);
-    if (job is null)
+    if (job.isNull)
       return;
 
     auto now = Clock.currStdTime();

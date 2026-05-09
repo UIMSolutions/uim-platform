@@ -32,7 +32,7 @@ class HtmlAppController : PlatformController {
     try {
       auto j = req.json;
       CreateHtmlAppRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.namespace_ = j.getString("namespace");
       r.description = j.getString("description");
@@ -55,7 +55,7 @@ class HtmlAppController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class HtmlAppController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
@@ -113,7 +113,7 @@ class HtmlAppController : PlatformController {
     try {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
@@ -141,7 +141,7 @@ class HtmlAppController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;

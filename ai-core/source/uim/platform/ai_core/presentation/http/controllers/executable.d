@@ -34,7 +34,7 @@ class ExecutableController : PlatformController {
     try {
       auto j = req.json;
       CreateExecutableRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.scenarioId = j.getString("scenarioId");
       r.id = j.getString("id");

@@ -39,7 +39,7 @@ class WorkspaceController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.alias_ = j.getString("alias");
@@ -76,7 +76,7 @@ class WorkspaceController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = workspaces.map!(w => w.toJson).array;
 
@@ -100,7 +100,7 @@ class WorkspaceController : PlatformController {
         return;
       }
 
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto ws = useCase.getWorkspace(tenantId, id);
       if (ws.isNull) {
         writeError(res, 404, "Workspace not found");
@@ -117,7 +117,7 @@ class WorkspaceController : PlatformController {
       auto j = req.json;
       auto r = UpdateWorkspaceRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.imageUrl = j.getString("imageUrl");
@@ -141,7 +141,7 @@ class WorkspaceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteWorkspace(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {
@@ -154,7 +154,7 @@ class WorkspaceController : PlatformController {
       auto j = req.json;
       auto r = AddMemberRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.userId = j.getString("userId");
       r.displayName = j.getString("displayName");
 

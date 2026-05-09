@@ -210,8 +210,6 @@ struct AnonymizationConfigId  {
   mixin DomainId;
 }
 
-
-
 /// Type of data subject whose personal data is processed.
 enum DataSubjectType {
   naturalPerson,

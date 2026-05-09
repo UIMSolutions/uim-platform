@@ -33,7 +33,7 @@ class HDIContainerController : PlatformController {
     try {
       auto j = req.json;
       CreateHDIContainerRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -58,7 +58,7 @@ class HDIContainerController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto containers = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -120,7 +120,7 @@ class HDIContainerController : PlatformController {
 
       auto j = req.json;
       UpdateHDIContainerRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");

@@ -40,7 +40,7 @@ class QueueController : PlatformController {
     try {
       auto j = req.json;
       auto r = CreateQueueRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.queueType = j.getString("queueType");
@@ -69,7 +69,7 @@ class QueueController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto queues = usecase.listQueues(tenantId);
       auto arr = queues.map!(q => q.toJson).array.toJson;

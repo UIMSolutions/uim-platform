@@ -40,7 +40,7 @@ class InferenceController : PlatformController {
     try {
       auto j = req.json;
       auto r = SubmitInferenceRequest();
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.deploymentId = j.getString("deploymentId");
       r.inputData = j.getString("inputData");
 
@@ -64,7 +64,7 @@ class InferenceController : PlatformController {
   private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       // Try as inference request
       auto requests = usecase.listByDeployment(tenantId, id);
@@ -90,13 +90,13 @@ class InferenceController : PlatformController {
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto result = usecase.getResult(tenantId, id);
-      if (result is null) {
+      if (result.isNull) {
         // Try by request id
         result = usecase.getResultByRequest(tenantId, id);
       }
-      if (result is null) {
+      if (result.isNull) {
         writeError(res, 404, "Inference result not found");
         return;
       }
@@ -109,7 +109,7 @@ class InferenceController : PlatformController {
 
   private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listRequests(tenantId);
       auto arr = items.map!(r => r.toJson).array.toJson;
 

@@ -33,7 +33,7 @@ class DocumentController : PlatformController {
     try {
       auto j = req.json;
       UploadDocumentRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.fileName = j.getString("fileName");
       r.mimeType = j.getString("mimeType");
@@ -122,7 +122,7 @@ class DocumentController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       ConfirmDocumentRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentId = id;
       r.correctedFields = jsonKeyValuePairs(j, "correctedFields");

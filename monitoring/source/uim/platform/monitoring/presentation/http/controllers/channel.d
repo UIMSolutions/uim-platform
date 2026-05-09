@@ -40,7 +40,7 @@ class ChannelController : PlatformController {
     try {
       auto j = req.json;
       CreateNotificationChannelRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.channelType = j.getString("channelType");

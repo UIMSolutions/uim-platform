@@ -35,7 +35,7 @@ class CorrectionRequestController : PlatformController {
     try {
       auto j = req.json;
       CreateCorrectionRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
@@ -59,7 +59,7 @@ class CorrectionRequestController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto items = usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -77,7 +77,7 @@ class CorrectionRequestController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Correction request not found");
@@ -93,7 +93,7 @@ class CorrectionRequestController : PlatformController {
       auto j = req.json;
       UpdateCorrectionStatusRequest r;
       r.id = CorrectionRequestId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.status = parseCorrectionStatus(j.getString("status"));
 
       auto result = usecase.updateStatus(r);
@@ -112,7 +112,7 @@ class CorrectionRequestController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

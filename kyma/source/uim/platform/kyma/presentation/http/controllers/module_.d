@@ -43,7 +43,7 @@ class ModuleController : PlatformController {
       auto j = req.json;
       EnableModuleRequest r;
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.moduleType = j.getString("moduleType");
       r.version_ = j.getString("version");

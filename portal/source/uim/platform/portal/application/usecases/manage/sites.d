@@ -116,7 +116,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     return "";
   }
 
-  string deleteSite(SiteId id) {
+  CommandResult deleteSite(SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site == Site.init)
       return "Site not found";

@@ -30,7 +30,7 @@ class TaskActionController : PlatformController {
         try {
             auto j = req.json;
             PerformTaskActionRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.taskId = j.getString("taskId");
             r.actionType = j.getString("actionType");
@@ -55,7 +55,7 @@ class TaskActionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto taskId = params.get("taskId", "");
 
@@ -86,7 +86,7 @@ class TaskActionController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
@@ -103,7 +103,7 @@ class TaskActionController : PlatformController {
         try {
             
 
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto id = TaskActionId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteTaskAction(tenantId, id);
             if (result.success) {

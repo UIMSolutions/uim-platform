@@ -82,7 +82,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   /// Delete a schema.
-  string deleteSchema(SchemaId id) {
+  CommandResult deleteSchema(SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
     if (schema == Schema.init)
       return "Schema not found";

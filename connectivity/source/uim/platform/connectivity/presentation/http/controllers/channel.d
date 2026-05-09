@@ -41,7 +41,7 @@ class ChannelController : PlatformController {
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.connectorId = j.getString("connectorId");
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.channelType = j.getString("type");
       r.virtualHost = j.getString("virtualHost");
@@ -66,7 +66,7 @@ class ChannelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto channels = usecase.listByTenant(tenantId);
       auto arr = channels.map!(ch => ch.toJson).array.toJson;
@@ -84,7 +84,7 @@ class ChannelController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
       auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
@@ -105,7 +105,7 @@ class ChannelController : PlatformController {
         return;
       }
       auto channelId = ChannelId(parts[$ - 2]);
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
 
       auto result = usecase.openChannel(tenantId, channelId);
       if (result.success) {
@@ -130,7 +130,7 @@ class ChannelController : PlatformController {
         writeError(res, 400, "Invalid path");
         return;
       }
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto channelId = ChannelId(parts[$ - 2]);
 
       auto result = usecase.closeChannel(tenantId, channelId);
@@ -151,7 +151,7 @@ class ChannelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteChannel(tenantId, id);
       if (result.success) {

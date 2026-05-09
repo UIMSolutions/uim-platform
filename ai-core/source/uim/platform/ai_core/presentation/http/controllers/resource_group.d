@@ -35,7 +35,7 @@ class ResourceGroupController : PlatformController {
     try {
       auto j = req.json;
       CreateResourceGroupRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonKeyValuePairs(j, "labels");
 
@@ -56,7 +56,7 @@ class ResourceGroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto groups = groups.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -119,7 +119,7 @@ class ResourceGroupController : PlatformController {
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchResourceGroupRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.resourceGroupId = id;
       r.labels = jsonKeyValuePairs(j, "labels");
 

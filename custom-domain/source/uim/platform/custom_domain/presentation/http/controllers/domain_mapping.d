@@ -31,7 +31,7 @@ class DomainMappingController : PlatformController {
         try {
             auto j = req.json;
             CreateDomainMappingRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.customDomainId = j.getString("customDomainId");
             r.standardRoute = j.getString("standardRoute");
@@ -59,7 +59,7 @@ class DomainMappingController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto mappings = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;

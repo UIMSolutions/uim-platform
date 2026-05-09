@@ -38,7 +38,7 @@ class DestinationController : PlatformController {
     try {
       auto j = req.json;
       CreateDestinationRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.serviceInstanceId = j.getString("serviceInstanceId");
       r.name = j.getString("name");
@@ -93,7 +93,7 @@ class DestinationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto instanceId = req.params.get("serviceInstanceId");
 

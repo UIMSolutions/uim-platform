@@ -34,7 +34,7 @@ class CertificateController : PlatformController {
         try {
             auto j = req.json;
             CreateCertificateRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.keyId = j.getString("keyId");
             r.certificateType = j.getString("certificateType");
@@ -57,7 +57,7 @@ class CertificateController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto certs = certificates.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -140,7 +140,7 @@ class CertificateController : PlatformController {
 
             auto j = req.json;
             UploadCertificateChainRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.certificatePem = j.getString("certificatePem");
 
@@ -169,7 +169,7 @@ class CertificateController : PlatformController {
 
             auto j = req.json;
             ActivateCertificateRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.domains = getStrings(j, "domains");
 

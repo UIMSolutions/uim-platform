@@ -73,7 +73,7 @@ class ExportController : ManageController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto jobs = useCase.listExports(tenantId);
       auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -92,7 +92,7 @@ class ExportController : ManageController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       if (!useCase.hasExport(tenantId, jobId)) {
         writeError(res, 404, "Export job not found");
         return;
@@ -108,7 +108,7 @@ class ExportController : ManageController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       useCase.deleteExport(tenantId, jobId);
       auto resp = Json.emptyObject
         .set("status", "deleted")

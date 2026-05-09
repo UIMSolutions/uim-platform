@@ -40,7 +40,7 @@ class DataSubjectController : PlatformController {
     try {
       auto j = req.json;
       CreateDataSubjectRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.externalId = j.getString("externalId");
@@ -65,7 +65,7 @@ class DataSubjectController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
       DataSubject[] items = typeParam.length > 0
@@ -88,7 +88,7 @@ class DataSubjectController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getSubject(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data subject not found");
@@ -105,7 +105,7 @@ class DataSubjectController : PlatformController {
       auto j = req.json;
       UpdateDataSubjectRequest r;
       r.id = DataSubjectId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.sourceSystem = j.getString("sourceSystem");
@@ -131,7 +131,7 @@ class DataSubjectController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }

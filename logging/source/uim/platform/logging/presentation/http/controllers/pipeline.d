@@ -35,7 +35,7 @@ class PipelineController : PlatformController {
     try {
       auto j = req.json;
       CreatePipelineRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
@@ -69,7 +69,7 @@ class PipelineController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto pipelines = usecase.listPipelines(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -94,7 +94,7 @@ class PipelineController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
       auto p = usecase.getPipeline(tenantId, id);
       if (p.isNull) {
@@ -118,7 +118,7 @@ class PipelineController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 

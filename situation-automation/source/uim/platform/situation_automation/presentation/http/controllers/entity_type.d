@@ -34,7 +34,7 @@ class EntityTypeController : PlatformController {
         try {
             auto j = req.json;
             CreateEntityTypeRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -59,7 +59,7 @@ class EntityTypeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            TenantId tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId;
             auto types = usecase.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -119,7 +119,7 @@ class EntityTypeController : PlatformController {
 
             auto j = req.json;
             UpdateEntityTypeRequest r;
-            r.tenantId = req.getTenantId;
+            r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

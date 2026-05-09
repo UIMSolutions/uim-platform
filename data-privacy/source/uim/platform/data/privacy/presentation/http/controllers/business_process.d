@@ -35,7 +35,7 @@ class BusinessProcessController : PlatformController {
     try {
       auto j = req.json;
       CreateBusinessProcessRequest r;
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
@@ -58,7 +58,7 @@ class BusinessProcessController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       
       auto items = usecase.listProcesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class BusinessProcessController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto entry = usecase.getProcess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business process not found");
@@ -92,7 +92,7 @@ class BusinessProcessController : PlatformController {
       auto j = req.json;
       UpdateBusinessProcessRequest r;
       r.id = BusinessProcessId(extractIdFromPath(req.requestURI));
-      r.tenantId = req.getTenantId;
+      r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
@@ -115,7 +115,7 @@ class BusinessProcessController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
-      TenantId tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       usecase.deleteProcess(tenantId, id);
 
       auto resp = Json.emptyObject
@@ -127,9 +127,9 @@ class BusinessProcessController : PlatformController {
   }
 
   private static Json serialize(const BusinessProcess e) {
-    auto purps = e.purposes.map!(p => p.toJson).array.toJson;
+    auto purps = e.purposes.map!(p => p.to!string).array.toJson;
 
-    auto bases = e.legalBases.map!(b => b.toJson).array.toJson;
+    auto bases = e.legalBases.map!(b => b.to!string).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)
