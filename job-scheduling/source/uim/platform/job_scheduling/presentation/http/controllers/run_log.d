@@ -78,7 +78,7 @@ class RunLogController : PlatformController {
 
     private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto runLogId = extractIdFromPath(path);
             auto j = req.json;

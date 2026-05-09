@@ -13,6 +13,7 @@ class ServiceBrokerController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/service-brokers", &handleList);
         router.get("/api/v1/service-manager/service-brokers/*", &handleGet);
         router.post("/api/v1/service-manager/service-brokers", &handleCreate);

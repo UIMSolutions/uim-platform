@@ -46,7 +46,7 @@ class AppBuildController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = AppBuildId(extractIdFromPath(path));
             auto e = usecase.getById(id);
@@ -90,7 +90,7 @@ class AppBuildController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             AppBuildDTO dto;

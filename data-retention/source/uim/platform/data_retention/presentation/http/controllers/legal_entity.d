@@ -12,6 +12,7 @@ class LegalEntityController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/legal-entities", &handleCreate);
         router.get("/api/v1/data-retention/legal-entities", &handleList);
         router.get("/api/v1/data-retention/legal-entities/*", &handleGet);

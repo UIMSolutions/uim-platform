@@ -20,6 +20,7 @@ class DnsRecordController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/dns-records", &handleList);
         router.get("/api/v1/custom-domain/dns-records/*", &handleGet);
         router.post("/api/v1/custom-domain/dns-records", &handleCreate);

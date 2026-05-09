@@ -45,7 +45,7 @@ class ContentConnectorController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ContentConnectorId(extractIdFromPath(path));
             auto e = usecase.getById(id);
@@ -87,7 +87,7 @@ class ContentConnectorController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ContentConnectorDTO dto;
@@ -116,7 +116,7 @@ class ContentConnectorController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ContentConnectorId(extractIdFromPath(path));
             auto result = usecase.remove(id);

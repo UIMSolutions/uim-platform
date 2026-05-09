@@ -20,6 +20,7 @@ class RefreshTokenController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/oauth/refresh-tokens", &handleList);
         router.get("/api/v1/oauth/refresh-tokens/*", &handleGet);
         router.post("/api/v1/oauth/refresh-tokens", &handleCreate);
@@ -45,7 +46,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(RefreshTokenId(id));
@@ -88,7 +89,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = usecase.revoke(RefreshTokenId(id));
@@ -107,7 +108,7 @@ class RefreshTokenController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = usecase.deleteRefreshToken(RefreshTokenId(id));

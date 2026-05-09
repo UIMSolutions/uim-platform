@@ -20,6 +20,7 @@ class SkillController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/skills", &handleList);
         router.get("/api/v1/field-service/skills/*", &handleGet);
         router.post("/api/v1/field-service/skills", &handleCreate);
@@ -45,7 +46,7 @@ class SkillController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(id);
@@ -91,7 +92,7 @@ class SkillController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SkillDTO dto;
@@ -120,7 +121,7 @@ class SkillController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = SkillId(extractIdFromPath(path));
             auto result = usecase.deleteSkill(id);

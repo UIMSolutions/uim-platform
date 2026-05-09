@@ -12,6 +12,7 @@ class LegalGroundController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/legal-grounds", &handleCreate);
         router.get("/api/v1/data-retention/legal-grounds", &handleList);
         router.get("/api/v1/data-retention/legal-grounds/*", &handleGet);

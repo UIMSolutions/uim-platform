@@ -12,6 +12,7 @@ class ArchivingJobController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/archiving-jobs", &handleCreate);
         router.get("/api/v1/data-retention/archiving-jobs", &handleList);
         router.get("/api/v1/data-retention/archiving-jobs/*", &handleGet);

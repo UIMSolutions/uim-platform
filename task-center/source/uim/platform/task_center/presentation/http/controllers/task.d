@@ -20,6 +20,7 @@ class TaskController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/task-center/tasks", &handleList);
         router.get("/api/v1/task-center/tasks/*", &handleGet);
         router.post("/api/v1/task-center/tasks", &handleCreate);

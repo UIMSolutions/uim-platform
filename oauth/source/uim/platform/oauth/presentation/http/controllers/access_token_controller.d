@@ -46,7 +46,7 @@ class AccessTokenController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(AccessTokenId(id));
@@ -88,7 +88,7 @@ class AccessTokenController : PlatformController {
 
     private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = usecase.revoke(AccessTokenId(id));
@@ -107,7 +107,7 @@ class AccessTokenController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = AccessTokenId(extractIdFromPath(path));
             auto result = usecase.delete(id);

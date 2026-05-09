@@ -20,6 +20,7 @@ class EquipmentController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/equipment", &handleList);
         router.get("/api/v1/field-service/equipment/*", &handleGet);
         router.post("/api/v1/field-service/equipment", &handleCreate);
@@ -45,7 +46,7 @@ class EquipmentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(id);
@@ -95,7 +96,7 @@ class EquipmentController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             EquipmentDTO dto;
@@ -126,7 +127,7 @@ class EquipmentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EquipmentId(extractIdFromPath(path));
             auto result = usecase.deleteEquipment(id);

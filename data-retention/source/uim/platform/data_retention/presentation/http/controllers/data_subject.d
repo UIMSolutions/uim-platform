@@ -12,6 +12,7 @@ class DataSubjectController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/data-subjects", &handleCreate);
         router.get("/api/v1/data-retention/data-subjects", &handleList);
         router.get("/api/v1/data-retention/data-subjects/*", &handleGet);
@@ -88,7 +89,7 @@ class DataSubjectController : PlatformController {
 
     private void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto parts = path.split("/");
             string id = "";

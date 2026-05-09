@@ -13,6 +13,7 @@ class ServiceInstanceController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/service-instances", &handleList);
         router.get("/api/v1/service-manager/service-instances/*", &handleGet);
         router.post("/api/v1/service-manager/service-instances", &handleCreate);

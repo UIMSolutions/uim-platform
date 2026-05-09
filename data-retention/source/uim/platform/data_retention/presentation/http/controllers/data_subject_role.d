@@ -12,6 +12,7 @@ class DataSubjectRoleController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/data-subject-roles", &handleCreate);
         router.get("/api/v1/data-retention/data-subject-roles", &handleList);
         router.get("/api/v1/data-retention/data-subject-roles/*", &handleGet);

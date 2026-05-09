@@ -23,6 +23,7 @@ class SituationTemplateController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/situation-automation/templates", &handleList);
         router.get("/api/v1/situation-automation/templates/*", &handleGet);
         router.post("/api/v1/situation-automation/templates", &handleCreate);

@@ -46,7 +46,7 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ScheduledExecutionId(extractIdFromPath(path));
             auto e = scheduledExecutions.getById(id);
@@ -90,7 +90,7 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ScheduledExecutionDTO dto;
@@ -117,7 +117,7 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ScheduledExecutionId(extractIdFromPath(path));
             auto result = scheduledExecutions.remove(id);

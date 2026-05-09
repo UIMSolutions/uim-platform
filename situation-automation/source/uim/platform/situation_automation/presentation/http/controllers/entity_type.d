@@ -23,6 +23,7 @@ class EntityTypeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/situation-automation/entity-types", &handleList);
         router.get("/api/v1/situation-automation/entity-types/*", &handleGet);
         router.post("/api/v1/situation-automation/entity-types", &handleCreate);

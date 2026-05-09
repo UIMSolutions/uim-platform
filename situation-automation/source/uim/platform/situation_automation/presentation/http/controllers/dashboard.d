@@ -23,6 +23,7 @@ class DashboardController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/situation-automation/dashboards", &handleList);
         router.get("/api/v1/situation-automation/dashboards/*", &handleGet);
         router.post("/api/v1/situation-automation/dashboards", &handleCreate);

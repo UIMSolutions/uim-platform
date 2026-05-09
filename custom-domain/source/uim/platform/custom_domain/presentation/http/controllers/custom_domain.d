@@ -20,6 +20,7 @@ class CustomDomainController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/domains", &handleList);
         router.get("/api/v1/custom-domain/domains/*", &handleGet);
         router.post("/api/v1/custom-domain/domains", &handleCreate);

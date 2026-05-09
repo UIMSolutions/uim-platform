@@ -20,6 +20,7 @@ class CatalogController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/automation-pilot/catalogs", &handleList);
         router.get("/api/v1/automation-pilot/catalogs/*", &handleGet);
         router.post("/api/v1/automation-pilot/catalogs", &handleCreate);
@@ -44,7 +45,7 @@ class CatalogController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CatalogId(extractIdFromPath(path));
             auto e = catalogs.getById(id);
@@ -85,7 +86,7 @@ class CatalogController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CatalogDTO dto;
@@ -112,7 +113,7 @@ class CatalogController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CatalogId(extractIdFromPath(path));
             auto result = catalogs.remove(id);

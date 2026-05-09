@@ -13,6 +13,7 @@ class ServiceBindingController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/service-bindings", &handleList);
         router.get("/api/v1/service-manager/service-bindings/*", &handleGet);
         router.post("/api/v1/service-manager/service-bindings", &handleCreate);

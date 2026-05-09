@@ -46,7 +46,7 @@ class LogicFlowController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = LogicFlowId(extractIdFromPath(path));
             auto e = usecase.getById(id);
@@ -93,7 +93,7 @@ class LogicFlowController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             LogicFlowDTO dto;
@@ -121,7 +121,7 @@ class LogicFlowController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = LogicFlowId(extractIdFromPath(path));
             auto result = usecase.remove(id);

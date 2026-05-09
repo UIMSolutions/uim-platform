@@ -15,6 +15,7 @@ class EnvironmentController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/platforms", &handleList);
         router.get("/api/v1/service-manager/platforms/*", &handleGet);
         router.post("/api/v1/service-manager/platforms", &handleCreate);

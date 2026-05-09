@@ -20,6 +20,7 @@ class TaskProviderController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/task-center/providers", &handleList);
         router.get("/api/v1/task-center/providers/*", &handleGet);
         router.post("/api/v1/task-center/providers", &handleCreate);
@@ -131,7 +132,7 @@ class TaskProviderController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
@@ -154,7 +155,7 @@ class TaskProviderController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
@@ -177,7 +178,7 @@ class TaskProviderController : PlatformController {
 
     private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 5]; // remove "/sync"
             auto id = extractIdFromPath(stripped);

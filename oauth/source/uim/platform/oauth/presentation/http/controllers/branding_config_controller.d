@@ -20,6 +20,7 @@ class BrandingConfigController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/oauth/branding-configs", &handleList);
         router.get("/api/v1/oauth/branding-configs/*", &handleGet);
         router.post("/api/v1/oauth/branding-configs", &handleCreate);
@@ -45,7 +46,7 @@ class BrandingConfigController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(BrandingConfigId(id));
@@ -91,7 +92,7 @@ class BrandingConfigController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BrandingConfigDTO dto;
@@ -124,7 +125,7 @@ class BrandingConfigController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = BrandingConfigId(extractIdFromPath(path));
             auto result = usecase.deleteBrandingConfig(id);

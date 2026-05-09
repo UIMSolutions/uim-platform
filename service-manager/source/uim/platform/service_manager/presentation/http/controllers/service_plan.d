@@ -13,6 +13,7 @@ class ServicePlanController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/service-plans", &handleList);
         router.get("/api/v1/service-manager/service-plans/*", &handleGet);
         router.post("/api/v1/service-manager/service-plans", &handleCreate);

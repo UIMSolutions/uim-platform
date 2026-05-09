@@ -12,6 +12,7 @@ class DeletionRequestController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/deletion-requests", &handleCreate);
         router.get("/api/v1/data-retention/deletion-requests", &handleList);
         router.get("/api/v1/data-retention/deletion-requests/*", &handleGet);

@@ -20,6 +20,7 @@ class RetentionRuleController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/personal-data/retention-rules", &handleList);
         router.get("/api/v1/personal-data/retention-rules/*", &handleGet);
         router.post("/api/v1/personal-data/retention-rules", &handleCreate);

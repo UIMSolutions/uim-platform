@@ -20,6 +20,7 @@ class DataSubjectRequestController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/personal-data/requests", &handleList);
         router.get("/api/v1/personal-data/requests/*", &handleGet);
         router.post("/api/v1/personal-data/requests", &handleCreate);

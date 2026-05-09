@@ -13,6 +13,7 @@ class OperationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/service-manager/operations", &handleList);
         router.get("/api/v1/service-manager/operations/*", &handleGet);
         router.post("/api/v1/service-manager/operations", &handleCreate);

@@ -12,6 +12,7 @@ class BusinessPurposeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/business-purposes", &handleCreate);
         router.get("/api/v1/data-retention/business-purposes", &handleList);
         router.get("/api/v1/data-retention/business-purposes/*", &handleGet);
@@ -98,7 +99,7 @@ class BusinessPurposeController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             // path: /api/v1/data-retention/business-purposes/{id}/activate
             auto parts = path.split("/");

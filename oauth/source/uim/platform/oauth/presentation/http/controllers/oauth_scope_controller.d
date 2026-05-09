@@ -20,6 +20,7 @@ class OAuthScopeController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/oauth/scopes", &handleList);
         router.get("/api/v1/oauth/scopes/*", &handleGet);
         router.post("/api/v1/oauth/scopes", &handleCreate);
@@ -44,7 +45,7 @@ class OAuthScopeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(OAuthScopeId(id));
@@ -84,7 +85,7 @@ class OAuthScopeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             OAuthScopeDTO dto;
@@ -110,7 +111,7 @@ class OAuthScopeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = usecase.deleteOAuthScope(OAuthScopeId(id));

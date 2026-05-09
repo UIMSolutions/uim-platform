@@ -26,6 +26,7 @@ class JobController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/scheduler/jobs", &handleCreate);
         router.get("/api/v1/scheduler/jobs", &handleList);
         router.get("/api/v1/scheduler/jobs/count", &handleCount);

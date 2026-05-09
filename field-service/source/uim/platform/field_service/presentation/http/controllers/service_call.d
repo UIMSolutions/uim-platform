@@ -20,6 +20,7 @@ class ServiceCallController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/service-calls", &handleList);
         router.get("/api/v1/field-service/service-calls/*", &handleGet);
         router.post("/api/v1/field-service/service-calls", &handleCreate);
@@ -44,7 +45,7 @@ class ServiceCallController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(id);
@@ -94,7 +95,7 @@ class ServiceCallController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceCallDTO dto;
@@ -124,7 +125,7 @@ class ServiceCallController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ServiceCallId(extractIdFromPath(path));
             auto result = usecase.deleteServiceCall(id);

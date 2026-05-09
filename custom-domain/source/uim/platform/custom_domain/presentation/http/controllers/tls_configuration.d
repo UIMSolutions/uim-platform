@@ -20,6 +20,7 @@ class TlsConfigurationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/tls-configurations", &handleList);
         router.get("/api/v1/custom-domain/tls-configurations/*", &handleGet);
         router.post("/api/v1/custom-domain/tls-configurations", &handleCreate);

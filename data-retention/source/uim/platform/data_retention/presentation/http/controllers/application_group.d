@@ -12,6 +12,7 @@ class ApplicationGroupController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/data-retention/application-groups", &handleCreate);
         router.get("/api/v1/data-retention/application-groups", &handleList);
         router.get("/api/v1/data-retention/application-groups/*", &handleGet);

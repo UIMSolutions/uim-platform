@@ -20,6 +20,7 @@ class CustomerController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/field-service/customers", &handleList);
         router.get("/api/v1/field-service/customers/*", &handleGet);
         router.post("/api/v1/field-service/customers", &handleCreate);
@@ -44,7 +45,7 @@ class CustomerController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto e = usecase.getById(id);
@@ -93,7 +94,7 @@ class CustomerController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CustomerDTO dto;
@@ -123,7 +124,7 @@ class CustomerController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CustomerId(extractIdFromPath(path));
             auto result = usecase.deleteCustomer(id);

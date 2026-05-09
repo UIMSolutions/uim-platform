@@ -20,6 +20,7 @@ class PrivateKeyController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/keys", &handleList);
         router.get("/api/v1/custom-domain/keys/*", &handleGet);
         router.post("/api/v1/custom-domain/keys", &handleCreate);
