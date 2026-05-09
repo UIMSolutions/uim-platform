@@ -31,13 +31,14 @@ class AlertRuleController : PlatformController {
 
     router.post("/api/v1/alert-rules", &handleCreate);
     router.get("/api/v1/alert-rules", &handleList);
-    router.get("/api/v1/alert-rules/*", &handleGetById);
+    router.get("/api/v1/alert-rules/*", &handleGet);
     router.put("/api/v1/alert-rules/*", &handleUpdate);
     router.delete_("/api/v1/alert-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = tenantId;
@@ -88,7 +89,7 @@ class AlertRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));

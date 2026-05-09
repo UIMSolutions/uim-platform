@@ -30,7 +30,8 @@ class TaskChainController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateTaskChainRequest r;
       r.tenantId = tenantId;
@@ -87,9 +88,8 @@ class TaskChainController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -118,9 +118,8 @@ class TaskChainController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

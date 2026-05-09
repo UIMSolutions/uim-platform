@@ -37,7 +37,8 @@ class MetricController : PlatformController {
   }
 
   private void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       PushMetricRequest r;
       r.tenantId = tenantId;
@@ -62,7 +63,8 @@ class MetricController : PlatformController {
   }
 
   private void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto tenantId = req.getTenantId;
 

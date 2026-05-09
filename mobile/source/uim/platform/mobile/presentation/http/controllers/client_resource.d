@@ -29,7 +29,8 @@ class ClientResourceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateClientResourceRequest r;
       r.tenantId = tenantId;
@@ -79,7 +80,8 @@ class ClientResourceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -105,7 +107,8 @@ class ClientResourceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateClientResourceRequest r;
@@ -131,7 +134,8 @@ class ClientResourceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ClientResourceId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteClientResource(id);
       if (result.success) {

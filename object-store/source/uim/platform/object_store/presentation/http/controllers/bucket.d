@@ -32,13 +32,14 @@ class BucketController : PlatformController {
 
     router.post("/api/v1/buckets", &handleCreate);
     router.get("/api/v1/buckets", &handleList);
-    router.get("/api/v1/buckets/*", &handleGetById);
+    router.get("/api/v1/buckets/*", &handleGet);
     router.put("/api/v1/buckets/*", &handleUpdate);
     router.delete_("/api/v1/buckets/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateBucketRequest();
       r.tenantId = tenantId;
@@ -83,8 +84,9 @@ class BucketController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       if (!existsBucket(id)) {
         writeError(res, 404, "Bucket not found");
@@ -104,7 +106,8 @@ class BucketController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateBucketRequest();
@@ -130,7 +133,8 @@ class BucketController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteBucket(id);
       if (result.success) {

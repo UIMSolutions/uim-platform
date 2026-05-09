@@ -31,13 +31,14 @@ class AccessPolicyController : PlatformController {
 
     router.post("/api/v1/access-policies", &handleCreate);
     router.get("/api/v1/buckets/*/access-policies", &handleListByBucket);
-    router.get("/api/v1/access-policies/*", &handleGetById);
+    router.get("/api/v1/access-policies/*", &handleGet);
     router.put("/api/v1/access-policies/*", &handleUpdate);
     router.delete_("/api/v1/access-policies/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateAccessPolicyRequest();
       r.tenantId = tenantId;
@@ -82,8 +83,9 @@ class AccessPolicyController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto policy = usecase.getPolicy(id);
       if (policy.isNull || policy.isNull) {
@@ -97,7 +99,8 @@ class AccessPolicyController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateAccessPolicyRequest();
@@ -122,7 +125,8 @@ class AccessPolicyController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deletePolicy(id);
       if (result.success) {

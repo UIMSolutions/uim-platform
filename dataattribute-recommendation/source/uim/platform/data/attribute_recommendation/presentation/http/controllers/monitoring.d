@@ -53,7 +53,8 @@ class MonitoringController : PlatformController {
   }
 
   private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto job = usecase.getTrainingJob(tenantId, id);

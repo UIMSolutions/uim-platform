@@ -31,7 +31,7 @@ class ApplicationController : PlatformController {
 
     router.post("/api/v1/applications", &handleRegister);
     router.get("/api/v1/applications", &handleList);
-    router.get("/api/v1/applications/*", &handleGetById);
+    router.get("/api/v1/applications/*", &handleGet);
     router.put("/api/v1/applications/*", &handleUpdate);
     router.post("/api/v1/applications/connect/*", &handleConnect);
     router.post("/api/v1/applications/disconnect/*", &handleDisconnect);
@@ -39,7 +39,8 @@ class ApplicationController : PlatformController {
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RegisterApplicationRequest r;
       with (r) {
@@ -93,7 +94,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ApplicationId id = extractIdFromPath(req.requestURI);
       if (!usecase.hasApplication(id)) {

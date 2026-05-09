@@ -27,7 +27,7 @@ class ReplicationController : PlatformController {
 
     router.post("/api/v1/replication-jobs", &handleCreate);
     router.get("/api/v1/replication-jobs", &handleList);
-    router.get("/api/v1/replication-jobs/*", &handleGetById);
+    router.get("/api/v1/replication-jobs/*", &handleGet);
     router.post("/api/v1/replication-jobs/start/*", &handleStart);
     router.post("/api/v1/replication-jobs/pause/*", &handlePause);
     router.post("/api/v1/replication-jobs/cancel/*", &handleCancel);
@@ -35,7 +35,8 @@ class ReplicationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateReplicationJobRequest r;
       r.tenantId = tenantId;
@@ -90,8 +91,9 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto job = usecase.getJob(id);
       if (job.isNull) {
@@ -105,7 +107,8 @@ class ReplicationController : PlatformController {
   }
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.startJob(id);
       if (result.success) {
@@ -122,7 +125,8 @@ class ReplicationController : PlatformController {
   }
 
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.pauseJob(id);
       if (result.success) {
@@ -139,7 +143,8 @@ class ReplicationController : PlatformController {
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.cancelJob(id);
       if (result.success) {
@@ -156,7 +161,8 @@ class ReplicationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteJob(id);
       if (result.success) {

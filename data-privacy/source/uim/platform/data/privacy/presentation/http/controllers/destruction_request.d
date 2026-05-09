@@ -26,13 +26,14 @@ class DestructionRequestController : PlatformController {
 
     router.post("/api/v1/destruction-requests", &handleCreate);
     router.get("/api/v1/destruction-requests", &handleList);
-    router.get("/api/v1/destruction-requests/*", &handleGetById);
+    router.get("/api/v1/destruction-requests/*", &handleGet);
     router.put("/api/v1/destruction-requests/*/status", &handleUpdateStatus);
     router.delete_("/api/v1/destruction-requests/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDestructionRequest r;
       r.tenantId = tenantId;
@@ -73,8 +74,9 @@ class DestructionRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
@@ -88,7 +90,8 @@ class DestructionRequestController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateDestructionStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -109,7 +112,8 @@ class DestructionRequestController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);

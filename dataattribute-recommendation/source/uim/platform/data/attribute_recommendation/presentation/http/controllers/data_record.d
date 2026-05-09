@@ -31,7 +31,7 @@ class DataRecordController : PlatformController {
     super.registerRoutes(router);
 
     router.post("/api/v1/data-records", &handleCreate);
-    router.get("/api/v1/data-records/*", &handleGetById);
+    router.get("/api/v1/data-records/*", &handleGet);
     router.get("/api/v1/datasets/records/*", &handleListByDataset);
     router.post("/api/v1/data-records/validate/*", &handleValidate);
     router.post("/api/v1/data-records/reject/*", &handleReject);
@@ -66,7 +66,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -126,7 +126,8 @@ class DataRecordController : PlatformController {
   }
 
   private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.rejectDataRecord(tenantId, id);

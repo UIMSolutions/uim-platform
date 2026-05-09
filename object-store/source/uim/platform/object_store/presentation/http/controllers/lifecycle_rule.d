@@ -31,13 +31,14 @@ class LifecycleRuleController : PlatformController {
 
     router.post("/api/v1/lifecycle-rules", &handleCreate);
     router.get("/api/v1/buckets/*/lifecycle-rules", &handleListByBucket);
-    router.get("/api/v1/lifecycle-rules/*", &handleGetById);
+    router.get("/api/v1/lifecycle-rules/*", &handleGet);
     router.put("/api/v1/lifecycle-rules/*", &handleUpdate);
     router.delete_("/api/v1/lifecycle-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto request = CreateLifecycleRuleRequest();
       request.tenantId = request.getTenantId;
@@ -84,8 +85,9 @@ class LifecycleRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getRule(id);
       if (rule.isNull) {
@@ -99,7 +101,8 @@ class LifecycleRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto request = UpdateLifecycleRuleRequest();
@@ -127,7 +130,8 @@ class LifecycleRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteRule(id);
       if (result.success) {

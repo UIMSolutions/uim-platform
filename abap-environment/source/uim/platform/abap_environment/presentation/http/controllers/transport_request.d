@@ -32,7 +32,7 @@ class TransportRequestController : PlatformController {
 
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
-    router.get("/api/v1/transports/*", &handleGetById);
+    router.get("/api/v1/transports/*", &handleGet);
     router.post("/api/v1/transports/tasks/*", &handleAddTask);
     router.post("/api/v1/transports/release/*", &handleRelease);
     router.post("/api/v1/transports/release-task/*", &handleReleaseTask);
@@ -41,6 +41,7 @@ class TransportRequestController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateTransportRequestRequest r;
       r.tenantId = tenantId;
@@ -67,8 +68,9 @@ class TransportRequestController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto requests = usecase.listRequests(systemId);
+      auto requests = usecase.listRequests(tenantId, systemId);
       auto arr = requests.map!(tr => tr.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -82,10 +84,11 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto tr = usecase.getRequest(id);
+      auto tr = usecase.getRequest(tenantId, id);
       if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
         return;
@@ -98,9 +101,11 @@ class TransportRequestController : PlatformController {
 
   private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto requestId = TransportRequestId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       AddTransportTaskRequest r;
+      r.tenantId = tenantId;
       r.owner = j.getString("owner");
       r.description = j.getString("description");
       r.objectList = getStrings(j, "objectList");
@@ -122,8 +127,10 @@ class TransportRequestController : PlatformController {
 
   private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto result = usecase.releaseRequest(id);
+
+      auto result = usecase.releaseRequest(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")
@@ -140,11 +147,12 @@ class TransportRequestController : PlatformController {
 
   private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto requestId = TransportRequestId(j.getString("requestId"));
       auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.releaseTask(requestId, taskId);
+      auto result = usecase.releaseTask(tenantId, requestId, taskId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")
@@ -161,8 +169,10 @@ class TransportRequestController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteRequest(id);
+      
+      auto result = usecase.deleteRequest(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

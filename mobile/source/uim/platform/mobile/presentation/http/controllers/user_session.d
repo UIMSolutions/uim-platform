@@ -30,7 +30,8 @@ class UserSessionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateUserSessionRequest r;
       r.tenantId = tenantId;
@@ -79,7 +80,8 @@ class UserSessionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -105,7 +107,8 @@ class UserSessionController : PlatformController {
   }
 
   private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.terminate(id);
       if (result.success) {
@@ -122,7 +125,8 @@ class UserSessionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = UserSessionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.delete(id);
       if (result.success) {

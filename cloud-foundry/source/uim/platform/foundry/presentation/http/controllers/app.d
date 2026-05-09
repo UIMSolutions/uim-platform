@@ -39,13 +39,14 @@ class AppController : PlatformController {
     router.get("/api/v1/apps/env/*", &handleGetEnv);
     router.put("/api/v1/apps/env/*", &handleSetEnv);
     // CRUD wildcard
-    router.get("/api/v1/apps/*", &handleGetById);
+    router.get("/api/v1/apps/*", &handleGet);
     router.put("/api/v1/apps/*", &handleUpdate);
     router.delete_("/api/v1/apps/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
@@ -95,7 +96,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -221,7 +222,8 @@ class AppController : PlatformController {
   }
 
   private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(tenantId, id);
@@ -237,7 +239,8 @@ class AppController : PlatformController {
   }
 
   private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -257,7 +260,8 @@ class AppController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);

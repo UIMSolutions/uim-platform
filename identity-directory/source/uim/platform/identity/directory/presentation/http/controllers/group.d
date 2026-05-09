@@ -37,7 +37,8 @@ class GroupController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto members = parseMembers(j);
       auto createReq = CreateGroupRequest(req.headers.get("X-Tenant-Id", ""),
@@ -122,7 +123,8 @@ class GroupController : PlatformController {
   }
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto addReq = AddMemberRequest(j.getString("groupId"),
         j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
@@ -141,7 +143,8 @@ class GroupController : PlatformController {
   }
 
   private void handleRemoveMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto removeReq = RemoveMemberRequest(j.getString("groupId"), j.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);

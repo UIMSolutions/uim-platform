@@ -31,13 +31,14 @@ class DataRetrievalController : PlatformController {
 
     router.post("/api/v1/data-retrievals", &handleCreate);
     router.get("/api/v1/data-retrievals", &handleList);
-    router.get("/api/v1/data-retrievals/*", &handleGetById);
+    router.get("/api/v1/data-retrievals/*", &handleGet);
     router.put("/api/v1/data-retrievals/*", &handleUpdateStatus);
     router.delete_("/api/v1/data-retrievals/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataRetrievalRequest r;
       r.tenantId = tenantId;
@@ -80,8 +81,9 @@ class DataRetrievalController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
@@ -95,7 +97,8 @@ class DataRetrievalController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRetrievalStatusRequest r;
       r.id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
@@ -118,7 +121,8 @@ class DataRetrievalController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);

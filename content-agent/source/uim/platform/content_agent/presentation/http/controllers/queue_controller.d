@@ -31,13 +31,14 @@ class QueueController : PlatformController {
     
     router.post("/api/v1/queues", &handleCreate);
     router.get("/api/v1/queues", &handleList);
-    router.get("/api/v1/queues/*", &handleGetById);
+    router.get("/api/v1/queues/*", &handleGet);
     router.put("/api/v1/queues/*", &handleUpdate);
     router.delete_("/api/v1/queues/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateQueueRequest();
       r.tenantId = tenantId;
@@ -86,8 +87,9 @@ class QueueController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto queue = usecase.getQueue(id);
       if (queue.isNull) {
@@ -102,7 +104,8 @@ class QueueController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateQueueRequest();
@@ -130,7 +133,8 @@ class QueueController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteQueue(id);
       if (result.success) {

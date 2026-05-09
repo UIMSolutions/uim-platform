@@ -38,7 +38,8 @@ class PermissionController : PlatformController {
   }
 
   private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreatePermissionRequest();
       r.tenantId = tenantId;
@@ -107,7 +108,8 @@ class PermissionController : PlatformController {
   }
 
   private void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto tenantId = req.getTenantId;
       auto resourceId = j.getString("resourceId");
@@ -133,7 +135,8 @@ class PermissionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdatePermissionRequest();
@@ -158,7 +161,8 @@ class PermissionController : PlatformController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = permissions.revokePermission(tenantId, id);

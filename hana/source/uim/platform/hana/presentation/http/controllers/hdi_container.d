@@ -30,7 +30,8 @@ class HDIContainerController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateHDIContainerRequest r;
       r.tenantId = tenantId;
@@ -84,9 +85,8 @@ class HDIContainerController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = usecase.getById(id);
       if (c.isNull) {
@@ -142,9 +142,8 @@ class HDIContainerController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteHDIContainer(id);
       if (result.success) {

@@ -46,7 +46,8 @@ class ServiceController : PlatformController {
   // --- Service Instances ---
 
   private void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = tenantId;
@@ -91,7 +92,8 @@ class ServiceController : PlatformController {
   }
 
   private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto si = useCase.getInstance(tenantId, id);
@@ -109,7 +111,8 @@ class ServiceController : PlatformController {
   }
 
   private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
@@ -134,7 +137,8 @@ class ServiceController : PlatformController {
   }
 
   private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(tenantId, id);
@@ -154,7 +158,8 @@ class ServiceController : PlatformController {
   // --- Service Bindings ---
 
   private void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = tenantId;
@@ -197,7 +202,8 @@ class ServiceController : PlatformController {
   }
 
   private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(tenantId, id);

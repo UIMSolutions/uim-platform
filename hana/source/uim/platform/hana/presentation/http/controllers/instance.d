@@ -32,7 +32,8 @@ class InstanceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateInstanceRequest r;
       r.tenantId = tenantId;
@@ -101,9 +102,8 @@ class InstanceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto instance = usecase.getById(id);
       if (instance.isNull) {
@@ -207,9 +207,8 @@ class InstanceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = InstanceId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteInstance(id);
       if (result.success) {

@@ -31,13 +31,14 @@ class NamespaceController : PlatformController {
 
     router.post("/api/v1/namespaces", &handleCreate);
     router.get("/api/v1/namespaces", &handleList);
-    router.get("/api/v1/namespaces/*", &handleGetById);
+    router.get("/api/v1/namespaces/*", &handleGet);
     router.put("/api/v1/namespaces/*", &handleUpdate);
     router.delete_("/api/v1/namespaces/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateNamespaceRequest r;
       r.environmentId = j.getString("environmentId");
@@ -86,8 +87,9 @@ class NamespaceController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto ns = usecase.getNamespace(NamespaceId(id));
       if (ns.isNull) {
@@ -101,7 +103,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateNamespaceRequest r;
@@ -127,7 +130,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteNamespace(NamespaceId(id));
       if (result.success)

@@ -36,7 +36,8 @@ class EntitlementController : PlatformController {
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       AssignEntitlementRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -89,7 +90,8 @@ class EntitlementController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto ent = usecase.getById(id);
       if (ent.isNull) {
@@ -102,7 +104,8 @@ class EntitlementController : PlatformController {
   }
 
   private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateEntitlementQuotaRequest request;
@@ -119,7 +122,8 @@ class EntitlementController : PlatformController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.revoke(id);
       if (result.success)
@@ -131,7 +135,8 @@ class EntitlementController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));
       auto result = usecase.deleteEntitlement(id);
       if (result.success)

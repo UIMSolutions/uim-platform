@@ -37,7 +37,8 @@ class RoleController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("name"), j.getString("description"),
@@ -101,7 +102,8 @@ class RoleController : PlatformController {
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto assignReq = AssignRoleRequest(j.getString("roleId"), getStrings(j,
           "userIds"), getStrings(j, "groupIds"),);

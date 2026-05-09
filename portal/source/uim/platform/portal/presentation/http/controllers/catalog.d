@@ -37,7 +37,8 @@ class CatalogController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("title"), j.getString("description"), j.getString("providerId"),

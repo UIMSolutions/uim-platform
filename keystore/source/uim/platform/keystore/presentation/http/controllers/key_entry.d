@@ -94,7 +94,8 @@ class KeyEntryController : PlatformController {
 
   // GET /api/v1/keystores/{keystoreId}/entries/{id}
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id    = extractIdFromPath(req);
       auto entry = usecase.getById(id);
       if (entry.id.length == 0) {
@@ -123,7 +124,8 @@ class KeyEntryController : PlatformController {
 
   // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id     = KeyEntryId(extractIdFromPath(req));
       auto result = usecase.deleteKeyEntry(id);
       if (result.success) {

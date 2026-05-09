@@ -37,7 +37,8 @@ class InferenceController : PlatformController {
   }
 
   private void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = SubmitInferenceRequest();
       r.tenantId = tenantId;
@@ -62,7 +63,8 @@ class InferenceController : PlatformController {
   }
 
   private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
 
@@ -88,7 +90,8 @@ class InferenceController : PlatformController {
   }
 
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.getResult(tenantId, id);

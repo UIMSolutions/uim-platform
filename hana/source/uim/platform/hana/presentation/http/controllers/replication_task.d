@@ -32,7 +32,8 @@ class ReplicationTaskController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateReplicationTaskRequest r;
       r.tenantId = tenantId;
@@ -89,9 +90,8 @@ class ReplicationTaskController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto t = usecase.getById(id);
       if (t.isNull) {
@@ -151,9 +151,8 @@ class ReplicationTaskController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ReplicationTaskId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteReplicationTask(id);
       if (result.success) {

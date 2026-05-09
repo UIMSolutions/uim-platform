@@ -33,7 +33,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -80,9 +81,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -102,9 +102,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
@@ -132,7 +131,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -163,9 +163,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 

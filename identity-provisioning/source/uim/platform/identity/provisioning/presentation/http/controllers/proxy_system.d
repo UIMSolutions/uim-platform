@@ -31,7 +31,7 @@ class ProxySystemController : PlatformController {
 
     router.post("/api/v1/proxy-systems", &handleCreate);
     router.get("/api/v1/proxy-systems", &handleList);
-    router.get("/api/v1/proxy-systems/*", &handleGetById);
+    router.get("/api/v1/proxy-systems/*", &handleGet);
     router.put("/api/v1/proxy-systems/*", &handleUpdate);
     router.delete_("/api/v1/proxy-systems/*", &handleDelete);
     router.post("/api/v1/proxy-systems/activate/*", &handleActivate);
@@ -39,7 +39,8 @@ class ProxySystemController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateProxySystemRequest();
       r.tenantId = tenantId;
@@ -81,8 +82,9 @@ class ProxySystemController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto sys = usecase.getProxySystem(tenantId, id);
@@ -97,7 +99,8 @@ class ProxySystemController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateProxySystemRequest();
@@ -123,7 +126,8 @@ class ProxySystemController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.activateSystem(tenantId, id);
@@ -143,7 +147,8 @@ class ProxySystemController : PlatformController {
   }
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
@@ -162,7 +167,8 @@ class ProxySystemController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteProxySystem(tenantId, id);

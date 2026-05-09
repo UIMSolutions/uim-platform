@@ -28,7 +28,8 @@ class ClientLogController : PlatformController {
   }
 
   private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UploadClientLogRequest r;
       r.tenantId = tenantId;
@@ -84,7 +85,8 @@ class ClientLogController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {

@@ -34,7 +34,8 @@ class AuthController : PlatformController {
   }
 
   private void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto authReq = AuthRequest(j.getString("tenantId"), j.getString("applicationId"),
           j.getString("email"), j.getString("password"),
@@ -67,7 +68,8 @@ class AuthController : PlatformController {
   }
 
   private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto tokenReq = TokenRequest(j.getString("sessionId"), j.getString("clientId"),
           j.getString("clientSecret"), getStrings(j, "scopes"));

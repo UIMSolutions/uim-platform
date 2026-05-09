@@ -47,7 +47,8 @@ class RouteController : PlatformController {
   // --- Routes ---
 
   private void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateRouteRequest();
       r.tenantId = tenantId;
@@ -90,7 +91,8 @@ class RouteController : PlatformController {
   }
 
   private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto r = useCase.getRoute(tenantId, id);
@@ -105,7 +107,8 @@ class RouteController : PlatformController {
   }
 
   private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(tenantId, id);
@@ -122,7 +125,8 @@ class RouteController : PlatformController {
   }
 
   private void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = RouteId(extractIdFromPath(req.requestURI));
@@ -167,7 +171,8 @@ class RouteController : PlatformController {
   // --- Domains ---
 
   private void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDomainRequest();
       r.tenantId = tenantId;
@@ -210,7 +215,8 @@ class RouteController : PlatformController {
   }
 
   private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DomainId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(tenantId, id);

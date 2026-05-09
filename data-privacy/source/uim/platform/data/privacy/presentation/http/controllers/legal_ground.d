@@ -31,13 +31,14 @@ class LegalGroundController : PlatformController {
     
     router.post("/api/v1/legal-grounds", &handleCreate);
     router.get("/api/v1/legal-grounds", &handleList);
-    router.get("/api/v1/legal-grounds/*", &handleGetById);
+    router.get("/api/v1/legal-grounds/*", &handleGet);
     router.put("/api/v1/legal-grounds/*", &handleUpdate);
     router.delete_("/api/v1/legal-grounds/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateLegalGroundRequest r;
       r.tenantId = tenantId;
@@ -94,8 +95,9 @@ class LegalGroundController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto entry = usecase.getGround(tenantId, id);
@@ -110,7 +112,8 @@ class LegalGroundController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateLegalGroundRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -136,7 +139,8 @@ class LegalGroundController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       usecase.deleteGround(tenantId, id);

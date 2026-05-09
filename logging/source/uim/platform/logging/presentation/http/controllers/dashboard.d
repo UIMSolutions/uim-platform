@@ -34,7 +34,8 @@ class DashboardController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDashboardRequest r;
       r.tenantId = tenantId;

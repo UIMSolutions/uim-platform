@@ -21,26 +21,26 @@ mixin(ShowModule!());
 class MemoryApplicationJobRepository : TenantRepository!(ApplicationJob, ApplicationJobId), ApplicationJobRepository {
 
   // #region BySystem
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
-  ApplicationJob[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+  ApplicationJob[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findByTenant(tenantId).filter!(e => e.systemInstanceId == systemId).array;
   }
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
   // #endregion BySystem
 
   // #region ByStatus
-  size_t countByStatus(SystemInstanceId systemId, JobStatus status) {
-    return findByStatus(systemId, status).length;
+  size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
+    return findByStatus(tenantId, systemId, status).length;
   }
-  ApplicationJob[] findByStatus(SystemInstanceId systemId, JobStatus status) {
-    return findAll().filter!(e => e.systemInstanceId == systemId && e.status == status).array;
+  ApplicationJob[] findByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
+    return findBySystem(tenantId, systemId).filter!(e => e.status == status).array;
   }
-  void removeByStatus(SystemInstanceId systemId, JobStatus status) {
-    findByStatus(systemId, status).each!(e => remove(e));
+  void removeByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
+    findByStatus(tenantId, systemId, status).each!(e => remove(e));
   }
   // #endregion ByStatus
 

@@ -30,7 +30,7 @@ class DatasetController : PlatformController {
 
     router.post("/api/v1/datasets", &handleCreate);
     router.get("/api/v1/datasets", &handleList);
-    router.get("/api/v1/datasets/*", &handleGetById);
+    router.get("/api/v1/datasets/*", &handleGet);
     router.put("/api/v1/datasets/*", &handleUpdate);
     router.delete_("/api/v1/datasets/*", &handleDelete);
     router.post("/api/v1/datasets/validate/*", &handleValidate);
@@ -38,7 +38,8 @@ class DatasetController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDatasetRequest();
       r.tenantId = tenantId;
@@ -80,8 +81,9 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto ds = usecase.getDataset(tenantId, id);
@@ -96,7 +98,8 @@ class DatasetController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateDatasetRequest();
@@ -123,7 +126,8 @@ class DatasetController : PlatformController {
   }
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.validateDataset(tenantId, id);
@@ -144,7 +148,8 @@ class DatasetController : PlatformController {
   }
 
   private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.processDataset(tenantId, id);
@@ -165,7 +170,8 @@ class DatasetController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteDataset(tenantId, id);

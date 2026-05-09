@@ -37,7 +37,8 @@ class ThemeController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateThemeRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("name"), j.getString("description"), jsonEnum!ThemeMode(j,

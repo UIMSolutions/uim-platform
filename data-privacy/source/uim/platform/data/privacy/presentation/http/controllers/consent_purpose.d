@@ -26,13 +26,14 @@ class ConsentPurposeController : PlatformController {
 
     router.post("/api/v1/consent-purposes", &handleCreate);
     router.get("/api/v1/consent-purposes", &handleList);
-    router.get("/api/v1/consent-purposes/*", &handleGetById);
+    router.get("/api/v1/consent-purposes/*", &handleGet);
     router.put("/api/v1/consent-purposes/*", &handleUpdate);
     router.delete_("/api/v1/consent-purposes/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateConsentPurposeRequest r;
       r.tenantId = tenantId;
@@ -77,8 +78,9 @@ class ConsentPurposeController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getPurpose(tenantId, id);
@@ -92,7 +94,8 @@ class ConsentPurposeController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateConsentPurposeRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -116,7 +119,8 @@ class ConsentPurposeController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deletePurpose(tenantId, id);

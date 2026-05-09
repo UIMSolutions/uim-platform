@@ -31,14 +31,15 @@ class SystemController : PlatformController {
 
     router.post("/api/v1/systems", &handleCreate);
     router.get("/api/v1/systems", &handleList);
-    router.get("/api/v1/systems/*", &handleGetById);
+    router.get("/api/v1/systems/*", &handleGet);
     router.put("/api/v1/systems/*", &handleUpdate);
     router.delete_("/api/v1/systems/*", &handleDelete);
     router.post("/api/v1/systems/test/*", &handleTestConnection);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateSystemRequest();
       r.tenantId = tenantId;
@@ -87,8 +88,9 @@ class SystemController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto sys = useCase.getSystem(tenantId, id);
@@ -103,7 +105,8 @@ class SystemController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateSystemRequest();
@@ -137,7 +140,8 @@ class SystemController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteSystem(tenantId, id);
@@ -155,7 +159,8 @@ class SystemController : PlatformController {
   }
 
   private void handleTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.testConnection(tenantId, id);

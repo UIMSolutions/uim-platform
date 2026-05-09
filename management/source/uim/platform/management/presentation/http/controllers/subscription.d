@@ -36,7 +36,8 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSubscriptionRequest r;
       r.subaccountId = j.getString("subaccountId");
@@ -80,7 +81,8 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto s = usecase.getById(id);
       if (s.isNull) {
@@ -93,7 +95,8 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateSubscriptionRequest r;
@@ -110,7 +113,8 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.unsubscribe(id);
       if (result.success)

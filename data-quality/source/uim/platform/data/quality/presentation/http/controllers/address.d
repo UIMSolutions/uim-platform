@@ -35,7 +35,8 @@ class AddressController : PlatformController {
   }
 
   private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CleanseAddressRequest();
       r.tenantId = tenantId;
@@ -55,7 +56,8 @@ class AddressController : PlatformController {
   }
 
   private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto batchReq = CleanseBatchAddressRequest();
       batchReq.tenantId = req.getTenantId;

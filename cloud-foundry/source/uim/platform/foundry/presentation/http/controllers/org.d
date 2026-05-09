@@ -30,13 +30,14 @@ class OrgController : PlatformController {
     router.get("/api/v1/orgs", &handleList);
     router.post("/api/v1/orgs/suspend/*", &handleSuspend);
     router.post("/api/v1/orgs/activate/*", &handleActivate);
-    router.get("/api/v1/orgs/*", &handleGetById);
+    router.get("/api/v1/orgs/*", &handleGet);
     router.put("/api/v1/orgs/*", &handleUpdate);
     router.delete_("/api/v1/orgs/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateOrgRequest();
       r.tenantId = tenantId;
@@ -84,8 +85,9 @@ class OrgController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto org = useCase.getOrg(tenantId, id);
@@ -101,7 +103,8 @@ class OrgController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateOrgRequest();
@@ -131,7 +134,8 @@ class OrgController : PlatformController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.suspendOrg(tenantId, id);
@@ -151,7 +155,8 @@ class OrgController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.activateOrg(tenantId, id);
@@ -171,7 +176,8 @@ class OrgController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteOrg(tenantId, id);

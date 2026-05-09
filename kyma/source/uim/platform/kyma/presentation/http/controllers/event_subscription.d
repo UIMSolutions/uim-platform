@@ -31,7 +31,7 @@ class EventSubscriptionController : PlatformController {
 
     router.post("/api/v1/event-subscriptions", &handleCreate);
     router.get("/api/v1/event-subscriptions", &handleList);
-    router.get("/api/v1/event-subscriptions/*", &handleGetById);
+    router.get("/api/v1/event-subscriptions/*", &handleGet);
     router.put("/api/v1/event-subscriptions/*", &handleUpdate);
     router.delete_("/api/v1/event-subscriptions/*", &handleDelete);
     router.post("/api/v1/event-subscriptions/pause/*", &handlePause);
@@ -39,7 +39,8 @@ class EventSubscriptionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateEventSubscriptionRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -103,8 +104,9 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto sub = usecase.getSubscription(id);
       if (sub.isNull) {
@@ -119,7 +121,8 @@ class EventSubscriptionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateEventSubscriptionRequest r;
@@ -145,7 +148,8 @@ class EventSubscriptionController : PlatformController {
   }
 
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.pauseSubscription(id);
       if (result.success)
@@ -159,7 +163,8 @@ class EventSubscriptionController : PlatformController {
   }
 
   private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.resumeSubscription(id);
       if (result.success)
@@ -173,7 +178,8 @@ class EventSubscriptionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteSubscription(id);
       if (result.success)

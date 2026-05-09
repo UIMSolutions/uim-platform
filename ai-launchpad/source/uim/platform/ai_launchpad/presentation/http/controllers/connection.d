@@ -31,7 +31,8 @@ class ConnectionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateConnectionRequest r;
       r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
@@ -119,7 +120,8 @@ class ConnectionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteConnection(id);
       if (result.success) {

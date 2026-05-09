@@ -27,13 +27,14 @@ class FilterRuleController : PlatformController {
 
     router.post("/api/v1/filter-rules", &handleCreate);
     router.get("/api/v1/filter-rules", &handleList);
-    router.get("/api/v1/filter-rules/*", &handleGetById);
+    router.get("/api/v1/filter-rules/*", &handleGet);
     router.put("/api/v1/filter-rules/*", &handleUpdate);
     router.delete_("/api/v1/filter-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateFilterRuleRequest r;
       r.tenantId = tenantId;
@@ -87,8 +88,9 @@ class FilterRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getRule(id);
       if (rule.isNull) {
@@ -102,7 +104,8 @@ class FilterRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateFilterRuleRequest r;
@@ -123,7 +126,8 @@ class FilterRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteRule(id);
       if (result.success)

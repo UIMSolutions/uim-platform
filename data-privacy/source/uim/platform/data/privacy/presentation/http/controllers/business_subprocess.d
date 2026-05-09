@@ -26,13 +26,14 @@ class BusinessSubprocessController : PlatformController {
 
     router.post("/api/v1/business-subprocesses", &handleCreate);
     router.get("/api/v1/business-subprocesses", &handleList);
-    router.get("/api/v1/business-subprocesses/*", &handleGetById);
+    router.get("/api/v1/business-subprocesses/*", &handleGet);
     router.put("/api/v1/business-subprocesses/*", &handleUpdate);
     router.delete_("/api/v1/business-subprocesses/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateBusinessSubprocessRequest r;
       r.tenantId = tenantId;
@@ -73,8 +74,9 @@ class BusinessSubprocessController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getSubprocess(tenantId, id);
@@ -88,7 +90,8 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateBusinessSubprocessRequest r;
       r.id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
@@ -113,7 +116,8 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteSubprocess(tenantId, id);

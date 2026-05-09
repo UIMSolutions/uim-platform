@@ -31,7 +31,8 @@ class DatabaseUserController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDatabaseUserRequest r;
       r.tenantId = tenantId;
@@ -87,9 +88,8 @@ class DatabaseUserController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto u = usecase.getById(id);
       if (u.isNull) {
@@ -145,9 +145,8 @@ class DatabaseUserController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.deleteDatabaseUser(DatabaseUserId(id));
       if (result.success) {

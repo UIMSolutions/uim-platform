@@ -35,7 +35,8 @@ class AppController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
@@ -83,7 +84,8 @@ class AppController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, id);
@@ -98,7 +100,8 @@ class AppController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateAppRequest();
       r.id = AppId(extractIdFromPath(req.requestURI));
@@ -133,7 +136,8 @@ class AppController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);

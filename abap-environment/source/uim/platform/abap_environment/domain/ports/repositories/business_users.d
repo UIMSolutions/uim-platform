@@ -15,16 +15,16 @@ mixin(ShowModule!());
 /// Port: outgoing - business user persistence.
 interface BusinessUserRepository : ITenantRepository!(BusinessUser, BusinessUserId) {
 
-  bool existsByUsername(SystemInstanceId systemId, string username);
-  BusinessUser findByUsername(SystemInstanceId systemId, string username);
-  void removeByUsername(SystemInstanceId systemId, string username);
+  bool existsByUsername(TenantId tenantId, SystemInstanceId systemId, string username);
+  BusinessUser findByUsername(TenantId tenantId, SystemInstanceId systemId, string username);
+  void removeByUsername(TenantId tenantId, SystemInstanceId systemId, string username);
   
-  bool existsByEmail(SystemInstanceId systemId, string email);
-  BusinessUser findByEmail(SystemInstanceId systemId, string email);
-  void removeByEmail(SystemInstanceId systemId, string email);
+  bool existsByEmail(TenantId tenantId, SystemInstanceId systemId, string email);
+  BusinessUser findByEmail(TenantId tenantId, SystemInstanceId systemId, string email);
+  void removeByEmail(TenantId tenantId, SystemInstanceId systemId, string email);
 
-  size_t countBySystem(SystemInstanceId systemId);
-  BusinessUser[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  BusinessUser[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
 }

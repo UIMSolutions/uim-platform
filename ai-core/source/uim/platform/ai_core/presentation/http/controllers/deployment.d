@@ -33,6 +33,8 @@ class DeploymentController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateDeploymentRequest r;
       r.tenantId = tenantId;
@@ -58,8 +60,9 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto deploys = deployments.list(rgId);
+      auto deploys = deployments.listDeployments(tenantId, rgId);
 
       auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
 
@@ -76,12 +79,11 @@ class DeploymentController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;  
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto deployment = deployments.getById(rgId, id);
+      auto deployment = deployments.getById(tenantId, rgId, id);
       if (deployment.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -95,12 +97,12 @@ class DeploymentController : PlatformController {
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
+      
       auto j = req.json;
       PatchDeploymentRequest request;
-      request.tenantId = req.getTenantId;
+      request.tenantId = tenantId;
       request.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       request.deploymentId = id;
       request.targetStatus = j.getString("targetStatus");
@@ -124,12 +126,11 @@ class DeploymentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = deployments.remove(rgId, id);
+      auto result = deployments.deleteDeployment(tenantId, rgId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")
@@ -144,21 +145,4 @@ class DeploymentController : PlatformController {
     }
   }
 
-  private Json deploymentToJson(Deployment d) {
-    
-
-    return Json.emptyObject
-      .set("id", d.id)
-      .set("configurationId", d.configurationId)
-      .set("scenarioId", d.scenarioId)
-      .set("executableId", d.executableId)
-      .set("status", d.status.to!string)
-      .set("statusMessage", d.statusMessage)
-      .set("deploymentUrl", d.deploymentUrl)
-      .set("ttl", d.ttl)
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt)
-      .set("startedAt", d.startedAt)
-      .set("completedAt", d.completedAt);
-  }
 }

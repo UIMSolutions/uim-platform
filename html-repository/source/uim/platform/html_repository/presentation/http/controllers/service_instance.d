@@ -29,7 +29,8 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
@@ -76,7 +77,8 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
       if (id.isEmpty) {
@@ -108,7 +110,8 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;

@@ -27,7 +27,7 @@ class ClientController : PlatformController {
 
     router.post("/api/v1/clients", &handleCreate);
     router.get("/api/v1/clients", &handleList);
-    router.get("/api/v1/clients/*", &handleGetById);
+    router.get("/api/v1/clients/*", &handleGet);
     router.put("/api/v1/clients/*", &handleUpdate);
     router.delete_("/api/v1/clients/*", &handleDelete);
     router.post("/api/v1/clients/connect/*", &handleConnect);
@@ -35,7 +35,8 @@ class ClientController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateClientRequest r;
       r.tenantId = tenantId;
@@ -95,8 +96,9 @@ class ClientController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto client = usecase.getClient(id);
       if (client.isNull) {
@@ -110,7 +112,8 @@ class ClientController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateClientRequest r;
@@ -138,7 +141,8 @@ class ClientController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteClient(id);
       if (result.success) {
@@ -153,7 +157,8 @@ class ClientController : PlatformController {
   }
 
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.connect(id);
       if (result.success)
@@ -166,7 +171,8 @@ class ClientController : PlatformController {
   }
 
   private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.disconnect(id);
       if (result.success)

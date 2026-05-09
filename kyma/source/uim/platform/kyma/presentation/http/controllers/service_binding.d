@@ -31,13 +31,14 @@ class ServiceBindingController : PlatformController {
 
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
-    router.get("/api/v1/service-bindings/*", &handleGetById);
+    router.get("/api/v1/service-bindings/*", &handleGet);
     router.put("/api/v1/service-bindings/*", &handleUpdate);
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.serviceInstanceId = j.getString("serviceInstanceId");
@@ -93,8 +94,9 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto b = usecase.getBinding(ServiceBindingId(id));
       if (b.isNull) {
@@ -109,7 +111,8 @@ class ServiceBindingController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateServiceBindingRequest r;
@@ -130,7 +133,8 @@ class ServiceBindingController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteBinding(ServiceBindingId(id));
       if (result.success)

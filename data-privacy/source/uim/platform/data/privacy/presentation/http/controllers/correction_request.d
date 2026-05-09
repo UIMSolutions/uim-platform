@@ -26,13 +26,14 @@ class CorrectionRequestController : PlatformController {
 
     router.post("/api/v1/correction-requests", &handleCreate);
     router.get("/api/v1/correction-requests", &handleList);
-    router.get("/api/v1/correction-requests/*", &handleGetById);
+    router.get("/api/v1/correction-requests/*", &handleGet);
     router.put("/api/v1/correction-requests/*/status", &handleUpdateStatus);
     router.delete_("/api/v1/correction-requests/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateCorrectionRequest r;
       r.tenantId = tenantId;
@@ -74,8 +75,9 @@ class CorrectionRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
@@ -89,7 +91,8 @@ class CorrectionRequestController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateCorrectionStatusRequest r;
       r.id = CorrectionRequestId(extractIdFromPath(req.requestURI));
@@ -110,7 +113,8 @@ class CorrectionRequestController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);

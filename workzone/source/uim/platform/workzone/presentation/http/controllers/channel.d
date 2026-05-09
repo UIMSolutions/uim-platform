@@ -35,7 +35,8 @@ class ChannelController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -89,7 +90,8 @@ class ChannelController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto ch = useCase.getChannel(tenantId, id);
@@ -104,7 +106,8 @@ class ChannelController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateChannelRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -131,7 +134,8 @@ class ChannelController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       useCase.deleteChannel(tenantId, id);

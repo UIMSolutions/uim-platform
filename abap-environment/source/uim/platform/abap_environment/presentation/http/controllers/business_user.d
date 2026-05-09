@@ -32,17 +32,19 @@ class BusinessUserController : PlatformController {
 
     router.post("/api/v1/business-users", &handleCreate);
     router.get("/api/v1/business-users", &handleList);
-    router.get("/api/v1/business-users/*", &handleGetById);
+    router.get("/api/v1/business-users/*", &handleGet);
     router.put("/api/v1/business-users/*", &handleUpdate);
     router.delete_("/api/v1/business-users/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateBusinessUserRequest r;
       r.tenantId = tenantId;
-      r.systemInstanceId = j.getString("systemInstanceId");
+      r.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
       r.username = j.getString("username");
       r.firstName = j.getString("firstName");
       r.lastName = j.getString("lastName");
@@ -52,7 +54,8 @@ class BusinessUserController : PlatformController {
       auto result = usecase.createUser(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-        .set("id", result.id);
+        .set("id", result.id)
+        .set("message", "Business user created successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -65,13 +68,16 @@ class BusinessUserController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto users = usecase.listUsers(systemId);
+      
+      auto users = usecase.listUsers(tenantId, systemId);
       auto arr = users.map!(user => user.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", users.length);
+        .set("totalCount", users.length)
+        .set("message", "Business users fetched");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -79,15 +85,22 @@ class BusinessUserController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
-      auto user = usecase.getUser(id);
+
+      auto user = usecase.getUser(tenantId, id);
       if (user.isNull) {
         writeError(res, 404, "Business user not found");
         return;
       }
-      res.writeJsonBody(user.toJson, 200);
+
+      auto resp = Json.emptyObject
+        .set("item", user.toJson)
+        .set("message", "Business user retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -95,16 +108,20 @@ class BusinessUserController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateBusinessUserRequest r;
+      r.tenantId = tenantId;
+      r.businessUserId = id;
       r.firstName = j.getString("firstName");
       r.lastName = j.getString("lastName");
       r.email = j.getString("email");
       r.status = j.getString("status");
       r.roleIds = getStrings(j, "roleIds");
 
-      auto result = usecase.updateUser(id, r);
+      auto result = usecase.updateUser(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -121,8 +138,10 @@ class BusinessUserController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteUser(id);
+
+      auto result = usecase.deleteUser(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

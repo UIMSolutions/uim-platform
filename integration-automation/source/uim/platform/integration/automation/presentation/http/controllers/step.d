@@ -30,7 +30,7 @@ class StepController : PlatformController {
     super.registerRoutes(router);
     
     router.get("/api/v1/steps", &handleListByWorkflow);
-    router.get("/api/v1/steps/*", &handleGetById);
+    router.get("/api/v1/steps/*", &handleGet);
     router.get("/api/v1/my-tasks", &handleMyTasks);
     router.post("/api/v1/steps/start/*", &handleStart);
     router.post("/api/v1/steps/complete/*", &handleComplete);
@@ -59,8 +59,9 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto step = useCase.getStep(tenantId, id);
@@ -94,7 +95,8 @@ class StepController : PlatformController {
   }
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
@@ -116,7 +118,8 @@ class StepController : PlatformController {
   }
 
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = CompleteStepRequest();
@@ -142,7 +145,8 @@ class StepController : PlatformController {
   }
 
   private void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = FailStepRequest();
@@ -168,7 +172,8 @@ class StepController : PlatformController {
   }
 
   private void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = SkipStepRequest();
@@ -194,7 +199,8 @@ class StepController : PlatformController {
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = AssignStepRequest();

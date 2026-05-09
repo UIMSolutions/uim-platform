@@ -31,13 +31,14 @@ class RetentionRuleController : PlatformController {
 
     router.post("/api/v1/retention-rules", &handleCreate);
     router.get("/api/v1/retention-rules", &handleList);
-    router.get("/api/v1/retention-rules/*", &handleGetById);
+    router.get("/api/v1/retention-rules/*", &handleGet);
     router.put("/api/v1/retention-rules/*", &handleUpdate);
     router.delete_("/api/v1/retention-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRetentionRuleRequest r;
       r.tenantId = tenantId;
@@ -84,8 +85,9 @@ class RetentionRuleController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRule(tenantId, id);
@@ -99,7 +101,8 @@ class RetentionRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRetentionRuleRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -124,7 +127,8 @@ class RetentionRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       usecase.deleteRule(tenantId, id);

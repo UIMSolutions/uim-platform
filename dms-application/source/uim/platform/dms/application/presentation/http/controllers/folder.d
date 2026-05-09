@@ -32,7 +32,7 @@ class FolderController : PlatformController {
 
     router.post("/api/v1/folders", &handleCreate);
     router.get("/api/v1/folders", &handleList);
-    router.get("/api/v1/folders/*", &handleGetById);
+    router.get("/api/v1/folders/*", &handleGet);
     router.put("/api/v1/folders/*", &handleUpdate);
     router.delete_("/api/v1/folders/*", &handleDelete);
     router.post("/api/v1/folders/move/*", &handleMove);
@@ -40,7 +40,8 @@ class FolderController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateFolderRequest();
       r.tenantId = tenantId;
@@ -81,8 +82,9 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto folder = usecase.getFolder(tenantId, id);
@@ -101,7 +103,8 @@ class FolderController : PlatformController {
     * The folder ID is extracted from the URL path.
     */
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateFolderRequest();
@@ -127,7 +130,8 @@ class FolderController : PlatformController {
   }
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = MoveFolderRequest();
@@ -171,7 +175,8 @@ class FolderController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteFolder(req.getTenantId, id);
 

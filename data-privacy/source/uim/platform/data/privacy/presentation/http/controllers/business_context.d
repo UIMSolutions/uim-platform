@@ -26,14 +26,15 @@ class BusinessContextController : PlatformController {
 
     router.post("/api/v1/business-contexts", &handleCreate);
     router.get("/api/v1/business-contexts", &handleList);
-    router.get("/api/v1/business-contexts/*", &handleGetById);
+    router.get("/api/v1/business-contexts/*", &handleGet);
     router.put("/api/v1/business-contexts/*", &handleUpdate);
     router.post("/api/v1/business-contexts/*/activate", &handleActivate);
     router.delete_("/api/v1/business-contexts/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateBusinessContextRequest r;
       r.tenantId = tenantId;
@@ -75,8 +76,9 @@ class BusinessContextController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getContext(tenantId, id);
@@ -90,7 +92,8 @@ class BusinessContextController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateBusinessContextRequest r;
       r.id = BusinessContextId(extractIdFromPath(req.requestURI));
@@ -135,7 +138,8 @@ class BusinessContextController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteContext(tenantId, id);

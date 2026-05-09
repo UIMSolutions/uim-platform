@@ -87,7 +87,8 @@ class BrowseController : PlatformController {
   }
 
   private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateFavoriteRequest();
       r.tenantId = tenantId;
@@ -129,7 +130,8 @@ class BrowseController : PlatformController {
   }
 
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FavoriteId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteFavorite(tenantId, id);

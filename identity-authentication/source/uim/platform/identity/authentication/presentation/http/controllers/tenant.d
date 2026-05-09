@@ -35,7 +35,8 @@ class TenantController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateTenantRequest(j.getString("name"),
         j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);

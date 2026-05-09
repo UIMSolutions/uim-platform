@@ -32,13 +32,14 @@ class ResourceController : PlatformController {
 
     router.post("/api/v1/resources", &handleCreate);
     router.get("/api/v1/resources", &handleList);
-    router.get("/api/v1/resources/*", &handleGetById);
+    router.get("/api/v1/resources/*", &handleGet);
     router.put("/api/v1/resources/*", &handleUpdate);
     router.delete_("/api/v1/resources/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RegisterResourceRequest r;
       r.tenantId = tenantId;
@@ -86,7 +87,7 @@ class ResourceController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));

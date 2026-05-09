@@ -36,7 +36,8 @@ class TranslationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateTranslationRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("resourceType"), j.getString("resourceId"),

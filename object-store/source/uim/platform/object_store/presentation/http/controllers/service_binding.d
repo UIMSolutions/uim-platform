@@ -28,13 +28,14 @@ class ServiceBindingController : PlatformController {
   override void registerRoutes(URLRouter router) {
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/buckets/*/service-bindings", &handleListByBucket);
-    router.get("/api/v1/service-bindings/*", &handleGetById);
+    router.get("/api/v1/service-bindings/*", &handleGet);
     router.post("/api/v1/service-bindings/*/revoke", &handleRevoke);
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = tenantId;
@@ -77,8 +78,9 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       if (id == "revoke")
         return;
@@ -127,7 +129,8 @@ class ServiceBindingController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteBinding(id);
       if (result.success) {

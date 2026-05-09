@@ -31,13 +31,14 @@ class CorsRuleController : PlatformController {
 
     router.post("/api/v1/cors-rules", &handleCreate);
     router.get("/api/v1/buckets/*/cors-rules", &handleListByBucket);
-    router.get("/api/v1/cors-rules/*", &handleGetById);
+    router.get("/api/v1/cors-rules/*", &handleGet);
     router.put("/api/v1/cors-rules/*", &handleUpdate);
     router.delete_("/api/v1/cors-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateCorsRuleRequest();
       r.tenantId = tenantId;
@@ -81,8 +82,9 @@ class CorsRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getRule(id);
       if (rule.isNull || rule.isNull) {
@@ -96,7 +98,8 @@ class CorsRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateCorsRuleRequest();
@@ -121,7 +124,8 @@ class CorsRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteRule(id);
       if (result.success) {

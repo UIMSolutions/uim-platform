@@ -31,13 +31,14 @@ class FragmentController : PlatformController {
 
     router.post("/api/v1/fragments", &handleCreate);
     router.get("/api/v1/fragments", &handleList);
-    router.get("/api/v1/fragments/*", &handleGetById);
+    router.get("/api/v1/fragments/*", &handleGet);
     router.put("/api/v1/fragments/*", &handleUpdate);
     router.delete_("/api/v1/fragments/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateFragmentRequest r;
       r.tenantId = tenantId;
@@ -92,8 +93,9 @@ class FragmentController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto f = usecase.getFragment(id);
       if (f.isNull) {
@@ -107,7 +109,8 @@ class FragmentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateFragmentRequest r;
@@ -141,7 +144,8 @@ class FragmentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteFragment(id);
       if (result.success) {

@@ -31,11 +31,12 @@ class ExportController : PlatformController {
 
     router.post("/api/v1/exports", &handleStartExport);
     router.get("/api/v1/exports", &handleList);
-    router.get("/api/v1/exports/*", &handleGetById);
+    router.get("/api/v1/exports/*", &handleGet);
   }
 
   private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = StartExportRequest();
       r.tenantId = tenantId;
@@ -78,8 +79,9 @@ class ExportController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto job = usecase.getExportJob(id);
       if (job.isNull) {

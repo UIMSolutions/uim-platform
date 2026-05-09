@@ -33,7 +33,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateEnvironmentInstanceRequest r;
       r.subaccountId = j.getString("subaccountId");
@@ -86,7 +87,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto inst = usecase.getById(id);
       if (inst.isNull) {
@@ -99,7 +101,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateEnvironmentInstanceRequest request;
@@ -120,7 +123,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.deprovision(id);
       if (result.success)

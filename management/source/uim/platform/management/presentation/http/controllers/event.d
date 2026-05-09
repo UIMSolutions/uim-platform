@@ -59,7 +59,8 @@ class EventController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto ev = usecase.getById(id);
       if (ev.isNull) {

@@ -32,7 +32,8 @@ class ResourceGroupController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateResourceGroupRequest r;
       r.tenantId = tenantId;
@@ -88,9 +89,8 @@ class ResourceGroupController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
       auto rg = groups.getbyId(id);
@@ -113,9 +113,8 @@ class ResourceGroupController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       PatchResourceGroupRequest r;
@@ -139,9 +138,8 @@ class ResourceGroupController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = groups.removeById(id);

@@ -31,13 +31,14 @@ class SystemInstanceController : PlatformController {
 
     router.post("/api/v1/systems", &handleCreate);
     router.get("/api/v1/systems", &handleList);
-    router.get("/api/v1/systems/*", &handleGetById);
+    router.get("/api/v1/systems/*", &handleGet);
     router.put("/api/v1/systems/*", &handleUpdate);
     router.delete_("/api/v1/systems/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSystemInstanceRequest request;
       request.tenantId = req.getTenantId;
@@ -85,8 +86,9 @@ class SystemInstanceController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto inst = usecase.getInstance(id);
       if (inst.isNull) {
@@ -100,7 +102,8 @@ class SystemInstanceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateSystemInstanceRequest r;
@@ -126,7 +129,8 @@ class SystemInstanceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteInstance(id);
       if (result.isSuccess()) {

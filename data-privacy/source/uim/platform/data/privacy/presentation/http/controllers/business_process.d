@@ -26,13 +26,14 @@ class BusinessProcessController : PlatformController {
 
     router.post("/api/v1/business-processes", &handleCreate);
     router.get("/api/v1/business-processes", &handleList);
-    router.get("/api/v1/business-processes/*", &handleGetById);
+    router.get("/api/v1/business-processes/*", &handleGet);
     router.put("/api/v1/business-processes/*", &handleUpdate);
     router.delete_("/api/v1/business-processes/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateBusinessProcessRequest r;
       r.tenantId = tenantId;
@@ -73,8 +74,9 @@ class BusinessProcessController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getProcess(tenantId, id);
@@ -88,7 +90,8 @@ class BusinessProcessController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateBusinessProcessRequest r;
       r.id = BusinessProcessId(extractIdFromPath(req.requestURI));
@@ -113,7 +116,8 @@ class BusinessProcessController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteProcess(tenantId, id);

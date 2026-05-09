@@ -31,11 +31,12 @@ class ImportController : PlatformController {
 
     router.post("/api/v1/imports", &handleStartImport);
     router.get("/api/v1/imports", &handleList);
-    router.get("/api/v1/imports/*", &handleGetById);
+    router.get("/api/v1/imports/*", &handleGet);
   }
 
   private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = StartImportRequest();
       r.tenantId = tenantId;
@@ -78,8 +79,9 @@ class ImportController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto job = usecase.getImportJob(id);
       if (job.isNull) {

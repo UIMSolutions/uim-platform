@@ -37,7 +37,8 @@ class UserController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("externalId"), j.getString("userName"), j.parseUserName,
@@ -144,7 +145,8 @@ class UserController : PlatformController {
   }
 
   private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto error = useCase.changePassword(j.getString("userId"),
         j.getString("currentPassword"), j.getString("newPassword"));

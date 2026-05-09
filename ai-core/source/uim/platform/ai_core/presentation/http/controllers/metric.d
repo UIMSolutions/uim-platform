@@ -29,7 +29,8 @@ class MetricController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       PatchMetricsRequest r;
       r.tenantId = tenantId;

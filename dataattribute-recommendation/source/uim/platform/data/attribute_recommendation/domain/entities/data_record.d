@@ -18,10 +18,10 @@ struct DataRecord {
   RecordStatus status = RecordStatus.pending;
 
   Json toJson() const {
-      return entityToJson
-          .set("datasetId", datasetId)
-          .set("attributes", attributes)
-          .set("labels", labels)
-          .set("status", status);
+    return entityToJson
+      .set("datasetId", datasetId)
+      .set("attributes", attributes)
+      .set("labels", labels)
+      .set("status", status);
   }
 }

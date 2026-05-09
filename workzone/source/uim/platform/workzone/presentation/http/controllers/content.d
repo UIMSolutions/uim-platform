@@ -36,7 +36,8 @@ class ContentController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateContentRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -103,7 +104,8 @@ class ContentController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto item = useCase.getContent(tenantId, id);
@@ -118,7 +120,8 @@ class ContentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateContentRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -153,7 +156,8 @@ class ContentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       useCase.deleteContent(tenantId, id);
@@ -164,7 +168,8 @@ class ContentController : PlatformController {
   }
 
   private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.publishContent(tenantId, id);

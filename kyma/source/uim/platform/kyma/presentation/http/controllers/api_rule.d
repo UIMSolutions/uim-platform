@@ -32,13 +32,14 @@ class ApiRuleController : PlatformController {
 
     router.post("/api/v1/api-rules", &handleCreate);
     router.get("/api/v1/api-rules", &handleList);
-    router.get("/api/v1/api-rules/*", &handleGetById);
+    router.get("/api/v1/api-rules/*", &handleGet);
     router.put("/api/v1/api-rules/*", &handleUpdate);
     router.delete_("/api/v1/api-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateApiRuleRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -104,8 +105,9 @@ class ApiRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getApiRule(id);
       if (rule.isNull) {
@@ -120,7 +122,8 @@ class ApiRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateApiRuleRequest r;
@@ -149,7 +152,8 @@ class ApiRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteApiRule(id);
       if (result.success)

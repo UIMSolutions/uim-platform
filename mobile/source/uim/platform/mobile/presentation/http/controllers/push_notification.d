@@ -28,7 +28,8 @@ class PushNotificationController : PlatformController {
   }
 
   private void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       SendPushNotificationRequest r;
       r.tenantId = tenantId;
@@ -81,7 +82,8 @@ class PushNotificationController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -112,7 +114,8 @@ class PushNotificationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deletePushNotification(id);
       if (result.success) {

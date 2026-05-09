@@ -30,13 +30,14 @@ class ConnectorController : PlatformController {
 
     router.post("/api/v1/connectors", &handleRegister);
     router.get("/api/v1/connectors", &handleList);
-    router.get("/api/v1/connectors/*", &handleGetById);
+    router.get("/api/v1/connectors/*", &handleGet);
     router.post("/api/v1/connectors/*/heartbeat", &handleHeartbeat);
     router.delete_("/api/v1/connectors/*", &handleUnregister);
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = RegisterConnectorRequest();
       r.subaccountId = j.getString("subaccountId");
@@ -81,7 +82,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));

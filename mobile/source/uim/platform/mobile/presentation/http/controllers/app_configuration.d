@@ -29,7 +29,8 @@ class AppConfigurationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateAppConfigurationRequest r;
       r.tenantId = tenantId;
@@ -81,7 +82,8 @@ class AppConfigurationController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -107,7 +109,8 @@ class AppConfigurationController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateAppConfigurationRequest r;
@@ -133,7 +136,8 @@ class AppConfigurationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AppConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAppConfiguration(id);
       if (result.success) {

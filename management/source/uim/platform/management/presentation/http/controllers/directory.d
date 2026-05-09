@@ -35,7 +35,8 @@ class DirectoryController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDirectoryRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -86,7 +87,8 @@ class DirectoryController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto d = usecase.getById(id);
       if (d.isNull) {
@@ -99,7 +101,8 @@ class DirectoryController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateDirectoryRequest request;
@@ -122,7 +125,8 @@ class DirectoryController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DirectoryId(extractId(req.requestURI));
       auto result = usecase.deleteDirectory(id);
       if (result.success) {

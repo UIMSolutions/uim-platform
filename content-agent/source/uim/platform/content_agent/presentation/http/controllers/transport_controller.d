@@ -31,13 +31,14 @@ class TransportController : PlatformController {
 
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
-    router.get("/api/v1/transports/*", &handleGetById);
+    router.get("/api/v1/transports/*", &handleGet);
     router.post("/api/v1/transports/release", &handleRelease);
     router.post("/api/v1/transports/cancel", &handleCancel);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateTransportRequest();
       r.tenantId = tenantId;
@@ -82,8 +83,9 @@ class TransportController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tr = usecase.getTransportRequest(id);
       if (tr.isNull) {
@@ -97,7 +99,8 @@ class TransportController : PlatformController {
   }
 
   private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ReleaseTransportRequest();
       r.requestId = j.getString("requestId");
@@ -121,7 +124,8 @@ class TransportController : PlatformController {
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto requestId = j.getString("requestId");
 

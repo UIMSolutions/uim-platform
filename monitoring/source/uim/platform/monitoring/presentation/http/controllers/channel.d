@@ -31,13 +31,14 @@ class ChannelController : PlatformController {
 
     router.post("/api/v1/channels", &handleCreate);
     router.get("/api/v1/channels", &handleList);
-    router.get("/api/v1/channels/*", &handleGetById);
+    router.get("/api/v1/channels/*", &handleGet);
     router.put("/api/v1/channels/*", &handleUpdate);
     router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateNotificationChannelRequest r;
       r.tenantId = tenantId;
@@ -86,7 +87,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));

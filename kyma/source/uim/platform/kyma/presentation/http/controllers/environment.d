@@ -31,13 +31,14 @@ class EnvironmentController : PlatformController {
 
     router.post("/api/v1/environments", &handleCreate);
     router.get("/api/v1/environments", &handleList);
-    router.get("/api/v1/environments/*", &handleGetById);
+    router.get("/api/v1/environments/*", &handleGet);
     router.put("/api/v1/environments/*", &handleUpdate);
     router.delete_("/api/v1/environments/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateEnvironmentRequest r;
       r.tenantId = tenantId;
@@ -93,8 +94,9 @@ class EnvironmentController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
       if (!usecase.hasEnvironment(id)) {
         writeError(res, 404, "Environment not found");
@@ -109,7 +111,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateEnvironmentRequest r;
@@ -134,7 +137,8 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteEnvironment(id);
       if (result.success)

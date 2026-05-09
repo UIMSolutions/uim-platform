@@ -37,7 +37,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateGlobalAccountRequest r;
       r.displayName = j.getString("displayName");
@@ -87,7 +88,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       if (!usecase.existsById(id)) {
         writeError(res, 404, "Global account not found");
@@ -101,7 +103,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateGlobalAccountRequest request;
@@ -121,7 +124,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.suspend(id);
       if (result.success)
@@ -133,7 +137,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.reactivate(id);
       if (result.success)
@@ -145,7 +150,8 @@ class GlobalAccountController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = GlobalAccountId(extractId(req.requestURI));
       auto result = usecase.deleteGlobalAccount(id);
       if (result.success)

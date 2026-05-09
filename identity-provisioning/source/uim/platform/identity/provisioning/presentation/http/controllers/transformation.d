@@ -32,14 +32,15 @@ class TransformationController : PlatformController {
     
     router.post("/api/v1/transformations", &handleCreate);
     router.get("/api/v1/transformations", &handleList);
-    router.get("/api/v1/transformations/*", &handleGetById);
+    router.get("/api/v1/transformations/*", &handleGet);
     router.put("/api/v1/transformations/*", &handleUpdate);
     router.delete_("/api/v1/transformations/*", &handleDelete);
     router.post("/api/v1/transformations/test", &handleTest);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateTransformationRequest();
       r.tenantId = tenantId;
@@ -80,8 +81,9 @@ class TransformationController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto t = usecase.getTransformation(tenantId, id);
@@ -96,7 +98,8 @@ class TransformationController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateTransformationRequest();
@@ -122,7 +125,8 @@ class TransformationController : PlatformController {
   }
 
   private void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto tenantId = req.getTenantId;
       auto systemId = j.getString("systemId");
@@ -143,7 +147,8 @@ class TransformationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteTransformation(tenantId, id);

@@ -44,13 +44,15 @@ class BusinessRoleController : PlatformController {
 
     router.post("/api/v1/business-roles", &handleCreate);
     router.get("/api/v1/business-roles", &handleList);
-    router.get("/api/v1/business-roles/*", &handleGetById);
+    router.get("/api/v1/business-roles/*", &handleGet);
     router.put("/api/v1/business-roles/*", &handleUpdate);
     router.delete_("/api/v1/business-roles/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateBusinessRoleRequest r;
       r.tenantId = tenantId;
@@ -77,8 +79,10 @@ class BusinessRoleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto roles = usecase.listRoles(systemId);
+
+      auto roles = usecase.listRoles(tenantId, systemId);
       auto arr = roles.map!(r => r.toJson).array.toJson;
 
       auto response = Json.emptyObject
@@ -92,16 +96,21 @@ class BusinessRoleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-      if (!usecase.existsRole(id)) {
+
+      auto role = usecase.getRole(tenantId, id);
+      if (role.isNull) {
         writeError(res, 404, "Business role not found");
         return;
       }
 
-      auto role = usecase.getRole(id);
-      res.writeJsonBody(role.toJson, 200);
+      auto response = role.toJson
+        .set("message", "Business role fetched"); 
+        
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -109,14 +118,18 @@ class BusinessRoleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateBusinessRoleRequest r;
+      r.tenantId = tenantId;
+      r.businessRoleId = id;
       r.description = j.getString("description");
       r.roleType = j.getString("roleType");
       r.restrictionTypes = getStrings(j, "restrictionTypes");
 
-      auto result = usecase.updateRole(id, r);
+      auto result = usecase.updateRole(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -133,8 +146,10 @@ class BusinessRoleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteRole(id);
+
+      auto result = usecase.deleteRole(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

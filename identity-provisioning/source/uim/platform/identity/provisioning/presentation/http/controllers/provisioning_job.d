@@ -31,7 +31,7 @@ class ProvisioningJobController : PlatformController {
     
     router.post("/api/v1/provisioning-jobs", &handleCreate);
     router.get("/api/v1/provisioning-jobs", &handleList);
-    router.get("/api/v1/provisioning-jobs/*", &handleGetById);
+    router.get("/api/v1/provisioning-jobs/*", &handleGet);
     router.post("/api/v1/provisioning-jobs/run/*", &handleRun);
     router.post("/api/v1/provisioning-jobs/run-now", &handleCreateAndRun);
     router.post("/api/v1/provisioning-jobs/cancel/*", &handleCancel);
@@ -39,7 +39,8 @@ class ProvisioningJobController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
@@ -83,8 +84,9 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto job = usecase.getJob(tenantId, id);
@@ -100,7 +102,8 @@ class ProvisioningJobController : PlatformController {
   }
 
   private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
 
@@ -121,7 +124,8 @@ class ProvisioningJobController : PlatformController {
   }
 
   private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
@@ -148,7 +152,8 @@ class ProvisioningJobController : PlatformController {
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.cancelJob(tenantId, id);
@@ -168,7 +173,8 @@ class ProvisioningJobController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteJob(tenantId, id);

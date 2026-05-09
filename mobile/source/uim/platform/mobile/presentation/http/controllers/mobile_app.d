@@ -29,7 +29,8 @@ class MobileAppController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateMobileAppRequest r;
       r.tenantId = tenantId;
@@ -82,7 +83,8 @@ class MobileAppController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -111,7 +113,8 @@ class MobileAppController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateMobileAppRequest r;
@@ -140,7 +143,8 @@ class MobileAppController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = MobileAppId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteMobileApp(id);
       if (result.success) {

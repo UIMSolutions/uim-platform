@@ -31,14 +31,15 @@ class PackageController : PlatformController {
 
     router.post("/api/v1/packages", &handleCreate);
     router.get("/api/v1/packages", &handleList);
-    router.get("/api/v1/packages/*", &handleGetById);
+    router.get("/api/v1/packages/*", &handleGet);
     router.put("/api/v1/packages/*", &handleUpdate);
     router.delete_("/api/v1/packages/*", &handleDelete);
     router.post("/api/v1/packages/assemble", &handleAssemble);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreatePackageRequest();
       r.tenantId = tenantId;
@@ -84,8 +85,9 @@ class PackageController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto pkg = usecase.getPackage(id);
       if (pkg.isNull) {
@@ -102,7 +104,8 @@ class PackageController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdatePackageRequest();
@@ -127,7 +130,8 @@ class PackageController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deletePackage(id);
       if (result.success) {
@@ -145,7 +149,8 @@ class PackageController : PlatformController {
   }
 
   private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = AssemblePackageRequest();
       r.packageId = j.getString("packageId");

@@ -89,7 +89,8 @@ class AlertController : PlatformController {
   }
 
   private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));

@@ -32,13 +32,14 @@ class ShareController : PlatformController {
 
     router.post("/api/v1/shares", &handleCreate);
     router.get("/api/v1/shares", &handleList);
-    router.get("/api/v1/shares/*", &handleGetById);
+    router.get("/api/v1/shares/*", &handleGet);
     router.post("/api/v1/shares/revoke/*", &handleRevoke);
     router.delete_("/api/v1/shares/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateShareRequest();
       r.tenantId = tenantId;
@@ -80,8 +81,9 @@ class ShareController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto share = usecase.getShare(tenantId, id);
@@ -96,7 +98,8 @@ class ShareController : PlatformController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.revokeShare(tenantId, id);
@@ -115,7 +118,8 @@ class ShareController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteShare(tenantId, id);

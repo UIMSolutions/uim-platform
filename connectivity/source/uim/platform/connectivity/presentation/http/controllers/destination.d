@@ -30,13 +30,14 @@ class DestinationController : PlatformController {
 
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
-    router.get("/api/v1/destinations/*", &handleGetById);
+    router.get("/api/v1/destinations/*", &handleGet);
     router.put("/api/v1/destinations/*", &handleUpdate);
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDestinationRequest();
       r.tenantId = tenantId;
@@ -91,7 +92,7 @@ class DestinationController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));

@@ -32,7 +32,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateNamespaceRequest r;
       r.tenantId = tenantId;
@@ -80,9 +81,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto ns = namespaces.getById(id);
 
@@ -107,9 +107,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateNamespaceRequest r;
@@ -130,9 +129,8 @@ class NamespaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       namespaces.remove(id);
       res.writeJsonBody(Json.emptyObject, 204);

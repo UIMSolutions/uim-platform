@@ -26,13 +26,14 @@ class InformationReportController : PlatformController {
 
     router.post("/api/v1/information-reports", &handleCreate);
     router.get("/api/v1/information-reports", &handleList);
-    router.get("/api/v1/information-reports/*", &handleGetById);
+    router.get("/api/v1/information-reports/*", &handleGet);
     router.put("/api/v1/information-reports/*/status", &handleUpdateStatus);
     router.delete_("/api/v1/information-reports/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateInformationReportRequest r;
       r.tenantId = tenantId;
@@ -73,8 +74,9 @@ class InformationReportController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getReport(tenantId, id);
@@ -91,7 +93,8 @@ class InformationReportController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateInformationReportStatusRequest r;
       r.id = InformationReportId(extractIdFromPath(req.requestURI));
@@ -113,7 +116,8 @@ class InformationReportController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteReport(tenantId, id);

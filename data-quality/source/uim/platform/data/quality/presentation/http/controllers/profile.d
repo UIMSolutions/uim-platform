@@ -31,11 +31,12 @@ class ProfileController : PlatformController {
 
     router.post("/api/v1/profiles", &handleProfile);
     router.get("/api/v1/profiles", &handleList);
-    router.get("/api/v1/profiles/*", &handleGetById);
+    router.get("/api/v1/profiles/*", &handleGet);
   }
 
   private void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ProfileDatasetRequest();
       r.tenantId = tenantId;
@@ -79,8 +80,9 @@ class ProfileController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto profile = usecase.getById(tenantId, id);

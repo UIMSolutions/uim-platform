@@ -30,7 +30,7 @@ class AccessRuleController : PlatformController {
 
     router.post("/api/v1/access-rules", &handleCreate);
     router.get("/api/v1/access-rules", &handleList);
-    router.get("/api/v1/access-rules/*", &handleGetById);
+    router.get("/api/v1/access-rules/*", &handleGet);
     router.put("/api/v1/access-rules/*", &handleUpdate);
     router.delete_("/api/v1/access-rules/*", &handleDelete);
   }
@@ -84,8 +84,9 @@ class AccessRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RuleId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto rule = usecase.getAccessRule(tenantId, id);
@@ -100,7 +101,8 @@ class AccessRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RuleId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateAccessRuleRequest();

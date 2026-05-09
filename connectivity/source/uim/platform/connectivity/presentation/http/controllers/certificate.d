@@ -30,13 +30,14 @@ class CertificateController : PlatformController {
 
     router.post("/api/v1/certificates", &handleCreate);
     router.get("/api/v1/certificates", &handleList);
-    router.get("/api/v1/certificates/*", &handleGetById);
+    router.get("/api/v1/certificates/*", &handleGet);
     router.put("/api/v1/certificates/*", &handleUpdate);
     router.delete_("/api/v1/certificates/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateCertificateRequest();
       r.tenantId = tenantId;
@@ -84,7 +85,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
       auto id = CertificateId(extractIdFromPath(req.requestURI));
@@ -101,7 +102,8 @@ class CertificateController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateCertificateRequest();
       r.certificateId = CertificateId(extractIdFromPath(req.requestURI));

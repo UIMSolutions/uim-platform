@@ -30,7 +30,7 @@ class ModelController : PlatformController {
 
     router.post("/api/v1/models", &handleCreate);
     router.get("/api/v1/models", &handleList);
-    router.get("/api/v1/models/*", &handleGetById);
+    router.get("/api/v1/models/*", &handleGet);
     router.put("/api/v1/models/*", &handleUpdate);
     router.delete_("/api/v1/models/*", &handleDelete);
     router.post("/api/v1/models/activate/*", &handleActivate);
@@ -38,7 +38,8 @@ class ModelController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateModelConfigRequest();
       r.tenantId = tenantId;
@@ -86,8 +87,9 @@ class ModelController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto config = usecase.getModelConfig(tenantId, id);
@@ -103,7 +105,8 @@ class ModelController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateModelConfigRequest();
@@ -136,7 +139,8 @@ class ModelController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.activateConfig(tenantId, id);
@@ -160,7 +164,8 @@ class ModelController : PlatformController {
   }
 
   private void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto r = StartTrainingRequest();
       r.modelConfigId = id;
@@ -185,7 +190,8 @@ class ModelController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteModelConfig(tenantId, id);

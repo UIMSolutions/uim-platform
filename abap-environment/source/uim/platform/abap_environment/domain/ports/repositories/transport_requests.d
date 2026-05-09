@@ -15,16 +15,16 @@ mixin(ShowModule!());
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
 
-  size_t countBySystem(SystemInstanceId systemId);
-  TransportRequest[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  TransportRequest[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
-  size_t countByStatus(SystemInstanceId systemId, TransportStatus status);
-  TransportRequest[] findByStatus(SystemInstanceId systemId, TransportStatus status);
-  void removeByStatus(SystemInstanceId systemId, TransportStatus status);
+  size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status);
+  TransportRequest[] findByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status);
+  void removeByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status);
 
-  size_t countByOwner(SystemInstanceId systemId, string owner);
-  TransportRequest[] findByOwner(SystemInstanceId systemId, string owner);
-  void removeByOwner(SystemInstanceId systemId, string owner);
+  size_t countByOwner(TenantId tenantId, SystemInstanceId systemId, string owner);
+  TransportRequest[] findByOwner(TenantId tenantId, SystemInstanceId systemId, string owner);
+  void removeByOwner(TenantId tenantId, SystemInstanceId systemId, string owner);
 
 }

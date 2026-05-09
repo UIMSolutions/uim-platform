@@ -32,13 +32,14 @@ class ConsentController : PlatformController {
     router.post("/api/v1/consents", &handleGrant);
     router.get("/api/v1/consents", &handleList);
     router.get("/api/v1/consents/active", &handleListActive);
-    router.get("/api/v1/consents/*", &handleGetById);
+    router.get("/api/v1/consents/*", &handleGet);
     router.post("/api/v1/consents/revoke", &handleRevoke);
     router.delete_("/api/v1/consents/*", &handleDelete);
   }
 
   private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateConsentRecordRequest r;
       r.tenantId = tenantId;
@@ -112,8 +113,9 @@ class ConsentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getConsent(tenantId, id);
@@ -130,7 +132,8 @@ class ConsentController : PlatformController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RevokeConsentRequest r;
       r.id = ConsentRecordId(j.getString("id"));
@@ -150,7 +153,8 @@ class ConsentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteConsent(tenantId, id);

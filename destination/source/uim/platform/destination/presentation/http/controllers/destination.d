@@ -29,13 +29,14 @@ class DestinationController : PlatformController {
   override void registerRoutes(URLRouter router) {
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
-    router.get("/api/v1/destinations/*", &handleGetById);
+    router.get("/api/v1/destinations/*", &handleGet);
     router.put("/api/v1/destinations/*", &handleUpdate);
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDestinationRequest r;
       r.tenantId = tenantId;
@@ -114,8 +115,9 @@ class DestinationController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto d = usecase.getDestination(id);
       if (d.isNull) {
@@ -129,7 +131,8 @@ class DestinationController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateDestinationRequest r;
@@ -171,7 +174,8 @@ class DestinationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteDestination(id);
       if (result.success) {

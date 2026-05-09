@@ -28,13 +28,14 @@ class BuildpackController : PlatformController {
 
     router.post("/api/v1/buildpacks", &handleCreate);
     router.get("/api/v1/buildpacks", &handleList);
-    router.get("/api/v1/buildpacks/*", &handleGetById);
+    router.get("/api/v1/buildpacks/*", &handleGet);
     router.put("/api/v1/buildpacks/*", &handleUpdate);
     router.delete_("/api/v1/buildpacks/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateBuildpackRequest();
       r.tenantId = tenantId;
@@ -75,7 +76,7 @@ class BuildpackController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

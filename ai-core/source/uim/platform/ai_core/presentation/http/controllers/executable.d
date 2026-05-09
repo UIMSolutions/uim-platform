@@ -32,6 +32,7 @@ class ExecutableController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateExecutableRequest r;
       r.tenantId = tenantId;
@@ -61,12 +62,13 @@ class ExecutableController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+            auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto executables = scenarioId.length > 0
-        ? usecase.listByScenario(scenarioId, rgId)
-        : usecase.list(rgId);
+        ? usecase.listByScenario(tenantId, scenarioId, rgId)
+        : usecase.list(tenantId, rgId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
@@ -94,13 +96,13 @@ class ExecutableController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+      auto tenantId = req.getTenantId;
 
-      auto e = usecase.getbyId(id, rgId);
+      auto e = usecase.getbyId(tenantId, id, rgId);
       if (e.isNull) {
         writeError(res, 404, "Executable not found");
         return;
@@ -125,11 +127,13 @@ class ExecutableController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+      auto tenantId = req.getTenantId;
 
-      auto result = usecase.deleteExecutable(rgId, id);
+      auto result = usecase.deleteExecutable(tenantId, rgId, id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("id", id)

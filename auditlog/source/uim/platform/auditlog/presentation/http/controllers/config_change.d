@@ -33,7 +33,8 @@ class ConfigChangeController : PlatformController {
   }
 
   private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = WriteConfigChangeLogRequest();
       r.tenantId = tenantId;

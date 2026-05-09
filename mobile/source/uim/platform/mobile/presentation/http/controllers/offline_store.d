@@ -29,7 +29,8 @@ class OfflineStoreController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateOfflineStoreRequest r;
       r.tenantId = tenantId;
@@ -78,7 +79,8 @@ class OfflineStoreController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -104,7 +106,8 @@ class OfflineStoreController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateOfflineStoreRequest r;
@@ -130,7 +133,8 @@ class OfflineStoreController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = OfflineStoreId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteOfflineStore(id);
       if (result.success) {

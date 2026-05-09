@@ -27,7 +27,7 @@ class DistributionController : PlatformController {
 
     router.post("/api/v1/distribution-models", &handleCreate);
     router.get("/api/v1/distribution-models", &handleList);
-    router.get("/api/v1/distribution-models/*", &handleGetById);
+    router.get("/api/v1/distribution-models/*", &handleGet);
     router.put("/api/v1/distribution-models/*", &handleUpdate);
     router.delete_("/api/v1/distribution-models/*", &handleDelete);
     router.post("/api/v1/distribution-models/activate/*", &handleActivate);
@@ -35,7 +35,8 @@ class DistributionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDistributionModelRequest r;
       r.tenantId = tenantId;
@@ -89,8 +90,9 @@ class DistributionController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto model = usecase.getModel(id);
       if (model.isNull) {
@@ -104,7 +106,8 @@ class DistributionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateDistributionModelRequest r;
@@ -133,7 +136,8 @@ class DistributionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteModel(id);
       if (result.success) {
@@ -150,7 +154,8 @@ class DistributionController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.activate(id);
       if (result.success) {
@@ -167,7 +172,8 @@ class DistributionController : PlatformController {
   }
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deactivate(id);
       if (result.success)

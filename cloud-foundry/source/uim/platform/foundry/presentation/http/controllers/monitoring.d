@@ -49,7 +49,8 @@ class MonitoringController : PlatformController {
   }
 
   private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(tenantId, id);

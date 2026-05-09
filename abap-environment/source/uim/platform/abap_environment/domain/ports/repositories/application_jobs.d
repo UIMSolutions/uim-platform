@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - application job persistence.
 interface ApplicationJobRepository : ITenantRepository!(ApplicationJob, ApplicationJobId) {
 
-  size_t countBySystem(SystemInstanceId systemId);
-  ApplicationJob[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  ApplicationJob[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
-  size_t countByStatus(SystemInstanceId systemId, JobStatus status);
-  ApplicationJob[] findByStatus(SystemInstanceId systemId, JobStatus status);
+  size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status);
+  ApplicationJob[] findByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status);
   void removeByStatus(SystemInstanceId systemId, JobStatus status);
 
 }

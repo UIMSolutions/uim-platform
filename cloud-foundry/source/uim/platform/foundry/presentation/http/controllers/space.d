@@ -32,13 +32,14 @@ class SpaceController : PlatformController {
     
     router.post("/api/v1/spaces", &handleCreate);
     router.get("/api/v1/spaces", &handleList);
-    router.get("/api/v1/spaces/*", &handleGetById);
+    router.get("/api/v1/spaces/*", &handleGet);
     router.put("/api/v1/spaces/*", &handleUpdate);
     router.delete_("/api/v1/spaces/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateSpaceRequest();
       r.tenantId = tenantId;
@@ -82,8 +83,9 @@ class SpaceController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto space = useCase.getSpace(tenantId, id);
@@ -99,7 +101,8 @@ class SpaceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateSpaceRequest();
@@ -125,7 +128,8 @@ class SpaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(tenantId, id);

@@ -29,7 +29,8 @@ class DeviceRegistrationController : PlatformController {
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RegisterDeviceRequest r;
       r.tenantId = tenantId;
@@ -79,7 +80,8 @@ class DeviceRegistrationController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -105,7 +107,8 @@ class DeviceRegistrationController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto status = j.getString("status");
@@ -124,7 +127,8 @@ class DeviceRegistrationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
       if (result.success) {

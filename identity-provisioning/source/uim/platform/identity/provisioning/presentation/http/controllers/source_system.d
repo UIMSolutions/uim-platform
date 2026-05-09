@@ -31,7 +31,7 @@ class SourceSystemController : PlatformController {
     
     router.post("/api/v1/source-systems", &handleCreate);
     router.get("/api/v1/source-systems", &handleList);
-    router.get("/api/v1/source-systems/*", &handleGetById);
+    router.get("/api/v1/source-systems/*", &handleGet);
     router.put("/api/v1/source-systems/*", &handleUpdate);
     router.delete_("/api/v1/source-systems/*", &handleDelete);
     router.post("/api/v1/source-systems/activate/*", &handleActivate);
@@ -39,7 +39,8 @@ class SourceSystemController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateSourceSystemRequest();
       r.tenantId = tenantId;
@@ -84,8 +85,9 @@ class SourceSystemController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto sys = usecase.getSourceSystem(tenantId, id);
@@ -101,7 +103,8 @@ class SourceSystemController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateSourceSystemRequest();
@@ -130,7 +133,8 @@ class SourceSystemController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.activateSystem(tenantId, id);
@@ -153,7 +157,8 @@ class SourceSystemController : PlatformController {
   }
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
@@ -173,7 +178,8 @@ class SourceSystemController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteSourceSystem(tenantId, id);

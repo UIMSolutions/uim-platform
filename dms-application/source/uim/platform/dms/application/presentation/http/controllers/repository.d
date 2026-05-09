@@ -32,7 +32,7 @@ class RepositoryController : PlatformController {
 
     router.post("/api/v1/repositories", &handleCreate);
     router.get("/api/v1/repositories", &handleList);
-    router.get("/api/v1/repositories/*", &handleGetById);
+    router.get("/api/v1/repositories/*", &handleGet);
     router.put("/api/v1/repositories/*", &handleUpdate);
     router.delete_("/api/v1/repositories/*", &handleDelete);
     router.post("/api/v1/repositories/activate/*", &handleActivate);
@@ -40,7 +40,8 @@ class RepositoryController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateRepositoryRequest();
       r.tenantId = tenantId;
@@ -82,8 +83,9 @@ class RepositoryController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto repository = usecase.getRepository(tenantId, id);
@@ -98,7 +100,8 @@ class RepositoryController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
@@ -126,7 +129,8 @@ class RepositoryController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.activateRepository(tenantId, id);
@@ -145,7 +149,8 @@ class RepositoryController : PlatformController {
   }
 
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.archiveRepository(tenantId, id);
@@ -163,7 +168,8 @@ class RepositoryController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteRepository(tenantId, id);

@@ -35,7 +35,8 @@ class LabelController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateLabelRequest r;
       r.resourceType = j.getString("resourceType");
@@ -84,7 +85,8 @@ class LabelController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto l = usecase.getById(id);
       if (l.isNull) {
@@ -98,7 +100,8 @@ class LabelController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateLabelRequest r;
@@ -115,7 +118,8 @@ class LabelController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = LabelId(extractId(req.requestURI));
       auto result = usecase.deleteLabel(id);
       if (result.success)

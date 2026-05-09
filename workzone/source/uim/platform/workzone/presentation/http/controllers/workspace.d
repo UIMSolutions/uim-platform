@@ -36,7 +36,8 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
       r.tenantId = tenantId;
@@ -92,7 +93,8 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       // Check for sub-resources
       if (id == "members") {
@@ -113,7 +115,8 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateWorkspaceRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -139,7 +142,8 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       useCase.deleteWorkspace(tenantId, id);
@@ -150,7 +154,8 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = AddMemberRequest();
       r.workspaceId = j.getString("workspaceId");

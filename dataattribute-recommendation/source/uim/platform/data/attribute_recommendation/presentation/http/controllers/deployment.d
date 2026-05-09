@@ -31,14 +31,15 @@ class DeploymentController : PlatformController {
 
     router.post("/api/v1/deployments", &handleCreate);
     router.get("/api/v1/deployments", &handleList);
-    router.get("/api/v1/deployments/*", &handleGetById);
+    router.get("/api/v1/deployments/*", &handleGet);
     router.post("/api/v1/deployments/activate/*", &handleActivate);
     router.post("/api/v1/deployments/deactivate/*", &handleDeactivate);
     router.delete_("/api/v1/deployments/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDeploymentRequest();
       r.tenantId = tenantId;
@@ -82,8 +83,9 @@ class DeploymentController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto dep = usecase.getDeployment(tenantId, id);
@@ -99,7 +101,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.activateDeployment(tenantId, id);
@@ -123,7 +126,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateDeployment(tenantId, id);
@@ -147,7 +151,8 @@ class DeploymentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteDeployment(tenantId, id);

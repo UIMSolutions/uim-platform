@@ -30,7 +30,8 @@ class PromptController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
 
       CreatePromptRequest r;
@@ -84,9 +85,8 @@ class PromptController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
 
       auto p = usecase.getById(id);
@@ -102,9 +102,8 @@ class PromptController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 

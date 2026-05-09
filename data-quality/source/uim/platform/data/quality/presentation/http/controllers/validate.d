@@ -35,7 +35,8 @@ class ValidateController : PlatformController {
   }
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ValidateRecordRequest();
       r.tenantId = tenantId;
@@ -51,7 +52,8 @@ class ValidateController : PlatformController {
   }
 
   private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ValidateBatchRequest();
       r.tenantId = tenantId;

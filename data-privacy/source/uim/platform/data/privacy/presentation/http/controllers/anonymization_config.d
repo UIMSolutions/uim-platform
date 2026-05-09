@@ -26,14 +26,15 @@ class AnonymizationConfigController : PlatformController {
 
     router.post("/api/v1/anonymization-configs", &handleCreate);
     router.get("/api/v1/anonymization-configs", &handleList);
-    router.get("/api/v1/anonymization-configs/*", &handleGetById);
+    router.get("/api/v1/anonymization-configs/*", &handleGet);
     router.put("/api/v1/anonymization-configs/*", &handleUpdate);
     router.post("/api/v1/anonymization-configs/*/activate", &handleActivate);
     router.delete_("/api/v1/anonymization-configs/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateAnonymizationConfigRequest r;
       r.tenantId = tenantId;
@@ -72,8 +73,9 @@ class AnonymizationConfigController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getConfig(tenantId, id);
@@ -87,7 +89,8 @@ class AnonymizationConfigController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
       r.id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
@@ -110,7 +113,8 @@ class AnonymizationConfigController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
 
@@ -127,7 +131,8 @@ class AnonymizationConfigController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteConfig(tenantId, id);

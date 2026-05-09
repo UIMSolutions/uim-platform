@@ -34,7 +34,8 @@ class KeystoreController : PlatformController {
 
   // POST /api/v1/keystores
   private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UploadKeystoreRequest r;
       r.accountId     = j.getString("accountId");
@@ -101,7 +102,8 @@ class KeystoreController : PlatformController {
 
   // GET /api/v1/keystores/{id}
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto ks = usecase.getById(id);
       if (ks.id.length == 0) {
@@ -130,7 +132,8 @@ class KeystoreController : PlatformController {
 
   // PUT /api/v1/keystores/{id}
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateKeystoreRequest r;
@@ -151,7 +154,8 @@ class KeystoreController : PlatformController {
 
   // DELETE /api/v1/keystores/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id     = KeystoreId(extractIdFromPath(req));
       auto result = usecase.deleteKeystore(id);
       if (result.success) {

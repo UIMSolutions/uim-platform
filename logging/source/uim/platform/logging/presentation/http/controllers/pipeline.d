@@ -32,7 +32,8 @@ class PipelineController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreatePipelineRequest r;
       r.tenantId = tenantId;

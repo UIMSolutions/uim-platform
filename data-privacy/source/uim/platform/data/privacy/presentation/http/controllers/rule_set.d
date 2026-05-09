@@ -26,14 +26,15 @@ class RuleSetController : PlatformController {
     
     router.post("/api/v1/rule-sets", &handleCreate);
     router.get("/api/v1/rule-sets", &handleList);
-    router.get("/api/v1/rule-sets/*", &handleGetById);
+    router.get("/api/v1/rule-sets/*", &handleGet);
     router.put("/api/v1/rule-sets/*", &handleUpdate);
     router.post("/api/v1/rule-sets/*/activate", &handleActivate);
     router.delete_("/api/v1/rule-sets/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRuleSetRequest r;
       r.tenantId = tenantId;
@@ -72,8 +73,9 @@ class RuleSetController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRuleSet(tenantId, id);
@@ -87,7 +89,8 @@ class RuleSetController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRuleSetRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -110,7 +113,8 @@ class RuleSetController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
 
@@ -128,7 +132,8 @@ class RuleSetController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       usecase.deleteRuleSet(tenantId, id);

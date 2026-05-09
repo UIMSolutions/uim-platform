@@ -38,7 +38,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSubaccountRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -93,7 +94,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto s = usecase.getById(id);
       if (s.isNull) {
@@ -106,7 +108,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateSubaccountRequest r;
@@ -128,7 +131,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       MoveSubaccountRequest r;
@@ -144,7 +148,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.suspend(id);
       if (result.success)
@@ -156,7 +161,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.reactivate(id);
       if (result.success)
@@ -168,7 +174,8 @@ class SubaccountController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto result = usecase.deleteSubaccount(id);
       if (result.success)

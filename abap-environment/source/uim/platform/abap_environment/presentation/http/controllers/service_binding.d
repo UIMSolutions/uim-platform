@@ -32,13 +32,15 @@ class ServiceBindingController : PlatformController {
 
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
-    router.get("/api/v1/service-bindings/*", &handleGetById);
+    router.get("/api/v1/service-bindings/*", &handleGet);
     router.put("/api/v1/service-bindings/*", &handleUpdate);
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
@@ -65,8 +67,10 @@ class ServiceBindingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto bindings = usecase.listBindings(systemId);
+
+      auto bindings = usecase.listBindings(tenantId, systemId);
       auto arr = bindings.map!(b => b.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -79,10 +83,12 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      auto binding = usecase.getBinding(id);
+
+      auto binding = usecase.getBinding(tenantId, id);
       if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -95,13 +101,17 @@ class ServiceBindingController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateServiceBindingRequest r;
+      r.tenantId = tenantId;
+      r.serviceBindingId = id;
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = usecase.updateBinding(id, r);
+      auto result = usecase.updateBinding(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -118,8 +128,10 @@ class ServiceBindingController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteBinding(id);
+      
+      auto result = usecase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

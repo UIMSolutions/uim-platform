@@ -28,13 +28,14 @@ class MasterDataController : PlatformController {
     router.post("/api/v1/master-data", &handleCreate);
     router.get("/api/v1/master-data", &handleList);
     router.get("/api/v1/master-data/lookup", &handleLookupByGlobalId);
-    router.get("/api/v1/master-data/*", &handleGetById);
+    router.get("/api/v1/master-data/*", &handleGet);
     router.put("/api/v1/master-data/*", &handleUpdate);
     router.delete_("/api/v1/master-data/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateMasterDataObjectRequest r;
       r.tenantId = tenantId;
@@ -108,8 +109,9 @@ class MasterDataController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto obj = usecase.getObject(id);
       if (obj.isNull) {
@@ -123,7 +125,8 @@ class MasterDataController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateMasterDataObjectRequest r;
@@ -144,7 +147,8 @@ class MasterDataController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteObject(id);
       if (result.success)

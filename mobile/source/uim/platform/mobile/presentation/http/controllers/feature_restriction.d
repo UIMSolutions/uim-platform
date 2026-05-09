@@ -30,7 +30,8 @@ class FeatureRestrictionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
@@ -83,7 +84,8 @@ class FeatureRestrictionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
       if (result.success) {
@@ -111,7 +113,8 @@ class FeatureRestrictionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateFeatureRestrictionRequest r;
@@ -139,7 +142,8 @@ class FeatureRestrictionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = FeatureRestrictionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteFeatureRestriction(id);
       if (result.success) {
@@ -153,7 +157,8 @@ class FeatureRestrictionController : PlatformController {
   }
 
   private void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto featureId = j.getString("featureId");
       auto userId = j.getString("userId");

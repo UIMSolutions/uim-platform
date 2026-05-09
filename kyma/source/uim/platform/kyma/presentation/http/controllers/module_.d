@@ -32,14 +32,15 @@ class ModuleController : PlatformController {
 
     router.post("/api/v1/modules", &handleEnable);
     router.get("/api/v1/modules", &handleList);
-    router.get("/api/v1/modules/*", &handleGetById);
+    router.get("/api/v1/modules/*", &handleGet);
     router.put("/api/v1/modules/*", &handleUpdate);
     router.post("/api/v1/modules/disable/*", &handleDisable);
     router.delete_("/api/v1/modules/*", &handleDelete);
   }
 
   private void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       EnableModuleRequest r;
       r.environmentId = j.getString("environmentId");
@@ -86,8 +87,9 @@ class ModuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto m = usecase.getModule(id);
       if (m.isNull) {
@@ -102,7 +104,8 @@ class ModuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateModuleRequest r;
@@ -123,7 +126,8 @@ class ModuleController : PlatformController {
   }
 
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.disableModule(id);
       if (result.success)
@@ -137,7 +141,8 @@ class ModuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteModule(id);
       if (result.success)

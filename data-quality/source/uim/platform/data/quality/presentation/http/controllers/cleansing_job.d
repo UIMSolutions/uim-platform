@@ -31,11 +31,12 @@ class CleansingJobController : PlatformController {
 
     router.post("/api/v1/cleansing-jobs", &handleCreate);
     router.get("/api/v1/cleansing-jobs", &handleList);
-    router.get("/api/v1/cleansing-jobs/*", &handleGetById);
+    router.get("/api/v1/cleansing-jobs/*", &handleGet);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateCleansingJobRequest();
       r.tenantId = tenantId;
@@ -77,7 +78,7 @@ class CleansingJobController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CleansingJobId(extractIdFromPath(req.requestURI));

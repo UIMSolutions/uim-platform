@@ -31,7 +31,7 @@ class WorkflowController : PlatformController {
 
     router.post("/api/v1/workflows", &handleCreate);
     router.get("/api/v1/workflows", &handleList);
-    router.get("/api/v1/workflows/*", &handleGetById);
+    router.get("/api/v1/workflows/*", &handleGet);
     router.post("/api/v1/workflows/start/*", &handleStart);
     router.post("/api/v1/workflows/suspend/*", &handleSuspend);
     router.post("/api/v1/workflows/resume/*", &handleResume);
@@ -40,7 +40,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateWorkflowRequest();
       r.tenantId = tenantId;
@@ -83,8 +84,9 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto wf = useCase.getWorkflow(tenantId, id);
@@ -99,7 +101,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.startWorkflow(tenantId, id);
@@ -118,7 +121,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.suspendWorkflow(tenantId, id);
@@ -137,7 +141,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.resumeWorkflow(tenantId, id);
@@ -156,7 +161,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.terminateWorkflow(tenantId, id);
@@ -175,7 +181,8 @@ class WorkflowController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteWorkflow(tenantId, id);

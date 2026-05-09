@@ -32,7 +32,7 @@ class ObjectController : PlatformController {
 
     router.post("/api/v1/objects", &handleCreate);
     router.get("/api/v1/buckets/*/objects", &handleListByBucket);
-    router.get("/api/v1/objects/*", &handleGetById);
+    router.get("/api/v1/objects/*", &handleGet);
     router.put("/api/v1/objects/*", &handleUpdateMetadata);
     router.delete_("/api/v1/objects/*", &handleDelete);
     router.post("/api/v1/objects/copy", &handleCopy);
@@ -40,7 +40,8 @@ class ObjectController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateObjectRequest();
       r.tenantId = tenantId;
@@ -93,8 +94,9 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       // Check if this is a versions request
       if (id == "versions" || id == "copy")
@@ -112,7 +114,8 @@ class ObjectController : PlatformController {
   }
 
   private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateObjectMetadataRequest();
@@ -136,7 +139,8 @@ class ObjectController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteObject(id);
       if (result.success) {
@@ -154,7 +158,8 @@ class ObjectController : PlatformController {
   }
 
   private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CopyObjectRequest();
       r.tenantId = tenantId;

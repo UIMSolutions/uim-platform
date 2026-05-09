@@ -28,7 +28,7 @@ class DomainDashboardController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto d = usecase.getById(tenantId);
+            auto d = usecase.getDashboard(tenantId);
 
             auto resp = Json.emptyObject
                 .set("id", Json(d.id))
@@ -39,7 +39,8 @@ class DomainDashboardController : PlatformController {
                 .set("totalMappings", Json(d.totalMappings))
                 .set("activeMappings", Json(d.activeMappings))
                 .set("overallHealth", Json(d.overallHealth.to!string))
-                .set("lastUpdatedAt", Json(d.lastUpdatedAt));
+                .set("lastUpdatedAt", Json(d.lastUpdatedAt))
+                .set("message", "Dashboard data retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -49,10 +50,11 @@ class DomainDashboardController : PlatformController {
 
     private void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             RefreshDashboardRequest r;
             r.tenantId = tenantId;
 
-            auto result = usecase.refresh(r);
+            auto result = usecase.refreshDashboard(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

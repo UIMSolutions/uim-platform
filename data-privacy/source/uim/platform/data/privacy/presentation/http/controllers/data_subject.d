@@ -31,13 +31,14 @@ class DataSubjectController : PlatformController {
     
     router.post("/api/v1/data-subjects", &handleCreate);
     router.get("/api/v1/data-subjects", &handleList);
-    router.get("/api/v1/data-subjects/*", &handleGetById);
+    router.get("/api/v1/data-subjects/*", &handleGet);
     router.put("/api/v1/data-subjects/*", &handleUpdate);
     router.delete_("/api/v1/data-subjects/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataSubjectRequest r;
       r.tenantId = tenantId;
@@ -85,8 +86,9 @@ class DataSubjectController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getSubject(tenantId, id);
@@ -101,7 +103,8 @@ class DataSubjectController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateDataSubjectRequest r;
       r.id = DataSubjectId(extractIdFromPath(req.requestURI));
@@ -129,7 +132,8 @@ class DataSubjectController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteSubject(tenantId, id);

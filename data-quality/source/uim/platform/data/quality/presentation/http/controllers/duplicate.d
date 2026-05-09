@@ -33,11 +33,12 @@ class DuplicateController : PlatformController {
     router.post("/api/v1/duplicates/detect", &handleDetect);
     router.post("/api/v1/duplicates/resolve", &handleResolve);
     router.get("/api/v1/duplicates", &handleList);
-    router.get("/api/v1/duplicates/*", &handleGetById);
+    router.get("/api/v1/duplicates/*", &handleGet);
   }
 
   private void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
@@ -70,7 +71,8 @@ class DuplicateController : PlatformController {
   }
 
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;
@@ -110,8 +112,9 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto group = usecase.getById(tenantId, id);

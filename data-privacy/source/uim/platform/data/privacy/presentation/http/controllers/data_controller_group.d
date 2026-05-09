@@ -26,13 +26,14 @@ class DataControllerGroupController : PlatformController {
 
     router.post("/api/v1/controller-groups", &handleCreate);
     router.get("/api/v1/controller-groups", &handleList);
-    router.get("/api/v1/controller-groups/*", &handleGetById);
+    router.get("/api/v1/controller-groups/*", &handleGet);
     router.put("/api/v1/controller-groups/*", &handleUpdate);
     router.delete_("/api/v1/controller-groups/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataControllerGroupRequest r;
       r.tenantId = tenantId;
@@ -70,8 +71,9 @@ class DataControllerGroupController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getGroup(tenantId, id);
@@ -110,7 +112,8 @@ class DataControllerGroupController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteGroup(tenantId, id);

@@ -32,14 +32,15 @@ class CertificateController : PlatformController {
     router.post("/api/v1/certificates", &handleUpload);
     router.get("/api/v1/certificates", &handleList);
     router.get("/api/v1/certificates/expiring", &handleListExpiring);
-    router.get("/api/v1/certificates/*", &handleGetById);
+    router.get("/api/v1/certificates/*", &handleGet);
     router.put("/api/v1/certificates/*", &handleUpdate);
     router.delete_("/api/v1/certificates/*", &handleDelete);
     router.post("/api/v1/certificates/validate/*", &handleValidate);
   }
 
   private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UploadCertificateRequest r;
         r.tenantId = tenantId;
@@ -120,8 +121,9 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto c = usecase.getCertificate(id);
       if (c.isNull) {
@@ -135,7 +137,8 @@ class CertificateController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateCertificateRequest r;
@@ -161,7 +164,8 @@ class CertificateController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteCertificate(id);
       if (result.success) {
@@ -179,7 +183,8 @@ class CertificateController : PlatformController {
   }
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = usecase.validateCertificate(id);
 

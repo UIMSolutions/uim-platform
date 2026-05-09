@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - business role persistence.
 interface BusinessRoleRepository : ITenantRepository!(BusinessRole, BusinessRoleId) {
 
-  bool existsByName(SystemInstanceId systemId, string name);
-  BusinessRole findByName(SystemInstanceId systemId, string name);
-  void removeByName(SystemInstanceId systemId, string name);
+  bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name);
+  BusinessRole findByName(TenantId tenantId, SystemInstanceId systemId, string name);
+  void removeByName(TenantId tenantId, SystemInstanceId systemId, string name);
 
-  size_t countBySystem(SystemInstanceId systemId);
-  BusinessRole[] findBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  BusinessRole[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
   void removeBySystem(SystemInstanceId systemId);
 
 }

@@ -31,14 +31,15 @@ class SoftwareComponentController : PlatformController {
 
     router.post("/api/v1/software-components", &handleCreate);
     router.get("/api/v1/software-components", &handleList);
-    router.get("/api/v1/software-components/*", &handleGetById);
+    router.get("/api/v1/software-components/*", &handleGet);
     router.post("/api/v1/software-components/clone/*", &handleClone);
     router.post("/api/v1/software-components/pull/*", &handlePull);
     router.delete_("/api/v1/software-components/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSoftwareComponentRequest request;
       request.tenantId = req.getTenantId;
@@ -85,8 +86,9 @@ class SoftwareComponentController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto comp = usecase.getComponent(id);
       if (comp.isNull) {
@@ -100,7 +102,8 @@ class SoftwareComponentController : PlatformController {
   }
 
   private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       CloneSoftwareComponentRequest r;
@@ -122,7 +125,8 @@ class SoftwareComponentController : PlatformController {
   }
 
   private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       PullSoftwareComponentRequest r;
@@ -143,7 +147,8 @@ class SoftwareComponentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteComponent(id);
       if (result.isSuccess()) {

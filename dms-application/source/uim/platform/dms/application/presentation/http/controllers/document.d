@@ -32,7 +32,7 @@ class DocumentController : PlatformController {
     router.post("/api/v1/documents", &handleCreate);
     router.get("/api/v1/documents", &handleList);
     router.get("/api/v1/documents/search", &handleSearch);
-    router.get("/api/v1/documents/*", &handleGetById);
+    router.get("/api/v1/documents/*", &handleGet);
     router.put("/api/v1/documents/*", &handleUpdate);
     router.delete_("/api/v1/documents/*", &handleDelete);
     router.post("/api/v1/documents/move/*", &handleMove);
@@ -116,8 +116,9 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto doc = usecase.getDocument(tenantId, id);
@@ -132,7 +133,8 @@ class DocumentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateDocumentRequest();
@@ -159,7 +161,8 @@ class DocumentController : PlatformController {
   }
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = MoveDocumentRequest();
@@ -183,7 +186,8 @@ class DocumentController : PlatformController {
   }
 
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.archiveDocument(tenantId, id);
@@ -201,7 +205,8 @@ class DocumentController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteDocument(tenantId, id);

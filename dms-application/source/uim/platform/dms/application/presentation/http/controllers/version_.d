@@ -61,7 +61,8 @@ class VersionController : PlatformController {
   }
 
   private void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CheckInRequest();
       r.documentId = DocumentId(j.getString("documentId"));

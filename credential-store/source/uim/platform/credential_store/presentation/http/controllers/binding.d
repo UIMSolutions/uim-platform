@@ -32,7 +32,8 @@ class BindingController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
@@ -89,9 +90,8 @@ class BindingController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto b = bindings.getById(id);
 
@@ -118,9 +118,8 @@ class BindingController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
       UpdateServiceBindingRequest r;
@@ -145,7 +144,8 @@ class BindingController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       bindings.remove(id);
 

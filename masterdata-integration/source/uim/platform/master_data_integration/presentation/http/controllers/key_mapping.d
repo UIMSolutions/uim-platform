@@ -28,13 +28,14 @@ class KeyMappingController : PlatformController {
     router.post("/api/v1/key-mappings", &handleCreate);
     router.get("/api/v1/key-mappings", &handleList);
     router.get("/api/v1/key-mappings/lookup", &handleLookup);
-    router.get("/api/v1/key-mappings/*", &handleGetById);
+    router.get("/api/v1/key-mappings/*", &handleGet);
     router.put("/api/v1/key-mappings/*", &handleUpdate);
     router.delete_("/api/v1/key-mappings/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateKeyMappingRequest r;
       r.tenantId = tenantId;
@@ -115,8 +116,9 @@ class KeyMappingController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto mapping = usecase.getMapping(id);
       if (mapping.isNull) {
@@ -130,7 +132,8 @@ class KeyMappingController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateKeyMappingRequest r;
@@ -147,7 +150,8 @@ class KeyMappingController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteMapping(id);
       if (result.success)

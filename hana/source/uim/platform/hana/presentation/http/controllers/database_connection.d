@@ -30,7 +30,8 @@ class DatabaseConnectionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
@@ -93,9 +94,8 @@ class DatabaseConnectionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = usecase.getById(id);
       if (c.isNull) {
@@ -156,9 +156,8 @@ class DatabaseConnectionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = DatabaseConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteDatabaseConnection(id);
       if (result.success) {

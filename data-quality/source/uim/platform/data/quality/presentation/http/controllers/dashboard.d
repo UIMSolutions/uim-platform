@@ -33,7 +33,8 @@ class DashboardController : PlatformController {
   }
 
   private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = ComputeDashboardRequest();
       r.tenantId = tenantId;

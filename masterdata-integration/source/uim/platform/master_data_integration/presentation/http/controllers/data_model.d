@@ -27,13 +27,14 @@ class DataModelController : PlatformController {
 
     router.post("/api/v1/data-models", &handleCreate);
     router.get("/api/v1/data-models", &handleList);
-    router.get("/api/v1/data-models/*", &handleGetById);
+    router.get("/api/v1/data-models/*", &handleGet);
     router.put("/api/v1/data-models/*", &handleUpdate);
     router.delete_("/api/v1/data-models/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataModelRequest r;
       r.tenantId = tenantId;
@@ -99,8 +100,9 @@ class DataModelController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto model = usecase.getModel(id);
       if (model.isNull) {
@@ -114,7 +116,8 @@ class DataModelController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateDataModelRequest r;
@@ -151,7 +154,8 @@ class DataModelController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteModel(id);
       if (result.success)

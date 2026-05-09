@@ -31,13 +31,14 @@ class ScenarioController : PlatformController {
     
     router.post("/api/v1/scenarios", &handleCreate);
     router.get("/api/v1/scenarios", &handleList);
-    router.get("/api/v1/scenarios/*", &handleGetById);
+    router.get("/api/v1/scenarios/*", &handleGet);
     router.put("/api/v1/scenarios/*", &handleUpdate);
     router.delete_("/api/v1/scenarios/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateScenarioRequest();
       r.tenantId = tenantId;
@@ -84,8 +85,9 @@ class ScenarioController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto scenario = useCase.getScenario(tenantId, id);
@@ -100,7 +102,8 @@ class ScenarioController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateScenarioRequest();
@@ -132,7 +135,8 @@ class ScenarioController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteScenario(tenantId, id);

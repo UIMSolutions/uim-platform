@@ -31,13 +31,14 @@ class ServiceInstanceController : PlatformController {
 
     router.post("/api/v1/service-instances", &handleCreate);
     router.get("/api/v1/service-instances", &handleList);
-    router.get("/api/v1/service-instances/*", &handleGetById);
+    router.get("/api/v1/service-instances/*", &handleGet);
     router.put("/api/v1/service-instances/*", &handleUpdate);
     router.delete_("/api/v1/service-instances/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -95,8 +96,9 @@ class ServiceInstanceController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto inst = usecase.getServiceInstance(ServiceInstanceId(id));
       if (inst.isNull) {
@@ -111,7 +113,8 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateServiceInstanceRequest r;
@@ -133,7 +136,8 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteServiceInstance(ServiceInstanceId(id));
       if (result.success)

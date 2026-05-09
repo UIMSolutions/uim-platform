@@ -26,7 +26,7 @@ class ChangeLogController : PlatformController {
     super.registerRoutes(router);
 
     router.get("/api/v1/change-log", &handleQuery);
-    router.get("/api/v1/change-log/*", &handleGetById);
+    router.get("/api/v1/change-log/*", &handleGet);
   }
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -65,8 +65,9 @@ class ChangeLogController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto entry = changeLogs.getEntry(id);
       if (entry.isNull) {

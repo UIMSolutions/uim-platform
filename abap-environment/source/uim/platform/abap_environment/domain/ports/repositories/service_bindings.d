@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - service binding persistence.
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
-  size_t countBySystem(SystemInstanceId systemId);
-  ServiceBinding[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
-  size_t countByType(SystemInstanceId systemId, BindingType bindingType);
-  ServiceBinding[] findByType(SystemInstanceId systemId, BindingType bindingType);
+  size_t countByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType);
+  ServiceBinding[] findByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType);
   void removeByType(SystemInstanceId systemId, BindingType bindingType);
 
 }

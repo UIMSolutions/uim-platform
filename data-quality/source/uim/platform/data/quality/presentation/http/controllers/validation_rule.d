@@ -31,13 +31,14 @@ class ValidationRuleController : PlatformController {
 
     router.post("/api/v1/validation-rules", &handleCreate);
     router.get("/api/v1/validation-rules", &handleList);
-    router.get("/api/v1/validation-rules/*", &handleGetById);
+    router.get("/api/v1/validation-rules/*", &handleGet);
     router.put("/api/v1/validation-rules/*", &handleUpdate);
     router.delete_("/api/v1/validation-rules/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateValidationRuleRequest();
       r.tenantId = tenantId;
@@ -92,8 +93,9 @@ class ValidationRuleController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto rule = usecase.getById(id);
       if (rule.isNull) {
@@ -108,7 +110,8 @@ class ValidationRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -149,7 +152,8 @@ class ValidationRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteValidationRule(tenantId, id);

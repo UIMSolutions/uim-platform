@@ -32,6 +32,8 @@ class ArtifactController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateArtifactRequest r;
       r.tenantId = tenantId;
@@ -60,18 +62,20 @@ class ArtifactController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto artifacts = scenarioId.length > 0
-        ? usecase.listByScenario(scenarioId, rgId)
-        : usecase.list(rgId);
+        ? usecase.listArtifacts(tenantId, rgId, scenarioId)
+        : usecase.listArtifacts(tenantId, rgId);
 
-      auto jarr = artifacts.map!(a => artifactToJson(a)).array;
+      auto jarr = artifacts.map!(a => artifactToJson(a)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", artifacts.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Artifacts retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -81,12 +85,11 @@ class ArtifactController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto a = usecase.getbyId(id, rgId);
+      auto a = usecase.getArtifactById(tenantId, id, rgId);
       if (a.isNull) {
         writeError(res, 404, "Artifact not found");
         return;
@@ -100,10 +103,11 @@ class ArtifactController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = usecase.deleteArtifact(rgId, id);
+      auto result = usecase.deleteArtifact(tenantId, rgId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")
@@ -116,28 +120,5 @@ class ArtifactController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json artifactToJson(Artifact a) {
-    
-
-    auto lArr = Json.emptyArray;
-    foreach (lbl; a.labels) {
-      lArr ~= Json.emptyObject
-        .set("key", Json(lbl.key))
-        .set("value", Json(lbl.value));
-    }
-
-    return Json.emptyObject
-      .set("id", a.id)
-      .set("scenarioId", a.scenarioId)
-      .set("executionId", a.executionId)
-      .set("name", a.name)
-      .set("description", a.description)
-      .set("kind", a.kind.to!string)
-      .set("url", a.url)
-      .set("createdAt", a.createdAt)
-      .set("updatedAt", a.updatedAt)
-      .set("labels", lArr);
   }
 }

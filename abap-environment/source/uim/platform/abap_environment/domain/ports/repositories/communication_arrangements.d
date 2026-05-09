@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - communication arrangement persistence.
 interface CommunicationArrangementRepository : ITenantRepository!(CommunicationArrangement, CommunicationArrangementId) {
 
-  size_t countBySystem(SystemInstanceId systemId);
-  CommunicationArrangement[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  CommunicationArrangement[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
-  size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir);
-  CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir);
-  void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir);
+  size_t countByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir);
+  CommunicationArrangement[] findByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir);
+  void removeByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir);
 
 }

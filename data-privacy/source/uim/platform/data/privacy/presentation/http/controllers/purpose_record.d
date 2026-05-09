@@ -26,7 +26,7 @@ class PurposeRecordController : PlatformController {
 
     router.post("/api/v1/purpose-records", &handleCreate);
     router.get("/api/v1/purpose-records", &handleList);
-    router.get("/api/v1/purpose-records/*", &handleGetById);
+    router.get("/api/v1/purpose-records/*", &handleGet);
     router.post("/api/v1/purpose-records/*/deactivate", &handleDeactivate);
     router.delete_("/api/v1/purpose-records/*", &handleDelete);
   }
@@ -77,7 +77,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -113,7 +113,8 @@ class PurposeRecordController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
       usecase.deleteRecord(tenantId, id);

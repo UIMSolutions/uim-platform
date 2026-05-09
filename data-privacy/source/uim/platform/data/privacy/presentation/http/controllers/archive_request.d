@@ -26,13 +26,14 @@ class ArchiveRequestController : PlatformController {
 
     router.post("/api/v1/archive-requests", &handleCreate);
     router.get("/api/v1/archive-requests", &handleList);
-    router.get("/api/v1/archive-requests/*", &handleGetById);
+    router.get("/api/v1/archive-requests/*", &handleGet);
     router.put("/api/v1/archive-requests/*/status", &handleUpdateStatus);
     router.delete_("/api/v1/archive-requests/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateArchiveRequest r;
       r.tenantId = tenantId;
@@ -75,8 +76,9 @@ class ArchiveRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto entry = usecase.getRequest(tenantId, id);
@@ -90,7 +92,8 @@ class ArchiveRequestController : PlatformController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateArchiveStatusRequest r;
       r.id = ArchiveRequestId(extractIdFromPath(req.requestURI));
@@ -111,7 +114,8 @@ class ArchiveRequestController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       usecase.deleteRequest(tenantId, id);

@@ -33,7 +33,8 @@ class KeyringController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateKeyringRequest r;
       r.tenantId = tenantId;
@@ -85,9 +86,8 @@ class KeyringController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
       auto k = keyrings.getById(id);
 
@@ -123,7 +123,8 @@ class KeyringController : PlatformController {
   }
 
   private void handleRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RotateKeyringRequest r;
       r.keyringId = j.getString("keyringId");
@@ -144,7 +145,8 @@ class KeyringController : PlatformController {
   }
 
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto keyringId = CredentialId(j.getString("keyringId"));
 
@@ -163,9 +165,8 @@ class KeyringController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
-
+        try {
+      auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
       auto result = keyrings.remove(id);
       if (result.success) {

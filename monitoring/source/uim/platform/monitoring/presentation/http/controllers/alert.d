@@ -30,7 +30,7 @@ class AlertController : PlatformController {
     super.registerRoutes(router);
 
     router.get("/api/v1/alerts", &handleList);
-    router.get("/api/v1/alerts/*", &handleGetById);
+    router.get("/api/v1/alerts/*", &handleGet);
     router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);
     router.post("/api/v1/alerts/resolve", &handleResolve);
     router.delete_("/api/v1/alerts/*", &handleDelete);
@@ -63,7 +63,7 @@ class AlertController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));
@@ -79,7 +79,8 @@ class AlertController : PlatformController {
   }
 
   private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
@@ -103,7 +104,8 @@ class AlertController : PlatformController {
   }
 
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));

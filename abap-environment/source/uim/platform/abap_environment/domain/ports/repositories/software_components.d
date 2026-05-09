@@ -15,12 +15,12 @@ mixin(ShowModule!());
 /// Port: outgoing - software component persistence.
 interface SoftwareComponentRepository : ITenantRepository!(SoftwareComponent, SoftwareComponentId) {
 
-  bool existsByName(SystemInstanceId systemId, string name);
-  SoftwareComponent findByName(SystemInstanceId systemId, string name);
-  void removeByName(SystemInstanceId systemId, string name);
+  bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name);
+  SoftwareComponent findByName(TenantId tenantId, SystemInstanceId systemId, string name);
+  void removeByName(TenantId tenantId, SystemInstanceId systemId, string name);
 
-  size_t countBySystem(SystemInstanceId systemId);
-  SoftwareComponent[] findBySystem(SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
+  SoftwareComponent[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
 }

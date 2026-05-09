@@ -32,13 +32,15 @@ class CommunicationArrangementController : PlatformController {
 
     router.post("/api/v1/communication-arrangements", &handleCreate);
     router.get("/api/v1/communication-arrangements", &handleList);
-    router.get("/api/v1/communication-arrangements/*", &handleGetById);
+    router.get("/api/v1/communication-arrangements/*", &handleGet);
     router.put("/api/v1/communication-arrangements/*", &handleUpdate);
     router.delete_("/api/v1/communication-arrangements/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateCommunicationArrangementRequest r;
       r.tenantId = tenantId;
@@ -58,7 +60,9 @@ class CommunicationArrangementController : PlatformController {
       auto result = usecase.createArrangement(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Communication arrangement created successfully");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -70,13 +74,15 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto arrangements = usecase.listArrangements(systemId);
+      auto arrangements = usecase.listArrangements(tenantId, systemId);
       auto arr = arrangements.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", arrangements.length);
+        .set("totalCount", arrangements.length)
+        .set("message", "Communication arrangements fetched successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -84,15 +90,22 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
-      auto arrangement = usecase.getArrangement(id);
+
+      auto arrangement = usecase.getArrangement(tenantId, id);
       if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
         return;
       }
-      res.writeJsonBody(arrangement.toJson, 200);
+
+      auto response = Json.emptyObject
+        .set("item", arrangement.toJson)
+        .set("message", "Communication arrangement retrieved successfully");
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -100,9 +113,13 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
+
       auto j = req.json;
       UpdateCommunicationArrangementRequest r;
+      r.tenantId = tenantId;
+      r.communicationArrangementId = id;
       r.description = j.getString("description");
       r.status = j.getString("status");
       r.authMethod = j.getString("authMethod");
@@ -112,10 +129,11 @@ class CommunicationArrangementController : PlatformController {
       r.clientSecret = j.getString("clientSecret");
       r.tokenEndpoint = j.getString("tokenEndpoint");
 
-      auto result = usecase.updateArrangement(id, r);
+      auto result = usecase.updateArrangement(r);
       if (result.isSuccess()) {
         auto response = Json.emptyObject
-          .set("status", "updated");
+          .set("status", "updated")
+          .set("message", "Communication arrangement updated successfully");
 
         res.writeJsonBody(response, 200);
       } else {
@@ -128,11 +146,15 @@ class CommunicationArrangementController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteArrangement(id);
+
+      auto result = usecase.deleteArrangement(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "deleted");
+          .set("status", "deleted")
+          .set("message", "Communication arrangement deleted successfully");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

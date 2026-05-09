@@ -30,7 +30,8 @@ class EncryptionController : PlatformController {
   }
 
   private void handleGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       GenerateDekRequest r;
       r.tenantId = tenantId;
@@ -55,7 +56,8 @@ class EncryptionController : PlatformController {
   }
 
   private void handleEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       EncryptDekRequest r;
       r.tenantId = tenantId;
@@ -80,7 +82,8 @@ class EncryptionController : PlatformController {
   }
 
   private void handleDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       DecryptDekRequest r;
       r.tenantId = tenantId;

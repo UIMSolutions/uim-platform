@@ -33,14 +33,15 @@ class CheckController : PlatformController {
     router.post("/api/v1/checks", &handleCreate);
     router.get("/api/v1/checks", &handleList);
     router.get("/api/v1/checks/results/*", &handleGetResults);
-    router.get("/api/v1/checks/*", &handleGetById);
+    router.get("/api/v1/checks/*", &handleGet);
     router.put("/api/v1/checks/*", &handleUpdate);
     router.delete_("/api/v1/checks/*", &handleDelete);
     router.post("/api/v1/checks/results", &handleRecordResult);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateHealthCheckRequest r;
       r.tenantId = tenantId;
@@ -92,7 +93,7 @@ class CheckController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
@@ -162,7 +163,8 @@ class CheckController : PlatformController {
   }
 
   private void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       RecordCheckResultRequest r;
       r.tenantId = tenantId;

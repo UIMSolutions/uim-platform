@@ -31,14 +31,15 @@ class ProviderController : PlatformController {
 
     router.post("/api/v1/providers", &handleRegister);
     router.get("/api/v1/providers", &handleList);
-    router.get("/api/v1/providers/*", &handleGetById);
+    router.get("/api/v1/providers/*", &handleGet);
     router.put("/api/v1/providers/*", &handleUpdate);
     router.delete_("/api/v1/providers/*", &handleDeregister);
     router.post("/api/v1/providers/sync", &handleSync);
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = RegisterProviderRequest();
       r.tenantId = tenantId;
@@ -81,8 +82,9 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto provider = usecase.getProvider(id);
       if (provider.isNull) {
@@ -96,7 +98,8 @@ class ProviderController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateProviderRequest();
@@ -120,7 +123,8 @@ class ProviderController : PlatformController {
   }
 
   private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deregisterProvider(id);
       if (result.success) {
@@ -138,7 +142,8 @@ class ProviderController : PlatformController {
   }
 
   private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto providerId = j.getString("providerId");
 

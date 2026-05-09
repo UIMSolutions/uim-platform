@@ -31,13 +31,14 @@ class FunctionController : PlatformController {
 
     router.post("/api/v1/functions", &handleCreate);
     router.get("/api/v1/functions", &handleList);
-    router.get("/api/v1/functions/*", &handleGetById);
+    router.get("/api/v1/functions/*", &handleGet);
     router.put("/api/v1/functions/*", &handleUpdate);
     router.delete_("/api/v1/functions/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateFunctionRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -102,8 +103,9 @@ class FunctionController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       if (!usecase.hasFunction(ServerlessFunctionId(id))) {
         writeError(res, 404, "Function not found");
@@ -118,7 +120,8 @@ class FunctionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateFunctionRequest r;
@@ -149,7 +152,8 @@ class FunctionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteFunction(ServerlessFunctionId(id));
       if (result.success)

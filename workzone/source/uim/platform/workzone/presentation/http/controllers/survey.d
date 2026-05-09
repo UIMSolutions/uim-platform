@@ -36,7 +36,8 @@ class SurveyController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateSurveyRequest();
       r.tenantId = tenantId;
@@ -84,7 +85,8 @@ class SurveyController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SurveyId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto s = useCase.getSurvey(tenantId, id);
@@ -99,7 +101,8 @@ class SurveyController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateSurveyRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -123,7 +126,8 @@ class SurveyController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+        try {
+      auto tenantId = req.getTenantId;
       auto id = SurveyId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
