@@ -30,7 +30,7 @@ class LogicFlowController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class LogicFlowController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = LogicFlowId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getById(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Logic flow not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {

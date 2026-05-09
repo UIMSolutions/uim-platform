@@ -82,7 +82,7 @@ class RetentionRuleController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(id);
+            auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Retention rule not found");
                 return;

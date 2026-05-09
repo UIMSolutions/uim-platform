@@ -30,7 +30,7 @@ class EquipmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = items.map!(e => toJson(e)).array;
 
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class EquipmentController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = usecase.getById(id);
+            auto e = usecase.getById(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Equipment not found"); return; }
             res.writeJsonBody(toJson(e), 200);
         } catch (Exception e) {

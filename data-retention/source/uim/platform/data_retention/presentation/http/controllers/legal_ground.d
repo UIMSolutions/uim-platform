@@ -60,7 +60,7 @@ class LegalGroundController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto lg = usecase.getById(id);
+            auto lg = usecase.getById(tenantId, id);
             if (lg.isNull) { writeError(res, 404, "Legal ground not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", lg.id.value).set("name", lg.name)

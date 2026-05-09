@@ -30,7 +30,7 @@ class OAuthClientController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items)
                 jarr ~= e.toJson();

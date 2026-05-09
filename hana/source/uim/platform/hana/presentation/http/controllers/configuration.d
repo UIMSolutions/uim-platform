@@ -91,7 +91,7 @@ class ConfigurationController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto c = usecase.getById(id);
+      auto c = usecase.getById(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;

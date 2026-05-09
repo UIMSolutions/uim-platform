@@ -91,7 +91,7 @@ class DatabaseUserController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto u = usecase.getById(id);
+      auto u = usecase.getById(tenantId, id);
       if (u.isNull) {
         writeError(res, 404, "Database user not found");
         return;

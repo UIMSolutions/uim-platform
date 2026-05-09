@@ -105,7 +105,7 @@ class InstanceController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto instance = usecase.getById(id);
+      auto instance = usecase.getById(tenantId, id);
       if (instance.isNull) {
         writeError(res, 404, "Instance not found");
         return;

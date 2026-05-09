@@ -94,7 +94,7 @@ class AlertController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto a = usecase.getById(id);
+      auto a = usecase.getById(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
         return;

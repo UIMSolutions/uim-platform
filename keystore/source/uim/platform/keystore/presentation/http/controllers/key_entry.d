@@ -97,7 +97,7 @@ class KeyEntryController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id    = extractIdFromPath(req);
-      auto entry = usecase.getById(id);
+      auto entry = usecase.getById(tenantId, id);
       if (entry.id.length == 0) {
         writeError(res, 404, "Key entry not found");
         return;

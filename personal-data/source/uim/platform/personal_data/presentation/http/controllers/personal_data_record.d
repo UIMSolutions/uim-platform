@@ -96,7 +96,7 @@ class PersonalDataRecordController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(id);
+            auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Personal data record not found");
                 return;

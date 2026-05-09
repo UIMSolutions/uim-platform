@@ -30,7 +30,7 @@ class DataEntityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = items.map!(e => e.dataEntityToJson()).array;
 
             auto resp = Json.emptyObject
@@ -50,7 +50,7 @@ class DataEntityController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getById(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Data entity not found");
                 return;

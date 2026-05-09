@@ -30,7 +30,7 @@ class TriggerController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = items.map!(e => e.triggerToJson()).array;
             
             auto resp = Json.emptyObject
@@ -49,7 +49,7 @@ class TriggerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = TriggerId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getById(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Trigger not found"); return; }
             res.writeJsonBody(e.triggerToJson(), 200);
         } catch (Exception e) {

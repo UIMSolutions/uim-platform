@@ -59,7 +59,7 @@ class LegalEntityController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto le = usecase.getById(id);
+            auto le = usecase.getById(tenantId, id);
             if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", le.id.value).set("name", le.name)

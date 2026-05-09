@@ -30,7 +30,7 @@ class BrandingConfigController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject

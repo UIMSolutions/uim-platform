@@ -94,7 +94,7 @@ class TlsConfigurationController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = usecase.getById(id);
+            auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "TLS configuration not found");
                 return;

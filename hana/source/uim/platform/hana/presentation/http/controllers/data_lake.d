@@ -90,7 +90,7 @@ class DataLakeController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto d = usecase.getById(id);
+      auto d = usecase.getById(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Data lake not found");
         return;

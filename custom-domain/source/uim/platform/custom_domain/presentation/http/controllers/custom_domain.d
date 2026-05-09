@@ -99,7 +99,7 @@ class CustomDomainController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            auto d = usecase.getById(id);
+            auto d = usecase.getById(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Custom domain not found");
                 return;

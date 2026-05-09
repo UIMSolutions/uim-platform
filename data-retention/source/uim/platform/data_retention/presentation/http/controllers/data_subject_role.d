@@ -56,7 +56,7 @@ class DataSubjectRoleController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto dsr = usecase.getById(id);
+            auto dsr = usecase.getById(tenantId, id);
             if (dsr.isNull) { writeError(res, 404, "Data subject role not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", dsr.id.value).set("name", dsr.name)

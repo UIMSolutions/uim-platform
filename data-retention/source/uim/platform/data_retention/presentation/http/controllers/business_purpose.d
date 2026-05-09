@@ -64,7 +64,7 @@ class BusinessPurposeController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto bp = usecase.getById(id);
+            auto bp = usecase.getById(tenantId, id);
             if (bp.isNull) { writeError(res, 404, "Business purpose not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", bp.id.value).set("name", bp.name)

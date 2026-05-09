@@ -91,7 +91,7 @@ class EntityTypeController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto et = usecase.getById(id);
+            auto et = usecase.getById(tenantId, id);
             if (et.isNull) {
                 writeError(res, 404, "Entity type not found");
                 return;

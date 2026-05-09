@@ -99,7 +99,7 @@ class ServicePlanController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto p = usecase.getById(id);
+      auto p = usecase.getById(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Service plan not found");
         return;

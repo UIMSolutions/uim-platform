@@ -65,7 +65,7 @@ class ApplicationGroupController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto ag = usecase.getById(id);
+            auto ag = usecase.getById(tenantId, id);
             if (ag.isNull) { writeError(res, 404, "Application group not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", ag.id.value).set("name", ag.name)

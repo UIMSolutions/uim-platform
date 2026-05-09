@@ -60,7 +60,7 @@ class DeletionRequestController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto dr = usecase.getById(id);
+            auto dr = usecase.getById(tenantId, id);
             if (dr.isNull) { writeError(res, 404, "Deletion request not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", dr.id.value)

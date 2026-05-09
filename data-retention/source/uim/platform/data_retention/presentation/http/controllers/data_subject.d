@@ -59,7 +59,7 @@ class DataSubjectController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto ds = usecase.getById(id);
+            auto ds = usecase.getById(tenantId, id);
             if (ds.isNull) { writeError(res, 404, "Data subject not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", ds.id.value).set("externalId", ds.externalId)

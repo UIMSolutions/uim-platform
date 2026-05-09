@@ -30,7 +30,7 @@ class AssignmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto assignments = usecase.list();
+            auto assignments = usecase.list(tenantId);
             auto jsonAssignments = assignments.map!(assignment => assignment.toJson).array.toJson;
             auto response = Json.emptyObject
                 .set("count", assignments.length)
@@ -48,7 +48,7 @@ class AssignmentController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = usecase.getById(id);
+            auto e = usecase.getById(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Assignment not found");
                 return;

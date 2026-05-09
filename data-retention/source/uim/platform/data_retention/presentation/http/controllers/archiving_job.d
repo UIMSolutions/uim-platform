@@ -60,7 +60,7 @@ class ArchivingJobController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto aj = usecase.getById(id);
+            auto aj = usecase.getById(tenantId, id);
             if (aj.isNull) { writeError(res, 404, "Archiving job not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", aj.id.value)

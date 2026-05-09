@@ -32,7 +32,7 @@ class AuthorizationCodeController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto items = usecase.list();
+            auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items)
                 jarr ~= e.toJson();

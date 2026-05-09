@@ -96,7 +96,7 @@ class GlobalAccountController : PlatformController {
         return;
       }
       
-      auto ga = usecase.getById(id);
+      auto ga = usecase.getById(tenantId, id);
       res.writeJsonBody(ga.toJson, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

@@ -61,7 +61,7 @@ class ResidenceRuleController : PlatformController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto rr = usecase.getById(id);
+            auto rr = usecase.getById(tenantId, id);
             if (rr.isNull) { writeError(res, 404, "Residence rule not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", rr.id.value)

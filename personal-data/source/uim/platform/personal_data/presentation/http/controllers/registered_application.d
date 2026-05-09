@@ -86,7 +86,7 @@ class RegisteredApplicationController : PlatformController {
             if (path.length > 8 && path[$ - 8 .. $] == "/suspend") return;
 
             auto id = extractIdFromPath(path);
-            auto a = usecase.getById(id);
+            auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Application not found");
                 return;

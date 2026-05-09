@@ -81,7 +81,7 @@ class ProcessingPurposeController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto p = usecase.getById(id);
+            auto p = usecase.getById(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Processing purpose not found");
                 return;

@@ -96,7 +96,7 @@ class AutomationRuleController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(id);
+            auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Automation rule not found");
                 return;

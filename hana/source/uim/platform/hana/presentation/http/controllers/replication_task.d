@@ -93,7 +93,7 @@ class ReplicationTaskController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto t = usecase.getById(id);
+      auto t = usecase.getById(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Replication task not found");
         return;

@@ -91,7 +91,7 @@ class DashboardController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = usecase.getById(id);
+            auto d = usecase.getById(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Dashboard not found");
                 return;

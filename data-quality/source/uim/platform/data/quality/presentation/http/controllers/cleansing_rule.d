@@ -95,7 +95,7 @@ class CleansingRuleController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = usecase.getById(id);
+      auto rule = usecase.getById(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Cleansing rule not found");
         return;

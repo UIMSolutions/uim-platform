@@ -89,7 +89,7 @@ class SchemaController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto s = usecase.getById(id);
+      auto s = usecase.getById(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Schema not found");
         return;

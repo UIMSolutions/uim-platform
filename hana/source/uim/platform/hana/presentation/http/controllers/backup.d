@@ -91,7 +91,7 @@ class BackupController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto b = usecase.getById(id);
+      auto b = usecase.getById(tenantId, id);
       if (b.isNull) {
         writeError(res, 404, "Backup not found");
         return;
