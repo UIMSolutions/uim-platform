@@ -58,6 +58,7 @@ class ProjectMemberController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(j.getString("id"));

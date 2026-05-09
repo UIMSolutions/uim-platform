@@ -30,8 +30,8 @@ class DevSpaceController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
-            auto jarr = items.map!(e => e.toJson()).array;
+            auto items = usecase.listDevSpaces();
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -46,10 +46,10 @@ class DevSpaceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = DevSpaceId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getDevSpace(tenantId, id);
             if (e.id.isEmpty) { writeError(res, 404, "Dev space not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,6 +59,7 @@ class DevSpaceController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             DevSpaceDTO dto;
             dto.id = j.getString("id");
@@ -74,7 +75,7 @@ class DevSpaceController : PlatformController {
             dto.diskLimit = j.getString("diskLimit");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createDevSpace(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -91,7 +92,7 @@ class DevSpaceController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DevSpaceDTO dto;
@@ -101,7 +102,7 @@ class DevSpaceController : PlatformController {
             dto.extensions = j.getString("extensions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateDevSpace(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -118,10 +119,10 @@ class DevSpaceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = DevSpaceId(extractIdFromPath(path));
-            auto result = usecase.deleteDevSpace(id);
+            auto result = usecase.deleteDevSpace(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Dev space deleted");

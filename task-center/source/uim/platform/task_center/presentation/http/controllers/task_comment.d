@@ -30,6 +30,7 @@ class TaskCommentController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;

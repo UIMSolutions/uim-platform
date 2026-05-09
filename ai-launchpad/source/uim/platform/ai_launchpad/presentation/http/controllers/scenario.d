@@ -23,6 +23,7 @@ class ScenarioController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/scenarios/sync", &handleSync);
     router.get("/api/v1/scenarios", &handleList);
     router.get("/api/v1/scenarios/*", &handleGet);
@@ -43,7 +44,7 @@ class ScenarioController : PlatformController {
       r.description = j.getString("description");
       r.labels = getStrings(j, "labels");
 
-      auto result = usecase.sync(r);
+      auto result = usecase.syncScenario(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -64,7 +65,7 @@ class ScenarioController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto scenarios = connectionId.isEmpty
-        ? usecase.listAll(tenantId) : usecase.listByConnection(tenantId, connectionId);
+        ? usecase.listScenarios(tenantId) : usecase.listScenarios(tenantId, connectionId);
 
       auto jarr = scenarios.map!(s => s.toJson).array.toJson;
 
@@ -85,7 +86,7 @@ class ScenarioController : PlatformController {
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto s = usecase.getById(tenantId, connectionId, id);
+      auto s = usecase.getScenario(tenantId, connectionId, id);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;

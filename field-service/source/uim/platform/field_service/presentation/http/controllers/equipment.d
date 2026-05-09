@@ -58,6 +58,7 @@ class EquipmentController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             EquipmentDTO dto;
             dto.id = j.getString("id");

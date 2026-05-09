@@ -33,6 +33,7 @@ class AutomationRuleController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateAutomationRuleRequest r;
             r.tenantId = tenantId;

@@ -30,7 +30,9 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+
+            auto items = usecase.listDevSpaceTypes(tenantId);
             auto jarr = items.map!(e => e.toJson()).array;
             
             auto resp = Json.emptyObject
@@ -46,10 +48,10 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = DevSpaceTypeId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getDevSpaceType(tenantId, id);
             if (e.devSpaceTypeId.isEmpty) { writeError(res, 404, "Dev space type not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,6 +61,7 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             DevSpaceTypeDTO dto;
             dto.id = j.getString("id");
@@ -88,17 +91,18 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DevSpaceTypeDTO dto;
+            dto.tenantId = tenantId;
             dto.devSpaceTypeId = DevSpaceTypeId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.predefinedExtensions = j.getString("predefinedExtensions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateDevSpaceType(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -115,10 +119,10 @@ class DevSpaceTypeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = DevSpaceTypeId(extractIdFromPath(path));
-            auto result = usecase.deleteDevSpaceType(id);
+            auto result = usecase.deleteDevSpaceType(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Dev space type deleted");

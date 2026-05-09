@@ -64,6 +64,7 @@ class OAuthClientController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             OAuthClientDTO dto;
             dto.id = j.getString("id");

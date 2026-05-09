@@ -20,6 +20,7 @@ class ExtensionController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/application-studio/extensions", &handleList);
         router.get("/api/v1/application-studio/extensions/*", &handleGet);
         router.post("/api/v1/application-studio/extensions", &handleCreate);
@@ -29,7 +30,8 @@ class ExtensionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listExtensions(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
@@ -43,11 +45,11 @@ class ExtensionController : PlatformController {
     }
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
+        try {   
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getExtension(tenantId, id);
             if (e.id.isEmpty) { writeError(res, 404, "Extension not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -57,10 +59,12 @@ class ExtensionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -71,7 +75,8 @@ class ExtensionController : PlatformController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto tenantId = req.getTenantId;
+            auto result = usecase.createExtension(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -88,7 +93,7 @@ class ExtensionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             
@@ -99,7 +104,7 @@ class ExtensionController : PlatformController {
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateExtension(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -116,10 +121,11 @@ class ExtensionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
-            auto result = usecase.deleteExtension(id);
+            auto result = usecase.deleteExtension(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Extension deleted");

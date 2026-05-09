@@ -48,6 +48,7 @@ class ConfigurationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
 
             UpdateConfigurationRequest r;

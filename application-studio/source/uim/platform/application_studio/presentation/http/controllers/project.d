@@ -30,7 +30,8 @@ class ProjectController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listProjects(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -46,11 +47,10 @@ class ProjectController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ProjectId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getProject(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Project not found");
                 return;
@@ -63,6 +63,7 @@ class ProjectController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             ProjectDTO dto;
             dto.projectId = ProjectId(j.getString("id"));
@@ -77,7 +78,7 @@ class ProjectController : PlatformController {
             dto.namespace_ = j.getString("namespace");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createProject(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -94,10 +95,10 @@ class ProjectController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             ProjectDTO dto;
             dto.projectId = ProjectId(extractIdFromPath(path));
             dto.name = j.getString("name");
@@ -106,7 +107,7 @@ class ProjectController : PlatformController {
             dto.gitBranch = j.getString("gitBranch");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateProject(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -123,11 +124,11 @@ class ProjectController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto id = ProjectId(extractIdFromPath(path));
-            auto result = usecase.deleteProject(id);
+            auto result = usecase.deleteProject(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Project deleted");

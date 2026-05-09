@@ -20,7 +20,7 @@ class BuildConfigurationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/application-studio/build-configurations", &handleList);
         router.get("/api/v1/application-studio/build-configurations/*", &handleGet);
         router.post("/api/v1/application-studio/build-configurations", &handleCreate);
@@ -30,12 +30,13 @@ class BuildConfigurationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listBuildConfigurations(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -45,11 +46,15 @@ class BuildConfigurationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = BuildConfigurationId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
-            if (e.isNull) { writeError(res, 404, "Build configuration not found"); return; }
+
+            auto e = usecase.getBuildConfiguration(tenantId, id);
+            if (e.isNull) {
+                writeError(res, 404, "Build configuration not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -58,10 +63,11 @@ class BuildConfigurationController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             BuildConfigurationDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.projectId = j.getString("projectId");
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -71,11 +77,11 @@ class BuildConfigurationController : PlatformController {
             dto.mtaDescriptor = j.getString("mtaDescriptor");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createBuildConfiguration(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Build configuration created");
+                    .set("id", result.id)
+                    .set("message", "Build configuration created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -88,22 +94,24 @@ class BuildConfigurationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             BuildConfigurationDTO dto;
             dto.id = BuildConfigurationId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.buildCommand = j.getString("buildCommand");
             dto.deployCommand = j.getString("deployCommand");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateBuildConfiguration(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Build configuration updated");
+                    .set("id", result.id)
+                    .set("message", "Build configuration updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -116,13 +124,14 @@ class BuildConfigurationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = BuildConfigurationId(extractIdFromPath(path));
-            auto result = usecase.deleteBuildConfiguration(id);
+
+            auto result = usecase.deleteBuildConfiguration(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Build configuration deleted");
+                    .set("message", "Build configuration deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

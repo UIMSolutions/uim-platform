@@ -30,7 +30,8 @@ class ProjectTemplateController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listProjectTemplates(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -45,11 +46,11 @@ class ProjectTemplateController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+
+            auto e = usecase.getProjectTemplate(tenantId, id);
             if (e.id.isEmpty) {
                 writeError(res, 404, "Project template not found");
                 return;
@@ -62,6 +63,7 @@ class ProjectTemplateController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             ProjectTemplateDTO dto;
             dto.projectTemplateId = ProjectTemplateId(j.getString("id"));
@@ -75,7 +77,8 @@ class ProjectTemplateController : PlatformController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto tenantId = req.getTenantId;
+            auto result = usecase.createProjectTemplate(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -92,8 +95,7 @@ class ProjectTemplateController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ProjectTemplateDTO dto;
@@ -103,7 +105,7 @@ class ProjectTemplateController : PlatformController {
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateProjectTemplate(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -124,7 +126,8 @@ class ProjectTemplateController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+            auto tenantId = req.getTenantId;
+            auto result = usecase.removeProjectTemplate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Project template deleted");

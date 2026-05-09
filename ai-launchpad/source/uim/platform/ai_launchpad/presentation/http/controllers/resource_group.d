@@ -41,7 +41,7 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonPairArray(j, "labels");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createResourceGroup(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -84,7 +84,7 @@ class ResourceGroupController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
-      auto g = usecase.getById(tenantId, connectionId, id);
+      auto g = usecase.getResourceGroup(tenantId, connectionId, id);
       if (g.isNull) {
         writeError(res, 404, "Resource group not found");
         return;
@@ -109,7 +109,7 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = id;
       r.labels = jsonPairArray(j, "labels");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchResourceGroup(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

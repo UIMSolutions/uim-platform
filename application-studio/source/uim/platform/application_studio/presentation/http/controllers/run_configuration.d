@@ -30,7 +30,8 @@ class RunConfigurationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listRunConfigurations(tenantId);
             auto jarr = items.map!(e => e.toJson()).array;
 
             auto resp = Json.emptyObject
@@ -46,11 +47,11 @@ class RunConfigurationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto id = RunConfigurationId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
+            auto e = usecase.getRunConfiguration(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Run configuration not found");
                 return;
@@ -63,6 +64,7 @@ class RunConfigurationController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             RunConfigurationDTO dto;
             dto.runConfigurationId = RunConfigurationId(j.getString("id"));
@@ -77,7 +79,8 @@ class RunConfigurationController : PlatformController {
             dto.debugPort = j.getString("debugPort");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto tenantId = req.getTenantId;
+            auto result = usecase.createRunConfiguration(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -94,10 +97,11 @@ class RunConfigurationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             RunConfigurationDTO dto;
             dto.runConfigurationId = RunConfigurationId(extractIdFromPath(path));
             dto.name = j.getString("name");
@@ -106,7 +110,7 @@ class RunConfigurationController : PlatformController {
             dto.arguments = j.getString("arguments");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateRunConfiguration(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -122,11 +126,11 @@ class RunConfigurationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto id = RunConfigurationId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+            auto result = usecase.removeRunConfiguration(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Run configuration deleted");

@@ -20,6 +20,7 @@ class ServiceBindingController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/application-studio/service-bindings", &handleList);
         router.get("/api/v1/application-studio/service-bindings/*", &handleGet);
         router.post("/api/v1/application-studio/service-bindings", &handleCreate);
@@ -29,12 +30,14 @@ class ServiceBindingController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list();
-            auto jarr = items.map!(e => e.toJson()).array;
-            
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listServiceBindings(tenantId);
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Service bindings retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -44,11 +47,15 @@ class ServiceBindingController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ServiceBindingId(extractIdFromPath(path));
-            auto e = usecase.getById(id);
-            if (e.isNull) { writeError(res, 404, "Service binding not found"); return; }
+
+            auto e = usecase.getServiceBinding(tenantId, id);
+            if (e.isNull) {
+                writeError(res, 404, "Service binding not found");
+                return;
+            }
             res.writeJsonBody(e.serviceBindingToJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -57,6 +64,7 @@ class ServiceBindingController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(j.getString("id"));
@@ -71,11 +79,11 @@ class ServiceBindingController : PlatformController {
             dto.systemAlias = j.getString("systemAlias");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createServiceBinding(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Service binding created");
+                    .set("id", result.id)
+                    .set("message", "Service binding created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -88,7 +96,7 @@ class ServiceBindingController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceBindingDTO dto;
@@ -98,11 +106,11 @@ class ServiceBindingController : PlatformController {
             dto.serviceUrl = j.getString("serviceUrl");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateServiceBinding(tenantId, dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Service binding updated");
+                    .set("id", result.id)
+                    .set("message", "Service binding updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -115,13 +123,14 @@ class ServiceBindingController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ServiceBindingId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+
+            auto result = usecase.removeServiceBinding(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Service binding deleted");
+                    .set("message", "Service binding deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {
