@@ -85,8 +85,8 @@ class DataAccessControlController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -114,8 +114,8 @@ class DataAccessControlController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

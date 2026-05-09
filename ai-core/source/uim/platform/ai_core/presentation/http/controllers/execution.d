@@ -10,7 +10,7 @@ module uim.platform.ai_core.presentation.http.controllers.execution;
 
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -23,7 +23,7 @@ class ExecutionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v2/lm/executions", &handleCreate);
     router.get("/api/v2/lm/executions", &handleList);
     router.get("/api/v2/lm/executions/*", &handleGet);
@@ -32,7 +32,7 @@ class ExecutionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateExecutionRequest r;
@@ -67,7 +67,7 @@ class ExecutionController : PlatformController {
         .set("count", executions.length)
         .set("resources", jarr)
         .set("message", "Executions retrieved");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -75,12 +75,12 @@ class ExecutionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto ex = usecase.getById(rgId, id);
+      auto ex = usecase.getExecution(tenantId, rgId, id);
       if (ex.isNull) {
         writeError(res, 404, "Execution not found");
         return;
@@ -93,13 +93,15 @@ class ExecutionController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
+      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
       auto j = req.json;
       PatchExecutionRequest r;
       r.tenantId = tenantId;
-      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+      r.resourceGroupId = rgId;
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");
 
@@ -119,12 +121,12 @@ class ExecutionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = usecase.deleteExecution(rgId, id);
+      auto result = usecase.deleteExecution(tenantId, rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

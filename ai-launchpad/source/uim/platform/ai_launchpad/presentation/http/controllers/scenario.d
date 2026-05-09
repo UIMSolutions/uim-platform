@@ -79,8 +79,8 @@ class ScenarioController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -100,8 +100,8 @@ class ScenarioController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 

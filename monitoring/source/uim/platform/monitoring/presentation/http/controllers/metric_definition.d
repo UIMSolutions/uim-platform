@@ -32,7 +32,7 @@ class MetricDefinitionController : PlatformController {
 
     router.post("/api/v1/metric-definitions", &handleCreate);
     router.get("/api/v1/metric-definitions", &handleList);
-    router.get("/api/v1/metric-definitions/*", &handleGetById);
+    router.get("/api/v1/metric-definitions/*", &handleGet);
     router.put("/api/v1/metric-definitions/*", &handleUpdate);
     router.delete_("/api/v1/metric-definitions/*", &handleDelete);
   }
@@ -84,7 +84,7 @@ class MetricDefinitionController : PlatformController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));

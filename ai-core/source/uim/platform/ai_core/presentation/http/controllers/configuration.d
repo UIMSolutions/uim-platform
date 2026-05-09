@@ -11,7 +11,7 @@ module uim.platform.ai_core.presentation.http.controllers.configuration;
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class ConfigurationController : ManageController {
@@ -31,27 +31,27 @@ class ConfigurationController : ManageController {
   }
 
   override Json createHandler(Json data) {
-      CreateConfigurationRequest r;
-      r.tenantId = data.getTenantId;
-      r.resourceGroupId = ResourceGroupId(data.get("AI-Resource-Group", ""));
-      r.scenarioId = data.getString("scenarioId");
-      r.executableId = data.getString("executableId");
-      r.name = data.getString("name");
-      r.parameterValues = jsonKeyValuePairs(data, "parameterBindings");
-      r.inputArtifacts = jsonKeyValuePairs(data, "inputArtifactBindings");
+    CreateConfigurationRequest r;
+    r.tenantId = data.getTenantId;
+    r.resourceGroupId = ResourceGroupId(data.get("AI-Resource-Group", ""));
+    r.scenarioId = data.getString("scenarioId");
+    r.executableId = data.getString("executableId");
+    r.name = data.getString("name");
+    r.parameterValues = jsonKeyValuePairs(data, "parameterBindings");
+    r.inputArtifacts = jsonKeyValuePairs(data, "inputArtifactBindings");
 
-      auto result = usecase.create(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Configuration created");
+    auto result = usecase.create(r);
+    if (result.success) {
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Configuration created");
 
-        return resp;
-      } else {
-        auto resp = Json.emptyObject
-          .set("error", result.error);
-        return resp;
-      }
+      return resp;
+    } else {
+      auto resp = Json.emptyObject
+        .set("error", result.error);
+      return resp;
+    }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -84,7 +84,7 @@ class ConfigurationController : ManageController {
       }
 
       auto resp = Json.emptyObject
-        .set("count", configs.length) 
+        .set("count", configs.length)
         .set("resources", jarr);
 
       res.writeJsonBody(resp, 200);
@@ -94,12 +94,12 @@ class ConfigurationController : ManageController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto c = usecase.getbyId(id, rgId);
+      auto c = usecase.getConfiguration(tenantId, rgId, id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -111,7 +111,7 @@ class ConfigurationController : ManageController {
         .set("executableId", c.executableId)
         .set("name", c.name)
         .set("createdAt", c.createdAt);
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -119,12 +119,12 @@ class ConfigurationController : ManageController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto result = usecase.deleteConfiguration(rgId, id);
+      auto result = usecase.deleteConfiguration(tenantId, rgId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

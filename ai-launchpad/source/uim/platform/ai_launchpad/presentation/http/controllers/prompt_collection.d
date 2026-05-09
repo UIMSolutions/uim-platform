@@ -79,8 +79,8 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto c = usecase.getById(id);
@@ -96,8 +96,8 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
@@ -122,8 +122,8 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deletePromptCollection(id);

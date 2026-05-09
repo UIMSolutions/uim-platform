@@ -86,8 +86,8 @@ class SpaceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
       auto s = usecase.getById(id);
       if (s.isNull) {
@@ -141,8 +141,8 @@ class SpaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      
+            try {
+      auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.delete(id);

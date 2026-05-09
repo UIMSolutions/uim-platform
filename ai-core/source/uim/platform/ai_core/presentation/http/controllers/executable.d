@@ -11,7 +11,7 @@ module uim.platform.ai_core.presentation.http.controllers.executable;
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class ExecutableController : PlatformController {
@@ -23,7 +23,7 @@ class ExecutableController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v2/lm/executables", &handleList);
     router.get("/api/v2/lm/executables/*", &handleGet);
     router.post("/api/v2/lm/executables", &handleCreate);
@@ -33,6 +33,7 @@ class ExecutableController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
+      
       auto j = req.json;
       CreateExecutableRequest r;
       r.tenantId = tenantId;
@@ -62,26 +63,25 @@ class ExecutableController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-            auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
       auto executables = scenarioId.length > 0
-        ? usecase.listByScenario(tenantId, scenarioId, rgId)
-        : usecase.list(tenantId, rgId);
+        ? usecase.listExecutables(tenantId, scenarioId, rgId) : usecase.listExecutables(tenantId, rgId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
         jarr ~= Json.emptyObject
-        .set("id", e.id)
-        .set("scenarioId", e.scenarioId)
-        .set("name", e.name)
-        .set("description", e.description)
-        .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
-        .set("versionId", e.versionId)
-        .set("deployable", e.deployable)
-        .set("createdAt", e.createdAt)
-        .set("updatedAt", e.updatedAt);
+          .set("id", e.id)
+          .set("scenarioId", e.scenarioId)
+          .set("name", e.name)
+          .set("description", e.description)
+          .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
+          .set("versionId", e.versionId)
+          .set("deployable", e.deployable)
+          .set("createdAt", e.createdAt)
+          .set("updatedAt", e.updatedAt);
       }
 
       auto resp = Json.emptyObject
@@ -96,13 +96,12 @@ class ExecutableController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto tenantId = req.getTenantId;
 
-      auto e = usecase.getbyId(tenantId, id, rgId);
+      auto e = usecase.getExecutable(tenantId, id, rgId);
       if (e.isNull) {
         writeError(res, 404, "Executable not found");
         return;
@@ -119,7 +118,7 @@ class ExecutableController : PlatformController {
         .set("createdAt", e.createdAt)
         .set("updatedAt", e.updatedAt)
         .set("message", "Executable retrieved");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -127,11 +126,10 @@ class ExecutableController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto tenantId = req.getTenantId;
 
       auto result = usecase.deleteExecutable(tenantId, rgId, id);
       if (result.success) {
