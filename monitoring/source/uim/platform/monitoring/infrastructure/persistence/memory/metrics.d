@@ -42,14 +42,13 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     return metrics.filter!(m => m.resourceId == resourceId).array;
   }
 
-  
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return filterByResource(findByTenant(tenantId), resourceId);
   }
+
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     findByResource(tenantId, resourceId).each!(m => remove(m));
   }
-
 
   size_t countByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
     return findByResourceAndName(tenantId, resourceId, metricName).length;
@@ -90,8 +89,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     if (!existsByTenant(tenantId))
       return;
 
-    foreach (metric; findByTenant(tenantId).filter!(m => m.timestamp < beforeTimestamp).array.toJson) {
-      remove(metric);
-    }
+    findByTenant(tenantId).filter!(m => m.timestamp < beforeTimestamp)
+      .each!(metric => remove(metric));
   }
 }

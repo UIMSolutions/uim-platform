@@ -67,7 +67,6 @@ class MeshBridgeController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
-            auto tenantId = req.getTenantId;
 
             MeshBridgeDTO dto;
             dto.bridgeId = MeshBridgeId(j.getString("id"));

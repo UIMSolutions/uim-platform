@@ -140,7 +140,7 @@ class RetentionController : ManageController {
 
   private static AuditCategory[] parseCategoryArray(Json j) {
     auto cats = getStrings(j, "categories");
-    return cats.map!(c => toAuditCategory(c)).array.toJson;
+    return cats.map!(c => toAuditCategory(c)).array;
   }
 
 

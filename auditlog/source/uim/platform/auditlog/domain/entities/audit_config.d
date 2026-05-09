@@ -89,8 +89,8 @@ struct AuditConfig {
     cfg.logSecurityEvents = json.toBoolean("logSecurityEvents");
     cfg.logConfigurationChanges = json.toBoolean("logConfigurationChanges");
     cfg.enableDataMasking = json.toBoolean("enableDataMasking");
-    cfg.maskedFields = json.getArray("maskedFields").map!(e => e.to!string).array.toJson;
-    cfg.excludedServices = json.getArray("excludedServices").map!(e => e.to!string).array.toJson;
+    cfg.maskedFields = json.getArray("maskedFields").map!(e => e.to!string).array;
+    cfg.excludedServices = json.getArray("excludedServices").map!(e => e.to!string).array;
     cfg.minimumSeverity = json.getString("minimumSeverity").to!AuditSeverity;
     cfg.rateLimitPerSecond = json.getInteger("rateLimitPerSecond");
     return cfg;

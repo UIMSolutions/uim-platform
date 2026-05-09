@@ -144,7 +144,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (req.metricName.length > 0 && req.resourceId.value.length > 0)
       return metricRepo.findByResourceAndName(req.tenantId, req.resourceId, req.metricName);
     if (req.metricName.length > 0)
-      return metricRepo.findByTenant(req.tenantId).filter!(m => m.name == req.metricName).array.toJson;
+      return metricRepo.findByTenant(req.tenantId).filter!(m => m.name == req.metricName).array;
     return metricRepo.findByResource(req.tenantId, req.resourceId);
   }
 
