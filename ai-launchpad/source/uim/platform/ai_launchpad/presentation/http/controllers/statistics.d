@@ -29,17 +29,18 @@ class StatisticsController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
 
-      typeof(usecase.getAll()) stats;
-      if (scenarioId.length > 0 && connectionId.length > 0)
-        stats = usecase.getByScenario(connectionId, scenarioId);
-      else if (connectionId.length > 0)
-        stats = usecase.getByConnection(connectionId);
+      UsageStatistic[] stats;
+      if (!scenarioId.isEmpty && !connectionId.isEmpty)
+        stats = usecase.listStatistics(tenantId, connectionId, scenarioId);
+      else if (!connectionId.isEmpty)
+        stats = usecase.listStatistics(tenantId, connectionId);
       else
-        stats = usecase.getAll();
+        stats = usecase.listStatistics(tenantId);
 
       auto jarr = stats.map!(s => s.toJson).array.toJson;
 

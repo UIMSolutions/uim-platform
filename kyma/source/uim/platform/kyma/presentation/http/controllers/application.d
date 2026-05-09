@@ -73,14 +73,12 @@ class ApplicationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto envId = req.params.get("environmentId");
       auto tenantId = req.getTenantId;
+      auto envId = req.params.get("environmentId");
 
-      Application[] items;
-      if (envId.length > 0)
-        items = usecase.listByEnvironment(envId);
-      else
-        items = usecase.listByTenant(tenantId);
+      Application[] items = envId.isEmpty 
+        ? usecase.listApplications(tenantId) 
+        : usecase.listApplications(tenantId, envId);
 
       auto arr = items.map!(app => app.toJson).array.toJson;
 
@@ -96,13 +94,15 @@ class ApplicationController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      ApplicationId id = extractIdFromPath(req.requestURI);
-      if (!usecase.hasApplication(id)) {
+      auto tenantId = req.getTenantId;
+      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+
+      if (!usecase.hasApplication(tenantId, id)) {
         writeError(res, 404, "Application not found");
         return;
       }
 
-      auto app = usecase.getApplication(id);
+      auto app = usecase.getApplication(tenantId, id);
       res.writeJsonBody(app.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -111,7 +111,7 @@ class ApplicationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      ApplicationId id = extractIdFromPath(req.requestURI);
+      auto id = ApplicationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateApplicationRequest r;
       r.description = j.getString("description");
@@ -121,7 +121,8 @@ class ApplicationController : PlatformController {
       r.apis = j.toApis;
       r.events = parseEvents(j);
 
-      auto result = usecase.updateApplication(id, r);
+      auto tenantId = req.getTenantId;
+      auto result = usecase.updateApplication(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -133,8 +134,9 @@ class ApplicationController : PlatformController {
 
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      ApplicationId id = extractIdFromPath(req.requestURI);
-      auto result = usecase.connectApplication(id);
+      auto tenantId = req.getTenantId;
+      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto result = usecase.connectApplication(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -146,7 +148,9 @@ class ApplicationController : PlatformController {
 
   private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = usecase.disconnectApplication(extractIdFromPath(req.requestURI));
+      auto tenantId = req.getTenantId;
+      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto result = usecase.disconnectApplication(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -158,7 +162,9 @@ class ApplicationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = usecase.deleteApplication(extractIdFromPath(req.requestURI));
+      auto tenantId = req.getTenantId;
+      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto result = usecase.deleteApplication(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else
@@ -187,42 +193,4 @@ class ApplicationController : PlatformController {
     return entries;
   }
 
-  private Json serializeApp(Application app) {
-    auto j = Json.emptyObject
-      .set("id", app.id)
-      .set("environmentId", app.environmentId)
-      .set("tenantId", app.tenantId)
-      .set("name", app.name)
-      .set("description", app.description)
-      .set("status", app.status.to!string)
-      .set("registrationType", app.registrationType.to!string)
-      .set("connectorUrl", app.connectorUrl)
-      .set("boundNamespaces", serializeStrArray(app.boundNamespaces))
-      .set("labels", serializeStrMap(app.labels))
-      .set("createdBy", app.createdBy)
-      .set("createdAt", app.createdAt)
-      .set("updatedAt", app.updatedAt);
-
-    auto apisArr = Json.emptyArray;
-    foreach (a; app.apis) {
-      apisArr ~= Json.emptyObject
-        .set("name", a.name)
-        .set("description", a.description)
-        .set("targetUrl", a.targetUrl)
-        .set("specUrl", a.specUrl)
-        .set("authType", a.authType);
-    }
-    j["apis"] = apisArr;
-
-    auto eventsArr = Json.emptyArray;
-    foreach (e; app.events) {
-      eventsArr ~= Json.emptyObject
-        .set("name", e.name)
-        .set("description", e.description)
-        .set("version", e.version_);
-    }
-    j["events"] = eventsArr;
-
-    return j;
-  }
 }

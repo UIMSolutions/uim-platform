@@ -33,10 +33,11 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateEnvironmentInstanceRequest r;
+      r.tenantId = tenantId;
       r.subaccountId = j.getString("subaccountId");
       r.globalAccountId = j.getString("globalAccountId");
       r.name = j.getString("name");
@@ -51,10 +52,11 @@ class EnvironmentController : PlatformController {
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createEnvironmentInstance(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Environment instance created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -65,14 +67,15 @@ class EnvironmentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto subId = req.params.get("subaccountId");
       auto envType = req.params.get("environmentType");
 
       EnvironmentInstance[] items;
-      if (envType.length > 0 && subId.length > 0)
-        items = usecase.listByType(subId, envType);
-      else if (subId.length > 0)
-        items = usecase.listBySubaccount(subId);
+      if (envType.length > 0 && !subId.isEmpty)
+        items = usecase.listEnvironmentInstances(tenantId, subId, envType);
+      else if (!subId.isEmpty)
+        items = usecase.listEnvironmentInstances(tenantId, subId);
 
       auto arr = items.map!(inst => inst.toJson).array.toJson;
 
@@ -80,17 +83,17 @@ class EnvironmentController : PlatformController {
         .set("items", arr)
         .set("totalCount", items.length)
         .set("message", "Environment instances retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto inst = usecase.getById(id);
+      auto id = EnvironmentInstanceId(extractId(req.requestURI));
+      auto inst = usecase.getEnvironmentInstance(tenantId, id);
       if (inst.isNull) {
         writeError(res, 404, "Environment instance not found");
         return;
@@ -101,11 +104,13 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
+      auto id = EnvironmentInstanceId(extractId(req.requestURI));
       auto j = req.json;
       UpdateEnvironmentInstanceRequest request;
+      request.tenantId = tenantId;
+      request.environmentInstanceId = id;
       request.description = j.getString("description");
       request.memoryQuotaMb = j.getInteger("memoryQuotaMb");
       request.routeQuota = j.getInteger("routeQuota");
@@ -113,7 +118,7 @@ class EnvironmentController : PlatformController {
       request.parameters = jsonStrMap(j, "parameters");
       request.labels = jsonStrMap(j, "labels");
 
-      auto result = usecase.update(id, request);
+      auto result = usecase.updateEnvironmentInstance(request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -123,10 +128,10 @@ class EnvironmentController : PlatformController {
   }
 
   private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.deprovision(id);
+      auto id = EnvironmentInstanceId(extractId(req.requestURI));
+      auto result = usecase.deprovisionEnvironmentInstance(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,28 +140,3 @@ class EnvironmentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 }
-
-private Json serializeEnvironment(EnvironmentInstance inst) {
-  return Json.emptyObject
-    .set("id", inst.id)
-    .set("subaccountId", inst.subaccountId)
-    .set("globalAccountId", inst.globalAccountId)
-    .set("name", inst.name)
-    .set("description", inst.description)
-    .set("environmentType", to!string(inst.environmentType))
-    .set("status", to!string(inst.status))
-    .set("planName", inst.planName)
-    .set("landscapeLabel", inst.landscapeLabel)
-    .set("technicalKey", inst.technicalKey)
-    .set("dashboardUrl", inst.dashboardUrl)
-    .set("memoryQuotaMb", inst.memoryQuotaMb)
-    .set("routeQuota", inst.routeQuota)
-    .set("serviceQuota", inst.serviceQuota)
-    .set("createdBy", inst.createdBy)
-    .set("createdAt", inst.createdAt)
-    .set("updatedAt", inst.updatedAt)
-    .set("parameters", inst.parameters)
-    .set("labels", inst.labels);
-}
-
-

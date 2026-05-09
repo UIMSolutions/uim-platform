@@ -53,3 +53,26 @@ TenantId getTenantId(HTTPServerRequest req) {
   return TenantId(req.headers.get("X-Tenant-Id", ""));
 }
 
+UserId getUserId(Json json, string key) {
+  return UserId(key in json && json[key].isString ? json[key].get!string : "");
+}
+
+bool hasUserId(HTTPServerRequest req) {
+  return req.headers.get("X-User-Id", "") != "";
+}
+
+UserId getUserId(HTTPServerRequest req) {
+  return UserId(req.headers.get("X-User-Id", ""));
+}
+
+ConnectionId getConnectionId(Json json, string key) {
+  return ConnectionId(key in json && json[key].isString ? json[key].get!string : "");
+}
+
+bool hasConnectionId(HTTPServerRequest req) {
+  return req.headers.get("X-Connection-Id", "") != "";
+}
+
+ConnectionId getConnectionId(HTTPServerRequest req) {
+  return ConnectionId(req.headers.get("X-Connection-Id", ""));
+}

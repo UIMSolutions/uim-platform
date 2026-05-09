@@ -26,7 +26,7 @@ class LabelController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/labels", &handleCreate);
     router.get("/api/v1/labels", &handleList);
     router.get("/api/v1/labels/*", &handleGet);
@@ -35,10 +35,11 @@ class LabelController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateLabelRequest r;
+      r.tenantId = tenantId;
       r.resourceType = j.getString("resourceType");
       r.resourceId = j.getString("resourceId");
       r.key = j.getString("key");
@@ -48,28 +49,28 @@ class LabelController : PlatformController {
       auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Label created successfully");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto resourceType = req.params.get("resourceType");
       auto resourceId = req.params.get("resourceId");
       auto key = req.params.get("key");
 
       Label[] items;
-      if (resourceType.length > 0 && resourceId.length > 0)
-        items = usecase.listByResource(resourceType, resourceId);
+      if (resourceType.length > 0 && !resourceId.isEmpty)
+        items = usecase.listLabels(tenantId, resourceType, resourceId);
       else if (resourceType.length > 0 && key.length > 0)
-        items = usecase.listByKey(resourceType, key);
+        items = usecase.listLabels(tenantId, resourceType, key);
 
       auto arr = items.map!(l => l.toJson).array.toJson;
 
@@ -77,69 +78,55 @@ class LabelController : PlatformController {
         .set("items", arr)
         .set("totalCount", items.length)
         .set("message", "Labels retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto l = usecase.getById(id);
+      auto l = usecase.getById(tenantId, id);
       if (l.isNull) {
         writeError(res, 404, "Label not found");
         return;
       }
       res.writeJsonBody(l.toJson, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateLabelRequest r;
+      r.tenantId = tenantId;
       r.values = getStrings(j, "values");
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateLabel(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = LabelId(extractId(req.requestURI));
-      auto result = usecase.deleteLabel(id);
+      auto result = usecase.deleteLabel(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
-private Json serializeLabel(Label label) {
-  return Json.emptyObject
-  .set("id", label.id)
-  .set("resourceType", to!string(label.resourceType))
-  .set("resourceId", label.resourceId)
-  .set("key", label.key)
-  .set("values", label.values.toJson)
-  .set("createdBy", label.createdBy)
-  .set("createdAt", label.createdAt)
-  .set("updatedAt", label.updatedAt);
-}

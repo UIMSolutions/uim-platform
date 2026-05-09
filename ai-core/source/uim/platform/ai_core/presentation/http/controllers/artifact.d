@@ -66,11 +66,11 @@ class ArtifactController : PlatformController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
-      auto artifacts = scenarioId.length > 0
-        ? usecase.listArtifacts(tenantId, rgId, scenarioId)
-        : usecase.listArtifacts(tenantId, rgId);
+      auto artifacts = scenarioId.isEmpty
+        ? usecase.listArtifacts(tenantId, rgId)
+        : usecase.listArtifacts(tenantId, rgId, scenarioId);
 
-      auto jarr = artifacts.map!(a => artifactToJson(a)).array.toJson;
+      auto jarr = artifacts.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", artifacts.length)
@@ -95,7 +95,7 @@ class ArtifactController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(artifactToJson(a), 200);
+      res.writeJsonBody(a.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

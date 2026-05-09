@@ -63,12 +63,13 @@ class DatasetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(usecase.listByConnection(connectionId)) datasets = scenarioId.length > 0
-        ? usecase.listByScenario(connectionId, scenarioId)
-        : usecase.listByConnection(connectionId);
+      auto datasets = scenarioId.isEmpty
+        ? usecase.listByConnection(tenantId, connectionId)
+        : usecase.listByScenario(tenantId, connectionId, scenarioId);
 
       auto jarr = datasets.map!(ds => ds.toJson).array.toJson;
 
@@ -89,7 +90,7 @@ class DatasetController : PlatformController {
       auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto d = usecase.getById(connectionId, id);
+      auto d = usecase.getDataset(tenantId, connectionId, id);
       if (d.isNull) {
         writeError(res, 404, "Dataset not found");
         return;
@@ -133,11 +134,11 @@ class DatasetController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-    
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deleteDataset(connectionId, id);
+      auto result = usecase.deleteDataset(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Dataset removed successfully");

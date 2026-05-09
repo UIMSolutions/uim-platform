@@ -35,33 +35,33 @@ struct Subscription {
   string[string] labels;
 
   Json toJson() const {
-      auto jParams = Json.emptyObject;
-      foreach (key, value; parameters) {
-        jParams.set(key, value);
-      }
+    auto jParams = Json.emptyObject;
+    foreach (key, value; parameters) {
+      jParams.set(key, value);
+    }
 
-      auto jLabels = Json.emptyObject;
-      foreach (key, value; labels) {
-        jLabels.set(key, value);
-      }
+    auto jLabels = Json.emptyObject;
+    foreach (key, value; labels) {
+      jLabels.set(key, value);
+    }
 
-      return entityToJson
-          .set("subaccountId", subaccountId.value)
-          .set("tenantId", tenantId.value)
-          .set("appName", appName)
-          .set("appDisplayName", appDisplayName)
-          .set("appDescription", appDescription)
-          .set("planName", planName)
-          .set("commercialAppName", commercialAppName)
-          .set("providerSubaccountId", providerSubaccountId)
-          .set("status", status.to!string())
-          .set("appUrl", appUrl)
-          .set("isSubscriptionDone", isSubscriptionDone)
-          .set("errorDescription", errorDescription)
-          .set("dependentServices", dependentServices.toJson)
-          .set("subscribedAt", subscribedAt)
-          .set("subscribedBy", subscribedBy)
-          .set("parameters", jParams)
-          .set("labels", jLabels);
+    return entityToJson
+      .set("subaccountId", subaccountId.value)
+      .set("tenantId", tenantId.value)
+      .set("appName", appName)
+      .set("appDisplayName", appDisplayName)
+      .set("appDescription", appDescription)
+      .set("planName", planName)
+      .set("commercialAppName", commercialAppName)
+      .set("providerSubaccountId", providerSubaccountId)
+      .set("status", status.to!string())
+      .set("appUrl", appUrl)
+      .set("isSubscriptionDone", isSubscriptionDone)
+      .set("errorDescription", errorDescription)
+      .set("dependentServices", dependentServices.toJson)
+      .set("subscribedAt", subscribedAt)
+      .set("subscribedBy", subscribedBy)
+      .set("parameters", jParams)
+      .set("labels", jLabels);
   }
 }

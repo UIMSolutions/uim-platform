@@ -20,6 +20,7 @@ class TaskCommentController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/task-center/comments", &handleList);
         router.get("/api/v1/task-center/comments/*", &handleGet);
         router.post("/api/v1/task-center/comments", &handleCreate);
@@ -32,8 +33,8 @@ class TaskCommentController : PlatformController {
             auto j = req.json;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.taskId = j.getString("taskId");
+            r.taskCommentId = TaskCommentId(j.getString("id"));
+            r.taskId = TaskId(j.getString("taskId"));
             r.author = j.getString("author");
             r.content = j.getString("content");
 
@@ -56,16 +57,12 @@ class TaskCommentController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
-            auto taskId = params.get("taskId", "");
+            auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskComment[] comments;
-            if (taskId.length > 0) {
-                comments = usecase.listByTask(tenantId, taskId);
-            } else {
-                comments = [];
-            }
+            TaskComment[] comments = !taskId.isEmpty
+                ? usecase.listCommentsByTask(tenantId, taskId) : [];    
 
-            auto jarr = comments.map!(c => toJson(c)).array;
+            auto jarr = comments.map!(c => c.toJson).array;
 
             auto resp = Json.emptyObject
                 .set("count", comments.length)
@@ -80,15 +77,14 @@ class TaskCommentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
             auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Comment not found");
                 return;
             }
-            res.writeJsonBody(toJson(c), 200);
+            res.writeJsonBody(commentToJson(c), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -96,12 +92,11 @@ class TaskCommentController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateTaskCommentRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.taskCommentId = id;
             r.content = j.getString("content");
 
             auto result = usecase.update(r);
@@ -121,10 +116,9 @@ class TaskCommentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteTaskComment(tenantId, TaskCommentId(id));
+            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteTaskComment(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -139,14 +133,4 @@ class TaskCommentController : PlatformController {
         }
     }
 
-    private Json commentToJson(TaskComment c) {
-        return Json.emptyObject
-            .set("id", c.id)
-            .set("tenantId", c.tenantId)
-            .set("taskId", c.taskId)
-            .set("author", c.author)
-            .set("content", c.content)
-            .set("createdAt", c.createdAt)
-            .set("updatedAt", c.updatedAt);
-    }
 }

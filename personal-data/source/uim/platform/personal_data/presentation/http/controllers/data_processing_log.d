@@ -65,12 +65,12 @@ class DataProcessingLogController : PlatformController {
             auto requestId = params.get("requestId", "");
 
             DataProcessingLog[] logs;
-            if (dataSubjectId.length > 0) {
-                logs = usecase.listByDataSubject(dataSubjectId);
-            } else if (requestId.length > 0) {
-                logs = usecase.listByRequest(requestId);
+            if (!dataSubjectId.isEmpty) {
+                logs = usecase.listDataProcessingLogs(tenantId, dataSubjectId);
+            } else if (!requestId.isEmpty) {
+                logs = usecase.listDataProcessingLogs(tenantId, requestId);
             } else {
-                logs = usecase.list(tenantId);
+                logs = usecase.listDataProcessingLogs(tenantId);
             }
 
             auto jarr = logs.map!(l => logToJson(l)).array;
@@ -88,9 +88,9 @@ class DataProcessingLogController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto l = usecase.getById(id);
+            auto tenantId = req.getTenantId;
+            auto id = DataProcessingLogId(extractIdFromPath(req.requestURI.to!string));
+            auto l = usecase.getDataProcessingLog(tenantId, id);
             if (l.isNull) {
                 writeError(res, 404, "Processing log entry not found");
                 return;
@@ -103,9 +103,10 @@ class DataProcessingLogController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteDataProcessingLog(id);
+            auto tenantId = req.getTenantId;
+            auto id = DataProcessingLogId(extractIdFromPath(req.requestURI.to!string));
+
+            auto result = usecase.deleteDataProcessingLog(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -120,18 +121,4 @@ class DataProcessingLogController : PlatformController {
         }
     }
 
-    private Json logToJson(DataProcessingLog l) {
-        return Json.emptyObject
-        .set("id", l.id)
-        .set("dataSubjectId", l.dataSubjectId)
-        .set("requestId", l.requestId)
-        .set("applicationId", l.applicationId)
-        .set("entryType", l.entryType.to!string)
-        .set("severity", l.severity.to!string)
-        .set("action", l.action)
-        .set("details", l.details)
-        .set("ipAddress", l.ipAddress)
-        .set("createdBy", l.createdBy)
-        .set("createdAt", l.createdAt);
-    }
 }

@@ -22,7 +22,7 @@ class ConnectionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/connections", &handleCreate);
     router.get("/api/v1/connections", &handleList);
     router.get("/api/v1/connections/*", &handleGet);
@@ -31,10 +31,11 @@ class ConnectionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateConnectionRequest r;
+      r.tenantId = tenantId;
       r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
       r.clientSecret = j.getString("clientSecret");
       r.description = j.getString("description");
@@ -43,8 +44,8 @@ class ConnectionController : PlatformController {
       auto result = usecase.create(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Connection created");
+          .set("id", result.id)
+          .set("message", "Connection created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -57,18 +58,19 @@ class ConnectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
-      auto connections = workspaceId.value.length > 0
-        ? usecase.listByWorkspace(workspaceId)
-        : usecase.listAll();
+      auto connections = workspaceId.isEmpty
+        ? usecase.listConnections(tenantId)
+        : usecase.listConnections(tenantId, workspaceId);
 
       auto jarr = connections.map!(connection => connection.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("count", connections.length)
-      .set("resources", jarr)
-      .set("message", "Connections retrieved successfully");
+        .set("count", connections.length)
+        .set("resources", jarr)
+        .set("message", "Connections retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -77,11 +79,11 @@ class ConnectionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto connection = usecase.getById(id);
+      auto connection = usecase.getConnection(tenantId, id);
       if (connection.isNull) {
         writeError(res, 404, "Connection not found");
         return;
@@ -94,12 +96,13 @@ class ConnectionController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchConnectionRequest r;
+      r.tenantId = tenantId;
       r.connectionId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -108,8 +111,8 @@ class ConnectionController : PlatformController {
       auto result = usecase.patch(r);
       if (result.success) {
         auto resp = Json.emptyObject
-        .set("message", "Connection updated");
-        
+          .set("message", "Connection updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -120,13 +123,14 @@ class ConnectionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
-      auto result = usecase.deleteConnection(id);
+
+      auto result = usecase.deleteConnection(tenantId, id);
       if (result.success) {
         auto response = Json.emptyObject
-          .set("message", "Connection deleted");  
+          .set("message", "Connection deleted");
 
         res.writeJsonBody(response, 204);
       } else {

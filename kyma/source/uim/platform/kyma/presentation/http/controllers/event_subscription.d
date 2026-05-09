@@ -82,14 +82,12 @@ class EventSubscriptionController : PlatformController {
       auto source = req.params.get("source");
 
       EventSubscription[] items;
-      if (source.length > 0)
+      if (!source.isEmpty)
         items = usecase.listBySource(source);
-      else if (nsId.length > 0)
+      else if (!nsId.isEmpty)
         items = usecase.listByNamespace(nsId);
-      else if (envId.length > 0)
+      else if (!envId.isEmpty)
         items = usecase.listByEnvironment(envId);
-      else
-        items = [];
 
       auto arr = items.map!(sub => sub.toJson).array.toJson;
 
@@ -108,7 +106,7 @@ class EventSubscriptionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto sub = usecase.getSubscription(id);
+      auto sub = usecase.getSubscription(tenantId, id);
       if (sub.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
@@ -136,7 +134,7 @@ class EventSubscriptionController : PlatformController {
       r.filterAttributes = jsonStrMap(j, "filterAttributes");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = usecase.updateSubscription(id, r);
+      auto result = usecase.updateSubscription(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -151,7 +149,7 @@ class EventSubscriptionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.pauseSubscription(id);
+      auto result = usecase.pauseSubscription(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -166,7 +164,7 @@ class EventSubscriptionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.resumeSubscription(id);
+      auto result = usecase.resumeSubscription(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -181,7 +179,7 @@ class EventSubscriptionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteSubscription(id);
+      auto result = usecase.deleteSubscription(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else
@@ -192,27 +190,4 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private Json serializeSub(EventSubscription sub) {
-    return Json.emptyObject
-    .set("id", sub.id)
-    .set("namespaceId", sub.namespaceId)
-    .set("environmentId", sub.environmentId)
-    .set("tenantId", sub.tenantId)
-    .set("name", sub.name)
-    .set("description", sub.description)
-    .set("status", sub.status.to!string)
-    .set("source", sub.source)
-    .set("eventTypes", serializeStrArray(sub.eventTypes))
-    .set("typeEncoding", sub.typeEncoding.to!string)
-    .set("sinkUrl", sub.sinkUrl)
-    .set("sinkServiceName", sub.sinkServiceName)
-    .set("sinkServicePort", sub.sinkServicePort)
-    .set("maxInFlightMessages", sub.maxInFlightMessages)
-    .set("exactTypeMatching", sub.exactTypeMatching)
-    .set("filterAttributes", sub.filterAttributes.toJson)
-    .set("labels", sub.labels.toJson)  
-    .set("createdBy", sub.createdBy)
-    .set("createdAt", sub.createdAt)
-    .set("updatedAt", sub.updatedAt);
-  }
 }

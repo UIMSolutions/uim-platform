@@ -32,14 +32,13 @@ class AuditController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
-
       auto namespaceId = req.params.get("namespaceId", "");
       auto resourceType = req.params.get("resourceType", "");
 
       AuditLogEntry[] entries;
-      if (namespaceId.length > 0) {
+      if (!namespaceId.isEmpty) {
         entries = auditLogs.listLogs(tenantId, NamespaceId(namespaceId));
-      } else if (resourceType.length > 0) {
+      } else if (!resourceType.isEmpty) {
         entries = auditLogs.listLogs(tenantId, resourceType);
       } else {
         entries = auditLogs.listLogs(tenantId);

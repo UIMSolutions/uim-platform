@@ -36,7 +36,7 @@ class EntitlementController : PlatformController {
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       AssignEntitlementRequest r;
@@ -65,35 +65,36 @@ class EntitlementController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto dirId = req.params.get("directoryId");
 
       Entitlement[] items;
-      if (subId.length > 0)
-        items = usecase.listBySubaccount(subId);
-      else if (dirId.length > 0)
-        items = usecase.listByDirectory(dirId);
-      else if (gaId.length > 0)
-        items = usecase.listByGlobalAccount(gaId);
+      if (!subId.isEmpty)
+        items = usecase.listEntitlements(tenantId, subId);
+      else if (!dirId.isEmpty)
+        items = usecase.listEntitlements(tenantId, dirId);
+      else if (!gaId.isEmpty)
+        items = usecase.listEntitlements(tenantId, gaId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
-  
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", items.length)
         .set("message", "Entitlements retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto ent = usecase.getById(id);
+      auto ent = usecase.getEntitlement(tenantId, id);
       if (ent.isNull) {
         writeError(res, 404, "Entitlement not found");
         return;
@@ -104,15 +105,18 @@ class EntitlementController : PlatformController {
   }
 
   private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
+      auto id = EntitlementId(extractId(req.requestURI));
+
       auto j = req.json;
       UpdateEntitlementQuotaRequest request;
+      request.tenantId = tenantId;
+      request.entitlementId = id;
       request.quotaAssigned = j.getInteger("quotaAssigned");
       request.unlimited = j.getBoolean("unlimited");
 
-      auto result = usecase.updateQuota(id, request);
+      auto result = usecase.updateEntitlementQuota(request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -122,10 +126,11 @@ class EntitlementController : PlatformController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.revoke(id);
+      auto id = EntitlementId(extractId(req.requestURI));
+
+      auto result = usecase.revokeEntitlement(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,10 +140,11 @@ class EntitlementController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));
-      auto result = usecase.deleteEntitlement(id);
+
+      auto result = usecase.deleteEntitlement(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else
@@ -148,24 +154,3 @@ class EntitlementController : PlatformController {
   }
 }
 
-private Json serializeEntitlement(Entitlement e) {
-  return Json.emptyObject
-    .set("id", e.id)
-    .set("globalAccountId", e.globalAccountId)
-    .set("directoryId", e.directoryId)
-    .set("subaccountId", e.subaccountId)
-    .set("servicePlanId", e.servicePlanId)
-    .set("serviceName", e.serviceName)
-    .set("planName", e.planName)
-    .set("planDisplayName", e.planDisplayName)
-    .set("category", to!string(e.category))
-    .set("status", to!string(e.status))
-    .set("quotaAssigned", e.quotaAssigned)
-    .set("quotaUsed", e.quotaUsed)
-    .set("quotaRemaining", e.quotaRemaining)
-    .set("unlimited", e.unlimited)
-    .set("autoAssign", e.autoAssign)
-    .set("assignedAt", e.assignedAt)
-    .set("updatedAt", e.updatedAt)
-    .set("assignedBy", e.assignedBy);
-}

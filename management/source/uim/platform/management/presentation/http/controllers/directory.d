@@ -35,7 +35,7 @@ class DirectoryController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDirectoryRequest r;
@@ -55,7 +55,7 @@ class DirectoryController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Directory created");
-          
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -65,14 +65,15 @@ class DirectoryController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");
       auto parentId = req.params.get("parentDirectoryId");
 
       Directory[] items;
-      if (parentId.length > 0)
-        items = usecase.listByParent(parentId);
-      else if (gaId.length > 0)
-        items = usecase.listByGlobalAccount(gaId);
+      if (!parentId.isEmpty)
+        items = usecase.listDirectories(tenantId, parentId);
+      else if (!gaId.isEmpty)
+        items = usecase.listDirectories(tenantId, gaId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
 
@@ -87,10 +88,10 @@ class DirectoryController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto d = usecase.getById(id);
+      auto d = usecase.getById(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Directory not found");
         return;
@@ -101,7 +102,7 @@ class DirectoryController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
       auto j = req.json;
@@ -111,7 +112,7 @@ class DirectoryController : PlatformController {
       request.labels = jsonStrMap(j, "labels");
       request.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = usecase.update(id, request);
+      auto result = usecase.update(tenantId, id, request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,10 +126,11 @@ class DirectoryController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DirectoryId(extractId(req.requestURI));
-      auto result = usecase.deleteDirectory(id);
+
+      auto result = usecase.deleteDirectory(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -142,21 +144,3 @@ class DirectoryController : PlatformController {
   }
 }
 
-private Json serializeDirectory(Directory directory) {
-  return Json.emptyObject
-    .set("id", directory.id)
-    .set("globalAccountId", directory.globalAccountId)
-    .set("parentDirectoryId", directory.parentDirectoryId)
-    .set("displayName", directory.displayName)
-    .set("description", directory.description)
-    .set("status", to!string(directory.status))
-    .set("manageEntitlements", directory.manageEntitlements)
-    .set("manageAuthorizations", directory.manageAuthorizations)
-    .set("createdBy", directory.createdBy)
-    .set("createdAt", directory.createdAt)
-    .set("updatedAt", directory.updatedAt)
-    .set("labels", directory.labels)
-    .set("customProperties", directory.customProperties.toJson)
-    .set("subaccounts", directory.subaccounts.toJson)
-    .set("subdirectories", directory.subdirectories.toJson);
-}

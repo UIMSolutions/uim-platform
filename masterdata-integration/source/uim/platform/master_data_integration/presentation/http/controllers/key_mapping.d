@@ -64,7 +64,7 @@ class KeyMappingController : PlatformController {
       auto category = req.params.get("category", "");
 
       KeyMapping[] mappings;
-      if (objectId.length > 0)
+      if (!objectId.isEmpty)
         mappings = usecase.listByObjectId(tenantId, objectId);
       else if (category.length > 0)
         mappings = usecase.listByCategory(tenantId, category);

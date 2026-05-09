@@ -30,12 +30,13 @@ class ScenarioController : PlatformController {
   }
 
   private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       SyncScenarioRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.scenarioId = ScenarioId(j.getString("scenarioId"));
       r.name = j.getString("name");
@@ -59,11 +60,11 @@ class ScenarioController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto scenarios = connectionId.length > 0
-        ? usecase.listByConnection(connectionId)
-        : usecase.listAll();
+      auto scenarios = connectionId.isEmpty
+        ? usecase.listAll(tenantId) : usecase.listByConnection(tenantId, connectionId);
 
       auto jarr = scenarios.map!(s => s.toJson).array.toJson;
 
@@ -71,7 +72,7 @@ class ScenarioController : PlatformController {
         .set("count", scenarios.length)
         .set("resources", jarr)
         .set("message", "Scenarios retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -79,19 +80,19 @@ class ScenarioController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto s = usecase.getById(connectionId, id);
+      auto s = usecase.getById(tenantId, connectionId, id);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;
       }
 
       auto resp = s.toJson
-      .set("message", "Scenario retrieved successfully");
+        .set("message", "Scenario retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -100,17 +101,17 @@ class ScenarioController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.deleteScenario(connectionId, id);
+      auto result = usecase.deleteScenario(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Scenario deleted successfully");
-          
+
         res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);

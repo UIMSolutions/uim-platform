@@ -9,7 +9,6 @@ module uim.platform.kyma.presentation.http.controllers.function_;
 // import vibe.http.router;
 // import vibe.data.json;
 
-
 // import uim.platform.kyma.application.usecases.manage.functions;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.serverless_function;
@@ -37,7 +36,7 @@ class FunctionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateFunctionRequest r;
@@ -68,59 +67,54 @@ class FunctionController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
 
       ServerlessFunction[] items;
-      if (nsId.length > 0)
+      if (!nsId.isEmpty)
         items = usecase.listByNamespace(NamespaceId(nsId));
-      else if (envId.length > 0)
-        items = usecase.listByEnvironment(envId);
-      else
-        items = [];
+      else if (!envId.isEmpty)
+        items = usecase.listByEnvironment(KymaEnvironmentId(envId));
 
       auto arr = items.map!(fn => fn.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length);
-      
+        .set("items", arr)
+        .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      if (!usecase.hasFunction(ServerlessFunctionId(id))) {
+      if (!usecase.hasFunction(ServerlessFunctionId(tenantId, id))) {
         writeError(res, 404, "Function not found");
         return;
       }
-      auto fn = usecase.getFunction(ServerlessFunctionId(id));
+      auto fn = usecase.getFunction(ServerlessFunctionId(tenantId, id));
       res.writeJsonBody(fn.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -140,55 +134,27 @@ class FunctionController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.timeoutSeconds = j.getInteger("timeoutSeconds");
 
-      auto result = usecase.updateFunction(ServerlessFunctionId(id), r);
+      auto result = usecase.updateFunction(ServerlessFunctionId(tenantId, id), r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteFunction(ServerlessFunctionId(id));
+      auto result = usecase.deleteFunction(ServerlessFunctionId(tenantId, id));
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeFn(ServerlessFunction fn) {
-    return Json.emptyObject
-     .set("id", fn.id)
-     .set("namespaceId", fn.namespaceId)
-     .set("environmentId", fn.environmentId)
-     .set("tenantId", fn.tenantId)
-     .set("name", fn.name)
-     .set("description", fn.description)
-     .set("runtime", fn.runtime.to!string)
-     .set("status", fn.status.to!string)
-     .set("handler", fn.handler)
-     .set("scalingType", fn.scalingType.to!string)
-     .set("minReplicas", fn.minReplicas)
-     .set("maxReplicas", fn.maxReplicas)
-     .set("cpuRequest", fn.cpuRequest)
-     .set("cpuLimit", fn.cpuLimit)
-     .set("memoryRequest", fn.memoryRequest)
-     .set("memoryLimit", fn.memoryLimit)
-     .set("envVars", serializeStrMap(fn.envVars))
-     .set("labels", serializeStrMap(fn.labels))
-     .set("timeoutSeconds", fn.timeoutSeconds)
-     .set("createdBy", fn.createdBy)
-     .set("createdAt", fn.createdAt)
-     .set("updatedAt", fn.updatedAt);
   }
 }

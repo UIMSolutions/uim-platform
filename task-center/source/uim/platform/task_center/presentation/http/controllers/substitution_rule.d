@@ -32,18 +32,19 @@ class SubstitutionRuleController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
-            r.userId = j.getString("userId");
-            r.substituteId = j.getString("substituteId");
+            r.userId = UserId(j.getString("userId"));
+            r.substituteId = UserId(j.getString("substituteId"));
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.startDate = j.getString("startDate");
             r.endDate = j.getString("endDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createSubstitutionRule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -62,23 +63,18 @@ class SubstitutionRuleController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
-            auto userId = params.get("userId", "");
+            auto userId = UserId(params.get("userId", ""));
 
             SubstitutionRule[] rules;
-            if (userId.length > 0) {
+            if (!userId.isEmpty)
                 rules = usecase.listByUser(tenantId, userId);
-            } else {
-                rules = [];
-            }
 
-            auto jarr = Json.emptyArray;
-            foreach (r; rules) {
-                jarr ~= toJson(r);
-            }
+            auto jarr = rules.map!(r => toJson(r)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", rules.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Substitution rules retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -110,20 +106,20 @@ class SubstitutionRuleController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = id;
-            r.substituteId = j.getString("substituteId");
+            r.substituteId = UserId(j.getString("substituteId"));
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.startDate = j.getString("startDate");
             r.endDate = j.getString("endDate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateSubstitutionRule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -140,14 +136,14 @@ class SubstitutionRuleController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto path = req.requestURI.to!string;
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = extractIdFromPath(stripped);
+            auto id = SubstitutionRuleId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
 
-            auto result = usecase.activate(tenantId, id);
+            auto result = usecase.activateSubstitutionRule(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -164,14 +160,12 @@ class SubstitutionRuleController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto id = SubstitutionRuleId(extractIdFromPath(stripped));
 
-            auto result = usecase.deactivate(tenantId, id);
+            auto result = usecase.deactivateSubstitutionRule(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -187,9 +181,7 @@ class SubstitutionRuleController : PlatformController {
     }
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
-
+        try {            
             auto tenantId = req.getTenantId;
             auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteSubstitutionRule(tenantId, id);
@@ -205,20 +197,5 @@ class SubstitutionRuleController : PlatformController {
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
-    }
-
-    private Json ruleToJson(SubstitutionRule r) {
-        return Json.emptyObject
-            .set("id", r.id)
-            .set("tenantId", r.tenantId)
-            .set("userId", r.userId)
-            .set("substituteId", r.substituteId)
-            .set("taskDefinitionId", r.taskDefinitionId)
-            .set("status", r.status.to!string)
-            .set("startDate", r.startDate)
-            .set("endDate", r.endDate)
-            .set("isAutoForward", r.isAutoForward)
-            .set("createdBy", r.createdBy)
-            .set("createdAt", r.createdAt);
     }
 }

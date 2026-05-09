@@ -58,11 +58,12 @@ class ResourceGroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto groups = connectionId.length > 0
-        ? usecase.listByConnection(connectionId)
-        : usecase.listAll();
+      auto groups = connectionId.isEmpty
+        ? usecase.listResourceGroups(tenantId)
+        : usecase.listResourceGroups(tenantId, connectionId);
 
       auto jarr = groups.map!(g => g.toJson).array.toJson;
 
@@ -80,10 +81,10 @@ class ResourceGroupController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
-      auto g = usecase.getById(id, connectionId);
+      auto g = usecase.getById(tenantId, connectionId, id);
       if (g.isNull) {
         writeError(res, 404, "Resource group not found");
         return;
@@ -103,6 +104,7 @@ class ResourceGroupController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchResourceGroupRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.resourceGroupId = id;
       r.labels = jsonPairArray(j, "labels");
@@ -128,7 +130,7 @@ class ResourceGroupController : PlatformController {
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.deleteResourceGroup(id, connectionId);
+      auto result = usecase.deleteResourceGroup(tenantId, connectionId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

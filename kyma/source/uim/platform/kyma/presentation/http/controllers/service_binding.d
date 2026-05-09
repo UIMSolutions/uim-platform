@@ -41,6 +41,7 @@ class ServiceBindingController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceBindingRequest r;
+      r.tenantId = tenantId;
       r.serviceInstanceId = j.getString("serviceInstanceId");
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
@@ -70,16 +71,15 @@ class ServiceBindingController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto nsId = req.params.get("namespaceId");
-      auto instId = req.params.get("serviceInstanceId");
+      auto tenantId = req.getTenantId;
+      auto nsId = NamespaceId(req.params.get("namespaceId"));
+      auto instId = ServiceInstanceId(req.params.get("serviceInstanceId"));
 
       ServiceBinding[] items;
-      if (instId.length > 0)
-        items = usecase.listByServiceInstance(ServiceInstanceId(instId));
-      else if (nsId.length > 0)
-        items = usecase.listByNamespace(NamespaceId(nsId));
-      else
-        items = [];
+      if (!instId.isEmpty)
+        items = usecase.listServiceBindings(tenantId, instId);
+      else if (!nsId.isEmpty)
+        items = usecase.listServiceBindings(tenantId, nsId);
 
       auto arr = items.map!(b => b.toJson).array.toJson;
 
@@ -98,7 +98,7 @@ class ServiceBindingController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto b = usecase.getBinding(ServiceBindingId(id));
+      auto b = usecase.getBinding(ServiceBindingId(tenantId, id));
       if (b.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -113,15 +113,17 @@ class ServiceBindingController : PlatformController {
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateServiceBindingRequest r;
+      r.tenantId = tenantId;  
+      r.serviceBindingId = id;
       r.description = j.getString("description");
       r.secretName = j.getString("secretName");
       r.parametersJson = j.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = usecase.updateBinding(ServiceBindingId(id), r);
+      auto result = usecase.updateBinding(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -135,8 +137,9 @@ class ServiceBindingController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteBinding(ServiceBindingId(id));
+      auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));
+
+      auto result = usecase.deleteBinding(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else
@@ -147,22 +150,4 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private Json serializeBinding(ServiceBinding b) {
-    return Json.emptyObject
-    .set("id", b.id)
-    .set("serviceInstanceId", b.serviceInstanceId)
-    .set("namespaceId", b.namespaceId)
-    .set("environmentId", b.environmentId)
-    .set("tenantId", b.tenantId)
-    .set("name", b.name)
-    .set("description", b.description)
-    .set("status", b.status.to!string)
-    .set("secretName", b.secretName)
-    .set("secretNamespace", b.secretNamespace)
-    .set("parameters", b.parametersJson)
-    .set("labels", b.labels)
-    .set("createdBy", b.createdBy)
-    .set("createdAt", b.createdAt)
-    .set("updatedAt", b.updatedAt);
-  }
 }

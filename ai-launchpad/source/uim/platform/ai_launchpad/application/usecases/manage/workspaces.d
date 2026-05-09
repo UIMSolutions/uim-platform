@@ -49,10 +49,6 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     return workspaces.findByTenant(tenantId);
   }
 
-  Workspace[] listWorkspaces(TenantId tenantId) {
-    return workspaces.findAll(tenantId);
-  }
-
   CommandResult patchWorkspace(PatchWorkspaceRequest r) {
     auto w = workspaces.findById(r.tenantId, r.workspaceId);
     if (w.isNull)

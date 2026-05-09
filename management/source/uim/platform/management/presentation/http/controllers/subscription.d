@@ -36,10 +36,11 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSubscriptionRequest r;
+      r.tenantId = tenantId;
       r.subaccountId = j.getString("subaccountId");
       r.globalAccountId = j.getString("globalAccountId");
       r.appName = j.getString("appName");
@@ -48,7 +49,7 @@ class SubscriptionController : PlatformController {
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
 
-      auto result = usecase.subscribe(r);
+      auto result = usecase.subscribeSubscription(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,10 +64,13 @@ class SubscriptionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+      auto resourceType = req.params.get("resourceType");
+      auto resourceId = req.params.get("resourceId");
       auto subId = req.params.get("subaccountId");
       Subscription[] items;
-      if (subId.length > 0)
-        items = usecase.listBySubaccount(subId);
+      if (!subId.isEmpty)
+        items = usecase.listSubscriptions(tenantId, subId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
 
@@ -74,17 +78,17 @@ class SubscriptionController : PlatformController {
         .set("items", arr)
         .set("totalCount", items.length)
         .set("message", "Subscriptions retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto s = usecase.getById(id);
+      auto s = usecase.getSubscription(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Subscription not found");
         return;
@@ -95,15 +99,16 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
+      auto id = SubscriptionId(extractId(req.requestURI));
       auto j = req.json;
       UpdateSubscriptionRequest r;
+      r.tenantId = tenantId;  
       r.planName = j.getString("planName");
       r.parameters = jsonStrMap(j, "parameters");
 
-      auto result = usecase.updatePlan(id, r);
+      auto result = usecase.updateSubscriptionPlan(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -113,10 +118,10 @@ class SubscriptionController : PlatformController {
   }
 
   private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.unsubscribe(id);
+      auto id = SubscriptionId(extractId(req.requestURI));
+      auto result = usecase.unsubscribeSubscription(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -126,21 +131,3 @@ class SubscriptionController : PlatformController {
   }
 }
 
-private Json serializeSubscription(Subscription s) {
-  return Json.emptyObject
-    .set("id", s.id)
-    .set("subaccountId", s.subaccountId)
-    .set("globalAccountId", s.globalAccountId)
-    .set("appName", s.appName)
-    .set("appDisplayName", s.appDisplayName)
-    .set("planName", s.planName)
-    .set("status", to!string(s.status))
-    .set("appUrl", s.appUrl)
-    .set("tenantId", s.tenantId)
-    .set("isSubscriptionDone", s.isSubscriptionDone)
-    .set("subscribedAt", s.subscribedAt)
-    .set("updatedAt", s.updatedAt)
-    .set("subscribedBy", s.subscribedBy)
-    .set("parameters", s.parameters)
-    .set("labels", s.labels);
-}

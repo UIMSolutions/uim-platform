@@ -39,12 +39,13 @@ class DeploymentController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateDeploymentRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.configurationId = j.getString("configurationId");
       r.resourceGroupId = j.getString("resourceGroupId");
       r.ttl = j.getInteger("ttl");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDeployment(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,12 +62,13 @@ class DeploymentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(usecase.listByConnection(connectionId)) deployments;
-      deployments = scenarioId.length > 0
-        ? usecase.listByScenario(scenarioId, connectionId) : usecase.listByConnection(connectionId);
+      auto deployments = scenarioId.isEmpty
+        ? usecase.listByConnection(tenantId, connectionId)
+        : usecase.listByScenario(tenantId, scenarioId, connectionId);
 
       auto jarr = deployments.map!(d => d.toJson).array.toJson;
 
@@ -86,13 +88,13 @@ class DeploymentController : PlatformController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto d = usecase.getById(connectionId, id);
+      auto d = usecase.getDeployment(tenantId, connectionId, id);
       if (d.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
       }
 
-      Auto resp = d.toJson
+      auto resp = d.toJson
         .set("message", "Deployment retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -105,10 +107,11 @@ class DeploymentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
-      auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+      auto j = req.json;
 
       PatchDeploymentRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.deploymentId = id;
       r.targetStatus = j.getString("targetStatus");
@@ -137,11 +140,12 @@ class DeploymentController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchDeploymentRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = usecase.bulkPatch(r);
+      auto results = usecase.bulkDeploymentPatch(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
@@ -168,7 +172,7 @@ class DeploymentController : PlatformController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.deleteDeployment(connectionId, id);
+      auto result = usecase.deleteDeployment(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Deployment removed successfully"); 

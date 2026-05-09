@@ -11,47 +11,48 @@ mixin(ShowModule!());
 
 @safe:
 
-
 class KeystoreController : PlatformController {
-  private ManageKeystoresUseCase  usecase;
-  private KeystoreSearchService   searchSvc;
+  private ManageKeystoresUseCase usecase;
+  private KeystoreSearchService searchSvc;
 
   this(ManageKeystoresUseCase usecase, KeystoreSearchService searchSvc) {
-    this.usecase        = usecase;
+    this.usecase = usecase;
     this.searchSvc = searchSvc;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.post("/api/v1/keystores",       &handleUpload);
-    router.get("/api/v1/keystores",        &handleList);
-    router.get("/api/v1/keystores/*",      &handleGet);
-    router.put("/api/v1/keystores/*",      &handleUpdate);
-    router.delete_("/api/v1/keystores/*",  &handleDelete);
+
+    router.post("/api/v1/keystores", &handleUpload);
+    router.get("/api/v1/keystores", &handleList);
+    router.get("/api/v1/keystores/*", &handleGet);
+    router.put("/api/v1/keystores/*", &handleUpdate);
+    router.delete_("/api/v1/keystores/*", &handleDelete);
     // Resolve by name with scope (mirrors SAP list-keystores / download-keystore)
     router.get("/api/v1/keystores/resolve", &handleResolve);
   }
 
   // POST /api/v1/keystores
   private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UploadKeystoreRequest r;
-      r.accountId     = j.getString("accountId");
+      r.tenantId = tenantId;
+      r.accountId = j.getString("accountId");
       r.applicationId = j.getString("applicationId");
       r.subscriptionId = j.getString("subscriptionId");
-      r.level         = j.getString("level");
-      r.name          = j.getString("name");
-      r.description   = j.getString("description");
-      r.format        = j.getString("format");
-      r.content       = j.getString("content");
-      r.createdBy     = UserId(j.getString("createdBy"));
+      r.level = j.getString("level");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.format = j.getString("format");
+      r.content = j.getString("content");
+      r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.upload(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id);
+          .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -65,34 +66,33 @@ class KeystoreController : PlatformController {
   // GET /api/v1/keystores?accountId=...&applicationId=...
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto accountId     = req.params.get("accountId", "");
+      auto tenantId = req.getTenantId;
+      auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
+      auto accountId = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      KeystoreEntity[] keystores;
-      if (applicationId.length > 0) {
-        keystores = usecase.listByApplication(accountId, applicationId);
-      } else {
-        keystores = usecase.listByAccount(accountId);
-      }
+      KeystoreEntity[] keystores = applicationId.isEmpty
+        ? usecase.listByAccount(tenantId, accountId) 
+        : usecase.listByApplication(tenantId, accountId, applicationId);
 
       auto jarr = Json.emptyArray;
       foreach (ks; keystores) {
         jarr ~= Json.emptyObject
-          .set("id",            ks.id)
-          .set("name",          ks.name)
-          .set("description",   ks.description)
-          .set("format",        keystoreFormatToString(ks.format))
-          .set("level",         keystoreLevelToString(ks.level))
-          .set("accountId",     ks.accountId)
+          .set("id", ks.id)
+          .set("name", ks.name)
+          .set("description", ks.description)
+          .set("format", keystoreFormatToString(ks.format))
+          .set("level", keystoreLevelToString(ks.level))
+          .set("accountId", ks.accountId)
           .set("applicationId", ks.applicationId)
-          .set("createdBy",     ks.createdBy)
-          .set("createdAt",     ks.createdAt)
-          .set("updatedAt",     ks.updatedAt);
+          .set("createdBy", ks.createdBy)
+          .set("createdAt", ks.createdAt)
+          .set("updatedAt", ks.updatedAt);
       }
 
       auto resp = Json.emptyObject
-          .set("items", jarr)
-          .set("totalCount", keystores.length);
+        .set("items", jarr)
+        .set("totalCount", keystores.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -102,28 +102,28 @@ class KeystoreController : PlatformController {
 
   // GET /api/v1/keystores/{id}
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto ks = usecase.getById(id);
+      auto ks = usecase.getById(tenantId, id);
       if (ks.id.length == 0) {
         writeError(res, 404, "Keystore not found");
         return;
       }
       auto j = Json.emptyObject
-        .set("id",            ks.id)
-        .set("name",          ks.name)
-        .set("description",   ks.description)
-        .set("format",        keystoreFormatToString(ks.format))
-        .set("level",         keystoreLevelToString(ks.level))
-        .set("content",       ks.content)
-        .set("accountId",     ks.accountId)
+        .set("id", ks.id)
+        .set("name", ks.name)
+        .set("description", ks.description)
+        .set("format", keystoreFormatToString(ks.format))
+        .set("level", keystoreLevelToString(ks.level))
+        .set("content", ks.content)
+        .set("accountId", ks.accountId)
         .set("applicationId", ks.applicationId)
-        .set("createdBy",     ks.createdBy)
-        .set("updatedBy",    ks.updatedBy)
-        .set("createdAt",     ks.createdAt)
-        .set("updatedAt",     ks.updatedAt);
-        
+        .set("createdBy", ks.createdBy)
+        .set("updatedBy", ks.updatedBy)
+        .set("createdAt", ks.createdAt)
+        .set("updatedAt", ks.updatedAt);
+
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -132,14 +132,16 @@ class KeystoreController : PlatformController {
 
   // PUT /api/v1/keystores/{id}
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = KeystoreId(extractIdFromPath(req));
+
       auto j = req.json;
       UpdateKeystoreRequest r;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
-      r.content     = j.getString("content");
-      r.updatedBy  = UserId(j.getString("updatedBy"));
+      r.content = j.getString("content");
+      r.updatedBy = UserId(j.getString("updatedBy"));
 
       auto result = usecase.update(id, r);
       if (result.success) {
@@ -154,12 +156,12 @@ class KeystoreController : PlatformController {
 
   // DELETE /api/v1/keystores/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id     = KeystoreId(extractIdFromPath(req));
-      auto result = usecase.deleteKeystore(id);
+      auto id = KeystoreId(extractIdFromPath(req));
+      auto result = usecase.deleteKeystore(tenantId, id);
       if (result.success) {
-        res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
+        res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
       } else {
         writeError(res, 404, result.error);
       }
@@ -171,9 +173,10 @@ class KeystoreController : PlatformController {
   // GET /api/v1/keystores/resolve?name=...&accountId=...&applicationId=...&subscriptionId=...
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto name           = req.params.get("name", "");
-      auto accountId      = req.params.get("accountId", "");
-      auto applicationId  = req.params.get("applicationId", "");
+      auto tenantId = req.getTenantId;
+      auto name = req.params.get("name", "");
+      auto accountId = req.params.get("accountId", "");
+      auto applicationId = req.params.get("applicationId", "");
       auto subscriptionId = req.params.get("subscriptionId", "");
 
       if (name.length == 0 || accountId.length == 0) {
@@ -181,20 +184,20 @@ class KeystoreController : PlatformController {
         return;
       }
 
-      auto ks = searchSvc.findByName(accountId, applicationId, subscriptionId, name);
+      auto ks = searchSvc.findByName(tenantId, accountId, applicationId, subscriptionId, name);
       if (ks.id.length == 0) {
         writeError(res, 404, "Keystore not found");
         return;
       }
 
       auto j = Json.emptyObject
-        .set("id",            ks.id)
-        .set("name",          ks.name)
-        .set("description",   ks.description)
-        .set("format",        keystoreFormatToString(ks.format))
-        .set("level",         keystoreLevelToString(ks.level))
-        .set("content",       ks.content)
-        .set("accountId",     ks.accountId)
+        .set("id", ks.id)
+        .set("name", ks.name)
+        .set("description", ks.description)
+        .set("format", keystoreFormatToString(ks.format))
+        .set("level", keystoreLevelToString(ks.level))
+        .set("content", ks.content)
+        .set("accountId", ks.accountId)
         .set("applicationId", ks.applicationId);
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
@@ -204,9 +207,12 @@ class KeystoreController : PlatformController {
 
   private string keystoreLevelToString(KeystoreLevel level) @safe {
     final switch (level) {
-      case KeystoreLevel.account:      return "account";
-      case KeystoreLevel.application:  return "application";
-      case KeystoreLevel.subscription: return "subscription";
+    case KeystoreLevel.account:
+      return "account";
+    case KeystoreLevel.application:
+      return "application";
+    case KeystoreLevel.subscription:
+      return "subscription";
     }
   }
 }

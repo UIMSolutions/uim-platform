@@ -42,6 +42,11 @@ struct EventSubscription {
   string[string] labels;
 
   Json toJson() const {
+    auto jLaberl = Json.emptyObject;
+    foreach (key, value; labels) {
+      jLaberl.set(key, value);
+    }
+
     return entityToJson
       .set("namespaceId", namespaceId)
       .set("environmentId", environmentId)
@@ -57,5 +62,6 @@ struct EventSubscription {
       .set("maxInFlightMessages", maxInFlightMessages)
       .set("exactTypeMatching", exactTypeMatching)
       .set("filterAttributes", filterAttributes)
-      .set("labels", labels);
+      .set("labels", jLaberl);
+  }
 }

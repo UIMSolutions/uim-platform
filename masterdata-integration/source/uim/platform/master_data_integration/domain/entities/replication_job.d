@@ -40,7 +40,7 @@ struct ReplicationJob {
   long completedAt;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("distributionModelId", distributionModelId.value)
       .set("name", name)
       .set("description", description)
@@ -59,7 +59,5 @@ struct ReplicationJob {
       .set("isInitialLoad", isInitialLoad)
       .set("startedAt", startedAt)
       .set("completedAt", completedAt);
-
-    return j;
   }
 }

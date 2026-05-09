@@ -76,11 +76,9 @@ class EnvironmentController : PlatformController {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
 
-      KymaEnvironment[] envs;
-      if (subaccountId.length > 0)
-        envs = usecase.listBySubaccount(tenantId, SubaccountId(subaccountId));
-      else
-        envs = usecase.listByTenant(tenantId);
+      KymaEnvironment[] envs = subaccountId.isEmpty ?
+        usecase.listByTenant(tenantId) :
+        usecase.listBySubaccount(tenantId, subaccountId);
 
       auto arr = envs.map!(e => e.toJson).array.toJson;
 
@@ -98,12 +96,12 @@ class EnvironmentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
-      if (!usecase.hasEnvironment(id)) {
+      if (!usecase.hasEnvironment(tenantId, id)) {
         writeError(res, 404, "Environment not found");
         return;
       }
 
-      auto env = usecase.getEnvironment(id);
+      auto env = usecase.getEnvironment(tenantId, id);
       res.writeJsonBody(env.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -116,6 +114,8 @@ class EnvironmentController : PlatformController {
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateEnvironmentRequest r;
+      r.tenantId = tenantId;
+      r.id = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.machineCount = j.getInteger("machineCount");
@@ -126,7 +126,7 @@ class EnvironmentController : PlatformController {
       r.oidcClientId = j.getString("oidcClientId");
       r.administrators = getStrings(j, "administrators");
 
-      auto result = usecase.updateEnvironment(id, r);
+      auto result = usecase.updateEnvironment(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -140,7 +140,7 @@ class EnvironmentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = KymaEnvironmentId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteEnvironment(id);
+      auto result = usecase.deleteEnvironment(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else
@@ -148,29 +148,5 @@ class EnvironmentController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeEnv(KymaEnvironment e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("subaccountId", e.subaccountId)
-      .set("clusterId", e.clusterId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("plan", e.plan.to!string)
-      .set("region", e.region)
-      .set("kubernetesVersion", e.kubernetesVersion)
-      .set("status", e.status.to!string)
-      .set("machineCount", e.machineCount)
-      .set("machineType", e.machineType)
-      .set("autoScalerMin", e.autoScalerMin)
-      .set("autoScalerMax", e.autoScalerMax)
-      .set("shootDomain", e.shootDomain)
-      .set("kubeApiServerUrl", e.kubeApiServerUrl)
-      .set("administrators", e.administrators.toJson)
-      .set("createdBy", e.createdBy)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt);
   }
 }

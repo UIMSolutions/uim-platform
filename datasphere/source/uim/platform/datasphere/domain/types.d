@@ -20,16 +20,6 @@ struct SpaceId {
   mixin DomainId;
 }
 
-struct ConnectionId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
-
 struct RemoteTableId {
   string value;
 

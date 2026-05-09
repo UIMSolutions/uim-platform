@@ -84,12 +84,10 @@ class ApiRuleController : PlatformController {
       auto envId = req.params.get("environmentId");
 
       ApiRule[] items;
-      if (nsId.length > 0)
+      if (!nsId.isEmpty)
         items = usecase.listByNamespace(nsId);
-      else if (envId.length > 0)
+      else if (!envId.isEmpty)
         items = usecase.listByEnvironment(envId);
-      else
-        items = [];
 
       auto arr = items.map!(rule => rule.toJson).array.toJson;
 
@@ -109,7 +107,7 @@ class ApiRuleController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = usecase.getApiRule(id);
+      auto rule = usecase.getApiRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "API rule not found");
         return;
@@ -140,7 +138,7 @@ class ApiRuleController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.rules = j.toRuleEntries;
 
-      auto result = usecase.updateApiRule(id, r);
+      auto result = usecase.updateApiRule(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -155,7 +153,7 @@ class ApiRuleController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteApiRule(id);
+      auto result = usecase.deleteApiRule(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else

@@ -61,14 +61,13 @@ class ExecutionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(usecase.listByConnection(connectionId)) executions;
-      if (scenarioId.length > 0)
-        executions = usecase.listByScenario(connectionId, scenarioId);
-      else
-        executions = usecase.listByConnection(connectionId);
+      auto executions = scenarioId.isEmpty 
+        ? usecase.listExecutions(tenantId, connectionId) 
+        : usecase.listExecutions(tenantId, connectionId, scenarioId);
 
       auto jarr = executions.map!(e => e.toJson).array.toJson;
 
@@ -89,12 +88,12 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      if (!usecase.existsById(connectionId, id)) {
+      auto ex = usecase.getExecution(tenantId, connectionId, id);
+      if (ex.isNull) {
         writeError(res, 404, "Execution not found");
         return;
       }
 
-      auto ex = usecase.getById(connectionId, id);
       auto resp = ex.toJson
         .set("message", "Execution retrieved successfully");
 
@@ -112,11 +111,12 @@ class ExecutionController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchExecutionRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchExecution(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -138,11 +138,12 @@ class ExecutionController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchExecutionRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.executionIds = getStrings(j, "executionIds");
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = usecase.bulkPatch(r);
+      auto results = usecase.bulkExecutionPatch(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
@@ -170,7 +171,7 @@ class ExecutionController : PlatformController {
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.deleteExecution(connectionId, id);
+      auto result = usecase.deleteExecution(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Execution removed successfully");

@@ -22,7 +22,7 @@ class WorkspaceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/workspaces", &handleCreate);
     router.get("/api/v1/workspaces", &handleList);
     router.get("/api/v1/workspaces/*", &handleGet);
@@ -31,7 +31,7 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateWorkspaceRequest r;
@@ -39,7 +39,7 @@ class WorkspaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createWorkspace(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,9 +58,7 @@ class WorkspaceController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto workspaces = tenantId.length > 0
-        ? usecase.listByTenant(tenantId)
-        : usecase.listAll();
+      auto workspaces = usecase.listWorkspaces(tenantId);
 
       auto jarr = workspaces.map!(w => w.toJson).array.toJson;
 
@@ -75,11 +73,11 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto w = usecase.getById(id);
+      auto w = usecase.getWorkspace(tenantId, id);
       if (w.isNull) {
         writeError(res, 404, "Workspace not found");
         return;
@@ -92,7 +90,7 @@ class WorkspaceController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -103,7 +101,7 @@ class WorkspaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchWorkspace(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Workspace updated");
@@ -118,15 +116,15 @@ class WorkspaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deleteWorkspace(id);
+      auto result = usecase.deleteWorkspace(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Workspace deleted");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

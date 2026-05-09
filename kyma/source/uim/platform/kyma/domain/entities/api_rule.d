@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An API rule — exposes a service or function via the API Gateway.
 struct ApiRule {
-  mixin TenantEntity!(ApiRuleId id);
-  
+  mixin TenantEntity!ApiRuleId;
+
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   string name;
@@ -46,7 +46,7 @@ struct ApiRule {
   string[string] labels;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("namespaceId", namespaceId.value)
       .set("environmentId", environmentId.value)
       .set("name", name)
@@ -56,22 +56,19 @@ struct ApiRule {
       .set("servicePort", servicePort)
       .set("gateway", gateway)
       .set("host", host)
-      .set("rules", rules.map!(r => Json.init
-        .set("path", r.path)
-        .set("methods", r.methods.map!(m => m.toString()).array)
-        .set("accessStrategy", r.accessStrategy.toString())
-        .set("requiredScopes", r.requiredScopes.array)
-        .set("audiences", r.audiences.array)
-        .set("trustedIssuers", r.trustedIssuers.array)).array)
+      .set("rules", rules.map!(r => r.toJson()).array.toJson)
       .set("tlsEnabled", tlsEnabled)
       .set("tlsSecretName", tlsSecretName)
       .set("corsEnabled", corsEnabled)
-      .set("corsAllowOrigins", corsAllowOrigins.array)
-      .set("corsAllowMethods", corsAllowMethods.array)
-      .set("corsAllowHeaders", corsAllowHeaders.array)
+      .set("corsAllowOrigins", corsAllowOrigins.array.toJson)
+      .set("corsAllowMethods", corsAllowMethods.array.toJson)
+      .set("corsAllowHeaders", corsAllowHeaders.array.toJson)
+      .set("labels", labels)
+      .set("trustedIssuers", rules.flatMap!(r => r.trustedIssuers).array.toJson)
+      .set("tlsEnabled", tlsEnabled)
+      .set("tlsSecretName", tlsSecretName)
+      .set("corsEnabled", corsEnabled)
       .set("labels", labels);
-
-    return j;
   }
 
 }
@@ -84,4 +81,14 @@ struct ApiRuleEntry {
   string[] requiredScopes;
   string[] audiences;
   string[] trustedIssuers;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("path", path)
+      .set("methods", methods.map!(m => m.toString()).array)
+      .set("accessStrategy", accessStrategy.toString())
+      .set("requiredScopes", requiredScopes.array)
+      .set("audiences", audiences.array)
+      .set("trustedIssuers", trustedIssuers.array);
+  }
 }

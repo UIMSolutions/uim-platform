@@ -64,19 +64,18 @@ class ModelController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      typeof(usecase.listByConnection(connectionId)) models;
-      if (scenarioId.length > 0)
-        models = usecase.listByScenario(connectionId, scenarioId);
-      else
-        models = usecase.listByConnection(connectionId);
+      auto models = scenarioId.isEmpty
+        ? usecase.listByConnection(tenantId, connectionId)
+        : usecase.listByScenario(tenantId, connectionId, scenarioId);
 
       auto jarr = models.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-        .set("count", Json(models.length))
+        .set("count", models.length)
         .set("resources", jarr);
 
       res.writeJsonBody(resp, 200);
@@ -91,7 +90,7 @@ class ModelController : PlatformController {
       auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto model = usecase.getById(connectionId, id);
+      auto model = usecase.getModel(tenantId, connectionId, id);
       if (model.isNull) {
         writeError(res, 404, "Model not found");
         return;
@@ -111,12 +110,13 @@ class ModelController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchModelRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.modelId = id;
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchModel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -133,10 +133,11 @@ class ModelController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deleteModel(connectionId, id);
+      auto result = usecase.deleteModel(tenantId, connectionId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

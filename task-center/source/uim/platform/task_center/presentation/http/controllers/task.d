@@ -68,8 +68,6 @@ class TaskController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto assignee = params.get("assignee", "");
@@ -77,17 +75,17 @@ class TaskController : PlatformController {
             auto providerId = params.get("providerId", "");
 
             Task[] tasks;
-            if (assignee.length > 0) {
-                tasks = usecase.listByAssignee(tenantId, assignee);
-            } else if (status.length > 0) {
-                tasks = usecase.listByStatus(tenantId, status.to!TaskStatus);
-            } else if (providerId.length > 0) {
-                tasks = usecase.listByProvider(tenantId, providerId);
+            if (!assignee.isEmpty) {
+                tasks = usecase.listTasks(tenantId, assignee);
+            } else if (!status.isEmpty) {
+                tasks = usecase.listTasks(tenantId, status.to!TaskStatus);
+            } else if (!providerId.isEmpty) {
+                tasks = usecase.listTasks(tenantId, providerId);
             } else {
-                tasks = usecase.list(tenantId);
+                tasks = usecase.listTasks(tenantId);
             }
 
-            auto jarr = tasks.map!(t => toJson(t)).array;
+            auto jarr = tasks.map!(t => toJson(t)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", tasks.length)
@@ -102,14 +100,12 @@ class TaskController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto path = req.requestURI.to!string;
             if (pathEndsWithAction(path))
                 return;
 
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(path);
+            auto id = TaskId(extractIdFromPath(path));
             auto t = usecase.getById(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Task not found");
@@ -123,13 +119,12 @@ class TaskController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateTaskRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.taskId = id;
             r.title = j.getString("title");
             r.description = j.getString("description");
             r.priority = j.getString("priority");
@@ -137,7 +132,7 @@ class TaskController : PlatformController {
             r.dueDate = j.getString("dueDate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateTask(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -154,11 +149,9 @@ class TaskController : PlatformController {
 
     private void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto path = req.requestURI.to!string;
+                auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
-            auto id = extractIdFromPath(stripped);
+            auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
             auto j = req.json;
             auto userId = j.getString("userId");
@@ -180,14 +173,12 @@ class TaskController : PlatformController {
 
     private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
-            auto id = extractIdFromPath(stripped);
+            auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
 
-            auto result = usecase.release(tenantId, id);
+            auto result = usecase.releaseTask(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -204,12 +195,10 @@ class TaskController : PlatformController {
 
     private void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
-            auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto id = TaskId(extractIdFromPath(stripped));
             auto j = req.json;
             auto toUser = j.getString("toUser");
             auto comment = j.getString("comment");
@@ -235,10 +224,10 @@ class TaskController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
-            auto id = extractIdFromPath(stripped);
+            auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
 
-            auto result = usecase.complete(tenantId, id);
+            auto result = usecase.completeTask(tenantId, id)(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -255,14 +244,12 @@ class TaskController : PlatformController {
 
     private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
-            auto id = extractIdFromPath(stripped);
+            auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
 
-            auto result = usecase.cancel(tenantId, id);
+            auto result = usecase.cancelTask(tenantId, id)(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -279,11 +266,9 @@ class TaskController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
             auto tenantId = req.getTenantId;
-            auto result = usecase.deleteTask(tenantId, TaskId(id));
+            auto result = usecase.deleteTask(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

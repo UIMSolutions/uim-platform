@@ -12,15 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 // ID aliases
-struct ConnectionId {
-      string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 struct WorkspaceId {
       string value;
 

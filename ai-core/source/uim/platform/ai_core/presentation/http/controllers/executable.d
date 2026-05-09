@@ -33,7 +33,7 @@ class ExecutableController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      
+
       auto j = req.json;
       CreateExecutableRequest r;
       r.tenantId = tenantId;
@@ -67,8 +67,8 @@ class ExecutableController : PlatformController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
-      auto executables = scenarioId.length > 0
-        ? usecase.listExecutables(tenantId, scenarioId, rgId) : usecase.listExecutables(tenantId, rgId);
+      auto executables = scenarioId.isEmpty
+        ? usecase.listExecutables(tenantId, rgId) : usecase.listExecutables(tenantId, scenarioId, rgId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {

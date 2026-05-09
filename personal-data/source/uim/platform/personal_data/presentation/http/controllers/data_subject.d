@@ -20,6 +20,7 @@ class DataSubjectController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/personal-data/subjects", &handleList);
         router.get("/api/v1/personal-data/subjects/search", &handleSearch);
         router.get("/api/v1/personal-data/subjects/*", &handleGet);
@@ -32,6 +33,7 @@ class DataSubjectController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
@@ -50,8 +52,8 @@ class DataSubjectController : PlatformController {
             auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data subject created");
+                    .set("id", result.id)
+                    .set("message", "Data subject created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -65,7 +67,7 @@ class DataSubjectController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto subjects = usecase.list(tenantId);
+            auto subjects = usecase.listDataSubjects(tenantId);
 
             auto jarr = subjects.map!(s => s.toJson).array.toJson;
 
@@ -81,20 +83,19 @@ class DataSubjectController : PlatformController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto firstName = params.get("firstName", "");
             auto lastName = params.get("lastName", "");
             auto email = params.get("email", "");
 
             DataSubject[] results;
-            if (email.length > 0) {
+            if (!email.isEmpty) {
                 auto s = usecase.findByEmail(email);
-                if (s.id.length > 0)
+                if (!s.id.isEmpty)
                     results ~= s;
             } else {
-                results = usecase.search(firstName, lastName);
+                results = usecase.searchDataSubjects(tenantId, firstName, lastName);
             }
 
             auto jarr = results.map!(s => s.toJson).array.toJson;
@@ -110,21 +111,20 @@ class DataSubjectController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             if (path.length > 6 && path[$ - 6 .. $] == "/block")
                 return;
             if (path.length > 6 && path[$ - 6 .. $] == "/erase")
                 return;
 
-            auto id = extractIdFromPath(path);
-            if (!usecase.hasDataSubject(id)) {
+            auto id = DataSubjectId(extractIdFromPath(path));
+            if (!usecase.hasDataSubject(tenantId, id)) {
                 writeError(res, 404, "Data subject not found");
                 return;
             }
 
-            auto subject = usecase.getDataSubject(id);
+            auto subject = usecase.getDataSubject(tenantId, id);
             res.writeJsonBody(subject.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -133,12 +133,11 @@ class DataSubjectController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             UpdateDataSubjectRequest request;
-            request.tenantId = req.getTenantId;
-            request.id = extractIdFromPath(req.requestURI.to!string);
+            request.tenantId = tenantId;
+            request.id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
             request.firstName = j.getString("firstName");
             request.lastName = j.getString("lastName");
             request.email = j.getString("email");
@@ -151,8 +150,8 @@ class DataSubjectController : PlatformController {
             auto result = usecase.updateDataSubject(request);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data subject updated");
+                    .set("id", result.id)
+                    .set("message", "Data subject updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -165,17 +164,16 @@ class DataSubjectController : PlatformController {
 
     private void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/block"
-            auto id = extractIdFromPath(stripped);
+            auto id = DataSubjectId(extractIdFromPath(stripped));
 
-            auto result = usecase.block(id);
+            auto result = usecase.block(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data subject blocked");
+                    .set("id", result.id)
+                    .set("message", "Data subject blocked");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -188,17 +186,16 @@ class DataSubjectController : PlatformController {
 
     private void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/erase"
-            auto id = extractIdFromPath(stripped);
+            auto id = DataSubjectId(extractIdFromPath(stripped));
 
-            auto result = usecase.erase(id);
+            auto result = usecase.eraseDataSubject(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data subject erased (anonymized)");
+                    .set("id", result.id)
+                    .set("message", "Data subject erased (anonymized)");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -211,14 +208,13 @@ class DataSubjectController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteDataSubject(id);
+            auto tenantId = req.getTenantId;
+            auto id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteDataSubject(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Data subject deleted");
+                    .set("id", result.id)
+                    .set("message", "Data subject deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

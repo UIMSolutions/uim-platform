@@ -64,19 +64,17 @@ class DataSubjectRequestController : PlatformController {
             auto statusFilter = params.get("status", "");
 
             DataSubjectRequest[] requests;
-            if (dataSubjectId.length > 0) {
-                requests = usecase.listByDataSubject(dataSubjectId);
-            } else if (statusFilter.length > 0) {
-                
-
+            if (!dataSubjectId.isEmpty) {
+                requests = usecase.listDataSubjectRequests(dataSubjectId);
+            } else if (!statusFilter.isEmpty) {
                 try {
                     auto s = statusFilter.to!RequestStatus;
-                    requests = usecase.listByStatus(s);
+                    requests = usecase.listDataSubjectRequests(s);
                 } catch (Exception) {
-                    requests = usecase.list(tenantId);
+                    requests = usecase.listDataSubjectRequests(tenantId);
                 }
             } else {
-                requests = usecase.list(tenantId);
+                requests = usecase.listDataSubjectRequests(tenantId);
             }
 
             auto jarr = requests.map!(r => toJson(r)).array;
@@ -94,10 +92,9 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(id);
+            auto r = usecase.getDataSubjectRequest(id);
             if (r.isNull) {
                 writeError(res, 404, "Data subject request not found");
                 return;
@@ -110,12 +107,11 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             UpdateDataSubjectRequestRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.dataSubjectRequestId = DataSubjectRequestId(extractIdFromPath(req.requestURI.to!string));
             r.status = j.getString("status");
             r.priority = j.getString("priority");
             r.assignedTo = j.getString("assignedTo");
@@ -141,10 +137,9 @@ class DataSubjectRequestController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteDataSubjectRequest(id);
+            auto tenantId = req.getTenantId;
+            auto id = DataSubjectRequestId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteDataSubjectRequest(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -157,21 +152,5 @@ class DataSubjectRequestController : PlatformController {
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
-    }
-
-    private Json requestToJson(DataSubjectRequest r) {
-        return Json.emptyObject
-            .set("id", r.id)
-            .set("dataSubjectId", r.dataSubjectId)
-            .set("requestType", r.requestType.to!string)
-            .set("status", r.status.to!string)
-            .set("priority", r.priority.to!string)
-            .set("description", r.description)
-            .set("assignedTo", r.assignedTo)
-            .set("dueDate", r.dueDate)
-            .set("rejectionReason", r.rejectionReason)
-            .set("createdBy", r.createdBy)
-            .set("createdAt", r.createdAt)
-            .set("updatedAt", r.updatedAt);
     }
 }

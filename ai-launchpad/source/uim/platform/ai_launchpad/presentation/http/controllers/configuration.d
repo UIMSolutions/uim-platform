@@ -61,7 +61,7 @@ class ConfigurationController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      auto configs = scenarioId.length > 0
+      auto configs = scenarioId.isEmpty
         ? configurations.listByScenario(connectionId, ScenarioId(scenarioId)) : configurations.listByConnection(
           connectionId);
 

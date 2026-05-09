@@ -30,11 +30,12 @@ class PromptController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
 
       CreatePromptRequest r;
+r.tenantId = tenantId;
       r.collectionId = j.getString("collectionId");
       r.name = j.getString("name");
       r.modelName = j.getString("modelName");
@@ -65,11 +66,11 @@ class PromptController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto collectionId = CollectionId(req.headers.get("X-Collection-Id", ""));
 
-      auto prompts = collectionId.length > 0
-        ? usecase.listByCollection(collectionId)
-        : usecase.listAll();
+      auto prompts = collectionId.isEmpty
+        ? usecase.listAll(tenantId) : usecase.listByCollection(tenantId, collectionId);
 
       auto jarr = prompts.map!(p => p.toJson).array.toJson;
 
@@ -77,7 +78,7 @@ class PromptController : PlatformController {
         .set("count", prompts.length)
         .set("resources", jarr)
         .set("message", "Prompts retrieved");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -85,11 +86,11 @@ class PromptController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
 
-      auto p = usecase.getById(id);
+      auto p = usecase.getPrompt(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Prompt not found");
         return;
@@ -102,7 +103,7 @@ class PromptController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;

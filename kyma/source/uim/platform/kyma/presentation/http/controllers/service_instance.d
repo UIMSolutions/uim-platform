@@ -9,7 +9,6 @@ module uim.platform.kyma.presentation.http.controllers.service_instance;
 // import vibe.http.router;
 // import vibe.data.json;
 
-
 // import uim.platform.kyma.application.usecases.manage.service_instances;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.service_instance;
@@ -37,10 +36,11 @@ class ServiceInstanceController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateServiceInstanceRequest r;
+      r.tenantId = tenantId;
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
       r.tenantId = tenantId;
@@ -60,114 +60,91 @@ class ServiceInstanceController : PlatformController {
           .set("id", result.id);
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto nsId = req.params.get("namespaceId");
-      auto envId = req.params.get("environmentId");
+      auto tenantId = req.getTenantId;
+      auto nsId = NamespaceId(req.params.get("namespaceId"));
+      auto envId = KymaEnvironmentId(req.params.get("environmentId"));
 
       ServiceInstance[] items;
-      if (nsId.length > 0)
-        items = usecase.listByNamespace(NamespaceId(nsId));
-      else if (envId.length > 0)
-        items = usecase.listByEnvironment(KymaEnvironmentId(envId));
-      else
-        items = [];
+      if (!nsId.isEmpty)
+        items = usecase.listByNamespace(tenantId, nsId);
+      else if (!envId.isEmpty)
+        items = usecase.listByEnvironment(tenantId, envId);
 
-      auto arr = items.map!(inst =inst).array.toJson;
-
+      auto arr = items.map!(inst => inst.toJson).array.toJson;
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Service instances retrieved successfully");
-          
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Service instances retrieved successfully");
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto inst = usecase.getServiceInstance(ServiceInstanceId(id));
+      auto inst = usecase.getServiceInstance(tenantId, id);
       if (inst.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }
       res.writeJsonBody(inst.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = ServiceInstanceId(tenantId, extractIdFromPath(
+          req.requestURI));
       auto j = req.json;
       UpdateServiceInstanceRequest r;
-      r.description = j.getString("description");
+      r.tenantId = tenantId;
+      r.serviceInstanceId = id;
+      r.description = j.getString(
+        "description");
       r.servicePlanName = j.getString("servicePlanName");
       r.servicePlanId = j.getString("servicePlanId");
-      r.parametersJson = j.getString("parameters");
+      r.parametersJson = j.getString(
+        "parameters");
       r.labels = jsonStrMap(j, "labels");
-
-      auto result = usecase.updateServiceInstance(ServiceInstanceId(id), r);
+      auto result = usecase.updateServiceInstance(
+        r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteServiceInstance(ServiceInstanceId(id));
+      auto id = ServiceInstanceId(
+        extractIdFromPath(req.requestURI));
+      auto result = usecase.deleteServiceInstance(tenantId, id);
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private Json serializeInst(ServiceInstance inst) {
-    return Json.emptyObject
-     .set("id", inst.id)
-     .set("namespaceId", inst.namespaceId)
-     .set("environmentId", inst.environmentId)
-     .set("tenantId", inst.tenantId)
-     .set("name", inst.name)
-     .set("description", inst.description)
-     .set("status", inst.status.to!string)
-     .set("serviceOfferingName", inst.serviceOfferingName)
-     .set("servicePlanName", inst.servicePlanName)
-     .set("servicePlanId", inst.servicePlanId)
-     .set("externalName", inst.externalName)
-     .set("parameters", inst.parametersJson)
-     .set("labels", serializeStrMap(inst.labels))
-     .set("bindingCount", inst.bindingCount)
-     .set("createdBy", inst.createdBy)
-     .set("createdAt", inst.createdAt)
-     .set("updatedAt", inst.updatedAt);
-  }
 }

@@ -56,14 +56,12 @@ class ConfigurationController : ManageController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = req.params.get("scenarioId", "");
 
-      typeof(usecase.list(rgId)) configs;
-      if (scenarioId.length > 0)
-        configs = usecase.listByScenario(scenarioId, rgId);
-      else
-        configs = usecase.list(rgId);
+      auto configs = scenarioId.isEmpty
+        ? usecase.list(tenantId, rgId) : usecase.listByScenario(tenantId, scenarioId, rgId);
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {

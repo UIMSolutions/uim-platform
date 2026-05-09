@@ -67,12 +67,12 @@ class PersonalDataRecordController : PlatformController {
             auto applicationId = params.get("applicationId", "");
 
             PersonalDataRecord[] records;
-            if (dataSubjectId.length > 0 && applicationId.length > 0) {
-                records = usecase.listByDataSubjectAndApplication(dataSubjectId, applicationId);
-            } else if (dataSubjectId.length > 0) {
-                records = usecase.listByDataSubject(dataSubjectId);
-            } else if (applicationId.length > 0) {
-                records = usecase.listByApplication(applicationId);
+            if (!dataSubjectId.isEmpty && !applicationId.isEmpty) {
+                records = usecase.listPersonalDataRecords(tenantId, dataSubjectId, applicationId);
+            } else if (!dataSubjectId.isEmpty) {
+                records = usecase.listPersonalDataRecords(tenantId, dataSubjectId);
+            } else if (!applicationId.isEmpty) {
+                records = usecase.listPersonalDataRecords(tenantId, applicationId);
             } else {
                 records = usecase.list(tenantId);
             }

@@ -32,7 +32,7 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
 
@@ -59,19 +59,20 @@ class PromptCollectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
-      auto collections = workspaceId.length > 0
-        ? usecase.listByWorkspace(workspaceId)
-        : usecase.listAll();
+      auto collections = workspaceId.isEmpty
+        ? usecase.listPromptCollections(tenantId) 
+        : usecase.listPromptCollections(tenantId, workspaceId);
 
       auto jarr = collections.map!(c => c.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(collections.length))
-        .set("resources", jarr);
+        .set("resources", jarr)
         .set("message", "Prompt collections retrieved");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -79,11 +80,11 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto c = usecase.getById(id);
+      auto c = usecase.getPromptCollection(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Prompt collection not found");
         return;
@@ -96,12 +97,13 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       PatchPromptCollectionRequest r;
+      r.tenantId = tenantId;
       r.collectionId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -122,15 +124,15 @@ class PromptCollectionController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deletePromptCollection(id);
+      auto result = usecase.deletePromptCollection(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "Prompt collection deleted"); 
+          .set("message", "Prompt collection deleted");
 
         res.writeJsonBody(resp, 204);
       } else {

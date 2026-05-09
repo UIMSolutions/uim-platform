@@ -46,16 +46,8 @@ struct Application {
       .set("registrationType", registrationType.toString())
       .set("connectorUrl", connectorUrl)
       .set("accessLabel", accessLabel)
-      .set("apis", apis.map!(api => Json.init
-        .set("name", api.name)
-        .set("description", api.description)
-        .set("targetUrl", api.targetUrl)
-        .set("specUrl", api.specUrl)
-        .set("authType", api.authType)).array)
-      .set("events", events.map!(event => Json.init
-        .set("name", event.name)
-        .set("description", event.description)
-        .set("version", event.version_)).array)
+      .set("apis", apis.map!(api => api.toJson()).array)
+      .set("events", events.map!(event => event.toJson()).array)
       .set("boundNamespaces", boundNamespaces.array)
       .set("labels", labels);
 
@@ -70,6 +62,15 @@ struct AppApiEntry {
   string targetUrl;
   string specUrl;
   string authType;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("description", description)
+      .set("targetUrl", targetUrl)
+      .set("specUrl", specUrl)
+      .set("authType", authType);
+  }
 }
 
 /// An event type registered by an external application.
@@ -77,4 +78,11 @@ struct AppEventEntry {
   string name;
   string description;
   string version_;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("description", description)
+      .set("version", version_);
+  }
 }

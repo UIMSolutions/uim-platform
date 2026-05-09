@@ -32,26 +32,28 @@ class EventController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto category = req.params.get("category");
       auto severity = req.params.get("severity");
 
       PlatformEvent[] items;
-      if (subId.length > 0)
-        items = usecase.listBySubaccount(subId);
-      else if (category.length > 0 && gaId.length > 0)
-        items = usecase.listByCategory(gaId, category);
-      else if (severity.length > 0 && gaId.length > 0)
-        items = usecase.listBySeverity(gaId, severity);
-      else if (gaId.length > 0)
-        items = usecase.listByGlobalAccount(gaId);
+      if (!subId.isEmpty)
+        items = usecase.listEvents(tenantId, subId);
+      else if (!category.isEmpty && !gaId.isEmpty)
+        items = usecase.listEvents(tenantId, gaId, category);
+      else if (!severity.isEmpty && !gaId.isEmpty)
+        items = usecase.listEvents(tenantId, gaId, severity);
+      else if (!gaId.isEmpty)
+        items = usecase.listEvents(tenantId, gaId);
 
       auto arr = items.map!(ev => ev.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", items.length);
+        .set("totalCount", items.length)
+        .set("message", "Events retrieved successfully");
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -62,7 +64,7 @@ class EventController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto ev = usecase.getById(id);
+      auto ev = usecase.getEvent(tenantId, id);
       if (ev.isNull) {
         writeError(res, 404, "Event not found");
         return;
@@ -73,21 +75,4 @@ class EventController : PlatformController {
   }
 }
 
-private Json serializeEvent(PlatformEvent event) {
-  return Json.emptyObject
-    .set("id", event.id)
-    .set("globalAccountId", event.globalAccountId)
-    .set("subaccountId", event.subaccountId)
-    .set("directoryId", event.directoryId)
-    .set("category", to!string(event.category))
-    .set("severity", to!string(event.severity))
-    .set("eventType", event.eventType)
-    .set("description", event.description)
-    .set("resourceId", event.resourceId)
-    .set("resourceType", event.resourceType)
-    .set("initiatedBy", event.initiatedBy)
-    .set("sourceService", event.sourceService)
-    .set("timestamp", event.timestamp)
-    .set("details", event.details);
-}
 

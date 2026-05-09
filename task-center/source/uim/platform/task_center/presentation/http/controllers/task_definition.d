@@ -31,6 +31,7 @@ class TaskDefinitionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateTaskDefinitionRequest r;
             r.tenantId = tenantId;
@@ -42,7 +43,7 @@ class TaskDefinitionController : PlatformController {
             r.taskSchema = j.getString("taskSchema");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createTaskDefinition(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -63,9 +64,10 @@ class TaskDefinitionController : PlatformController {
             auto params = req.queryParams();
             auto providerId = params.get("providerId", "");
 
-            TaskDefinition[] defs = providerId.length > 0 ? usecase.listByProvider(tenantId, providerId) : usecase.list(tenantId);
+            TaskDefinition[] defs = !providerId.isEmpty 
+                ? usecase.listTaskDefinitions(tenantId, providerId) : usecase.listTaskDefinitions(tenantId);
 
-            auto jarr = defs.map!(d => toJson(d)).array;
+            auto jarr = defs.map!(d => toJson(d)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", defs.length)
@@ -80,14 +82,13 @@ class TaskDefinitionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             import std.algorithm : endsWith;
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(path);
-            auto d = usecase.getById(tenantId, id);
+            auto id = TaskDefinitionId(extractIdFromPath(path));
+            auto d = usecase.getTaskDefinition(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Task definition not found");
                 return;
@@ -100,8 +101,8 @@ class TaskDefinitionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = TaskDefinitionId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateTaskDefinitionRequest r;
             r.tenantId = tenantId;
@@ -112,7 +113,7 @@ class TaskDefinitionController : PlatformController {
             r.taskSchema = j.getString("taskSchema");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateTaskDefinition(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -129,13 +130,13 @@ class TaskDefinitionController : PlatformController {
 
     private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto id = TaskDefinitionId(extractIdFromPath(stripped));
 
-            auto result = usecase.activate(tenantId, id);
+            auto result = usecase.activateTaskDefinition(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -152,13 +153,13 @@ class TaskDefinitionController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
             
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto id = TaskDefinitionId(extractIdFromPath(stripped));
 
-            auto result = usecase.deactivate(tenantId, id);
+            auto result = usecase.deactivateTaskDefinition(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

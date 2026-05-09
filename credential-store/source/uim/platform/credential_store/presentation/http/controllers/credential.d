@@ -112,7 +112,7 @@ class CredentialController : PlatformController {
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
       Credential[] creds;
-      if (namespaceId.length > 0) {
+      if (!namespaceId.isEmpty) {
         creds = credentials.listCredentials(tenantId, namespaceId, type);
       }
 
@@ -185,6 +185,7 @@ class CredentialController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+
       credentials.deleteCredential(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {

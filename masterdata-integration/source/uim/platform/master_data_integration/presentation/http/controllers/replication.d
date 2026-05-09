@@ -9,7 +9,6 @@ module uim.platform.master_data_integration.presentation.http.replication;
 // import vibe.http.router;
 // import vibe.data.json;
 
-
 import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.replication_job;
@@ -35,7 +34,7 @@ class ReplicationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateReplicationJobRequest r;
@@ -68,15 +67,15 @@ class ReplicationController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
-      auto modelId = req.params.get("distributionModelId", "");
+      auto modelId = DistributionModelId(req.params.get("distributionModelId", ""));
 
       ReplicationJob[] jobs;
-      if (status.length > 0)
-        jobs = usecase.listByStatus(tenantId, status);
-      else if (modelId.length > 0)
-        jobs = usecase.listByDistributionModel(tenantId, modelId);
+      if (!status.isEmpty)
+        jobs = usecase.listReplicationJobs(tenantId, status);
+      else if (!modelId.isEmpty)
+        jobs = usecase.listReplicationJobs(tenantId, modelId);
       else
-        jobs = usecase.listByTenant(tenantId);
+        jobs = usecase.listReplicationJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
@@ -84,7 +83,7 @@ class ReplicationController : PlatformController {
         .set("items", arr)
         .set("totalCount", jobs.length)
         .set("message", "Replication jobs retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -92,10 +91,11 @@ class ReplicationController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto job = usecase.getJob(id);
+      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+
+      auto job = usecase.getReplicationJob(tenantId, id);
       if (job.isNull) {
         writeError(res, 404, "Replication job not found");
         return;
@@ -107,10 +107,11 @@ class ReplicationController : PlatformController {
   }
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.startJob(id);
+      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+
+      auto result = usecase.startReplicationJob(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -125,10 +126,10 @@ class ReplicationController : PlatformController {
   }
 
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.pauseJob(id);
+      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto result = usecase.pauseReplicationJob(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -143,10 +144,10 @@ class ReplicationController : PlatformController {
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.cancelJob(id);
+      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto result = usecase.cancelReplicationJob(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -161,10 +162,10 @@ class ReplicationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteJob(id);
+      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto result = usecase.deleteReplicationJob(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -178,35 +179,4 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private Json serializeJob(ReplicationJob j) {
-    auto o = Json.emptyObject;
-    o["id"] = Json(j.id);
-    o["tenantId"] = Json(j.tenantId);
-    o["distributionModelId"] = Json(j.distributionModelId);
-    o["name"] = Json(j.name);
-    o["description"] = Json(j.description);
-    o["status"] = Json(j.status.to!string);
-    o["trigger"] = Json(j.trigger.to!string);
-
-    auto catsArr = Json.emptyArray;
-    foreach (cat; j.categories)
-      catsArr ~= Json(cat.to!string);
-    o["categories"] = catsArr;
-
-    o["sourceClientId"] = Json(j.sourceClientId);
-    o["targetClientIds"] = serializeStrArray(j.targetClientIds);
-    o["totalRecords"] = Json(j.totalRecords);
-    o["processedRecords"] = Json(j.processedRecords);
-    o["successRecords"] = Json(j.successRecords);
-    o["errorRecords"] = Json(j.errorRecords);
-    o["skippedRecords"] = Json(j.skippedRecords);
-    o["errorMessages"] = serializeStrArray(j.errorMessages);
-    o["lastDeltaToken"] = Json(j.lastDeltaToken);
-    o["isInitialLoad"] = Json(j.isInitialLoad);
-    o["startedAt"] = Json(j.startedAt);
-    o["completedAt"] = Json(j.completedAt);
-    o["createdAt"] = Json(j.createdAt);
-    o["createdBy"] = Json(j.createdBy);
-    return o;
-  }
 }

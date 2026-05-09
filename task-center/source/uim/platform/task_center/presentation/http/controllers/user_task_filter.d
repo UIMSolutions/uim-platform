@@ -59,14 +59,10 @@ class UserTaskFilterController : PlatformController {
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
-            UserTaskFilter[] filters;
-            if (userId.length > 0) {
-                filters = usecase.listByUser(tenantId, userId);
-            } else {
-                filters = [];
-            }
+            UserTaskFilter[] filters = !userId.isEmpty
+                ? usecase.listUserTaskFilters(tenantId, userId) : [];
 
-            auto jarr = filters.map!(f => toJson(f)).array;
+            auto jarr = filters.map!(f => toJson(f)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", filters.length)
@@ -89,8 +85,8 @@ class UserTaskFilterController : PlatformController {
                 return;
 
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(path);
-            auto f = usecase.getById(tenantId, id);
+            auto id = UserTaskFilterId(extractIdFromPath(path));
+            auto f = usecase.getUserTaskFilter(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Filter not found");
                 return;
@@ -105,11 +101,11 @@ class UserTaskFilterController : PlatformController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateUserTaskFilterRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.userTaskFilterId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
 
@@ -134,10 +130,10 @@ class UserTaskFilterController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
-            auto id = extractIdFromPath(stripped);
+            auto id = UserTaskFilterId(extractIdFromPath(stripped));
             auto tenantId = req.getTenantId;
 
-            auto result = usecase.setDefault(tenantId, id);
+            auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -154,8 +150,6 @@ class UserTaskFilterController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
             auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteUserTaskFilter(tenantId, id);
@@ -173,15 +167,4 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private Json filterToJson(UserTaskFilter f) {
-        return Json.emptyObject
-            .set("id", f.id)
-            .set("tenantId", f.tenantId)
-            .set("userId", f.userId)
-            .set("name", f.name)
-            .set("description", f.description)
-            .set("isDefault", f.isDefault)
-            .set("createdAt", f.createdAt)
-            .set("updatedAt", f.updatedAt);
-    }
 }

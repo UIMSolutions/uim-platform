@@ -9,7 +9,6 @@ module uim.platform.destination.presentation.http.controllers.destination;
 // import vibe.http.router;
 // import vibe.data.json;
 
-
 // import uim.platform.destination.application.usecases.manage.destinations;
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination;
@@ -35,7 +34,7 @@ class DestinationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDestinationRequest r;
@@ -48,7 +47,7 @@ class DestinationController : PlatformController {
       r.url = j.getString("url");
       r.authenticationType = j.getString("authentication");
       r.proxyType = j.getString("proxyType");
-      r.level = j.getString("level");
+      r.level = j.getString("level");   
       r.urlPath = j.getString("urlPath");
       r.httpMethod = j.getString("httpMethod");
 
@@ -96,11 +95,10 @@ class DestinationController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      auto instanceId = req.params.get("serviceInstanceId");
+      auto instanceId = ServiceInstanceId(req.params.get("serviceInstanceId", ""));
 
-      Destination[] destinations = instanceId.length > 0
-        ? usecase.listByServiceInstance(tenantId, ServiceInstanceId(instanceId))
-        : usecase.listBySubaccount(tenantId, subaccountId);
+      Destination[] destinations = instanceId.isEmpty
+        ? usecase.listBySubaccount(tenantId, subaccountId) : usecase.listByServiceInstance(tenantId, instanceId);
 
       auto arr = destinations.map!(d => d.toJson).array.toJson;
 
@@ -116,10 +114,11 @@ class DestinationController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto d = usecase.getDestination(id);
+
+      auto d = usecase.getDestination(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Destination not found");
         return;
@@ -131,11 +130,12 @@ class DestinationController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateDestinationRequest r;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.url = j.getString("url");
       r.authenticationType = j.getString("authentication");
@@ -174,10 +174,11 @@ class DestinationController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteDestination(id);
+      
+      auto result = usecase.deleteDestination(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true);

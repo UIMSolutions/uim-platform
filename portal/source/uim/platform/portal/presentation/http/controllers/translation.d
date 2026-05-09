@@ -39,7 +39,7 @@ class TranslationController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto createReq = CreateTranslationRequest(req.headers.get("X-Tenant-Id", ""),
+      auto createReq = CreateTranslationRequest(tenantId,
         j.getString("resourceType"), j.getString("resourceId"),
         j.getString("fieldName"), j.getString("language"), j.getString("value"),);
 
@@ -64,15 +64,14 @@ class TranslationController : PlatformController {
       auto resourceType = req.headers.get("X-Resource-Type", "");
       auto resourceId = req.headers.get("X-Resource-Id", "");
 
-      Translation[] translations;
-      if (resourceType.length > 0 && resourceId.length > 0)
-        translations = useCase.getTranslationsForResource(resourceType, resourceId, language);
-      else
-        translations = useCase.listTranslations(tenantId, language);
+      Translation[] translations = resourceType.length > 0 && !resourceId.isEmpty
+        ? useCase.listTranslations(tenantId, resourceType, resourceId, language)
+        : useCase.listTranslations(tenantId, language);
 
       auto response = Json.emptyObject;
       response["totalResults"] = Json(translations.length);
       response["resources"] = toJsonArray(translations);
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -81,8 +80,9 @@ class TranslationController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto translationId = extractIdFromPath(req.requestURI);
-      auto translation = useCase.getTranslation(translationId);
+      auto translation = useCase.getTranslation(tenantId, translationId);
       if (translation == Translation.init) {
         writeApiError(res, 404, "Translation not found");
         return;
@@ -95,11 +95,12 @@ class TranslationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto translationId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateTranslationRequest(translationId, j.getString("value"),);
 
-      auto error = useCase.updateTranslation(updateReq);
+      auto error = useCase.updateTranslation(tenantId, updateReq);
       if (error.length > 0)
         writeApiError(res, 404, error);
       else
@@ -111,8 +112,9 @@ class TranslationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto translationId = extractIdFromPath(req.requestURI);
-      auto error = useCase.deleteTranslation(translationId);
+      auto error = useCase.deleteTranslation(tenantId, translationId);
       if (error.length > 0)
         writeApiError(res, 404, error);
       else

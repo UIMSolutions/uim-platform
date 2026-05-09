@@ -20,6 +20,7 @@ class TaskAttachmentController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/task-center/attachments", &handleList);
         router.get("/api/v1/task-center/attachments/*", &handleGet);
         router.post("/api/v1/task-center/attachments", &handleCreate);
@@ -31,19 +32,19 @@ class TaskAttachmentController : PlatformController {
             auto j = req.json;
             CreateTaskAttachmentRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.taskId = j.getString("taskId");
+            r.taskAttachmentId = TaskAttachmentId(j.getString("id"));
+            r.taskId = TaskId(j.getString("taskId"));
             r.fileName = j.getString("fileName");
             r.fileSize = j.getString("fileSize");
             r.mimeType = j.getString("mimeType");
-            r.uploadedBy = j.getString("uploadedBy");
+            r.uploadedBy = UserId(j.getString("uploadedBy"));
 
             auto result = usecase.create(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Attachment created");
-                
+
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.error);
@@ -57,16 +58,12 @@ class TaskAttachmentController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
-            auto taskId = params.get("taskId", "");
+            auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskAttachment[] attachments;
-            if (taskId.length > 0) {
-                attachments = usecase.listByTask(tenantId, taskId);
-            } else {
-                attachments = [];
-            }
+            TaskAttachment[] attachments = !taskId.isEmpty
+                ? usecase.listTaskAttachments(tenantId, taskId) : [];
 
-            auto jarr = attachments.map!(a => toJson(a)).array;
+            auto jarr = attachments.map!(a => a.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", attachments.length)
@@ -81,10 +78,9 @@ class TaskAttachmentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TaskAttachmentId(extractIdFromPath(req.requestURI.to!string));
+            
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Attachment not found");
@@ -98,16 +94,15 @@ class TaskAttachmentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
             auto id = TaskAttachmentId(extractIdFromPath(req.requestURI.to!string));
+
             auto result = usecase.deleteTaskAttachment(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Attachment deleted");
-                
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

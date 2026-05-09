@@ -21,19 +21,19 @@ class GetUsageStatisticsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  UsageStatistic[] getByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    return repo.findByScenario(scenarioId, connectionId);
+  UsageStatistic[] listStatistics(TenantId tenantId, ScenarioId scenarioId, ConnectionId connectionId) {
+    return repo.findByScenario(tenantId, scenarioId, connectionId);
   }
 
-  UsageStatistic[] getByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+  UsageStatistic[] listStatistics(TenantId tenantId, ConnectionId connectionId) {
+    return repo.findByConnection(tenantId, connectionId);
   }
 
-  UsageStatistic[] getByPeriod(StatisticsPeriod period) {
-    return repo.findByPeriod(period);
+  UsageStatistic[] listStatistics(TenantId tenantId, StatisticsPeriod period) {
+    return repo.findByPeriod(tenantId, period);
   }
 
-  UsageStatistic[] getAll() {
-    return repo.findAll();
+  UsageStatistic[] listStatistics(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 }

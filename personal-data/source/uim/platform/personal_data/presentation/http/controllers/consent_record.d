@@ -33,7 +33,6 @@ class ConsentRecordController : PlatformController {
             auto j = req.json;
             CreateConsentRecordRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.purposeId = j.getString("purposeId");
             r.consentText = j.getString("consentText");
@@ -65,18 +64,15 @@ class ConsentRecordController : PlatformController {
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
 
-            ConsentRecord[] consents;
-            if (dataSubjectId.length > 0) {
-                consents = usecase.listConsentRecordsByDataSubject(dataSubjectId);
-            } else {
-                consents = usecase.listConsentRecordsByTenant(tenantId);
-            }
+            ConsentRecord[] consents = dataSubjectId.isEmpty
+                ? usecase.listConsentRecords(tenantId) : usecase.listConsentRecords(tenantId, dataSubjectId);
 
             auto jarr = consents.map!(c => c.toJson).array.toJson;
 
             auto response = Json.emptyObject
                 .set("count", consents.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Consent records retrieved successfully");
 
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
@@ -86,19 +82,18 @@ class ConsentRecordController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
                 return;
 
-            auto id = extractIdFromPath(path);
-            if (!usecase.hasConsentRecord(id)) {
+            auto id = ConsentRecordId(extractIdFromPath(path));
+            if (!usecase.hasConsentRecord(tenantId, id)) {
                 writeError(res, 404, "Consent record not found");
                 return;
             }
 
-            auto consent = usecase.getConsentRecord(id);
+            auto consent = usecase.getConsentRecord(tenantId, id);
             res.writeJsonBody(consent.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -107,11 +102,10 @@ class ConsentRecordController : PlatformController {
 
     private void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
-            auto id = extractIdFromPath(stripped);
+            auto id = ConsentRecordId(extractIdFromPath(stripped));
 
             auto j = req.json;
             WithdrawConsentRequest r;
@@ -136,10 +130,10 @@ class ConsentRecordController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = ConsentRecordId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteConsentRecord(id);
+            auto result = usecase.deleteConsentRecord(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

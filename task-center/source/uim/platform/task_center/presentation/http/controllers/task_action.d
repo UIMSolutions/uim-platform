@@ -20,6 +20,7 @@ class TaskActionController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/task-center/actions", &handleList);
         router.get("/api/v1/task-center/actions/*", &handleGet);
         router.post("/api/v1/task-center/actions", &handleCreate);
@@ -31,11 +32,11 @@ class TaskActionController : PlatformController {
             auto j = req.json;
             PerformTaskActionRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.taskId = j.getString("taskId");
+            r.taskActionId = TaskActionId(j.getString("id"));
+            r.taskId = TaskId(j.getString("taskId"));
             r.actionType = j.getString("actionType");
-            r.performedBy = j.getString("performedBy");
-            r.forwardTo = j.getString("forwardTo");
+            r.performedBy = UserId(j.getString("performedBy"));
+            r.forwardTo = UserId(j.getString("forwardTo"));
             r.comment = j.getString("comment");
 
             auto result = usecase.create(r);
@@ -57,19 +58,13 @@ class TaskActionController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
-            auto taskId = params.get("taskId", "");
+            auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskAction[] actions;
-            if (taskId.length > 0) {
-                actions = usecase.listByTask(tenantId, taskId);
-            } else {
-                actions = [];
-            }
+            TaskAction[] actions = !taskId.isEmpty
+                ? usecase.listTaskActions(tenantId, taskId)
+                : null;
 
-            auto jarr = Json.emptyArray;
-            foreach (a; actions) {
-                jarr ~= actionToJson(a);
-            }
+            auto jarr = actions.map!(a => a.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", actions.length)
@@ -84,10 +79,8 @@ class TaskActionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TaskActionId(extractIdFromPath(req.requestURI.to!string));
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Action not found");
@@ -101,8 +94,6 @@ class TaskActionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto tenantId = req.getTenantId;
             auto id = TaskActionId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteTaskAction(tenantId, id);
@@ -120,15 +111,4 @@ class TaskActionController : PlatformController {
         }
     }
 
-    private Json actionToJson(TaskAction a) {
-        return Json.emptyObject
-            .set("id", a.id)
-            .set("tenantId", a.tenantId)
-            .set("taskId", a.taskId)
-            .set("actionType", a.actionType.to!string)
-            .set("performedBy", a.performedBy)
-            .set("forwardTo", a.forwardTo)
-            .set("comment", a.comment)
-            .set("performedAt", a.performedAt);
-    }
 }

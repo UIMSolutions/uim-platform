@@ -38,10 +38,11 @@ class SubaccountController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSubaccountRequest r;
+      r.tenantId = tenantId;
       r.globalAccountId = j.getString("globalAccountId");
       r.parentDirectoryId = j.getString("parentDirectoryId");
       r.displayName = j.getString("displayName");
@@ -69,16 +70,17 @@ class SubaccountController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");
       auto dirId = req.params.get("directoryId");
       auto region = req.params.get("region");
 
       Subaccount[] items;
-      if (dirId.length > 0)
+      if (!dirId.isEmpty)
         items = usecase.listByDirectory(dirId);
-      else if (region.length > 0 && gaId.length > 0)
+      else if (!region.isEmpty && !gaId.isEmpty)
         items = usecase.listByRegion(gaId, region);
-      else if (gaId.length > 0)
+      else if (!gaId.isEmpty)
         items = usecase.listByGlobalAccount(gaId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -94,10 +96,10 @@ class SubaccountController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto s = usecase.getById(id);
+      auto s = usecase.getById(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Subaccount not found");
         return;
@@ -108,11 +110,13 @@ class SubaccountController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
+      auto id = SubaccountId(extractId(req.requestURI));
       auto j = req.json;
       UpdateSubaccountRequest r;
+      r.tenantId = tenantId;
+      r.subaccountId = id;
       r.displayName = j.getString("displayName");
       r.description = j.getString("description");
       r.usage = j.getString("usage");
@@ -121,7 +125,7 @@ class SubaccountController : PlatformController {
       r.labels = jsonStrMap(j, "labels");
       r.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateSubaccount(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -131,14 +135,17 @@ class SubaccountController : PlatformController {
   }
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
+      auto id = SubaccountId(extractId(req.requestURI));
       auto j = req.json;
       MoveSubaccountRequest r;
+      r.tenantId = tenantId;
+      r.subaccountId = id;
+      r.globalAccountId = j.getString("globalAccountId");
       r.targetDirectoryId = j.getString("targetDirectoryId");
 
-      auto result = usecase.moveSubaccount(id, r);
+      auto result = usecase.moveSubaccount(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -148,10 +155,10 @@ class SubaccountController : PlatformController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.suspend(id);
+      auto id = SubaccountId(extractId(req.requestURI));
+      auto result = usecase.suspendSubaccount(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -161,10 +168,10 @@ class SubaccountController : PlatformController {
   }
 
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.reactivate(id);
+      auto id = SubaccountId(extractId(req.requestURI));
+      auto result = usecase.reactivateSubaccount(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -174,10 +181,10 @@ class SubaccountController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
-      auto result = usecase.deleteSubaccount(id);
+      auto result = usecase.deleteSubaccount(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else
@@ -185,26 +192,4 @@ class SubaccountController : PlatformController {
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
-}
-
-private Json serializeSubaccount(Subaccount subaccount) {
-  return Json.emptyObject
-    .set("id", subaccount.id)
-    .set("globalAccountId", subaccount.globalAccountId)
-    .set("parentDirectoryId", subaccount.parentDirectoryId)
-    .set("displayName", subaccount.displayName)
-    .set("description", subaccount.description)
-    .set("subdomain", subaccount.subdomain)
-    .set("region", subaccount.region)
-    .set("status", to!string(subaccount.status))
-    .set("usage", to!string(subaccount.usage))
-    .set("betaEnabled", subaccount.betaEnabled)
-    .set("usedForProduction", subaccount.usedForProduction)
-    .set("tenantId", subaccount.tenantId)
-    .set("createdAt", subaccount.createdAt)
-    .set("updatedAt", subaccount.updatedAt)
-    .set("createdBy", subaccount.createdBy)
-    .set("labels", subaccount.labels)
-    .set("customProperties", subaccount.customProperties)
-    .set("message", "Subaccount retrieved successfully");
 }
