@@ -72,8 +72,8 @@ struct DomainDashboard {
             .set("totalMappings", totalMappings)
             .set("activeMappings", activeMappings)
             .set("overallHealth", overallHealth.to!string)
-            .set("metrics", metrics.array.map!(m => m.toJson()).array)
-            .set("expirationWarnings", expirationWarnings.array.map!(w => w.toJson()).array)
+            .set("metrics", metrics.array.map!(m => m.toJson()).array.toJson)
+            .set("expirationWarnings", expirationWarnings.array.map!(w => w.toJson()).array.toJson)
             .set("lastUpdatedAt", lastUpdatedAt);
     }
 }

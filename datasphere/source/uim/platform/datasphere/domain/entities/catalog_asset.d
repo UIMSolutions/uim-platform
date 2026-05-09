@@ -47,7 +47,7 @@ struct CatalogAsset {
       .set("assetType", assetType.to!string)
       .set("qualityStatus", qualityStatus.to!string)
       .set("sourceObjectId", sourceObjectId)
-      .set("tags", tags.map!(t => t.toJson()).array)
+      .set("tags", tags.map!(t => t.toJson()).array.toJson)
       .set("glossaryTerms", glossaryTerms)
       .set("owner", owner)
       .set("accessCount", accessCount);

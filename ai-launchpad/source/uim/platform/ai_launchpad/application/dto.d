@@ -89,7 +89,7 @@ struct SyncScenarioRequest {
       .set("scenarioId", scenarioId)
       .set("name", name)
       .set("description", description)
-      .set("labels", labels.array);
+      .set("labels", labels.array.toJson);
   }
 }
 
@@ -108,8 +108,8 @@ struct CreateConfigurationRequest {
       .set("scenarioId", scenarioId)
       .set("executableId", executableId)
       .set("name", name)
-      .set("parameterValues", parameterValues.array)
-      .set("inputArtifacts", inputArtifacts.array);
+      .set("parameterValues", parameterValues.array.toJson)
+      .set("inputArtifacts", inputArtifacts.array.toJson);
   }
 }
 
@@ -148,7 +148,7 @@ struct BulkPatchExecutionRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("connectionId", connectionId)
-      .set("executionIds", executionIds.array)
+      .set("executionIds", executionIds.array.toJson)
       .set("targetStatus", targetStatus);
   }
 }
@@ -194,7 +194,7 @@ struct BulkPatchDeploymentRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("connectionId", connectionId)
-      .set("deploymentIds", deploymentIds.array)
+      .set("deploymentIds", deploymentIds.array.toJson)
       .set("targetStatus", targetStatus);
   }
 
@@ -222,7 +222,7 @@ struct RegisterModelRequest {
       .set("executionId", executionId)
       .set("url", url)
       .set("size", size)
-      .set("labels", labels.array);
+      .set("labels", labels.array.toJson);
   }
 }
 
@@ -259,7 +259,7 @@ struct RegisterDatasetRequest {
       .set("scenarioId", scenarioId)
       .set("url", url)
       .set("size", size)
-      .set("labels", labels.array);
+      .set("labels", labels.array.toJson);
   }
 }
 
@@ -299,13 +299,13 @@ struct CreatePromptRequest {
       .set("name", name)
       .set("modelName", modelName)
       .set("modelVersion", modelVersion)
-      .set("messages", messages.array)
+      .set("messages", messages.array.toJson)
       .set("temperature", temperature)
       .set("maxTokens", maxTokens)
       .set("topP", topP)
       .set("frequencyPenalty", frequencyPenalty)
       .set("presencePenalty", presencePenalty)
-      .set("inputParams", inputParams.array)
+      .set("inputParams", inputParams.array.toJson)
       .set("createdBy", createdBy);
   }
 }
@@ -323,7 +323,7 @@ struct PatchPromptRequest {
       .set("promptId", promptId)
       .set("name", name)
       .set("status", status)
-      .set("messages", messages.array)
+      .set("messages", messages.array.toJson)
       .set("temperature", temperature)
       .set("maxTokens", maxTokens);
   }
@@ -368,7 +368,7 @@ struct CreateResourceGroupRequest {
     return Json.emptyObject
       .set("connectionId", connectionId)
       .set("resourceGroupId", resourceGroupId)
-      .set("labels", labels.array);
+      .set("labels", labels.array.toJson);
   }
 }
 
@@ -381,7 +381,7 @@ struct PatchResourceGroupRequest {
     return Json.emptyObject
       .set("connectionId", connectionId)
       .set("resourceGroupId", resourceGroupId)
-      .set("labels", labels.array);
+      .set("labels", labels.array.toJson);
   }
 }
 
@@ -416,8 +416,8 @@ struct CapabilitiesResponse {
     return Json.emptyObject
       .set("serviceName", serviceName)
       .set("serviceVersion", serviceVersion)
-      .set("supportedRuntimes", supportedRuntimes.array)
-      .set("features", features.array)
+      .set("supportedRuntimes", supportedRuntimes.array.toJson)
+      .set("features", features.array.toJson)
       .set("multiTenant", multiTenant)
       .set("genAiHub", genAiHub)
       .set("promptManagement", promptManagement)

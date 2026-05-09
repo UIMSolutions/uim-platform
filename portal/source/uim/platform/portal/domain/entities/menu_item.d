@@ -33,7 +33,7 @@ struct MenuItem {
       .set("targetPageId", targetPageId.value)
       .set("targetUrl", targetUrl)
       .set("navigationTarget", navigationTarget.toString())
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson)
       .set("sortOrder", sortOrder)
       .set("visible", visible);
 

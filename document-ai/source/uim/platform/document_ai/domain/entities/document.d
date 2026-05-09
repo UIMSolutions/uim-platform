@@ -51,7 +51,7 @@ struct Document {
       .set("schemaId", schemaId)
       .set("templateId", templateId)
       .set("extractionMethod", extractionMethod.to!string)
-      .set("labels", labels.map!(l => Json.emptyObject.set("key", l.key).set("value", l.value)).array)
+      .set("labels", labels.map!(l => Json.emptyObject.set("key", l.key).set("value", l.value)).array.toJson)
       .set("uploadedAt", uploadedAt)
       .set("processedAt", processedAt);
   }

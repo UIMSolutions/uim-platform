@@ -24,7 +24,7 @@ struct AuthorizationPolicy {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("rules", rules.map!(r => r.toJson()).array)
+      .set("rules", rules.map!(r => r.toJson()).array.toJson)
       .set("applicationIds", applicationIds)
       .set("active", active);
   }

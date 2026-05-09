@@ -50,7 +50,7 @@ struct ContentProvider {
           .set("endpoint", endpoint)
           .set("authToken", authToken)
           .set("status", status.to!string)
-          .set("contentTypes", contentTypes.map!(c => c.toJson).array)
+          .set("contentTypes", contentTypes.map!(c => c.toJson).array.toJson)
           .set("createdBy", createdBy)
           .set("registeredAt", registeredAt)
           .set("lastSyncAt", lastSyncAt);

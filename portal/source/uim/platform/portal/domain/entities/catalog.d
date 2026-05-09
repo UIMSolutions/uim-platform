@@ -27,8 +27,8 @@ struct Catalog {
       .set("title", title)
       .set("description", description)
       .set("providerId", providerId.value)
-      .set("tileIds", tileIds.map!(id => id.value).array)
-      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array)
+      .set("tileIds", tileIds.map!(id => id.value).array.toJson)
+      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array.toJson)
       .set("active", active);
 
     return j;

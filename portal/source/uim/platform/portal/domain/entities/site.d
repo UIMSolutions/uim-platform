@@ -37,8 +37,8 @@ struct Site {
       .set("status", status.toString())
       .set("themeId", themeId.value)
       .set("pageIds", pageIds)
-      .set("menuItemIds", menuItemIds.map!(id => id.value).array)
-      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array)
+      .set("menuItemIds", menuItemIds.map!(id => id.value).array.toJson)
+      .set("allowedRoleIds", allowedRoleIds.map!(id => id.value).array.toJson)
       .set("settings", settings.toJson());
 
     return j;

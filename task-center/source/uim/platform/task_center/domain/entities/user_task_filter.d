@@ -34,7 +34,7 @@ struct UserTaskFilter {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("criteria", criteria.map!(c => c.toJson()).array)
+            .set("criteria", criteria.map!(c => c.toJson()).array.toJson)
             .set("isDefault", isDefault);
     }
 }

@@ -30,7 +30,7 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
   }
 
   TenantId[] findAllTenants() {
-    return store.byKey.array;
+    return store.byKey.array.toJson;
   }
 
   void createTenant(TenantId tenantId) {
@@ -61,7 +61,7 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
 
   override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     auto tenants = findAllTenants();
-    auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array).array.flat();
+    auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array.toJson).array.flat();
     return limit == 0
       ? tenantsItems.skip(offset) : tenantsItems.skip(offset).take(limit);
   }
@@ -89,7 +89,7 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
   TEntity[] findAllById(TenantId tenantId, TId[] ids) {
     return ids.filter!(id => existsById(tenantId, id))
       .map!(id => findById(tenantId, id))
-      .array;
+      .array.toJson;
   }
 
   void removeById(TenantId tenantId, TId id) {
@@ -112,7 +112,7 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
   }
 
   TEntity[] filterByTenant(TEntity[] items, TenantId tenantId) {
-    return items.filter!(e => e.tenantId == tenantId).array;
+    return items.filter!(e => e.tenantId == tenantId).array.toJson;
   }
 
   TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
@@ -122,7 +122,7 @@ class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantReposito
 
     TEntity[] allItems;
     size_t idx;
-    foreach (item; store[tenantId].values.array) {
+    foreach (item; store[tenantId].values.array.toJson) {
       if (idx >= offset && (limit == 0 || allItems.length < limit))
         allItems ~= item;
       idx++;

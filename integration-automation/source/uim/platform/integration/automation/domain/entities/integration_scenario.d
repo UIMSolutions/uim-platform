@@ -35,8 +35,8 @@ struct IntegrationScenario {
           .set("status", status.to!string)
           .set("sourceSystemType", sourceSystemType.to!string)
           .set("targetSystemType", targetSystemType.to!string)
-          .set("prerequisites", prerequisites.array)
-          .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array);
+          .set("prerequisites", prerequisites.array.toJson)
+          .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array.toJson);
   }
 }
 
@@ -69,7 +69,7 @@ struct ScenarioStepTemplate {
           .set("automationPayload", automationPayload)
           .set("requiresSourceSystem", requiresSourceSystem)
           .set("requiresTargetSystem", requiresTargetSystem)
-          .set("dependsOnSteps", dependsOnSteps.array)
+          .set("dependsOnSteps", dependsOnSteps.array.toJson)
           .set("estimatedDurationMinutes", estimatedDurationMinutes);
   }
 }

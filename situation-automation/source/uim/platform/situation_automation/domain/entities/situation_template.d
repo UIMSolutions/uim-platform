@@ -51,7 +51,7 @@ struct SituationTemplate {
             .set("defaultSeverity", defaultSeverity.toString())
             .set("status", status.toString())
             .set("entityTypeId", entityTypeId)
-            .set("conditions", conditions.map!(c => c.toJson()).array)
+            .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
             .set("suggestedActionIds", suggestedActionIds)
             .set("sourceSystem", sourceSystem)
             .set("sourceTemplateId", sourceTemplateId)

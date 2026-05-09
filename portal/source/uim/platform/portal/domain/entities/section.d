@@ -28,7 +28,7 @@ struct PortalSection {
       .set("id", id.value)
       .set("pageId", pageId.value)
       .set("title", title)
-      .set("tileIds", tileIds.map!(t => t.value).array)
+      .set("tileIds", tileIds.map!(t => t.value).array.toJson)
       .set("sortOrder", sortOrder)
       .set("visible", visible)
       .set("columns", columns);

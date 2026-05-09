@@ -43,7 +43,7 @@ struct DataAccessControl {
       .set("name", name)
       .set("description", description)
       .set("criteriaType", criteriaType.to!string)
-      .set("conditions", conditions.map!(c => c.toJson()).array)
+      .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
       .set("targetViewIds", targetViewIds)
       .set("assignedUserIds", assignedUserIds)
       .set("isEnabled", isEnabled);

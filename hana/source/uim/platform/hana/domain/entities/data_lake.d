@@ -56,8 +56,8 @@ struct DataLake {
           .set("description", description)
           .set("status", status.to!string)
           .set("endpoint", endpoint.toJson())
-          .set("storage", storage.map!(s => s.toJson()).array)
-          .set("supportedFormats", supportedFormats.map!(f => f.to!string).array)
+          .set("storage", storage.map!(s => s.toJson()).array.toJson)
+          .set("supportedFormats", supportedFormats.map!(f => f.to!string).array.toJson)
           .set("computeNodes", computeNodes);
   }
 }

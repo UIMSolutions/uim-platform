@@ -58,7 +58,7 @@ struct Group {
       .set("displayName", displayName)
       .set("description", description)
       .set("groupType", groupType.to!string)
-      .set("members", members.map!(m => m.toJson()).array)
+      .set("members", members.map!(m => m.toJson()).array.toJson)
       .set("schemas", schemas);
   }
 }

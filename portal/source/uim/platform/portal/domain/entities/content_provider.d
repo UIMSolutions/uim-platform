@@ -31,7 +31,7 @@ struct ContentProvider {
       .set("providerType", providerType.toString())
       .set("contentEndpointUrl", contentEndpointUrl)
       .set("active", active)
-      .set("catalogIds", catalogIds.map!(id => id.value).array)
+      .set("catalogIds", catalogIds.map!(id => id.value).array.toJson)
       .set("lastSyncedAt", lastSyncedAt);
 
     return j;

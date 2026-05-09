@@ -28,7 +28,7 @@ struct DataContext {
             .set("instanceId", instanceId.value)
             .set("entityId", entityId)
             .set("entityTypeId", entityTypeId)
-            .set("data", data.map!(row => row.array).array)
+            .set("data", data.map!(row => row.array.toJson).array.toJson)
             .set("sourceSystem", sourceSystem)
             .set("containsPersonalData", containsPersonalData)
             .set("capturedAt", capturedAt)

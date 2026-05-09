@@ -31,7 +31,7 @@ struct MatchGroup {
       .set("detectedAt", detectedAt)
       .set("resolvedAt", resolvedAt)
       .set("survivorRecordId", survivorRecordId)
-      .set("candidates", candidates.map!(c => c.toJson()).array);
+      .set("candidates", candidates.map!(c => c.toJson()).array.toJson);
   }
 }
 
@@ -49,7 +49,7 @@ struct MatchCandidate {
       .set("score", score)
       .set("confidence", confidence.to!string)
       .set("isSurvivor", isSurvivor)
-      .set("fieldMatches", fieldMatches.map!(fm => fm.toJson()).array);
+      .set("fieldMatches", fieldMatches.map!(fm => fm.toJson()).array.toJson);
   }
 }
 

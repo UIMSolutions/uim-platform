@@ -85,10 +85,10 @@ struct ApiRuleEntry {
   Json toJson() const {
     return Json.emptyObject
       .set("path", path)
-      .set("methods", methods.map!(m => m.toString()).array)
+      .set("methods", methods.map!(m => m.toString()).array.toJson)
       .set("accessStrategy", accessStrategy.toString())
-      .set("requiredScopes", requiredScopes.array)
-      .set("audiences", audiences.array)
-      .set("trustedIssuers", trustedIssuers.array);
+      .set("requiredScopes", requiredScopes.array.toJson)
+      .set("audiences", audiences.array.toJson)
+      .set("trustedIssuers", trustedIssuers.array.toJson);
   }
 }

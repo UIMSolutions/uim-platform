@@ -23,7 +23,7 @@ struct RiskRule {
   Json toJson() const {
     return entityToJson
       .set("name", name)
-      .set("conditions", conditions.map!(c => c.toJson()).array)
+      .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
       .set("resultLevel", resultLevel.to!string)
       .set("requiredMfa", requiredMfa.to!string)
       .set("active", active);

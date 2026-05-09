@@ -46,9 +46,9 @@ struct Application {
       .set("registrationType", registrationType.toString())
       .set("connectorUrl", connectorUrl)
       .set("accessLabel", accessLabel)
-      .set("apis", apis.map!(api => api.toJson()).array)
-      .set("events", events.map!(event => event.toJson()).array)
-      .set("boundNamespaces", boundNamespaces.array)
+      .set("apis", apis.map!(api => api.toJson()).array.toJson)
+      .set("events", events.map!(event => event.toJson()).array.toJson)
+      .set("boundNamespaces", boundNamespaces.array.toJson)
       .set("labels", labels);
 
     return j;

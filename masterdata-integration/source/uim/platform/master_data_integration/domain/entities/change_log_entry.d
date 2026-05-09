@@ -43,7 +43,7 @@ struct ChangeLogEntry {
       .set("category", category.to!string)
       .set("changeType", changeType.to!string)
       .set("objectType", objectType)
-      .set("changedFields", changedFields.array)
+      .set("changedFields", changedFields.array.toJson)
       .set("oldValues", oldValues)
       .set("newValues", newValues)
       .set("sourceSystem", sourceSystem)

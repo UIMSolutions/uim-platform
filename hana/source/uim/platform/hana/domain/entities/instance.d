@@ -82,11 +82,11 @@ struct DatabaseInstance {
       .set("availabilityZone", availabilityZone)
       .set("endpoint", endpoint.toJson())
       .set("resources", resources.toJson())
-      .set("labels", labels.map!(l => l.toJson()).array)
+      .set("labels", labels.map!(l => l.toJson()).array.toJson)
       .set("enableScriptServer", enableScriptServer)
       .set("enableDocStore", enableDocStore)
       .set("enableDataLake", enableDataLake)
       .set("allowAllIpAccess", allowAllIpAccess)
-      .set("whitelistedIps", whitelistedIps.array);
+      .set("whitelistedIps", whitelistedIps.array.toJson);
   }
 }

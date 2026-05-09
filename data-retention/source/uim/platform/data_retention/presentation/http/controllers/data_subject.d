@@ -42,6 +42,7 @@ class DataSubjectController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
+            
             auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;
             foreach (ds; items) {

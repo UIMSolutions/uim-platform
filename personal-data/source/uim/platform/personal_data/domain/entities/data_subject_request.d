@@ -49,7 +49,7 @@ struct DataSubjectRequest {
             .set("description", description)
             .set("applicationIds", applicationIds)
             .set("dataCategoryIds", dataCategoryIds)
-            .set("comments", comments.map!(c => c.toJson()).array)
+            .set("comments", comments.map!(c => c.toJson()).array.toJson)
             .set("assignedTo", assignedTo)
             .set("dueDate", dueDate)
             .set("completedAt", completedAt)

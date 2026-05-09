@@ -42,7 +42,7 @@ struct EntityType {
             .set("description", description)
             .set("category", category.toString())
             .set("sourceSystem", sourceSystem)
-            .set("attributes", attributes.map!(attr => attr.toJson()).array)
-            .set("relatedTemplateIds", relatedTemplateIds.array);
+            .set("attributes", attributes.map!(attr => attr.toJson()).array.toJson)
+            .set("relatedTemplateIds", relatedTemplateIds.array.toJson);
     }
 }

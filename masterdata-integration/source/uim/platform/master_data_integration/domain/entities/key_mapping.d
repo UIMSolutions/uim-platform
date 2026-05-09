@@ -24,7 +24,7 @@ struct KeyMapping {
       .set("masterDataObjectId", masterDataObjectId)
       .set("category", category.to!string)
       .set("objectType", objectType)
-      .set("entries", entries.map!(e => e.toJson()).array);
+      .set("entries", entries.map!(e => e.toJson()).array.toJson);
   }
 }
 

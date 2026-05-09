@@ -50,7 +50,7 @@ struct Template {
           .set("name", name)
           .set("description", description)
           .set("status", status.to!string)
-          .set("regions", regions.map!(r => r.toJson()).array)
-          .set("sampleDocumentIds", sampleDocumentIds.array);
+          .set("regions", regions.map!(r => r.toJson()).array.toJson)
+          .set("sampleDocumentIds", sampleDocumentIds.array.toJson);
   }
 }

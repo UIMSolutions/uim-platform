@@ -43,7 +43,7 @@ struct TlsConfiguration {
             .set("description", description)
             .set("minProtocolVersion", minProtocolVersion.to!string)
             .set("maxProtocolVersion", maxProtocolVersion.to!string)
-            .set("cipherSuites", cipherSuites.map!(cs => cs.toJson()).array)
+            .set("cipherSuites", cipherSuites.map!(cs => cs.toJson()).array.toJson)
             .set("http2Enabled", http2Enabled)
             .set("hstsEnabled", hstsEnabled)
             .set("hstsMaxAge", hstsMaxAge)

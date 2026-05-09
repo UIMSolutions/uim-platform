@@ -35,7 +35,7 @@ struct EnrichmentData {
       .set("subtype", subtype)
       .set("fields", fields.map!(f => Json.init
         .set("key", f.key)
-        .set("value", f.value)).array);
+        .set("value", f.value)).array.toJson);
 
     return j;
   }

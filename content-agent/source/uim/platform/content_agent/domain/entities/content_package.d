@@ -56,7 +56,7 @@ struct ContentPackage {
       .set("version", version_)
       .set("status", status.to!string)
       .set("format", format.to!string)
-      .set("items", items.map!(item => item.toJson()).array)
+      .set("items", items.map!(item => item.toJson()).array.toJson)
       .set("tags", tags)
       .set("assembledAt", assembledAt)
       .set("packageSizeBytes", packageSizeBytes);

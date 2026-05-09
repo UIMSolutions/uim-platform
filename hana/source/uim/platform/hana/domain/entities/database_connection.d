@@ -58,6 +58,6 @@ struct DatabaseConnection {
       .set("useTls", useTls)
       .set("tlsCertificate", tlsCertificate)
       .set("poolConfig", poolConfig.toJson())
-      .set("properties", properties.array);
+      .set("properties", properties.array.toJson);
   }
 }

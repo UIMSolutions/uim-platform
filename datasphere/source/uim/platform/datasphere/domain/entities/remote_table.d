@@ -53,7 +53,7 @@ struct RemoteTable {
         .set("length", col.length)
         .set("precision", col.precision)
         .set("scale", col.scale)
-        .set("description", col.description)).array)
+        .set("description", col.description)).array.toJson)
       .set("rowCount", rowCount)
       .set("lastReplicatedAt", lastReplicatedAt);
 

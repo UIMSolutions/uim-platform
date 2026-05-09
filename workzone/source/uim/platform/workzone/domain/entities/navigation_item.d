@@ -38,7 +38,7 @@ struct NavigationItem {
       .set("targetAppId", targetAppId.value)
       .set("targetPageId", targetPageId.value)
       .set("parentId", parentId.value)
-      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array)
+      .set("allowedRoleIds", allowedRoleIds.map!(r => r.value).array.toJson)
       .set("sortOrder", sortOrder)
       .set("visible", visible)
       .set("openInNewWindow", openInNewWindow);

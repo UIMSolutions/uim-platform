@@ -27,7 +27,7 @@ struct FeatureRestriction {
           .set("type", type.to!string)
           .set("enabled", enabled)
           .set("percentage", percentage)
-          .set("whitelist", whitelist.array)
+          .set("whitelist", whitelist.array.toJson)
           .set("metadata", metadata);
   }
 }

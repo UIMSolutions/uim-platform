@@ -46,7 +46,7 @@ struct SituationInstance {
             .set("severity", severity)
             .set("entityId", entityId)
             .set("entityTypeId", entityTypeId)
-            .set("contextData", contextData.map!(cd => cd.array).array)
+            .set("contextData", contextData.map!(cd => cd.array.toJson).array.toJson)
             .set("resolution", resolution.type != ResolutionType.none ? Json.init
                 .set("type", resolution.type)
                 .set("resolvedBy", resolution.resolvedBy)

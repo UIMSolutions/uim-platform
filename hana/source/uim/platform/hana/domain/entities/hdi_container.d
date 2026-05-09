@@ -51,6 +51,6 @@ struct HDIContainer {
       .set("appUserSchema", appUserSchema)
       .set("artifactCount", artifactCount)
       .set("sizeBytes", sizeBytes)
-      .set("grantedSchemas", grantedSchemas.array);
+      .set("grantedSchemas", grantedSchemas.array.toJson);
   }
 }

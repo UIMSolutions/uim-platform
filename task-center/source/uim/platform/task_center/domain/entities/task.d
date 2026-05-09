@@ -52,7 +52,7 @@ struct Task {
             .set("creator", creator)
             .set("processor", processor)
             .set("sourceApplication", sourceApplication)
-            .set("allowedActions", allowedActions.array)
+            .set("allowedActions", allowedActions.array.toJson)
             .set("customAttributes", customAttributes)
             .set("isClaimed", isClaimed)
             .set("claimedBy", claimedBy)

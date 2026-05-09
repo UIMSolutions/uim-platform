@@ -31,6 +31,7 @@ class ProjectTemplateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
+            
             auto items = usecase.listProjectTemplates(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             auto resp = Json.emptyObject

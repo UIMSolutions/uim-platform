@@ -39,8 +39,8 @@ struct DashboardWidget {
             .set("id", id)
             .set("name", name)
             .set("widgetType", widgetType)
-            .set("metrics", metrics.map!(m => m.toJson()).array)
-            .set("templateIds", templateIds.array)
+            .set("metrics", metrics.map!(m => m.toJson()).array.toJson)
+            .set("templateIds", templateIds.array.toJson)
             .set("order", order);
     }
 }
@@ -60,7 +60,7 @@ struct Dashboard {
             .set("name", name)
             .set("description", description)
             .set("type", type.toString())
-            .set("widgets", widgets.map!(w => w.toJson()).array)
+            .set("widgets", widgets.map!(w => w.toJson()).array.toJson)
             .set("defaultTimeRange", Json.emptyObject
                     .set("startTime", defaultTimeRange.startTime)
                     .set("endTime", defaultTimeRange.endTime))

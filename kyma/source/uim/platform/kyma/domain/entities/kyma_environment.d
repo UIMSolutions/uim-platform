@@ -61,11 +61,11 @@ struct KymaEnvironment {
       .set("autoScalerMax", autoScalerMax)
       .set("oidcIssuerUrl", oidcIssuerUrl)
       .set("oidcClientId", oidcClientId)
-      .set("oidcGroupsClaim", oidcGroupsClaim.array)
-      .set("oidcUsernameClaim", oidcUsernameClaim.array)
+      .set("oidcGroupsClaim", oidcGroupsClaim.array.toJson)
+      .set("oidcUsernameClaim", oidcUsernameClaim.array.toJson)
       .set("shootDomain", shootDomain)
       .set("kubeApiServerUrl", kubeApiServerUrl)
-      .set("administrators", administrators.array)
+      .set("administrators", administrators.array.toJson)
       .set("expiresAt", expiresAt);
 
     return j;

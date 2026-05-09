@@ -38,6 +38,6 @@ struct Client {
       .set("documentQuota", documentQuota)
       .set("documentsProcessed", documentsProcessed)
       .set("dataFeedbackEnabled", dataFeedbackEnabled)
-      .set("labels", labels.map!(l => l.toJson()).array);
+      .set("labels", labels.map!(l => l.toJson()).array.toJson);
   }
 }

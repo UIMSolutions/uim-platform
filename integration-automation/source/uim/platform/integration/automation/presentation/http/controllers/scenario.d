@@ -193,7 +193,7 @@ class ScenarioController : PlatformController {
   private static ScenarioStepTemplate[] parseStepTemplates(Json j) {
     ScenarioStepTemplate[] result;
     auto v = "stepTemplates" in j;
-    if (v.isNull || (v).type != Json.Type.array)
+    if (v.isNull || (v).type != Json.Type.array.toJson)
       return result;
     foreach (item; *v) {
       if (item.isObject) {

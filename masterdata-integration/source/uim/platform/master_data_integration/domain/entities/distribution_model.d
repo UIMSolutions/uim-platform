@@ -38,10 +38,10 @@ struct DistributionModel {
       .set("status", status.to!string)
       .set("direction", direction.to!string)
       .set("sourceClientId", sourceClientId)
-      .set("targetClientIds", targetClientIds.array)
-      .set("categories", categories.map!(c => c.to!string).array)
-      .set("dataModelIds", dataModelIds.array)
-      .set("filterRuleIds", filterRuleIds.array)
+      .set("targetClientIds", targetClientIds.array.toJson)
+      .set("categories", categories.map!(c => c.to!string).array.toJson)
+      .set("dataModelIds", dataModelIds.array.toJson)
+      .set("filterRuleIds", filterRuleIds.array.toJson)
       .set("autoReplicate", autoReplicate)
       .set("cronSchedule", cronSchedule);
   }

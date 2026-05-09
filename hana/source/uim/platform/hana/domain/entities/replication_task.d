@@ -52,7 +52,7 @@ struct ReplicationTask {
       .set("status", status.toString())
       .set("sourceConnectionId", sourceConnectionId)
       .set("targetConnectionId", targetConnectionId)
-      .set("mappings", mappings.map!(m => m.toJson()).array)
+      .set("mappings", mappings.map!(m => m.toJson()).array.toJson)
       .set("scheduleExpression", scheduleExpression)
       .set("lastRunAt", lastRunAt)
       .set("nextRunAt", nextRunAt)

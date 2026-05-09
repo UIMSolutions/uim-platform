@@ -48,7 +48,7 @@ struct SituationAction {
             .set("webhookUrl", webhookUrl)
             .set("emailTemplate", emailTemplate)
             .set("scriptContent", scriptContent)
-            .set("applicableTemplateIds", applicableTemplateIds.array)
+            .set("applicableTemplateIds", applicableTemplateIds.array.toJson)
             .set("lastExecutedAt", lastExecutedAt)
             .set("executionCount", executionCount);
     }

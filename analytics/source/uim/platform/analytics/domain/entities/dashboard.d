@@ -54,7 +54,7 @@ class Dashboard {
 
   Json toJson() {
     auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
-        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array)).array;
+        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array.toJson)).array.toJson;
 
     return Json.emptyObject.set("id", id.value).set("name", name)
       .set("description", description).set("ownerId", ownerId.value)
@@ -74,6 +74,6 @@ struct Page {
 
   Json toJson() {
     return Json.emptyObject.set("id", id.value).set("title", title)
-      .set("widgetIds", widgetIds.map!(wid => wid.value).array);
+      .set("widgetIds", widgetIds.map!(wid => wid.value).array.toJson);
   }
 }

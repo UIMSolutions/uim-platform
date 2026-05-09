@@ -30,9 +30,9 @@ struct DataModel {
       .set("version", version_)
       .set("description", description)
       .set("category", category.to!string)
-      .set("fields", fields.map!(f => f.toJson()).array)
-      .set("keyFields", keyFields.array)
-      .set("requiredFields", requiredFields.array)
+      .set("fields", fields.map!(f => f.toJson()).array.toJson)
+      .set("keyFields", keyFields.array.toJson)
+      .set("requiredFields", requiredFields.array.toJson)
       .set("isActive", isActive);
   }
 }

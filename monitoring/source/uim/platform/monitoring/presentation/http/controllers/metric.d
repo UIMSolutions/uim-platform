@@ -66,7 +66,6 @@ class MetricController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto tenantId = req.getTenantId;
 
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;

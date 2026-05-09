@@ -23,7 +23,7 @@ mixin template DomainId() {
     }
 
     bool isNull() const {
-        return value.isNull;
+        return value.length == 0;
     }
 
     bool isEmpty() const {

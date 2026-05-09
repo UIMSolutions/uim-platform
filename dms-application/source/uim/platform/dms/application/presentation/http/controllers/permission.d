@@ -111,7 +111,6 @@ class PermissionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto tenantId = req.getTenantId;
       auto resourceId = j.getString("resourceId");
       auto resourceType = j.getString("resourceType").to!ResourceType;
       auto userId = UserId(j.getString("userId"));

@@ -39,7 +39,7 @@ struct Event {
       .set("meetingUrl", meetingUrl)
       .set("organizerId", organizerId.value)
       .set("organizerName", organizerName)
-      .set("attendeeIds", attendeeIds.map!(id => id.value).array)
+      .set("attendeeIds", attendeeIds.map!(id => id.value).array.toJson)
       .set("status", status.to!string())
       .set("allDay", allDay)
       .set("startTime", startTime)

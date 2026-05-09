@@ -47,12 +47,12 @@ class UIMTenantRepository {
   }
 
   IUIMTenant[] getAllTenants() {
-  return tenants.values.array;
+  return tenants.values.array.toJson;
   }
 
   void loadTenantsFromJson(string jsonData) {
   auto json = parseJsonString(jsonData);
-  foreach (tenantJson; json["tenants"].array) {
+  foreach (tenantJson; json["tenants"].array.toJson) {
     tenants[Tenant(tenantJson["id"].get!string, tenantJson["name"].getString).id] = Tenant(
     tenantJson["id"].get!string, tenantJson["name"].getString);
   }

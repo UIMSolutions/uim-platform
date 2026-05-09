@@ -115,7 +115,7 @@ class AuditLogController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = AuditLogId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       if (!retrieveUsecase.existsById(tenantId, id)) {
         writeError(res, 404, "Audit log entry not found");
         return;

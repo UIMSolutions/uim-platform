@@ -68,8 +68,8 @@ struct Schema {
       .set("name", name)
       .set("description", description)
       .set("status", status.to!string)
-      .set("headerFields", headerFields.map!(f => f.toJson()).array)
-      .set("lineItemFields", lineItemFields.map!(f => f.toJson()).array)
+      .set("headerFields", headerFields.map!(f => f.toJson()).array.toJson)
+      .set("lineItemFields", lineItemFields.map!(f => f.toJson()).array.toJson)
       .set("supportedLanguages", supportedLanguages);
   }
 }

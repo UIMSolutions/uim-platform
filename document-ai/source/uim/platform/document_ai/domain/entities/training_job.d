@@ -53,7 +53,7 @@ struct TrainingJob {
       .set("statusMessage", statusMessage)
       .set("documentCount", documentCount)
       .set("accuracy", accuracy)
-      .set("metrics", metrics.map!(m => m.toJson()).array)
+      .set("metrics", metrics.map!(m => m.toJson()).array.toJson)
       .set("startedAt", startedAt)
       .set("completedAt", completedAt);
   }

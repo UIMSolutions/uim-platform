@@ -39,7 +39,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] filterByResource(Metric[] metrics, MonitoredResourceId resourceId) {
-    return metrics.filter!(m => m.resourceId == resourceId).array;
+    return metrics.filter!(m => m.resourceId == resourceId).array.toJson;
   }
 
   
@@ -56,7 +56,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
-    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array;
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array.toJson;
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
@@ -73,13 +73,13 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
 
   Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m
-        .timestamp <= endTime).array;
+        .timestamp <= endTime).array.toJson;
   }
 
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
     string metricName, long startTime, long endTime) {
     return findByResourceAndName(tenantId, resourceId, metricName).filter!(
-      m => m.timestamp >= startTime && m.timestamp <= endTime).array;
+      m => m.timestamp >= startTime && m.timestamp <= endTime).array.toJson;
   }
 
   void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
@@ -90,7 +90,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     if (!existsByTenant(tenantId))
       return;
 
-    foreach (metric; findByTenant(tenantId).filter!(m => m.timestamp < beforeTimestamp).array) {
+    foreach (metric; findByTenant(tenantId).filter!(m => m.timestamp < beforeTimestamp).array.toJson) {
       remove(metric);
     }
   }

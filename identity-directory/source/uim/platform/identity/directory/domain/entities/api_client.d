@@ -33,7 +33,7 @@ struct ApiClient {
           .set("name", name)
           .set("description", description)
           .set("clientId", clientId)
-          .set("scopes", scopes.array)
+          .set("scopes", scopes.array.toJson)
           .set("active", active)
           .set("expiresAt", expiresAt)
           .set("lastUsedAt", lastUsedAt);

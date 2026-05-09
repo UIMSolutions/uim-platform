@@ -37,7 +37,7 @@ struct LineItem {
   Json toJson() const {
     return Json.emptyObject
       .set("rowIndex", rowIndex)
-      .set("fields", fields.map!(f => f.toJson()).array);
+      .set("fields", fields.map!(f => f.toJson()).array.toJson);
   }
 }
 
@@ -61,8 +61,8 @@ struct ExtractionResult {
       .set("documentId", documentId)
       .set("schemaId", schemaId)
       .set("method", method.to!string)
-      .set("headerFields", headerFields.map!(f => f.toJson()).array)
-      .set("lineItems", lineItems.map!(li => li.toJson()).array)
+      .set("headerFields", headerFields.map!(f => f.toJson()).array.toJson)
+      .set("lineItems", lineItems.map!(li => li.toJson()).array.toJson)
       .set("overallConfidence", overallConfidence)
       .set("extractedFieldCount", extractedFieldCount)
       .set("totalPages", totalPages)
