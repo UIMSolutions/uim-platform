@@ -36,6 +36,6 @@ struct ContentSearchService {
         if (t.toLower().canFind(q))
           return true;
       return false;
-    }).array;
+    }).array.toJson;
   }
 }

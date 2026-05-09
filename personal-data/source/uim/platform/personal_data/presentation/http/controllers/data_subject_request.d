@@ -79,7 +79,7 @@ class DataSubjectRequestController : PlatformController {
                 requests = usecase.listDataSubjectRequests(tenantId);
             }
 
-            auto jarr = requests.map!(r => toJson(r)).array;
+            auto jarr = requests.map!(r => toJson(r)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", requests.length)

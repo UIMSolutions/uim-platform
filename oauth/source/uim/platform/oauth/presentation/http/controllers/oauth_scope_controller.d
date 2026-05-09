@@ -31,7 +31,7 @@ class OAuthScopeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
             .set("count", items.length)

@@ -78,7 +78,7 @@ class PersonalDataRecordController : PlatformController {
                 records = usecase.list(tenantId);
             }
 
-            auto jarr = records.map!(r => toJson(r)).array;
+            auto jarr = records.map!(r => toJson(r)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", records.length)

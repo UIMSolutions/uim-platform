@@ -77,7 +77,7 @@ class DistributionController : PlatformController {
       else
         models = usecase.listByTenant(tenantId);
 
-      auto arr = models.map!(m => m.toJson).array;
+      auto arr = models.map!(m => m.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

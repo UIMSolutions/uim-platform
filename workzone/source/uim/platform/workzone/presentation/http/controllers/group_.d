@@ -63,7 +63,7 @@ class GroupController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
-      auto arr = groups.map!(g => g.toJson).array;
+      auto arr = groups.map!(g => g.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

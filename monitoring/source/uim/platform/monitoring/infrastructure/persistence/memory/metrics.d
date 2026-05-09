@@ -39,7 +39,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] filterByResource(Metric[] metrics, MonitoredResourceId resourceId) {
-    return metrics.filter!(m => m.resourceId == resourceId).array.toJson;
+    return metrics.filter!(m => m.resourceId == resourceId).array;
   }
 
   
@@ -56,7 +56,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] filterByResourceAndName(Metric[] metrics, MonitoredResourceId resourceId, string metricName) {
-    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array.toJson;
+    return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName).array;
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
@@ -73,13 +73,13 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
 
   Metric[] filterInTimeRange(Metric[] metrics, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {
     return metrics.filter!(m => m.resourceId == resourceId && m.name == metricName && m.timestamp >= startTime && m
-        .timestamp <= endTime).array.toJson;
+        .timestamp <= endTime).array;
   }
 
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
     string metricName, long startTime, long endTime) {
     return findByResourceAndName(tenantId, resourceId, metricName).filter!(
-      m => m.timestamp >= startTime && m.timestamp <= endTime).array.toJson;
+      m => m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
 
   void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {

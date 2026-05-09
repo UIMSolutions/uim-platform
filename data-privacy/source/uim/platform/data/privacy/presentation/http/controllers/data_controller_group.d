@@ -39,7 +39,7 @@ class DataControllerGroupController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
+      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array.toJson;
 
       auto result = usecase.createGroup(r);
       if (result.isSuccess()) {
@@ -96,7 +96,7 @@ class DataControllerGroupController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
+      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array.toJson;
 
       auto result = usecase.updateGroup(r);
       if (result.isSuccess()) {

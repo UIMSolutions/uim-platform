@@ -83,7 +83,7 @@ class ScheduleController : PlatformController {
 
             auto schedules = usecase.list(tenantId, jobId);
 
-            auto jarr = schedules.map!(s => toJson(s)).array;
+            auto jarr = schedules.map!(s => toJson(s)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("total", schedules.length)

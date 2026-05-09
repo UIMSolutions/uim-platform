@@ -35,7 +35,7 @@ struct Directory {
     directory.parentDirectoryId = req.parentDirectoryId;
     directory.displayName = req.displayName;
     directory.description = req.description;
-    directory.features = req.features.map!(f => f.to!DirectoryFeature).array;
+    directory.features = req.features.map!(f => f.to!DirectoryFeature).array.toJson;
     directory.manageEntitlements = req.manageEntitlements;
     directory.manageAuthorizations = req.manageAuthorizations;
     directory.createdBy = req.createdBy;

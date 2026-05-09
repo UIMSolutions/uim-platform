@@ -56,7 +56,7 @@ class MonitorAppsUseCase { // TODO: UIMUseCase {
 
   /// Get health summary for all apps belonging to the tenant.
   AppHealthSummary[] listAppHealth(TenantId tenantId) {
-    return apps.findByTenant(tenantId).map!(app => buildHealthSummary(app)).array;
+    return apps.findByTenant(tenantId).map!(app => buildHealthSummary(app)).array.toJson;
   }
 
   /// Get health summary for a single application.

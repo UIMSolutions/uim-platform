@@ -32,7 +32,7 @@ struct DatasetResponse {
       return DatasetResponse.init;
 
     ColumnResponse[] cols = d.columns.map!(col => ColumnResponse(col.name,
-        col.role.to!string, col.dataType.to!string)).array;
+        col.role.to!string, col.dataType.to!string)).array.toJson;
 
     return DatasetResponse(d.id.value, d.name, d.description,
         d.dataSourceId.value, d.status.to!string, cols,);

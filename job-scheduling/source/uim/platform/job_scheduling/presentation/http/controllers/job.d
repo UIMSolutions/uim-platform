@@ -94,7 +94,7 @@ class JobController : PlatformController {
             auto tenantId = req.getTenantId;
             auto jobs = jobUc.list(tenantId);
 
-            auto jarr = jobs.map!(job => toJson(job)).array; 
+            auto jarr = jobs.map!(job => toJson(job)).array.toJson; 
 
             auto resp = Json.emptyObject
                 .set("total", jobs.length)

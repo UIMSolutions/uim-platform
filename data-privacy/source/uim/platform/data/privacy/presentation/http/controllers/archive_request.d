@@ -40,7 +40,7 @@ class ArchiveRequestController : PlatformController {
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories").map!(c => c.to!PersonalDataCategory).array;
+      r.categories = getStrings(j, "categories").map!(c => c.to!PersonalDataCategory).array.toJson;
       r.archiveLocation = j.getString("archiveLocation");
       r.reason = j.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);

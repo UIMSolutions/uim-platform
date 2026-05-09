@@ -41,9 +41,9 @@ class BusinessContextController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
-      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array.toJson;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.createContext(r);
@@ -100,9 +100,9 @@ class BusinessContextController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
-      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array.toJson;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.updateContext(r);

@@ -31,7 +31,7 @@ class DataEntityController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => e.dataEntityToJson()).array;
+            auto jarr = items.map!(e => e.dataEntityToJson()).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)

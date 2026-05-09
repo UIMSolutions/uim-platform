@@ -206,7 +206,7 @@ class DestinationController : PlatformController {
     DestinationProperty[] result = j.getArray("properties")
       .filter!(item => item.isObject)
       .map!(item => DestinationProperty(item.getString("key"), item.getString("value")))
-      .array;
+      .array.toJson;
 
     return result;
   }

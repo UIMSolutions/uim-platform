@@ -48,7 +48,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       description = req.description;
       alias_ = req.alias_;
       layout = req.layout;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
       createdAt = Clock.currStdTime();
@@ -86,7 +86,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       description = req.description;
       alias_ = req.alias_.length > 0 ? req.alias_ : alias_;
       layout = req.layout;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
       updatedAt = Clock.currStdTime();
@@ -104,7 +104,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     // Remove from site
     if (siteRepo.existsById(siteId)) {
       auto site = siteRepo.findById(siteId);
-      site.pageIds = site.pageIds.filter!(p => p != pageId).array;
+      site.pageIds = site.pageIds.filter!(p => p != pageId).array.toJson;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);
     }

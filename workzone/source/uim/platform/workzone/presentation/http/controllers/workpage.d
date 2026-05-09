@@ -66,7 +66,7 @@ class WorkpageController : PlatformController {
       auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = pages.map!(p => p.toJson).array;
+      auto arr = pages.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

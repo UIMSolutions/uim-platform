@@ -36,7 +36,8 @@ class IdRepository(TEntity, TId) : BaseRepository!(TEntity), IIdRepository!(TEnt
 
   override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
     return limit == 0
-      ? store.byValue.array.skip(offset).array : store.byValue.array.skip(offset).take(limit).array;
+      ? store.byValue.array.skip(offset).array 
+      : store.byValue.array.skip(offset).take(limit).array;
   }
 
   override void removeAll() {
@@ -65,9 +66,8 @@ class IdRepository(TEntity, TId) : BaseRepository!(TEntity), IIdRepository!(TEnt
 
   TEntity[] findAllById(TId[] ids, bool onlyExisting = true) {
     return onlyExisting
-      ? ids.filter!(id => existsById(id))
-      .map!(id => findById(id))
-      .array : ids.map!(id => findById(id)).array;
+      ? ids.filter!(id => existsById(id)).map!(id => findById(id)).array 
+      : ids.map!(id => findById(id)).array;
   }
 
   void removeAllById(TId[] ids) {

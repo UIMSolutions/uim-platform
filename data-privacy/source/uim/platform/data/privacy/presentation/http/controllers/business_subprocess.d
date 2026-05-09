@@ -40,8 +40,8 @@ class BusinessSubprocessController : PlatformController {
       r.parentProcessId = BusinessProcessId(j.getString("parentProcessId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!DataCategoryId).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!DataCategoryId).array.toJson;
       r.owner = UserId(j.getString("owner"));
 
       auto result = usecase.createSubprocess(r);
@@ -98,8 +98,8 @@ class BusinessSubprocessController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => PurposeId(p)).array;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => DataCategoryId(c)).array;
+      r.purposes = getStrings(j, "purposes").map!(p => PurposeId(p)).array.toJson;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => DataCategoryId(c)).array.toJson;
       r.owner = UserId(j.getString("owner"));
 
       auto result = usecase.updateSubprocess(r);

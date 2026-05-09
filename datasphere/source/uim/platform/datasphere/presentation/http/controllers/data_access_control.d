@@ -40,8 +40,8 @@ class DataAccessControlController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.criteriaType = j.getString("criteriaType");
-      r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array;
-      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array;
+      r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
+      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array.toJson;
 
       auto result = usecase.create(r);
       if (result.success) {

@@ -18,7 +18,7 @@ Address[] toAddresses(Json json) {
       item.getString("formatted"), item.getString("streetAddress"),
       item.getString("locality"), item.getString("region"),
       item.getString("postalCode"), item.getString("country"),
-      item.getString("type"), getBoolean(item, "primary"))).array;
+      item.getString("type"), getBoolean(item, "primary"))).array.toJson;
 }
 
 UserName toUserName(Json json) {

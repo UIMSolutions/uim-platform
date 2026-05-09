@@ -64,7 +64,7 @@ class RetentionRuleController : PlatformController {
             auto tenantId = req.getTenantId;
             auto rules = usecase.list(tenantId);
 
-            auto jarr = rules.map!(r => toJson(r)).array;
+            auto jarr = rules.map!(r => toJson(r)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", rules.length)

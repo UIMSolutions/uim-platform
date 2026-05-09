@@ -196,7 +196,7 @@ private Email[] parseEmails(Json j) {
     return result;
 
   return value.toArray.map!(item => Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary")))
-    .array;
+    .array.toJson;
 }
 
 private PhoneNumber[] parsePhoneNumbers(Json j) {
@@ -212,7 +212,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
     return result;
 
   return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString("type"),
-      getBoolean(item, "primary"))).array;
+      getBoolean(item, "primary"))).array.toJson;
 }
 
 

@@ -135,7 +135,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (group == Group.init)
       return "Group not found";
 
-    auto newMembers = group.members.filter!(m => m.value != req.memberId).array;
+    auto newMembers = group.members.filter!(m => m.value != req.memberId).array.toJson;
     if (newMembers.length == group.members.length)
       return "Member not found in group";
 
@@ -146,7 +146,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     // Update user's groupIds
     auto user = userRepo.findById(req.memberId);
     if (user != User.init) {
-      user.groupIds = user.groupIds.filter!(g => g != req.groupId).array;
+      user.groupIds = user.groupIds.filter!(g => g != req.groupId).array.toJson;
       userRepo.update(user);
     }
 
@@ -169,7 +169,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         auto user = userRepo.findById(m.value);
         if (user != User.init)
         {
-          user.groupIds = user.groupIds.filter!(g => g != id).array;
+          user.groupIds = user.groupIds.filter!(g => g != id).array.toJson;
           userRepo.update(user);
         }
       }

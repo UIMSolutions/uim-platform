@@ -65,7 +65,7 @@ struct TransportRequest {
       .set("importedAt", importedAt);
 
     if (tasks.length > 0) {
-      auto ts = tasks.map!(t => t.toJson).array;
+      auto ts = tasks.map!(t => t.toJson).array.toJson;
       j["tasks"] = ts.toJson;
     }
 

@@ -145,13 +145,13 @@ struct User {
   }
 
   Json toJson() const {
-    auto emailsJson = emails.map!(e => e.toJson()).array;
+    auto emailsJson = emails.map!(e => e.toJson()).array.toJson;
 
-    auto phonesJson = phoneNumbers.map!(p => p.toJson()).array;
+    auto phonesJson = phoneNumbers.map!(p => p.toJson()).array.toJson;
 
-    auto addressesJson = addresses.map!(a => a.toJson()).array;
+    auto addressesJson = addresses.map!(a => a.toJson()).array.toJson;
 
-    auto extendedAttrsJson = extendedAttributes.map!(ea => ea.toJson()).array;
+    auto extendedAttrsJson = extendedAttributes.map!(ea => ea.toJson()).array.toJson;
 
     return entityToJson
       .set("externalId", externalId)

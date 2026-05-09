@@ -63,7 +63,7 @@ class ProcessingPurposeController : PlatformController {
             auto tenantId = req.getTenantId;
             auto purposes = usecase.list(tenantId);
 
-            auto jarr = purposes.map!(p => toJson(p)).array;
+            auto jarr = purposes.map!(p => toJson(p)).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", purposes.length)

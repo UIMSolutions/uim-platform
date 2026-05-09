@@ -98,7 +98,7 @@ class AnonymizationConfigController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
+      r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array.toJson;
 
       auto result = usecase.updateConfig(r);
       if (result.isSuccess()) {

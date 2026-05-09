@@ -41,7 +41,7 @@ class RunLogController : PlatformController {
 
             auto logs = usecase.listBySchedule(ids[1], ids[0], tenantId);
 
-            auto jarr = logs.map!(l => toJson(l)).array;
+            auto jarr = logs.map!(l => toJson(l)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("total", logs.length)
@@ -64,7 +64,7 @@ class RunLogController : PlatformController {
 
             auto logs = usecase.listByJob(jobId, tenantId);
 
-            auto jarr = logs.map!(log => toJson(log)).array;
+            auto jarr = logs.map!(log => toJson(log)).array.toJson;
             auto resp = Json.emptyObject
                 .set("total", logs.length)
                 .set("results", jarr)

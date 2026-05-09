@@ -79,7 +79,7 @@ class WorkspaceController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
-      auto arr = workspaces.map!(w => w.toJson).array;
+      auto arr = workspaces.map!(w => w.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

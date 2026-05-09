@@ -31,7 +31,7 @@ class TechnicianController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array;
+            auto jarr = items.map!(e => toJson(e)).array.toJson;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)

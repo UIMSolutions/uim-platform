@@ -50,7 +50,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       targetPageId = req.targetPageId;
       targetUrl = req.targetUrl;
       navigationTarget = req.navigationTarget;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
       createdAt = Clock.currStdTime();
@@ -92,7 +92,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       targetPageId = req.targetPageId;
       targetUrl = req.targetUrl;
       navigationTarget = req.navigationTarget;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
       updatedAt = Clock.currStdTime();
@@ -109,7 +109,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
 
     if (siteRepo.existsById(siteId)) {
       auto site = siteRepo.findById(siteId);
-      site.menuItemIds = site.menuItemIds.filter!(m => m != menuItemId).array;
+      site.menuItemIds = site.menuItemIds.filter!(m => m != menuItemId).array.toJson;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);
     }

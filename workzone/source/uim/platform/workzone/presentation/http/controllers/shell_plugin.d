@@ -70,7 +70,7 @@ class ShellPluginController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto plugins = useCase.listPlugins(tenantId);
-      auto arr = plugins.map!(p => p.toJson).array;
+      auto arr = plugins.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

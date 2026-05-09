@@ -64,7 +64,7 @@ class BuildpackController : PlatformController {
       auto tenantId = req.getTenantId;
       auto items = useCase.listBuildpacks(tenantId);
 
-      auto arr = items.map!(bp => bp.toJson()).array;
+      auto arr = items.map!(bp => bp.toJson()).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

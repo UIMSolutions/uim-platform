@@ -71,7 +71,7 @@ class KnowledgeBaseArticleController : PlatformController {
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
 
       auto articles = useCase.listByWorkspace(tenantId, workspaceId);
-      auto arr = articles.map!(a => a.toJson).array;
+      auto arr = articles.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

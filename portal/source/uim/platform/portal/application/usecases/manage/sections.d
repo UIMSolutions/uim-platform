@@ -90,7 +90,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
 
     if (pageRepo.existsById(pageId)) {
       auto page = pageRepo.findById(pageId);
-      page.sectionIds = page.sectionIds.filter!(s => s != sectionId).array;
+      page.sectionIds = page.sectionIds.filter!(s => s != sectionId).array.toJson;
       page.updatedAt = Clock.currStdTime();
       pageRepo.update(page);
     }

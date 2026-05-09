@@ -105,8 +105,8 @@ class CertificateController : PlatformController {
                 writeError(res, 404, "Certificate not found");
                 return;
             }
-            auto domainsArr = c.activatedDomains.map!(d => Json(d)).array;
-            auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array;
+            auto domainsArr = c.activatedDomains.map!(d => Json(d)).array.toJson;
+            auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("id", c.id)

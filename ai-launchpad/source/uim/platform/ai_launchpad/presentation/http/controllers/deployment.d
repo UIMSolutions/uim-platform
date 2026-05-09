@@ -142,7 +142,7 @@ class DeploymentController : PlatformController {
       BulkPatchDeploymentRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
+      r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array.toJson;
       r.targetStatus = j.getString("targetStatus");
 
       auto results = usecase.bulkDeploymentPatch(r);

@@ -61,7 +61,7 @@ class ExecutionController : PlatformController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto executions = usecase.list(rgId);
 
-      auto jarr = executions.map!(ex => executionToJson(ex)).array;
+      auto jarr = executions.map!(ex => executionToJson(ex)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", executions.length)

@@ -40,7 +40,7 @@ class BindingController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permission = j.getString("permission");
-      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array;
+      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array.toJson;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(j.getString("createdBy"));
 
@@ -126,7 +126,7 @@ class BindingController : PlatformController {
       r.description = j.getString("description");
       r.permission = j.getString("permission");
       r.status = j.getString("status");
-      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array;
+      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array.toJson;
 
       auto result = bindings.update(id, r);
       if (result.success) {

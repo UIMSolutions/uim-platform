@@ -47,7 +47,7 @@ class AlertRuleController : PlatformController {
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
-      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
+      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array.toJson;
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createAlertRule(r);
@@ -134,7 +134,7 @@ class AlertRuleController : PlatformController {
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
+      r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array.toJson;
 
       auto result = usecase.updateAlertRule(r);
       if (result.success) {

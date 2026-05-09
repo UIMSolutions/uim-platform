@@ -31,7 +31,7 @@ class CommandInputController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = commandInputs.list();
-            auto jarr = items.map!(e => e.commandInputToJson()).array;
+            auto jarr = items.map!(e => e.commandInputToJson()).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)

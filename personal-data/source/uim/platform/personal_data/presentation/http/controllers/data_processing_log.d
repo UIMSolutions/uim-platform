@@ -75,7 +75,7 @@ class DataProcessingLogController : PlatformController {
                 logs = usecase.listDataProcessingLogs(tenantId);
             }
 
-            auto jarr = logs.map!(l => logToJson(l)).array;
+            auto jarr = logs.map!(l => logToJson(l)).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", logs.length)

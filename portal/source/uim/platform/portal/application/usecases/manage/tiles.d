@@ -48,7 +48,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
       appId = req.appId;
       navigationTarget = req.navigationTarget;
       keywords = req.keywords;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       config = req.configuration;
       sortOrder = 0; // default sort order
       visible = true; // default visibility

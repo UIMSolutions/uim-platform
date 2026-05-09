@@ -68,7 +68,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       entry.audiences = r.audiences;
       entry.trustedIssuers = r.trustedIssuers;
 
-      ApiHttpMethod[] methods = r.methods.map!(m => parseHttpMethod(m)).array;
+      ApiHttpMethod[] methods = r.methods.map!(m => parseHttpMethod(m)).array.toJson;
       entry.methods = methods;
       entries ~= entry;
     }
@@ -118,7 +118,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
           requiredScopes = r.requiredScopes;
           audiences = r.audiences;
           trustedIssuers = r.trustedIssuers;
-          methods = r.methods.map!(m => parseHttpMethod(m)).array;
+          methods = r.methods.map!(m => parseHttpMethod(m)).array.toJson;
         }
         entries ~= entry;
       }

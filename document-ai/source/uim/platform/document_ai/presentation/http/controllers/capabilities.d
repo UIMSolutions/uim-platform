@@ -25,10 +25,10 @@ class CapabilitiesController : PlatformController {
     try {
       auto caps = usecase.getById();
 
-      auto exMethods = caps.extractionMethods.map!(method => Json(m)).array;
-      auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array;
-      auto fvArr = caps.fieldValueTypes.map!(fv => Json(fv)).array;
-      auto fArr = caps.features.map!(feat => Json(feat)).array;
+      auto exMethods = caps.extractionMethods.map!(method => Json(m)).array.toJson;
+      auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array.toJson;
+      auto fvArr = caps.fieldValueTypes.map!(fv => Json(fv)).array.toJson;
+      auto fArr = caps.features.map!(feat => Json(feat)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("serviceName", Json(caps.serviceName))

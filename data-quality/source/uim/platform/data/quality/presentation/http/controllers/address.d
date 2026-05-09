@@ -96,7 +96,7 @@ class AddressController : PlatformController {
       auto tenantId = req.getTenantId;
 
       auto records = usecase.getByTenant(tenantId);
-      auto arr = records.map!(r => r.toJson).array;
+      auto arr = records.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

@@ -70,7 +70,7 @@ class NavigationItemController : PlatformController {
       auto tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(tenantId, siteId);
-      auto arr = items.map!(n => n.toJson).array;
+      auto arr = items.map!(n => n.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)

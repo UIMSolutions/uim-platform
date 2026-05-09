@@ -40,8 +40,8 @@ class BusinessProcessController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
-      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array.toJson;
       r.owner = j.getString("owner");
 
       auto result = usecase.createProcess(r);
@@ -98,8 +98,8 @@ class BusinessProcessController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
-      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array.toJson;
       r.owner = j.getString("owner");
 
       auto result = usecase.updateProcess(r);

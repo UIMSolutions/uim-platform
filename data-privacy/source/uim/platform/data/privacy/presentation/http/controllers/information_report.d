@@ -41,7 +41,7 @@ class InformationReportController : PlatformController {
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.format = j.getString("format");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array;
+      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array.toJson;
       r.reason = j.getString("reason");
 
       auto result = usecase.createReport(r);

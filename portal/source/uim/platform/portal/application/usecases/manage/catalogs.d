@@ -38,7 +38,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
       description = req.description;
       providerId = req.providerId;
       tileIds = [];
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       active = req.active;
       createdAt = Clock.currStdTime();
       updatedAt = createdAt;
@@ -63,7 +63,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     with (catalog) {
       title = req.title.length > 0 ? req.title : catalog.title;
       description = req.description;
-      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array;
+      allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       active = req.active;
       updatedAt = Clock.currStdTime();
     }

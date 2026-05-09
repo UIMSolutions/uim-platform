@@ -66,7 +66,7 @@ class DocumentController : PlatformController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto docs = usecase.list(clientId);
 
-        auto jarr = docs.map!(d => toJson(d)).array;
+        auto jarr = docs.map!(d => toJson(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(docs.length))

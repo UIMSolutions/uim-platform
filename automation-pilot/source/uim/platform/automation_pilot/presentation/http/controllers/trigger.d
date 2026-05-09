@@ -31,7 +31,7 @@ class TriggerController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => e.triggerToJson()).array;
+            auto jarr = items.map!(e => e.triggerToJson()).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)

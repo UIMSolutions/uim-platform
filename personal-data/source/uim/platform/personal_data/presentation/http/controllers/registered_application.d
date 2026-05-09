@@ -65,7 +65,7 @@ class RegisteredApplicationController : PlatformController {
             auto tenantId = req.getTenantId;
             auto apps = usecase.list(tenantId);
 
-            auto jarr = apps.map!(a => appToJson(a)).array; {
+            auto jarr = apps.map!(a => appToJson(a)).array.toJson; {
 
             auto resp = Json.emptyObject
               .set("count", apps.length)

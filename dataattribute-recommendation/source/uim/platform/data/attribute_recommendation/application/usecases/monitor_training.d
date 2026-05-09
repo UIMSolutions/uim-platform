@@ -78,7 +78,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
     auto deps = deploymentRepo.findByTenant(tenantId);
-    return deps.map!(d => buildDeploymentSummary(tenantId, d)).array;
+    return deps.map!(d => buildDeploymentSummary(tenantId, d)).array.toJson;
   }
 
   PipelineSummary getPipelineSummary(TenantId tenantId) {

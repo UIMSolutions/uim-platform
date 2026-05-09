@@ -67,7 +67,7 @@ class TaskProviderController : PlatformController {
             auto tenantId = req.getTenantId;
             auto providers = usecase.list(tenantId);
 
-            auto jarr = providers.map!(p => toJson(p)).array;{
+            auto jarr = providers.map!(p => toJson(p)).array.toJson;{
 
             auto resp = Json.emptyObject
                 .set("count", providers.length)

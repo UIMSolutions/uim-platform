@@ -53,7 +53,7 @@ class AlertRuleController : PlatformController {
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
-      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
+      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array.toJson;
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createRule(r);
@@ -121,7 +121,7 @@ class AlertRuleController : PlatformController {
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
+      r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array.toJson;
 
       auto result = usecase.updateRule(r);
       if (result.success) {

@@ -79,7 +79,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {
-    return features.map!(f => f.to!DirectoryFeature).array;
+    return features.map!(f => f.to!DirectoryFeature).array.toJson;
   }
 
 }

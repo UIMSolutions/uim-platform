@@ -46,8 +46,8 @@ struct Configuration {
   long createdAt;
 
   Json toJson() const {
-    auto paramJson = parameters.map!(p => p.toJson()).array;
-    auto artifactJson = inputArtifacts.map!(a => a.toJson()).array;
+    auto paramJson = parameters.map!(p => p.toJson()).array.toJson;
+    auto artifactJson = inputArtifacts.map!(a => a.toJson()).array.toJson;
 
     return Json.emptyObject
       .set("id", id.value)

@@ -41,7 +41,7 @@ class ConsentPurposeController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purpose = j.getString("purpose").to!ProcessingPurpose;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
       r.consentFormTemplate = j.getString("consentFormTemplate");
       r.version_ = j.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);

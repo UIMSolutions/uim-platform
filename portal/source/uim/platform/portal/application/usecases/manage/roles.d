@@ -108,7 +108,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
 
     auto role = roleRepo.findById(roleId);
     with (role) {
-      userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array;
+      userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array.toJson;
       updatedAt = Clock.currStdTime();
     }
     roleRepo.update(role);

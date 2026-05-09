@@ -63,7 +63,7 @@ class TaskCommentController : PlatformController {
             TaskComment[] comments = !taskId.isEmpty
                 ? usecase.listCommentsByTask(tenantId, taskId) : [];    
 
-            auto jarr = comments.map!(c => c.toJson).array;
+            auto jarr = comments.map!(c => c.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", comments.length)
