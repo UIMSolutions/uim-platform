@@ -66,8 +66,8 @@ class TransportNodeController : PlatformController {
             dto.subaccountId = j.getString("subaccountId");
             dto.spaceId = j.getString("spaceId");
             dto.serviceKey = j.getString("serviceKey");
-            dto.isForwardEnabled = j.getBool("isForwardEnabled");
-            dto.autoImport = j.getBool("autoImport");
+            dto.isForwardEnabled = getBoolean(j, "isForwardEnabled");
+            dto.autoImport = getBoolean(j, "autoImport");
             dto.autoImportSchedule = j.getString("autoImportSchedule");
             dto.createdBy = UserId(j.getString("createdBy"));
             auto result = usecase.createNode(dto);
@@ -105,8 +105,8 @@ class TransportNodeController : PlatformController {
             dto.description = j.getString("description");
             dto.region = j.getString("region");
             dto.environment = j.getString("environment");
-            dto.isForwardEnabled = j.getBool("isForwardEnabled");
-            dto.autoImport = j.getBool("autoImport");
+            dto.isForwardEnabled = getBoolean(j, "isForwardEnabled");
+            dto.autoImport = getBoolean(j, "autoImport");
             dto.autoImportSchedule = j.getString("autoImportSchedule");
             dto.updatedBy = UserId(j.getString("updatedBy"));
             auto result = usecase.updateNode(dto);
