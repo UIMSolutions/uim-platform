@@ -18,26 +18,26 @@ mixin(ShowModule!());
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-  size_t countByClientId(string clientId) {
-    return findByClientId(clientId).length;
+  size_t countByClientId(TenantId tenantId, string clientId) {
+    return findByClientId(tenantId, clientId).length;
   }
 
-  ServiceBinding[] findByClientId(string clientId) {
-    return findAll.filter!(b => b.clientId == clientId).array; 
+  ServiceBinding[] findByClientId(TenantId tenantId, string clientId) {
+    return findByTenant(tenantId).filter!(b => b.clientId == clientId).array; 
   }
 
-  void removeByClientId(string clientId) {
-    findByClientId(clientId).each!(b => remove(b));
+  void removeByClientId(TenantId tenantId, string clientId) {
+    findByClientId(tenantId, clientId).each!(b => remove(b));
   }
 
     // ByStatus
-    size_t countByStatus(BindingStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, BindingStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    ServiceBinding[] findByStatus(BindingStatus status) {
-        return findAll.filter!(b => b.status == status).array;
+    ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
+        return findByTenant(tenantId).filter!(b => b.status == status).array;
     }
-    void removeByStatus(BindingStatus status) {
-        findByStatus(status).each!(b => remove(b));
+    void removeByStatus(TenantId tenantId, BindingStatus status) {
+        findByStatus(tenantId, status).each!(b => remove(b));
     }
 }

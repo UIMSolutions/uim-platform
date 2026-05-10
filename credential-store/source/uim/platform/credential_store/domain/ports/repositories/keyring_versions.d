@@ -14,10 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 interface KeyringVersionRepository : ITenantRepository!(KeyringVersion, KeyringVersionId) {
-  KeyringVersion findActiveVersion(CredentialId keyringId);
-  KeyringVersion findByVersion(CredentialId keyringId, long versionNumber);
-  KeyringVersion[] findByKeyring(CredentialId keyringId);
-  void deactivateAll(CredentialId keyringId);
-  void removeByKeyring(CredentialId keyringId);
-  size_t countByKeyring(CredentialId keyringId);
+  KeyringVersion findActiveVersion(TenantId tenantId, CredentialId keyringId);
+  KeyringVersion findByVersion(TenantId tenantId, CredentialId keyringId, long versionNumber);
+  KeyringVersion[] findByKeyring(TenantId tenantId, CredentialId keyringId);
+  void deactivateAll(TenantId tenantId, CredentialId keyringId);
+  void removeByKeyring(TenantId tenantId, CredentialId keyringId);
+  size_t countByKeyring(TenantId tenantId, CredentialId keyringId);
 }

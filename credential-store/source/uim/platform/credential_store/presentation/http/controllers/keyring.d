@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.keyring;
 
-// import uim.platform.credential_store.application.usecases.manage.keyrings;
+// import uim.platform.credential_store.application.usecases.manage.usecase;
 // import uim.platform.credential_store.application.dto;
 
 import uim.platform.credential_store;
@@ -15,21 +15,21 @@ mixin(ShowModule!());
 @safe:
 
 class KeyringController : PlatformController {
-  private ManageKeyringsUseCase keyrings;
+  private ManageKeyringsUseCase usecase;
 
-  this(ManageKeyringsUseCase keyrings) {
-    this.keyrings = keyrings;
+  this(ManageKeyringsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/keyrings", &handleCreate);
-    router.get("/api/v1/keyrings", &handleList);
-    router.get("/api/v1/keyrings/*", &handleGet);
-    router.post("/api/v1/keyrings/rotate", &handleRotate);
-    router.post("/api/v1/keyrings/disable", &handleDisable);
-    router.delete_("/api/v1/keyrings/*", &handleDelete);
+    router.post("/api/v1/usecase", &handleCreate);
+    router.get("/api/v1/usecase", &handleList);
+    router.get("/api/v1/usecase/*", &handleGet);
+    router.post("/api/v1/usecase/rotate", &handleRotate);
+    router.post("/api/v1/usecase/disable", &handleDisable);
+    router.delete_("/api/v1/usecase/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -46,7 +46,7 @@ class KeyringController : PlatformController {
       r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = keyrings.createKeyring(r);
+      auto result = usecase.createKeyring(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,7 +66,7 @@ class KeyringController : PlatformController {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
       
-      auto rings = keyrings.listByNamespace(tenantId, namespaceId);
+      auto rings = usecase.listByNamespace(tenantId, namespaceId);
       auto jarr = Json.emptyArray;
       foreach (k; rings) {
         jarr ~= Json.emptyObject
@@ -91,14 +91,14 @@ class KeyringController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
-      auto k = keyrings.getById(tenantId, id);
+      auto k = usecase.getById(tenantId, id);
 
       if (k.isNull) {
         writeError(res, 404, "Keyring not found");
         return;
       }
 
-      auto versions = keyrings.getVersions(tenantId, k.id);
+      auto versions = usecase.getKeyringVersions(tenantId, k.id);
 
       auto varr = Json.emptyArray;
       foreach (v; versions) {
@@ -132,7 +132,7 @@ class KeyringController : PlatformController {
       r.keyringId = j.getString("keyringId");
       r.tenantId = tenantId;
 
-      auto result = keyrings.rotate(r);
+      auto result = usecase.rotateKeyring(r);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("versionId", result.id);
@@ -152,7 +152,7 @@ class KeyringController : PlatformController {
       auto j = req.json;
       auto keyringId = CredentialId(j.getString("keyringId"));
 
-      auto result = keyrings.disable(tenantId, keyringId);
+      auto result = usecase.disableKeyring(tenantId, keyringId);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -171,7 +171,7 @@ class KeyringController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = keyrings.deleteKeyring(tenantId, id);
+      auto result = usecase.deleteKeyring(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

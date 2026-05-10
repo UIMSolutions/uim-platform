@@ -33,7 +33,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     if (validationError.length > 0)
       return CommandResult(false, "", validationError);
 
-    auto existing = credentials.findByName(r.namespaceId, r.name, credType);
+    auto existing = credentials.findByName(r.tenantId, r.namespaceId, r.name, credType);
 
     // If-None-Match: * means create only (fail if exists)
     if (r.ifNoneMatch == "*" && !existing.isNull)
@@ -103,16 +103,16 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     return credentials.findById(tenantId, id);
   }
 
-  Credential getCredentialByName(NamespaceId namespaceId, string name, string type) {
-    return credentials.findByName(namespaceId, name, parseCredentialType(type));
+  Credential getCredentialByName(TenantId tenantId, NamespaceId namespaceId, string name, string type) {
+    return credentials.findByName(tenantId, namespaceId, name, parseCredentialType(type));
   }
 
-  Credential[] listCredentialsByNamespace(NamespaceId namespaceId) {
-    return credentials.findByNamespace(namespaceId);
+  Credential[] listCredentialsByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return credentials.findByNamespace(tenantId, namespaceId);
   }
 
-  Credential[] listCredentialsByType(NamespaceId namespaceId, string type) {
-    return credentials.findByNamespaceAndType(namespaceId, parseCredentialType(type));
+  Credential[] listCredentialsByType(TenantId tenantId, NamespaceId namespaceId, string type) {
+    return credentials.findByNamespaceAndType(tenantId, namespaceId, parseCredentialType(type));
   }
 
   CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
@@ -124,8 +124,8 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, credential.id.value, "");
   }
 
-  size_t countCredentialsByNamespace(NamespaceId namespaceId) {
-    return credentials.countByNamespace(namespaceId);
+  size_t countCredentialsByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return credentials.countByNamespace(tenantId, namespaceId);
   }
 
   size_t countCredentialsByTenant(TenantId tenantId) {

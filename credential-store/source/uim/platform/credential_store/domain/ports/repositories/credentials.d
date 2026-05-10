@@ -15,16 +15,16 @@ mixin(ShowModule!());
 @safe:
 interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
 
-  bool existsByName(NamespaceId namespaceId, string name, CredentialType type);
-  Credential findByName(NamespaceId namespaceId, string name, CredentialType type);
-  void removeByName(NamespaceId namespaceId, string name, CredentialType type);
+  bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type);
+  Credential findByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type);
+  void removeByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type);
 
-  size_t countByNamespace(NamespaceId namespaceId);
-  Credential[] findByNamespace(NamespaceId namespaceId);
-  void removeByNamespace(NamespaceId namespaceId);
+  size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId);
+  Credential[] findByNamespace(TenantId tenantId, NamespaceId namespaceId);
+  void removeByNamespace(TenantId tenantId, NamespaceId namespaceId);
 
-  size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
-  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
-  void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type);
+  size_t countByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type);
+  Credential[] findByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type);
+  void removeByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type);
 
 }

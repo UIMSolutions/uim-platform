@@ -18,46 +18,46 @@ mixin(ShowModule!());
 @safe:
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
 
-  bool existsByName(NamespaceId namespaceId, string name, CredentialType type) {
+  bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
     return !findByName(namespaceId, name, type).isNull;
   }
 
-  Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
-    foreach (c; findAll) {
+  Credential findByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
         return c;
     }
     return Credential.init;
   }
 
-  void removeByName(NamespaceId namespaceId, string name, CredentialType type) {
-    Credential c = findByName(namespaceId, name, type);
+  void removeByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
+    Credential c = findByName(tenantId, namespaceId, name, type);
     if (!c.isNull)
       remove(c);
   }
 
-  size_t countByNamespace(NamespaceId namespaceId) {
-    return findByNamespace(namespaceId).length;
+  size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return findByNamespace(tenantId, namespaceId).length;
   }
 
-  Credential[] findByNamespace(NamespaceId namespaceId) {
-    return findAll().filter!(c => c.namespaceId == namespaceId).array;
+  Credential[] findByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return findByTenant(tenantId).filter!(c => c.namespaceId == namespaceId).array;
   }
 
-  void removeByNamespace(NamespaceId namespaceId) {
-    findByNamespace(namespaceId).each!(c => remove(c));
+  void removeByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    findByNamespace(tenantId, namespaceId).each!(c => remove(c));
   }
 
-  size_t countByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    return findByNamespaceAndType(namespaceId, type).length;
+  size_t countByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type) {
+    return findByNamespaceAndType(tenantId, namespaceId, type).length;
   }
 
-  Credential[] findByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    return findByNamespace(namespaceId).filter!(c => c.type == type).array;
+  Credential[] findByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type) {
+    return findByNamespace(tenantId, namespaceId).filter!(c => c.type == type).array;
   }
 
-  void removeByNamespaceAndType(NamespaceId namespaceId, CredentialType type) {
-    findByNamespaceAndType(namespaceId, type).each!(c => remove(c));
+  void removeByNamespaceAndType(TenantId tenantId, NamespaceId namespaceId, CredentialType type) {
+    findByNamespaceAndType(tenantId, namespaceId, type).each!(c => remove(c));
   }
 
 }

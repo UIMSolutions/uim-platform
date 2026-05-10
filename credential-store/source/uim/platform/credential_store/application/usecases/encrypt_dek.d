@@ -28,13 +28,13 @@ class EncryptDekUseCase { // TODO: UIMUseCase {
 
   // Generate a new DEK and return it both plaintext and encrypted
   GenerateDekResponse generate(GenerateDekRequest r) {
-    auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
+    auto keyring = credRepo.findByName(r.tenantId, r.namespaceId, r.keyringName, CredentialType.keyring);
     if (keyring.isNull)
       return GenerateDekResponse(false, "", "", keyring.id, 0, "Keyring not found");
     if (keyring.status != CredentialStatus.active)
       return GenerateDekResponse(false, "", "", keyring.id, 0, "Keyring is not active");
 
-    auto activeVersion = versionRepo.findActiveVersion(keyring.id);
+    auto activeVersion = versionRepo.findActiveVersion(r.tenantId, keyring.id);
     if (activeVersion.isNull)
       return GenerateDekResponse(false, "", "", keyring.id, 0, "No active keyring version");
 
@@ -46,13 +46,13 @@ class EncryptDekUseCase { // TODO: UIMUseCase {
 
   // Encrypt a provided DEK with the active keyring version
   EncryptDekResponse encrypt(EncryptDekRequest r) {
-    auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
+    auto keyring = credRepo.findByName(r.tenantId, r.namespaceId, r.keyringName, CredentialType.keyring);
     if (keyring.isNull)
       return EncryptDekResponse(false, "", keyring.id, 0, "Keyring not found");
     if (keyring.status != CredentialStatus.active)
       return EncryptDekResponse(false, "", keyring.id, 0, "Keyring is not active");
 
-    auto activeVersion = versionRepo.findActiveVersion(keyring.id);
+    auto activeVersion = versionRepo.findActiveVersion(r.tenantId, keyring.id);
     if (activeVersion.isNull)
       return EncryptDekResponse(false, "", keyring.id, 0, "No active keyring version");
 
@@ -63,11 +63,11 @@ class EncryptDekUseCase { // TODO: UIMUseCase {
 
   // Decrypt an encrypted DEK using the specified keyring version
   DecryptDekResponse decrypt(DecryptDekRequest r) {
-    auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
+    auto keyring = credRepo.findByName(r.tenantId, r.namespaceId, r.keyringName, CredentialType.keyring);
     if (keyring.isNull)
       return DecryptDekResponse(false, "", "Keyring not found");
 
-    auto ver = versionRepo.findByVersion(keyring.id, r.keyringVersion);
+    auto ver = versionRepo.findByVersion(r.tenantId, keyring.id, r.keyringVersion);
     if (ver.isNull)
       return DecryptDekResponse(false, "", "Keyring version not found");
 

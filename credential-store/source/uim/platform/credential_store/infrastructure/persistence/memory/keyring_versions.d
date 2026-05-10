@@ -18,34 +18,34 @@ mixin(ShowModule!());
 @safe:
 class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, KeyringVersionId), KeyringVersionRepository {
 
-  KeyringVersion findActiveVersion(CredentialId keyringId) {
-    foreach (v; findAll)
+  KeyringVersion findActiveVersion(TenantId tenantId, CredentialId keyringId) {
+    foreach (v; findByTenant(tenantId))
       if (v.keyringId == keyringId && v.isActive)
         return v;
     return KeyringVersion.init;
   }
 
-  KeyringVersion findByVersion(CredentialId keyringId, long versionNumber) {
-    foreach (v; findAll)
+  KeyringVersion findByVersion(TenantId tenantId, CredentialId keyringId, long versionNumber) {
+    foreach (v; findByTenant(tenantId))
       if (v.keyringId == keyringId && v.versionNumber == versionNumber)
         return v;
     return KeyringVersion.init;
   }
 
-  size_t countByKeyring(CredentialId keyringId) {
-    return findByKeyring(keyringId).length;
+  size_t countByKeyring(TenantId tenantId, CredentialId keyringId) {
+    return findByKeyring(tenantId, keyringId).length;
   }
 
-  KeyringVersion[] findByKeyring(CredentialId keyringId) {
-    return findAll().filter!(v => v.keyringId == keyringId).array;
+  KeyringVersion[] findByKeyring(TenantId tenantId, CredentialId keyringId) {
+    return findByTenant(tenantId).filter!(v => v.keyringId == keyringId).array;
   }
 
-  void removeByKeyring(CredentialId keyringId) {
-    findByKeyring(keyringId).each!(v => remove(v));
+  void removeByKeyring(TenantId tenantId, CredentialId keyringId) {
+    findByKeyring(tenantId, keyringId).each!(v => remove(v));
   }
 
-  void deactivateAll(CredentialId keyringId) {
-    findByKeyring(keyringId).each!(v => v.isActive = false);
+  void deactivateAll(TenantId tenantId, CredentialId keyringId) {
+    findByKeyring(tenantId, keyringId).each!(v => v.isActive = false);
   }
 
 }

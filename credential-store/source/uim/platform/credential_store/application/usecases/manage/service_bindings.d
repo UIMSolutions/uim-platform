@@ -70,25 +70,25 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  ServiceBinding getServiceBinding(GetServiceBindingRequest r) {
-    return bindings.findById(r.tenantId, r.serviceBindingId);
+  ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {
+    return bindings.findById(tenantId, serviceBindingId);
   }
 
-  ServiceBinding[] listServiceBindings(ListServiceBindingsRequest r) {
-    return bindings.findByTenant(r.tenantId);
+  ServiceBinding[] listServiceBindings(TenantId tenantId) {
+    return bindings.findByTenant(tenantId);
   }
 
-  CommandResult deleteServiceBinding(DeleteServiceBindingRequest r) {
-    auto binding = bindings.findById(r.tenantId, r.serviceBindingId);
+  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {
+    auto binding = bindings.findById(tenantId, serviceBindingId);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
-    bindings.removeById(r.tenantId, r.serviceBindingId);
+    bindings.removeById(tenantId, serviceBindingId);
     return CommandResult(true, binding.id.value, "");
   }
 
-  size_t countServiceBindings(CountServiceBindingsRequest r) {
-    return bindings.countByTenant(r.tenantId);
+  size_t countServiceBindings(TenantId tenantId) {
+    return bindings.countByTenant(tenantId);
   }
 
   private static PermissionLevel parsePermission(string p) {

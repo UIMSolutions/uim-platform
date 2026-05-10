@@ -61,7 +61,7 @@ class NamespaceController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto namespaces = usecase.list(tenantId);
+      auto namespaces = usecase.listNamespaces(tenantId);
       auto jarr = Json.emptyArray;
       foreach (ns; namespaces) {
         jarr ~= Json.emptyObject
