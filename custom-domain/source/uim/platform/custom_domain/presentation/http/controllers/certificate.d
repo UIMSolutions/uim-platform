@@ -34,6 +34,7 @@ class CertificateController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateCertificateRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
@@ -41,7 +42,7 @@ class CertificateController : PlatformController {
             r.certificateType = j.getString("certificateType");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = certificates.create(r);
+            auto result = certificates.createCertificate(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -59,7 +60,7 @@ class CertificateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto certs = certificates.list(tenantId);
+            auto certs = certificates.listCertificates(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
@@ -89,7 +90,7 @@ class CertificateController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             if (path.length > 13 && path[$ - 13 .. $] == "/upload-chain")
@@ -100,7 +101,7 @@ class CertificateController : PlatformController {
                 return;
 
             auto id = extractIdFromPath(path);
-            auto c = certificates.getById(id);
+            auto c = certificates.getCertificate(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Certificate not found");
                 return;
@@ -133,7 +134,7 @@ class CertificateController : PlatformController {
 
     private void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
@@ -145,7 +146,7 @@ class CertificateController : PlatformController {
             r.id = id;
             r.certificatePem = j.getString("certificatePem");
 
-            auto result = certificates.uploadChain(r);
+            auto result = certificates.uploadCertificateChain(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -191,13 +192,13 @@ class CertificateController : PlatformController {
 
     private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
 
-            auto result = certificates.deactivate(id);
+            auto result = certificates.deactivateCertificate(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -214,10 +215,10 @@ class CertificateController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = certificates.removeById(id);
+            auto result = certificates.deleteCertificate(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

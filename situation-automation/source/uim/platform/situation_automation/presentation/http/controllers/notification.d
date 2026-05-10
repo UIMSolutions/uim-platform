@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.notification;
 
-// import uim.platform.situation_automation.application.usecases.manage.notifications;
+// import uim.platform.situation_automation.application.usecases.manage.usecase;
 // import uim.platform.situation_automation.application.dto;
 
 import uim.platform.situation_automation;
@@ -15,20 +15,20 @@ mixin(ShowModule!());
 @safe:
 
 class NotificationController : PlatformController {
-    private ManageNotificationsUseCase notifications;
+    private ManageNotificationsUseCase usecase;
 
-    this(ManageNotificationsUseCase notifications) {
-        this.notifications = notifications;
+    this(ManageNotificationsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
 
-        router.get("/api/v1/situation-automation/notifications", &handleList);
-        router.get("/api/v1/situation-automation/notifications/*", &handleGet);
-        router.post("/api/v1/situation-automation/notifications", &handleCreate);
-        router.put("/api/v1/situation-automation/notifications/*", &handleUpdate);
-        router.delete_("/api/v1/situation-automation/notifications/*", &handleDelete);
+        router.get("/api/v1/situation-automation/usecase", &handleList);
+        router.get("/api/v1/situation-automation/usecase/*", &handleGet);
+        router.post("/api/v1/situation-automation/usecase", &handleCreate);
+        router.put("/api/v1/situation-automation/usecase/*", &handleUpdate);
+        router.delete_("/api/v1/situation-automation/usecase/*", &handleDelete);
     }
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -46,7 +46,7 @@ class NotificationController : PlatformController {
             r.priority = j.getString("priority");
             r.actionUrl = j.getString("actionUrl");
 
-            auto result = notifications.create(r);
+            auto result = usecase.createNotification(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -64,7 +64,7 @@ class NotificationController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto notifications = notifications.list(tenantId);
+            auto notifications = usecase.listNotifications(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (n; notifications) {
@@ -83,7 +83,7 @@ class NotificationController : PlatformController {
             auto resp = Json.emptyObject
                 .set("count", notifications.length)
                 .set("resources", jarr);
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,10 +92,10 @@ class NotificationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto n = notifications.getById(id);
+            auto n = usecase.getNotification(tenantId, id);
             if (n.isNull) {
                 writeError(res, 404, "Notification not found");
                 return;
@@ -124,15 +124,15 @@ class NotificationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
 
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             UpdateNotificationRequest r;
             r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
 
-            auto result = notifications.update(r);
+            auto result = usecase.updateNotification(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -149,10 +149,10 @@ class NotificationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = notifications.removeById(id);
+
+            auto result = usecase.deleteNotification(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

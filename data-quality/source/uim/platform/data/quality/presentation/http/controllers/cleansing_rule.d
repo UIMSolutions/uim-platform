@@ -9,7 +9,6 @@ module uim.platform.data.quality.presentation.http.controllers.cleansing_rule;
 // import vibe.http.router;
 // import vibe.data.json;
 
-
 // import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;
@@ -37,7 +36,7 @@ class CleansingRuleController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateCleansingRuleRequest();
@@ -59,7 +58,7 @@ class CleansingRuleController : PlatformController {
       r.category = j.getString("category");
       r.priority = j.getInteger("priority");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createCleansingRule(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -77,7 +76,7 @@ class CleansingRuleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto rules = usecase.listByTenant(tenantId);
+      auto rules = usecase.listCleansingRules(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -92,10 +91,10 @@ class CleansingRuleController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto rule = usecase.getById(tenantId, id);
+      auto rule = usecase.getCleansingRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Cleansing rule not found");
         return;
@@ -107,7 +106,7 @@ class CleansingRuleController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateCleansingRuleRequest();
@@ -147,10 +146,10 @@ class CleansingRuleController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+
       auto result = usecase.deleteCleansingRule(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
@@ -161,46 +160,4 @@ class CleansingRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(const CleansingRule r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("name", r.name)
-      .set("description", r.description)
-      .set("datasetPattern", r.datasetPattern)
-      .set("fieldName", r.fieldName)
-      .set("action", Json(r.to!string)
-          .set("status", Json(r.to!string)
-            .set("findPattern", r.findPattern)
-            .set("replaceWith", r.replaceWith)
-            .set("defaultValue", r.defaultValue)
-            .set("trimWhitespace", r.trimWhitespace)
-            .set("normalizeCase", r.normalizeCase)
-            .set("caseMode", r.caseMode)
-            .set("removeDiacritics", r.removeDiacritics)
-            .set("category", r.category)
-            .set("priority", r.priority)
-            .set("createdAt", r.createdAt)
-            .set("updatedAt", r.updatedAt);}
-
-    private static CleansingAction parseCleansingAction(string s) {
-      switch (s) {
-      case "trimmed":
-        return CleansingAction.trimmed; case "normalized":
-        return CleansingAction.normalized; case "corrected":
-        return CleansingAction.corrected; case "standardized":
-        return CleansingAction.standardized; case "enriched":
-        return CleansingAction.enriched; case "removed":
-        return CleansingAction.removed; case "defaulted":
-        return CleansingAction.defaulted; default:
-        return CleansingAction.none;}
-      }
-
-      private static RuleStatus parseRuleStatus(string s) {
-        switch (s) {
-        case "active":
-          return RuleStatus.active; case "inactive":
-          return RuleStatus.inactive; default:
-          return RuleStatus.draft;}
-        }
-      }
+}

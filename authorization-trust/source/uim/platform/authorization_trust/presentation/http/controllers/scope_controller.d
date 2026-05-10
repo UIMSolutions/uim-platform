@@ -33,11 +33,12 @@ class ScopeController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateScopeRequest r;
+      r.tenantId = tenantId;
       r.name        = j.getString("name");
       r.description = j.getString("description");
       r.appId       = j.getString("appId");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createScope(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
       else
@@ -51,10 +52,10 @@ class ScopeController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto scopes = usecase.listAll();
+      auto scopes = usecase.listScopes(tenantId);
       auto jarr = Json.emptyArray;
       foreach (s; scopes)
-        jarr ~= scopeToJson(s);
+        jarr ~= s.toJson();
       res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", scopes.length), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -66,12 +67,12 @@ class ScopeController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
 
-      auto s = usecase.getById(id);
+      auto s = usecase.getScope(tenantId, id);
       if (s.id.length == 0) {
         writeError(res, 404, "Scope not found");
         return;
       }
-      res.writeJsonBody(scopeToJson(s), 200);
+      res.writeJsonBody(s.toJson(), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -83,10 +84,11 @@ class ScopeController : PlatformController {
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateScopeRequest r;
+      r.tenantId = tenantId;
       r.id          = id;
       r.description = j.getString("description");
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateScope(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       else
@@ -100,8 +102,8 @@ class ScopeController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      
-      auto result = usecase.remove(id);
+
+      auto result = usecase.deleteScope(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", id), 200);
       else

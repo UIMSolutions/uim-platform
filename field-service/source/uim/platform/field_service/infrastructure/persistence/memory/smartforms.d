@@ -13,43 +13,43 @@ mixin(ShowModule!());
 
 class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), SmartformRepository {
 
-    size_t countByServiceCall(ServiceCallId serviceCallId) {
-        return findByServiceCall(serviceCallId).length;
+    size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        return findByServiceCall(tenantId, serviceCallId).length;
     }
     Smartform[] filterByServiceCall(Smartform[] smartforms, ServiceCallId serviceCallId) {
         return smartforms.filter!(e => e.serviceCallId == serviceCallId).array;
     }
-    Smartform[] findByServiceCall(ServiceCallId serviceCallId) {
-        return findAll().filter!(e => e.serviceCallId == serviceCallId).array;
+    Smartform[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.serviceCallId == serviceCallId).array;
     }
-    void removeByServiceCall(ServiceCallId serviceCallId) {
-        findByServiceCall(serviceCallId).each!(entity => remove(entity));
+    void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        findByServiceCall(tenantId, serviceCallId).each!(entity => remove(entity));
     }
 
-    size_t countByActivity(ActivityId activityId) {
-        return findByActivity(activityId).length;
+    size_t countByActivity(TenantId tenantId, ActivityId activityId) {
+        return findByActivity(tenantId, activityId).length;
     }
     Smartform[] filterByActivity(Smartform[] smartforms, ActivityId activityId) {
         return smartforms.filter!(e => e.activityId == activityId).array;
     }
-    Smartform[] findByActivity(ActivityId activityId) {
-        return findAll().filter!(e => e.activityId == activityId).array;
+    Smartform[] findByActivity(TenantId tenantId, ActivityId activityId) {
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.activityId == activityId).array;
     }
-    void removeByActivity(ActivityId activityId) {
-        findByActivity(activityId).each!(entity => remove(entity));
+    void removeByActivity(TenantId tenantId, ActivityId activityId) {
+        findByActivity(tenantId, activityId).each!(entity => remove(entity));
     }
 
-    size_t countByStatus(SmartformStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, SmartformStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     Smartform[] filterByStatus(Smartform[] smartforms, SmartformStatus status) {
         return smartforms.filter!(e => e.status == status).array;
     }   
-    Smartform[] findByStatus(SmartformStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    Smartform[] findByStatus(TenantId tenantId, SmartformStatus status) {
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.status == status).array;
     }
-    void removeByStatus(SmartformStatus status) {
-        findByStatus(status).each!(entity => remove(entity));
+    void removeByStatus(TenantId tenantId, SmartformStatus status) {
+        findByStatus(tenantId, status).each!(entity => remove(entity));
     }
 
 }

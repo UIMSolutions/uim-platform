@@ -13,46 +13,46 @@ mixin(ShowModule!());
 
 class MemoryEquipmentRepository : TenantRepository!(Equipment, EquipmentId), EquipmentRepository {
 
-    size_t countByCustomer(CustomerId customerId) {
-        return findByCustomer(customerId).length;
+    size_t countByCustomer(TenantId tenantId, CustomerId customerId) {
+        return findByCustomer(tenantId, customerId).length;
     }
     Equipment[] filterByCustomer(Equipment[] equipment, CustomerId customerId) {
         return equipment.filter!(e => e.customerId == customerId).array;
     }
 
-    Equipment[] findByCustomer(CustomerId customerId) {
-        return filterByCustomer(findAll(), customerId);
+    Equipment[] findByCustomer(TenantId tenantId, CustomerId customerId) {
+        return filterByCustomer(findByTenant(tenantId), customerId);
     }
-    void removeByCustomer(CustomerId customerId) {
-        findByCustomer(customerId).each!(e => remove(e));
+    void removeByCustomer(TenantId tenantId, CustomerId customerId) {
+        findByCustomer(tenantId, customerId).each!(e => remove(e));
     }
 
-        size_t countByType(EquipmentType equipmentType) {
-            return findByType(equipmentType).length;
+        size_t countByType(TenantId tenantId, EquipmentType equipmentType) {
+            return findByType(tenantId,     equipmentType).length;
         }
 
         Equipment[] filterByType(Equipment[] equipment, EquipmentType equipmentType) {
             return equipment.filter!(e => e.equipmentType == equipmentType).array;
         }
 
-    Equipment[] findByType(EquipmentType equipmentType) {
-        return filterByType(findAll(), equipmentType);
+    Equipment[] findByType(TenantId tenantId, EquipmentType equipmentType) {
+        return filterByType(findByTenant(tenantId), equipmentType);
     }
-    void removeByType(EquipmentType equipmentType) {
-        findByType(equipmentType).each!(e => remove(e));
+    void removeByType(TenantId tenantId, EquipmentType equipmentType) {
+        findByType(tenantId, equipmentType).each!(e => remove(e));
     }
 
-    size_t countByStatus(EquipmentStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, EquipmentStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     Equipment[] filterByStatus(Equipment[] equipment, EquipmentStatus status) {
         return equipment.filter!(e => e.status == status).array;
     }
-    Equipment[] findByStatus(EquipmentStatus status) {
-        return filterByStatus(findAll(), status);
+    Equipment[] findByStatus(TenantId tenantId, EquipmentStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(EquipmentStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, EquipmentStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

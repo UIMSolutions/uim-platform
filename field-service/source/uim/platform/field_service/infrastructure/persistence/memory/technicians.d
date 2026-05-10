@@ -13,30 +13,30 @@ mixin(ShowModule!());
 
 class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), TechnicianRepository {
 
-    size_t countByStatus(TechnicianStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, TechnicianStatus status) {
+        return findByStatus(tenantId, status).length;
     }
     Technician[] filterByStatus(Technician[] technicians, TechnicianStatus status) {
         return technicians.filter!(e => e.status == status).array;
     }
-    Technician[] findByStatus(TechnicianStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    Technician[] findByStatus(TenantId tenantId, TechnicianStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
-    void removeByStatus(TechnicianStatus status) {
-        findByStatus(status).each!(entity => remove(entity));
+    void removeByStatus(TenantId tenantId, TechnicianStatus status) {
+        findByStatus(tenantId, status).each!(entity => remove(entity));
     }
 
-    size_t countByRegion(string region) {
-        return findByRegion(region).length;
+    size_t countByRegion(TenantId tenantId, string region) {
+        return findByRegion(tenantId, region).length;
     }
     Technician[] filterByRegion(Technician[] technicians, string region) {
         return technicians.filter!(e => e.region == region).array;
     }
-    Technician[] findByRegion(string region) {
-        return findAll().filter!(e => e.region == region).array;
+    Technician[] findByRegion(TenantId tenantId, string region) {
+        return filterByRegion(findByTenant(tenantId), region);
     }
-    void removeByRegion(string region) {
-        findByRegion(region).each!(entity => remove(entity));
+    void removeByRegion(TenantId tenantId, string region) {
+        findByRegion(tenantId, region).each!(entity => remove(entity));
     }
 
 }

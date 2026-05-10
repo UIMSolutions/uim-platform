@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface EquipmentRepository : ITenantRepository!(Equipment, EquipmentId) {
 
-    size_t countByCustomer(CustomerId customerId);
-    Equipment[] findByCustomer(CustomerId customerId);
-    void removeByCustomer(CustomerId customerId);
+    size_t countByCustomer(TenantId tenantId, CustomerId customerId);
+    Equipment[] findByCustomer(TenantId tenantId, CustomerId customerId);
+    void removeByCustomer(TenantId tenantId, CustomerId customerId);
 
-    size_t countByType(EquipmentType equipmentType);
-    Equipment[] findByType(EquipmentType equipmentType);
-    void removeByType(EquipmentType equipmentType);
+    size_t countByType(TenantId tenantId, EquipmentType equipmentType);
+    Equipment[] findByType(TenantId tenantId, EquipmentType equipmentType);
+    void removeByType(TenantId tenantId, EquipmentType equipmentType);
 
-    size_t countByStatus(EquipmentStatus status);
-    Equipment[] findByStatus(EquipmentStatus status);
-    void removeByStatus(EquipmentStatus status);
+    size_t countByStatus(TenantId tenantId, EquipmentStatus status);
+    Equipment[] findByStatus(TenantId tenantId, EquipmentStatus status);
+    void removeByStatus(TenantId tenantId, EquipmentStatus status);
 
 }

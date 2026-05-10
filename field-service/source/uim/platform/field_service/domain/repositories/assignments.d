@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface AssignmentRepository : ITenantRepository!(Assignment, AssignmentId) {
 
-    size_t countByActivity(ActivityId activityId);
-    Assignment[] findByActivity(ActivityId activityId);
-    void removeByActivity(ActivityId activityId);
+    size_t countByActivity(TenantId tenantId, ActivityId activityId);
+    Assignment[] findByActivity(TenantId tenantId, ActivityId activityId);
+    void removeByActivity(TenantId tenantId, ActivityId activityId);
 
-    size_t countByTechnician(TechnicianId technicianId);
-    Assignment[] findByTechnician(TechnicianId technicianId);
-    void removeByTechnician(TechnicianId technicianId);
+    size_t countByTechnician(TenantId tenantId, TechnicianId technicianId);
+    Assignment[] findByTechnician(TenantId tenantId, TechnicianId technicianId);
+    void removeByTechnician(TenantId tenantId, TechnicianId technicianId);
 
-    size_t countByStatus(AssignmentStatus status);
-    Assignment[] findByStatus(AssignmentStatus status);
-    void removeByStatus(AssignmentStatus status);
+    size_t countByStatus(TenantId tenantId, AssignmentStatus status);
+    Assignment[] findByStatus(TenantId tenantId, AssignmentStatus status);
+    void removeByStatus(TenantId tenantId, AssignmentStatus status);
 
 }

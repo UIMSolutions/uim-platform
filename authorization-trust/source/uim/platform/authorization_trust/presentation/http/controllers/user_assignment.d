@@ -21,9 +21,9 @@ class UserAssignmentController : PlatformController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/user-assignments",    &handleCreate);
-    router.get("/api/v1/user-assignments",     &handleList);
-    router.get("/api/v1/user-assignments/*",   &handleGet);
+    router.post("/api/v1/user-assignments", &handleCreate);
+    router.get("/api/v1/user-assignments", &handleList);
+    router.get("/api/v1/user-assignments/*", &handleGet);
     router.delete_("/api/v1/user-assignments/*", &handleDelete);
   }
 
@@ -32,12 +32,13 @@ class UserAssignmentController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateUserAssignmentRequest r;
-      r.userId           = j.getString("userId");
-      r.userEmail        = j.getString("userEmail");
-      r.roleCollectionId = j.getString("roleCollectionId");
-      r.origin           = j.getString("origin");
+      r.tenantId = tenantId;
+      r.userId = UserId(j.getString("userId"));
+      r.userEmail = j.getString("userEmail");
+      r.roleCollectionId = RoleCollectionId(j.getString("roleCollectionId"));
+      r.origin = j.getString("origin");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createUserAssignment(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
       else
@@ -50,12 +51,20 @@ class UserAssignmentController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto userId = req.params.get("userId", "");
-      auto assignments = userId.length > 0 ? usecase.listByUserId(userId) : usecase.listAll();
-      auto jarr = Json.emptyArray;
-      foreach (ua; assignments)
-        jarr ~= uaToJson(ua);
-      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", assignments.length), 200);
+      auto userId = UserId(req.params.get("userId", ""));
+
+      auto assignments =
+        userId.isNull ? usecase.listUserAssignments(
+          tenantId) : usecase.listUserAssignments(tenantId, userId);
+
+      auto jarr = assignments.map!(ua => ua.toJson).array.toJson;
+
+      auto response = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", assignments.length)
+        .set("message", "User assignments retrieved successfully");
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -65,12 +74,18 @@ class UserAssignmentController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto ua = usecase.getById(id);
+
+      auto ua = usecase.getUserAssignment(tenantId, id);
       if (ua.id.length == 0) {
         writeError(res, 404, "User assignment not found");
         return;
       }
-      res.writeJsonBody(uaToJson(ua), 200);
+
+      auto response = Json.emptyObject
+        .set("result", ua.toJson)
+        .set("message", "User assignment retrieved successfully");
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -80,10 +95,15 @@ class UserAssignmentController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto result = usecase.remove(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
-      else
+
+      auto result = usecase.deleteUserAssignment(tenantId, id);
+      if (result.success) {
+        auto response = Json.emptyObject
+          .set("result", Json.emptyObject.set("id", id))
+          .set("message", "User assignment deleted successfully");
+
+        res.writeJsonBody(response, 200);
+      } else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

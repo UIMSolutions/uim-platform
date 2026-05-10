@@ -14,43 +14,43 @@ mixin(ShowModule!());
 class MemoryActivityRepository : TenantRepository!(Activity, ActivityId), ActivityRepository {
 
 
-    size_t countByServiceCall(ServiceCallId serviceCallId) {
-        return findByServiceCall(serviceCallId).length;
+    size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        return findByServiceCall(tenantId, serviceCallId).length;
     }
     Activity[] filterByServiceCall(Activity[] activities, ServiceCallId serviceCallId) {
         return activities.filter!(e => e.serviceCallId == serviceCallId).array;
     }
-    Activity[] findByServiceCall(ServiceCallId serviceCallId) {
-        return filterByServiceCall(findAll(), serviceCallId);
+    Activity[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        return filterByServiceCall(findByTenant(tenantId), serviceCallId);
     }
-    void removeByServiceCall(ServiceCallId serviceCallId) {
-        findByServiceCall(serviceCallId).each!(e => remove(e));
+    void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
+        findByServiceCall(tenantId, serviceCallId).each!(e => remove(e));
     }
 
-    size_t countByTechnician(TechnicianId technicianId) {
-        return findByTechnician(technicianId).length;
+    size_t countByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        return findByTechnician(tenantId, technicianId).length;
     }
     Activity[] filterByTechnician(Activity[] activities, TechnicianId technicianId) {
         return activities.filter!(e => e.technicianId == technicianId).array;
     }
-    Activity[] findByTechnician(TechnicianId technicianId) {
-        return filterByTechnician(findAll(), technicianId);
+    Activity[] findByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        return filterByTechnician(findByTenant(tenantId), technicianId);
     }
-    void removeByTechnician(TechnicianId technicianId) {
-        findByTechnician(technicianId).each!(e => remove(e));
+    void removeByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        findByTechnician(tenantId, technicianId).each!(e => remove(e));
     }
 
-    Activity[] findByStatus(ActivityStatus status) {
-        return filterByStatus(findAll(), status);
+    Activity[] findByStatus(TenantId tenantId, ActivityStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
     Activity[] filterByStatus(Activity[] activities, ActivityStatus status) {
         return activities.filter!(e => e.status == status).array;
     }
-    size_t countByStatus(ActivityStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, ActivityStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    void removeByStatus(ActivityStatus status) {
-        findByStatus(status).each!(e => remove(e)); 
+    void removeByStatus(TenantId tenantId, ActivityStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e)); 
     }
 
 }

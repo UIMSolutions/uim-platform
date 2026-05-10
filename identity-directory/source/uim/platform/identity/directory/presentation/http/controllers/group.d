@@ -33,25 +33,29 @@ class GroupController : PlatformController {
     router.put("/scim/Groups/*", &handleUpdate);
     router.delete_("/scim/Groups/*", &handleDelete);
     router.post("/scim/Groups/members", &handleAddMember);
-    router.delete_("/scim/Groups/members", &handleRemoveMember);
+    router.delete_("/scim/Groups/members", &handleDeleteMember);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       auto members = parseMembers(j);
-      auto createReq = CreateGroupRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("externalId"), j.getString("displayName"),
-        j.getString("description"), members,);
+      CreateGroupRequest createReq;
+      createReq.tenantId = tenantId;
+      createReq.externalId = j.getString("externalId");
+      createReq.displayName = j.getString("displayName");
+      createReq.description = j.getString("description");
+      createReq.members = members;
 
       auto result = useCase.createGroup(createReq);
-      auto response = Json.emptyObject;
 
       if (result.isSuccess()) {
-        response["id"] = Json(result.groupId);
-        response["schemas"] = Json.emptyArray;
-        response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:Group");
+      auto response = Json.emptyObject
+        .set("id", Json(result.groupId))
+        .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
+
         res.writeJsonBody(response, 201);
       } else {
         writeScimError(res, 409, result.error);
@@ -65,11 +69,10 @@ class GroupController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
-      auto response = Json.emptyObject;
-      response["schemas"] = Json.emptyArray;
-      response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(groups.length);
-      response["Resources"] = toJsonArray(groups);
+      auto response = Json.emptyObject
+      .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
+      .set("totalResults", Json(groups.length))
+      .set("Resources", toJsonArray(groups));
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
@@ -78,6 +81,7 @@ class GroupController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto groupId = extractIdFromPath(req.requestURI);
       auto group = useCase.getGroup(groupId);
       if (group == Group.init) {
@@ -92,6 +96,7 @@ class GroupController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto groupId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
@@ -126,7 +131,7 @@ class GroupController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto addReq = AddMemberRequest(j.getString("groupId"),
+      auto addReq = AddMemberRequest(tenantId, j.getString("groupId"),
         j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
       auto error = useCase.addMember(addReq);
       if (error.length > 0) {
@@ -142,11 +147,11 @@ class GroupController : PlatformController {
     }
   }
 
-  private void handleRemoveMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto removeReq = RemoveMemberRequest(j.getString("groupId"), j.getString("memberId"),);
+      auto removeReq = RemoveMemberRequest(tenantId, j.getString("groupId"), j.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);
       if (error.length > 0) {
         writeScimError(res, 400, error);

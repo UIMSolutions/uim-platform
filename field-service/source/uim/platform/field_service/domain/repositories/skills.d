@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface SkillRepository : ITenantRepository!(Skill, SkillId) {
 
-    size_t countByTechnician(TechnicianId technicianId);
-    Skill[] findByTechnician(TechnicianId technicianId);
-    void removeByTechnician(TechnicianId technicianId);
+    size_t countByTechnician(TenantId tenantId, TechnicianId technicianId);
+    Skill[] findByTechnician(TenantId tenantId, TechnicianId technicianId);
+    void removeByTechnician(TenantId tenantId, TechnicianId technicianId);
 
-    size_t countByCategory(SkillCategory category);
-    Skill[] findByCategory(SkillCategory category);
-    void removeByCategory(SkillCategory category);
+    size_t countByCategory(TenantId tenantId, SkillCategory category);
+    Skill[] findByCategory(TenantId tenantId, SkillCategory category);
+    void removeByCategory(TenantId tenantId, SkillCategory category);
 
 }

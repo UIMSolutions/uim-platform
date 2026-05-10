@@ -20,6 +20,7 @@ class RoleController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/roles",    &handleCreate);
     router.get("/api/v1/roles",     &handleList);
     router.get("/api/v1/roles/*",   &handleGet);
@@ -31,7 +32,9 @@ class RoleController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateRoleRequest r;
+      r.tenantId = tenantId;
       r.name        = j.getString("name");
       r.description = j.getString("description");
       r.appId       = j.getString("appId");
@@ -41,7 +44,7 @@ class RoleController : PlatformController {
         foreach (v; srArr.byValue)
           r.scopeReferences ~= v.get!string;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createRole(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
       else
@@ -54,10 +57,10 @@ class RoleController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto roles = usecase.listAll();
+      auto roles = usecase.listRoles(tenantId);
       auto jarr = Json.emptyArray;
       foreach (role; roles)
-        jarr ~= roleToJson(role);
+        jarr ~= role.toJson();
       res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", roles.length), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -68,12 +71,12 @@ class RoleController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto role = usecase.getById(id);
+      auto role = usecase.getRole(tenantId, id);
       if (role.id.length == 0) {
         writeError(res, 404, "Role not found");
         return;
       }
-      res.writeJsonBody(roleToJson(role), 200);
+      res.writeJsonBody(role.toJson(), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -85,6 +88,7 @@ class RoleController : PlatformController {
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateRoleRequest r;
+      r.tenantId = tenantId;
       r.id          = id;
       r.description = j.getString("description");
 
@@ -93,7 +97,7 @@ class RoleController : PlatformController {
         foreach (v; srArr.byValue)
           r.scopeReferences ~= v.get!string;
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateRole(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       else
@@ -107,7 +111,8 @@ class RoleController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto result = usecase.remove(id);
+      
+      auto result = usecase.deleteRole(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", id), 200);
       else

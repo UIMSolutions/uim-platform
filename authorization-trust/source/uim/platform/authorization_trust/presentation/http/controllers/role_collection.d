@@ -21,10 +21,10 @@ class RoleCollectionController : PlatformController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/role-collections",    &handleCreate);
-    router.get("/api/v1/role-collections",     &handleList);
-    router.get("/api/v1/role-collections/*",   &handleGet);
-    router.put("/api/v1/role-collections/*",   &handleUpdate);
+    router.post("/api/v1/role-collections", &handleCreate);
+    router.get("/api/v1/role-collections", &handleList);
+    router.get("/api/v1/role-collections/*", &handleGet);
+    router.put("/api/v1/role-collections/*", &handleUpdate);
     router.delete_("/api/v1/role-collections/*", &handleDelete);
   }
 
@@ -32,16 +32,16 @@ class RoleCollectionController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateRoleCollectionRequest r;
-      r.name        = j.getString("name");
+      r.tenantId = tenantId;
+      r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto rrArr = j["roleReferences"];
-      if (rrArr.type == Json.Type.array)
-        foreach (v; rrArr.byValue)
-          r.roleReferences ~= v.get!string;
+      foreach (v; j.getArray("roleReferences"))
+        r.roleReferences ~= v.getString;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createRoleCollection(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
       else
@@ -54,11 +54,16 @@ class RoleCollectionController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto rcs = usecase.listAll();
-      auto jarr = Json.emptyArray;
-      foreach (rc; rcs)
-        jarr ~= rcToJson(rc);
-      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", rcs.length), 200);
+
+      auto rcs = usecase.listRoleCollections(tenantId);
+      auto jarr = rcs.map!(rc => rc.toJson).array.toJson;
+
+      auto response = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", rcs.length)
+        .set("message", "Role collections retrieved successfully");
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -68,12 +73,16 @@ class RoleCollectionController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto rc = usecase.getById(id);
+      auto rc = usecase.getRoleCollection(tenantId, id);
       if (rc.id.length == 0) {
         writeError(res, 404, "Role collection not found");
         return;
       }
-      res.writeJsonBody(rcToJson(rc), 200);
+      auto response = Json.emptyObject
+        .set("result", rc.toJson())
+        .set("message", "Role collection retrieved successfully");
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -84,8 +93,10 @@ class RoleCollectionController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto j = req.json;
+
       UpdateRoleCollectionRequest r;
-      r.id          = id;
+      r.tenantId = tenantId;
+      r.id = id;
       r.description = j.getString("description");
 
       auto rrArr = j["roleReferences"];
@@ -93,11 +104,16 @@ class RoleCollectionController : PlatformController {
         foreach (v; rrArr.byValue)
           r.roleReferences ~= v.get!string;
 
-      auto result = usecase.update(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-      else
+      auto result = usecase.updateRoleCollection(r);
+      if (result.success) {
+        auto response = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Role collection updated successfully");
+
+        res.writeJsonBody(response, 200);
+      } else {
         writeError(res, result.error == "Role collection not found" ? 404 : 400, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -107,27 +123,20 @@ class RoleCollectionController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto result = usecase.remove(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
-      else
+
+      auto result = usecase.deleteRoleCollection(tenantId, id);
+      if (result.success) {
+        auto response = Json.emptyObject
+          .set("id", id)
+          .set("message", "Role collection deleted successfully");
+          
+        res.writeJsonBody(response, 200);
+      } else {
         writeError(res, 404, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private Json rcToJson(RoleCollectionEntity rc) @safe {
-    auto rrArr = Json.emptyArray;
-    foreach (r; rc.roleReferences)
-      rrArr ~= Json(r);
-
-    return Json.emptyObject
-      .set("id",             rc.id)
-      .set("name",           rc.name)
-      .set("description",    rc.description)
-      .set("roleReferences", rrArr)
-      .set("createdAt",      rc.createdAt)
-      .set("updatedAt",      rc.updatedAt);
-  }
 }

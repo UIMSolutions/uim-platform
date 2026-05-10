@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface ServiceCallRepository : ITenantRepository!(ServiceCall, ServiceCallId) {
 
-    size_t countByStatus(ServiceCallStatus status);
-    ServiceCall[] findByStatus(ServiceCallStatus status);
-    void removeByStatus(ServiceCallStatus status);
+    size_t countByStatus(TenantId tenantId, ServiceCallStatus status);
+    ServiceCall[] findByStatus(TenantId tenantId, ServiceCallStatus status);
+    void removeByStatus(TenantId tenantId, ServiceCallStatus status);
 
-    size_t countByPriority(ServiceCallPriority priority);
-    ServiceCall[] findByPriority(ServiceCallPriority priority);
-    void removeByPriority(ServiceCallPriority priority);
+    size_t countByPriority(TenantId tenantId, ServiceCallPriority priority);
+    ServiceCall[] findByPriority(TenantId tenantId, ServiceCallPriority priority);
+    void removeByPriority(TenantId tenantId, ServiceCallPriority priority);
 
-    size_t countByCustomer(CustomerId customerId);
-    ServiceCall[] findByCustomer(CustomerId customerId);
-    void removeByCustomer(CustomerId customerId);
+    size_t countByCustomer(TenantId tenantId, CustomerId customerId);
+    ServiceCall[] findByCustomer(TenantId tenantId, CustomerId customerId);
+    void removeByCustomer(TenantId tenantId, CustomerId customerId);
     
 }

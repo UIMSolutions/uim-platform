@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface SmartformRepository : ITenantRepository!(Smartform, SmartformId) {
 
-    size_t findByServiceCall(ServiceCallId serviceCallId);
-    Smartform[] findByServiceCall(ServiceCallId serviceCallId);
-    void removeByServiceCall(ServiceCallId serviceCallId);
+    size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
+    Smartform[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
+    void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
 
-    size_t findByActivity(ActivityId activityId);
-    Smartform[] findByActivity(ActivityId activityId);
-    void removeByActivity(ActivityId activityId);
+    size_t countByActivity(TenantId tenantId, ActivityId activityId);
+    Smartform[] findByActivity(TenantId tenantId, ActivityId activityId);
+    void removeByActivity(TenantId tenantId, ActivityId activityId);
 
-    size_t findByStatus(SmartformStatus status);
-    Smartform[] findByStatus(SmartformStatus status);
-    void removeByStatus(SmartformStatus status);
+    size_t countByStatus(TenantId tenantId, SmartformStatus status);
+    Smartform[] findByStatus(TenantId tenantId, SmartformStatus status);
+    void removeByStatus(TenantId tenantId, SmartformStatus status);
     
 }

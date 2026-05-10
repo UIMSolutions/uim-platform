@@ -34,30 +34,33 @@ class ApplicationController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto createReq = CreateAppRequest(j.getString("tenantId"), j.getString("name"),
-          j.getString("description"), SsoProtocol.oidc, getStrings(j, "redirectUris"),
-          getStrings(j, "allowedScopes"), j.getString("samlEntityId"),
-          j.getString("samlAcsUrl"));
+      CreateAppRequest request;
+      request.tenantId = tenantId;
+      request.name = j.getString("name");
+      request.description = j.getString("description");
+      request.protocol = SsoProtocol.oidc;
+      request.redirectUris = getStrings(j, "redirectUris");
+      request.allowedScopes = getStrings(j, "allowedScopes");
+      request.samlEntityId = j.getString("samlEntityId");
+      request.samlAcsUrl = j.getString("samlAcsUrl");
 
-      auto result = useCase.createApplication(createReq);
-      auto response = Json.emptyObject;
+      auto result = useCase.createApplication(request);
 
       if (result.isSuccess()) {
+        auto response = Json.emptyObject;
         response["applicationId"] = Json(result.applicationId);
         response["clientId"] = Json(result.clientId);
         response["clientSecret"] = Json(result.clientSecret);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
+        auto response = Json.emptyObject;
         response["error"] = Json(result.error);
         res.writeJsonBody(response, 400);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -72,8 +75,7 @@ class ApplicationController : PlatformController {
       response["totalResults"] = apps.length.toJson;
       response["resources"] = apps.toJson;
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -83,12 +85,12 @@ class ApplicationController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
-
+      auto tenantId = req.getTenantId;
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto app = useCase.getApplication(appId);
+      auto app = useCase.getApplication(tenantId, appId);
       if (app == Application.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("Application not found");
@@ -99,8 +101,7 @@ class ApplicationController : PlatformController {
       auto response = toJsonValue(app);
       response.remove("clientSecret"); // Don't expose secret on GET
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -111,30 +112,32 @@ class ApplicationController : PlatformController {
     try {
       // import std.string : lastIndexOf;
 
+      auto tenantId = req.getTenantId;
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto j = req.json;
-      auto updateReq = UpdateAppRequest(appId, j.getString("name"),
-          getStrings(j, "redirectUris"), getStrings(j, "allowedScopes"));
+      UpdateAppRequest request;
+      request.tenantId = tenantId;
+      request.applicationId = appId;
+      request.name = j.getString("name");
+      request.redirectUris = getStrings(j, "redirectUris");
+      request.allowedScopes = getStrings(j, "allowedScopes");
 
-      auto error = useCase.updateApplication(updateReq);
+      auto error = useCase.updateApplication(request);
       if (error.length > 0) {
         auto errRes = Json.emptyObject
           .set("error", error);
-          
+
         res.writeJsonBody(errRes, 404);
-      }
-      else
-      {
+      } else {
         auto resp = Json.emptyObject
           .set("status", "updated");
 
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject
         .set("error", "Internal server error");
 

@@ -30,7 +30,9 @@ class AssignmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto assignments = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+
+            auto assignments = usecase.listAssignments(tenantId);
             auto jsonAssignments = assignments.map!(assignment => assignment.toJson).array.toJson;
             auto response = Json.emptyObject
                 .set("count", assignments.length)
@@ -44,11 +46,11 @@ class AssignmentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
+            auto id = AssignmentId(extractIdFromPath(path));
+
+            auto e = usecase.getAssignment(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Assignment not found");
                 return;
@@ -63,9 +65,10 @@ class AssignmentController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             AssignmentDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.activityId = j.getString("activityId");
             dto.technicianId = j.getString("technicianId");
             dto.assignedDate = j.getString("assignedDate");
@@ -74,7 +77,7 @@ class AssignmentController : PlatformController {
             dto.notes = j.getString("notes");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createAssignment(dto);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -90,12 +93,13 @@ class AssignmentController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             AssignmentDTO dto;
             dto.id = extractIdFromPath(path);
+            dto.tenantId = tenantId;
             dto.acceptedDate = j.getString("acceptedDate");
             dto.startedDate = j.getString("startedDate");
             dto.completedDate = j.getString("completedDate");
@@ -103,7 +107,7 @@ class AssignmentController : PlatformController {
             dto.notes = j.getString("notes");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateAssignment(dto);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -119,11 +123,10 @@ class AssignmentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = usecase.removeById(id);
+            auto id = AssignmentId(extractIdFromPath(path));
+            auto result = usecase.deleteAssignment(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["message"] = Json("Assignment deleted");

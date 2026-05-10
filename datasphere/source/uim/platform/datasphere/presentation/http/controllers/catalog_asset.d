@@ -46,7 +46,7 @@ class CatalogAssetController : PlatformController {
       r.owner = j.getString("owner");
       r.glossaryTerms = getStrings(j, "glossaryTerms");
 
-      auto result = assets.create(r);
+      auto result = assets.createCatalogAsset(r);
       if (result.success) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -63,8 +63,9 @@ class CatalogAssetController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto assets = assets.list(spaceId);
+      auto assets = assets.listCatalogAssets(tenantId, spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
@@ -91,12 +92,11 @@ class CatalogAssetController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto query = req.params.get("q", "");
 
-      auto assets = assets.search(spaceId, query);
+      auto assets = assets.searchCatalogAssets(tenantId, spaceId, query);
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
@@ -125,7 +125,7 @@ class CatalogAssetController : PlatformController {
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto ca = assets.getById(spaceId, id);
+      auto ca = assets.getCatalogAsset(tenantId, spaceId, id);
       if (ca.id.isEmpty) {
         writeError(res, 404, "Catalog asset not found");
         return;
@@ -156,7 +156,7 @@ class CatalogAssetController : PlatformController {
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = assets.remove(spaceId, id);
+      auto result = assets.deleteCatalogAsset(tenantId, spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

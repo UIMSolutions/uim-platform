@@ -36,7 +36,7 @@ class BrowseController : PlatformController {
     router.get("/api/v1/browse/repository/*", &handleRepositorySummary);
     router.post("/api/v1/favorites", &handleAddFavorite);
     router.get("/api/v1/favorites", &handleListFavorites);
-    router.delete_("/api/v1/favorites/*", &handleRemoveFavorite);
+    router.delete_("/api/v1/favorites/*", &handleDeleteFavorite);
   }
 
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -129,7 +129,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  private void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FavoriteId(extractIdFromPath(req.requestURI));

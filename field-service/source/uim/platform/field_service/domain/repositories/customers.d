@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface CustomerRepository : ITenantRepository!(Customer, CustomerId) {
 
-    size_t countByType(CustomerType customerType);
-    Customer[] findByType(CustomerType customerType);
-    void removeByType(CustomerType customerType);
+    size_t countByType(TenantId tenantId, CustomerType customerType);
+    Customer[] findByType(TenantId tenantId, CustomerType customerType);
+    void removeByType(TenantId tenantId, CustomerType customerType);
 
-    size_t countByStatus(CustomerStatus status);
-    Customer[] findByStatus(CustomerStatus status);
-    void removeByStatus(CustomerStatus status);
+    size_t countByStatus(TenantId tenantId, CustomerStatus status);
+    Customer[] findByStatus(TenantId tenantId, CustomerStatus status);
+    void removeByStatus(TenantId tenantId, CustomerStatus status);
     
 }

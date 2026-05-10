@@ -35,27 +35,29 @@ class UserController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto createReq = CreateUserRequest(j.getString("tenantId"), j.getString("userName"),
-          j.getString("email"), j.getString("firstName"), j.getString("lastName"),
-          j.getString("password"), j.getString("phoneNumber"));
+      CreateUserRequest request;
+      request.tenantId = tenantId;
+      request.userName = j.getString("userName");
+      request.email = j.getString("email");
+      request.firstName = j.getString("firstName");
+      request.lastName = j.getString("lastName");
+      request.password = j.getString("password");
+      request.phoneNumber = j.getString("phoneNumber");
 
-      auto result = useCase.createUser(createReq);
+      auto result = useCase.createUser(request);
       auto response = Json.emptyObject;
 
       if (result.isSuccess()) {
         response["userId"] = Json(result.userId);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         response["error"] = Json(result.error);
         res.writeJsonBody(response, 409);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -73,8 +75,7 @@ class UserController : PlatformController {
       response["totalResults"] = users.length.toJson;
       response["resources"] = users.toJson;
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -83,12 +84,11 @@ class UserController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+auto tenantId = req.getTenantId;
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
 
-      auto user = useCase.getUser(userId);
+      auto user = useCase.getUser(tenantId, userId);
       if (user == User.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("User not found");
@@ -101,8 +101,7 @@ class UserController : PlatformController {
       response.remove("passwordHash");
       response.remove("mfaSecret");
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -111,28 +110,26 @@ class UserController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
       auto j = req.json;
 
-      auto updateReq = UpdateUserRequest(userId, j.getString("firstName"),
-          j.getString("lastName"), j.getString("phoneNumber"));
+      auto updateReq = UpdateUserRequest(tenantId, userId, j.getString("firstName"),
+        j.getString("lastName"), j.getString("phoneNumber"));
 
       auto error = useCase.updateUser(updateReq);
       if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 404);
-      }
-      else
-      {
+      } else {
         auto resp = Json.emptyObject
           .set("status", "updated");
 
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -140,29 +137,26 @@ class UserController : PlatformController {
   }
 
   private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto error = useCase.changePassword(j.getString("userId"),
-          j.getString("oldPassword"), j.getString("newPassword"));
+      auto error = useCase.changePassword(tenantId, j.getString("userId"),
+        j.getString("oldPassword"), j.getString("newPassword"));
 
       if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 400);
-      }
-      else
-      {
+      } else {
         auto resp = Json.emptyObject
           .set("status", "password_changed");
 
         res.writeJsonBody(resp, 200);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       auto errRes = Json.emptyObject
         .set("error", "Internal server error");
-        
+
       res.writeJsonBody(errRes, 500);
     }
   }

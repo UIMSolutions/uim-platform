@@ -13,36 +13,36 @@ mixin(ShowModule!());
 
 class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), CustomerRepository {
 
-    size_t countByType(CustomerType customerType) {
-        return findByType(customerType).length;
+    size_t countByType(TenantId tenantId, CustomerType customerType) {
+        return findByType(tenantId, customerType).length;
     }
 
     Customer[] filterByType(Customer[] customers, CustomerType customerType) {
         return customers.filter!(e => e.customerType == customerType).array;
     }
 
-    Customer[] findByType(CustomerType customerType) {
-        return filterByType(findAll(), customerType);
+    Customer[] findByType(TenantId tenantId, CustomerType customerType) {
+        return filterByType(findByTenant(tenantId), customerType);
     }
 
-    void removeByType(CustomerType customerType) {
-        findByType(customerType).each!(e => remove(e));
+    void removeByType(TenantId tenantId, CustomerType customerType) {
+        findByType(tenantId, customerType).each!(e => remove(e));
     }
 
-    size_t countByStatus(CustomerStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, CustomerStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
     Customer[] filterByStatus(Customer[] customers, CustomerStatus status) {
         return customers.filter!(e => e.status == status).array;
     }
 
-    Customer[] findByStatus(CustomerStatus status) {
-        return filterByStatus(findAll(), status);
+    Customer[] findByStatus(TenantId tenantId, CustomerStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
-    void removeByStatus(CustomerStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, CustomerStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

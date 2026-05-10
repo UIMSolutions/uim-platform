@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface ActivityRepository : ITenantRepository!(Activity, ActivityId) {
 
-    size_t countByServiceCall(ServiceCallId serviceCallId);
-    Activity[] findByServiceCall(ServiceCallId serviceCallId);
-    void removeByServiceCall(ServiceCallId serviceCallId);
+    size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
+    Activity[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
+    void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
 
-    size_t countByTechnician(TechnicianId technicianId);
-    Activity[] findByTechnician(TechnicianId technicianId);
-    void removeByTechnician(TechnicianId technicianId);
+    size_t countByTechnician(TenantId tenantId, TechnicianId technicianId);
+    Activity[] findByTechnician(TenantId tenantId, TechnicianId technicianId);
+    void removeByTechnician(TenantId tenantId, TechnicianId technicianId);
 
-    size_t countByStatus(ActivityStatus status);
-    Activity[] findByStatus(ActivityStatus status);
-    void removeByStatus(ActivityStatus status);
+    size_t countByStatus(TenantId tenantId, ActivityStatus status);
+    Activity[] findByStatus(TenantId tenantId, ActivityStatus status);
+    void removeByStatus(TenantId tenantId, ActivityStatus status);
     
 }

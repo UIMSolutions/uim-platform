@@ -14,30 +14,30 @@ mixin(ShowModule!());
 class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository {
 
 
-    size_t countByTechnician(TechnicianId technicianId) {
-        return findByTechnician(technicianId).length;
+    size_t countByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        return findByTechnician(tenantId, technicianId).length;
     }
     Skill[] filterByTechnician(Skill[] skills, TechnicianId technicianId) {
         return skills.filter!(e => e.technicianId == technicianId).array;
     }
-    Skill[] findByTechnician(TechnicianId technicianId) {
-        return filterByTechnician(findAll(), technicianId);
+    Skill[] findByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        return filterByTechnician(findByTenant(tenantId), technicianId);
     }
-    void removeByTechnician(TechnicianId technicianId) {
-        findByTechnician(technicianId).each!(e => remove(e));
+    void removeByTechnician(TenantId tenantId, TechnicianId technicianId) {
+        findByTechnician(tenantId, technicianId).each!(e => remove(e));
     }
 
-    size_t countByCategory(SkillCategory category) {
-        return findByCategory(category).length;
+    size_t countByCategory(TenantId tenantId, SkillCategory category) {
+        return findByCategory(tenantId, category).length;
     }
     Skill[] filterByCategory(Skill[] skills, SkillCategory category) {
         return skills.filter!(e => e.category == category).array;
     }
-    Skill[] findByCategory(SkillCategory category) {
-        return filterByCategory(findAll(), category);
+    Skill[] findByCategory(TenantId tenantId, SkillCategory category) {
+        return filterByCategory(findByTenant(tenantId), category);
     }
-    void removeByCategory(SkillCategory category) {
-        findByCategory(category).each!(e => remove(e));
+    void removeByCategory(TenantId tenantId, SkillCategory category) {
+        findByCategory(tenantId, category).each!(e => remove(e));
     }
 
 }

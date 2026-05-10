@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class DataContextController : PlatformController {
-    private ManageDataContextsUseCase dataContexts;
+    private ManageDataContextsUseCase usecase;
 
-    this(ManageDataContextsUseCase dataContexts) {
-        this.dataContexts = dataContexts;
+    this(ManageDataContextsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -46,7 +46,7 @@ class DataContextController : PlatformController {
             r.containsPersonalData = j.getBoolean("containsPersonalData");
             r.expiresAt = jsonLong(j, "expiresAt");
 
-            auto result = dataContexts.create(r);
+            auto result = usecase.createDataContext(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -64,7 +64,7 @@ class DataContextController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto contexts = dataContexts.list(tenantId);
+            auto contexts = usecase.listDataContexts(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; contexts) {
@@ -93,9 +93,9 @@ class DataContextController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-
+auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = dataContexts.getById(id);
+            auto d = usecase.getDataContext(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Data context not found");
                 return;
@@ -119,10 +119,10 @@ class DataContextController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;    
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = dataContexts.removeById(id);
+            auto result = usecase.deleteDataContext(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -140,7 +140,7 @@ class DataContextController : PlatformController {
     private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto result = dataContexts.removePersonalData(tenantId);
+            auto result = usecase.deletePersonalData(tenantId);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Personal data contexts deleted");

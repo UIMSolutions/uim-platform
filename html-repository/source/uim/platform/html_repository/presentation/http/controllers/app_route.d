@@ -10,7 +10,6 @@ module uim.platform.html_repository.presentation.http.controllers.app_route;
 
 // import uim.platform.htmls;
 
-
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -36,23 +35,24 @@ class AppRouteController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-
       auto j = req.json;
+
       CreateAppRouteRequest request;
       with (request) {
-         tenantId = tenantId;
-         appId = j.getString("appId");
-         pathPrefix = j.getString("pathPrefix");
-         targetPath = j.getString("targetPath");
-         authRequired = j.getBoolean("authRequired");
-         cacheEnabled = j.getBoolean("cacheEnabled");
-         createdBy = UserId(j.getString("createdBy"));
+        tenantId = tenantId;
+        appId = j.getString("appId");
+        pathPrefix = j.getString("pathPrefix");
+        targetPath = j.getString("targetPath");
+        authRequired = j.getBoolean("authRequired");
+        cacheEnabled = j.getBoolean("cacheEnabled");
+        createdBy = UserId(j.getString("createdBy"));
       }
 
-      auto result = usecase.create(request);
+      auto result = usecase.createAppRoute(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Route created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -65,7 +65,7 @@ class AppRouteController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto items = usecase.listByTenant(tenantId);
+      auto items = usecase.listAppRoutes(tenantId);
       auto arr = Json.emptyArray;
       foreach (e; items) {
         arr ~= Json.emptyObject
@@ -76,8 +76,9 @@ class AppRouteController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", items.length);
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Routes retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -93,7 +94,7 @@ class AppRouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto entry = usecase.getById(tenantId, id);
+      auto entry = usecase.getAppRoute(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Route not found");
         return;
@@ -133,11 +134,12 @@ class AppRouteController : PlatformController {
       r.targetUrl = j.getString("targetUrl");
       r.updatedBy = UserId(j.getString("updatedBy"));
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateAppRoute(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", id);
-          
+          .set("id", id)
+          .set("message", "Route updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -148,16 +150,18 @@ class AppRouteController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-
       auto id = extractIdFromPath(req.requestURI.to!string);
       if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto result = usecase.removeById(tenantId, id);
-      if (result.isSuccess())
-        res.writeBody("", 204);
-      else
+      auto result = usecase.deleteAppRoute(tenantId, id);
+      if (result.isSuccess()) {
+        auto resp = Json.emptyObject
+          .set("id", id)
+          .set("message", "Route deleted successfully");
+        res.writeJsonBody(resp, 200);
+      } else
         writeError(res, 400, result.error);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
