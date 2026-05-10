@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dms-integration
+  namespace: uim-platform
+  labels:
+    app: dms-integration
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dms-integration
+  template:
+    metadata:
+      labels:
+        app: dms-integration
+    spec:
+      containers:
+      - name: dms-integration
+        image: uim-platform/dms-integration:latest
+        ports:
+        - containerPort: 8109
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: dms-integration-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8109
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8109
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

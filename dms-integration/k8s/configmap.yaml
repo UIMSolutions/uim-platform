@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dms-integration-config
+  namespace: uim-platform
+  labels:
+    app: dms-integration
+    part-of: uim-platform
+data:
+  DMS_INTEGRATION_HOST: "0.0.0.0"
+  DMS_INTEGRATION_PORT: "8109"
