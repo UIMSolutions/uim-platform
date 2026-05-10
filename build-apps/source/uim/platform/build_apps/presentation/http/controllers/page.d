@@ -30,7 +30,9 @@ class PageController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+
+            auto items = usecase.listPages(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
@@ -46,10 +48,11 @@ class PageController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = PageId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+            
+            auto e = usecase.getPage(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Page not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,11 +62,12 @@ class PageController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             PageDTO dto;
             dto.pageId = PageId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -75,7 +79,7 @@ class PageController : PlatformController {
             dto.pageVariables = j.getString("pageVariables");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createPage(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -92,10 +96,12 @@ class PageController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             PageDTO dto;
+            dto.tenantId = tenantId;
             dto.pageId = PageId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -104,7 +110,7 @@ class PageController : PlatformController {
             dto.componentTree = j.getString("componentTree");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updatePage(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -121,10 +127,11 @@ class PageController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = PageId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+
+            auto result = usecase.deletePage(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Page deleted");

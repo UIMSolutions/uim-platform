@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceAccountController : PlatformController {
-    private ManageServiceAccountsUseCase serviceAccounts;
+    private ManageServiceAccountsUseCase usecase;
 
-    this(ManageServiceAccountsUseCase serviceAccounts) {
-        this.serviceAccounts = serviceAccounts;
+    this(ManageServiceAccountsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
@@ -30,7 +30,8 @@ class ServiceAccountController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = serviceAccounts.list();
+            auto tenantId = req.getTenantId();
+            auto items = usecase.listServiceAccounts(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -45,10 +46,11 @@ class ServiceAccountController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ServiceAccountId(extractIdFromPath(path));
-            auto e = serviceAccounts.getById(id);
+
+            auto e = usecase.getServiceAccount(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Service account not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -60,7 +62,9 @@ class ServiceAccountController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             ServiceAccountDTO dto;
+            dto.tenantId = tenantId;
             dto.id = j.getString("id");
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
@@ -70,7 +74,7 @@ class ServiceAccountController : PlatformController {
             dto.expiresAt = j.getString("expiresAt");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = serviceAccounts.create(dto);
+            auto result = usecase.createServiceAccount(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -86,17 +90,19 @@ class ServiceAccountController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             ServiceAccountDTO dto;
+            dto.tenantId = tenantId;
             dto.serviceAccountId = ServiceAccountId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.permissions = j.getString("permissions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = serviceAccounts.update(dto);
+            auto result = usecase.updateServiceAccount(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -116,7 +122,8 @@ class ServiceAccountController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ServiceAccountId(extractIdFromPath(path));
-            auto result = serviceAccounts.remove(id);
+
+            auto result = usecase.deleteServiceAccount(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service account deleted");

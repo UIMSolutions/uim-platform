@@ -30,7 +30,9 @@ class DataEntityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+
+            auto items = usecase.listDataEntities(tenantId);
             auto jarr = items.map!(e => e.dataEntityToJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -46,11 +48,12 @@ class DataEntityController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+
+            auto e = usecase.getDataEntity(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Data entity not found");
                 return;
@@ -63,11 +66,11 @@ class DataEntityController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -79,7 +82,7 @@ class DataEntityController : PlatformController {
             dto.relations = j.getString("relations");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createDataEntity(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -96,18 +99,19 @@ class DataEntityController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.fields = j.getString("fields");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateDataEntity(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -124,11 +128,11 @@ class DataEntityController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+            auto result = usecase.deleteDataEntity(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Data entity deleted");

@@ -30,7 +30,9 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = scheduledExecutions.list();
+            auto tenantId = req.getTenantId();
+
+            auto items = scheduledExecutions.listScheduledExecutions(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -46,10 +48,11 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ScheduledExecutionId(extractIdFromPath(path));
-            auto e = scheduledExecutions.getById(id);
+
+            auto e = scheduledExecutions.getScheduledExecution(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Scheduled execution not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,12 +62,13 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             ScheduledExecutionDTO dto;
-            dto.tenantId = req.getTenantId;
-            dto.id = j.getString("id");
-            dto.commandId = j.getString("commandId");
+            dto.tenantId = tenantId;
+            dto.id = ScheduledExecutionId(j.getString("id"));
+            dto.commandId = CommandId(j.getString("commandId"));
             dto.cronExpression = j.getString("cronExpression");
             dto.scheduledAt = j.getString("scheduledAt");
             dto.inputValues = j.getString("inputValues");
@@ -73,7 +77,7 @@ class ScheduledExecutionController : PlatformController {
             dto.retryDelay = j.getString("retryDelay");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = scheduledExecutions.create(dto);
+            auto result = scheduledExecutions.createScheduledExecution(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -90,17 +94,18 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ScheduledExecutionDTO dto;
+            dto.tenantId = tenantId;
             dto.id = ScheduledExecutionId(extractIdFromPath(path));
             dto.cronExpression = j.getString("cronExpression");
             dto.scheduledAt = j.getString("scheduledAt");
             dto.description = j.getString("description");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = scheduledExecutions.update(dto);
+            auto result = scheduledExecutions.updateScheduledExecution(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -117,10 +122,11 @@ class ScheduledExecutionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ScheduledExecutionId(extractIdFromPath(path));
-            auto result = scheduledExecutions.remove(id);
+
+            auto result = scheduledExecutions.deleteScheduledExecution(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

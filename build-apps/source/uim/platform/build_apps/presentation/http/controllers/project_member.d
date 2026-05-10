@@ -30,8 +30,11 @@ class ProjectMemberController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();  
+
+            auto items = usecase.listProjectMembers(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
+
             auto resp = Json.emptyObject
               .set("count", items.length)
               .set("resources", jarr)
@@ -48,7 +51,8 @@ class ProjectMemberController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ProjectMemberId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+
+            auto e = usecase.getProjectMember(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Project member not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -58,11 +62,12 @@ class ProjectMemberController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.userId = UserId(j.getString("userId"));
             dto.displayName = j.getString("displayName");
@@ -71,7 +76,7 @@ class ProjectMemberController : PlatformController {
             dto.permissions = j.getString("permissions");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createProjectMember(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -88,17 +93,19 @@ class ProjectMemberController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+            
             ProjectMemberDTO dto;
+            dto.tenantId = tenantId;
             dto.projectMemberId = ProjectMemberId(extractIdFromPath(path));
             dto.displayName = j.getString("displayName");
             dto.email = j.getString("email");
             dto.permissions = j.getString("permissions");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateProjectMember(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -115,13 +122,14 @@ class ProjectMemberController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ProjectMemberId(extractIdFromPath(path));
-            auto result = usecase.deleteProjectMember(id);
+
+            auto result = usecase.deleteProjectMember(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Project member removed");
+                  .set("message", "Project member deleted");
                   
                 res.writeJsonBody(resp, 200);
             } else {

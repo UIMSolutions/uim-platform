@@ -30,7 +30,9 @@ class UIComponentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = components.list();
+            auto tenantId = req.getTenantId();
+
+            auto items = components.listUIComponents(tenantId);
             auto jarr = items.map!(e => e.uiComponenttoJson).array.toJson;
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -45,10 +47,11 @@ class UIComponentController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = UIComponentId(extractIdFromPath(path));
-            auto e = components.getById(id);
+
+            auto e = components.getUIComponent(tenantId, id);
             if (e.isNull) { writeError(res, 404, "UI component not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -58,11 +61,12 @@ class UIComponentController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             UIComponentDTO dto;
             dto.uiComponentId = UIComponentId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.category = j.getString("category");
@@ -76,7 +80,7 @@ class UIComponentController : PlatformController {
             dto.previewUrl = j.getString("previewUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = components.create(dto);
+            auto result = components.createUIComponent(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -93,17 +97,19 @@ class UIComponentController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             UIComponentDTO dto;
+            dto.tenantId = tenantId;
             dto.uiComponentId = UIComponentId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = components.update(dto);
+            auto result = components.updateUIComponent(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -120,10 +126,11 @@ class UIComponentController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = UIComponentId(extractIdFromPath(path));
-            auto result = components.remove(id);
+
+            auto result = components.deleteUIComponent(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "UI component deleted");

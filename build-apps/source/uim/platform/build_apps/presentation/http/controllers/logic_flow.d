@@ -30,7 +30,9 @@ class LogicFlowController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+
+            auto items = usecase.listLogicFlows(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -46,10 +48,11 @@ class LogicFlowController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = LogicFlowId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+
+            auto e = usecase.getLogicFlow(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Logic flow not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,11 +62,12 @@ class LogicFlowController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             LogicFlowDTO dto;
             dto.logicFlowId = LogicFlowId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.pageId = PageId(j.getString("pageId"));
             dto.name = j.getString("name");
@@ -76,7 +80,7 @@ class LogicFlowController : PlatformController {
             dto.errorHandler = j.getString("errorHandler");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createLogicFlow(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -93,10 +97,12 @@ class LogicFlowController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             LogicFlowDTO dto;
+            dto.tenantId = tenantId;
             dto.logicFlowId = LogicFlowId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -104,7 +110,7 @@ class LogicFlowController : PlatformController {
             dto.connections = j.getString("connections");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateLogicFlow(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -124,7 +130,8 @@ class LogicFlowController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = LogicFlowId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+
+            auto result = usecase.deleteLogicFlow(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Logic flow deleted successfully");
